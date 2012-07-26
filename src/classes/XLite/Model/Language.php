@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Language
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="languages",
@@ -54,9 +52,7 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -67,9 +63,7 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Language alpha-2 code (ISO 639-2)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=2, unique=true)
      */
@@ -78,9 +72,7 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Language alpha-3 code (ISO 639-3)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=3, unique=true)
      */
@@ -89,9 +81,7 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Right-to-left flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -100,9 +90,7 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Status
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -112,8 +100,6 @@ class Language extends \XLite\Model\Base\I18n
      * Get added status
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAdded()
     {
@@ -126,8 +112,6 @@ class Language extends \XLite\Model\Base\I18n
      * @param boolean $status Added status
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setAdded($status)
     {
@@ -143,8 +127,6 @@ class Language extends \XLite\Model\Base\I18n
      * Get enabled status
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getEnabled()
     {
@@ -157,8 +139,6 @@ class Language extends \XLite\Model\Base\I18n
      * @param boolean $status Enabled status
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setEnabled($status)
     {
@@ -171,8 +151,6 @@ class Language extends \XLite\Model\Base\I18n
      * Get flag URL
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFlagURL()
     {
@@ -195,8 +173,6 @@ class Language extends \XLite\Model\Base\I18n
      * Get default language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSessionLanguageCode()
     {

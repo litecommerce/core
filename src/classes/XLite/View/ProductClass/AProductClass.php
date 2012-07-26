@@ -28,8 +28,6 @@ namespace XLite\View\ProductClass;
 /**
  * Product class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProductClass extends \XLite\View\Dialog
 {
@@ -37,8 +35,6 @@ abstract class AProductClass extends \XLite\View\Dialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -49,8 +45,6 @@ abstract class AProductClass extends \XLite\View\Dialog
      * Return templates directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

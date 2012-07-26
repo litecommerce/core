@@ -28,8 +28,6 @@ namespace XLite\View\Console;
 /**
  * Console base widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="cli.center", zone="console")
  */
@@ -39,8 +37,6 @@ class Main extends \XLite\View\Console\AConsole
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class Main extends \XLite\View\Console\AConsole
      * Get allowed commands
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAllowedCommands()
     {
@@ -77,8 +71,6 @@ class Main extends \XLite\View\Console\AConsole
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

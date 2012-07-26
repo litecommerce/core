@@ -1,0 +1,69 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * CSS classes
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.form-item, .form-actions {
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+#contact-site-form label,
+  #contact-site-form .captcha
+{
+  color: #2F5576;
+  font-size: 16px;
+  padding-top: 0;
+}
+
+#contact-site-form label {
+  width: 148px;
+  display: inline-block;
+  font-weight: normal;
+  vertical-align: top;
+}
+
+#contact-site-form input {
+  width: 275px;
+  height: 17px;
+}
+
+#contact-site-form div.table-value {
+  float: none;
+  display: inline;
+}
+
+#contact-site-form .resizable-textarea {
+  width: 555px;
+  display: block;
+  padding-top: 7px;
+}
+
+#contact-site-form label .form-required {
+  float: right;
+  position: relative;
+  top: 2px;
+}
+
+#contact-site-form label.for-message .form-required {
+  float: none;
+  position: static;
+}
+
+#contact-site-form textarea {
+  width: 100%;
+}
+
+#contact-site-form .action {
+  margin-left: 250px;
+}
+
+#contact-site-form #recaptcha_widget_div {
+  margin-left: 150px;
+}

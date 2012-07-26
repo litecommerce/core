@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Demo\Controller\Admin;
 /**
  * Measure
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Measure extends \XLite\Controller\Admin\Measure implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Measure extends \XLite\Controller\Admin\Measure implements \XLite\Base\IDe
      * URL to redirect if action is forbidden
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getForbidInDemoModeRedirectURL()
     {

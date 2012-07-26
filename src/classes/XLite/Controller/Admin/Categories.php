@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Categories page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Categories extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Categories extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -54,8 +50,6 @@ class Categories extends \XLite\Controller\Admin\AAdmin
      * Get all memberships
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMemberships()
     {
@@ -66,8 +60,6 @@ class Categories extends \XLite\Controller\Admin\AAdmin
      * Return current category Id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoryId()
     {
@@ -78,8 +70,6 @@ class Categories extends \XLite\Controller\Admin\AAdmin
      * Return current (or default) category object
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategory()
     {
@@ -98,8 +88,6 @@ class Categories extends \XLite\Controller\Admin\AAdmin
      * @param integer $rootId ID of the subtree root OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     public function getCategories($categoryId)
     {
@@ -110,8 +98,6 @@ class Categories extends \XLite\Controller\Admin\AAdmin
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -133,8 +119,6 @@ class Categories extends \XLite\Controller\Admin\AAdmin
      * Update "position" fields
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {

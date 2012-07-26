@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Button widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Button extends \XLite\View\AView
 {
@@ -46,8 +44,6 @@ class Button extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -58,8 +54,6 @@ class Button extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Welcome page
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center", zone="customer")
  */
@@ -39,8 +37,6 @@ class Welcome extends \XLite\View\AView
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class Welcome extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -67,8 +61,6 @@ class Welcome extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

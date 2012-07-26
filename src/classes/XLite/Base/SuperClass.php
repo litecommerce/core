@@ -28,17 +28,13 @@ namespace XLite\Base;
 /**
  * SuperClass
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class SuperClass
 {
     /**
      * Default store language
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      */
     protected static $defaultLanguage;
 
@@ -46,8 +42,6 @@ abstract class SuperClass
      * So called static constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function __constructStatic()
     {
@@ -58,8 +52,6 @@ abstract class SuperClass
      * Getter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public static function getDefaultLanguage()
     {
@@ -74,8 +66,6 @@ abstract class SuperClass
      * @param string $code      Language code OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function t($name, array $arguments = array(), $code = null)
     {
@@ -88,8 +78,6 @@ abstract class SuperClass
      * until that child class is not implemented public constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -103,8 +91,6 @@ abstract class SuperClass
      * @param string $message Text to display
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doDie($message)
     {

@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Event tasks repository
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class EventTask extends \XLite\Model\Repo\ARepo
 {
@@ -44,8 +42,6 @@ class EventTask extends \XLite\Model\Repo\ARepo
      * @param integer $limit Tasks limit OPTIONAL
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function findQuery($limit = self::QUERY_LIMIT)
     {
@@ -58,8 +54,6 @@ class EventTask extends \XLite\Model\Repo\ARepo
      * @param integer $limit Tasks limit
      * 
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineFindQuery($limit)
     {

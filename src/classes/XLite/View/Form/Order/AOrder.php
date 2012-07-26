@@ -28,8 +28,6 @@ namespace XLite\View\Form\Order;
 /**
  * Abstract product-based form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AOrder extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ abstract class AOrder extends \XLite\View\Form\AForm
      * getDefaultFormMethod
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultFormMethod()
     {
@@ -49,8 +45,6 @@ abstract class AOrder extends \XLite\View\Form\AForm
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

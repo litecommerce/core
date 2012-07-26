@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Orders list controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderList extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -49,8 +45,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -67,8 +61,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @param boolean $isEndDate End date flag OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDateValue($fieldName, $isEndDate = false)
     {
@@ -104,8 +96,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @param string $paramName Parameter name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCondition($paramName)
     {
@@ -122,8 +112,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @param boolean $start Start date flag, otherwise - end date  OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDateCondition($start = true)
     {
@@ -140,8 +128,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * TODO: after the multiple inheritance should be moved to the AAdmin class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPrefixPostedData()
     {
@@ -152,8 +138,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * Get search conditions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getConditions()
     {
@@ -175,8 +159,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -195,8 +177,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * doActionSearch
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSearch()
     {
@@ -238,8 +218,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * Get order changes from request
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrdersChanges()
     {

@@ -53,11 +53,6 @@ function CommonForm(form)
   form.submit(
     function(event)
     {
-      // Submit element should have "Enabled state"
-      if (jQuery('button[type="submit"]', this).hasClass('disabled')) {
-        return false;
-      }
-
       jQuery('input', this).trigger('sanitize');
 
       if (this.isBgSubmitting) {

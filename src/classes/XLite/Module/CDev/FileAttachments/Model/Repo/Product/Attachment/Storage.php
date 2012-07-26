@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\Model\Repo\Product\Attachment;
 /**
  * Product sttachment's storages repository
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 class Storage extends \XLite\Model\Repo\Base\Storage
 {
@@ -37,8 +35,6 @@ class Storage extends \XLite\Model\Repo\Base\Storage
      * Get storage name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public function getStorageName()
     {
@@ -49,8 +45,6 @@ class Storage extends \XLite\Model\Repo\Base\Storage
      * Get allowed file system root list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getAllowedFileSystemRoots()
     {
@@ -65,8 +59,6 @@ class Storage extends \XLite\Model\Repo\Base\Storage
      * Get file system images storage root path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFileSystemRoot()
     {
@@ -77,8 +69,6 @@ class Storage extends \XLite\Model\Repo\Base\Storage
      * Get web images storage root path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWebRoot()
     {

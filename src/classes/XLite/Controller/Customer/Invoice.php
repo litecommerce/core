@@ -28,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Invoice controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Invoice extends \XLite\Controller\Customer\Base\Order
 {
@@ -37,8 +35,6 @@ class Invoice extends \XLite\Controller\Customer\Base\Order
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -55,8 +51,6 @@ class Invoice extends \XLite\Controller\Customer\Base\Order
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {

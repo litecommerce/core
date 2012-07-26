@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Role;
 /**
  * Permission repository 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Permission extends \XLite\Model\Repo\Base\I18n
 {
@@ -37,9 +35,7 @@ class Permission extends \XLite\Model\Repo\Base\I18n
     /**
      * Alternative record identifiers
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $alternativeIdentifier = array(
         array('code'),

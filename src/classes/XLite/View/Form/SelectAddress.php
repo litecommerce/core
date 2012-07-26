@@ -28,8 +28,6 @@ namespace XLite\View\Form;
 /**
  * Select address form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SelectAddress extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class SelectAddress extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class SelectAddress extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class SelectAddress extends \XLite\View\Form\AForm
      * Return list of the form default parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

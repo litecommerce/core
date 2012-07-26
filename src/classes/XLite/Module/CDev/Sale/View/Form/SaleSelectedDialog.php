@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View\Form;
 /**
  * "Set the sale price" dialog form class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SaleSelectedDialog extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * Get validator
      *
      * @return \XLite\Core\Validator\HashArray
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidator()
     {
@@ -80,8 +72,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * @param mixed &$data Data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setDataValidators(&$data)
     {
@@ -92,8 +82,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * Called before the includeCompiledFile()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initView()
     {

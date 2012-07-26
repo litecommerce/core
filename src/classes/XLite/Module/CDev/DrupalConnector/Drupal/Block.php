@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Block
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -40,8 +38,6 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param \stdClass $block The block object, as loaded from the database
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setBlockContent(array &$data, \stdClass $block)
     {
@@ -71,8 +67,6 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $class LC widget class
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addCSSClass(array &$data, $class)
     {

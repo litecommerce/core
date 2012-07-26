@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\Controller\Admin;
 /**
  * Select file controller
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * "Upload" handler for product attachments
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUploadProductAttachments()
     {
@@ -51,8 +47,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * "URL" handler for product images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUrlProductAttachments()
     {
@@ -69,8 +63,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * "Local file" handler for product images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectLocalProductAttachments()
     {
@@ -89,8 +81,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * @param array  $paramsToLoad Parameters to use in attachment getter method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectProductAttachments($methodToLoad, array $paramsToLoad)
     {
@@ -150,8 +140,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * Return parameters array for "Product" target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function getParamsObjectAttachment()
     {
@@ -168,8 +156,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * Get attachment 
      * 
      * @return \XLite\Module\CDev\FileAttachments\Model\Product\Attachment
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getAttachment()
     {
@@ -181,8 +167,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * "Upload" handler for product attachments
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUploadAttachmentAttachments()
     {
@@ -193,8 +177,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * "URL" handler for product images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUrlAttachmentAttachments()
     {
@@ -211,8 +193,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * "Local file" handler for product images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectLocalAttachmentAttachments()
     {
@@ -231,8 +211,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * @param array  $paramsToLoad Parameters to use in attachment getter method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectAttachmentAttachments($methodToLoad, array $paramsToLoad)
     {
@@ -262,8 +240,6 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
      * Get redirect target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getRedirectTarget()
     {

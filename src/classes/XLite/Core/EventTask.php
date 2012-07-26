@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Event task 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class EventTask extends \XLite\Base\Singleton
 {
@@ -42,9 +40,7 @@ class EventTask extends \XLite\Base\Singleton
     /**
      * Driver 
      * 
-     * @var   \XLite\Core\EventDriver\AEventDriver
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var \XLite\Core\EventDriver\AEventDriver
      */
     protected $driver;
 
@@ -55,8 +51,6 @@ class EventTask extends \XLite\Base\Singleton
      * @param array  $args Event arguments OPTIONAL
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function __callStatic($name, array $args = array())
     {
@@ -75,8 +69,6 @@ class EventTask extends \XLite\Base\Singleton
      * Get driver 
      * 
      * @return \XLite\Core\EventDriver\AEventDriver
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getDriver()
     {
@@ -106,8 +98,6 @@ class EventTask extends \XLite\Base\Singleton
      * Get valid drivers 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getDrivers()
     {
@@ -126,8 +116,6 @@ class EventTask extends \XLite\Base\Singleton
      * Get drivers classes 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getDriversClasses()
     {

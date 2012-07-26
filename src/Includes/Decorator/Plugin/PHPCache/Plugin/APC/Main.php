@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\PHPCache\Plugin\APC;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\PHPCache\Plugin\APlugin
 {
@@ -42,8 +40,6 @@ class Main extends \Includes\Decorator\Plugin\PHPCache\Plugin\APlugin
      * Execute certain hook handle
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {

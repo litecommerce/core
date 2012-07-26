@@ -28,44 +28,34 @@ namespace XLite\Upgrade\Entry;
 /**
  * Core
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Core extends \XLite\Upgrade\Entry\AEntry
 {
     /**
      * Core major version
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $majorVersion;
 
     /**
      * Core minor version
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $minorVersion;
 
     /**
      * Core revision date
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $revisionDate;
 
     /**
      * Pack size (in bytes)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $size;
 
@@ -73,8 +63,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return entry readable name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -85,8 +73,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return icon URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIconURL()
     {
@@ -97,8 +83,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return entry old major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMajorVersionOld()
     {
@@ -109,8 +93,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return entry old minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMinorVersionOld()
     {
@@ -121,8 +103,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return entry new major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMajorVersionNew()
     {
@@ -133,8 +113,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return entry new minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMinorVersionNew()
     {
@@ -145,8 +123,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return entry revision date
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRevisionDate()
     {
@@ -157,8 +133,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return module author readable name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAuthor()
     {
@@ -169,8 +143,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Check if module is enabled
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEnabled()
     {
@@ -181,8 +153,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Check if module is installed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isInstalled()
     {
@@ -193,8 +163,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return entry pack size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPackSize()
     {
@@ -205,8 +173,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return module actual name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -217,8 +183,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Download hashes for current version
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function loadHashesForInstalledFiles()
     {
@@ -237,8 +201,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * @param integer $size         Pack size
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($majorVersion, $minorVersion, $revisionDate, $size)
     {
@@ -263,8 +225,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Names of variables to serialize
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __sleep()
     {
@@ -281,8 +241,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Download package
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function download()
     {
@@ -313,8 +271,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * Return path where the upgrade helper scripts are placed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUpgradeHelperPath()
     {
@@ -327,8 +283,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * @param string $majorVersion Version to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkMajorVersion($majorVersion)
     {
@@ -342,8 +296,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * @param string $minorVersion Version to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkMinorVersion($majorVersion, $minorVersion)
     {

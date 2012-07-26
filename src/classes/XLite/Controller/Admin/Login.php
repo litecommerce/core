@@ -29,8 +29,6 @@ namespace XLite\Controller\Admin;
  * Login
  * FIXME: must be completely refactored
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Login extends \XLite\Controller\Admin\AAdmin
 {
@@ -38,8 +36,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * handleRequest
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -62,8 +58,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * getAccessLevel
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevel()
     {
@@ -74,8 +68,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * init
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -90,8 +82,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * Login
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogin()
     {
@@ -128,8 +118,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * Logoff
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogoff()
     {

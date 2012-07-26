@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Button to use with popup (with defined AUTOLOADing of JS object)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class PopupButton extends \XLite\View\Button\APopupButton
 {
@@ -37,8 +35,6 @@ abstract class PopupButton extends \XLite\View\Button\APopupButton
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {

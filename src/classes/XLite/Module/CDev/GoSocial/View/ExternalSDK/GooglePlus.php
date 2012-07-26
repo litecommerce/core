@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\ExternalSDK;
 /**
  * Google+ SDK loader
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class GooglePlus extends \XLite\View\ExternalSDK\AExternalSDK
 {
@@ -37,8 +35,6 @@ class GooglePlus extends \XLite\View\ExternalSDK\AExternalSDK
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View\Form\Product\Modify;
 /**
  * Form class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Single extends \XLite\View\Form\Product\Modify\Single implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ class Single extends \XLite\View\Form\Product\Modify\Single implements \XLite\Ba
      * @param mixed &$data Data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setDataValidators(&$data)
     {

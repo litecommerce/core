@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * ADrupal
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ADrupal extends \XLite\Base\Singleton
 {
     /**
      * Initialized handler instance
      *
-     * @var   \XLite\Module\CDev\DrupalConnector\Handler
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\DrupalConnector\Handler
      */
     protected $handler;
 
@@ -48,8 +44,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * Return instance of current CMS connector
      *
      * @return \XLite\Module\CDev\DrupalConnector\Handler
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHandler()
     {
@@ -69,8 +63,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param array  $data   Request data OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function runController($target, $action = null, array $data = array())
     {

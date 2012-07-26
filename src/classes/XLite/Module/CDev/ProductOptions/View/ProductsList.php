@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Products list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ProductsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ abstract class ProductsList extends \XLite\View\ItemsList\Product\Customer\ACust
      * @param \XLite\Model\Product $product Product
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isShowAdd2Cart(\XLite\Model\Product $product)
     {

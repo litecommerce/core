@@ -28,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Checkout failed page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CheckoutFailed extends \XLite\Controller\Customer\CheckoutSuccess
 {
@@ -37,8 +35,6 @@ class CheckoutFailed extends \XLite\Controller\Customer\CheckoutSuccess
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {

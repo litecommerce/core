@@ -31,8 +31,6 @@ namespace XLite\Module\CDev\TwoCheckout\Model\Payment\Processor;
  * Find the latest API document here:
  * https://www.2checkout.com/documentation/Advanced_User_Guide.pdf
  *
- * @see   ____class_see____
- * @since 1.0.11
  */
 class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
 {
@@ -40,8 +38,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Get operation types
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOperationTypes()
     {
@@ -54,8 +50,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSettingsWidget()
     {
@@ -68,8 +62,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -113,8 +105,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -127,8 +117,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Get return type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnType()
     {
@@ -139,8 +127,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Returns the list of settings available for this payment processor
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     public function getAvailableSettings()
     {
@@ -158,8 +144,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Get return request owner transaction or null
      *
      * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnOwnerTransaction()
     {
@@ -173,8 +157,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Get redirect form URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormURL()
     {
@@ -187,8 +169,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Address $address Address model (could be shipping or billing address)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getName($address)
     {
@@ -200,8 +180,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Format state of billing address for request
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getBillingState()
     {
@@ -212,8 +190,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Format state of shipping address for request
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getShippingState()
     {
@@ -226,8 +202,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Address $address Address model (could be shipping or billing address)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getState($address)
     {
@@ -248,8 +222,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Address $address Address model (could be shipping or billing address)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getStateFieldValue($address)
     {
@@ -264,8 +236,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Address $address Address model (could be shipping or billing address)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getCountryField($address)
     {
@@ -280,8 +250,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * @param integer $price Price value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getFormattedPrice($price)
     {
@@ -293,8 +261,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * Get redirect form fields list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFields()
     {
@@ -362,8 +328,6 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {

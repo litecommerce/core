@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Submit button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Submit extends \XLite\View\Button\AButton
 {
@@ -37,8 +35,6 @@ class Submit extends \XLite\View\Button\AButton
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -49,8 +45,6 @@ class Submit extends \XLite\View\Button\AButton
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {

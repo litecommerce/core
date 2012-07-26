@@ -28,26 +28,20 @@ namespace XLite\Model\Repo;
 /**
  * Template patches repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TemplatePatch extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_INTERNAL;
 
     /**
      * Default 'order by' field name
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $defaultOrderBy = array(
         'patch_type' => true,
@@ -61,8 +55,6 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
      * Define cache cells
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -80,8 +72,6 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
      * Find all patches
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllPatches()
     {
@@ -99,8 +89,6 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
      * Define query builder for findAllPatches()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllPatchesQuery()
     {
@@ -113,8 +101,6 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
      * @param array $data Raw data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessAllPatches(array $data)
     {

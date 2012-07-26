@@ -28,8 +28,6 @@ namespace XLite\View\Button\Addon;
 /**
  * Upload addon button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Upload extends \XLite\View\Button\APopupButton
 {
@@ -37,8 +35,6 @@ class Upload extends \XLite\View\Button\APopupButton
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -52,8 +48,6 @@ class Upload extends \XLite\View\Button\APopupButton
      * Return content for popup button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -64,8 +58,6 @@ class Upload extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
@@ -79,8 +71,6 @@ class Upload extends \XLite\View\Button\APopupButton
      * getClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
 /**
  * \XLite\Module\CDev\DrupalConnector\View\Model\Profile\AProfile
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \XLite\Base\IDecorator
 {
@@ -40,8 +38,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * @param array $sections Sections list OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -57,8 +53,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * Return current profile ID
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileId()
     {
@@ -79,8 +73,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * Error message - Drupal and LC profiles are not synchronized
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIncompleteProfileErrorMessage()
     {
@@ -92,8 +84,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * Use the specific message in Drupal
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAccessDeniedMessage()
     {
@@ -106,8 +96,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * getDefaultModelObject
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -135,8 +123,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * Access denied if user is logged into Drupal but not logged into LC
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -149,8 +135,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * Do not add additional message when update profile via Drupal interface
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addDataSavedTopMessage()
     {
@@ -163,8 +147,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * Do not add additional message when delete profile via Drupal interface
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addDataDeletedTopMessage()
     {

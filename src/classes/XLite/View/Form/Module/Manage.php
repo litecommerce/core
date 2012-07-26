@@ -28,8 +28,6 @@ namespace XLite\View\Form\Module;
 /**
  * Manage
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Manage extends \XLite\View\Form\Module\AModule
 {
@@ -37,8 +35,6 @@ class Manage extends \XLite\View\Form\Module\AModule
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Manage extends \XLite\View\Form\Module\AModule
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

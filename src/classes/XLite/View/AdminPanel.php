@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Administrator panel 
  * 
- * @see   ____class_see____
- * @since 1.0.18
  *
  * @ListChild (list="main", weight="100", zone="admin")
  */
@@ -46,8 +44,6 @@ class AdminPanel extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -62,8 +58,6 @@ class AdminPanel extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -74,8 +68,6 @@ class AdminPanel extends \XLite\View\AView
      * Get items 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getItems()
     {
@@ -101,8 +93,6 @@ class AdminPanel extends \XLite\View\AView
      * Define items 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function defineItems()
     {
@@ -162,8 +152,6 @@ class AdminPanel extends \XLite\View\AView
      * Get default item template 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getDefaultItemTemplate()
     {
@@ -176,8 +164,6 @@ class AdminPanel extends \XLite\View\AView
      * @param array $item Item
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function checkItemACL(array $item)
     {

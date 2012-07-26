@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Role 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="role_translations")
@@ -39,9 +37,7 @@ class RoleTranslation extends \XLite\Model\Base\Translation
     /**
      * Name
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="string")
      */

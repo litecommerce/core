@@ -28,17 +28,13 @@ namespace XLite\View\Order\Details\Admin;
 /**
  * Model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Model extends \XLite\View\Order\Details\Base\AModel
 {
     /**
      * Main order info
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $schemaMain = array(
         'order_id' => array(
@@ -63,8 +59,6 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * @param array $sections Sections list OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -77,8 +71,6 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -94,8 +86,6 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * Alias
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrder()
     {
@@ -108,8 +98,6 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * @param array &$data Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareFieldParamsDate(array &$data)
     {

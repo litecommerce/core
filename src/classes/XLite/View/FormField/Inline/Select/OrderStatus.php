@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Select;
 /**
  * Order status
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class OrderStatus extends \XLite\View\FormField\Inline\Base\Single
 {
@@ -37,8 +35,6 @@ class OrderStatus extends \XLite\View\FormField\Inline\Base\Single
      * Define form field
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineFieldClass()
     {
@@ -49,8 +45,6 @@ class OrderStatus extends \XLite\View\FormField\Inline\Base\Single
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {
@@ -63,8 +57,6 @@ class OrderStatus extends \XLite\View\FormField\Inline\Base\Single
      * @param array $field Field data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldParams(array $field)
     {
@@ -81,8 +73,6 @@ class OrderStatus extends \XLite\View\FormField\Inline\Base\Single
      * @param array $field Field
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getViewValue(array $field)
     {
@@ -97,8 +87,6 @@ class OrderStatus extends \XLite\View\FormField\Inline\Base\Single
      * Check - field is editable or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasSeparateView()
     {

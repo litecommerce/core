@@ -28,8 +28,6 @@ namespace XLite\View\Payment;
 /**
  * Payment methods list
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -39,8 +37,6 @@ class Methods extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -54,8 +50,6 @@ class Methods extends \XLite\View\Dialog
      * Get payment methods list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPaymentMethods()
     {
@@ -76,8 +70,6 @@ class Methods extends \XLite\View\Dialog
      * @param \XLite\Model\Payment\Method $method Method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMethodName(\XLite\Model\Payment\Method $method)
     {
@@ -90,8 +82,6 @@ class Methods extends \XLite\View\Dialog
      * @param \XLite\Model\Payment\Method $method Method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMethodDescription(\XLite\Model\Payment\Method $method)
     {
@@ -104,8 +94,6 @@ class Methods extends \XLite\View\Dialog
      * @param \XLite\Model\Payment\Method $method Method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMethodEnabled(\XLite\Model\Payment\Method $method)
     {
@@ -118,8 +106,6 @@ class Methods extends \XLite\View\Dialog
      * @param \XLite\Model\Payment\Method $method Method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMethodConfigurable(\XLite\Model\Payment\Method $method)
     {
@@ -132,8 +118,6 @@ class Methods extends \XLite\View\Dialog
      * @param \XLite\Model\Payment\Method $method Method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isModuleConfigurable(\XLite\Model\Payment\Method $method)
     {
@@ -144,8 +128,6 @@ class Methods extends \XLite\View\Dialog
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -161,8 +143,6 @@ class Methods extends \XLite\View\Dialog
      * @param \XLite\Model\Payment\Method $method Method
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleURL(\XLite\Model\Payment\Method $method)
     {
@@ -184,8 +164,6 @@ class Methods extends \XLite\View\Dialog
      * @param \XLite\Model\Payment\Method $method Method
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleName(\XLite\Model\Payment\Method $method)
     {
@@ -198,8 +176,6 @@ class Methods extends \XLite\View\Dialog
      * Get current language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLanguage()
     {
@@ -211,8 +187,6 @@ class Methods extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

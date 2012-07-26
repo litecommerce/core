@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * AddonUpload
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddonUpload extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class AddonUpload extends \XLite\Controller\Admin\AAdmin
      * Controller title
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {

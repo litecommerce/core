@@ -29,18 +29,13 @@ namespace Includes\Decorator\Plugin\Templates\Data\Templates;
  * Collection
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 class Collection
 {
     /**
      * Templates list cache
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected $list = array();
 
@@ -49,9 +44,6 @@ class Collection
      * Get iterator for class files
      *
      * @return \Includes\Utils\FileFilter
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFileIterator()
     {
@@ -67,9 +59,6 @@ class Collection
      * @param \SplFileInfo $fileInfo file descriptor
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareNodeData($fileinfo)
     {
@@ -82,9 +71,6 @@ class Collection
      * @param array $node node data
      *
      * @return \Includes\Decorator\Plugin\Templates\Data\Templates\Node
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function createNode(array $data = array())
     {
@@ -97,9 +83,6 @@ class Collection
      * @param \Includes\Utils\FileFilter\FilterIterator $iterator FS iterator
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function create(\Includes\Utils\FileFilter\FilterIterator $iterator)
     {
@@ -121,9 +104,6 @@ class Collection
      * @param mixed $callback callback to execute
      *
      * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByCallback($callback)
     {
@@ -134,9 +114,6 @@ class Collection
      * Return templates list
      *
      * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getList()
     {
@@ -147,9 +124,6 @@ class Collection
      * Constructor
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {

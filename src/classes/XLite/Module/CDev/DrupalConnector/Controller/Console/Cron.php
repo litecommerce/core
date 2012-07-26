@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Console;
 /**
  * Cron
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cron extends \XLite\Controller\Console\Cron implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Cron extends \XLite\Controller\Console\Cron implements \XLite\Base\IDecora
      * Run tasks processor direct, without check access
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function runTasksDirect()
     {

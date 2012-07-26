@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DeTranslation;
 /**
  * German translation module
  *
- * @see   ____class_see____
- * @since 1.0.19
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -42,8 +40,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -54,8 +50,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -66,8 +60,6 @@ abstract class Main extends \XLite\Module\AModule
      * Get module major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMajorVersion()
     {
@@ -78,8 +70,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -90,8 +80,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -102,8 +90,6 @@ abstract class Main extends \XLite\Module\AModule
      * Decorator run this method at the end of cache rebuild
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function runBuildCacheHandler()
     {

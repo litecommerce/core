@@ -28,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Abstract catalog model
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  * @HasLifecycleCallbacks
@@ -39,9 +37,7 @@ abstract class Catalog extends \XLite\Model\Base\I18n
     /**
      * Clean URL
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255, unique=true, nullable=true)
      */
@@ -51,8 +47,6 @@ abstract class Catalog extends \XLite\Model\Base\I18n
      * Lifecycle callback
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      *
      * @PrePersist
      * @PreUpdate

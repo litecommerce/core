@@ -28,8 +28,6 @@ namespace XLite\View\Order\Details\Base;
 /**
  * AForm
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AForm extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ abstract class AForm extends \XLite\View\Form\AForm
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ abstract class AForm extends \XLite\View\Form\AForm
      * Return list of the form default parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

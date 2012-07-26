@@ -27,8 +27,6 @@
  * LiteCommerce installation settings
  *
  * @package LiteCommerce
- * @see     ____class_see____
- * @since   1.0.0
  */
 
 if (!defined('XLITE_INSTALL_MODE')) {

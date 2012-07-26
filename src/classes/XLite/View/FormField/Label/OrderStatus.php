@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Label;
 /**
  * OrderStatus
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderStatus extends \XLite\View\FormField\Label
 {
@@ -37,8 +35,6 @@ class OrderStatus extends \XLite\View\FormField\Label
      * getValue
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getValue()
     {

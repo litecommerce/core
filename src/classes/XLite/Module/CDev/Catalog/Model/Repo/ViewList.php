@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\Catalog\Model\Repo;
 /**
  * ViewList
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ViewList extends \XLite\Model\Repo\ViewList implements \XLite\Base\IDecorator
 {
     /**
      * Templates to hide 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.23
+     * @var array
      */
     protected $templatesToHide = array(
         'product/details/parts/common.button-add2cart.tpl',
@@ -55,8 +51,6 @@ class ViewList extends \XLite\Model\Repo\ViewList implements \XLite\Base\IDecora
      * @param string $zone Current interface name
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineClassListQuery($list, $zone)
     {

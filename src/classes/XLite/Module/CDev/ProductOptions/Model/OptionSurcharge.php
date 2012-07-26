@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 /**
  * Product option surcharge
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionSurcharge")
  * @Table (name="option_surcharges",
@@ -50,9 +48,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
     /**
      * Option surcharge unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -63,9 +59,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
     /**
      * Type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32)
      */
@@ -74,9 +68,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
     /**
      * Modifier
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -85,9 +77,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
     /**
      * Modifier type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=1)
      */
@@ -96,9 +86,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
     /**
      * Option (relation)
      *
-     * @var   \XLite\Module\CDev\ProductOptions\Model\Option
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\ProductOptions\Model\Option
      *
      * @ManyToOne (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option", inversedBy="surcharges")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")
@@ -111,8 +99,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @param string $type Modifier type code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setModifierType($type)
     {
@@ -132,8 +118,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Get surcharge sign
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSign()
     {
@@ -153,8 +137,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Check - empty surcharge or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEmpty()
     {
@@ -165,8 +147,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Get surcharge absolute value
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAbsoluteValue()
     {
@@ -180,8 +160,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Get surcharge positive absolute value
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPositiveAbsoluteValue()
     {
@@ -192,8 +170,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Get surcharge calculator method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCalculator()
     {
@@ -213,8 +189,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Calculate absolute surcharge type
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function calculateAbsolute()
     {
@@ -225,8 +199,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Calculate relative surcharge type
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function calculateRelative()
     {
@@ -237,8 +209,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Get surcharge base value
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSurchargeBase()
     {
@@ -261,8 +231,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Get price-based surcharge base value
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSurchargeBasePrice()
     {
@@ -277,8 +245,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * Get weight-based surcharge base value
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSurchargeBaseWeight()
     {
@@ -294,8 +260,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @param float $surcharge Surcharge
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessSurcharge($surcharge)
     {
@@ -320,8 +284,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @param float $surcharge Surcharge
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessSurchargePrice($surcharge)
     {
@@ -334,8 +296,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @param float $surcharge Surcharge
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessSurchargeWeight($surcharge)
     {

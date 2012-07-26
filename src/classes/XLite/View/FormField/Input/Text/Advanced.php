@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * \XLite\View\FormField\Input\Text\Advanced
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Advanced extends \XLite\View\FormField\Input\Text
 {
@@ -43,8 +41,6 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -58,8 +54,6 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * getCSSFiles
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -73,8 +67,6 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * getLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLabel()
     {
@@ -85,8 +77,6 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -97,8 +87,6 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * getParentFieldTemplate
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getParentFieldTemplate()
     {

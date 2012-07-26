@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Top message
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopMessage extends \XLite\Base\Singleton
 {
@@ -50,18 +48,14 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Types list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $types = array(self::INFO, self::WARNING, self::ERROR);
 
     /**
      * Current messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $messages = array();
 
@@ -73,8 +67,6 @@ class TopMessage extends \XLite\Base\Singleton
      * @param string $code      Language code OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function addInfo($text, array $arguments = array(), $code = null)
     {
@@ -89,8 +81,6 @@ class TopMessage extends \XLite\Base\Singleton
      * @param string $code      Language code OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function addWarning($text, array $arguments = array(), $code = null)
     {
@@ -105,8 +95,6 @@ class TopMessage extends \XLite\Base\Singleton
      * @param string $code      Language code OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function addError($text, array $arguments = array(), $code = null)
     {
@@ -125,8 +113,6 @@ class TopMessage extends \XLite\Base\Singleton
      * @param boolean $ajax      AJAX message state
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function add($text, array $arguments = array(), $code = null, $type = self::INFO, $rawText = false, $ajax = true)
     {
@@ -165,8 +151,6 @@ class TopMessage extends \XLite\Base\Singleton
      * @param string $type     Message type OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addBatch(array $messages, $type = self::INFO)
     {
@@ -183,8 +167,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Get messages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMessages()
     {
@@ -201,8 +183,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Get messages for AJAX response
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAJAXMessages()
     {
@@ -225,8 +205,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Get previous messages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPreviousMessages()
     {
@@ -237,8 +215,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Unload previous messages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function unloadPreviousMessages()
     {
@@ -253,8 +229,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Clear list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clear()
     {
@@ -265,8 +239,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Clear top messages list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clearTopMessages()
     {
@@ -278,8 +250,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Clear only AJAX messages
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clearAJAX()
     {
@@ -302,8 +272,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {

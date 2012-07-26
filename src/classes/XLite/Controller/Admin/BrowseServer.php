@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Browse server controller
  *
- * @see   ____class_see____
- * @since 1.0.6
  */
 class BrowseServer extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class BrowseServer extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {

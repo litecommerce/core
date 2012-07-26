@@ -28,26 +28,20 @@ namespace XLite\Controller\Console;
 /**
  * Abstarct console-zone controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AConsole extends \XLite\Controller\AController
 {
     /**
      * Action time
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      */
     protected $actionTime;
 
     /**
      * Pure output flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $pureOutput = false;
 
@@ -56,8 +50,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Parses the request variables if necessary. Attempts to call the specified action function
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -90,8 +82,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * isRedirectNeeded
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isRedirectNeeded()
     {
@@ -102,8 +92,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -114,8 +102,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Return Viewer object
      *
      * @return \XLite\View\Controller
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getViewer()
     {
@@ -126,8 +112,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Get allowed actions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAllowedActions()
     {
@@ -149,8 +133,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Check CLI key
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkCLIKey()
     {
@@ -163,8 +145,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Get help
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHelp()
     {
@@ -189,8 +169,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Get controller help
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getControllerHelp()
     {
@@ -204,8 +182,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * @param string $str Content
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function printContent($str)
     {
@@ -220,8 +196,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * @param string $error Error message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function printError($error)
     {
@@ -238,8 +212,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * @param string $url Redirect URL OPTIONAL
      *
      * @return void
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function redirect($url = null)
     {
@@ -249,8 +221,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Mark controller run thread as access denied
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function markAsAccessDenied()
     {
@@ -261,8 +231,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Check - script run with input stream or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isInputStream()
     {
@@ -282,8 +250,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Open input stream
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function openInputStream()
     {
@@ -301,8 +267,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Read line form input stream
      *
      * @return string|boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function readInputStream()
     {
@@ -320,8 +284,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Save input stream to temporary file
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveInputStream()
     {

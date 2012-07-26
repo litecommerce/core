@@ -28,8 +28,6 @@ namespace XLite\Logic;
 /**
  * Mathematic
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Math extends \XLite\Logic\ALogic
 {
@@ -47,8 +45,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function round($value, $precision = 0)
     {
@@ -62,8 +58,6 @@ class Math extends \XLite\Logic\ALogic
      * @param \XLite\Model\Currency $currency Currency
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundByCurrency($value, \XLite\Model\Currency $currency)
     {
@@ -77,8 +71,6 @@ class Math extends \XLite\Logic\ALogic
      * @param \XLite\Model\Currency $currency Currency
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function formatValue($value, \XLite\Model\Currency $currency)
     {
@@ -97,8 +89,6 @@ class Math extends \XLite\Logic\ALogic
      * @param \XLite\Model\Currency $currency Currency
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function formatParts($value, \XLite\Model\Currency $currency)
     {
@@ -138,8 +128,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundUp($value, $precision = 0)
     {
@@ -155,8 +143,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundDown($value, $precision = 0)
     {
@@ -172,8 +158,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundCeil($value, $precision = 0)
     {
@@ -189,8 +173,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundFloor($value, $precision = 0)
     {
@@ -206,8 +188,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundHalfUp($value, $precision = 0)
     {
@@ -223,8 +203,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundHalfDown($value, $precision = 0)
     {
@@ -240,8 +218,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundHalfEven($value, $precision = 0)
     {
@@ -264,8 +240,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundMath($value, $precision = 0)
     {
@@ -279,8 +253,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isRoundHalf($value, $precision)
     {
@@ -301,8 +273,6 @@ class Math extends \XLite\Logic\ALogic
      * @param integer $precision Precision
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isRoundEven($value, $precision)
     {

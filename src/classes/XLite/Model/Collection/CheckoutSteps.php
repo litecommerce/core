@@ -28,26 +28,20 @@ namespace XLite\Model\Collection;
 /**
  * Checkout steps list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CheckoutSteps extends \XLite\Model\Collection
 {
     /**
      * current
      *
-     * @var   \XLite\Model\ListNode\CheckoutStep
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\ListNode\CheckoutStep
      */
     protected $current = null;
 
     /**
      * actual
      *
-     * @var   \XLite\Model\ListNode\CheckoutStep
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\ListNode\CheckoutStep
      */
     protected $actual = null;
 
@@ -56,8 +50,6 @@ class CheckoutSteps extends \XLite\Model\Collection
      * Return current (so called "regular") step
      *
      * @return \XLite\Model\ListNode\CheckoutStep
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrentStep()
     {
@@ -68,8 +60,6 @@ class CheckoutSteps extends \XLite\Model\Collection
      * Return actual ("regular" or "pseudo") checkout step
      *
      * @return \XLite\Model\ListNode\CheckoutStep
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualStep()
     {
@@ -80,8 +70,6 @@ class CheckoutSteps extends \XLite\Model\Collection
      * Check if the step was corrected
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCorrectedStep()
     {
@@ -95,8 +83,6 @@ class CheckoutSteps extends \XLite\Model\Collection
      * @param \XLite\Model\ListNode\CheckoutStep &$step Object to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function findLastPassedRegularStep(\XLite\Model\ListNode\CheckoutStep &$step)
     {
@@ -111,8 +97,6 @@ class CheckoutSteps extends \XLite\Model\Collection
      * @param \XLite\Model\ListNode\CheckoutStep &$step Object to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function correctStep(\XLite\Model\ListNode\CheckoutStep &$step)
     {
@@ -128,8 +112,6 @@ class CheckoutSteps extends \XLite\Model\Collection
      * @param string  $method   Name of the callback function used to prepare step object OPTIONAL
      *
      * @return \XLite\Model\ListNode\CheckoutStep
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStep($isActual, $method = null)
     {

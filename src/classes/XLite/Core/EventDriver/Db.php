@@ -28,8 +28,6 @@ namespace XLite\Core\EventDriver;
 /**
  * DB-based event driver 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class Db extends \XLite\Core\EventDriver\AEventDriver
 {
@@ -37,8 +35,6 @@ class Db extends \XLite\Core\EventDriver\AEventDriver
      * Get driver code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function getCode()
     {
@@ -52,8 +48,6 @@ class Db extends \XLite\Core\EventDriver\AEventDriver
      * @param array  $arguments Arguments OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function fire($name, array $arguments = array())
     {

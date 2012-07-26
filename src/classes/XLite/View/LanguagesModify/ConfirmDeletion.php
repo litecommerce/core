@@ -28,8 +28,6 @@ namespace XLite\View\LanguagesModify;
 /**
  * Confirm language deletion dialog
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ConfirmDeletion extends \XLite\View\AView
 {
@@ -43,8 +41,6 @@ class ConfirmDeletion extends \XLite\View\AView
      * Get confirm language
      *
      * @return \XLite\Model\Language|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getConfirmLanguage()
     {
@@ -57,8 +53,6 @@ class ConfirmDeletion extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -69,8 +63,6 @@ class ConfirmDeletion extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -87,8 +79,6 @@ class ConfirmDeletion extends \XLite\View\AView
      * Check widget visibility
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

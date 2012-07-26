@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\MarketPrice\View;
 /**
  * ItemsList 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * @param \XLite\Model\Product $product Current product
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isShowMarketPrice(\XLite\Model\Product $product)
     {
@@ -53,8 +49,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLabels(\XLite\Model\Product $product)
     {

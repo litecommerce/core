@@ -28,8 +28,6 @@ namespace XLite\View\RequestHandler;
 /**
  * Abstract base which can populate its params from request and session
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ARequestHandler extends \XLite\View\AView
 {
@@ -49,18 +47,14 @@ abstract class ARequestHandler extends \XLite\View\AView
     /**
      * List of so called "request" params - which take values from request (if passed)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $requestParams;
 
     /**
      * Request param values saved in session
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $savedRequestParams;
 
@@ -69,8 +63,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Return target to retrive this widget from AJAX
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getWidgetTarget()
     {
@@ -82,8 +74,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Return list of the "request" parameter names
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestParams()
     {
@@ -98,8 +88,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Return the associative array mapped by the "request" parameter names/values
      *
      * @return array
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     public function getRequestParamsHash()
     {
@@ -112,8 +100,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * @param array $params Handler params
      *
      * @return void
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -129,8 +115,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Return name of the session cell identifier
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSessionCell()
     {
@@ -141,8 +125,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Return name of this class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWidgetClass()
     {
@@ -153,8 +135,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Get widget parameters
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWidgetParameters()
     {
@@ -165,8 +145,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Return data to send to JS
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSData()
     {
@@ -189,8 +167,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Then only the corresponded widget will use it
      *
      * @return boolean
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function checkSessionCell()
     {
@@ -203,8 +179,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Check if we need to manage request params
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkRequestParams()
     {
@@ -218,8 +192,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * It allows us to refresh pages without restore their default view
      *
      * @return void
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function initView()
     {
@@ -234,8 +206,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Define the "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -248,8 +218,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * @param string $param Parameter name
      *
      * @return mixed
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function getSavedRequestParam($param)
     {
@@ -275,8 +243,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * @param array &$params Param values to modify
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setWidgetRequestParamValues(array &$params)
     {

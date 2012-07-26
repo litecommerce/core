@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\JoomlaConnector\Core;
 /**
  * Handler
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecorator
 {
@@ -41,8 +39,6 @@ abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecor
      * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function buildURL($target = '', $action = '', array $params = array())
     {
@@ -60,8 +56,6 @@ abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecor
      * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJoomlaURL($target, $action = '', array $params = array())
     {

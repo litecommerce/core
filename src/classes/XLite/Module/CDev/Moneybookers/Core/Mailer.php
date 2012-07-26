@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Moneybookers\Core;
 /**
  * Mailer 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Mailer extends \XLite\Core\Mailer implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Mailer extends \XLite\Core\Mailer implements \XLite\Base\IDecorator
      * Send Moneybookers activation message
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendMoneybookersActivation()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\UserPermissions\View\Form;
 /**
  * Role form
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Role extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class Role extends \XLite\View\Form\AForm
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -53,8 +49,6 @@ class Role extends \XLite\View\Form\AForm
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -65,8 +59,6 @@ class Role extends \XLite\View\Form\AForm
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -77,8 +69,6 @@ class Role extends \XLite\View\Form\AForm
      * Get default class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultClassName()
     {
@@ -89,8 +79,6 @@ class Role extends \XLite\View\Form\AForm
      * Return list of the form default parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

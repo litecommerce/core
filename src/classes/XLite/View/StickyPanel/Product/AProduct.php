@@ -28,8 +28,6 @@ namespace XLite\View\StickyPanel\Product;
 /**
  * Abstract product panel
  * 
- * @see   ____class_see____
- * @since 1.0.16
  */
 abstract class AProduct extends \XLite\View\StickyPanel\ItemsListForm
 {

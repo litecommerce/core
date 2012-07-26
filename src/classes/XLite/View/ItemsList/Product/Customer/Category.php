@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Product\Customer;
 /**
  * Category products list widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="200")
  */
@@ -55,8 +53,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -71,8 +67,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return target to retrive this widget from AJAX
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getWidgetTarget()
     {
@@ -86,8 +80,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -102,8 +94,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Returns CSS classes for the container element
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getListCSSClasses()
     {
@@ -115,8 +105,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -127,8 +115,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Get requested category object
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategory()
     {
@@ -139,8 +125,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Get requested category ID 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getCategoryId()
     {
@@ -152,8 +136,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -168,8 +150,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -182,8 +162,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * getSortByModeDefault
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -197,8 +175,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -211,8 +187,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Get widget parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWidgetParameters()
     {
@@ -226,8 +200,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

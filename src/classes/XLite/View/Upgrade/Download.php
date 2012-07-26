@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade;
 /**
  * Download
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Download extends \XLite\View\Upgrade\AUpgrade
 {
@@ -39,8 +37,6 @@ class Download extends \XLite\View\Upgrade\AUpgrade
      * :TODO: remove if it's not needed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -53,8 +49,6 @@ class Download extends \XLite\View\Upgrade\AUpgrade
      * :TODO: remove if it's not needed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -67,8 +61,6 @@ class Download extends \XLite\View\Upgrade\AUpgrade
      * :TODO: remove if it's not needed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

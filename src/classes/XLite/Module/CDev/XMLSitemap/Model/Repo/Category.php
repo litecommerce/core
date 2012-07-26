@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\Model\Repo;
 /**
  * Category repository
  * 
- * @see   ____class_see____
- * @since 1.0.12
  */
 abstract class Category extends \XLite\Model\Repo\Category implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Category extends \XLite\Model\Repo\Category implements \XLite\Bas
      * Count categories as sitemaps links 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function countCategoriesAsSitemapsLinks()
     {
@@ -51,8 +47,6 @@ abstract class Category extends \XLite\Model\Repo\Category implements \XLite\Bas
      * @param integer $position Position
      *  
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function  findOneAsSitemapLink($position)
     {

@@ -28,17 +28,13 @@ namespace XLite\Core\Validator\String;
 /**
  * Regular expression
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class RegExp extends \XLite\Core\Validator\String
 {
     /**
      * Regular expression
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $regExp;
 
@@ -49,8 +45,6 @@ class RegExp extends \XLite\Core\Validator\String
      * @param string  $regExp   Regular expression OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($nonEmpty = false, $regExp = null)
     {
@@ -67,8 +61,6 @@ class RegExp extends \XLite\Core\Validator\String
      * @param string $regExp Regular expression
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setRegExp($regExp)
     {
@@ -82,8 +74,6 @@ class RegExp extends \XLite\Core\Validator\String
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {

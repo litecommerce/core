@@ -29,8 +29,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
  * \XLite\Module\CDev\DrupalConnector\View\Model\Profile\Main
  * TODO: check if this class needed
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * Process the errors occured during the "validateInput" action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessErrorActionValidateInput()
     {
@@ -55,8 +51,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * Perform certain action for the model object
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performActionValidateInput()
     {
@@ -76,8 +70,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * @param array &$data Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareFieldParamsAccessLevel(&$data)
     {
@@ -95,8 +87,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * @param array &$data Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareFieldParamsStatus(&$data)
     {
@@ -111,8 +101,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * @param array $data Data to set up
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {

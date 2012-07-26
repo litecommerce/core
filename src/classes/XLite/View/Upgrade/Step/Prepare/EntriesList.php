@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade\Step\Prepare;
 /**
  * EntriesList
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", weight="100", zone="admin")
  */
@@ -39,8 +37,6 @@ class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -51,8 +47,6 @@ class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -63,8 +57,6 @@ class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -78,8 +70,6 @@ class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * @param \XLite\Upgrade\Entry\AEntry $entry Current entry
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getEntryRowCSSClass(\XLite\Upgrade\Entry\AEntry $entry)
     {

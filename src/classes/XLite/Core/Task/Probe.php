@@ -28,8 +28,6 @@ namespace XLite\Core\Task;
 /**
  * Probe task
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Probe extends \XLite\Core\Task\Base\Periodic
 {
@@ -37,8 +35,6 @@ class Probe extends \XLite\Core\Task\Base\Periodic
      * Get title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,8 +45,6 @@ class Probe extends \XLite\Core\Task\Base\Periodic
      * Run step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function runStep()
     {
@@ -61,8 +55,6 @@ class Probe extends \XLite\Core\Task\Base\Periodic
      * Get period (seconds)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPeriod()
     {

@@ -28,8 +28,6 @@ namespace XLite\Core\Task\Base;
 /**
  * Abstract periodic task
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Periodic extends \XLite\Core\Task\ATask
 {
@@ -37,8 +35,6 @@ abstract class Periodic extends \XLite\Core\Task\ATask
      * Get period (seconds)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getPeriod();
 
@@ -46,8 +42,6 @@ abstract class Periodic extends \XLite\Core\Task\ATask
      * Finalize step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function finalizeStep()
     {

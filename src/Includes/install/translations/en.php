@@ -28,8 +28,6 @@
  * LiteCommerce installation texts (English)
  *
  * @package LiteCommerce
- * @see     ____class_see____
- * @since   1.0.0
  */
 
 

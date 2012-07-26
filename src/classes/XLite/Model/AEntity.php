@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Abstract entity
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AEntity extends \XLite\Base\SuperClass
 {
@@ -43,9 +41,7 @@ abstract class AEntity extends \XLite\Base\SuperClass
     /**
      * Cache enabled flag (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $cacheEnabled = array();
 
@@ -55,8 +51,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -73,8 +67,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param array $data Data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function map(array $data)
     {
@@ -101,8 +93,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param string $name Property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -117,8 +107,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param mixed  $value Property value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -132,8 +120,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param string $name Property name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __isset($name)
     {
@@ -146,8 +132,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param string $name Property name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __unset($name)
     {
@@ -158,8 +142,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Get entity repository
      *
      * @return \XLite\Model\Doctrine\Repo\AbstractRepo
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRepository()
     {
@@ -170,8 +152,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Check cache after enity persis or remove
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkCache()
     {
@@ -194,8 +174,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Detach static
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function detach()
     {
@@ -211,8 +189,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      *
      * @return mixed
      * @throws \BadMethodCallException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -252,8 +228,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Check if entity is persistent
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPersistent()
     {
@@ -264,8 +238,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Get entity unique identifier name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getUniqueIdentifierName()
     {
@@ -276,8 +248,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Get entity unique identifier value
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getUniqueIdentifier()
     {
@@ -288,8 +258,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Update entity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function update()
     {
@@ -303,8 +271,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Create entity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function create()
     {
@@ -315,8 +281,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Delete entity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function delete()
     {
@@ -331,8 +295,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Clone
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -361,8 +323,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param string $type Type of current operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function prepareEntityBeforeCommit($type)
     {

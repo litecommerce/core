@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * Input with symbol
  *
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Symbol extends \XLite\View\FormField\Input\Text\Float
 {
@@ -42,8 +40,6 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -58,8 +54,6 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
      * It is usable to make unique changes of the field.
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function getWrapperClass()
     {
@@ -70,8 +64,6 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
      * Return symbol
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSymbol()
     {
@@ -82,8 +74,6 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -94,8 +84,6 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -112,8 +100,6 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {

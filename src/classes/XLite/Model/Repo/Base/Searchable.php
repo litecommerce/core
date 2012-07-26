@@ -31,8 +31,6 @@ namespace XLite\Model\Repo\Base;
 /**
  * Searchable
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Searchable extends \XLite\Base\SuperClass
 {
@@ -44,8 +42,6 @@ abstract class Searchable extends \XLite\Base\SuperClass
      * @param \XLite\Core\CommonCell $cnd   Condition object to use OPTIONAL
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function addLimitCondition($start, $count, \XLite\Core\CommonCell $cnd = null)
     {

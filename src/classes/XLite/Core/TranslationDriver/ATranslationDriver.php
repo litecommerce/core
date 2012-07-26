@@ -28,8 +28,6 @@ namespace XLite\Core\TranslationDriver;
 /**
  * Abstract translation driver
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ATranslationDriver extends \XLite\Base
 {
@@ -40,8 +38,6 @@ abstract class ATranslationDriver extends \XLite\Base
      * @param string $code Language code
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function translate($name, $code);
 
@@ -49,8 +45,6 @@ abstract class ATranslationDriver extends \XLite\Base
      * Check - valid driver or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function isValid();
 
@@ -58,8 +52,6 @@ abstract class ATranslationDriver extends \XLite\Base
      * Reset language driver
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function reset();
 
@@ -67,8 +59,6 @@ abstract class ATranslationDriver extends \XLite\Base
      * Alias
      *
      * @return \XLite\Model\Repo\LanguageLabel
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getRepo()
     {

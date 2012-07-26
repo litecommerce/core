@@ -28,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Profile management controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddressBook extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * address
      *
-     * @var   \XLite\Model\Address
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Address
      */
     protected $address = null;
 
@@ -46,8 +42,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -60,8 +54,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -72,8 +64,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * getAddress
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddress()
     {
@@ -84,8 +74,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * Get addresses array for working profile
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function getAddresses()
     {
@@ -102,8 +90,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * Get return URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnURL()
     {
@@ -135,8 +121,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public function checkAccess()
     {
@@ -148,8 +132,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * Return true if profile is not related with any order (i.e. it's an original profile)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function isOrigProfile()
     {
@@ -160,8 +142,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * Alias
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -172,8 +152,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * getModelFormClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -184,8 +162,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * doActionSave
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSave()
     {
@@ -196,8 +172,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -217,8 +191,6 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * doActionCancelDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionCancelDelete()
     {

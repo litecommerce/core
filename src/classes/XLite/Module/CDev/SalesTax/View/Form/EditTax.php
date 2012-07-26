@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\SalesTax\View\Form;
 /**
  * Edit tax form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class EditTax extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class EditTax extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class EditTax extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class EditTax extends \XLite\View\Form\AForm
      * Required form parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonFormParams()
     {

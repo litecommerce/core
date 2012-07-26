@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Textarea;
 /**
  * Abstract class for textarea widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ATextarea extends \XLite\View\FormField\AFormField
 {
@@ -48,8 +46,6 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -60,9 +56,6 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * Rows getter
      *
      * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRows()
     {
@@ -73,9 +66,6 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * Columns getter
      *
      * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCols()
     {
@@ -86,8 +76,6 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * Return default value of 'rows' HTML attribute.
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultRows()
     {
@@ -98,8 +86,6 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * Return default value of 'cols' HTML attribute.
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultCols()
     {
@@ -110,8 +96,6 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * getCommonAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {
@@ -125,8 +109,6 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

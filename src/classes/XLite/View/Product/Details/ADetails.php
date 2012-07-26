@@ -28,8 +28,6 @@ namespace XLite\View\Product\Details;
 /**
  * ADetails
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ADetails extends \XLite\View\Product\AProduct
 {
@@ -37,8 +35,6 @@ abstract class ADetails extends \XLite\View\Product\AProduct
      * getDir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

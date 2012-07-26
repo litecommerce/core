@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Demo\View;
 /**
  * Mailer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
      * Mailer is disabled in demo mode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function send()
     {

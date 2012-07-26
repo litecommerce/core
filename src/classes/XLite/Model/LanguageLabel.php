@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Language label
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\LanguageLabel")
  * @Table (name="language_labels",
@@ -43,9 +41,7 @@ class LanguageLabel extends \XLite\Model\Base\I18n
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -56,9 +52,7 @@ class LanguageLabel extends \XLite\Model\Base\I18n
     /**
      * Label name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="varbinary", length=255)
      */
@@ -70,8 +64,6 @@ class LanguageLabel extends \XLite\Model\Base\I18n
      * @param string $code Language code OPTIONAL
      *  
      * @return \XLite\Model\LanguageLabelTranslation
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getLabelTranslation($code = null)
     {

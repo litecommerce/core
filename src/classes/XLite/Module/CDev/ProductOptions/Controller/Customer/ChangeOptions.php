@@ -28,26 +28,20 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Customer;
 /**
  * Change options from cart / wishlist item
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Item (cache)
      *
-     * @var   \XLite\Model\OrderItem
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\OrderItem
      */
     protected $item = null;
 
     /**
      * Internal error flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.2
+     * @var boolean
      */
     protected $internalError = false;
 
@@ -55,8 +49,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -67,8 +59,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * Initialize controller
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -83,8 +73,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * Get cart / wishlist item
      *
      * @return \XLite\Model\OrderItem
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItem()
     {
@@ -114,8 +102,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * Get product
      *
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProduct()
     {
@@ -127,8 +113,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -143,8 +127,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @param string $action Current action OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function actionPostprocess($action = null)
     {
@@ -159,8 +141,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * Assemble return url
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleReturnURL()
     {
@@ -187,8 +167,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * Change product options
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionChange()
     {

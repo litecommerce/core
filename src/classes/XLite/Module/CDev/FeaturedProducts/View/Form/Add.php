@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Form;
 /**
  * List
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Add extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class Add extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Add extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class Add extends \XLite\View\Form\AForm
      * Get form parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormParams()
     {

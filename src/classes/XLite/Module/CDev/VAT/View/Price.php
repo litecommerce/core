@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\View;
 /**
  * Price widget 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Price extends \XLite\View\Price implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Price extends \XLite\View\Price implements \XLite\Base\IDecorator
      * Determine if we need to display 'incl.VAT' note
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVATApplicable()
     {
@@ -61,8 +57,6 @@ class Price extends \XLite\View\Price implements \XLite\Base\IDecorator
      * Get targets of product pages
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getProductTargets()
     {
@@ -73,8 +67,6 @@ class Price extends \XLite\View\Price implements \XLite\Base\IDecorator
      * Determine if we need to display 'incl.VAT' note
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisplayedPriceIncludingVAT()
     {
@@ -85,8 +77,6 @@ class Price extends \XLite\View\Price implements \XLite\Base\IDecorator
      * Determine if we need to display 'incl.VAT' note
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getVATName()
     {

@@ -28,8 +28,6 @@ namespace XLite\Model\Payment\Base;
 /**
  * Processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Processor extends \XLite\Base
 {
@@ -47,18 +45,14 @@ abstract class Processor extends \XLite\Base
     /**
      * Transaction (cache)
      *
-     * @var   \XLite\Model\Payment\Transaction
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Payment\Transaction
      */
     protected $transaction;
 
     /**
      * Request cell with transaction input data
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $request;
 
@@ -67,8 +61,6 @@ abstract class Processor extends \XLite\Base
      * Do initial payment
      *
      * @return string Status code
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function doInitialPayment();
 
@@ -76,8 +68,6 @@ abstract class Processor extends \XLite\Base
      * Get allowed transactions list
      *
      * @return string Status code
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAllowedTransactions()
     {
@@ -91,8 +81,6 @@ abstract class Processor extends \XLite\Base
      * @param string                           $transactionType Backend transaction type
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function isTransactionAllowed(\XLite\Model\Payment\Transaction $transaction, $transactionType)
     {
@@ -122,8 +110,6 @@ abstract class Processor extends \XLite\Base
      * @param string                           $transactionType Backend transaction type
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function doTransaction(\XLite\Model\Payment\Transaction $transaction, $transactionType)
     {
@@ -132,9 +118,11 @@ abstract class Processor extends \XLite\Base
             $methodName = 'do' . ucfirst($transactionType);
 
             if (method_exists($this, $methodName)) {
-                $backendTransaction = $transaction->createBackendTransaction($transactionType);
-                // Call transaction type specific method
-                $this->$methodName($backendTransaction);
+                $txn = $transaction->createBackendTransaction($transactionType);
+                // Call backend transaction type specific method
+                $this->$methodName($txn);
+
+                $txn->registerTransactionInOrderHistory();
             }
         }
     }
@@ -146,8 +134,6 @@ abstract class Processor extends \XLite\Base
      * @param array                            $request     Input data request OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function pay(\XLite\Model\Payment\Transaction $transaction, array $request = array())
     {
@@ -163,8 +149,6 @@ abstract class Processor extends \XLite\Base
      * Get input template
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -177,8 +161,6 @@ abstract class Processor extends \XLite\Base
      * @param array $data Input data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputErrors(array $data)
     {
@@ -189,8 +171,6 @@ abstract class Processor extends \XLite\Base
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSettingsWidget()
     {
@@ -201,8 +181,6 @@ abstract class Processor extends \XLite\Base
      * Payment method has settings into Module settings section
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasModuleSettings()
     {
@@ -215,8 +193,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -230,8 +206,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
@@ -247,8 +221,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIconPath(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
@@ -261,8 +233,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
     {
@@ -273,8 +243,6 @@ abstract class Processor extends \XLite\Base
      * Get processor module
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModule()
     {
@@ -290,8 +258,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method object OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInitialTransactionType($method = null)
     {
@@ -302,8 +268,6 @@ abstract class Processor extends \XLite\Base
      * Get current transaction order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrder()
     {
@@ -314,8 +278,6 @@ abstract class Processor extends \XLite\Base
      * Get current transaction order profile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -328,8 +290,6 @@ abstract class Processor extends \XLite\Base
      * @param string $name Name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSetting($name)
     {
@@ -340,8 +300,6 @@ abstract class Processor extends \XLite\Base
      * Save input data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveInputData($backendTransaction = null)
     {
@@ -369,8 +327,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\BackendTransaction $backendTransaction Backend transaction object OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setDetail($name, $value, $label = null, $backendTransaction = null)
     {
@@ -383,8 +339,6 @@ abstract class Processor extends \XLite\Base
      * Get input data labels list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInputDataLabels()
     {
@@ -395,8 +349,6 @@ abstract class Processor extends \XLite\Base
      * Get input data access levels list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInputDataAccessLevels()
     {
@@ -409,8 +361,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {

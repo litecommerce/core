@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Product options list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ProductOptions extends \XLite\View\AView
 {
@@ -45,8 +43,6 @@ class ProductOptions extends \XLite\View\AView
      * Get product options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -59,8 +55,6 @@ class ProductOptions extends \XLite\View\AView
      * @param \XLite\Module\CDev\ProductOptions\Model\OptionGroup $option Option group
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTemplateNameByOption(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $option)
     {
@@ -92,8 +86,6 @@ class ProductOptions extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -110,8 +102,6 @@ class ProductOptions extends \XLite\View\AView
      * @param \XLite\Module\CDev\ProductOptions\Model\Option $option Option class
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isOptionSelected(\XLite\Module\CDev\ProductOptions\Model\Option $option)
     {
@@ -135,8 +125,6 @@ class ProductOptions extends \XLite\View\AView
      * @param \XLite\Module\CDev\ProductOptions\Model\OptionGroup $option Option class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptionText(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $option)
     {
@@ -152,8 +140,6 @@ class ProductOptions extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -164,8 +150,6 @@ class ProductOptions extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -190,8 +174,6 @@ class ProductOptions extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

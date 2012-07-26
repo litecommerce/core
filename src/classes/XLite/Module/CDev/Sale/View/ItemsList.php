@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * ItemsList
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLabels(\XLite\Model\Product $product)
     {
@@ -65,8 +61,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -79,8 +73,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * getPageData
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageData()
     {
@@ -95,8 +87,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * @param mixed $data Data
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getOnlyEntities($data)
     {

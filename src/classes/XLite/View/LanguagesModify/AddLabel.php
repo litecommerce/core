@@ -28,8 +28,6 @@ namespace XLite\View\LanguagesModify;
 /**
  * Add new label dialog
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddLabel extends \XLite\View\AView
 {
@@ -39,8 +37,6 @@ class AddLabel extends \XLite\View\AView
      * @param \XLite\Model\Language $language Language_
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isRequiredLanguage(\XLite\Model\Language $language)
     {
@@ -51,8 +47,6 @@ class AddLabel extends \XLite\View\AView
      * Get added languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddedLanguages()
     {
@@ -64,8 +58,6 @@ class AddLabel extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

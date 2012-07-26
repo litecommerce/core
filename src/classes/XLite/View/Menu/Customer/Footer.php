@@ -28,8 +28,6 @@ namespace XLite\View\Menu\Customer;
 /**
  * Footer menu
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Footer extends \XLite\View\Menu\AMenu
 {
@@ -37,8 +35,6 @@ class Footer extends \XLite\View\Menu\AMenu
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -49,8 +45,6 @@ class Footer extends \XLite\View\Menu\AMenu
      * Define menu items
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineItems()
     {

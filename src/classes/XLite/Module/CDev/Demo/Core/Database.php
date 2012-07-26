@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Demo\Core;
 /**
  * Database
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Database extends \XLite\Core\Database implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Database extends \XLite\Core\Database implements \XLite\Base\IDecorator
      * Connect
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function connect()
     {

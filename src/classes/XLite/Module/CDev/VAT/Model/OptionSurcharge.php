@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Model;
 /**
  * Product option surcharge
  *
- * @see   ____class_see____
- * @since 1.0.5
  *
  * @LC_Dependencies ("CDev\ProductOptions")
  */
@@ -39,8 +37,6 @@ class OptionSurcharge extends \XLite\Module\CDev\ProductOptions\Model\OptionSurc
      * Get surcharge absolute value
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     public function getDisplaySurchargePrice()
     {

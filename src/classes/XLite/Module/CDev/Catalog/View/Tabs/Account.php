@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Catalog\View\Tabs;
 /**
  * Account
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Account extends \XLite\View\Tabs\Account implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ class Account extends \XLite\View\Tabs\Account implements \XLite\Base\IDecorator
      * Returns an array(tab) descriptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTabs()
     {

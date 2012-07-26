@@ -28,8 +28,6 @@ namespace XLite\Model\Role;
 /**
  * Permission
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="permissions")
@@ -41,9 +39,7 @@ class Permission extends \XLite\Model\Base\I18n
     /**
      * ID 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -54,9 +50,7 @@ class Permission extends \XLite\Model\Base\I18n
     /**
      * Code 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="fixedstring", length=32)
      */
@@ -65,9 +59,7 @@ class Permission extends \XLite\Model\Base\I18n
     /**
      * Section
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -76,9 +68,7 @@ class Permission extends \XLite\Model\Base\I18n
     /**
      * Roles
      *
-     * @var   \XLite\Model\Roles
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Roles
      *
      * @ManyToMany (targetEntity="XLite\Model\Role", inversedBy="permissions")
      * @JoinTable (
@@ -95,8 +85,6 @@ class Permission extends \XLite\Model\Base\I18n
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -109,8 +97,6 @@ class Permission extends \XLite\Model\Base\I18n
      * Get public name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getPublicName()
     {

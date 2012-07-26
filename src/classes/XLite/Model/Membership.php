@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Membership
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="memberships")
@@ -39,9 +37,7 @@ class Membership extends \XLite\Model\Base\I18n
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class Membership extends \XLite\Model\Base\I18n
     /**
      * Position
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -63,9 +57,7 @@ class Membership extends \XLite\Model\Base\I18n
     /**
      * Active status
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -76,8 +68,6 @@ class Membership extends \XLite\Model\Base\I18n
      * Get name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {

@@ -28,53 +28,41 @@ namespace XLite\Controller\Console;
 /**
  * Cron controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cron extends \XLite\Controller\Console\AConsole
 {
     /**
      * Time limit (seconds)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $timeLimit = 600;
 
     /**
      * Memory limit (bytes)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $memoryLimit = 4000000;
 
     /**
      * Memory limit from memory_limit PHP setting (bytes)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $memoryLimitIni;
 
     /**
      * Sleep time
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $sleepTime = 3;
 
     /**
      * Start time 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var integer
      */
     protected $startTime;
 
@@ -82,8 +70,6 @@ class Cron extends \XLite\Controller\Console\AConsole
      * Preprocessor for no-action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -114,8 +100,6 @@ class Cron extends \XLite\Controller\Console\AConsole
      * Check thread resource 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function checkThreadResource()
     {
@@ -129,8 +113,6 @@ class Cron extends \XLite\Controller\Console\AConsole
      * @param \XLite\Core\Task\ATask $runner Runner
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function runRunner(\XLite\Core\Task\ATask $runner)
     {

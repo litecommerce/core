@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * ZoneElement model
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="zone_elements",
@@ -53,9 +51,7 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Unique zone element Id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -66,9 +62,7 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Zone element value, e.g. 'US', 'US_NY', 'New Y%' etc
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -77,9 +71,7 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Element type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=1)
      */
@@ -88,9 +80,7 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Zone (relation)
      *
-     * @var   \XLite\Model\Zone
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Zone
      *
      * @ManyToOne (targetEntity="XLite\Model\Zone", inversedBy="zone_elements")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
@@ -101,8 +91,6 @@ class ZoneElement extends \XLite\Model\AEntity
      * getElementTypesData
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getElementTypesData()
     {

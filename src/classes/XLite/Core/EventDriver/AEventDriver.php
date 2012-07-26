@@ -28,8 +28,6 @@ namespace XLite\Core\EventDriver;
 /**
  * Abstract event driver 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 abstract class AEventDriver extends \XLite\Base
 {
@@ -40,8 +38,6 @@ abstract class AEventDriver extends \XLite\Base
      * @param array  $arguments Arguments OPTIONAL
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     abstract public function fire($name, array $arguments = array());
 
@@ -49,8 +45,6 @@ abstract class AEventDriver extends \XLite\Base
      * Check driver
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function isValid()
     {
@@ -61,8 +55,6 @@ abstract class AEventDriver extends \XLite\Base
      * Get driver code 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function getCode()
     {
@@ -73,8 +65,6 @@ abstract class AEventDriver extends \XLite\Base
      * Constructor
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function __construct()
     {
@@ -84,8 +74,6 @@ abstract class AEventDriver extends \XLite\Base
      * Current driver is blocking
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function isBlocking()
     {

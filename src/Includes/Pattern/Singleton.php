@@ -29,18 +29,13 @@ namespace Includes\Pattern;
  * Singleton
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class Singleton extends \Includes\Pattern\APattern
 {
     /**
      * Class instances
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $instances = array();
 
@@ -49,9 +44,6 @@ abstract class Singleton extends \Includes\Pattern\APattern
      * Protected constructur
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -62,9 +54,6 @@ abstract class Singleton extends \Includes\Pattern\APattern
      * Return object instance
      *
      * @return static
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getInstance()
     {

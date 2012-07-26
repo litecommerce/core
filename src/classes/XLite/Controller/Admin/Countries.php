@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Countries management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Countries extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -50,8 +46,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * TODO - move to widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCountries()
     {
@@ -62,8 +56,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * action 'update'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -93,8 +85,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * FIXME: Action is temporary disabled until Countries list will be refactored to allow add/edit all country fields
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     /*
     protected function doActionAdd()
@@ -133,8 +123,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * action 'delete'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {

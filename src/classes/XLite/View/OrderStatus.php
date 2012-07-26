@@ -29,8 +29,6 @@ namespace XLite\View;
 /**
  * Order status
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderStatus extends \XLite\View\AView
 {
@@ -48,9 +46,7 @@ class OrderStatus extends \XLite\View\AView
     /**
      * CSS classes associations.
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $cssClasses = array(
         \XLite\Model\Order::STATUS_TEMPORARY  => 'order-status-temporary',
@@ -66,9 +62,7 @@ class OrderStatus extends \XLite\View\AView
     /**
      * Titles associations.
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $titles = array(
         \XLite\Model\Order::STATUS_TEMPORARY  => 'Temporary',
@@ -86,8 +80,6 @@ class OrderStatus extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -98,8 +90,6 @@ class OrderStatus extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -115,8 +105,6 @@ class OrderStatus extends \XLite\View\AView
      * Return CSS class to use with wrapper
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCSSClass()
     {
@@ -127,8 +115,6 @@ class OrderStatus extends \XLite\View\AView
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTitle()
     {

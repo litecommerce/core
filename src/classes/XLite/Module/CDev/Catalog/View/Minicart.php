@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Catalog\View;
 /**
  * Minicart
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDecorator
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

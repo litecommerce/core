@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\UserPermissions\View\StickyPanel\Role\Admin;
 /**
  * Sticky panel for roles list
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Roles extends \XLite\View\StickyPanel\ItemsListForm
 {

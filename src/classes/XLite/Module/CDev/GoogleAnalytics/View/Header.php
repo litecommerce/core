@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoogleAnalytics\View;
 /**
  * Header declaration
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="head")
  */
@@ -39,8 +37,6 @@ class Header extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -51,8 +47,6 @@ class Header extends \XLite\View\AView
      * Get _gaq options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getGaqOptions()
     {
@@ -138,8 +132,6 @@ class Header extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -151,8 +143,6 @@ class Header extends \XLite\View\AView
      * Display widget as Standalone-specific
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisplayStandalone()
     {
@@ -170,8 +160,6 @@ class Header extends \XLite\View\AView
      * @param string $string String
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function escapeJavascript($string)
     {

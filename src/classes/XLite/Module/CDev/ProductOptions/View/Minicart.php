@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Minicart widget extension
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDec
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -52,8 +48,6 @@ abstract class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDec
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {

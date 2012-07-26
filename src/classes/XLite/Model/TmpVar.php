@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * DB-based temporary variables
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="tmp_vars",
@@ -43,9 +41,7 @@ class TmpVar extends \XLite\Model\AEntity
     /**
      * Option unique name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -56,9 +52,7 @@ class TmpVar extends \XLite\Model\AEntity
     /**
      * Name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -67,9 +61,7 @@ class TmpVar extends \XLite\Model\AEntity
     /**
      * Value
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */

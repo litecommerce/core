@@ -28,8 +28,6 @@ namespace XLite\Base;
 /**
  * REST-based repository interface
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 interface IREST
 {
@@ -37,8 +35,6 @@ interface IREST
      * Get REST entity names
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRESTNames();
 }

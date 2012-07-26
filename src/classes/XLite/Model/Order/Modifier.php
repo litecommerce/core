@@ -28,8 +28,6 @@ namespace XLite\Model\Order;
 /**
  * Order modifier
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="order_modifiers")
@@ -39,9 +37,7 @@ class Modifier extends \XLite\Model\AEntity
     /**
      * ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class Modifier extends \XLite\Model\AEntity
     /**
      * Logic class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -63,9 +57,7 @@ class Modifier extends \XLite\Model\AEntity
     /**
      * Weight
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -74,9 +66,7 @@ class Modifier extends \XLite\Model\AEntity
     /**
      * Modifier object (cache)
      *
-     * @var   \XLite\Logic\Order\Modifier\AModifier
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Logic\Order\Modifier\AModifier
      */
     protected $modifier;
 
@@ -87,8 +77,6 @@ class Modifier extends \XLite\Model\AEntity
      * @param array  $args   Arguments list OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -103,8 +91,6 @@ class Modifier extends \XLite\Model\AEntity
      * Get modifier object
      *
      * @return \XLite\Logic\Order\Modifier\AModifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModifier()
     {

@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Common pager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Pager extends \XLite\View\Pager\APager
 {
@@ -37,8 +35,6 @@ class Pager extends \XLite\View\Pager\APager
      * Return number of items per page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {
@@ -49,8 +45,6 @@ class Pager extends \XLite\View\Pager\APager
      * Return number of pages to display
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagesPerFrame()
     {

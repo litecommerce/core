@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node\Catalog;
 /**
  * Abstract catalog node
  * 
- * @see   ____class_see____
- * @since 1.0.18
  */
 abstract class ACatalog extends \XLite\View\TopMenu\Node
 {
@@ -37,8 +35,6 @@ abstract class ACatalog extends \XLite\View\TopMenu\Node
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function checkACL()
     {

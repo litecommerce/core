@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Form extends \XLite\View\Form\AForm
 {

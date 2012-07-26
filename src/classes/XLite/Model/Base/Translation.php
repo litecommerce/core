@@ -28,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Object translation
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -43,9 +41,7 @@ abstract class Translation extends \XLite\Model\AEntity
     /**
      * Label unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -56,9 +52,7 @@ abstract class Translation extends \XLite\Model\AEntity
     /**
      * Label language code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=2)
      */
@@ -68,8 +62,6 @@ abstract class Translation extends \XLite\Model\AEntity
      * Return list of class properties which are not translated
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getInternalProperties()
     {
@@ -80,8 +72,6 @@ abstract class Translation extends \XLite\Model\AEntity
      * Return the owner object
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOwner()
     {
@@ -92,8 +82,6 @@ abstract class Translation extends \XLite\Model\AEntity
      * Check cache after enity persist or remove
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkCache()
     {

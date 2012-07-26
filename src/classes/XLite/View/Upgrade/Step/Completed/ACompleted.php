@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade\Step\Completed;
 /**
  * ACompleted
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ACompleted extends \XLite\View\Upgrade\Step\AStep
 {
@@ -37,8 +35,6 @@ abstract class ACompleted extends \XLite\View\Upgrade\Step\AStep
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -52,8 +48,6 @@ abstract class ACompleted extends \XLite\View\Upgrade\Step\AStep
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -64,8 +58,6 @@ abstract class ACompleted extends \XLite\View\Upgrade\Step\AStep
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -76,8 +68,6 @@ abstract class ACompleted extends \XLite\View\Upgrade\Step\AStep
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

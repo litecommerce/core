@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Shipping estimator
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -39,8 +37,6 @@ class ShippingEstimate extends \XLite\View\AView
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class ShippingEstimate extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -67,8 +61,6 @@ class ShippingEstimate extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -80,8 +72,6 @@ class ShippingEstimate extends \XLite\View\AView
      * Get countries list
      *
      * @return array(\XLite\Model\Country)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCountries()
     {
@@ -93,8 +83,6 @@ class ShippingEstimate extends \XLite\View\AView
      * Get selected country code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCountryCode()
     {
@@ -116,8 +104,6 @@ class ShippingEstimate extends \XLite\View\AView
      * Get state
      *
      * @return \XLite\Model\State
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getState()
     {
@@ -156,8 +142,6 @@ class ShippingEstimate extends \XLite\View\AView
      * Get ZIP code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getZipcode()
     {
@@ -172,8 +156,6 @@ class ShippingEstimate extends \XLite\View\AView
      * Check - shipping is estimate or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isEstimate()
     {

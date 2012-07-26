@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * File Selector Dialog widget
  *
- * @see   ____class_see____
- * @since 1.0.6
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -39,8 +37,6 @@ class SaleSelectedDialog extends \XLite\View\SimpleDialog
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class SaleSelectedDialog extends \XLite\View\SimpleDialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -67,8 +61,6 @@ class SaleSelectedDialog extends \XLite\View\SimpleDialog
      * Return file name for the center part template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBody()
     {

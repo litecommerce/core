@@ -28,8 +28,6 @@ namespace XLite\View\Model\DataSource;
 /**
  * Abstract data source model widget
  *
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Ecwid extends ADataSource
 {
@@ -37,9 +35,7 @@ class Ecwid extends ADataSource
     /**
      * Form fields definition
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var array
      */
     protected $schemaDefault = array(
         'parameter_storeid' => array(
@@ -54,8 +50,6 @@ class Ecwid extends ADataSource
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\DataSource
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultModelObject()
     {

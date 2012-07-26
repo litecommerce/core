@@ -28,17 +28,13 @@ namespace Includes\Decorator\DataStructure\Graph;
 /**
  * Modules 
  *
- * @see   ____class_see____
- * @since 1.0.10
  */
 class Modules extends \Includes\DataStructure\Graph
 {
     /**
      * List of critical path legths for all child nodes
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $criticalPaths;
 
@@ -48,8 +44,6 @@ class Modules extends \Includes\DataStructure\Graph
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -60,8 +54,6 @@ class Modules extends \Includes\DataStructure\Graph
      * Return module dependencies list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDependencies()
     {
@@ -72,8 +64,6 @@ class Modules extends \Includes\DataStructure\Graph
      * Return list of mutually exclusive modules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getMutualModulesList()
     {
@@ -90,8 +80,6 @@ class Modules extends \Includes\DataStructure\Graph
      * @param string $module Module actual name
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCriticalPath($module)
     {
@@ -106,8 +94,6 @@ class Modules extends \Includes\DataStructure\Graph
      * Calculate critical path lengths
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function calculateCriticalPathLengths($length = 1)
     {

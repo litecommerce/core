@@ -28,8 +28,6 @@ namespace XLite\View\Order;
 /**
  * Actions  row
  * 
- * @see   ____class_see____
- * @since 1.0.24
  *
  * @ListChild (list="order.actions", weight="200", zone="admin")
  */
@@ -39,8 +37,6 @@ class Actions extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -51,8 +47,6 @@ class Actions extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -66,8 +60,6 @@ class Actions extends \XLite\View\AView
      * @param \XLite\Model\Order $entity Order
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getOrderActions(\XLite\Model\Order $entity)
     {
@@ -92,8 +84,6 @@ class Actions extends \XLite\View\AView
      * Define order actions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function defineOrderActions()
     {

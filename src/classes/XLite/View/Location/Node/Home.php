@@ -28,8 +28,6 @@ namespace XLite\View\Location\Node;
 /**
  * Home node
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Home extends \XLite\View\Location\Node
 {
@@ -37,8 +35,6 @@ class Home extends \XLite\View\Location\Node
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -49,8 +45,6 @@ class Home extends \XLite\View\Location\Node
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

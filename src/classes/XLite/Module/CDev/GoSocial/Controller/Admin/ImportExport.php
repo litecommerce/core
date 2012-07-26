@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\Controller\Admin;
 /**
  * Import / export controller
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class ImportExport extends \XLite\Controller\Admin\ImportExport implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class ImportExport extends \XLite\Controller\Admin\ImportExport impleme
      * Define product columns
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function defineProductColumns()
     {

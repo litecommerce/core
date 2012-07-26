@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\Core\DataSource\Importer;
 /**
  * Product importer
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 abstract class Product extends \XLite\Core\DataSource\Importer\Product implements \XLite\Base\IDecorator
 {
@@ -40,8 +38,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param array                $cell    Cell
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function update(\XLite\Model\Product $product, array $cell)
     {
@@ -59,8 +55,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param array                $optionGroups Option groups
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function updateOptionGroups(\XLite\Model\Product $product, array $optionGroups)
     {
@@ -95,8 +89,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param array                $group   Group data
      *  
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function detectOptionGroup(\XLite\Model\Product $product, array $group)
     {
@@ -125,8 +117,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param array                $group   Group data
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function createOptionGroup(\XLite\Model\Product $product, array $group)
     {
@@ -144,8 +134,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param array                                               $group Group data
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function updateOptionGroup(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $model, array $group)
     {
@@ -185,8 +173,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param array                                               $option Option data
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\Option
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function detectOption(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $group, array $option)
     {
@@ -215,8 +201,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param array                                               $option Option data
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\Option
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function createOption(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $group, array $option)
     {
@@ -234,8 +218,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param array                                          $option Option data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function updateOption(\XLite\Module\CDev\ProductOptions\Model\Option $model, array $option)
     {
@@ -253,8 +235,6 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
      * @param string                                         $type     Modifier type
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function updateOptionSurcharge(\XLite\Module\CDev\ProductOptions\Model\Option $model, array $modifier, $type)
     {

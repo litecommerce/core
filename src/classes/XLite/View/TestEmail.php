@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * \XLite\View\TestEmail
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TestEmail extends \XLite\View\Dialog
 {
@@ -37,8 +35,6 @@ class TestEmail extends \XLite\View\Dialog
      * Return list of required CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -53,8 +49,6 @@ class TestEmail extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Database
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Database extends \XLite\Base\Singleton
 {
@@ -53,27 +51,21 @@ class Database extends \XLite\Base\Singleton
     /**
      * Doctrine entity manager
      *
-     * @var   \Doctrine\ORM\EntityManager
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\ORM\EntityManager
      */
     protected static $em = null;
 
     /**
      * Doctrine cache driver
      *
-     * @var   \Doctrine\Common\Cache\AbtractCache
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Cache\AbtractCache
      */
     protected static $cacheDriver = null;
 
     /**
      * Cache drivers query
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $cacheDriversQuery = array(
         'apc',
@@ -84,45 +76,35 @@ class Database extends \XLite\Base\Singleton
     /**
      * Doctrine config object
      *
-     * @var   \Doctrine\ORM\Configuration
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\ORM\Configuration
      */
     protected $configuration;
 
     /**
      * Table prefix
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $tablePrefix = '';
 
     /**
      * connected
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $connected;
 
     /**
      * Doctrine unmanaged table names list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $unmanagedTables = array();
 
     /**
      * Forbid truncate tables if will truncate store-based tables
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $forbidTruncateTablesStore = array(
         'profiles',
@@ -135,9 +117,7 @@ class Database extends \XLite\Base\Singleton
     /**
      * Fixtures loading procedure options
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $fixturesLoadingOptions = array(
         'insert'    => false,
@@ -149,8 +129,6 @@ class Database extends \XLite\Base\Singleton
      * Get entity manager
      *
      * @return \Doctrine\ORM\EntityManager
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getEM()
     {
@@ -168,8 +146,6 @@ class Database extends \XLite\Base\Singleton
      * @param string $repository Entity class name
      *
      * @return \Doctrine\ORM\EntityRepository
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getRepo($repository)
     {
@@ -182,8 +158,6 @@ class Database extends \XLite\Base\Singleton
      * @param mixed $options Options from config.ini
      *
      * @return \Doctrine\Common\Cache\Cache
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getCacheDriverByOptions($options)
     {
@@ -257,8 +231,6 @@ class Database extends \XLite\Base\Singleton
      * Register custom types
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function registerCustomTypes(\Doctrine\ORM\EntityManager $em)
     {
@@ -304,8 +276,6 @@ class Database extends \XLite\Base\Singleton
      * @param string $class Short class name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function loadAnnotationClass($class)
     {
@@ -317,8 +287,6 @@ class Database extends \XLite\Base\Singleton
      * Get cache driver
      *
      * @return \Doctrine\Common\Cache\AbstractCache
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getCacheDriver()
     {
@@ -329,8 +297,6 @@ class Database extends \XLite\Base\Singleton
      * Get last query length
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getLastQueryLength()
     {
@@ -349,8 +315,6 @@ class Database extends \XLite\Base\Singleton
      * @param string $prefix Placeholder prefix OPTIONAL
      *
      * @return array (keys for IN () function & parameters hash array)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function prepareArray(array $data, $prefix = 'arr')
     {
@@ -374,8 +338,6 @@ class Database extends \XLite\Base\Singleton
      * @param string                     $prefix Placeholder prefix OPTIONAL
      *
      * @return array Keys for IN () function
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildInCondition(\Doctrine\ORM\QueryBuilder $qb, array $data, $prefix = 'arr')
     {
@@ -391,8 +353,6 @@ class Database extends \XLite\Base\Singleton
      * Detect APC cache driver
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function detectCacheDriverApc()
     {
@@ -403,8 +363,6 @@ class Database extends \XLite\Base\Singleton
      * Detect XCache cache driver
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function detectCacheDriverXcache()
     {
@@ -415,8 +373,6 @@ class Database extends \XLite\Base\Singleton
      * Detect Memcache cache driver
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function detectCacheDriverMemcache()
     {
@@ -428,8 +384,6 @@ class Database extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -442,8 +396,6 @@ class Database extends \XLite\Base\Singleton
      * Connect and set-up Doctrine
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function connect()
     {
@@ -506,8 +458,6 @@ class Database extends \XLite\Base\Singleton
      * Start Doctrine entity manager
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function startEntityManager()
     {
@@ -545,8 +495,6 @@ class Database extends \XLite\Base\Singleton
      * @param boolean $verbose Is export should be verbose flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function exportSQLToFile($path = null, $verbose = false)
     {
@@ -593,8 +541,6 @@ OUT;
      * @param string $path Export directory path OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getExportDBSchema($path = null)
     {
@@ -625,8 +571,6 @@ OUT;
      *
      * @return array
      * @throws
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getExportDBData()
     {
@@ -678,8 +622,6 @@ OUT;
      * @param mixed $value Data of any type gathered from database
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doQuote($value)
     {
@@ -709,8 +651,6 @@ OUT;
      * Check - DB is empty or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDBEmpty()
     {
@@ -721,8 +661,6 @@ OUT;
      * Create / update DB schema
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function updateDBSchema()
     {
@@ -735,8 +673,6 @@ OUT;
      * Drop DB schema
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function dropDBSchema()
     {
@@ -749,8 +685,6 @@ OUT;
      * @param array $queries Queries list
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeQueries(array $queries)
     {
@@ -770,8 +704,6 @@ OUT;
      * @param string $mode Schema generation mode OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDBSchemaAsFile($mode = self::SCHEMA_CREATE)
     {
@@ -784,8 +716,6 @@ OUT;
      * @param string $mode Schema generation mode OPTIONAL
      *
      * @return array(string)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDBSchema($mode = self::SCHEMA_CREATE)
     {
@@ -841,8 +771,6 @@ OUT;
      * @param string $name Option name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFixturesLoadingOption($name)
     {
@@ -856,8 +784,6 @@ OUT;
      * @param mixed  $value Option value OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setFixturesLoadingOption($name, $value = null)
     {
@@ -870,8 +796,6 @@ OUT;
      * @param string $path YAML file path
      *
      * @return boolean|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loadFixturesFromYaml($path)
     {
@@ -905,8 +829,6 @@ OUT;
      * @param string $path YAML file path
      *
      * @return boolean|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function unloadFixturesFromYaml($path)
     {
@@ -939,8 +861,6 @@ OUT;
      * Get table prefix
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTablePrefix()
     {
@@ -953,8 +873,6 @@ OUT;
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function postPersist(\Doctrine\ORM\Event\LifecycleEventArgs $arg)
     {
@@ -967,8 +885,6 @@ OUT;
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function postUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $arg)
     {
@@ -981,8 +897,6 @@ OUT;
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function postRemove(\Doctrine\ORM\Event\LifecycleEventArgs $arg)
     {
@@ -995,8 +909,6 @@ OUT;
      * @param \Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs Event arguments
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loadClassMetadata(\Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs)
     {
@@ -1021,8 +933,6 @@ OUT;
      * Get disabled structures
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDisabledStructures()
     {
@@ -1051,8 +961,6 @@ OUT;
      * @param array  $structures Disabled structures OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setDisabledStructures($module, array $structures = array())
     {
@@ -1088,8 +996,6 @@ OUT;
      * @param string $sql SQL
      *
      * @return integer Lines count
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function importSQL($sql)
     {
@@ -1119,8 +1025,6 @@ OUT;
      *
      * @return integer Lines count
      * @throws
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function importSQLFromFile($path, $verbose = false)
     {
@@ -1147,8 +1051,6 @@ OUT;
      * @param string $type Repository type
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function truncateByType($type)
     {
@@ -1161,8 +1063,6 @@ OUT;
      * @param array $tableNames Table names OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function truncate(array $tableNames = array())
     {
@@ -1185,8 +1085,6 @@ OUT;
      * @param string $schema Schema
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessCreateSchema($schema)
     {
@@ -1206,8 +1104,6 @@ OUT;
      * @param string $schema Schema
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessCreateSchemaTable($schema)
     {
@@ -1274,8 +1170,6 @@ OUT;
      * @param string $schema Schema
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessAlterSchemaTable($schema)
     {
@@ -1326,8 +1220,6 @@ OUT;
      * @param string $schema Schema
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessUpdateSchema($schema)
     {
@@ -1369,8 +1261,6 @@ OUT;
      * @param string $schema Schema
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessDropSchema($schema)
     {
@@ -1393,8 +1283,6 @@ OUT;
      * Get all metadata
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAllMetadata()
     {
@@ -1414,8 +1302,6 @@ OUT;
      * @param array $rows Entity fixtures
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function detectDirectives(array $rows)
     {
@@ -1440,8 +1326,6 @@ OUT;
      * Reset fixtures loading directives
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function resetDirectives()
     {
@@ -1454,8 +1338,6 @@ OUT;
      * Setup doctrine cache
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setDoctrineCache()
     {
@@ -1470,8 +1352,6 @@ OUT;
      * Get DSN in Doctrine style
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDSN()
     {
@@ -1513,8 +1393,6 @@ OUT;
      * Get disabled tables list storage path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisabledStructuresPath()
     {
@@ -1527,8 +1405,6 @@ OUT;
      * @param string $class Entity class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function detectCustomRepositoryClassName($class)
     {
@@ -1551,8 +1427,6 @@ OUT;
      * @param string $type Repository type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTruncateTableNames($type)
     {
@@ -1577,8 +1451,6 @@ OUT;
      * @param string $type Repository type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTruncateMetadatas($type)
     {
@@ -1599,8 +1471,6 @@ OUT;
      * @param array $metadatas Class metadata list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function detectTruncateTables(array $metadatas)
     {
@@ -1655,8 +1525,6 @@ OUT;
      * Set charset for DB connection
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setCharset()
     {
@@ -1669,8 +1537,6 @@ OUT;
      * @param string $path Path
      *
      * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function createAnnotationDriver($path)
     {

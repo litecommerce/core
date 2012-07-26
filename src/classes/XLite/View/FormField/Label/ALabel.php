@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Label;
 /**
  * ALabel
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ALabel extends \XLite\View\FormField\AFormField
 {
@@ -37,8 +35,6 @@ abstract class ALabel extends \XLite\View\FormField\AFormField
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -49,8 +45,6 @@ abstract class ALabel extends \XLite\View\FormField\AFormField
      * Get label value 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getLabelValue()
     {

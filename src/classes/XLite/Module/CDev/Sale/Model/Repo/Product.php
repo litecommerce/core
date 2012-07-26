@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\Model\Repo;
 /**
  * The Product model repository extension
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorator
 {
@@ -50,8 +48,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * Add arrivalDate to the list of handling search params
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHandlingSearchParams()
     {
@@ -70,8 +66,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * @param boolean                    $countOnly    Count only flag
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndParticipateSale(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
     {
@@ -111,8 +105,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * @param string                                  $alias        Main alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function defineCalculatedPriceDQL(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $alias)
     {

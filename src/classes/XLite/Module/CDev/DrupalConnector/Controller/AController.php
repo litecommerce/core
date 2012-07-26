@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller;
 /**
  * Abstract controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AController extends \XLite\Controller\AController implements \XLite\Base\IDecorator
 {
@@ -41,8 +39,6 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * @param array  $pageArgs LC-specific URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -56,8 +52,6 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * @param array  $args LC URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
@@ -72,8 +66,6 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * Return Viewer object
      *
      * @return \XLite\View\Controller
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getViewer()
     {

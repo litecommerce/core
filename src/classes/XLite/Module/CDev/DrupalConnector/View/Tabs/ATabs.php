@@ -29,8 +29,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Tabs;
  * ATabs is a component allowing you to display multiple widgets as tabs depending
  * on their targets
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ATabs extends \XLite\View\Tabs\ATabs implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ abstract class ATabs extends \XLite\View\Tabs\ATabs implements \XLite\Base\IDeco
      * Flag: display (true) or hide (false) tabs
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isWrapperVisible()
     {

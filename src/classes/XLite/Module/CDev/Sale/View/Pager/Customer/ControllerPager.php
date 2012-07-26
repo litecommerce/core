@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View\Pager\Customer;
 /**
  * Pager class for items list with navigation tools
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ControllerPager extends \XLite\View\Pager\Customer\Product\AProduct
 {

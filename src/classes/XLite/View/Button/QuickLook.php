@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * QuickLook
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class QuickLook extends \XLite\View\Button\Regular
 {
@@ -43,8 +41,6 @@ class QuickLook extends \XLite\View\Button\Regular
      * getProduct
      *
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -55,8 +51,6 @@ class QuickLook extends \XLite\View\Button\Regular
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -67,8 +61,6 @@ class QuickLook extends \XLite\View\Button\Regular
      * getClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {
@@ -79,8 +71,6 @@ class QuickLook extends \XLite\View\Button\Regular
      * JavaScript: default JS code to execute
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {
@@ -91,8 +81,6 @@ class QuickLook extends \XLite\View\Button\Regular
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

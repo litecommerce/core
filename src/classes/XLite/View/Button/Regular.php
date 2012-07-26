@@ -29,8 +29,6 @@ namespace XLite\View\Button;
 /**
  * Regular button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Regular extends \XLite\View\Button\AButton
 {
@@ -45,8 +43,6 @@ class Regular extends \XLite\View\Button\AButton
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -57,8 +53,6 @@ class Regular extends \XLite\View\Button\AButton
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -69,8 +63,6 @@ class Regular extends \XLite\View\Button\AButton
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -89,8 +81,6 @@ class Regular extends \XLite\View\Button\AButton
      * @param array $params Values to compose
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSFormParams(array $params)
     {
@@ -107,8 +97,6 @@ class Regular extends \XLite\View\Button\AButton
      * JavaScript: default JS code to execute
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {
@@ -127,8 +115,6 @@ class Regular extends \XLite\View\Button\AButton
      * Return specified (or default) JS code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSCode()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\View\FormField\Select;
 /**
  * Change frequency selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ChangeFrequency extends \XLite\View\FormField\Select\Regular
 {
@@ -37,8 +35,6 @@ class ChangeFrequency extends \XLite\View\FormField\Select\Regular
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

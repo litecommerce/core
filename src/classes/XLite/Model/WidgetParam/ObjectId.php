@@ -28,8 +28,6 @@ namespace XLite\Model\WidgetParam;
 /**
  * Abstract Object id widget parameter
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ObjectId extends \XLite\Model\WidgetParam\Int
 {
@@ -37,8 +35,6 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * Return object class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getClassName();
 
@@ -49,8 +45,6 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param integer $id Object ID OPTIONAL
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getObject($id = null)
     {
@@ -64,8 +58,6 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param mixed $value Value to check
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIdValidCondition($value)
     {
@@ -81,8 +73,6 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param mixed $value Value to check
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getObjectExistsCondition($value)
     {
@@ -98,8 +88,6 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param integer $id Object ID OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getId($id = null)
     {
@@ -112,8 +100,6 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param mixed $value Value to validate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidaionSchema($value)
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Catalog\View\ItemsList\Product\Customer;
 /**
  * ACustomer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\Customer\ACustome
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -54,8 +50,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\Customer\ACustome
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {

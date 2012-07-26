@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal;
 /**
  * Paypal module
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -38,8 +36,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public static function getAuthorName()
     {
@@ -50,8 +46,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -62,8 +56,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMajorVersion()
     {
@@ -75,8 +67,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -87,8 +77,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -99,8 +87,6 @@ abstract class Main extends \XLite\Module\AModule
      * Determines if we need to show settings form link
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function showSettingsForm()
     {
@@ -114,8 +100,6 @@ abstract class Main extends \XLite\Module\AModule
      * @param mixed  $data    Data (can be any type) OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function addLog($message = null, $data = null)
     {
@@ -143,8 +127,6 @@ abstract class Main extends \XLite\Module\AModule
      * Returns true if ExpressCheckout payment is enabled 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public static function isExpressCheckoutEnabled()
     {

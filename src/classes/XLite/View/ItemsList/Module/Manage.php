@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Module;
 /**
  * Addons search and installation widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Manage extends \XLite\View\ItemsList\Module\AModule
 {
@@ -37,8 +35,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -52,8 +48,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -64,8 +58,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return dir which contains the page body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -76,8 +68,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -88,8 +78,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -105,8 +93,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * :TODO: actualize keys
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTags()
     {
@@ -123,8 +109,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return filters array
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFilters()
     {
@@ -138,8 +122,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Get current filter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFilter()
     {
@@ -156,8 +138,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Get current tag
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTag()
     {
@@ -176,8 +156,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * @param string $filter Name of filter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFilterClasses($filter)
     {
@@ -190,8 +168,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * @param string $tag Name of tag
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTagClasses($tag)
     {
@@ -204,8 +180,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * @param string $filter Filter criterion
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModulesCount($filter)
     {
@@ -220,8 +194,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * @param string                 $filter    Filter criterion OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false, $filter = null)
     {
@@ -247,8 +219,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
     {
@@ -261,8 +231,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isInstalled(\XLite\Model\Module $module)
     {
@@ -275,8 +243,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasErrors(\XLite\Model\Module $module)
     {

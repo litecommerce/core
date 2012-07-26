@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * Price
  *
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Price extends \XLite\View\FormField\Input\Text\Symbol
 {
@@ -39,8 +37,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -57,8 +53,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
      * @param array $params Handler params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -76,8 +70,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
      * Get currency
      *
      * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getCurrency()
     {
@@ -88,8 +80,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
      * Get currency symbol
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getSymbol()
     {
@@ -100,8 +90,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -123,8 +111,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {
@@ -139,8 +125,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
      * getCommonAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {
@@ -155,8 +139,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
      * Get mantis
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getE()
     {

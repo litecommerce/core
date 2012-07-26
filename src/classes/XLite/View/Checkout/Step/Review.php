@@ -28,8 +28,6 @@ namespace XLite\View\Checkout\Step;
 /**
  * Review checkout step
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Review extends \XLite\View\Checkout\Step\AStep
 {
@@ -37,8 +35,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get step name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStepName()
     {
@@ -49,8 +45,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get step title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -61,8 +55,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Check - step is complete or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCompleted()
     {
@@ -73,8 +65,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get Terms and Conditions page URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTermsURL()
     {
@@ -85,8 +75,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get Place button title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPlaceTitle()
     {
@@ -102,8 +90,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get payment processor
      *
      * @return \XLite\Model\Payment\Base\Processor
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProcessor()
     {
@@ -116,8 +102,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get payment template
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPaymentTemplate()
     {
@@ -132,8 +116,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get surcharge totals
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getSurchargeTotals()
     {
@@ -147,8 +129,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * @param array  $surcharge Surcharge
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getSurchargeClassName($type, array $surcharge)
     {
@@ -163,8 +143,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * @param array $surcharge Surcharge
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function formatSurcharge(array $surcharge)
     {
@@ -177,8 +155,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * @param string $type Surcharge type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getExcludeSurchargesByType($type)
     {

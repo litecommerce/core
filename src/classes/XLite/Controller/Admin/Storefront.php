@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Close storefront action controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Storefront extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Storefront extends \XLite\Controller\Admin\AAdmin
      * Close storefront
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionClose()
     {
@@ -49,8 +45,6 @@ class Storefront extends \XLite\Controller\Admin\AAdmin
      * Open storefront
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionOpen()
     {
@@ -63,8 +57,6 @@ class Storefront extends \XLite\Controller\Admin\AAdmin
      * @param boolean $status Activity status OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function changeStorefrontActivity($status = true)
     {

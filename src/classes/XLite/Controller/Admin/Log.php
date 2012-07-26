@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Log getter controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Log extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Log extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -49,8 +45,6 @@ class Log extends \XLite\Controller\Admin\AAdmin
      * Get log path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getLogPath()
     {
@@ -67,8 +61,6 @@ class Log extends \XLite\Controller\Admin\AAdmin
      * Preprocessor for no-action ren
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {

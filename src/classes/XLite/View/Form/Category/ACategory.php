@@ -28,8 +28,6 @@ namespace XLite\View\Form\Category;
 /**
  * ACategory 
  *
- * @see   ____class_see____
- * @since 1.0.21
  */
 abstract class ACategory extends \XLite\View\Form\AForm
 {

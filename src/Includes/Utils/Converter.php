@@ -29,8 +29,6 @@ namespace Includes\Utils;
  * Converter
  *
  * @package    XLite
- * @see        ____class_see____
- * @since      1.0.0
  */
 abstract class Converter extends \Includes\Utils\AUtils
 {
@@ -39,9 +37,7 @@ abstract class Converter extends \Includes\Utils\AUtils
      * Source: http://en.wikipedia.org/wiki/Template:Quantities_of_bytes
      * Source: http://physics.nist.gov/cuu/Units/binary.html
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $byteMultipliers = array('b', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 
@@ -54,9 +50,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $quotes    char (string) to quote the value
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildQuery(array $data, $glue = '=', $separator = '&', $quotes = '')
     {
@@ -78,9 +71,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param boolean $hasParts Flag OPTIONAL
      *
      * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function parseArgs(array $args, $glue = '=', $quotes = '', $hasParts = true)
     {
@@ -113,9 +103,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param boolean $hasParts  Flag OPTIONAL
      *
      * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function parseQuery($query, $glue = '=', $separator = '&', $quotes = '', $hasParts = true)
     {
@@ -129,9 +116,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $chars  charlist to remove
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function trimLeadingChars($string, $chars)
     {
@@ -145,9 +129,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $chars  charlist to remove
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function trimTrailingChars($string, $chars)
     {
@@ -160,9 +141,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param float $price value to format
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatPrice($price)
     {
@@ -175,8 +153,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $string String to convert
      *
      * @return string
-     * @access public
-     * @since  1.0.0
      */
     public static function convertToCamelCase($string)
     {
@@ -189,8 +165,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $string String to convert
      *
      * @return string
-     * @access public
-     * @since  1.0.0
      */
     public static function convertFromCamelCase($string)
     {
@@ -203,8 +177,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $string String to convert
      *
      * @return string
-     * @access public
-     * @since  1.0.0
      */
     public static function convertToPascalCase($string)
     {
@@ -218,9 +190,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param boolean $relative Flag to enclose class name with namespace separator
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function prepareClassName($class, $relative = true)
     {
@@ -233,9 +202,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $class Class name
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getClassFile($class)
     {
@@ -249,8 +215,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $versionMinor Minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function composeVersion($versionMajor, $versionMinor)
     {
@@ -264,8 +228,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string  $separator To return a string OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatFileSize($size, $separator = null)
     {
@@ -293,8 +255,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $value Input value
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function removeCRLF($value)
     {
@@ -307,8 +267,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $class Class name to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public static function getPureClassName($class)
     {
@@ -324,8 +282,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @param string $interface Interface script OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.20
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {

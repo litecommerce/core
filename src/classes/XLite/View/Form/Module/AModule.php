@@ -28,8 +28,6 @@ namespace XLite\View\Form\Module;
 /**
  * Abstract form for modules
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AModule extends \XLite\View\Form\AForm
 {

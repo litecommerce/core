@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Product classes selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ProductClasses extends \XLite\View\FormField\Select\Multiple
 {
@@ -37,8 +35,6 @@ class ProductClasses extends \XLite\View\FormField\Select\Multiple
      * Get product classes list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProductClassesList()
     {
@@ -54,8 +50,6 @@ class ProductClasses extends \XLite\View\FormField\Select\Multiple
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu;
 /**
  * Node
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Node extends \XLite\View\TopMenu
 {
@@ -49,8 +47,6 @@ class Node extends \XLite\View\TopMenu
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -61,8 +57,6 @@ class Node extends \XLite\View\TopMenu
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -83,8 +77,6 @@ class Node extends \XLite\View\TopMenu
      * Check if submenu available for this item
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasChildren()
     {
@@ -96,8 +88,6 @@ class Node extends \XLite\View\TopMenu
      * Check - node is branch but has empty childs list
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function isEmptyChildsList()
     {
@@ -109,8 +99,6 @@ class Node extends \XLite\View\TopMenu
      * Return list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -121,8 +109,6 @@ class Node extends \XLite\View\TopMenu
      * Return list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLink()
     {
@@ -143,8 +129,6 @@ class Node extends \XLite\View\TopMenu
      * (linked to a current page)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCurrentPageLink()
     {
@@ -156,8 +140,6 @@ class Node extends \XLite\View\TopMenu
      * Return CSS class for the link item
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCSSClass()
     {
@@ -174,8 +156,6 @@ class Node extends \XLite\View\TopMenu
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -187,8 +167,6 @@ class Node extends \XLite\View\TopMenu
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function checkACL()
     {
@@ -208,8 +186,6 @@ class Node extends \XLite\View\TopMenu
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getTitle()
     {
@@ -220,8 +196,6 @@ class Node extends \XLite\View\TopMenu
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getNodeTarget()
     {

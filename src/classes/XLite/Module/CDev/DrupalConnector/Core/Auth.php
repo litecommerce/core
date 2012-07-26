@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 /**
  * Authorization routine
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
      * Get stored profiel id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStoredProfileId()
     {

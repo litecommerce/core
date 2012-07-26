@@ -29,17 +29,13 @@ namespace XLite\Logic\Order\Modifier;
  * Abstract Discount modifier - for discounts which should be aggregated
  * and displayed as a single 'Discount' line in cart/order totals
  *
- * @see   ____class_see____
- * @since 1.0.18
  */
 abstract class Discount extends \XLite\Logic\Order\Modifier\ADiscount
 {
     /**
      * Modifier unique code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.18
+     * @var string
      */
     protected $code = 'DISCOUNT';
 
@@ -51,8 +47,6 @@ abstract class Discount extends \XLite\Logic\Order\Modifier\ADiscount
      * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
      *
      * @return \XLite\DataSet\Transport\Order\Surcharge
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
     {
@@ -71,8 +65,6 @@ abstract class Discount extends \XLite\Logic\Order\Modifier\ADiscount
      * @param float  $discountTotal Discount value
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function distributeDiscount($discountTotal)
     {
@@ -119,8 +111,6 @@ abstract class Discount extends \XLite\Logic\Order\Modifier\ADiscount
      * Returns order items
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getOrderItems()
     {

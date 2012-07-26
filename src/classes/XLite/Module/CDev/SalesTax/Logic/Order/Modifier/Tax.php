@@ -28,26 +28,20 @@ namespace XLite\Module\CDev\SalesTax\Logic\Order\Modifier;
 /**
  * Tax  business logic
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Tax extends \XLite\Logic\Order\Modifier\ATax
 {
     /**
      * Modifier unique code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $code = 'CDEV.STAX';
 
     /**
      * Surcharge identification pattern
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $identificationPattern = '/^CDEV\.STAX\.\d+$/Ss';
 
@@ -56,8 +50,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Check - can apply this modifier or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function canApply()
     {
@@ -71,8 +63,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Calculate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function calculate()
     {
@@ -115,8 +105,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get taxes 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTaxes()
     {
@@ -127,8 +115,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get zones list 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getZonesList()
     {
@@ -147,8 +133,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get membership 
      * 
      * @return \XLite\Model\Membership
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMembership()
     {
@@ -164,8 +148,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * @param array                     $previousItems Previous selected items OPTIONAL
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTaxableItems(\XLite\Model\ProductClass $class = null, array $previousItems = array())
     {
@@ -187,8 +169,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get address for zone calculator
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAddress()
     {
@@ -215,8 +195,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get order-based address 
      * 
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderAddress()
     {
@@ -235,8 +213,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
      *
      * @return \XLite\DataSet\Transport\Order\Surcharge
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
     {

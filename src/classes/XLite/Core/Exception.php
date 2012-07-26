@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Common exception
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Exception extends \Exception
 {

@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\Templates\Plugin\Patcher;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
@@ -41,9 +39,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * List of pather classes
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $patchers;
 
@@ -51,8 +47,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Execute certain hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {
@@ -69,8 +63,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkClassForPatcherInterface(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -83,8 +75,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Remove existing lists from database
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function clearAll()
     {
@@ -95,8 +85,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Save pathes info in DB
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function collectPatches()
     {
@@ -124,8 +112,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return list of the "patcher" classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPatchers()
     {
@@ -145,8 +131,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param string $class Patcher class
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonData(array $data, $class)
     {
@@ -161,8 +145,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param string $class Patcher class
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getXpathData(array $data, $class)
     {
@@ -180,8 +162,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param string $class Patcher class
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRegexpData(array $data, $class)
     {
@@ -197,8 +177,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array $data Data describe the patch
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCustomData(array $data)
     {

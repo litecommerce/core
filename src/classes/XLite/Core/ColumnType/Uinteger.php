@@ -28,8 +28,6 @@ namespace XLite\Core\ColumnType;
 /**
  * Unsigned integer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Uinteger extends \Doctrine\DBAL\Types\IntegerType
 {
@@ -45,8 +43,6 @@ class Uinteger extends \Doctrine\DBAL\Types\IntegerType
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform         Platform
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSQLDeclaration(array $fieldDeclaration, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {
@@ -59,8 +55,6 @@ class Uinteger extends \Doctrine\DBAL\Types\IntegerType
      * Get type name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {

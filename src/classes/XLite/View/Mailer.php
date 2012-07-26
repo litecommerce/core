@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Mailer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Mailer extends \XLite\View\AView
 {
@@ -43,117 +41,91 @@ class Mailer extends \XLite\View\AView
     /**
      * Compose runned
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $composeRunned = false;
 
     /**
      * Subject template file name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $subjectTemplate = 'subject.tpl';
 
     /**
      * Body template file name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $bodyTemplate = 'body.tpl';
 
     /**
      * Signature template file name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $signatureTemplate = 'signature.tpl';
 
     /**
      * Language locale (for PHPMailer)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $langLocale = 'en';
 
     /**
      * Languages directory path (for PHPMailer)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $langPath = 'lib/PHPMailer/language/';
 
     /**
      * PHPMailer object
      *
-     * @var   \PHPMailer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \PHPMailer
      */
     protected $mail = null;
 
     /**
      * Message charset
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $charset = 'UTF-8';
 
     /**
      * Saved templates skin
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $templatesSkin = null;
 
     /**
      * Current template
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $template = null;
 
     /**
      * Embedded images list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $images = array();
 
     /**
      * Image parser
      *
-     * @var   null|\XLite\Model\MailImageParser
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var null|\XLite\Model\MailImageParser
      */
     protected $imageParser = null;
 
     /**
      * Error message set by PHPMailer class
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $errorInfo = null;
 
@@ -162,8 +134,6 @@ class Mailer extends \XLite\View\AView
      * Check - is copose procedure runned or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isComposeRunned()
     {
@@ -177,8 +147,6 @@ class Mailer extends \XLite\View\AView
      * @param mixed  $value Property value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function set($name, $value)
     {
@@ -215,8 +183,6 @@ class Mailer extends \XLite\View\AView
      * @param string $interface     Interface to use for mail OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function compose($from, $to, $dir, $customHeaders = array(), $interface = \XLite::CUSTOMER_INTERFACE)
     {
@@ -283,8 +249,6 @@ class Mailer extends \XLite\View\AView
      * Send message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function send()
     {
@@ -341,8 +305,6 @@ class Mailer extends \XLite\View\AView
      * Return decription of the last occured error
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLastError()
     {
@@ -354,8 +316,6 @@ class Mailer extends \XLite\View\AView
       * Get default template
       *
       * @return string
-      * @see    ____func_see____
-      * @since  1.0.0
       */
     protected function getDefaultTemplate()
     {
@@ -368,8 +328,6 @@ class Mailer extends \XLite\View\AView
      * @param string $html Message body
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function createAltBody($html)
     {
@@ -387,8 +345,6 @@ class Mailer extends \XLite\View\AView
      * Inner mailer initialization from set variables
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initMailFromSet()
     {
@@ -444,8 +400,6 @@ class Mailer extends \XLite\View\AView
      * Inner mailer initialization from DB configuration
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initMailFromConfig()
     {
@@ -491,8 +445,6 @@ class Mailer extends \XLite\View\AView
      * @param boolean $switchLayout Switch laout flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function compile($template, $interface = \XLite::CUSTOMER_INTERFACE, $switchLayout = true)
     {
@@ -527,8 +479,6 @@ class Mailer extends \XLite\View\AView
      * Get headers as string
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHeaders()
     {
@@ -548,8 +498,6 @@ class Mailer extends \XLite\View\AView
      * @param string $message Message
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function prepareErrorMessage($message)
     {

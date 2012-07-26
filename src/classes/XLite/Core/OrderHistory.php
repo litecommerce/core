@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Order history main point of execution
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderHistory extends \XLite\Base\Singleton
 {
@@ -56,17 +54,19 @@ class OrderHistory extends \XLite\Base\Singleton
     /**
      * Register event to the order history. Main point of action.
      *
-     * @param integer $orderId
-     * @param string  $code
-     * @param string  $description
-     * @param string  $details
+     * @param integer $orderId     Order identificator
+     * @param string  $code        Event code
+     * @param string  $description Event description
+     * @param array   $data        Data for event description OPTIONAL
+     * @param string  $comment     Event comment OPTIONAL
+     * @param string  $details     Event details OPTIONAL
      *
      * @return void
      */
-    public function registerEvent($orderId, $code, $description, array $data = array(), $details = '')
+    public function registerEvent($orderId, $code, $description, array $data = array(), $comment = '', $details = array())
     {
         \XLite\Core\Database::getRepo('XLite\Model\OrderHistoryEvents')
-            ->registerEvent($orderId, $code, $description, $data, $details);
+            ->registerEvent($orderId, $code, $description, $data, $comment, $details);
     }
 
     /**
@@ -75,8 +75,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerPlaceOrder($orderId)
     {
@@ -95,8 +93,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param array   $changes
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerOrderChanges($orderId, $changes)
     {
@@ -114,8 +110,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param array   $change  old,new structure
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerOrderChangeStatus($orderId, $change)
     {
@@ -136,8 +130,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param array   $change  old,new structure
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerOrderChangeAdminNotes($orderId, $change)
     {
@@ -155,8 +147,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerCustomerEmailSent($orderId)
     {
@@ -174,8 +164,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerAdminEmailSent($orderId)
     {
@@ -194,17 +182,16 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param string  $transactionData
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function registerTransaction($orderId, $transactionData)
+    public function registerTransaction($orderId, $description, $details = array(), $comment = '')
     {
         $this->registerEvent(
             $orderId,
             static::CODE_TRANSACTION,
-            $this->getTransactionDescription($orderId, $transactionData),
-            $this->getTransactionData($orderId, $transactionData),
-            $this->getTransactionDetails($orderId, $transactionData)
+            $description,
+            array(),
+            $comment,
+            $details
         );
     }
 
@@ -214,8 +201,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPlaceOrderDescription($orderId)
     {
@@ -228,8 +213,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPlaceOrderData($orderId)
     {
@@ -245,8 +228,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param array   $change
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderChangeStatusDescription($orderId, array $change)
     {
@@ -260,8 +241,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param array   $change
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderChangeStatusData($orderId, array $change)
     {
@@ -281,8 +260,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param array   $change
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderChangeNotesDescription($orderId, $change)
     {
@@ -296,8 +273,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param array   $change
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderChangeNotesData($orderId, $change)
     {
@@ -314,8 +289,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCustomerEmailSentDescription($orderId)
     {
@@ -328,8 +301,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCustomerEmailSentData($orderId)
     {
@@ -344,8 +315,6 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAdminEmailSentDescription($orderId)
     {
@@ -358,61 +327,11 @@ class OrderHistory extends \XLite\Base\Singleton
      * @param integer $orderId
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAdminEmailSentData($orderId)
     {
         return array(
             'orderId' => $orderId,
         );
-    }
-
-    /**
-     * Text for transaction description
-     *
-     * @param integer $orderId
-     * @param mixed   $transactionData
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getTransactionDescription($orderId, $transactionData)
-    {
-        return static::TXT_TRANSACTION;
-    }
-
-    /**
-     * Data for transaction description
-     *
-     * @param integer $orderId
-     * @param mixed   $transactionData
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getTransactionData($orderId, $transactionData)
-    {
-        return array(
-            'orderId'   => $orderId,
-            'data'      => $transactionData,
-        );
-    }
-
-    /**
-     * Details for transaction description
-     *
-     * @param integer $orderId
-     * @param mixed   $transactionData
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getTransactionDetails($orderId, $transactionData)
-    {
-        return $transactionData;
     }
 }

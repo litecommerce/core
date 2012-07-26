@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Low inventory box
  * 
- * @see   ____class_see____
- * @since 1.0.18
  *
  * @ListChild (list="main", weight="200", zone="admin")
  */
@@ -40,8 +38,6 @@ class LowInventoryBox extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -52,8 +48,6 @@ class LowInventoryBox extends \XLite\View\AView
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function checkACL()
     {

@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Minicart widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="layout.header.right", weight="100")
  */
@@ -54,9 +52,7 @@ class Minicart extends \XLite\View\SideBarBox
     /**
      * Widget directories
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
@@ -67,8 +63,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -82,8 +76,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -97,8 +89,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -112,8 +102,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Get widget templates directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -124,8 +112,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Return up to 3 items from cart
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsList()
     {
@@ -140,8 +126,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Check whether in cart there are more than 3 items
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isTruncated()
     {
@@ -152,8 +136,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Return a CSS class depending on whether the minicart is empty or collapsed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCollapsed()
     {
@@ -164,8 +146,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Get cart total
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTotals()
     {
@@ -176,8 +156,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

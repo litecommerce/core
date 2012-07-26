@@ -28,8 +28,6 @@ namespace XLite\View\PagerOrig;
 /**
  * Pager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrdersList extends \XLite\View\PagerOrig\Common
 {
@@ -39,8 +37,6 @@ class OrdersList extends \XLite\View\PagerOrig\Common
      * @param integer $pageId Page ID
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageURLParams($pageId)
     {

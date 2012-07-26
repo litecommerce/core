@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\Core;
 /**
  * Event listener (common) 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 abstract class EventListener extends \XLite\Core\EventListener implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class EventListener extends \XLite\Core\EventListener implements \XLite
      * Get listeners
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getListeners()
     {

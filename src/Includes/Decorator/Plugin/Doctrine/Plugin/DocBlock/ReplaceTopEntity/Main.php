@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ReplaceTopEntity;
 /**
  * Main
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
 {
@@ -39,8 +37,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function checkRewriteCondition(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -53,8 +49,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function correctTagsOnElement(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -71,8 +65,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return string Doctrine specified parameter for @Entity and @MappedSuperClass
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRepositoryCustomClassParameter(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -87,8 +79,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRepositoryClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -119,8 +109,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
      * @param string $class Model class name
      *
      * @return string Default model repository class name
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultRepositoryClass($class)
     {

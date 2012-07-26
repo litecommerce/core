@@ -28,8 +28,6 @@ namespace XLite\View\Form\Profile;
 /**
  * \XLite\View\Form\Profile\Main
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\View\Form\Profile\AProfile
 {
@@ -38,8 +36,6 @@ class Main extends \XLite\View\Form\Profile\AProfile
      * isRegisterMode
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isRegisterMode()
     {
@@ -50,8 +46,6 @@ class Main extends \XLite\View\Form\Profile\AProfile
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -62,8 +56,6 @@ class Main extends \XLite\View\Form\Profile\AProfile
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -74,8 +66,6 @@ class Main extends \XLite\View\Form\Profile\AProfile
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

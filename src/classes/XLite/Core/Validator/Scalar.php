@@ -28,8 +28,6 @@ namespace XLite\Core\Validator;
 /**
  * Scalar
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Scalar extends \XLite\Core\Validator\AValidator
 {

@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Category;
 /**
  * QuickFlags repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class QuickFlags extends \XLite\Model\Repo\ARepo
 {

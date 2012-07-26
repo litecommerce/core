@@ -28,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Payment method callback
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Callback extends \XLite\Controller\Customer\ACustomer
 {
@@ -37,8 +35,6 @@ class Callback extends \XLite\Controller\Customer\ACustomer
      * Handles the request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -53,8 +49,6 @@ class Callback extends \XLite\Controller\Customer\ACustomer
      * TODO - check if it's really needed; remove if not
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkStorefrontAccessability()
     {
@@ -65,8 +59,6 @@ class Callback extends \XLite\Controller\Customer\ACustomer
      * Process callback
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionCallback()
     {

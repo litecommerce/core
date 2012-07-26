@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\FormField\Select;
 /**
  * Use Custom Open Graph selector
  * 
- * @see   ____class_see____
- * @since 1.0.23
  */
 class UseCustomOpenGraph extends \XLite\View\FormField\Select\ASelect
 {
@@ -37,8 +35,6 @@ class UseCustomOpenGraph extends \XLite\View\FormField\Select\ASelect
      * Return default options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

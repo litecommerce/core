@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Shipping settings management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingSettings extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * Returns shipping options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -50,8 +46,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -62,8 +56,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * Do action 'Update'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionUpdate()
     {
@@ -100,8 +92,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * @param mixed $stateId ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStateById($stateId)
     {
@@ -112,8 +102,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * getOptionsCategory
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOptionsCategory()
     {

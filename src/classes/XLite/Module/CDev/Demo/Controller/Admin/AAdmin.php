@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\Demo\Controller\Admin;
 /**
  * AAdmin
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\Base\IDecorator
 {
     /**
      * Controllers which actions are all forbidden in demo mode
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $demoControllers = array(
         'XLite\Controller\Admin\AddonsInstall',
@@ -64,9 +60,7 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
     /**
      * Actions permitted in demo mode
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $demoPermittedActions = array(
         'XLite\Controller\Admin\Languages' => array(
@@ -77,9 +71,7 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
     /**
      * Actions forbidden in demo mode
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $demoForbiddenActions = array();
 
@@ -88,8 +80,6 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      * Message to display if action is forbidden
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getForbidInDemoModeMessage()
     {
@@ -100,8 +90,6 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      * URL to redirect if action is forbidden
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getForbidInDemoModeRedirectURL()
     {
@@ -112,8 +100,6 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      * This function is called if action is forbidden in demo mode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function forbidInDemoMode()
     {
@@ -132,8 +118,6 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      * Check if we need to forbid current action
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkForDemoController()
     {
@@ -148,8 +132,6 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      * Check if specific action is permitted
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDemoActionPermitted($class)
     {
@@ -161,8 +143,6 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      * Check if specific action is forbidden
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDemoActionForbidden($class)
     {
@@ -174,8 +154,6 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      * Call controller action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callAction()
     {

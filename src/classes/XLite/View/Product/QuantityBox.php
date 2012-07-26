@@ -28,8 +28,6 @@ namespace XLite\View\Product;
 /**
  * QuantityBox
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class QuantityBox extends \XLite\View\Product\AProduct
 {
@@ -49,8 +47,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -64,8 +60,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -80,8 +74,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Return directory contains the template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -92,8 +84,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -113,8 +103,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      *
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -125,8 +113,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBoxName()
     {
@@ -137,8 +123,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBoxId()
     {
@@ -149,8 +133,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBoxValue()
     {
@@ -161,8 +143,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBoxTitle()
     {
@@ -173,8 +153,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCartPage()
     {
@@ -185,8 +163,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Default CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultClass()
     {
@@ -197,8 +173,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * CSS class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {
@@ -209,8 +183,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Return name of the \XLite\Model\Inventory model to get max available quantity
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMaxQuantityMethod()
     {
@@ -221,8 +193,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Return maximum allowed quantity
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMaxQuantity()
     {
@@ -233,8 +203,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Return minimum quantity
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMinQuantity()
     {

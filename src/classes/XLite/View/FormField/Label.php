@@ -28,8 +28,6 @@ namespace XLite\View\FormField;
 /**
  * Label
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Label extends \XLite\View\FormField\Label\ALabel
 {
@@ -37,8 +35,6 @@ class Label extends \XLite\View\FormField\Label\ALabel
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {

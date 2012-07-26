@@ -28,8 +28,6 @@ namespace XLite\Model\Payment\Base;
 /**
  * Abstract online (gateway-based) processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Online extends \XLite\Model\Payment\Base\Processor
 {
@@ -54,8 +52,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -68,8 +64,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Get return type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnType()
     {
@@ -82,8 +76,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processCallback(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -96,8 +88,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Get callback request owner transaction or null
      *
      * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCallbackOwnerTransaction()
     {
@@ -110,8 +100,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param string $message Message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function markCallbackRequestAsInvalid($message)
     {
@@ -129,8 +117,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Get client IP
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClientIP()
     {
@@ -150,8 +136,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Get invoice description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInvoiceDescription()
     {
@@ -163,8 +147,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Define saved into transaction data schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSavedData()
     {
@@ -175,8 +157,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Save request data into transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveDataFromRequest($backendTransaction = null)
     {
@@ -190,8 +170,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param \XLite\Model\Payment\BackendTransaction $backendTransaction Backend transaction object OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveFilteredData($data, $backendTransaction = null)
     {
@@ -209,8 +187,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param string $name CEll key
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function maskCell(array $list, $name)
     {
@@ -227,8 +203,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param array $list Request data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logReturn(array $list)
     {
@@ -245,8 +219,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param array $list Callback data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logCallback(array $list)
     {
@@ -265,8 +237,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param boolean $asCancel  Mark URL as cancel action OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getReturnURL($fieldName = self::RETURN_TXN_ID, $withId = false, $asCancel = false)
     {
@@ -295,8 +265,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param boolean $withId    Add to URL transaction id or not OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCallbackURL($fieldName = self::RETURN_TXN_ID, $withId = false)
     {
@@ -320,8 +288,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param float $total Total from gateway response
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkTotal($total)
     {
@@ -348,8 +314,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param string $currency Transaction response currency code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkCurrency($currency)
     {

@@ -21,6 +21,8 @@ jQuery().ready(
         var buttons = jQuery('button', box);
         var form    = box.closest('form');
 
+        form.get(0).commonController.submitOnlyChanged = true;
+
         form.bind(
           'sticky_undo_buttons',
           function (e){

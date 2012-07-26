@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View;
 /**
  * Page modify widget
  * 
- * @see   ____class_see____
- * @since 1.0.15
  *
  * @LC_Dependencies ("CDev\SimpleCMS")
  */
@@ -42,8 +40,6 @@ class PageModify extends \XLite\Module\CDev\SimpleCMS\View\Model\Page implements
      * @param array $sections Sections list OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {

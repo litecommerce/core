@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * \XLite\View\FormField\Select\State
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class State extends \XLite\View\FormField\Select\Regular
 {
@@ -37,8 +35,6 @@ class State extends \XLite\View\FormField\Select\Regular
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -49,8 +45,6 @@ class State extends \XLite\View\FormField\Select\Regular
      * getDefaultOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

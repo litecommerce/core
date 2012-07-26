@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Category selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CategorySelect extends \XLite\View\AView
 {
@@ -48,27 +46,21 @@ class CategorySelect extends \XLite\View\AView
     /**
      * Current category ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.6
+     * @var integer
      */
     protected $currentCategoryID;
 
     /**
      * List of the nodes in current path
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.6
+     * @var array
      */
     protected $currentPath = array();
 
     /**
      * Base multiplier of current intendation
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.6
+     * @var integer
      */
     protected $currentIndent = 0;
 
@@ -76,8 +68,6 @@ class CategorySelect extends \XLite\View\AView
      * Get categories list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategories()
     {
@@ -88,8 +78,6 @@ class CategorySelect extends \XLite\View\AView
      * Check - display 'No categories' option or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDisplayNoCategories()
     {
@@ -102,8 +90,6 @@ class CategorySelect extends \XLite\View\AView
      * @param array $category Category data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.6
      */
     protected function getCategoryName(array $category)
     {
@@ -116,8 +102,6 @@ class CategorySelect extends \XLite\View\AView
      * @param array $category Category data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getCategoryPath(array $category)
     {
@@ -128,8 +112,6 @@ class CategorySelect extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -140,8 +122,6 @@ class CategorySelect extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -165,8 +145,6 @@ class CategorySelect extends \XLite\View\AView
      * @param array $category Category
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCategorySelected(array $category)
     {
@@ -181,8 +159,6 @@ class CategorySelect extends \XLite\View\AView
      * @param integer $multiplier Level's multiplier
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIndentation(array $category, $multiplier)
     {
@@ -215,8 +191,6 @@ class CategorySelect extends \XLite\View\AView
      * @param string  $repeatStr String to be displayed $multiplier times before category name OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     protected function getIndentationString(array $category, $multiplier, $repeatStr = '')
     {

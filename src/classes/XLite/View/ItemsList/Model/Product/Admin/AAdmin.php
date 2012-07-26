@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Model\Product\Admin;
 /**
  * Abstarct admin-interface products list
  * 
- * @see   ____class_see____
- * @since 1.0.16
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Model\Product\AProduct
 {
@@ -39,8 +37,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Product\AProduct
      * @param integer $count Count
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getRemoveMessage($count)
     {
@@ -53,8 +49,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Product\AProduct
      * @param integer $count Count
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getCreateMessage($count)
     {
@@ -65,8 +59,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Product\AProduct
      * Get create entity URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getCreateURL()
     {

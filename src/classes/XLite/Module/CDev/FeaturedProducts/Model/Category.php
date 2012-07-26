@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\FeaturedProducts\Model;
 /**
  * Category model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
 {
     /**
      * Featured products (relation)
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct", mappedBy="category", cascade={"all"})
      */
@@ -50,8 +46,6 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

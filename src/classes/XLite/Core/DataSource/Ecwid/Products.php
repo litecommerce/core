@@ -28,8 +28,6 @@ namespace XLite\Core\DataSource\Ecwid;
 /**
  * Ecwid products collection
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Products extends \XLite\Core\DataSource\Base\Products
 {
@@ -37,27 +35,21 @@ class Products extends \XLite\Core\DataSource\Base\Products
     /**
      * Stores current iterator position
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      */
     protected $position;
 
     /**
      * Contains all products (though information for each is restrained)
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var array
      */
     protected $allProducts;
 
     /**
      * An array with cached products (full info)
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var array
      */
     protected $products = array();
 
@@ -67,8 +59,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * @param \XLite\Core\DataSource\Ecwid $dataSource Ecwid data source
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function __construct(\XLite\Core\DataSource\Ecwid $dataSource)
     {
@@ -85,8 +75,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Countable::count 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function count()
     {
@@ -98,8 +86,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Returns current product index
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function key()
     {
@@ -111,8 +97,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Sets position to the start
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function rewind()
     {
@@ -124,8 +108,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Advances position one step forward
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function next()
     {
@@ -137,8 +119,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Checks if current position is valid
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function valid()
     {
@@ -153,8 +133,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      *  
      * @return void
      * @throws OutOfBoundException
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function seek($position)
     {
@@ -171,8 +149,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * 
      * @return void
      * @throws OutOfBoundException
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function current()
     {
@@ -210,8 +186,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * @param array $data Raw data
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function normalizeProduct(array $data)
     {

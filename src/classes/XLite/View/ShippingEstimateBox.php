@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Shipping estimate box
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="cart.panel.box", weight="10")
  */
@@ -38,9 +36,7 @@ class ShippingEstimateBox extends \XLite\View\AView
     /**
      * Modifier (cache)
      *
-     * @var   \XLite\Model\Order\Modifier
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order\Modifier
      */
     protected $modifier;
 
@@ -48,8 +44,6 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -60,8 +54,6 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -74,8 +66,6 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Check - shipping estimate and method selected or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isShippingEstimate()
     {
@@ -87,8 +77,6 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Get modifier
      *
      * @return \XLite\Model\Order\Modifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModifier()
     {
@@ -103,8 +91,6 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Get shipping cost
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getShippingCost()
     {
@@ -118,8 +104,6 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Get shipping estimate address
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getEstimateAddress()
     {

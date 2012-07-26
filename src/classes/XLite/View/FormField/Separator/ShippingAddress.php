@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Separator;
 /**
  * \XLite\View\FormField\Separator\ShippingAddress
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingAddress extends \XLite\View\FormField\Separator\ASeparator
 {
@@ -44,8 +42,6 @@ class ShippingAddress extends \XLite\View\FormField\Separator\ASeparator
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -60,8 +56,6 @@ class ShippingAddress extends \XLite\View\FormField\Separator\ASeparator
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -72,8 +66,6 @@ class ShippingAddress extends \XLite\View\FormField\Separator\ASeparator
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -90,8 +82,6 @@ class ShippingAddress extends \XLite\View\FormField\Separator\ASeparator
      * Show the "Ship as bill" checkbox
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function showShipAsBillCheckbox()
     {

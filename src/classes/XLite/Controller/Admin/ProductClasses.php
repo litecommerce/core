@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Product classes
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ProductClasses extends \XLite\Controller\Admin\AAdmin
 {
@@ -48,8 +46,6 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -60,8 +56,6 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      * Update action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -86,8 +80,6 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      * @param string $name Name value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addClass($name)
     {

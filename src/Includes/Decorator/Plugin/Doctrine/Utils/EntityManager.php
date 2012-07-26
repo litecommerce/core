@@ -28,26 +28,20 @@ namespace Includes\Decorator\Plugin\Doctrine\Utils;
 /**
  * EntityManager 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
     /**
      * Entity manager
      *
-     * @var   \Doctrine\ORM\EntityManager
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\ORM\EntityManager
      */
     protected static $handler;
 
     /**
      * Model classes metadata
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $metadata;
 
@@ -57,8 +51,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @param string $class Class name OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllMetadata($class = null)
     {
@@ -78,8 +70,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Generate models
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function generateModels()
     {
@@ -90,8 +80,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Generate proxies
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function generateProxies()
     {
@@ -102,8 +90,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Retur DSN as params array
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDSN()
     {
@@ -117,8 +103,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @param \Doctrine\ORM\Configuration $config Config object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function setMetadataDriver(\Doctrine\ORM\Configuration $config)
     {
@@ -159,8 +143,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Return the Doctrine config object
      *
      * @return \Doctrine\ORM\Configuration
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getConfig()
     {
@@ -184,8 +166,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Return instance of the entity manager
      *
      * @return \Doctrine\ORM\EntityManager
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getHandler()
     {
@@ -201,8 +181,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Return the Doctrine tools
      *
      * @return \Doctrine\ORM\Tools\EntityGenerator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getEntityGenerator()
     {

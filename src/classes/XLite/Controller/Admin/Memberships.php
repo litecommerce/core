@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Memberships management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Memberships extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -49,8 +45,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -61,8 +55,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Update membership list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -116,8 +108,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Delete some membership(s)
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -128,8 +118,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Define memberships identificators array to remove
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMembershipIdsToDelete()
     {
@@ -142,8 +130,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Add new membership
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {

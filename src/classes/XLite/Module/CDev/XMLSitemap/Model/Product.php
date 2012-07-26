@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\Model;
 /**
  * Product 
  * 
- * @see   ____class_see____
- * @since 1.0.12
  *
  * @HasLifecycleCallbacks
  */
@@ -39,8 +37,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Clear sitemaps 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      *
      * @PrePersist
      * @PreUpdate

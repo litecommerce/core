@@ -28,8 +28,6 @@ namespace XLite\DataSet\Transport\Order;
 /**
  * Surcharge info
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Surcharge extends \XLite\DataSet\Transport\ATransport
 {
@@ -37,8 +35,6 @@ class Surcharge extends \XLite\DataSet\Transport\ATransport
      * Define keys
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineKeys()
     {

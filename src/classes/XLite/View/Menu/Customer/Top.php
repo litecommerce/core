@@ -28,8 +28,6 @@ namespace XLite\View\Menu\Customer;
 /**
  * Main menu
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="layout.main", weight="250")
  */
@@ -39,8 +37,6 @@ class Top extends \XLite\View\Menu\AMenu
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -51,8 +47,6 @@ class Top extends \XLite\View\Menu\AMenu
      * Define menu items
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineItems()
     {

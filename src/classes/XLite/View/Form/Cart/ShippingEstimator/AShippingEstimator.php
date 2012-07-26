@@ -28,8 +28,6 @@ namespace XLite\View\Form\Cart\ShippingEstimator;
 /**
  * Abstract shipping estimator form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AShippingEstimator extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ abstract class AShippingEstimator extends \XLite\View\Form\AForm
      * Get default form target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ abstract class AShippingEstimator extends \XLite\View\Form\AForm
      * Required form parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     protected function getCommonFormParams()
     {

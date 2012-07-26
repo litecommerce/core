@@ -29,8 +29,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Button;
 /**
  * 'Add user' button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddUser extends \XLite\View\Button\AddUser implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ class AddUser extends \XLite\View\Button\AddUser implements \XLite\Base\IDecorat
      * Disable button 'Add user'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

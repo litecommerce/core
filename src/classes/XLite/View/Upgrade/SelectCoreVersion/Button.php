@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade\SelectCoreVersion;
 /**
  * Button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Button extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
 {
@@ -37,8 +35,6 @@ class Button extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -52,8 +48,6 @@ class Button extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -67,8 +61,6 @@ class Button extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -79,8 +71,6 @@ class Button extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

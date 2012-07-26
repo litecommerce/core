@@ -16,14 +16,13 @@ function OrderEventDetails()
 
     jQuery('.action', $elem)
     .bind('click', function(event) {
-      jQuery('*', $elem).trigger('toggle-action');
+      jQuery('.order-event-details .details', $elem).trigger('toggle-action');
     })
     .bind('toggle-action', function() {
       jQuery(this).toggleClass('show-details');
     });
 
-
-    jQuery('.details', $elem).bind('toggle-action', function() {
+    jQuery('.order-event-details .details', $elem).bind('toggle-action', function() {
       jQuery(this).toggleClass('show-details');
     });
   });

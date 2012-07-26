@@ -28,8 +28,6 @@ namespace XLite\View\Form\Checkout;
 /**
  * Checkout abstract form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ACheckout extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ abstract class ACheckout extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {

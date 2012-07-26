@@ -29,8 +29,6 @@ namespace Includes\Decorator\Plugin\Templates\Data\Templates;
  * Node
  *
  * @package    XLite
- * @see        ____class_see____
- * @since      1.0.0
  */
 class Node extends \Includes\DataStructure\Cell
 {
@@ -40,9 +38,6 @@ class Node extends \Includes\DataStructure\Cell
      * @param string $name tag name
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTag($name)
     {

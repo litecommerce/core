@@ -29,8 +29,6 @@ namespace XLite\View\OrderList;
  * Orders search widget
  * TODO: reimplement with items lists usage
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="orders.search.base", weight="30")
  */
@@ -39,18 +37,14 @@ class Search extends \XLite\View\OrderList\AOrderList
     /**
      * Widget class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $widgetClass = '\XLite\View\OrderList\Search';
 
     /**
      * Search conditions (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $conditions = null;
 
@@ -59,8 +53,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get orders
      *
      * @return array(\XLite\Model\Order)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrders(\XLite\Core\CommonCell $cnd = null)
     {
@@ -77,8 +69,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get page data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPageData()
     {
@@ -98,8 +88,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get page id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPageId()
     {
@@ -111,8 +99,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get profile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -123,8 +109,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get widget keys
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWidgetKeys()
     {
@@ -137,8 +121,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get conditions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getConditions(\XLite\Core\CommonCell $cnd = null)
     {

@@ -28,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Translation-owner abstract class
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -38,9 +36,7 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Current entity language
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.20
+     * @var string
      */
     protected $editLanguage;
 
@@ -50,8 +46,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -66,8 +60,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Code to set
      *
      * @return self
-     * @see    ____func_see____
-     * @since  1.0.20
      */
     public function setEditLanguage($code)
     {
@@ -80,8 +72,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * Return all translations
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslations()
     {
@@ -94,8 +84,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param \XLite\Model\Base\Translation $translation Translation to add
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addTranslations(\XLite\Model\Base\Translation $translation)
     {
@@ -109,8 +97,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param boolean $allowEmptyResult Flag OPTIONAL
      *
      * @return \XLite\Model\Base\Translation
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslation($code = null, $allowEmptyResult = false)
     {
@@ -134,8 +120,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Language code OPTIONAL
      *
      * @return \XLite\Model\Base\Translation
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function getHardTranslation($code = null)
     {
@@ -152,8 +136,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Language code OPTIONAL
      *
      * @return \XLite\Model\Base\Translation
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSoftTranslation($code = null)
     {
@@ -187,8 +169,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Language code OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasTranslation($code = null)
     {
@@ -199,8 +179,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * Get translation codes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslationCodes()
     {
@@ -211,8 +189,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * Detach self
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function detach()
     {
@@ -229,8 +205,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Language code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getTranslationCode($code = null)
     {
@@ -245,8 +219,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * Get default language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSessionLanguageCode()
     {

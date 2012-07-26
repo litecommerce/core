@@ -28,8 +28,6 @@ namespace XLite\View\JS;
 /**
  * \XLite\View\JS\StatesList
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class StatesList extends \XLite\View\JS\AJS
 {
@@ -37,8 +35,6 @@ class StatesList extends \XLite\View\JS\AJS
      * getCountriesStates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCountriesStates()
     {
@@ -49,8 +45,6 @@ class StatesList extends \XLite\View\JS\AJS
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

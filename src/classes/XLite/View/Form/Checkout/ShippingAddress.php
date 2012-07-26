@@ -28,8 +28,6 @@ namespace XLite\View\Form\Checkout;
 /**
  * Shipping address form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingAddress extends \XLite\View\Form\Checkout\ACheckout
 {
@@ -37,8 +35,6 @@ class ShippingAddress extends \XLite\View\Form\Checkout\ACheckout
      * Get default form action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

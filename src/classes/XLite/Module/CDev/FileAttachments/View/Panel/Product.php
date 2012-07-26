@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\View\Panel;
 /**
  * Product attachments panel
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 class Product extends \XLite\View\Base\StickyPanel
 {
@@ -37,8 +35,6 @@ class Product extends \XLite\View\Base\StickyPanel
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

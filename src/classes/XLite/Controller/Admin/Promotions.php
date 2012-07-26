@@ -28,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Common promotions controller
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Promotions extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * FIXME- backward compatibility
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'page');
 
@@ -48,8 +44,6 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
      * Get pages static 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function getPagesStatic()
     {
@@ -60,8 +54,6 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -78,8 +70,6 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {

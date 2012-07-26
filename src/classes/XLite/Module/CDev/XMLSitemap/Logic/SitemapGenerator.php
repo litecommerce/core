@@ -28,26 +28,20 @@ namespace XLite\Module\CDev\XMLSitemap\Logic;
 /**
  * Sitemap generator 
  * 
- * @see   ____class_see____
- * @since 1.0.12
  */
 class SitemapGenerator extends \XLite\Base\Singleton
 {
     /**
      * File index 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.12
+     * @var integer
      */
     protected $fileIndex;
 
     /**
      * Empty file flag
      * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.12
+     * @var boolean
      */
     protected $emptyFile = false;
 
@@ -55,8 +49,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Get sitemap index 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function getIndex()
     {
@@ -84,8 +76,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * @param integer $index Index
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function getSitemap($index)
     {
@@ -98,8 +88,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Check - sitemap empty or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function isEmpty()
     {
@@ -110,8 +98,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Check - sitemaps files generated or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function isGenerated()
     {
@@ -124,8 +110,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Generate index file and sitemap files
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function generate()
     {
@@ -137,8 +121,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Clear files directory
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function clear()
     {
@@ -151,8 +133,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Generate sitemap files
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function generateSitemaps()
     {
@@ -169,8 +149,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Get head 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function getHead()
     {
@@ -182,8 +160,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Get footer 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function getFooter()
     {
@@ -196,8 +172,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * @param array $record Record
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function assembleRecord(array $record)
     {
@@ -219,8 +193,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * @param array $loc Locationb as array
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function buildLoc(array $loc)
     {
@@ -234,8 +206,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Get iterator 
      * 
      * @return \XLite\Module\CDev\XMLSitemap\Logic\SitemapIterator
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function getIterator()
     {
@@ -246,8 +216,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Initialize write 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function initializeWrite()
     {
@@ -269,8 +237,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Finalize write 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function finalizeWrite()
     {
@@ -290,8 +256,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * @param string $string String
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function writeRecord($string)
     {
@@ -315,8 +279,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Get sitemap path
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function getSitemapPath()
     {
@@ -327,8 +289,6 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * Check - need switch to next file or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function needSwitch()
     {

@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Currency management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Currency extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Currency extends \XLite\Controller\Admin\AAdmin
      * init
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -63,8 +59,6 @@ class Currency extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -75,8 +69,6 @@ class Currency extends \XLite\Controller\Admin\AAdmin
      * Return currencies collection to use
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrencies()
     {
@@ -91,8 +83,6 @@ class Currency extends \XLite\Controller\Admin\AAdmin
      * Modify currency action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionModify()
     {
@@ -103,8 +93,6 @@ class Currency extends \XLite\Controller\Admin\AAdmin
      * Class name for the \XLite\View\Model\ form
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {

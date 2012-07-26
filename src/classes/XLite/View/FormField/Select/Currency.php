@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Currencies list
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class Currency extends \XLite\View\FormField\Select\Regular
 {
@@ -37,8 +35,6 @@ class Currency extends \XLite\View\FormField\Select\Regular
      * getDefaultOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getDefaultOptions()
     {

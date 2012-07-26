@@ -28,8 +28,6 @@ namespace XLite\View\Tabs;
 /**
  * Tabs related to user profile section
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -38,18 +36,14 @@ class Account extends \XLite\View\Tabs\ATabs
     /**
      * User profile object
      *
-     * @var   \XLite\Model\Profile
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Profile
      */
     protected $profile;
 
     /**
      * Description of tabs related to user profile section and their targets
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $tabs = array(
         'profile' => array(
@@ -70,8 +64,6 @@ class Account extends \XLite\View\Tabs\ATabs
      * Returns the list of targets where this widget is available
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -88,8 +80,6 @@ class Account extends \XLite\View\Tabs\ATabs
      * init
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -111,8 +101,6 @@ class Account extends \XLite\View\Tabs\ATabs
      * getProfile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfile()
     {
@@ -140,8 +128,6 @@ class Account extends \XLite\View\Tabs\ATabs
      * @param string $target Tab target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function buildTabURL($target)
     {
@@ -154,8 +140,6 @@ class Account extends \XLite\View\Tabs\ATabs
      * getTitle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTitle()
     {

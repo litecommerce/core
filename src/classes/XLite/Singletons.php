@@ -28,26 +28,20 @@ namespace XLite;
 /**
  * Singletons
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Singletons
 {
     /**
      * handler
      *
-     * @var   \Includes\Singletons
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var \Includes\Singletons
      */
     public static $handler;
 
     /**
      * classNames
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var array
      */
     protected static $classNames = array(
         'xlite'   => '\XLite',
@@ -63,8 +57,6 @@ class Singletons
      * __constructStatic
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     public static function __constructStatic()
     {
@@ -77,8 +69,6 @@ class Singletons
      * @param string $name Variable name
      *
      * @return \XLite\Base\Singleton
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     public function __get($name)
     {

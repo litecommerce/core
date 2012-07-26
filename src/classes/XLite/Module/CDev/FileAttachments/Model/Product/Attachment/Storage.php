@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\Model\Product\Attachment;
 /**
  * Product attchament's storage 
  * 
- * @see   ____class_see____
- * @since 1.0.10
  *
  * @Entity
  * @Table  (name="product_attachment_storages")
@@ -41,9 +39,7 @@ class Storage extends \XLite\Model\Base\Storage
     /**
      * Relation to a attachment
      *
-     * @var   \XLite\Module\CDev\FileAttachments\Model\Product\Attachment
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\FileAttachments\Model\Product\Attachment
      *
      * @OneToOne  (targetEntity="XLite\Module\CDev\FileAttachments\Model\Product\Attachment", inversedBy="storage")
      * @JoinColumn (name="attachment_id", referencedColumnName="id")
@@ -58,8 +54,6 @@ class Storage extends \XLite\Model\Base\Storage
      * Get valid file system storage root
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getValidFileSystemRoot()
     {
@@ -84,8 +78,6 @@ class Storage extends \XLite\Model\Base\Storage
      * @param string $path Path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function assembleSavePath($path)
     {
@@ -96,8 +88,6 @@ class Storage extends \XLite\Model\Base\Storage
      * Get valid file system storage root
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getStoreFileSystemRoot()
     {

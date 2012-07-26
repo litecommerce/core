@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Category
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category")
  * @Table  (name="categories",
@@ -45,9 +43,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Node unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -58,9 +54,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Node left value
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -69,9 +63,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Node right value
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -80,9 +72,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Node status
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -91,9 +81,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Whether to display the category title, or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -102,9 +90,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Category "depth" in the tree
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.6
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -113,9 +99,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Category position parameter. Sort inside the parent category
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -124,9 +108,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Some cached flags
      *
-     * @var   \XLite\Model\Category\QuickFlags
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Category\QuickFlags
      *
      * @OneToOne (targetEntity="XLite\Model\Category\QuickFlags", mappedBy="category", cascade={"all"})
      */
@@ -135,9 +117,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Many-to-one relation with memberships table
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id", onDelete="SET NULL")
@@ -147,9 +127,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * One-to-one relation with category_images table
      *
-     * @var   \XLite\Model\Image\Category\Image
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Image\Category\Image
      *
      * @OneToOne  (targetEntity="XLite\Model\Image\Category\Image", mappedBy="category", cascade={"all"})
      */
@@ -158,9 +136,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Relation to a CategoryProducts entities
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="category", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
@@ -170,9 +146,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Child categories
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\Category", mappedBy="parent", cascade={"all"})
      * @OrderBy({"pos" = "ASC"})
@@ -182,9 +156,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Parent category
      *
-     * @var   \XLite\Model\Category
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Category
      *
      * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="children")
      * @JoinColumn (name="parent_id", referencedColumnName="category_id")
@@ -194,9 +166,7 @@ class Category extends \XLite\Model\Base\Catalog
     /**
      * Caching flag to check if the category is visible in the parents branch.
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.7
+     * @var boolean
      */
     protected $flagVisible = null;
 
@@ -206,8 +176,6 @@ class Category extends \XLite\Model\Base\Catalog
      * @param \XLite\Model\Category $parent Parent category OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setParent(\XLite\Model\Category $parent = null)
     {
@@ -220,8 +188,6 @@ class Category extends \XLite\Model\Base\Catalog
      * @param \XLite\Model\Image\Category\Image $image Image OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setImage(\XLite\Model\Image\Category\Image $image = null)
     {
@@ -232,8 +198,6 @@ class Category extends \XLite\Model\Base\Catalog
      * Check if category has image
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasImage()
     {
@@ -244,8 +208,6 @@ class Category extends \XLite\Model\Base\Catalog
      * Check every parent of category to be enabled.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     public function isVisible()
     {
@@ -272,8 +234,6 @@ class Category extends \XLite\Model\Base\Catalog
      * Get the number of subcategories
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSubCategoriesCount()
     {
@@ -295,8 +255,6 @@ class Category extends \XLite\Model\Base\Catalog
      * Check if category has subcategories
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasSubcategories()
     {
@@ -307,8 +265,6 @@ class Category extends \XLite\Model\Base\Catalog
      * Return subcategories list
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSubcategories()
     {
@@ -326,8 +282,6 @@ class Category extends \XLite\Model\Base\Catalog
      * @param boolean $hasSelf Flag to include itself
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSiblings($hasSelf = false)
     {
@@ -338,8 +292,6 @@ class Category extends \XLite\Model\Base\Catalog
      * Get category path
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public function getPath()
     {
@@ -350,8 +302,6 @@ class Category extends \XLite\Model\Base\Catalog
      * Gets full path to the category as a string: <parent category>/.../<category name>
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStringPath()
     {
@@ -368,8 +318,6 @@ class Category extends \XLite\Model\Base\Catalog
      * Return parent category ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     public function getParentId()
     {
@@ -382,8 +330,6 @@ class Category extends \XLite\Model\Base\Catalog
      * @param integer $parentID Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     public function setParentId($parentID)
     {
@@ -396,8 +342,6 @@ class Category extends \XLite\Model\Base\Catalog
      * TODO: check if result of "getProducts()" is cached by Doctrine
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProductsCount()
     {
@@ -411,8 +355,6 @@ class Category extends \XLite\Model\Base\Catalog
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProducts(\XLite\Core\CommonCell $cnd = null, $countOnly = false)
     {
@@ -432,8 +374,6 @@ class Category extends \XLite\Model\Base\Catalog
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

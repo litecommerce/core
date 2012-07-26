@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemapDrupal\Drupal;
 /**
  * Controller 
  * 
- * @see   ____class_see____
- * @since 1.0.12
  */
 abstract class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\Controller implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\Cont
      * Get XML sitemap link info 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function getXMLSitemapLinkInfo()
     {
@@ -56,8 +52,6 @@ abstract class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\Cont
      * Generate XML sitemap links 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function generateXMLSitemapLinks()
     {

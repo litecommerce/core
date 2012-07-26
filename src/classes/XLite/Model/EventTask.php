@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Event task
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="event_tasks")
@@ -39,9 +37,7 @@ class EventTask extends \XLite\Model\AEntity
     /**
      * Unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class EventTask extends \XLite\Model\AEntity
     /**
      * Event name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -63,9 +57,7 @@ class EventTask extends \XLite\Model\AEntity
     /**
      * Event narguments
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      *
      * @Column (type="array")
      */

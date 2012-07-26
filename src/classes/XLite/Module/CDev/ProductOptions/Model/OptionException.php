@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 /**
  * Product option exception
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionException")
  * @Table (name="option_exceptions",
@@ -43,9 +41,7 @@ class OptionException extends \XLite\Model\AEntity
     /**
      * Exception record unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -56,9 +52,7 @@ class OptionException extends \XLite\Model\AEntity
     /**
      * Exception unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -67,9 +61,7 @@ class OptionException extends \XLite\Model\AEntity
     /**
      * Option (relation)
      *
-     * @var   \XLite\Module\CDev\ProductOptions\Model\Option
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\ProductOptions\Model\Option
      *
      * @ManyToOne (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option", inversedBy="exceptions")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")

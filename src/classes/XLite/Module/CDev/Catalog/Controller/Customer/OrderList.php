@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Catalog\Controller\Customer;
 /**
  * OrderList
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * Parses the request variables if necessary. Attempts to call the specified action function
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Currency format selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CurrencyFormat extends \XLite\View\FormField\Select\Regular
 {
@@ -73,8 +71,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * @param string $format
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDelimiters($format)
     {
@@ -88,8 +84,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * @param string $decimalDelimiter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getFormat($thousandDelimiter, $decimalDelimiter)
     {
@@ -102,8 +96,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * @param array $elem
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function formatElement($elem)
     {
@@ -117,8 +109,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * @param array $params Handler params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -136,8 +126,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * Get format pairs array with the key
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPairs()
     {
@@ -155,8 +143,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * Return exp. part number for a selector
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getE()
     {
@@ -167,8 +153,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * Get default options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
@@ -179,8 +163,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * Get options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormatOptions()
     {
@@ -196,8 +178,6 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

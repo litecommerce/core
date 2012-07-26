@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\JoomlaConnector;
 /**
  * JoomlaConnector module handler
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Handler extends \XLite\Core\CMSConnector
 {
@@ -37,8 +35,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Return name of current CMS
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCMSName()
     {

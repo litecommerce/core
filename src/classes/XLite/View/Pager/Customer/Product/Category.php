@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Customer\Product;
 /**
  * Pager for the category products page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Category extends \XLite\View\Pager\Customer\Product\AProduct
 {
@@ -44,8 +42,6 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      * Return current category model object
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategory()
     {
@@ -56,8 +52,6 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -74,8 +68,6 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -91,8 +83,6 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      * @param integer $count Number of items per page
      *
      * @return array|\Doctrine\ORM\PersistentCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDataFrame($start, $count)
     {

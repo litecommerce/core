@@ -28,26 +28,20 @@ namespace XLite\Controller\Customer;
 /**
  * Checkout success page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'order_id');
 
     /**
      * Order (cache)
      *
-     * @var   \XLite\Model\Order
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order
      */
     protected $order;
 
@@ -56,8 +50,6 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -69,8 +61,6 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * Parses the request variables if necessary. Attempts to call the specified action function
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -95,8 +85,6 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * Get order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrder()
     {
@@ -114,8 +102,6 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {

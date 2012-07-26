@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Customer;
 /**
  * Cart controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
     /**
      * Options invalid flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $optionInvalid = false;
 
@@ -49,8 +45,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * @param \XLite\Model\Product $product Product class that is requested to add to cart
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     protected function getCurrentProductOptions(\XLite\Model\Product $product)
     {
@@ -77,8 +71,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * Change order item options from customer request.
      *
      * @return \XLite\Model\OrderItem
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrentItem()
     {
@@ -106,8 +98,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * 'add' action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {

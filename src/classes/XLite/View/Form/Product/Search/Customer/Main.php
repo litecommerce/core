@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Search\Customer;
 /**
  * Main
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\View\Form\Product\Search\Customer\ACustomer
 {
@@ -37,8 +35,6 @@ class Main extends \XLite\View\Form\Product\Search\Customer\ACustomer
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Main extends \XLite\View\Form\Product\Search\Customer\ACustomer
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class Main extends \XLite\View\Form\Product\Search\Customer\ACustomer
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

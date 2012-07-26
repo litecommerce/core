@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Model\Shipping;
 /**
  * Shipping rate model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Rate extends \XLite\Model\Shipping\Rate implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Rate extends \XLite\Model\Shipping\Rate implements \XLite\Base\IDecorator
      * Get total rate
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTotalRate()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\Model\Repo;
 /**
  * Config model repository
  * 
- * @see   ____class_see____
- * @since 1.0.23
  */
 abstract class Config extends \XLite\Model\Repo\Config implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ abstract class Config extends \XLite\Model\Repo\Config implements \XLite\Base\ID
      * @param array $data Option data in the following format
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function createOption($data)
     {

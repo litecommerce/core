@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\AmazonS3Images\View\Model;
 /**
  * Settings dialog model widget
  *
- * @see   ____class_see____
- * @since 1.0.11
  */
 abstract class Settings extends \XLite\View\Model\Settings implements \XLite\Base\IDecorator
 {
     /**
      * Amazon S3 required settings 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var array
      */
     protected $amazonS3RequiredSettings = array(
         'access_key',
@@ -54,8 +50,6 @@ abstract class Settings extends \XLite\View\Model\Settings implements \XLite\Bas
      * @param string $section Current section name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateFields(array $data, $section)
     {
@@ -94,8 +88,6 @@ abstract class Settings extends \XLite\View\Model\Settings implements \XLite\Bas
      * @param \XLite\Model\Config $option Option
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function isOptionRequired(\XLite\Model\Config $option)
     {

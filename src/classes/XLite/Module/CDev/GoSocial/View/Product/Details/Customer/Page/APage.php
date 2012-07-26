@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\Product\Details\Customer\Page;
 /**
  * Abstract product page 
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 abstract class APage extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\Page\APage imp
      * Define tabs
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function defineTabs()
     {

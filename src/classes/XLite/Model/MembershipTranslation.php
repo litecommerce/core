@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Memebership translations
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="membership_translations",
@@ -44,9 +42,7 @@ class MembershipTranslation extends \XLite\Model\Base\Translation
     /**
      * Membership name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */

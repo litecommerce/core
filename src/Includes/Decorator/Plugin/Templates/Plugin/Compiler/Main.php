@@ -28,17 +28,13 @@ namespace Includes\Decorator\Plugin\Templates\Plugin\Compiler;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
     /**
      * Instance of the Flexy compiler
      *
-     * @var   \Xlite\Core\FlexyCompiler
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Xlite\Core\FlexyCompiler
      */
     protected $flexy;
 
@@ -46,8 +42,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Execute "postprocess" hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {
@@ -60,8 +54,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Static templates compilation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function createTemplatesCache()
     {

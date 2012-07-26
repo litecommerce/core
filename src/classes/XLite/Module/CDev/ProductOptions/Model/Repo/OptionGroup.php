@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
 /**
  * Option group repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OptionGroup extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'orderby';
 
@@ -47,8 +43,6 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * Get option group types
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptionGroupTypes()
     {
@@ -87,8 +81,6 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product id
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findActiveByProductId($productId)
     {
@@ -104,8 +96,6 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineActiveByProductIdQuery($productId)
     {
@@ -125,8 +115,6 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product id
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessActiveByProductId(array $data, $productId)
     {
@@ -158,8 +146,6 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product id
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByGroupIdAndProductId($groupId, $productId)
     {
@@ -173,8 +159,6 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineOneByGroupIdAndProductIdQuery($groupId, $productId)
     {
@@ -197,8 +181,6 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
      *
      * @return \XLite\Model\AEntity|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -223,8 +205,6 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * @param string $name Option group name (any language)
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineOneBySkuAndNameQuery($sku, $name)
     {

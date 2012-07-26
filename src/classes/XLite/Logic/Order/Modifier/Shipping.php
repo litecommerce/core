@@ -28,26 +28,20 @@ namespace XLite\Logic\Order\Modifier;
 /**
  * Shipping modifier
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 {
     /**
      * Modifier unique code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $code = 'SHIPPING';
 
     /**
      * Selected rate (cache)
      *
-     * @var   \XLite\Model\Shipping\Rate
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Shipping\Rate
      */
     protected $selectedRate;
 
@@ -55,8 +49,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Check - can apply this modifier or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function canApply()
     {
@@ -68,8 +60,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Calculate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function calculate()
     {
@@ -100,8 +90,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Check - shipping rates exists or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isRatesExists()
     {
@@ -113,8 +101,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * TODO: add checking if rates should be recalculated else get rates from cache
      *
      * @return array(\XLite\Model\Shipping\Rate)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRates()
     {
@@ -125,8 +111,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Returns true if any of order items are shipped
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isShippable()
     {
@@ -148,8 +132,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Calculate shipping rates
      *
      * @return array(\XLite\Model\Shipping\Rate)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function calculateRates()
     {
@@ -172,8 +154,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * @param \XLite\Model\Shipping\Rate $b Second shipping rate
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function compareRates(\XLite\Model\Shipping\Rate $a, \XLite\Model\Shipping\Rate $b)
     {
@@ -203,8 +183,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Get selected shipping rate
      *
      * @return \XLite\Model\Shipping\Rate
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSelectedRate()
     {
@@ -254,8 +232,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate object OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setSelectedRate(\XLite\Model\Shipping\Rate $rate = null)
     {
@@ -277,8 +253,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Get shipping method
      *
      * @return \XLite\Model\Shipping\Method
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMethod()
     {
@@ -297,8 +271,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Get shipping method name
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -322,8 +294,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Get shipped items
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItems()
     {
@@ -342,8 +312,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Get order weight
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWeight()
     {
@@ -360,8 +328,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Count shipped items quantity
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function countItems()
     {
@@ -378,8 +344,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Get order subtotal only for shipped items
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSubtotal()
     {
@@ -402,8 +366,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
      *
      * @return \XLite\DataSet\Transport\Order\Surcharge
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
     {

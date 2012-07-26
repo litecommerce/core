@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Model extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
     /**
      * Blocks cache
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $blocks;
 
@@ -49,8 +45,6 @@ class Model extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param integer $blockId Block ID OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getBlocks($blockId = null)
     {
@@ -89,8 +83,6 @@ class Model extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param integer $blockId Block ID OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getBlock($blockId)
     {

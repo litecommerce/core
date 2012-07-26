@@ -28,8 +28,6 @@ namespace XLite\View\Order\Details\Admin;
 /**
  * Form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Form extends \XLite\View\Order\Details\Base\AForm
 {
@@ -37,8 +35,6 @@ class Form extends \XLite\View\Order\Details\Base\AForm
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

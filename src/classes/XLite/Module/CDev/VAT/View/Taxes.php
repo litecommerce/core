@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\View;
 /**
  * Taxes widget (admin)
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Taxes extends \XLite\View\Taxes implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Taxes extends \XLite\View\Taxes implements \XLite\Base\IDecorator
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -53,8 +49,6 @@ class Taxes extends \XLite\View\Taxes implements \XLite\Base\IDecorator
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {

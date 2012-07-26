@@ -28,8 +28,6 @@ namespace XLite\View\Form\Checkout;
 /**
  * Checkout update profile form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
 {
@@ -37,8 +35,6 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
      * Get default form action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -49,8 +45,6 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
      * Get validator
      *
      * @return \XLite\Core\Validator\HashArray
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidator()
     {

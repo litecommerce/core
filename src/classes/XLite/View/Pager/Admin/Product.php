@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Admin;
 /**
  * Common pager class for the ProductsList widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\View\Pager\Admin\Product\AProduct
 {

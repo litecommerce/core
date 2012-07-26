@@ -28,8 +28,6 @@ namespace XLite\View\Tabs;
 /**
  * Tabs related to shipping settings
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -38,9 +36,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     /**
      * Description of tabs related to shipping settings and their targets
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $tabs = array(
         'shipping_settings' => array(
@@ -65,18 +61,14 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     /**
      * Zones
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $zones = null;
 
     /**
      * Markups
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $markups = null;
 
@@ -84,8 +76,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Returns a list of shipping processors
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShippingProcessors()
     {
@@ -96,8 +86,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Returns a list of shipping methods
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShippingMethods()
     {
@@ -108,8 +96,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Check if zone details page should be displayed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDisplayZoneDetails()
     {
@@ -121,8 +107,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * getZone
      *
      * @return \XLite\Model\Zone
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getZone()
     {
@@ -147,8 +131,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * getShippingZones
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShippingZones()
     {
@@ -163,8 +145,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * isZonesDefined
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isZonesDefined()
     {
@@ -175,8 +155,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * hasShippingMarkups
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasShippingMarkups()
     {
@@ -187,8 +165,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * getShippingMarkups
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShippingMarkups()
     {
@@ -227,8 +203,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * getPreparedShippingMarkups
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPreparedShippingMarkups()
     {
@@ -243,8 +217,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * @param array   $array Array of markups
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isShowMarkupsSeparator($id, array $array)
     {
@@ -274,8 +246,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * @param mixed $markups ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareMarkups($markups)
     {
@@ -332,8 +302,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * @param \XLite\Model\Shipping\Processor\AProcessor $processor Processor
      *
      * @return \XLite\Model\Shipping\Method
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getProcessorMethods(\XLite\Model\Shipping\Processor\AProcessor $processor)
     {

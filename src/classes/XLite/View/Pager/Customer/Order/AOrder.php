@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Customer\Order;
 /**
  * Abstract pager class for the OrdersList widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AOrder extends \XLite\View\Pager\Customer\ACustomer
 {
@@ -37,8 +35,6 @@ abstract class AOrder extends \XLite\View\Pager\Customer\ACustomer
      * Return number of items per page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {

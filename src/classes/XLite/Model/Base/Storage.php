@@ -28,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Storage abstract store
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  * @HasLifecycleCallbacks
@@ -46,18 +44,14 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * MIME type to extenstion translation table
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var array
      */
     protected static $types = array();
 
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -68,9 +62,7 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * Path (URL or file name in storage directory)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=512)
      */
@@ -79,9 +71,7 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * File name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string")
      */
@@ -90,9 +80,7 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * MIME type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -101,9 +89,7 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * Storage type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=1)
      */
@@ -112,9 +98,7 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * Size
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */
@@ -123,9 +107,7 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * Create / modify date (UNIX timestamp)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */
@@ -134,9 +116,7 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * Load error code
      * 
-     * @var   mstring
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var mstring
      */
     protected $loadError;
 
@@ -146,8 +126,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get body
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getBody()
     {
@@ -165,8 +143,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get storage type 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getStorageType()
     {
@@ -186,8 +162,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param integer $length Length
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function readOutput($start = null, $length = null)
     {
@@ -236,8 +210,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param boolean $forceFile Flag OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function isFileExists($path = null, $forceFile = false)
     {
@@ -259,8 +231,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURL()
     {
@@ -298,8 +268,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get URL for customer front-end
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFrontURL()
     {
@@ -310,8 +278,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get attachment getter URL 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getGetterURL()
     {
@@ -322,8 +288,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get file extension
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getExtension()
     {
@@ -334,8 +298,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get file extension by MIME type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getExtensionByMIME()
     {
@@ -358,8 +320,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $path Path OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isURL($path = null)
     {
@@ -370,8 +330,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get MIME type icon URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public function getMimeClass()
     {
@@ -382,8 +340,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get MIME type name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public function getMimeName()
     {
@@ -396,8 +352,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get load error code
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public function getLoadError()
     {
@@ -410,8 +364,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $path Path
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function convertPathToURL($path)
     {
@@ -422,8 +374,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get getter parameters
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getGetterParams()
     {
@@ -443,8 +393,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $key Key in $_FILES service array
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loadFromRequest($key)
     {
@@ -476,8 +424,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $basename File name OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loadFromLocalFile($path, $basename = null)
     {
@@ -532,8 +478,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param boolean $copy2fs Copy file to file system or not OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loadFromURL($url, $copy2fs = false)
     {
@@ -597,8 +541,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $path Path OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function removeFile($path = null)
     {
@@ -613,8 +555,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Renew storage 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function renewStorage()
     {
@@ -631,8 +571,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Renew dependent storage
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function renewDependentStorage()
     {
@@ -643,8 +581,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get duplicates storages
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getDuplicates()
     {
@@ -655,8 +591,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Prepare order before save data operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PrePersist
      * @PreUpdate
@@ -672,8 +606,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Prepare order before save data operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      *
      * @PreRemove
      */
@@ -690,8 +622,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $path Path to use OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function getStoragePath($path = null)
     {
@@ -713,8 +643,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $path Full path
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function savePath($path)
     {
@@ -746,8 +674,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $path Path
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function assembleSavePath($path)
     {
@@ -758,8 +684,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Update file path - change file extension taken from MIME information.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     protected function updatePathByMIME()
     {
@@ -770,8 +694,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Renew parameters
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function renew()
     {
@@ -793,8 +715,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * @param string $path Path
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function renewByPath($path)
     {
@@ -808,8 +728,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Check storage security 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function checkSecurity()
     {
@@ -820,8 +738,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Check path extension 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function checkPathExtension()
     {
@@ -839,8 +755,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get local path for file-based PHP functions
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocalPath()
     {
@@ -873,8 +787,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get allowed file system root list
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getAllowedFileSystemRoots()
     {
@@ -885,8 +797,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get valid file system storage root 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getValidFileSystemRoot()
     {
@@ -900,8 +810,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get valid file system storage root
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getStoreFileSystemRoot()
     {
@@ -912,8 +820,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get file system images storage root path
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getFileSystemRoot()
     {
@@ -924,8 +830,6 @@ abstract class Storage extends \XLite\Model\AEntity
      * Get web images storage root path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getWebRoot()
     {

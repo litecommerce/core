@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Search\Customer;
 /**
  * Simple form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
 {
@@ -38,8 +36,6 @@ class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
      * NOTE - this function designed for AJAX easy switch on/off
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {
@@ -50,8 +46,6 @@ class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

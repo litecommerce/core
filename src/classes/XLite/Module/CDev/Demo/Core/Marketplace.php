@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Demo\Core;
 /**
  * Marketplace
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Marketplace extends \XLite\Core\Marketplace implements \XLite\Base\IDecorator
 {
@@ -40,8 +38,6 @@ class Marketplace extends \XLite\Core\Marketplace implements \XLite\Base\IDecora
      * @param array  $data   Custom data to send in request OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sendRequestToMarketplace($action, array $data = array())
     {

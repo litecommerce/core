@@ -814,9 +814,12 @@ table.form input[type="text"]
   background-color: transparent;
 }
 
-.settings ul.table .table-label
+.module .settings ul.table .table-label
 {
   width: 25%;
+}
+
+.settings ul.table .table-label {
   padding: 7px 0 7px 10px;
   color: #456583;
   white-space: normal;
@@ -831,8 +834,11 @@ table.form input[type="text"]
   margin: 30px 0 10px 0;
 }
 
-.settings ul.table .table-value {
+.module .settings ul.table .table-value {
   width: 70%;
+}
+
+.settings ul.table .table-value {
   padding: 7px 0px;
 }
 
@@ -1638,8 +1644,9 @@ div.table-label {
 }
 
 div.star {
-  float: left;
+  float: right;
   width: 10px;
+  padding: 12px 0px 5px 0px;
 }
 
 .table-label,

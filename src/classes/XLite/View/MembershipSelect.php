@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Membership selection widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class MembershipSelect extends \XLite\View\FormField
 {
@@ -45,8 +43,6 @@ class MembershipSelect extends \XLite\View\FormField
      * Get active memberships
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMemberships()
     {
@@ -58,8 +54,6 @@ class MembershipSelect extends \XLite\View\FormField
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -70,8 +64,6 @@ class MembershipSelect extends \XLite\View\FormField
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

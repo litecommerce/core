@@ -29,8 +29,6 @@ namespace XLite\Module\CDev\USPS\Model\Shipping\Processor;
  * USPS shipping processor model
  * API documentation: https://www.usps.com/business/webtools-technical-guides.htm
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class USPS extends \XLite\Model\Shipping\Processor\AProcessor
 {
@@ -43,27 +41,21 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
     /**
      * $newMethods is used to prevent duplicating methods in database 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.18
+     * @var array
      */
     protected $newMethods = array();
 
     /**
      * Unique processor Id
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $processorId = 'usps';
 
     /**
      * Type of API (Domestic | International)
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $apiType = null;
 
@@ -73,8 +65,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * Returns processor name (displayed name)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProcessorName()
     {
@@ -85,8 +75,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * Disable the possibility to edit the names of shipping methods in the interface of administrator
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMethodNamesAdjustable()
     {
@@ -100,8 +88,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @param boolean                                    $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRates($inputData, $ignoreCache = false)
     {
@@ -133,8 +119,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @param array|\XLite\Logic\Order\Modifier\Shipping $inputData Array of input data or a shipping order modifier
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareRequestData($inputData)
     {
@@ -182,8 +166,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @param boolean $ignoreCache Flag: if true then do not get rates from cache
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doQuery($data, $ignoreCache)
     {
@@ -278,8 +260,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @param string $data Response received from USPS
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponse($data)
     {
@@ -292,8 +272,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @param array $data Array of request values
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getXMLData($data)
     {
@@ -311,8 +289,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @param string $packKey Key of current package
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareRequestDataDomestic($data, $packKey)
     {
@@ -346,8 +322,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @param array $data Array of request values
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getXMLDataDomestic($data)
     {
@@ -405,8 +379,6 @@ OUT;
      * @param string $stringData Response received from USPS
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseDomestic($stringData)
     {
@@ -458,8 +430,6 @@ OUT;
      * @param string $packKey Key of current package
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareRequestDataIntl($data, $packKey)
     {
@@ -497,8 +467,6 @@ OUT;
      * @param array $data Array of request values
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getXMLDataIntl($data)
     {
@@ -556,8 +524,6 @@ OUT;
      * @param string $stringData Response received from USPS
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseIntl($stringData)
     {
@@ -606,8 +572,6 @@ OUT;
      * Returns API URL
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getApiURL()
     {
@@ -628,8 +592,6 @@ OUT;
      * @param float $weight Weight value
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPoundsOunces($weight)
     {
@@ -665,8 +627,6 @@ OUT;
      * Returns shipping method name prefix
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getUSPSNamePrefix()
     {
@@ -678,8 +638,6 @@ OUT;
      * Returns a type of API 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getApiType()
     {
@@ -692,8 +650,6 @@ OUT;
      * @param array $address Array of address data
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setApiType($address)
     {
@@ -704,8 +660,6 @@ OUT;
      * Returns the name of API 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getApiName()
     {
@@ -721,8 +675,6 @@ OUT;
      * Returns true if USPS module is configured 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isConfigured()
     {
@@ -736,8 +688,6 @@ OUT;
      * @param array  $availableMethods Array of shipping methods objects gathered from database
      *  
      * @return \XLite\Model\Shipping\Method
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getShippingMethod($code, $availableMethods)
     {
@@ -769,8 +719,6 @@ OUT;
      * @param array $postage Array of data for shipping method
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addShippingMethod($postage)
     {
@@ -797,8 +745,6 @@ OUT;
      * @param string $code Country code
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUSPSCountryByCode($code)
     {
@@ -1043,8 +989,6 @@ OUT;
      * @param string $zipcode Zipcode value
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sanitizeZipcode($zipcode)
     {

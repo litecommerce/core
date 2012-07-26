@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Top sellers statistics page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopSellers extends \XLite\Controller\Admin\Stats
 {
@@ -42,8 +40,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -54,8 +50,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * getPageTemplate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPageTemplate()
     {
@@ -66,8 +60,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Get rows count in statistics
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRowsCount()
     {
@@ -78,8 +70,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Get columns for statistics table
      *
      * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
      */
     public function getStatsRows()
     {
@@ -90,8 +80,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Prepare statistics table
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStats()
     {
@@ -106,8 +94,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Get data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData()
     {
@@ -140,8 +126,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * @param array $data Collected data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processData($data)
     {

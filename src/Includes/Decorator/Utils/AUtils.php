@@ -29,8 +29,6 @@ namespace Includes\Decorator\Utils;
  * AUtils
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class AUtils extends \Includes\Decorator\ADecorator
 {

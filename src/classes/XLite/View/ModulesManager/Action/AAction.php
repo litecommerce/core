@@ -28,8 +28,6 @@ namespace XLite\View\ModulesManager\Action;
 /**
  * Abstract action link for Module list (Modules manage)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAction extends \XLite\View\AView
 {
@@ -43,8 +41,6 @@ abstract class AAction extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -59,8 +55,6 @@ abstract class AAction extends \XLite\View\AView
      * Get module
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModule()
     {
@@ -71,8 +65,6 @@ abstract class AAction extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

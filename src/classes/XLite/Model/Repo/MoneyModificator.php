@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Money modificators repository
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class MoneyModificator extends \XLite\Model\Repo\ARepo
 {
@@ -37,8 +35,6 @@ class MoneyModificator extends \XLite\Model\Repo\ARepo
      * Find active modificators list
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function findActive()
     {
@@ -49,8 +45,6 @@ class MoneyModificator extends \XLite\Model\Repo\ARepo
      * Define query for findActive() method
      * 
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineFindActiveQuery()
     {

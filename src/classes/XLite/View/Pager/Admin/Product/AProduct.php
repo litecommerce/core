@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Admin\Product;
 /**
  * Abstract pager class for the ProductsList widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProduct extends \XLite\View\Pager\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ abstract class AProduct extends \XLite\View\Pager\Admin\AAdmin
      * Return number of items per page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {

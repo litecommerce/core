@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\Model\Product;
 /**
  * Product attchament 
  * 
- * @see   ____class_see____
- * @since 1.0.10
  *
  * @Entity
  * @Table  (name="product_attachments",
@@ -45,9 +43,7 @@ class Attachment extends \XLite\Model\Base\I18n
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -58,9 +54,7 @@ class Attachment extends \XLite\Model\Base\I18n
     /**
      * Sort position
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -73,9 +67,7 @@ class Attachment extends \XLite\Model\Base\I18n
     /**
      * Relation to a product entity
      *
-     * @var   \XLite\Model\Product
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Product
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="attachments")
      * @JoinColumn (name="product_id", referencedColumnName="product_id")
@@ -85,9 +77,7 @@ class Attachment extends \XLite\Model\Base\I18n
     /**
      * Relation to a product entity
      *
-     * @var   \XLite\Module\CDev\FileAttachments\Model\Product\Attachment\Storage
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\FileAttachments\Model\Product\Attachment\Storage
      *
      * @OneToOne  (targetEntity="XLite\Module\CDev\FileAttachments\Model\Product\Attachment\Storage", mappedBy="attachment", cascade={"all"}, fetch="EAGER")
      */
@@ -101,8 +91,6 @@ class Attachment extends \XLite\Model\Base\I18n
      * Get storage 
      * 
      * @return \XLite\Module\CDev\FileAttachments\Model\Product\Attachment\Storage
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public function getStorage()
     {
@@ -118,8 +106,6 @@ class Attachment extends \XLite\Model\Base\I18n
      * Get public title 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public function getPublicTitle()
     {

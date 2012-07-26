@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\Controller\Admin;
 /**
  * Amazon S3 migrate 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class S3Migrate extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class S3Migrate extends \XLite\Controller\Admin\AAdmin
      * Migrate to Amazon S3 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function doActionMigrateToS3()
     {
@@ -50,8 +46,6 @@ class S3Migrate extends \XLite\Controller\Admin\AAdmin
      * Migrate from Amazon S3
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function doActionMigrateFromS3()
     {

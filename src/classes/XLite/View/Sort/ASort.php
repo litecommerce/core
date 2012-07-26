@@ -30,8 +30,6 @@ namespace XLite\View\Sort;
 /**
  * Abstract sort widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ASort extends \XLite\View\AView
 {
@@ -48,8 +46,6 @@ abstract class ASort extends \XLite\View\AView
      * Get form parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFormParams()
     {
@@ -66,8 +62,6 @@ abstract class ASort extends \XLite\View\AView
      * @param string $key Sort criterion code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSortCriterionSelected($key)
     {
@@ -80,8 +74,6 @@ abstract class ASort extends \XLite\View\AView
      * Check - sort order is ascending or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSortOrderAsc()
     {
@@ -94,8 +86,6 @@ abstract class ASort extends \XLite\View\AView
      * Build sort order link URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSortOrderURL()
     {
@@ -125,8 +115,6 @@ abstract class ASort extends \XLite\View\AView
      * Get class name for sort order link
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSortOrderLinkClassName()
     {
@@ -137,8 +125,6 @@ abstract class ASort extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -153,8 +139,6 @@ abstract class ASort extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -170,8 +154,6 @@ abstract class ASort extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -182,8 +164,6 @@ abstract class ASort extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -200,8 +180,6 @@ abstract class ASort extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

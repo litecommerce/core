@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Cache management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CacheManagement extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class CacheManagement extends \XLite\Controller\Admin\AAdmin
      * doActionRebuild
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionRebuild()
     {

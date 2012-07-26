@@ -28,8 +28,6 @@ namespace XLite\View\Product\Details\Customer;
 /**
  * ACustomer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\View\Product\Details\ADetails
 {
@@ -37,8 +35,6 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      * Checks whether a product was added to the cart
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isProductAdded()
     {
@@ -50,8 +46,6 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -62,8 +56,6 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      * Check - product is available for sale or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isProductAvailableForSale()
     {

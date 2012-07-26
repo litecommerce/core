@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Authorization
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center", zone="customer")
  */
@@ -39,8 +37,6 @@ class Authorization extends \XLite\View\SimpleDialog
      * Return file name for the center part template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBody()
     {
@@ -51,8 +47,6 @@ class Authorization extends \XLite\View\SimpleDialog
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

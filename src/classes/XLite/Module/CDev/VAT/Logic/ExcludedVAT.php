@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Logic;
 /**
  * Display price modificator: add VAT to displayPrice
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class ExcludedVAT extends \XLite\Logic\ALogic
 {
@@ -42,8 +40,6 @@ class ExcludedVAT extends \XLite\Logic\ALogic
      * @param string               $purpose   Purpose
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     static public function isApply(\XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
@@ -60,8 +56,6 @@ class ExcludedVAT extends \XLite\Logic\ALogic
      * @param string               $purpose   Purpose
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     static public function modifyMoney($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {

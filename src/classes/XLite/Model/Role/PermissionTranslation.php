@@ -28,8 +28,6 @@ namespace XLite\Model\Role;
 /**
  * Permission translation
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="permission_translations")
@@ -39,9 +37,7 @@ class PermissionTranslation extends \XLite\Model\Base\Translation
     /**
      * Name
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="string")
      */
@@ -50,9 +46,7 @@ class PermissionTranslation extends \XLite\Model\Base\Translation
     /**
      * Description
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="text")
      */

@@ -28,17 +28,13 @@ namespace XLite\Core\Validator;
 /**
  * Product SKU
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SKU extends \XLite\Core\Validator\AValidator
 {
     /**
      * Product Id (saved)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $productId;
 
@@ -48,8 +44,6 @@ class SKU extends \XLite\Core\Validator\AValidator
      * @param integer $productId Product identificator OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($productId = null)
     {
@@ -66,8 +60,6 @@ class SKU extends \XLite\Core\Validator\AValidator
      * @param mixed $data Data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -87,8 +79,6 @@ class SKU extends \XLite\Core\Validator\AValidator
      * @param mixed $data Data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sanitize($data)
     {
@@ -100,8 +90,6 @@ class SKU extends \XLite\Core\Validator\AValidator
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function throwSKUError()
     {

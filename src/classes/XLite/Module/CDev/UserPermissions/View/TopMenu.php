@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\UserPermissions\View;
 /**
  * Top menu widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class TopMenu extends \XLite\View\TopMenu implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ abstract class TopMenu extends \XLite\View\TopMenu implements \XLite\Base\IDecor
      * @param array $params Handler params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {

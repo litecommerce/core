@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade;
 /**
  * InstallUpdates
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -39,8 +37,6 @@ class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -54,8 +50,6 @@ class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -66,8 +60,6 @@ class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -78,8 +70,6 @@ class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

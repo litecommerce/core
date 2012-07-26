@@ -28,8 +28,6 @@ namespace XLite\View\Checkout\Step;
 /**
  * Abstract checkout step widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AStep extends \XLite\View\AView
 {
@@ -44,8 +42,6 @@ abstract class AStep extends \XLite\View\AView
      * Get step name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getStepName();
 
@@ -53,8 +49,6 @@ abstract class AStep extends \XLite\View\AView
      * Get step title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getTitle();
 
@@ -62,8 +56,6 @@ abstract class AStep extends \XLite\View\AView
      * Check - step is complete or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function isCompleted();
 
@@ -71,8 +63,6 @@ abstract class AStep extends \XLite\View\AView
      * Check - is current step or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCurrent()
     {
@@ -83,8 +73,6 @@ abstract class AStep extends \XLite\View\AView
      * Get steps collector
      *
      * @return \XLite\View\Checkout\Steps
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStepsCollector()
     {
@@ -95,8 +83,6 @@ abstract class AStep extends \XLite\View\AView
      * Check - step is enabled (true) or skipped (false)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEnabled()
     {
@@ -107,8 +93,6 @@ abstract class AStep extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -125,8 +109,6 @@ abstract class AStep extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -137,8 +119,6 @@ abstract class AStep extends \XLite\View\AView
      * Return current template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -151,8 +131,6 @@ abstract class AStep extends \XLite\View\AView
      * Get step template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStepTemplate()
     {

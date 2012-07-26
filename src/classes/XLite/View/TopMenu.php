@@ -28,17 +28,13 @@ namespace XLite\View;
 /**
  * Top menu widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopMenu extends \XLite\View\AView
 {
     /**
      * Array of targets related to the same menu link
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $relatedTargets = array(
         'orders_stats' => array(
@@ -75,8 +71,6 @@ class TopMenu extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -91,8 +85,6 @@ class TopMenu extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -108,8 +100,6 @@ class TopMenu extends \XLite\View\AView
      * Return widget directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -120,8 +110,6 @@ class TopMenu extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -132,8 +120,6 @@ class TopMenu extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -146,8 +132,6 @@ class TopMenu extends \XLite\View\AView
      * @param string $target Target name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRelatedTargets($target)
     {

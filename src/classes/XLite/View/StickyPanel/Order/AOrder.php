@@ -28,8 +28,6 @@ namespace XLite\View\StickyPanel\Order;
 /**
  * Abstract order panel
  * 
- * @see   ____class_see____
- * @since 1.0.16
  */
 abstract class AOrder extends \XLite\View\StickyPanel\ItemsListForm
 {

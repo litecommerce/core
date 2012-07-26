@@ -29,8 +29,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\FormField\Input;
 /**
  * 'User profile id' radio button hide
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class UserProfileId extends \XLite\View\FormField\Input\UserProfileId implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ class UserProfileId extends \XLite\View\FormField\Input\UserProfileId implements
      * Disable radio button 'User profile id' (User profiles page)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

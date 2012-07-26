@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * File selector popup button
  *
- * @see   ____class_see____
- * @since 1.0.6
  */
 class FileSelector extends \XLite\View\Button\APopupButton
 {
@@ -57,8 +55,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -74,8 +70,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -91,8 +85,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
@@ -110,8 +102,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Return default button label
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -122,8 +112,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -141,8 +129,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

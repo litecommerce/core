@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Modify\Base;
 /**
  * Details (abstract)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Single extends \XLite\View\Form\Product\Modify\AModify
 {
@@ -37,8 +35,6 @@ abstract class Single extends \XLite\View\Form\Product\Modify\AModify
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ abstract class Single extends \XLite\View\Form\Product\Modify\AModify
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

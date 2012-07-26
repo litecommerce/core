@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Demo\Controller\Admin;
 /**
  * AddressBook
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddressBook extends \XLite\Controller\Admin\AddressBook implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class AddressBook extends \XLite\Controller\Admin\AddressBook implements \XLite\
      * Check if we need to forbid current action
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkForDemoController()
     {
@@ -49,8 +45,6 @@ class AddressBook extends \XLite\Controller\Admin\AddressBook implements \XLite\
      * URL to redirect if action is forbidden
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getForbidInDemoModeRedirectURL()
     {

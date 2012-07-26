@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Modify;
 /**
  * Inventory
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Inventory extends \XLite\View\Form\Product\Modify\Base\Single
 {
@@ -37,8 +35,6 @@ class Inventory extends \XLite\View\Form\Product\Modify\Base\Single
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

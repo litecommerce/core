@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\Model\Product;
 /**
  * Product attchament's translations
  * 
- * @see   ____class_see____
- * @since 1.0.10
  *
  * @Entity
  * @Table (name="product_attachment_translations",
@@ -46,9 +44,7 @@ class AttachmentTranslation extends \XLite\Model\Base\Translation
     /**
      * Title
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -57,9 +53,7 @@ class AttachmentTranslation extends \XLite\Model\Base\Translation
     /**
      * Title
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var string
      *
      * @Column (type="text")
      */

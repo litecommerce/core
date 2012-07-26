@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Model;
 /**
  * Tax
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="vat_taxes")
@@ -39,9 +37,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Product unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Eenabled
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -63,9 +57,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Tax rates (relation)
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\VAT\Model\Tax\Rate", mappedBy="tax", cascade={"all"})
      * @OrderBy ({"position" = "ASC"})
@@ -75,9 +67,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * VAT base membership
      *
-     * @var   \XLite\Model\Membership
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Membership
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership", cascade={"detach", "merge", "persist"})
      * @JoinColumn (name="vat_membership_id", referencedColumnName="membership_id")
@@ -87,9 +77,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * VAT base Zone
      *
-     * @var   \XLite\Model\Zone
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Zone
      *
      * @ManyToOne  (targetEntity="XLite\Model\Zone", cascade={"detach", "merge", "persist"})
      * @JoinColumn (name="vat_zone_id", referencedColumnName="zone_id")
@@ -102,8 +90,6 @@ class Tax extends \XLite\Model\Base\I18n
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -120,8 +106,6 @@ class Tax extends \XLite\Model\Base\I18n
      * @param \Doctrine\Common\Collections\Collection $productClasses Product classes OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFilteredRates(
         array $zones,
@@ -148,8 +132,6 @@ class Tax extends \XLite\Model\Base\I18n
      * @param \Doctrine\Common\Collections\Collection $productClasses Product classes OPTIONAL
      *
      * @return \XLite\Module\CDev\VAT\Model\Tax\Rate
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFilteredRate(
         array $zones,
@@ -167,8 +149,6 @@ class Tax extends \XLite\Model\Base\I18n
      * @param \XLite\Model\Membership $membership Membership OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setVATMembership(\XLite\Model\Membership $membership = null)
     {
@@ -181,8 +161,6 @@ class Tax extends \XLite\Model\Base\I18n
      * @param \XLite\Model\Zone $zone Zone OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setVATZone(\XLite\Model\Zone $zone = null)
     {

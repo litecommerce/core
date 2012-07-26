@@ -28,8 +28,6 @@ namespace XLite\View\Base;
 /**
  * Sticky panel 
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 abstract class StickyPanel extends \XLite\View\Container
 {
@@ -37,8 +35,6 @@ abstract class StickyPanel extends \XLite\View\Container
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -53,8 +49,6 @@ abstract class StickyPanel extends \XLite\View\Container
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -69,8 +63,6 @@ abstract class StickyPanel extends \XLite\View\Container
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -81,8 +73,6 @@ abstract class StickyPanel extends \XLite\View\Container
      * Get class 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getClass()
     {

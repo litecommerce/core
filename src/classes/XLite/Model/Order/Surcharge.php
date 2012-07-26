@@ -28,8 +28,6 @@ namespace XLite\Model\Order;
 /**
  * Surcharge
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="order_surcharges")
@@ -39,9 +37,7 @@ class Surcharge extends \XLite\Model\Base\Surcharge
     /**
      * Surcharge owner (order)
      *
-     * @var   \XLite\Model\Order
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order
      *
      * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="surcharges")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -52,8 +48,6 @@ class Surcharge extends \XLite\Model\Base\Surcharge
      * Get order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrder()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\Model;
 /**
  * Category 
  * 
- * @see   ____class_see____
- * @since 1.0.12
  *
  * @HasLifecycleCallbacks
  */
@@ -39,8 +37,6 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
      * Clear sitemaps 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      *
      * @PrePersist
      * @PreUpdate

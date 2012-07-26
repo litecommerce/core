@@ -28,8 +28,6 @@ namespace XLite\View\Button\Addon;
 /**
  * Install addon popup button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SelectInstallationType extends \XLite\View\Button\APopupButton
 {
@@ -42,8 +40,6 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -57,8 +53,6 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -72,8 +66,6 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
      * Return content for popup button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -84,8 +76,6 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
@@ -101,8 +91,6 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
      * Define widgets parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -117,8 +105,6 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

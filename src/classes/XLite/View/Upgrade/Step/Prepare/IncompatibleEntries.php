@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade\Step\Prepare;
 /**
  * IncompatibleEntries
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
 {
@@ -37,8 +35,6 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -52,8 +48,6 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -64,8 +58,6 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -76,8 +68,6 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -88,8 +78,6 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -100,8 +88,6 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Return list of inclompatible modules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIncompatibleEntries()
     {
@@ -124,8 +110,6 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isModuleToDisable(\XLite\Model\Module $module)
     {
@@ -147,8 +131,6 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isModuleCustom(\XLite\Model\Module $module)
     {

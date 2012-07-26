@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Module key repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ModuleKey extends \XLite\Model\Repo\ARepo
 {
@@ -40,8 +38,6 @@ class ModuleKey extends \XLite\Model\Repo\ARepo
      * @param string $name   Module name
      *
      * @return \XLite\Model\ModuleKey
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findKey($author, $name)
     {

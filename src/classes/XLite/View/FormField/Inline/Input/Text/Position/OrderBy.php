@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text\Position;
 /**
  * Order by position
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class OrderBy extends \XLite\View\FormField\Inline\Input\Text\Position
 {

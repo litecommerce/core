@@ -28,8 +28,6 @@ namespace XLite\Core\ColumnType;
 /**
  * Money (value without currency)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Money extends \Doctrine\DBAL\Types\DecimalType
 {
@@ -40,8 +38,6 @@ class Money extends \Doctrine\DBAL\Types\DecimalType
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform         Platform
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSQLDeclaration(array $fieldDeclaration, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {
@@ -63,8 +59,6 @@ class Money extends \Doctrine\DBAL\Types\DecimalType
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform Platform
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function convertToPHPValue($value, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {

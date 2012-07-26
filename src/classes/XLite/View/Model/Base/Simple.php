@@ -28,35 +28,27 @@ namespace XLite\View\Model\Base;
 /**
  * Simple CRUD 
  * 
- * @see   ____class_see____
- * @since 1.0.20
  */
 abstract class Simple extends \XLite\View\Model\AModel
 {
     /**
      * Update message 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.20
+     * @var string
      */
     protected $updateMessage = null;
 
     /**
      * Create message 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.20
+     * @var string
      */
     protected $createMessage = null;
 
     /**
      * Entity class 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.20
+     * @var string
      */
     protected $entityClass = null;
 
@@ -64,8 +56,6 @@ abstract class Simple extends \XLite\View\Model\AModel
      * Return current model ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModelId()
     {
@@ -76,8 +66,6 @@ abstract class Simple extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Module\CDev\Suppliers\Model\Supplier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -92,8 +80,6 @@ abstract class Simple extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -115,8 +101,6 @@ abstract class Simple extends \XLite\View\Model\AModel
      * Add top message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addDataSavedTopMessage()
     {

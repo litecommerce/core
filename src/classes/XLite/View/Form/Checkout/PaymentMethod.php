@@ -28,8 +28,6 @@ namespace XLite\View\Form\Checkout;
 /**
  * Payment method selection
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PaymentMethod extends \XLite\View\Form\Checkout\ACheckout
 {
@@ -37,8 +35,6 @@ class PaymentMethod extends \XLite\View\Form\Checkout\ACheckout
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Product widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer im
      * Check - available product for sale or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAvailableForSale()
     {
@@ -60,8 +56,6 @@ abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer im
      * Get selected options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSelectedOptions()
     {
@@ -76,8 +70,6 @@ abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer im
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {

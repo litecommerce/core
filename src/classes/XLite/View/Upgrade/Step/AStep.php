@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade\Step;
 /**
  * AStep
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AStep extends \XLite\View\Upgrade\AUpgrade
 {
@@ -37,8 +35,6 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -49,8 +45,6 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -61,8 +55,6 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -73,8 +65,6 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
      * Get an action URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSoftResetURL()
     {
@@ -85,8 +75,6 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
      * Get an action URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHardResetURL()
     {

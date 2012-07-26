@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * User accounts synchronization
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class UserSync extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -42,63 +40,49 @@ class UserSync extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * LiteCommerce accounts list
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.1
+     * @var array
      */
     protected $lcAccounts = null;
     
     /**
      * Drupal accounts list
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.1
+     * @var array
      */
     protected $drupalAccounts = null;
     
     /**
      * List of accounts missed in Drupal 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.1
+     * @var array
      */
     protected $accountsMissedInDrupal = null;
     
     /**
      * List of non-linked accounts (LiteCommerce accounts)
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.1
+     * @var array
      */
     protected $nonLinkedAccounts = null;
     
     /**
      * Cache of Drupal account names (to validate names of new account before creation)
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.1
+     * @var array
      */
     protected $drupalAccountNames = null;
     
     /**
      * Maximal number of user accounts processed per step 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.1
+     * @var integer
      */
     protected $userAccountsPerStepCounter = 50;
     
     /**
      * Total number of non-synchronized accounts 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.1
+     * @var integer
      */
     protected $totalNonSynchronizedAccounts = 0;
 
@@ -109,8 +93,6 @@ class UserSync extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$form Form description
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function addUserSyncForm(array &$form)
     {
@@ -154,8 +136,6 @@ OUT;
      * @param array &$formState Form state
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function processUserSyncFormSubmit(array &$form, array &$formState)
     {
@@ -196,8 +176,6 @@ OUT;
      * @param array &$context Batch process context data
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doUserSynchronization(array &$context)
     {
@@ -233,8 +211,6 @@ OUT;
      * @param array   $operations Array of batch process operations (not used here)
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function doUserSyncFinished($success, $results, $operations)
     {
@@ -251,8 +227,6 @@ OUT;
      * Check if user accounts synchronization is required
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function isUserSynchronizationRequired()
     {
@@ -264,8 +238,6 @@ OUT;
      * Returns true if accounts were found
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function findAllAccounts()
     {
@@ -292,8 +264,6 @@ OUT;
      * Returns true if such accounts exists
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function prepareNonSynchronizedAccounts()
     {
@@ -352,8 +322,6 @@ OUT;
      * Link LiteCommerce accounts with Drupal accounts
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function linkUserAccounts()
     {
@@ -377,8 +345,6 @@ OUT;
      * Create missed LiteCommerce accounts 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function createMissedLCAccounts()
     {
@@ -414,8 +380,6 @@ OUT;
      * Create missed Drupal accounts 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function createMissedDrupalAccounts()
     {
@@ -465,8 +429,6 @@ OUT;
      * @param string $email LiteCommerce login field (email)
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getNameFromEmail($email)
     {
@@ -489,8 +451,6 @@ OUT;
      * Check per-step-counter 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function checkUserAccountsPerStepCounter()
     {

@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock;
 /**
  * ADocBlock
  *
- * @see   ____class_see____
- * @since 1.0.22
  */
 abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
@@ -37,8 +35,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * Execute certain hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {
@@ -51,8 +47,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function correctTags(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -67,8 +61,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function correctTagsOnElement(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -93,8 +85,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function checkRewriteCondition(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -107,8 +97,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getTagsToAdd(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {

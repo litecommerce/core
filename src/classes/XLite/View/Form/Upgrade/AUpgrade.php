@@ -28,8 +28,6 @@ namespace XLite\View\Form\Upgrade;
 /**
  * AUpgrade
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AUpgrade extends \XLite\View\Form\AForm
 {

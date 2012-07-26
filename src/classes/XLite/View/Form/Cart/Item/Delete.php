@@ -28,8 +28,6 @@ namespace XLite\View\Form\Cart\Item;
 /**
  * Delete cart item form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Delete extends \XLite\View\Form\Cart\Item\AItem
 {
@@ -37,8 +35,6 @@ class Delete extends \XLite\View\Form\Cart\Item\AItem
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

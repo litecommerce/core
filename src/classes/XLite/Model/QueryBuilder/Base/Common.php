@@ -28,8 +28,6 @@ namespace XLite\Model\QueryBuilder\Base;
 /**
  * Common query builder
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Common extends \XLite\Model\QueryBuilder\AQueryBuilder
 {

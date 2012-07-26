@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\ProxyGenerator;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
@@ -37,8 +35,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Execute certain hook handle
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {
@@ -56,8 +52,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Check if proxy classes are already generated
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function areProxiesExist()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 /**
  * Option translations
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="option_translations",
@@ -44,9 +42,7 @@ class OptionTranslation extends \XLite\Model\Base\Translation
     /**
      * Option name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */

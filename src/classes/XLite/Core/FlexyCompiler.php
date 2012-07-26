@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Flexy compiler
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class FlexyCompiler extends \XLite\Base\Singleton
 {
@@ -44,42 +42,35 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Template source code
      *
-     * @var   string
-     * @since 1.0.0
+     * @var string
      */
     protected $source = null;
 
     /**
      * Template file name
      *
-     * @var   string
-     * @since 1.0.0
+     * @var string
      */
     protected $file = null;
 
     /**
      * List of URLs to rewrite
      *
-     * @var   array
-     * @since 1.0.0
+     * @var array
      */
     protected $urlRewrite = array();
 
     /**
      * patches
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $patches;
 
     /**
      * Image URL output type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $imageURLOutputType = \XLite\Core\Layout::WEB_PATH_OUTPUT_URL;
 
@@ -152,8 +143,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Preprocess template
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function preprocess()
     {
@@ -179,8 +168,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $zone Skin name
      *
      * @return string (admin or customer)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getZone($zone)
     {
@@ -197,8 +184,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $tpl  Relative template pathg
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPatches($zone, $lang, $tpl)
     {
@@ -231,8 +216,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processXpathPatch(\XLite\Model\TemplatePatch $patch)
     {
@@ -266,8 +249,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string          $baseInsertType Patch insert type
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function applyXpathPatches(\DOMNamedNodeMap $places, \DOMNamedNodeMap $patches, $baseInsertType)
     {
@@ -318,8 +299,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processRegexpPatch(\XLite\Model\TemplatePatch $patch)
     {
@@ -336,8 +315,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processCustomPatch(\XLite\Model\TemplatePatch $patch)
     {
@@ -662,8 +639,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Get template info
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTemplateInfo()
     {
@@ -777,8 +752,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $url Short URL
      *
      * @return boolean|array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function rewriteURL($url)
     {
@@ -809,8 +782,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param integer $length Replace part length
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function rewriteImageURL($url, $length)
     {
@@ -1244,18 +1215,14 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Flag
      *
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var boolean
      */
     protected $checkTemplateStatus = true;
 
     /**
      * Root directory path length
      *
-     * @var    integer
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var integer
      */
     protected $rootDirLength;
 
@@ -1266,8 +1233,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param boolean $force    Flag to force compilation OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function prepare($original, $force = false)
     {
@@ -1289,8 +1254,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $compiled Compiled one
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isTemplateValid($original, $compiled)
     {
@@ -1303,8 +1266,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $file Template to compile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function init($file)
     {
@@ -1323,8 +1284,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param integer &$counter Counter
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function parseWidget(array $token, &$counter)
     {
@@ -1343,8 +1302,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param integer &$counter Counter
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function parseList(array $token, &$counter)
     {
@@ -1359,8 +1316,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param integer &$counter Counter
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function parseTagAttrs(&$counter)
     {
@@ -1392,8 +1347,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $code  Code to display
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function displayTag(array $token, $code)
     {
@@ -1411,8 +1364,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param array $attrs Attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function processWidgetAttrs(array &$attrs)
     {
@@ -1438,8 +1389,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param array $attrs All tag attributes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getListDisplayCode(array $attrs)
     {
@@ -1459,8 +1408,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Details
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {

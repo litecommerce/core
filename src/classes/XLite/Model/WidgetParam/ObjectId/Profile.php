@@ -28,8 +28,6 @@ namespace XLite\Model\WidgetParam\ObjectId;
 /**
  * Profiel id Widget parameter
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Model\WidgetParam\ObjectId
 {
@@ -37,8 +35,6 @@ class Profile extends \XLite\Model\WidgetParam\ObjectId
      * Return object class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClassName()
     {

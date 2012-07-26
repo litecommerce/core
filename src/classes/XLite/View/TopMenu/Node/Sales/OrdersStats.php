@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node\Sales;
 /**
  * Orders statistics
  * 
- * @see   ____class_see____
- * @since 1.0.18
  *
  * @ListChild (list="menu.sales", weight="300", zone="admin")
  */
@@ -39,8 +37,6 @@ class OrdersStats extends \XLite\View\TopMenu\Node\Sales\ASales
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

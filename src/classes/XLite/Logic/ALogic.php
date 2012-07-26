@@ -28,8 +28,6 @@ namespace XLite\Logic;
 /**
  * Abstract logic class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ALogic extends \XLite\Base
 {

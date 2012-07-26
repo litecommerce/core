@@ -28,8 +28,6 @@ namespace XLite\Upgrade;
 /**
  * Logger 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Logger extends \XLite\Base\Singleton
 {
@@ -37,8 +35,6 @@ class Logger extends \XLite\Base\Singleton
      * Clear log file
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clear()
     {
@@ -49,8 +45,6 @@ class Logger extends \XLite\Base\Singleton
      * Return log file name
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLogFile()
     {
@@ -61,8 +55,6 @@ class Logger extends \XLite\Base\Singleton
      * Return link to view the log file
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLogURL()
     {
@@ -77,8 +69,6 @@ class Logger extends \XLite\Base\Singleton
      * @param boolean $showTopMessage Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logInfo($message, array $args = array(), $showTopMessage = false)
     {
@@ -93,8 +83,6 @@ class Logger extends \XLite\Base\Singleton
      * @param boolean $showTopMessage Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logWarning($message, array $args = array(), $showTopMessage = false)
     {
@@ -109,8 +97,6 @@ class Logger extends \XLite\Base\Singleton
      * @param boolean $showTopMessage Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logError($message, array $args = array(), $showTopMessage = false)
     {
@@ -126,8 +112,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string  $topMessageType \XLite\Core\TopMessage class constant OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function log($message, array $args = array(), $showTopMessage = false, $topMessageType = null)
     {
@@ -146,8 +130,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $message Message text
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function write($message)
     {
@@ -160,8 +142,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $type Prefix type
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPrefix($type)
     {
@@ -174,8 +154,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $message Message text
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTopMessage($message)
     {

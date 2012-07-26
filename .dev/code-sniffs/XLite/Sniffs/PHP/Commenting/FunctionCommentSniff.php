@@ -74,12 +74,12 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
             'order_text'     => 'follows @param',
         ),
 		'see'	=> array(
-            'required'       => true,
+            'required'       => false,
             'allow_multiple' => false,
             'order_text'     => 'follows @return',
         ),
         'since'      => array(
-            'required'       => true,
+            'required'       => false,
             'allow_multiple' => false,
             'order_text'     => 'follows @see',
         ),

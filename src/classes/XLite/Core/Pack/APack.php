@@ -28,8 +28,6 @@ namespace XLite\Core\Pack;
 /**
  * APack
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class APack
 {
@@ -42,8 +40,6 @@ abstract class APack
      * Return pack name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getName();
 
@@ -51,8 +47,6 @@ abstract class APack
      * Return iterator to walk through directories
      *
      * @return \Iterator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getDirectoryIterator();
 
@@ -60,8 +54,6 @@ abstract class APack
      * Return pack metadata
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMetadata()
     {

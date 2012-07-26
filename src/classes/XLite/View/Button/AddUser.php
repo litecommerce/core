@@ -29,8 +29,6 @@ namespace XLite\View\Button;
 /**
  * Button for adding user from "Profile list page". (Add user)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddUser extends \XLite\View\Button\Link
 {

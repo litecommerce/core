@@ -30,8 +30,6 @@ namespace Includes;
  *
  * :TODO: reduce numder of public methods
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class SafeMode
 {
@@ -57,8 +55,6 @@ abstract class SafeMode
      * Return true if software reset is enabled in config file
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     public static function isSoftwareResetEnabled()
     {
@@ -69,8 +65,6 @@ abstract class SafeMode
      * Check request parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isSafeModeRequested()
     {
@@ -81,8 +75,6 @@ abstract class SafeMode
      * Check if the safe mode requested in the "Soft reset" variant
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isSoftResetRequested()
     {
@@ -93,8 +85,6 @@ abstract class SafeMode
      * Check request parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isSafeModeStarted()
     {
@@ -105,8 +95,6 @@ abstract class SafeMode
      * Get Access Key
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAccessKey()
     {
@@ -121,8 +109,6 @@ abstract class SafeMode
      * Re-generate access key
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function regenerateAccessKey()
     {
@@ -137,8 +123,6 @@ abstract class SafeMode
      * Send email notification to administrator about access key
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function sendNotification()
     {
@@ -156,8 +140,6 @@ abstract class SafeMode
      * @param boolean $soft Soft reset flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getResetURL($soft = false)
     {
@@ -179,8 +161,6 @@ abstract class SafeMode
      * Clean up the safe mode indicator
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function cleanupIndicator()
     {
@@ -191,8 +171,6 @@ abstract class SafeMode
      * Initialization
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function initialize()
     {
@@ -217,8 +195,6 @@ abstract class SafeMode
      * Check Access Key
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function checkAccessKey()
     {
@@ -229,8 +205,6 @@ abstract class SafeMode
      * Get safe mode indicator file name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getIndicatorFileName()
     {
@@ -241,8 +215,6 @@ abstract class SafeMode
      * Get safe mode access key file name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getAccessKeyFileName()
     {
@@ -253,8 +225,6 @@ abstract class SafeMode
      * Generate Access Key
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function generateAccessKey()
     {
@@ -265,8 +235,6 @@ abstract class SafeMode
      * Data to write into the indicator file
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getIndicatorFileContent()
     {
@@ -280,8 +248,6 @@ abstract class SafeMode
      * Remove file with active modules list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function clearUnsafeModules()
     {
@@ -294,8 +260,6 @@ abstract class SafeMode
      * @param boolean $asPlainList Flag OPTIONAL
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getUnsafeModulesList($asPlainList = true)
     {
@@ -330,8 +294,6 @@ abstract class SafeMode
      * @param string $name   Module name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function markModuleAsUnsafe($author, $name)
     {
@@ -344,8 +306,6 @@ abstract class SafeMode
      * @param array $modules Modules
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function markModulesAsUnsafe(array $modules)
     {
@@ -369,8 +329,6 @@ abstract class SafeMode
      * Get modules list file path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getUnsafeModulesFilePath()
     {
@@ -383,8 +341,6 @@ abstract class SafeMode
      * @param array $modules Modules array
      *
      * @return integer|boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function saveUnsafeModulesToFile(array $modules)
     {

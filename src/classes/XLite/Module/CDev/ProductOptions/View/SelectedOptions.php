@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Selected product options widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SelectedOptions extends \XLite\View\AView
 {
@@ -46,8 +44,6 @@ class SelectedOptions extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -62,8 +58,6 @@ class SelectedOptions extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -78,8 +72,6 @@ class SelectedOptions extends \XLite\View\AView
      * Get Change options link URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getChangeOptionsLink()
     {
@@ -100,8 +92,6 @@ class SelectedOptions extends \XLite\View\AView
      * @param \XLite\Module\CDev\ProductOptions\Model\OrderItemOption $option Item option
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isOptionEmpty(\XLite\Module\CDev\ProductOptions\Model\OrderItemOption $option)
     {
@@ -113,8 +103,6 @@ class SelectedOptions extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -125,8 +113,6 @@ class SelectedOptions extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -143,8 +129,6 @@ class SelectedOptions extends \XLite\View\AView
      * getItem
      *
      * @return \XLite\Model\OrderItem
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItem()
     {
@@ -155,8 +139,6 @@ class SelectedOptions extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\Controller\Admin;
 /**
  * Sale selected controller
  *
- * @see   ____class_see____
- * @since 1.0.7
  */
 class SaleSelected extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,8 +45,6 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
      * Set sale price parameters for products list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSetSalePrice()
     {
@@ -78,8 +72,6 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
      * Return result array to update in batch list of products
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUpdateInfo()
     {
@@ -93,8 +85,6 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
      * Return one element to update.
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUpdateInfoElement()
     {

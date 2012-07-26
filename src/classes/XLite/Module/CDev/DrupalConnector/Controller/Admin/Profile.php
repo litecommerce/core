@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Admin;
 /**
  * \XLite\Module\CDev\DrupalConnector\Controller\Admin\Profile
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDe
      * Prevent users registering by administrator
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {

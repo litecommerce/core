@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\UserPermissions\Model;
 /**
  * Role 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 abstract class Role extends \XLite\Model\Role implements \XLite\Base\IDecorator
 {
     /**
      * Enabled
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -50,8 +46,6 @@ abstract class Role extends \XLite\Model\Role implements \XLite\Base\IDecorator
      * @param string $code Permission code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermissionAllowed($code)
     {
@@ -62,8 +56,6 @@ abstract class Role extends \XLite\Model\Role implements \XLite\Base\IDecorator
      * Check - role is permanent (unremovable and foreave enable) or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermanentRole()
     {

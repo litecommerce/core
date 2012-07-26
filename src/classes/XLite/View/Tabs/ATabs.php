@@ -29,8 +29,6 @@ namespace XLite\View\Tabs;
  * ATabs is a component allowing you to display multiple widgets as tabs depending
  * on their targets
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ATabs extends \XLite\View\AView
 {
@@ -49,18 +47,14 @@ abstract class ATabs extends \XLite\View\AView
      * If a widget class is not specified for a target, the ATabs descendant will be used as the widget class.
      * If a template is not specified for a target, it will be used from the tab widget class.
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $tabs = array();
 
     /**
      * Cached result of the getTabs() method
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $processedTabs = null;
 
@@ -69,8 +63,6 @@ abstract class ATabs extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -93,8 +85,6 @@ abstract class ATabs extends \XLite\View\AView
      * Checks whether no widget class is specified for the selected tab
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isTemplateOnlyTab()
     {
@@ -107,8 +97,6 @@ abstract class ATabs extends \XLite\View\AView
      * Checks whether both a template and a widget class are specified for the selected tab
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isFullWidgetTab()
     {
@@ -121,8 +109,6 @@ abstract class ATabs extends \XLite\View\AView
      * Checks whether no template is specified for the selected tab
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isWidgetOnlyTab()
     {
@@ -135,8 +121,6 @@ abstract class ATabs extends \XLite\View\AView
      * Returns a widget class name for the selected tab
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTabWidget()
     {
@@ -149,8 +133,6 @@ abstract class ATabs extends \XLite\View\AView
      * Returns a template name for the selected tab
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTabTemplate()
     {
@@ -163,8 +145,6 @@ abstract class ATabs extends \XLite\View\AView
      * Checks whether no template is specified for the selected tab
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCommonTab()
     {
@@ -178,8 +158,6 @@ abstract class ATabs extends \XLite\View\AView
      * Flag: display (true) or hide (false) tabs
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isWrapperVisible()
     {
@@ -190,8 +168,6 @@ abstract class ATabs extends \XLite\View\AView
      * Returns the default widget template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -202,8 +178,6 @@ abstract class ATabs extends \XLite\View\AView
      * Returns the current target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrentTarget()
     {
@@ -214,8 +188,6 @@ abstract class ATabs extends \XLite\View\AView
      * Returns a list of targets for which the tabs are visible
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTabTargets()
     {
@@ -226,8 +198,6 @@ abstract class ATabs extends \XLite\View\AView
      * Checks whether the widget is visible, or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -240,8 +210,6 @@ abstract class ATabs extends \XLite\View\AView
      * @param string $target Tab target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function buildTabURL($target)
     {
@@ -254,8 +222,6 @@ abstract class ATabs extends \XLite\View\AView
      * @param mixed $target Tab target
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSelectedTab($target)
     {
@@ -266,8 +232,6 @@ abstract class ATabs extends \XLite\View\AView
      * Returns default values for a tab description
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTabValues()
     {
@@ -283,8 +247,6 @@ abstract class ATabs extends \XLite\View\AView
      * Returns an array(tab) descriptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTabs()
     {
@@ -313,8 +275,6 @@ abstract class ATabs extends \XLite\View\AView
      * getTitle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTitle()
     {
@@ -325,8 +285,6 @@ abstract class ATabs extends \XLite\View\AView
      * Returns a description of the selected tab. If no tab is selected, returns NULL.
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSelectedTab()
     {

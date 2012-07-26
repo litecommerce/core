@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
 /**
  * Option exception repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OptionException extends \XLite\Model\Repo\ARepo
 {
@@ -41,8 +39,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @param array $ids Option id list
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkOptions(array $ids)
     {
@@ -71,8 +67,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @param array $ids Option ids list
      *
      * @return \Doctrine\ORM\NativeQuery
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCheckExceptionQuery(array $ids)
     {
@@ -115,8 +109,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * Get next free exception id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getNextExceptionId()
     {
@@ -127,8 +119,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * Define query builder for getNextExceptionId() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineNextExceptionIdQuery()
     {
@@ -146,8 +136,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @param integer $exceptionId Exception id
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByExceptionId($exceptionId)
     {
@@ -160,8 +148,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @param integer $exceptionId Exception id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineByExceptionIdQuery($exceptionId)
     {
@@ -180,8 +166,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @param array $exceptionIds Exception ids list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByExceptionIds(array $exceptionIds)
     {
@@ -194,8 +178,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @param array $exceptionIds Exception ids list
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineByExceptionIdsQuery(array $exceptionIds)
     {

@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\VAT\Model;
 /**
  * Product model
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Included tax list 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $includedTaxList;
 
@@ -49,8 +45,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @param boolean $override Override calculation flag OPTIONAL
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIncludedTaxList($override = false)
     {

@@ -28,17 +28,13 @@ namespace XLite\Controller\Customer;
 /**
  * Select address from address book
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SelectAddress extends \XLite\Controller\Customer\Cart
 {
     /**
      * Controller parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'atype');
 
@@ -47,8 +43,6 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -59,8 +53,6 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * Get current aAddress id
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrentAddressId()
     {
@@ -80,8 +72,6 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -92,8 +82,6 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -106,8 +94,6 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * Select address
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSelect()
     {

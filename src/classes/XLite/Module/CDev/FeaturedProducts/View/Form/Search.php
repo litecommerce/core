@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Form;
 /**
  * Search
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {
@@ -77,8 +69,6 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * JavaScript: this value will be returned on form submit
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {

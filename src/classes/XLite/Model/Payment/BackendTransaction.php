@@ -28,8 +28,6 @@ namespace XLite\Model\Payment;
 /**
  * Payment backend transaction
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="payment_backend_transactions",
@@ -74,9 +72,7 @@ class BackendTransaction extends \XLite\Model\AEntity
     /**
      * Primary key
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -87,9 +83,7 @@ class BackendTransaction extends \XLite\Model\AEntity
     /**
      * Transaction creation timestamp
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -98,9 +92,7 @@ class BackendTransaction extends \XLite\Model\AEntity
     /**
      * Status
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=1)
      */
@@ -109,9 +101,7 @@ class BackendTransaction extends \XLite\Model\AEntity
     /**
      * Transaction value
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -120,9 +110,7 @@ class BackendTransaction extends \XLite\Model\AEntity
     /**
      * Transaction type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=8)
      */
@@ -131,9 +119,7 @@ class BackendTransaction extends \XLite\Model\AEntity
     /**
      * Payment transactions
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ManyToOne  (targetEntity="XLite\Model\Payment\Transaction", inversedBy="backend_transactions")
      * @JoinColumn (name="transaction_id", referencedColumnName="transaction_id")
@@ -143,9 +129,7 @@ class BackendTransaction extends \XLite\Model\AEntity
     /**
      * Transaction data
      *
-     * @var   \XLite\Model\Payment\BackendTransactionData
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Payment\BackendTransactionData
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\BackendTransactionData", mappedBy="transaction", cascade={"all"})
      */
@@ -156,8 +140,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * Get charge value modifier
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getChargeValueModifier()
     {
@@ -174,8 +156,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * Get payment method object related to the parent payment transaction
      * 
      * @return \XLite\Model\Payment\Method
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function getPaymentMethod()
     {
@@ -186,8 +166,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * Check - transaction is failed or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isFailed()
     {
@@ -198,8 +176,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * Check - order is completed or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCompleted()
     {
@@ -212,8 +188,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -226,14 +200,10 @@ class BackendTransaction extends \XLite\Model\AEntity
      * Get human-readable status 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReadableStatus()
     {
-        return isset($this->getPaymentTransaction()->readableStatuses[$this->getStatus()])
-            ? $this->getPaymentTransaction()->readableStatuses[$this->getStatus()]
-            : 'Unknown';
+        return $this->getPaymentTransaction()->getReadableStatus($this->getStatus());
     }
 
     /**
@@ -242,8 +212,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * @param string $operation Name of operation
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function isOperationAllowed($operation)
     {
@@ -254,8 +222,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * Return true if transaction is an initial 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function isInitial()
     {
@@ -278,8 +244,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * @param string $label Public name OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setDataCell($name, $value, $label = null)
     {
@@ -312,8 +276,6 @@ class BackendTransaction extends \XLite\Model\AEntity
      * @param string $name Parameter name
      *  
      * @return \XLite\Model\Payment\BackendTransactionData
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function getDataCell($name)
     {
@@ -327,6 +289,68 @@ class BackendTransaction extends \XLite\Model\AEntity
         }
 
         return $value;
+    }
+
+    /**
+     * Register transaction in order history 
+     * 
+     * @param string $suffix Suffix text to add to the end of event description
+     *  
+     * @return void
+     */
+    public function registerTransactionInOrderHistory($suffix = null)
+    {
+        $descrSuffix = !empty($suffix) ? ' [' . static::t($suffix) . ']' : '';
+
+        \XLite\Core\OrderHistory::getInstance()->registerTransaction(
+            $this->getPaymentTransaction()->getOrder()->getOrderId(),
+            static::t($this->getHistoryEventDescription(), $this->getHistoryEventDescriptionData()) . $descrSuffix,
+            $this->getEventData()
+        );
+    }
+
+    /**
+     * Get description of order history event (language label is returned)
+     * 
+     * @return string
+     */
+    public function getHistoryEventDescription()
+    {
+        return 'Backend payment transaction X issued';
+    }
+
+    /**
+     * Get data for description of order history event (substitution data for language label is returned)
+     * 
+     * @return return
+     */
+    public function getHistoryEventDescriptionData()
+    {
+        return array(
+            'trx_method' => static::t($this->getPaymentMethod()->getName()),
+            'trx_type'   => static::t($this->getType()),
+            'trx_value'  => $this->getPaymentTransaction()->getOrder()->getCurrency()->roundValue($this->getValue()),
+            'trx_status' => static::t($this->getReadableStatus()),
+        );
+    }
+
+    /**
+     * getEventData 
+     * 
+     * @return void
+     */
+    public function getEventData()
+    {
+        $result = array();
+
+        foreach ($this->getData() as $cell) {
+            $result[] = array(
+                'name'  => $cell->getLabel() ?: $cell->getName(),
+                'value' => $cell->getValue()
+            );
+        }
+
+        return $result;
     }
 
     // }}}

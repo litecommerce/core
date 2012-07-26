@@ -28,26 +28,20 @@ namespace XLite\Module\CDev\Demo\Controller\Admin;
 /**
  * Login / logoff
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecorator
 {
     /**
      * Demo admin login
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $demoLogin = 'bit-bucket@litecommerce.com';
 
     /**
      * Demo admin password
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $demoPassword = 'master';
 
@@ -58,8 +52,6 @@ class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecora
      * FIXME - adapt after the mapping will be removed
      *
      * @return void
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {

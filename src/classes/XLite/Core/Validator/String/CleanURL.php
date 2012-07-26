@@ -28,26 +28,20 @@ namespace XLite\Core\Validator\String;
 /**
  * CleanURL 
  *
- * @see   ____class_see____
- * @since 1.0.24
  */
 class CleanURL extends \XLite\Core\Validator\String\RegExp
 {
     /**
      * Class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var string
      */
     protected $class;
 
     /**
      * Entity id
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var mixed
      */
     protected $id;
 
@@ -58,8 +52,6 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      * @param string  $regExp   Regular expression OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($nonEmpty = false, $regExp = null, $class = '', $id = null)
     {
@@ -83,8 +75,6 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -106,8 +96,6 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      * @param mixed $data Data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sanitize($data)
     {
@@ -118,8 +106,6 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      * Clean URL pattern
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function getCleanURLPattern()
     {
@@ -131,8 +117,6 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function throwCleanURLError()
     {

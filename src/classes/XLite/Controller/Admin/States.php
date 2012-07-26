@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * States management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class States extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,8 +45,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * init
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -71,8 +65,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * getStates
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStates()
     {
@@ -88,8 +80,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * doActionAdd
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -144,8 +134,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -172,8 +160,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {

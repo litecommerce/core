@@ -28,8 +28,6 @@ namespace Includes\Utils;
 /**
  * URLManager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class URLManager extends \Includes\Utils\AUtils
 {
@@ -45,9 +43,6 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @param string $url URL to prepare
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function trimTrailingSlashes($url)
     {
@@ -64,9 +59,6 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @param boolean $isSession Use session ID parameter OPTIONAL
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getShopURL(
         $url = '',
@@ -116,8 +108,6 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * Check for secure connection
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public static function isHTTPS()
     {
@@ -129,9 +119,6 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * Return current URI
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getSelfURI()
     {
@@ -142,8 +129,6 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * Return current URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getCurrentURL()
     {
@@ -156,8 +141,6 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @param string $str Host string
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     public static function isValidURLHost($str)
     {

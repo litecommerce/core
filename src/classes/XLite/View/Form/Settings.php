@@ -28,8 +28,6 @@ namespace XLite\View\Form;
 /**
  * Settings dialog form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Settings extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class Settings extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Settings extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class Settings extends \XLite\View\Form\AForm
      * Ability to add the 'enctype="multipart/form-data"' form attribute
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isMultipart()
     {
@@ -73,8 +65,6 @@ class Settings extends \XLite\View\Form\AForm
      * getDefaultClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultClassName()
     {
@@ -89,8 +79,6 @@ class Settings extends \XLite\View\Form\AForm
      * Required form parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonFormParams()
     {

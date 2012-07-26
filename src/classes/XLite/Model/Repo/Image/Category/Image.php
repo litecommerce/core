@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Image\Category;
 /**
  * Category
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Image extends \XLite\Model\Repo\Base\Image
 {
@@ -37,8 +35,6 @@ class Image extends \XLite\Model\Repo\Base\Image
      * Returns the name of the directory within 'root/images' where images stored
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStorageName()
     {

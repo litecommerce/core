@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade\Step\Completed;
 /**
  * Log
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", weight="400", zone="admin")
  */
@@ -39,8 +37,6 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -51,8 +47,6 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -63,8 +57,6 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
      * Get the log file link
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLogFileURL()
     {
@@ -75,8 +67,6 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
      * Called after the includeCompiledFile()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function closeView()
     {

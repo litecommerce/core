@@ -28,8 +28,6 @@ namespace XLite\Core\Validator;
 /**
  * Enumrable
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Enum extends \XLite\Core\Validator\Enum\AEnum
 {
@@ -39,8 +37,6 @@ class Enum extends \XLite\Core\Validator\Enum\AEnum
      * @param array $list List of allowe values OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function __construct(array $list = array())
     {

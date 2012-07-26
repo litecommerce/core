@@ -28,8 +28,6 @@ namespace XLite\View\Order\Details\Admin;
 /**
  * Payment actions unit widget (button capture or refund or void etc)
  * 
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="order.details.payment_actions", zone="admin")
  */
@@ -46,8 +44,6 @@ class PaymentActionsUnit extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -58,8 +54,6 @@ class PaymentActionsUnit extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -80,8 +74,6 @@ class PaymentActionsUnit extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -94,8 +86,6 @@ class PaymentActionsUnit extends \XLite\View\AView
      * Return true if requested unit is allowed for the transaction
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isTransactionUnitAllowed($transaction, $unit)
     {
@@ -106,8 +96,6 @@ class PaymentActionsUnit extends \XLite\View\AView
      * Get unit name (for button naming)
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUnitName()
     {
@@ -118,8 +106,6 @@ class PaymentActionsUnit extends \XLite\View\AView
      * Get action URL
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getActionURL()
     {

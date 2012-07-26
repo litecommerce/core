@@ -28,17 +28,13 @@ namespace XLite\Model\Repo;
 /**
  * Session cell repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SessionCell extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -50,8 +46,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param mixed   $value Data to store
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function insertCell($id, $name, $value)
     {
@@ -65,8 +59,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param mixed                    $value Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function updateCell(\XLite\Model\SessionCell $cell, $value)
     {
@@ -81,8 +73,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\SessionCell $cell Cell to delete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function removeCell(\XLite\Model\SessionCell $cell)
     {
@@ -96,8 +86,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param string $type   Schema type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processSchema(array $schema, $type)
     {
@@ -124,8 +112,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param mixed   $value Data to store
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareDataForNewCell($id, $name, $value)
     {
@@ -142,8 +128,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\SessionCell $cell  Cell to update OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareDataForExistingCell($value, \XLite\Model\SessionCell $cell = null)
     {

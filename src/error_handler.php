@@ -37,8 +37,6 @@ define('LC_ERROR_PAGE_MESSAGE', 'ERROR: "' . LC_ERR_TAG_ERROR . '" (' . LC_ERR_T
  * @param string  $page    Template of message to display
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function showErrorPage($code, $message, $page = LC_ERROR_PAGE_MESSAGE, $prefix = 'ERROR_')
 {

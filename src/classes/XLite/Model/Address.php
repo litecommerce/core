@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Address model
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Address")
  * @Table  (name="profile_addresses",
@@ -53,9 +51,7 @@ class Address extends \XLite\Model\Base\PersonalAddress
     /**
      * Flag: is it a billing address
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="boolean")
      */
@@ -64,9 +60,7 @@ class Address extends \XLite\Model\Base\PersonalAddress
     /**
      * Flag: is it a shipping address
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="boolean")
      */
@@ -75,9 +69,7 @@ class Address extends \XLite\Model\Base\PersonalAddress
     /**
      * Profile: many-to-one relation with profile entity
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ManyToOne (targetEntity="XLite\Model\Profile", inversedBy="addresses")
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
@@ -89,8 +81,6 @@ class Address extends \XLite\Model\Base\PersonalAddress
      * Get billing address-specified required fields
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getBillingRequiredFields()
     {
@@ -108,8 +98,6 @@ class Address extends \XLite\Model\Base\PersonalAddress
      * Get shipping address-specified required fields
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShippingRequiredFields()
     {
@@ -129,8 +117,6 @@ class Address extends \XLite\Model\Base\PersonalAddress
      * @param string $atype Address type code
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequiredFieldsByType($atype)
     {
@@ -155,8 +141,6 @@ class Address extends \XLite\Model\Base\PersonalAddress
      * Clone
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -174,8 +158,6 @@ class Address extends \XLite\Model\Base\PersonalAddress
      * Check if address has duplicates
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkAddress()
     {

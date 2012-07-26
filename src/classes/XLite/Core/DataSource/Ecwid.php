@@ -28,8 +28,6 @@ namespace XLite\Core\DataSource;
 /**
  * Ecwid data source
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Ecwid extends ADataSource
 {
@@ -47,8 +45,6 @@ class Ecwid extends ADataSource
      * Get Ecwid data source name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function getName()
     {
@@ -59,8 +55,6 @@ class Ecwid extends ADataSource
      * Get Ecwid data source name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function getType()
     {
@@ -71,8 +65,6 @@ class Ecwid extends ADataSource
      * Get standardized data source information array
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getInfo()
     {
@@ -83,8 +75,6 @@ class Ecwid extends ADataSource
      * Checks whether the data source is valid
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isValid()
     {
@@ -106,8 +96,6 @@ class Ecwid extends ADataSource
      * Request and return products collection
      * 
      * @return \XLite\Core\DataSource\Ecwid\Products
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getProductsCollection()
     {
@@ -118,8 +106,6 @@ class Ecwid extends ADataSource
      * Request and return categories collection
      * 
      * @return \XLite\Core\DataSource\Ecwid\Categories
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getCategoriesCollection()
     {
@@ -130,8 +116,6 @@ class Ecwid extends ADataSource
      * Get Ecwid Store ID
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getStoreId()
     {
@@ -146,8 +130,6 @@ class Ecwid extends ADataSource
      *  
      * @return array
      * @throws Exception
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function callApi($apiMethod, $params = array())
     {
@@ -201,8 +183,6 @@ class Ecwid extends ADataSource
      * @param array $params An array of call parameters
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function callBatchApi(array $params)
     {

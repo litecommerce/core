@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Form id repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class FormId extends \XLite\Model\Repo\ARepo
 {
@@ -42,18 +40,14 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = array(
         'date' => false,
@@ -63,9 +57,7 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Form id characters list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $chars = array(
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -80,9 +72,7 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Frontier length
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $frontierLength = 100;
 
@@ -93,8 +83,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function countByFormIdAndSessionId($formId, $sessionId = null)
     {
@@ -111,8 +99,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function generateFormId($sessionId = null)
     {
@@ -146,8 +132,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id OPTIONAL OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function removeExpired($sessionId = null)
     {
@@ -168,8 +152,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param string $type   Schema type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processSchema(array $schema, $type)
     {
@@ -196,8 +178,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineByFormIdAndSessionIdQuery($formId, $sessionId)
     {
@@ -214,8 +194,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFrontierId($sessionId)
     {
@@ -229,8 +207,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineGetFrontierQuery($frontier, $sessionId)
     {
@@ -249,8 +225,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRemoveExpiredQuery($id, $sessionId)
     {

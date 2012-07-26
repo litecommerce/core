@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Admin\Model;
 /**
  * Table-based pager
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Table extends \XLite\View\Pager\Admin\Model\AModel
 {
@@ -37,8 +35,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * isVisible: hide pager if table contains no data
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isVisible()
     {
@@ -49,8 +45,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * Return CSS classes for parent block of pager (list-pager by default)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSClasses()
     {
@@ -61,8 +55,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * Get items per page (default)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {
@@ -73,8 +65,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * getDir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -87,8 +77,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * Check - current page is first or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isFirstPage()
     {
@@ -99,8 +87,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * Check - current page is last or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isLastPage()
     {
@@ -111,8 +97,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * Get previous arrow class 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getPrevClass()
     {
@@ -123,8 +107,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * Get next arrow class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getNextClass()
     {
@@ -135,8 +117,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * Get items per page ranges list
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getItemsPerPageRanges()
     {
@@ -147,8 +127,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * Chec - items per page box visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isItemsPerPageVisible()
     {
@@ -163,8 +141,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * @param integer $range Range
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isRangeSelected($range)
     {
@@ -177,8 +153,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
      * @param integer $id Page id
      *  
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function preprocessPageId($id)
     {

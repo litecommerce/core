@@ -28,8 +28,6 @@ namespace XLite\View\Location;
 /**
  * Node
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Node extends \XLite\View\AView
 {
@@ -49,8 +47,6 @@ class Node extends \XLite\View\AView
      * @param array  $subnodes Node subnodes OPTIONAL
      *
      * @return object
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function create($name, $link = null, array $subnodes = null)
     {
@@ -67,8 +63,6 @@ class Node extends \XLite\View\AView
      * Check - node is last in nodes list or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLast()
     {
@@ -79,8 +73,6 @@ class Node extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -91,8 +83,6 @@ class Node extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -110,8 +100,6 @@ class Node extends \XLite\View\AView
      * Get node name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getName()
     {
@@ -122,8 +110,6 @@ class Node extends \XLite\View\AView
      * Get link URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLink()
     {
@@ -134,8 +120,6 @@ class Node extends \XLite\View\AView
      * Get subnodes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSubnodes()
     {

@@ -29,8 +29,6 @@ namespace Includes\Decorator\Plugin\Doctrine;
  * ADoctrine
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class ADoctrine extends \Includes\Decorator\Plugin\APlugin
 {

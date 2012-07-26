@@ -28,17 +28,13 @@ namespace XLite\View\ExternalSDK;
 /**
  * Abstract external SDK loader
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class AExternalSDK extends \XLite\View\AView
 {
     /**
      * Loaded state
      * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var boolean
      */
     protected static $loaded = array();
 
@@ -46,8 +42,6 @@ abstract class AExternalSDK extends \XLite\View\AView
      * Check - loaded SDK or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public static function isLoaded()
     {
@@ -62,8 +56,6 @@ abstract class AExternalSDK extends \XLite\View\AView
      * @param string $template Template file name OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function display($template = null)
     {
@@ -76,8 +68,6 @@ abstract class AExternalSDK extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

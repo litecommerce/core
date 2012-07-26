@@ -28,8 +28,6 @@ namespace XLite\View\Taxes;
 /**
  * Membership selector 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class MembershipSelector extends \XLite\View\AView
 {
@@ -43,8 +41,6 @@ class MembershipSelector extends \XLite\View\AView
      * Get active memberships
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMemberships()
     {
@@ -55,8 +51,6 @@ class MembershipSelector extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -67,8 +61,6 @@ class MembershipSelector extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -86,8 +78,6 @@ class MembershipSelector extends \XLite\View\AView
      * @param \XLite\Model\Membership $current Membership
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSelectedMembership(\XLite\Model\Membership $current)
     {

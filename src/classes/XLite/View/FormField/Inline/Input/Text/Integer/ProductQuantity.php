@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text\Integer;
 /**
  * Product quantity
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
 {
@@ -37,8 +35,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * Save value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function saveValue()
     {
@@ -49,8 +45,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * Get entity value for field
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getEntityValue()
     {
@@ -61,8 +55,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * Check - field is editable or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isEditable()
     {
@@ -75,8 +67,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * @param array $field Field data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldParams(array $field)
     {
@@ -87,8 +77,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * Get view template
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getViewTemplate()
     {

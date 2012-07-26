@@ -28,8 +28,6 @@ namespace XLite\View\Model\DataSource;
 /**
  * Abstract data source model widget
  *
- * @see   ____class_see____
- * @since 1.0.17
  */
 abstract class ADataSource extends \XLite\View\Model\AModel
 {
@@ -39,8 +37,6 @@ abstract class ADataSource extends \XLite\View\Model\AModel
      * @param mixed $name Field/property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getModelObjectValue($name)
     {
@@ -64,8 +60,6 @@ abstract class ADataSource extends \XLite\View\Model\AModel
      * @param array $data Data to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function setModelProperties(array $data)
     {
@@ -87,8 +81,6 @@ abstract class ADataSource extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getFormButtons()
     {
@@ -107,8 +99,6 @@ abstract class ADataSource extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {

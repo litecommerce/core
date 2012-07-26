@@ -28,8 +28,6 @@ namespace XLite\View\Form\Login\Admin;
 /**
  * Abstract log-in form in admn interface
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\Form\Login\ALogin
 {
@@ -37,8 +35,6 @@ abstract class AAdmin extends \XLite\View\Form\Login\ALogin
      * getSecuritySetting
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSecuritySetting()
     {

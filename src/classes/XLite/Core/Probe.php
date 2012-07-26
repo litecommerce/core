@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Probe
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Probe extends \XLite\Base\Singleton
 {
@@ -39,8 +37,6 @@ class Probe extends \XLite\Base\Singleton
      * @param boolean $force Force run OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function measure($force = false)
     {
@@ -70,8 +66,6 @@ class Probe extends \XLite\Base\Singleton
      * Measure filesystem
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function measureFilesystem()
     {
@@ -108,8 +102,6 @@ class Probe extends \XLite\Base\Singleton
      * Measure database
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function measureDatabase()
     {
@@ -155,8 +147,6 @@ class Probe extends \XLite\Base\Singleton
      * Measure computation
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function measureComputation()
     {
@@ -184,8 +174,6 @@ class Probe extends \XLite\Base\Singleton
      * Check access
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -196,8 +184,6 @@ class Probe extends \XLite\Base\Singleton
      * Check web access
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkWebAccess()
     {
@@ -211,8 +197,6 @@ class Probe extends \XLite\Base\Singleton
      * Check CLI access
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkCLIAccess()
     {
@@ -226,8 +210,6 @@ class Probe extends \XLite\Base\Singleton
      * Check CLI access
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkCronAccess()
     {

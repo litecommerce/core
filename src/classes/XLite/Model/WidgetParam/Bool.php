@@ -28,26 +28,20 @@ namespace XLite\Model\WidgetParam;
 /**
  * ____description____
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Bool extends \XLite\Model\WidgetParam\Set
 {
     /**
      * Values for TRUE value
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.1
+     * @var array
      */
     protected $trueValues = array('1', 'true', 1, true);
 
     /**
      * Options
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $options = array(
         'true'  => 'Yes',
@@ -60,8 +54,6 @@ class Bool extends \XLite\Model\WidgetParam\Set
      * @param mixed $name Value to get
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -75,8 +67,6 @@ class Bool extends \XLite\Model\WidgetParam\Set
      * @param mixed $value Value of widget parameter
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function isTrue($value)
     {

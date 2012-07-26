@@ -28,8 +28,6 @@ namespace XLite\View\Form\Category\Modify;
 /**
  * AModify 
  *
- * @see   ____class_see____
- * @since 1.0.21
  */
 abstract class AModify extends \XLite\View\Form\Category\ACategory
 {

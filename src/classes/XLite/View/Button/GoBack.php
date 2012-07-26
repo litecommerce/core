@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * "Go back" button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class GoBack extends \XLite\View\Button\Regular
 {
@@ -37,8 +35,6 @@ class GoBack extends \XLite\View\Button\Regular
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -49,8 +45,6 @@ class GoBack extends \XLite\View\Button\Regular
      * JavaScript: default JS code to execute
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {

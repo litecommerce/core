@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\TinyMCE\View\FormField\Textarea;
 /**
  * TinyMCE textarea widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * getJSFiles
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -55,8 +51,6 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * Return CSS files for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -72,8 +66,6 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * getFieldTemplate
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -85,8 +77,6 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * getDir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -97,8 +87,6 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * Return structure of configuration for JS TinyMCE library
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTinyMCEConfiguration()
     {

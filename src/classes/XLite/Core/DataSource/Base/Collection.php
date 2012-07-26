@@ -29,8 +29,6 @@ namespace XLite\Core\DataSource\Base;
  * Abstract collection
  * Implements SeekableIterator and Countable interfaces
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 abstract class Collection implements \Countable, \SeekableIterator
 {
@@ -38,9 +36,7 @@ abstract class Collection implements \Countable, \SeekableIterator
     /**
      * Abstract data source
      * 
-     * @var   \XLite\Core\DataSource\ADataSource
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var \XLite\Core\DataSource\ADataSource
      */
     protected $dataSource;
 
@@ -50,8 +46,6 @@ abstract class Collection implements \Countable, \SeekableIterator
      * @param \XLite\Core\DataSource\ADataSource $dataSource Abstract data source
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function __construct(\XLite\Core\DataSource\ADataSource $dataSource)
     {
@@ -62,8 +56,6 @@ abstract class Collection implements \Countable, \SeekableIterator
      * Data source getter
      * 
      * @return \XLite\Core\DataSource\ADataSource
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDataSource()
     {

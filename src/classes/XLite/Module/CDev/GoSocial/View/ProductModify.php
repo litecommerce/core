@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View;
 /**
  * Product modify widget
  * 
- * @see   ____class_see____
- * @since 1.0.15
  *
  * @ListChild (list="product.modify.list", weight="1015", zone="admin")
  */
@@ -39,8 +37,6 @@ class ProductModify extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -55,8 +51,6 @@ class ProductModify extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -71,8 +65,6 @@ class ProductModify extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

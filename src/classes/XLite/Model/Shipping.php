@@ -28,17 +28,13 @@ namespace XLite\Model;
 /**
  * Common shipping method
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Shipping extends \XLite\Base\Singleton
 {
     /**
      * List of registered shipping processors
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $registeredProcessors = array();
 
@@ -50,8 +46,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param string $processorClass Processor class
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function registerProcessor($processorClass)
     {
@@ -71,8 +65,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param string $processorClass Processor class
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function unregisterProcessor($processorClass)
     {
@@ -85,8 +77,6 @@ class Shipping extends \XLite\Base\Singleton
      * Returns the list of registered shipping processors
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getProcessors()
     {
@@ -98,8 +88,6 @@ class Shipping extends \XLite\Base\Singleton
      * __constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -110,8 +98,6 @@ class Shipping extends \XLite\Base\Singleton
      * Retrieves shipping methods: all or by specified processor
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShippingMethods($processorClass = null)
     {
@@ -136,8 +122,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
@@ -195,8 +179,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDestinationAddress(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
@@ -239,8 +221,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param \XLite\Model\Shipping\Processor\AProcessor $b Second processor
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function compareProcessors($a, $b)
     {

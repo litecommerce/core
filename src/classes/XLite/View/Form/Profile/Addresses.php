@@ -28,8 +28,6 @@ namespace XLite\View\Form\Profile;
 /**
  * \XLite\View\Form\Profile\Addresses
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Addresses extends \XLite\View\Form\Profile\AProfile
 {
@@ -37,8 +35,6 @@ class Addresses extends \XLite\View\Form\Profile\AProfile
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Addresses extends \XLite\View\Form\Profile\AProfile
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

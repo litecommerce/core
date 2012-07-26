@@ -28,8 +28,6 @@ namespace XLite\View\Checkout;
 /**
  * Shipping address block
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingAddress extends \XLite\View\AView
 {
@@ -37,21 +35,24 @@ class ShippingAddress extends \XLite\View\AView
      * Get shipping address
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddress()
     {
         $address = null;
-        
-        if ($this->getCart()->getProfile()) {
 
-            $address = $this->getCart()->getProfile()->getShippingAddress();
+        $profile = $this->getCart()->getProfile();
+
+        if ($profile) {
+
+            $address = $profile->getShippingAddress();
 
             if (!$address) {
-                $address = $this->getCart()->getProfile()->getFirstAddress();
-                $address->setIsShipping(true);
-                $address->update();
+                $address = $profile->getFirstAddress();
+
+                if ($address) {
+                    $address->setIsShipping(true);
+                    $address->update();
+                }
             }
         }
 
@@ -63,8 +64,6 @@ class ShippingAddress extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

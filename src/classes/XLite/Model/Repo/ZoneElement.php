@@ -28,17 +28,13 @@ namespace XLite\Model\Repo;
 /**
  * Zone element repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ZoneElement extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SECONDARY;
 }

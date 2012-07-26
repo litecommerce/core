@@ -29,8 +29,6 @@ namespace XLite\Core\DataSource\Base;
  * Abstract categories collection
  * Implements SeekableIterator and Countable interfaces
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 abstract class Categories extends Collection
 {
@@ -38,8 +36,6 @@ abstract class Categories extends Collection
      * Performs a basic validation over a collection of categories
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isValid()
     {

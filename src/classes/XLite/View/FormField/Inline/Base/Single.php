@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Base;
 /**
  * Single-field
  * 
- * @see   ____class_see____
- * @since 1.0.22
  */
 abstract class Single extends \XLite\View\FormField\Inline\AInline
 {
@@ -37,8 +35,6 @@ abstract class Single extends \XLite\View\FormField\Inline\AInline
      * Define form field
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     abstract protected function defineFieldClass();
 
@@ -46,8 +42,6 @@ abstract class Single extends \XLite\View\FormField\Inline\AInline
      * Define fields
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function defineFields()
     {
@@ -63,8 +57,6 @@ abstract class Single extends \XLite\View\FormField\Inline\AInline
      * Get entity value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getEntityValue()
     {
@@ -80,8 +72,6 @@ abstract class Single extends \XLite\View\FormField\Inline\AInline
      * @param array $field Field
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getFieldEntityValue(array $field)
     {
@@ -92,8 +82,6 @@ abstract class Single extends \XLite\View\FormField\Inline\AInline
      * Get single field 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getSingleField()
     {
@@ -106,8 +94,6 @@ abstract class Single extends \XLite\View\FormField\Inline\AInline
      * Get single field as widget
      *
      * @return \XLite\View\FormField\AFormField
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getSingleFieldAsWidget()
     {

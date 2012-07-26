@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text\Product;
 /**
  * Product SKU
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class SKU extends \XLite\View\FormField\Inline\Input\Text
 {
@@ -37,8 +35,6 @@ class SKU extends \XLite\View\FormField\Inline\Input\Text
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -55,8 +51,6 @@ class SKU extends \XLite\View\FormField\Inline\Input\Text
      * @param array $field Field data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldParams(array $field)
     {

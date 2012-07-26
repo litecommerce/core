@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\View\Taxes;
 /**
  * Membership selector 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class MembershipSelector extends \XLite\View\Taxes\MembershipSelector
 {
@@ -37,8 +35,6 @@ class MembershipSelector extends \XLite\View\Taxes\MembershipSelector
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\UserPermissions\View\FormField;
 /**
  * Permissions selector 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class Permissions extends \XLite\View\FormField\Select\CheckboxList\ACheckboxList
 {
     /**
      * Root permission
      * 
-     * @var   \XLite\Model\Role\Permission
-     * @see   ____var_see____
-     * @since 1.0.22
+     * @var \XLite\Model\Role\Permission
      */
     protected $root;
 
@@ -46,8 +42,6 @@ class Permissions extends \XLite\View\FormField\Select\CheckboxList\ACheckboxLis
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -62,8 +56,6 @@ class Permissions extends \XLite\View\FormField\Select\CheckboxList\ACheckboxLis
      * Return default options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
@@ -90,8 +82,6 @@ class Permissions extends \XLite\View\FormField\Select\CheckboxList\ACheckboxLis
      * @param mixed $value Value
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getOptionAttributes($value)
     {
@@ -108,8 +98,6 @@ class Permissions extends \XLite\View\FormField\Select\CheckboxList\ACheckboxLis
      * Get root permission 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getRootPermission()
     {

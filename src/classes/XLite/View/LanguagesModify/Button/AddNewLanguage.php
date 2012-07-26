@@ -28,8 +28,6 @@ namespace XLite\View\LanguagesModify\Button;
 /**
  * Add new language button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddNewLanguage extends \XLite\View\Button\Regular
 {
@@ -42,8 +40,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -58,8 +54,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -70,8 +64,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * getDefaultStyle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultStyle()
     {
@@ -82,8 +74,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * JavaScript: default JS code to execute
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {
@@ -95,8 +85,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

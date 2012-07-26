@@ -28,8 +28,6 @@ namespace XLite\Core\Doctrine;
 /**
  * IF(condition, then, else) MySQL function realisation
  * 
- * @see   ____class_see____
- * @since 1.0.8
  */
 class IfFunction extends \Doctrine\ORM\Query\AST\Functions\FunctionNode
 {
@@ -39,8 +37,6 @@ class IfFunction extends \Doctrine\ORM\Query\AST\Functions\FunctionNode
      * @param \Doctrine\ORM\Query\Parser $parser Parser
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     public function parse(\Doctrine\ORM\Query\Parser $parser)
     {
@@ -72,8 +68,6 @@ class IfFunction extends \Doctrine\ORM\Query\AST\Functions\FunctionNode
      * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker SQL walker
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {

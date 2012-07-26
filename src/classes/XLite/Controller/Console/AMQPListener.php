@@ -28,17 +28,13 @@ namespace XLite\Controller\Console;
 /**
  * AMQP listener controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AMQPListener extends \XLite\Controller\Console\AConsole
 {
     /**
      * Driver 
      * 
-     * @var   \XLite\Core\EventDriver\AMQP
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var \XLite\Core\EventDriver\AMQP
      */
     protected $driver;
 
@@ -49,8 +45,6 @@ class AMQPListener extends \XLite\Controller\Console\AConsole
      * @param string       $name    Event (queue) name
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function handleMessage(\AMQPMessage $message, $name)
     {
@@ -69,8 +63,6 @@ class AMQPListener extends \XLite\Controller\Console\AConsole
      * Preprocessor for no-action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -94,8 +86,6 @@ class AMQPListener extends \XLite\Controller\Console\AConsole
      * Check wait cycle 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function checkCycle()
     {
@@ -106,8 +96,6 @@ class AMQPListener extends \XLite\Controller\Console\AConsole
      * Wait
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function wait()
     {
@@ -121,8 +109,6 @@ class AMQPListener extends \XLite\Controller\Console\AConsole
      * Get driver 
      * 
      * @return \XLite\Core\EventDriver\AMQP
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getDriver()
     {

@@ -29,8 +29,6 @@ namespace XLite\Controller\Admin;
  * Get widget (AJAX)
  * TODO: multiple inheritance required;
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class GetWidget extends \XLite\Controller\Admin\AAdmin
 {
@@ -38,8 +36,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
      * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -59,8 +55,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -73,8 +67,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
      * Return Viewer object
      *
      * @return \XLite\View\Controller
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getViewer($isExported = false)
     {
@@ -85,8 +77,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
      * Get class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getClass()
     {
@@ -98,8 +88,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
      * These params from AJAX request will be translated into the corresponding ones
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAJAXParamsTranslationTable()
     {
@@ -113,8 +101,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
      * checkRequest
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkRequest()
     {
@@ -125,8 +111,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
      * Select template to use
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {

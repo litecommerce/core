@@ -27,8 +27,6 @@ namespace XLite\Model\Base;
 /**
  * Order item related object interface
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 interface IOrderItem
 {
@@ -36,8 +34,6 @@ interface IOrderItem
      * Get unique id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getId();
 
@@ -45,8 +41,6 @@ interface IOrderItem
      * Get price
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPrice();
 
@@ -54,8 +48,6 @@ interface IOrderItem
      * Get weight
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWeight();
 
@@ -63,8 +55,6 @@ interface IOrderItem
      * Get purchase limit (minimum)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMinPurchaseLimit();
 
@@ -72,8 +62,6 @@ interface IOrderItem
      * Get purchase limit (maximum)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMaxPurchaseLimit();
 
@@ -81,8 +69,6 @@ interface IOrderItem
      * Get name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName();
 
@@ -90,8 +76,6 @@ interface IOrderItem
      * Get SKU
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSku();
 
@@ -99,8 +83,6 @@ interface IOrderItem
      * Get image
      *
      * @return \XLite\Model\Base\Image|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getImage();
 
@@ -108,8 +90,6 @@ interface IOrderItem
      * Get free shipping
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFreeShipping();
 
@@ -117,8 +97,6 @@ interface IOrderItem
      * Get URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURL();
 }

@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Role 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="roles")
@@ -39,9 +37,7 @@ class Role extends \XLite\Model\Base\I18n
     /**
      * ID 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class Role extends \XLite\Model\Base\I18n
     /**
      * Permissions
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ManyToMany (targetEntity="XLite\Model\Role\Permission", mappedBy="roles", cascade={"merge","detach"})
      */
@@ -63,9 +57,7 @@ class Role extends \XLite\Model\Base\I18n
     /**
      * Profiles
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ManyToMany (targetEntity="XLite\Model\Profile", inversedBy="roles")
      * @JoinTable (
@@ -82,8 +74,6 @@ class Role extends \XLite\Model\Base\I18n
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -97,8 +87,6 @@ class Role extends \XLite\Model\Base\I18n
      * Get public name 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getPublicName()
     {
@@ -111,8 +99,6 @@ class Role extends \XLite\Model\Base\I18n
      * @param string $code Permission code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermissionAllowed($code)
     {
@@ -134,8 +120,6 @@ class Role extends \XLite\Model\Base\I18n
      * @param string|array $code Permission code(s)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermissionAllowedOr($code)
     {

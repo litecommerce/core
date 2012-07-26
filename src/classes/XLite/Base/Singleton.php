@@ -28,17 +28,13 @@ namespace XLite\Base;
 /**
  * Singleton
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Singleton extends \XLite\Base\SuperClass
 {
     /**
      * Array of instances for all derived classes
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $instances = array();
 
@@ -46,8 +42,6 @@ abstract class Singleton extends \XLite\Base\SuperClass
      * Method to access a singleton
      *
      * @return \XLite\Base
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getInstance()
     {
@@ -65,8 +59,6 @@ abstract class Singleton extends \XLite\Base\SuperClass
      * Destruct and recreate singleton
      *
      * @return \XLite\Base
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function resetInstance()
     {

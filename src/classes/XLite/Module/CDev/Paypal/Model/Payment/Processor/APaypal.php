@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 /**
  * Abstract Paypal (iframe) processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 {
@@ -45,36 +43,28 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     /**
      * iframeURL 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      */
     protected $iframeURL = 'https://payflowlink.paypal.com/';
 
     /**
      * API test URL 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      */
     protected $apiTestURL = 'https://pilot-payflowpro.paypal.com/';
 
     /**
      * API live URL 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      */
     protected $apiLiveURL = 'https://payflowpro.paypal.com/';
 
     /**
      * Cache of SecureTokenID
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      */
     protected $secureTokenId = null;
 
@@ -83,8 +73,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * getSettingsWidget 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function getSettingsWidget()
     {
@@ -95,8 +83,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get allowed backend transactions
      *
      * @return string Status code
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAllowedTransactions()
     {
@@ -112,8 +98,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get return type of the iframe-method: html redirect with destroying an iframe
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnType()
     {
@@ -126,8 +110,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method object OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInitialTransactionType($method = null)
     {
@@ -143,8 +125,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param string                           $status      Transaction status
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function updateInitialBackendTransaction(\XLite\Model\Payment\Transaction $transaction, $status)
     {
@@ -162,8 +142,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -177,8 +155,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Return true if merchant country is allowed for this payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMerchantCountryAllowed()
     {
@@ -194,8 +170,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -223,8 +197,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processCallback(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -283,6 +255,8 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             $this->transaction->setStatus($status);
 
             $this->updateInitialBackendTransaction($this->transaction, $status);
+
+            $this->transaction->registerTransactionInOrderHistory('callback');
         }
     }
 
@@ -293,8 +267,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param array $response Response data
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function isSuccessResponse($response)
     {
@@ -318,8 +290,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param array  $params  Array of URL parameters OPTIONAL
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPostURL($postURL = null, $params = array())
     {
@@ -334,8 +304,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * getAPIURL 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAPIURL()
     {
@@ -346,8 +314,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Return true if module is in test mode
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isTestMode()
     {
@@ -358,8 +324,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get URL of the page to display within iframe
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIframeData()
     {
@@ -379,8 +343,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get iframe size 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIframeSize()
     {
@@ -391,8 +353,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Returns the list of iframe URL arguments
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIframeParams($token)
     {
@@ -412,8 +372,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get SecureTokenId
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSecureTokenId()
     {
@@ -433,8 +391,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Generate random string for SecureTokenId
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function generateSecureTokenId()
     {
@@ -445,8 +401,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Do CREATESECURETOKEN request and get SECURETOKEN from Paypal 
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSecureToken()
     {
@@ -477,8 +431,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Returns true on success or false on failure
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doCapture(\XLite\Model\Payment\BackendTransaction $transaction)
     {
@@ -515,8 +467,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Returns true on success or false on failure
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doVoid(\XLite\Model\Payment\BackendTransaction $transaction)
     {
@@ -552,8 +502,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Returns true on success or false on failure
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doRefund(\XLite\Model\Payment\BackendTransaction $transaction)
     {
@@ -593,8 +541,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\BackendTransaction $transaction Backend transaction object OPTIONAL
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function doRequest($requestType, $transaction = null)
     {
@@ -645,8 +591,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * );
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getParsedResponse($response)
     {
@@ -671,8 +615,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\BackendTransaction $transaction Backend transaction object OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRequestParams($requestType, $transaction = null)
     {
@@ -696,8 +638,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get array of common params for all requests
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonRequestParams()
     {
@@ -715,8 +655,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get array of parameters for CREATESECURETOKEN request
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCreateSecureTokenRequestParams()
     {
@@ -772,8 +710,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Cart $cart Cart object OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLineItems($cart = null)
     {
@@ -816,8 +752,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get currency code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrencyCode()
     {
@@ -828,8 +762,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Return array of parameters for 'CAPTURE' request 
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInquiryRequestParams()
     {
@@ -847,8 +779,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Return array of parameters for 'CAPTURE' request 
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCaptureRequestParams(\XLite\Model\Payment\BackendTransaction $transaction)
     {
@@ -866,8 +796,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Get reference ID field name for backend transactions
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getReferenceIdField()
     {
@@ -881,8 +809,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\BackendTransaction $backendTransaction Backend transaction object
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTransactionReferenceId(\XLite\Model\Payment\BackendTransaction $backendTransaction)
     {
@@ -933,8 +859,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Return array of parameters for 'VOID' request 
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getVoidRequestParams(\XLite\Model\Payment\BackendTransaction $transaction)
     {
@@ -950,8 +874,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Return array of parameters for 'CREDIT' request 
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCreditRequestParams(\XLite\Model\Payment\BackendTransaction $transaction)
     {
@@ -968,8 +890,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Define saved into transaction data schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSavedData()
     {

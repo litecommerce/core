@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node;
 /**
  * Promotions 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @ListChild (list="menu.catalog", weight="50", zone="admin")
  */
@@ -39,8 +37,6 @@ class Promotions extends \XLite\View\TopMenu\Node
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -54,8 +50,6 @@ class Promotions extends \XLite\View\TopMenu\Node
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

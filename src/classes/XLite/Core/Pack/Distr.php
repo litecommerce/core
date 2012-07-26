@@ -28,8 +28,6 @@ namespace XLite\Core\Pack;
 /**
  * Distr
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Distr extends \XLite\Core\Pack\APack
 {
@@ -42,36 +40,28 @@ class Distr extends \XLite\Core\Pack\APack
     /**
      * List of patterns which are not required in pack
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $exclude = array();
 
     /**
      * List of exception patterns
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $include = array();
 
     /**
      * Exclude pattern
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $excludePattern;
 
     /**
      * Include pattern
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $includePattern;
 
@@ -81,8 +71,6 @@ class Distr extends \XLite\Core\Pack\APack
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -103,8 +91,6 @@ class Distr extends \XLite\Core\Pack\APack
      * Return pack name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -116,8 +102,6 @@ class Distr extends \XLite\Core\Pack\APack
      * Return iterator to walk through directories
      *
      * @return \Iterator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDirectoryIterator()
     {
@@ -133,8 +117,6 @@ class Distr extends \XLite\Core\Pack\APack
      * Return pack metadata
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMetadata()
     {
@@ -148,8 +130,6 @@ class Distr extends \XLite\Core\Pack\APack
      * Preapre patterns
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function preparePatterns()
     {
@@ -179,8 +159,6 @@ class Distr extends \XLite\Core\Pack\APack
      * @param \Includes\Utils\FileFilter\FilterIterator $iterator Directory iterator
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function filterCoreFiles(\Includes\Utils\FileFilter\FilterIterator $iterator)
     {

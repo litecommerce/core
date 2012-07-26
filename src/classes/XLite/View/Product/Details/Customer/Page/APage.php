@@ -28,17 +28,13 @@ namespace XLite\View\Product\Details\Customer\Page;
 /**
  * APage
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
 {
     /**
      * Tabs (cache)
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var array
      */
     protected $tabs;
 
@@ -46,8 +42,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -61,8 +55,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -77,8 +69,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * Check - 'items available' label is visible or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isAvailableLabelVisible()
     {
@@ -92,8 +82,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * Get tabs 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getTabs()
     {
@@ -136,8 +124,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * Define tabs 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function defineTabs()
     {
@@ -158,8 +144,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * @param array $tab Tab
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getTabClass(array $tab)
     {
@@ -172,8 +156,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * @param array $tab Tab
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getTabStyle(array $tab)
     {
@@ -186,8 +168,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * @param array $tab tab
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isTabActive(array $tab)
     {
@@ -198,8 +178,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * Check - product has Description tab or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function hasDescription()
     {
@@ -211,8 +189,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      * Check - product has visible attributes or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function hasAttributes()
     {

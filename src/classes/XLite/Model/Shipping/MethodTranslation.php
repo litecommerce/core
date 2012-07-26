@@ -28,8 +28,6 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping method multilingual data
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="shipping_method_translations")
@@ -44,9 +42,7 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     /**
      * Shipping method name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255, nullable=false)
      */

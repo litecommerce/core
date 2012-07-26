@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Store statisics page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Stats extends \XLite\Controller\Admin\AAdmin
 {
@@ -46,8 +44,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Statistics data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected $stats = null;
 
@@ -55,8 +51,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -67,8 +61,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Prepare statistics table
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStats()
     {
@@ -83,8 +75,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get column headings
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getColumnTitles()
     {
@@ -101,8 +91,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get row headings
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRowTitles()
     {
@@ -115,8 +103,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * @param string $column Column identificator
      *
      * @return array|string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getColumnTitle($column)
     {
@@ -129,8 +115,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * @param string $row Row identificator
      *
      * @return array|string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRowTitle($row)
     {
@@ -143,8 +127,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get rows for statistics table
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStatsRows()
     {
@@ -155,8 +137,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get columns for statistics table
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStatsColumns()
     {
@@ -167,8 +147,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get currencies
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrencies()
     {
@@ -179,8 +157,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get currency from request
      *
      * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.2
      */
     public function getCurrency()
     {
@@ -194,8 +170,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Initialize table matrix
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initStats()
     {
@@ -211,8 +185,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * @param string $interval Time interval OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition($interval = null)
     {
@@ -234,8 +206,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get search data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData()
     {
@@ -250,8 +220,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Time intervals
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTimeIntervals()
     {
@@ -268,8 +236,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get timestamp of current day start
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStartTime($interval = self::P_ALL)
     {
@@ -284,8 +250,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get timestamp of current day start
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTodayStartTime()
     {
@@ -296,8 +260,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get timestamp of current week start
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWeekStartTime()
     {
@@ -308,8 +270,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get timestamp of current month start
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMonthStartTime()
     {
@@ -320,8 +280,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get timestamp of current year start
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getYearStartTime()
     {
@@ -332,8 +290,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get start time for all dates condition
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAllStartTime()
     {
@@ -344,8 +300,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * Get start time for all dates condition
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultStartTime()
     {

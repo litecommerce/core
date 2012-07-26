@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer\Base;
 /**
  * Order controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Order extends \XLite\Controller\Customer\Base\Order implements \XLite\Base\IDecorator
 {
@@ -41,8 +39,6 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @param array  $pageArgs LC-specific URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -63,8 +59,6 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @param array  $args LC URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
@@ -89,8 +83,6 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @param integer $id Drupal profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getLCProfileId($id)
     {
@@ -103,8 +95,6 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @param integer $id LC profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDrupalProfileId($id)
     {
@@ -115,8 +105,6 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * Check if current page is the "Orders" portal
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function isPortal()
     {

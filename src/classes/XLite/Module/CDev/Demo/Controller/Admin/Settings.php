@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Demo\Controller\Admin;
 /**
  * Settings
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Settings extends \XLite\Controller\Admin\Settings implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Settings extends \XLite\Controller\Admin\Settings implements \XLite\Base\I
      * Get tab names
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTabPages()
     {

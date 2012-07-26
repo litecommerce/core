@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Access denied page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AccessDenied extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class AccessDenied extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {

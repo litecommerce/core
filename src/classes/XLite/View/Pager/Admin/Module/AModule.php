@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Admin\Module;
 /**
  * Abstract pager class for the OrdersList widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AModule extends \XLite\View\Pager\Admin\AAdmin
 {
@@ -38,9 +36,6 @@ abstract class AModule extends \XLite\View\Pager\Admin\AAdmin
      * Return current tag
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTag()
     {

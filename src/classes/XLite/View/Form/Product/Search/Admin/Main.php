@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Search\Admin;
 /**
  * Main
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
 {
@@ -39,8 +37,6 @@ class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * NOTE - this function designed for AJAX easy switch on/off
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {
@@ -51,8 +47,6 @@ class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -63,8 +57,6 @@ class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

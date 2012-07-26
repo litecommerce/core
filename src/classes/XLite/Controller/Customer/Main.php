@@ -28,17 +28,13 @@ namespace XLite\Controller\Customer;
 /**
  * \XLite\Controller\Customer\Main
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\Controller\Customer\Category
 {
     /**
      * Controller parameters list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target');
 
@@ -46,8 +42,6 @@ class Main extends \XLite\Controller\Customer\Category
      * Preprocessor for no-action ren
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -63,8 +57,6 @@ class Main extends \XLite\Controller\Customer\Category
      * Check controller visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

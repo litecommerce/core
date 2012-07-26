@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
 /**
  * Review checkout step
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDecorator
 {
@@ -43,8 +41,6 @@ class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDe
      * Get Terms and Conditions page URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTermsURL()
     {

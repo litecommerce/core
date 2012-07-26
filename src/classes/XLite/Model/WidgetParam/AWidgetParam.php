@@ -28,8 +28,6 @@ namespace XLite\Model\WidgetParam;
 /**
  * ____description____
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AWidgetParam extends \XLite\Base\SuperClass
 {
@@ -43,36 +41,28 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Param type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = null;
 
     /**
      * Param value
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $value = null;
 
     /**
      * Param label
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $label = null;
 
     /**
      * Determines if the param will be diaplayed in CMS as widget setting
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $isSetting = false;
 
@@ -82,8 +72,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to validate
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getValidaionSchema($value);
 
@@ -95,8 +83,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $isSetting Display this setting in CMS or not OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($label, $value = null, $isSetting = false)
     {
@@ -112,8 +98,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to validate
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($value)
     {
@@ -128,8 +112,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param string $name Property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -142,8 +124,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setValue($value)
     {
@@ -156,8 +136,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to append
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function appendValue($value)
     {
@@ -170,8 +148,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param boolean $isSetting Visibility flag
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setVisibility($isSetting)
     {
@@ -185,8 +161,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param array $conditions Conditions to check
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkConditions(array $conditions)
     {

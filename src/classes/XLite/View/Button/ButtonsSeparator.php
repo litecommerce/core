@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Checkout buttons separator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ButtonsSeparator extends \XLite\View\AView
 {
@@ -37,8 +35,6 @@ class ButtonsSeparator extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

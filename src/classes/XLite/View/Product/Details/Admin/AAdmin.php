@@ -28,8 +28,6 @@ namespace XLite\View\Product\Details\Admin;
 /**
  * AAdmin
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\Product\Details\ADetails
 {

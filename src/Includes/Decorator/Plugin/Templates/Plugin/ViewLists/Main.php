@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\Templates\Plugin\ViewLists;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
@@ -52,9 +50,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * List of PHP classes with the "ListChild" tags
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $annotatedPHPCLasses;
 
@@ -62,8 +58,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Execute certain hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {
@@ -80,8 +74,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkClassForListChildTag(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -98,8 +90,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Remove existing lists from database
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function clearAll()
     {
@@ -111,8 +101,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Create lists
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function createLists()
     {
@@ -123,8 +111,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return all defined "ListChild" tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAllListChildTags()
     {
@@ -135,8 +121,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return list of PHP classes with the "ListChild" tag
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAnnotatedPHPCLasses()
     {
@@ -153,8 +137,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return all "ListChild" tags defined in PHP classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListChildTagsFromPHP()
     {
@@ -165,8 +147,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return all "ListChild" tags defined in templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListChildTagsFromTemplates()
     {
@@ -179,8 +159,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array $list List
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareListChildTemplates(array $list)
     {
@@ -253,8 +231,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array $nodes List of nodes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAllListChildTagAttributes(array $nodes)
     {
@@ -267,8 +243,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array $data Tag attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareListChildTagData(array $data)
     {
@@ -287,8 +261,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array &$data Data to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareWeightAttrs(array &$data)
     {
@@ -319,8 +291,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array &$data Data to use
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function preparePreprocessors(array &$data)
     {
@@ -333,8 +303,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * There are some reserved words for the "weight" param of the "ListChild" tag
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getReservedWeightValues()
     {

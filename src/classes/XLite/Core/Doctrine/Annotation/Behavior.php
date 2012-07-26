@@ -28,8 +28,6 @@ namespace XLite\Core\Doctrine\Annotation;
 /**
  * Behavior 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  *
  * @Annotation
  */
@@ -38,9 +36,7 @@ class Behavior extends \Doctrine\Common\Annotations\Annotation
     /**
      * Behaviors list 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var array
      */
     public $list = array();
 }

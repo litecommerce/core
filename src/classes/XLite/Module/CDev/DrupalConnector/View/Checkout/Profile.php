@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Checkout;
 /**
  * Profile widget on Checkout page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      * Get cart Drupal's user name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getUsername()
     {
@@ -49,8 +45,6 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      * Get current profile username
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileUsername()
     {
@@ -63,8 +57,6 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      * Get profile page URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileURL()
     {
@@ -77,8 +69,6 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      * Get log-off page URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLogoffURL()
     {

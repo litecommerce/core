@@ -28,26 +28,20 @@ namespace XLite\Module\CDev\UserPermissions\Controller\Admin;
 /**
  * Role 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Role extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var array
      */
     protected $param = array('target', 'id');
 
     /**
      * Role id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var integer
      */
     protected $id;
 
@@ -55,8 +49,6 @@ class Role extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -71,8 +63,6 @@ class Role extends \XLite\Controller\Admin\AAdmin
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -83,8 +73,6 @@ class Role extends \XLite\Controller\Admin\AAdmin
      * Add part to the location nodes list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -98,8 +86,6 @@ class Role extends \XLite\Controller\Admin\AAdmin
      * Update coupon
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function doActionUpdate()
     {
@@ -114,8 +100,6 @@ class Role extends \XLite\Controller\Admin\AAdmin
     * Get model form class
     *
     * @return void
-    * @see    ____func_see____
-    * @since  1.0.15
     */
    protected function getModelFormClass()
    {

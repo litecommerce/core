@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Switch button (register two onclick callbacks JS functions)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SwitchButton extends \XLite\View\Button\AButton
 {
@@ -49,8 +47,6 @@ class SwitchButton extends \XLite\View\Button\AButton
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -64,8 +60,6 @@ class SwitchButton extends \XLite\View\Button\AButton
      * Return CSS files list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -79,8 +73,6 @@ class SwitchButton extends \XLite\View\Button\AButton
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -91,8 +83,6 @@ class SwitchButton extends \XLite\View\Button\AButton
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -108,8 +98,6 @@ class SwitchButton extends \XLite\View\Button\AButton
      * Return JS callbacks to use with onclick event
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCallbacks()
     {

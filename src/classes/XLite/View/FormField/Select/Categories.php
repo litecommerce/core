@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Categories selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Categories extends \XLite\View\FormField\Select\Multiple
 {
@@ -43,8 +41,6 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      * Return default options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
@@ -63,8 +59,6 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      * @param array $category Category data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     protected function getIndentationString(array $category)
     {
@@ -77,8 +71,6 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      * @param array $category Category data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.6
      */
     protected function getCategoryName(array $category)
     {

@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * 'Delete selecetd' button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DeleteSelected extends \XLite\View\Button\Regular
 {
@@ -42,8 +40,6 @@ class DeleteSelected extends \XLite\View\Button\Regular
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -54,8 +50,6 @@ class DeleteSelected extends \XLite\View\Button\Regular
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -66,8 +60,6 @@ class DeleteSelected extends \XLite\View\Button\Regular
      * getDefaultConfirmationText
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultConfirmationText()
     {
@@ -78,8 +70,6 @@ class DeleteSelected extends \XLite\View\Button\Regular
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -96,8 +86,6 @@ class DeleteSelected extends \XLite\View\Button\Regular
      * JavaScript: default JS code to execute
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Model\Repo;
 /**
  * Product repository
  * 
- * @see   ____class_see____
- * @since 1.0.8
  */
 class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorator
 {
@@ -41,8 +39,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * @param float                      $max          Maximum
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     protected function assignPriceRangeCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $min, $max)
     {

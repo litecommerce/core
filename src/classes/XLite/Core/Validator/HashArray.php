@@ -28,17 +28,13 @@ namespace XLite\Core\Validator;
 /**
  * Hash array validator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class HashArray extends \XLite\Core\Validator\AValidator
 {
     /**
      * Pairs
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $pairs;
 
@@ -46,8 +42,6 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -65,8 +59,6 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * @param string                           $publicName Cell public name OPTIONAL
      *
      * @return \XLite\Core\Validator\AValidator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addPair(
         $name,
@@ -104,8 +96,6 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * Get pair validators
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPairs()
     {
@@ -118,8 +108,6 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * @param mixed $name Name
      *
      * @return \XLite\Core\Validator\AValidator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getChild($name)
     {
@@ -142,8 +130,6 @@ class HashArray extends \XLite\Core\Validator\AValidator
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -162,8 +148,6 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * @param mixed $data Daa
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sanitize($data)
     {

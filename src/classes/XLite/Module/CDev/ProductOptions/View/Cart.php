@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Cart widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cart extends \XLite\View\Cart implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Cart extends \XLite\View\Cart implements \XLite\Base\IDecorator
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
