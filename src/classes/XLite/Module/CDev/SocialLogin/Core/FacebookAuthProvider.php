@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,29 +13,25 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.24
  */
 
 namespace XLite\Module\CDev\SocialLogin\Core;
 
 /**
  * Facebook auth provider
- * 
- * @see   ____class_see____
- * @since 1.0.24
+ *
  */
 class FacebookAuthProvider extends AAuthProvider
 {
-    
+
     /**
      * Unique auth provider name
      */
@@ -57,23 +53,21 @@ class FacebookAuthProvider extends AAuthProvider
     const TOKEN_REQUEST_URL = 'https://graph.facebook.com/oauth/access_token';
 
     /**
-     * Url to access user profile information 
+     * Url to access user profile information
      */
     const PROFILE_REQUEST_URL = 'https://graph.facebook.com/me';
 
     /**
-     * Path of the icon to be displayed in site header 
+     * Path of the icon to be displayed in site header
      */
     const SMALL_ICON_PATH = 'modules/CDev/SocialLogin/icons/facebook_small.png';
 
     /**
      * Returns access token based on authorization code
-     * 
+     *
      * @param string $code Authorization code
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getAccessToken($code)
     {
@@ -92,10 +86,8 @@ class FacebookAuthProvider extends AAuthProvider
 
     /**
      * Get OAuth 2.0 client ID
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getClientId()
     {
@@ -104,10 +96,8 @@ class FacebookAuthProvider extends AAuthProvider
 
     /**
      * Get OAuth 2.0 client secret
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getClientSecret()
     {

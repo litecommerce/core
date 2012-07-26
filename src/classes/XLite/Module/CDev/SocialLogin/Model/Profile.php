@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.24
  */
 
 namespace XLite\Module\CDev\SocialLogin\Model;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\SocialLogin\Model;
 /**
  * \XLite\Module\CDev\SocialLogin\Model\Profile
  *
- * @see   ____class_see____
- * @since 1.0.24
  */
 class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * Auth provider (facebook, google, etc.)
      *
      * @var   string
-     * @see   ____var_see____
-     * @since 1.0.24
      *
      * @Column (type="string", length=128, nullable=true)
      */
@@ -50,8 +44,6 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * Auth provider-unique user id (for ex. facebook user id)
      *
      * @var   string
-     * @see   ____var_see____
-     * @since 1.0.24
      *
      * @Column (type="string", length=128, nullable=true)
      */
@@ -59,10 +51,8 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 
     /**
      * Checks if current profile is a SocialLogin's profile
-     * 
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function isSocialProfile()
     {
