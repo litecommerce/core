@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.24
  */
 
 namespace XLite\Module\CDev\SocialLogin\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\SocialLogin\View;
 /**
  * Social sign-in widget
  *
- * @see   ____class_see____
- * @since 1.0.24
  */
 class SocialLoginWidget extends \XLite\View\AView
 {
@@ -45,10 +41,8 @@ class SocialLoginWidget extends \XLite\View\AView
 
     /**
      * Get all configured authentication providers
-     * 
+     *
      * @return array Auth providers list
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getAuthProviders()
     {
@@ -59,8 +53,6 @@ class SocialLoginWidget extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getCSSFiles()
     {
@@ -77,24 +69,20 @@ class SocialLoginWidget extends \XLite\View\AView
      * See setWidgetParams()
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getDefaultTemplate()
     {
         return 'modules/CDev/SocialLogin/social_login.tpl';
     }
 
-    /**  
+    /**
      * Check if widget is visible
      * (there should be at least one active auth provider)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
-    {    
+    {
         return parent::isVisible()
             && $this->getAuthProviders()
             && !\XLite\Core\Auth::getInstance()->isLogged();
@@ -104,8 +92,6 @@ class SocialLoginWidget extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -122,8 +108,6 @@ class SocialLoginWidget extends \XLite\View\AView
      * Get widget caption
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getCaption()
     {
@@ -134,8 +118,6 @@ class SocialLoginWidget extends \XLite\View\AView
      * Get widget's preceding text
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getTextBefore()
     {
@@ -146,8 +128,6 @@ class SocialLoginWidget extends \XLite\View\AView
      * Get widget's following text
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getTextAfter()
     {

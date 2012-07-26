@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,25 +13,21 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.18
  */
 
 namespace XLite\Module\CDev\SocialLogin\View;
 
 /**
  * Abstract sign-in button
- * 
- * @see   ____class_see____
- * @since 1.0.24
+ *
  */
 abstract class Button extends \XLite\View\AView
 {
@@ -42,31 +38,25 @@ abstract class Button extends \XLite\View\AView
 
     /**
      * Returns an instance of auth provider
-     * 
+     *
      * @return \XLite\Module\CDev\SocialLogin\Core\AAuthProvider
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     abstract protected function getAuthProvider();
 
     /**
      * Get widget display name
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getName()
     {
         return static::DISPLAY_NAME;
     }
-    
+
     /**
      * Get path to auth provider icon
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getIconPath()
     {
@@ -75,12 +65,10 @@ abstract class Button extends \XLite\View\AView
 
     /**
      * Get web path to a provider's icon
-     * 
+     *
      * @param string $iconPath Icon path relative to skins directory
-     *  
+     *
      * @return string Icon web path
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getIconWebPath($iconPath)
     {
@@ -92,10 +80,8 @@ abstract class Button extends \XLite\View\AView
 
     /**
      * Get authentication request url
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getAuthRequestUrl()
     {
@@ -108,24 +94,20 @@ abstract class Button extends \XLite\View\AView
      * Return default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getDefaultTemplate()
     {
         return 'modules/CDev/SocialLogin/button.tpl';
     }
 
-    /**  
+    /**
      * Check if widget is visible
      * (auth provider must be fully configured)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
-    {    
+    {
         return parent::isVisible() && $this->getAuthProvider()->isConfigured();
     }
 }

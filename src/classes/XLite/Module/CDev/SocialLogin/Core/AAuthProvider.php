@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,25 +13,21 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.24
  */
 
 namespace XLite\Module\CDev\SocialLogin\Core;
 
 /**
  * Auth provider abstract class
- * 
- * @see   ____class_see____
- * @since 1.0.24
+ *
  */
 abstract class AAuthProvider extends \XLite\Base\Singleton
 {
@@ -47,30 +43,24 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Get OAuth 2.0 client ID
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     abstract protected function getClientId();
 
     /**
      * Get OAuth 2.0 client secret
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     abstract protected function getClientSecret();
 
     /**
      * Get authorization request url
-     * 
+     *
      * @param string $state State parameter to include in request
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getAuthRequestUrl($state)
     {
@@ -84,10 +74,8 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Get unique auth provider name to distinguish it from others
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getName()
     {
@@ -96,10 +84,8 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Get path to small icon to display in header
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getSmallIconPath()
     {
@@ -108,10 +94,8 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Check if current request belongs to the concrete implementation of auth provider
-     * 
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function detectAuth()
     {
@@ -120,10 +104,8 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Process authorization grant and return array with profile data
-     * 
+     *
      * @return array Client information containing at least id and e-mail
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function processAuth()
     {
@@ -133,7 +115,7 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
         if (!empty($code)) {
             $accessToken = $this->getAccessToken($code);
-            
+
             if ($accessToken) {
                 $request = new \XLite\Core\HTTP\Request($this->getProfileRequestUrl($accessToken));
                 $response = $request->sendRequest();
@@ -149,10 +131,8 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Check if auth provider has all options configured
-     * 
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function isConfigured()
     {
@@ -161,12 +141,10 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Get url to request access token
-     * 
+     *
      * @param string $code Authorization code
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getTokenRequestUrl($code)
     {
@@ -179,12 +157,10 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Get url used to access user profile info
-     * 
+     *
      * @param string $accessToken Access token
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getProfileRequestUrl($accessToken)
     {
@@ -193,10 +169,8 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
 
     /**
      * Get authorization grant redirect url
-     * 
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getRedirectUrl()
     {

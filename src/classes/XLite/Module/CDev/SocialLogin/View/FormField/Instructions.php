@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.1.0
  */
 
 namespace XLite\Module\CDev\SocialLogin\View\FormField;
@@ -31,8 +29,6 @@ namespace XLite\Module\CDev\SocialLogin\View\FormField;
 /**
  * Configuration instructions widget for SocialLogin
  *
- * @see   ____class_see____
- * @since 1.1.0
  */
 class Instructions extends \XLite\View\FormField\Label\ALabel
 {
@@ -45,8 +41,6 @@ class Instructions extends \XLite\View\FormField\Label\ALabel
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getCSSFiles()
     {
@@ -59,17 +53,15 @@ class Instructions extends \XLite\View\FormField\Label\ALabel
 
     /**
      * Process all occurencies of WEB_LC_ROOT
-     * 
+     *
      * @param mixed $str Input string
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function processUrls($str)
     {
         return str_replace(
-            static::WEB_LC_ROOT, 
+            static::WEB_LC_ROOT,
             htmlentities(\XLite::getInstance()->getShopURL(null)),
             $str
         );
@@ -79,8 +71,6 @@ class Instructions extends \XLite\View\FormField\Label\ALabel
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -91,8 +81,6 @@ class Instructions extends \XLite\View\FormField\Label\ALabel
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

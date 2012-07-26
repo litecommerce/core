@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.24
  */
 
 namespace XLite\Module\CDev\SocialLogin\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\SocialLogin\Controller\Customer;
 /**
  * Authorization grants are routed to this controller
  *
- * @see   ____class_see____
- * @since 1.0.24
  */
 class SocialLogin extends \XLite\Controller\Customer\ACustomer
 {
@@ -40,8 +36,6 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
      * Perform login action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function doActionLogin()
     {
@@ -101,14 +95,12 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Fetches an existing social login profile or creates new
-     * 
+     *
      * @param string $login          E-mail address
      * @param string $socialProvider SocialLogin auth provider
      * @param string $socialId       SocialLogin provider-unique id
-     *  
+     *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getSocialLoginProfile($login, $socialProvider, $socialId)
     {
@@ -141,14 +133,12 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Set redirect URL
-     * 
+     *
      * @param string $stateParamName Name of the state parameter containing
      *      class name of the controller that initialized auth request OPTIONAL
      * @param mixed  $failure        Indicates if auth process failed OPTIONAL
-     *  
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function setAuthReturnUrl($stateParamName = '', $failure = false)
     {
