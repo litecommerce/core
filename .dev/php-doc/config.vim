@@ -63,13 +63,7 @@ let g:pdv_cfg_Author     = "Creative Development LLC <info@cdev.ru>"
 let g:pdv_cfg_Copyright  = "Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved"
 let g:pdv_cfg_License    = "http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)"
 " let g:pdv_cfg_Version    = "GIT: $Id$"
-let g:pdv_cfg_Since      = "1.1.0"
 let g:pdv_cfg_Link       = "http://www.litecommerce.com/"
-
-let g:pdv_cfg_FileSee    = "____file_see____"
-let g:pdv_cfg_ClassSee   = "____class_see____"
-let g:pdv_cfg_VarSee     = "____var_see____"
-let g:pdv_cfg_FuncSee    = "____func_see____"
 
 let g:pdv_cfg_FileTitle  = "____file_title____"
 let g:pdv_cfg_ParamComm  = "____param_comment____"
@@ -120,7 +114,6 @@ func! SmartyDocFile()
     exe l:txtBOL . g:pdv_cfg_Commentn . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
 "   exe l:txtBOL . g:pdv_cfg_Commentn . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
     exe l:txtBOL . g:pdv_cfg_Commentn . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
 
     " Close the comment block.
     exe l:txtBOL . g:pdv_cfg_CommentTail_Smarty . g:pdv_cfg_EOL
@@ -152,7 +145,6 @@ func! YAMLDocFile()
     exe l:txtBOL . l:yamlComment . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
 "   exe l:txtBOL . l:yamlComment . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
     exe l:txtBOL . l:yamlComment . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
-    exe l:txtBOL . l:yamlComment . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
 
     exe ":0"
     exe ":delete"
@@ -182,7 +174,6 @@ func! CSSDocFile()
     exe l:txtBOL . g:pdv_cfg_Commentn . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
 "   exe l:txtBOL . g:pdv_cfg_Commentn . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
     exe l:txtBOL . g:pdv_cfg_Commentn . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
 
     " Close the comment block.
     exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
@@ -214,7 +205,6 @@ func! JSDocFile()
     exe l:txtBOL . g:pdv_cfg_Commentn . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
 "   exe l:txtBOL . g:pdv_cfg_Commentn . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
     exe l:txtBOL . g:pdv_cfg_Commentn . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
 
     " Close the comment block.
     exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
@@ -261,8 +251,6 @@ func! LC_PhpDocFile()
     exe l:txtBOL . g:pdv_cfg_Commentn . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
 "   exe l:txtBOL . g:pdv_cfg_Commentn . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
     exe l:txtBOL . g:pdv_cfg_Commentn . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . "@see       " . g:pdv_cfg_FileSee . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
 
     " Close the comment block.
     exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL

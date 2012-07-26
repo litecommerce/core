@@ -86,12 +86,12 @@ class XLite_Sniffs_PHP_Commenting_FileCommentSniff extends XLite_TagsSniff
                                         'order_text'     => 'follows @version',
                                        ),
                        'see'        => array(
-                                        'required'       => true,
+                                        'required'       => false,
                                         'allow_multiple' => false,
                                         'order_text'     => 'follows @link',
                                        ),
                        'since'      => array(
-                                        'required'       => true,
+                                        'required'       => false,
                                         'allow_multiple' => false,
                                         'order_text'     => 'follows @see (if used) or @link',
                                        ),
