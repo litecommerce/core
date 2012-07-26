@@ -28,16 +28,9 @@ namespace XLite\Module\CDev\ContactUs\Controller\Customer;
 /**
  * Contact us controller
  *
- * @see   ____class_see____
- * @since 1.0.18
  */
 class ContactUs extends \XLite\Controller\Customer\ACustomer
 {
-    /**
-     * Default title
-     */
-    const DEFAULT_TITLE = 'Contact us';
-
     /**
      * Fields
      *
@@ -68,7 +61,7 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return \XLite\Core\Config::getInstance()->CDev->ContactUs->page_title ?: self::DEFAULT_TITLE;
+        return 'Contact us';
     }
 
     /**
@@ -108,7 +101,7 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return \XLite\Core\Config::getInstance()->CDev->ContactUs->page_title ?: self::DEFAULT_TITLE;
+        return $this->getTitle();
     }
 
     /**
@@ -140,7 +133,6 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
             $isValid
             && false === filter_var($data['email'], FILTER_VALIDATE_EMAIL)
         ) {
-
             $isValid = false;
             \XLite\Core\TopMessage::addError(
                 \XLite\Core\Translation::lbl(
@@ -156,6 +148,7 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
             && $config->recaptcha_public_key
         ) {
             require_once LC_DIR_MODULES . '/CDev/ContactUs/recaptcha/recaptchalib.php';
+
             $resp = recaptcha_check_answer(
                 $config->recaptcha_private_key,
                 $_SERVER['REMOTE_ADDR'],
@@ -171,14 +164,26 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
         }
 
         if ($isValid) {
-            \XLite\Core\Mailer::getInstance()->sendContactUsMessage(
+
+            $errorMessage = \XLite\Core\Mailer::getInstance()->sendContactUsMessage(
                 $data,
-                \XLite\Core\Config::getInstance()->CDev->ContactUs->email
-                ?: \XLite\Core\Config::getInstance()->Company->site_administrator
+                \XLite\Core\Config::getInstance()->CDev->ContactUs->email ?: \XLite\Core\Config::getInstance()->Company->site_administrator
             );
-            unset($data['message']);
-            unset($data['subject']);
-            \XLite\Core\TopMessage::addInfo('Message has been sent');
+
+            if ($errorMessage) {
+
+                \XLite\Core\TopMessage::addError($errorMessage);
+
+            } else {
+
+                unset($data['message']);
+                unset($data['subject']);
+                \XLite\Core\TopMessage::addInfo('Message has been sent');
+            }
+
+        } else {
+
+            \XLite\Core\TopMessage::addError('Please enter the correct captcha');
         }
 
         \XLite\Core\Session::getInstance()->contact_us = $data;

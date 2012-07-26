@@ -87,14 +87,4 @@ class ContactUs extends \XLite\View\AView
         return 'modules/CDev/ContactUs/contact_us/body.tpl';
     }
 
-    /**
-     * Return widget description
-     *
-     * @return string
-     */
-    protected function getDescription()
-    {
-        return \XLite\Core\Config::getInstance()->CDev->ContactUs->page_description;
-    }
-
 }

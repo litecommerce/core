@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ContactUs\View\Form;
 /**
  * Contact us form
  *
- * @see   ____class_see____
- * @since 1.0.17
  */
 class ContactUs extends \XLite\View\Form\AForm
 {
@@ -52,5 +50,4 @@ class ContactUs extends \XLite\View\Form\AForm
     {
         return 'send';
     }
-
 }

@@ -37,12 +37,13 @@ abstract class Mailer extends \XLite\Core\Mailer implements \XLite\Base\IDecorat
      * @param array  $data  Data
      * @param string $email Email
      *
-     * @return void
+     * @return string | null
      */
     public static function sendContactUsMessage(array $data, $email)
     {
         static::setMailInterface(\XLite::MAIL_INTERFACE);
 
+        $data['message'] = htmlspecialchars($data['message']);
         static::register('data', $data);
 
         static::compose(
@@ -50,5 +51,7 @@ abstract class Mailer extends \XLite\Core\Mailer implements \XLite\Base\IDecorat
             $email,
             'modules/CDev/ContactUs/message'
         );
+
+        return static::getMailer()->getLastError();
     }
 }

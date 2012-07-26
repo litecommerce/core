@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<div>{getDescription():h}</div>
+<div>{t(#Contact us description#)}</div>
 <hr size="1" />
 <widget class="\XLite\Module\CDev\ContactUs\View\Form\ContactUs" name="contact-us" />
 
