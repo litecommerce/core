@@ -7,6 +7,10 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 
+XLite\Model\LanguageLabel:
+  directives: { insert: true }
+  - { name: 'Contact us description', translations: [{ code: en, label: 'To contact us please fill the form below' }] }
+
 XLite\Model\Config:
   - name: enable_form
     category: 'CDev\ContactUs'
