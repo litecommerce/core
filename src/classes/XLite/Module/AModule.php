@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module;
@@ -30,8 +28,6 @@ namespace XLite\Module;
 /**
  * Module
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AModule
 {
@@ -39,8 +35,6 @@ abstract class AModule
      * Method to initialize concrete module instance
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function init()
     {
@@ -50,8 +44,6 @@ abstract class AModule
      * Decorator run this method at the end of cache rebuild
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function runBuildCacheHandler()
     {
@@ -61,8 +53,6 @@ abstract class AModule
      * Return module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -73,8 +63,6 @@ abstract class AModule
      * Return author full name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -85,8 +73,6 @@ abstract class AModule
      * Return module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -97,8 +83,6 @@ abstract class AModule
      * Return URL for module icon
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getIconURL()
     {
@@ -121,8 +105,6 @@ abstract class AModule
      * Return link to the module author page
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAuthorPageURL()
     {
@@ -133,8 +115,6 @@ abstract class AModule
      * Return link to the module page
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPageURL()
     {
@@ -145,8 +125,6 @@ abstract class AModule
      * Determines if we need to show settings form link
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function showSettingsForm()
     {
@@ -157,8 +135,6 @@ abstract class AModule
      * Return link to settings form
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getSettingsForm()
     {
@@ -169,8 +145,6 @@ abstract class AModule
      * Return module dependencies
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDependencies()
     {
@@ -181,8 +155,6 @@ abstract class AModule
      * Return list of mutually exclusive modules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function getMutualModulesList()
     {
@@ -193,8 +165,6 @@ abstract class AModule
      * Get module major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMajorVersion()
     {
@@ -205,8 +175,6 @@ abstract class AModule
      * Get module minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -217,8 +185,6 @@ abstract class AModule
      * Get module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getVersion()
     {

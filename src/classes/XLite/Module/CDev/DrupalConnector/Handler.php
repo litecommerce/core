@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector;
@@ -30,17 +28,13 @@ namespace XLite\Module\CDev\DrupalConnector;
 /**
  * CMS connector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Handler extends \XLite\Core\CMSConnector
 {
     /**
      * Message types translation table (XLite to Drupal)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $messageTypes = array(
         \XLite\Core\TopMessage::INFO    => 'status',
@@ -52,8 +46,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Return name of current CMS
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCMSName()
     {
@@ -64,8 +56,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Return the default controller name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDefaultTarget()
     {
@@ -78,8 +68,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param string $path Path to compare
      *
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPortalByPath($path)
     {
@@ -92,8 +80,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param string $target Target to search
      *
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPortalByTarget($target)
     {
@@ -113,8 +99,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Initialization
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -128,8 +112,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Clear top message in Drupal
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clearTopMessages()
     {
@@ -140,8 +122,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Method to get raw Drupal request arguments
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getArgs()
     {
@@ -152,8 +132,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Check if current page is an LC portal
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPortal()
     {
@@ -179,8 +157,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param array &$args Request arguments
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isController(array &$args)
     {
@@ -196,8 +172,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param array                                           $pageArgs Drupal page arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPortalArgs(
         \XLite\Module\CDev\DrupalConnector\Model\Portal $portal,
@@ -215,8 +189,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param boolean $includePOSTVars Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getControllerArgs(array $args, $includePOSTVars = true)
     {
@@ -237,8 +209,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Return default arguments
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultArgs()
     {
@@ -249,8 +219,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Translate Drupal request into LC format
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLCArgs()
     {
@@ -282,8 +250,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Set Drupal messages using LC top messages data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setPreviousTopMessages()
     {
@@ -304,8 +270,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param array  $options A set of URL options
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDrupalCleanURL($path, array $options)
     {
@@ -326,8 +290,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param string $path Clean url
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURLByCleanURL($path)
     {
@@ -368,8 +330,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param array $args Arguments
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCleanURL(array $args)
     {
@@ -400,8 +360,6 @@ class Handler extends \XLite\Core\CMSConnector
      * getCleanURLTargets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCleanURLTargets()
     {
@@ -418,8 +376,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param array   $params URL params OPTIONAL
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategoryCleanURL($id, array $params = array())
     {
@@ -437,8 +393,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param integer $productId Product ID
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProductCleanURL($productId)
     {
@@ -464,8 +418,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function buildCleanURL($target, $action = '', array $params = array())
     {

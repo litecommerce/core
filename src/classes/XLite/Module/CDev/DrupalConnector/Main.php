@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector;
 /**
  * DrupalConnector module main class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -39,8 +35,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -51,8 +45,6 @@ abstract class Main extends \XLite\Module\AModule
      * Get module major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMajorVersion()
     {
@@ -63,8 +55,6 @@ abstract class Main extends \XLite\Module\AModule
      * Get version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -75,8 +65,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -87,8 +75,6 @@ abstract class Main extends \XLite\Module\AModule
      * Get description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -99,8 +85,6 @@ abstract class Main extends \XLite\Module\AModule
      * Show settings form flag
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function showSettingsForm()
     {
@@ -111,8 +95,6 @@ abstract class Main extends \XLite\Module\AModule
      * Return list of mutually exclusive modules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function getMutualModulesList()
     {

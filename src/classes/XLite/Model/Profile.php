@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * The "profile" model class
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Profile")
  * @Table  (name="profiles",
@@ -52,9 +48,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Profile unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -65,9 +59,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Login (e-mail)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -76,9 +68,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Password
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32)
      */
@@ -87,9 +77,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Password hint
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -98,9 +86,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Password hint answer
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -109,9 +95,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Access level
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -120,9 +104,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * CMS profile Id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -131,9 +113,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * CMS name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32)
      */
@@ -142,9 +122,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Timestamp of profile creation date
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -153,9 +131,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Timestamp of first login event
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -164,9 +140,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Timestamp of last login event
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -175,9 +149,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Profile status
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=1)
      */
@@ -186,9 +158,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Referer
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -197,9 +167,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Relation to a order
      *
-     * @var   \XLite\Model\Order
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order
      *
      * @OneToOne   (targetEntity="XLite\Model\Order")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -207,11 +175,19 @@ class Profile extends \XLite\Model\AEntity
     protected $order;
 
     /**
+     * Relation to an event
+     *
+     * @var \XLite\Model\OrderHistoryEvents
+     *
+     * @OneToMany   (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="author")
+     * @JoinColumn (name="event_id", referencedColumnName="event_id")
+     */
+    protected $event;
+
+    /**
      * Language code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=2)
      */
@@ -220,9 +196,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Last selected shipping id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer", nullable=true)
      */
@@ -231,9 +205,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Last selected payment id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer", nullable=true)
      */
@@ -242,9 +214,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Membership: many-to-one relation with memberships table
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id", onDelete="SET NULL")
@@ -254,9 +224,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Pending membership: many-to-one relation with memberships table
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="pending_membership_id", referencedColumnName="membership_id", onDelete="SET NULL")
@@ -266,9 +234,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Address book: one-to-many relation with address book entity
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\Address", mappedBy="profile", cascade={"all"})
      */
@@ -277,9 +243,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Roles
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ManyToMany (targetEntity="XLite\Model\Role", mappedBy="profiles", cascade={"merge","detach"})
      */
@@ -288,9 +252,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * The count of orders placed by the user
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $orders_count = null;
 
@@ -301,8 +263,6 @@ class Profile extends \XLite\Model\AEntity
      * @param \XLite\Model\Membership $membership Membership OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setMembership(\XLite\Model\Membership $membership = null)
     {
@@ -315,8 +275,6 @@ class Profile extends \XLite\Model\AEntity
      * @param \XLite\Model\Membership $pendingMembership Pending membership OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setPendingMembership(\XLite\Model\Membership $pendingMembership = null)
     {
@@ -327,8 +285,6 @@ class Profile extends \XLite\Model\AEntity
      * Get membership Id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMembershipId()
     {
@@ -339,8 +295,6 @@ class Profile extends \XLite\Model\AEntity
      * Get pending membership Id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPendingMembershipId()
     {
@@ -351,8 +305,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns billing address
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getBillingAddress()
     {
@@ -363,8 +315,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns shipping address
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShippingAddress()
     {
@@ -375,8 +325,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns first available address
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFirstAddress()
     {
@@ -394,8 +342,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns the number of orders places by the user
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrdersCount()
     {
@@ -414,8 +360,6 @@ class Profile extends \XLite\Model\AEntity
      * Check if profile is enabled
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEnabled()
     {
@@ -426,8 +370,6 @@ class Profile extends \XLite\Model\AEntity
      * Enable user profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function enable()
     {
@@ -438,8 +380,6 @@ class Profile extends \XLite\Model\AEntity
      * Disable user profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function disable()
     {
@@ -450,8 +390,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns true if profile has an administrator access level
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAdmin()
     {
@@ -462,8 +400,6 @@ class Profile extends \XLite\Model\AEntity
      * Create an entity profile in the database
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function create()
     {
@@ -476,8 +412,6 @@ class Profile extends \XLite\Model\AEntity
      * Update an entity in the database
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function update($cloneMode = false)
     {
@@ -503,8 +437,6 @@ class Profile extends \XLite\Model\AEntity
      * Delete an entity profile from the database
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function delete()
     {
@@ -527,8 +459,6 @@ class Profile extends \XLite\Model\AEntity
      * TODO: review method after implementing at one-step-checkout
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSameAddress()
     {
@@ -568,8 +498,6 @@ class Profile extends \XLite\Model\AEntity
      * Check - billing and shipping addresses are equal or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEqualAddress()
     {
@@ -585,8 +513,6 @@ class Profile extends \XLite\Model\AEntity
      * Clone
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -629,8 +555,6 @@ class Profile extends \XLite\Model\AEntity
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -646,8 +570,6 @@ class Profile extends \XLite\Model\AEntity
      * @param \XLite\Model\Order $order Order OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setOrder(\XLite\Model\Order $order = null)
     {
@@ -659,8 +581,6 @@ class Profile extends \XLite\Model\AEntity
      * Prepare object for its creation in the database
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCreate()
     {
@@ -700,8 +620,6 @@ class Profile extends \XLite\Model\AEntity
      * @param string $atype Address type: b - billing, s - shipping OPTIONAL
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAddressByType($atype = \XLite\Model\Address::BILLING)
     {
@@ -725,8 +643,6 @@ class Profile extends \XLite\Model\AEntity
      * Add error top message 'Email already exists...'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addErrorEmailExists()
     {
@@ -741,8 +657,6 @@ class Profile extends \XLite\Model\AEntity
      * @param string $code Permission code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermissionAllowed($code)
     {

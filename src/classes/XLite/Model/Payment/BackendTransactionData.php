@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Payment;
@@ -30,8 +28,6 @@ namespace XLite\Model\Payment;
 /**
  * Backend transaction data storage
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="payment_backend_transaction_data",
@@ -45,9 +41,7 @@ class BackendTransactionData extends \XLite\Model\AEntity
     /**
      * Primary key
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -58,9 +52,7 @@ class BackendTransactionData extends \XLite\Model\AEntity
     /**
      * Record name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -69,9 +61,7 @@ class BackendTransactionData extends \XLite\Model\AEntity
     /**
      * Record public name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -80,9 +70,7 @@ class BackendTransactionData extends \XLite\Model\AEntity
     /**
      * Access level
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=1)
      */
@@ -91,9 +79,7 @@ class BackendTransactionData extends \XLite\Model\AEntity
     /**
      * Value
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -102,9 +88,7 @@ class BackendTransactionData extends \XLite\Model\AEntity
     /**
      * Transaction
      *
-     * @var   \XLite\Model\Payment\BackendTransaction
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Payment\BackendTransaction
      *
      * @ManyToOne  (targetEntity="XLite\Model\Payment\BackendTransaction", inversedBy="data")
      * @JoinColumn (name="backend_transaction_id", referencedColumnName="id")
@@ -115,8 +99,6 @@ class BackendTransactionData extends \XLite\Model\AEntity
      * Check record availability
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAvailable()
     {

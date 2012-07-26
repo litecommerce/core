@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,8 +30,6 @@ namespace XLite\View;
 /**
  * \XLite\View\CountrySelect
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CountrySelect extends \XLite\View\FormField
 {
@@ -53,8 +49,6 @@ class CountrySelect extends \XLite\View\FormField
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -65,8 +59,6 @@ class CountrySelect extends \XLite\View\FormField
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -86,8 +78,6 @@ class CountrySelect extends \XLite\View\FormField
      * Check - display enabled only countries or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isEnabledOnly()
     {
@@ -98,8 +88,6 @@ class CountrySelect extends \XLite\View\FormField
      * Get selected value 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     protected function getSelectedValue()
     {
@@ -112,8 +100,6 @@ class CountrySelect extends \XLite\View\FormField
      * @param string $countryCode Code of country to check.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function isSelectedCountry($countryCode)
     {
@@ -130,8 +116,6 @@ class CountrySelect extends \XLite\View\FormField
      * Return countries list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCountries()
     {
@@ -144,8 +128,6 @@ class CountrySelect extends \XLite\View\FormField
      * Check - country selector is label-based
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     protected function isLabelBasedSelector()
     {
@@ -157,8 +139,6 @@ class CountrySelect extends \XLite\View\FormField
      * Get one country 
      * 
      * @return \XLite\Model\Country
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     protected function getOneCountry()
     {

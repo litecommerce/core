@@ -3,10 +3,9 @@
 # Minimum data dump
 #
 # @author    Creative Development LLC <info@cdev.ru>
-# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
-# @since     3.0.0
 
 XLite\Model\Config:
   directives: { insert: true }
@@ -480,6 +479,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Placed on X by Y link', translations: [{ code: en, label: 'Placed on <span class="date">{{date}}</span> by <a href="{{url}}" class="name">{{name}}</a>' }] }
   - { name: 'Order Total X', translations: [{ code: en, label: 'Order Total: <span>{{total}}</span>' }] }
   - { name: 'Payment was not finished', translations: [{ code: en, label: 'Oops! Our payment system have not informed us whether your last order is paid, or not. Is there a payment form that you have not completed yet? If so, please complete and submit it. Or you can quickly <a href="{{url}}">re-order products</a> from your last incomplete order.' }] }
+  - { name: 'Payment transaction X issued', translations: [{ code: en, label: 'Payment transaction [method: {{trx_method}}, type: {{trx_type}}, amount: {{trx_value}}, status: {{trx_status}}]' }] }
+  - { name: 'Backend payment transaction X issued', translations: [{ code: en, label: 'Backend payment transaction [method: {{trx_method}}, type: {{trx_type}}, amount: {{trx_value}}, status: {{trx_status}}]' }] }
 
 XLite\Model\Membership:
   directives: { insert: true }

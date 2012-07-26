@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * AddonInstall
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddonInstall extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,8 +37,6 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -57,8 +51,6 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      * Return LICENSE text for the module
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLicense()
     {
@@ -88,8 +80,6 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      * Return module identificator
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleId()
     {
@@ -100,8 +90,6 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      * Search for module
      *
      * @return \XLite\Model\Module|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModule()
     {
@@ -114,8 +102,6 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      * @param array $data Keys to search
      *
      * @return \XLite\Model\ModuleKey
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleKey(array $data)
     {
@@ -130,8 +116,6 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      * doActionViewLicense
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function doActionViewLicense()
     {

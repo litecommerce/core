@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Paypal\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\Controller\Customer;
 /**
  * Checkout controller
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * Modify request to allow start Express Checkout process
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function handleRequest()
     {
@@ -59,8 +53,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * Returns true if action is related to Express Checkout process 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function isExpressCheckoutAction()
     {
@@ -74,8 +66,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * doActionStartExpressCheckout 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function doActionStartExpressCheckout()
     {
@@ -107,8 +97,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * doExpressCheckoutReturn 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function doActionExpressCheckoutReturn()
     {
@@ -168,8 +156,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * Set up ec_type flag to 'mark' value if payment method selected on checkout
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function doActionPayment()
     {
@@ -185,8 +171,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @param array $paypalData Array of customer data received from Paypal
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function prepareBuyerData($paypalData)
     {
@@ -222,8 +206,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * Get Express Checkout payment method
      * 
      * @return \XLite\Model\Payment\Method
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getExpressCheckoutPaymentMethod()
     {

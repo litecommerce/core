@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 /**
  * 'Powered by' widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      * Gathering Drupal return URL from request and save it in session
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -59,8 +53,6 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      * Disable storefront menu in top links
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isStorefrontMenuVisible()
     {
@@ -71,8 +63,6 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      * Return Drupal frontend URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDrupalURL()
     {
@@ -83,8 +73,6 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      * Check if Drupal URL is stored in config variables
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasDrupalURL()
     {
@@ -96,8 +84,6 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      * Returns a Drupal return URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDrupalReturnURL()
     {
@@ -109,8 +95,6 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      * Check if Drupal return URL is saved in session
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasDrupalReturnURL()
     {
@@ -125,8 +109,6 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      * check if Drupal menu is visible in top links
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDrupalStorefrontLinkVisible()
     {

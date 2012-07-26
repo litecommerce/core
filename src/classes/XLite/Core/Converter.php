@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Miscelaneous convertion routines
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Converter extends \XLite\Base\Singleton
 {
@@ -50,9 +46,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Method name translation records
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $to = array(
         'Q', 'W', 'E', 'R', 'T',
@@ -66,9 +60,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Method name translation patterns
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $from = array(
         '_q', '_w', '_e', '_r', '_t',
@@ -82,9 +74,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Flag to avoid multiple setlocale() calls
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $isLocaleSet = false;
 
@@ -94,8 +84,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string String to convert
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertToCamelCase($string)
     {
@@ -108,8 +96,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string String to convert
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertFromCamelCase($string)
     {
@@ -122,8 +108,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string Underline-style string
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function prepareMethodName($string)
     {
@@ -136,8 +120,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $target Current target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getControllerClass($target)
     {
@@ -167,8 +149,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $interface Interface script OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
@@ -198,8 +178,6 @@ class Converter extends \XLite\Base\Singleton
      * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildFullURL($target = '', $action = '', array $params = array())
     {
@@ -214,8 +192,6 @@ class Converter extends \XLite\Base\Singleton
      * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public static function buildCleanURL($target = '', $action = '', array $params = array())
     {
@@ -273,8 +249,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $ext  Extension OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function parseCleanUrl($url, $last = '', $rest = '', $ext = '')
     {
@@ -299,8 +273,6 @@ class Converter extends \XLite\Base\Singleton
      * Return current separator for clean URLs
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function getCleanURLSeparator()
     {
@@ -317,8 +289,6 @@ class Converter extends \XLite\Base\Singleton
      * Return pattern to check clean URLs
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function getCleanURLAllowedCharsPattern()
     {
@@ -334,8 +304,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $ext  Extension OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function getCleanURLBook($url, $last = '', $rest = '', $ext = '')
     {
@@ -360,8 +328,6 @@ class Converter extends \XLite\Base\Singleton
      * @param array  &$urlParams Params to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function buildCleanURLHook($target, $action, array $params, array &$urlParams)
     {
@@ -378,8 +344,6 @@ class Converter extends \XLite\Base\Singleton
      * @param array  $params Additional params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function parseCleanURLHook($url, $last, $rest, $ext, &$target, array &$params)
     {
@@ -401,8 +365,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $currKey Parameter for recursive calls OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertTreeToFlatArray(array $data, $currKey = '')
     {
@@ -420,8 +382,6 @@ class Converter extends \XLite\Base\Singleton
      * Generate random token (32 chars)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function generateRandomToken()
     {
@@ -432,8 +392,6 @@ class Converter extends \XLite\Base\Singleton
      * Check - is GDlib enabled or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isGDEnabled()
     {
@@ -450,8 +408,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $url URL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isURL($url)
     {
@@ -466,8 +422,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string String to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function isEmptyString($string)
     {
@@ -480,8 +434,6 @@ class Converter extends \XLite\Base\Singleton
      * @param \XLite_Base $obj Object to get class name from
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPlainClassName(\XLite\Base $obj)
     {
@@ -494,8 +446,6 @@ class Converter extends \XLite\Base\Singleton
      * @param mixed $price Currency unformatted value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatCurrency($price)
     {
@@ -520,8 +470,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $dstUnit Destination weight unit
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertWeightUnits($value, $srcUnit, $dstUnit)
     {
@@ -545,8 +493,6 @@ class Converter extends \XLite\Base\Singleton
      * @param boolean $convertToUserTimeZone True if time value should be converted according to the time zone OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatTime($base = null, $format = null, $convertToUserTimeZone = true)
     {
@@ -570,8 +516,6 @@ class Converter extends \XLite\Base\Singleton
      * @param boolean $convertToUserTimeZone True if time value should be converted according to the time zone OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatDate($base = null, $format = null, $convertToUserTimeZone = true)
     {
@@ -594,8 +538,6 @@ class Converter extends \XLite\Base\Singleton
      * @param boolean $convertToUserTimeZone True if time value should be converted according to the time zone OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatDayTime($base = null, $format = null, $convertToUserTimeZone = true)
     {
@@ -617,8 +559,6 @@ class Converter extends \XLite\Base\Singleton
      * @param integer $base   UNIX time stamp OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getStrftime($format, $base = null)
     {
@@ -635,8 +575,6 @@ class Converter extends \XLite\Base\Singleton
      * Attempt to set locale to UTF-8
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function setLocaleToUTF8()
     {
@@ -667,8 +605,6 @@ class Converter extends \XLite\Base\Singleton
      * @param integer $size Size in bytes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatFileSize($size)
     {
@@ -683,8 +619,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $size Shortsize
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     public static function convertShortSizeToHumanReadable($size)
     {
@@ -715,8 +649,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $size Short size
      *  
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     public static function convertShortSize($size)
     {
@@ -750,8 +682,6 @@ class Converter extends \XLite\Base\Singleton
      * @param integer $time User time
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertTimeToServer($time)
     {
@@ -774,8 +704,6 @@ class Converter extends \XLite\Base\Singleton
      * @param integer $time Server time
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertTimeToUser($time)
     {

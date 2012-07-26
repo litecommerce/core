@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Order repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Order extends \XLite\Model\Repo\ARepo
 {
@@ -58,9 +54,7 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * currentSearchCnd
      *
-     * @var   \XLite\Core\CommonCell
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\CommonCell
      */
     protected $currentSearchCnd = null;
 
@@ -69,8 +63,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Find all expired temporary orders
      *
      * @return \Doctrine\Common\Collection\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllExpiredTemporaryOrders()
     {
@@ -84,8 +76,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param boolean $placedOnly Use only orders or orders + carts OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function createQueryBuilder($alias = null, $placedOnly = true)
     {
@@ -103,8 +93,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Orders collect garbage
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function collectGarbage()
     {
@@ -125,8 +113,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -157,8 +143,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Return list of handling search params
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHandlingSearchParams()
     {
@@ -181,8 +165,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param string $param Name of param to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSearchParamHasHandler($param)
     {
@@ -196,8 +178,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param integer                    $value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -214,8 +194,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Profile       $value        Profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndProfile(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Model\Profile $value)
     {
@@ -232,8 +210,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param integer                    $value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndProfileId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -251,8 +227,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param string                     $value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndEmail(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -269,8 +243,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param string                     $value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -293,8 +265,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param array                      $value        Condition data OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndDate(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value = null)
     {
@@ -322,8 +292,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param integer                    $value        Condition data OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndCurrency(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = null)
     {
@@ -337,8 +305,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Return order TTL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderTTL()
     {
@@ -349,8 +315,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Define query for findAllExpiredTemporaryOrders() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllExpiredTemporaryOrdersQuery()
     {
@@ -367,8 +331,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param array                      $value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
@@ -384,8 +346,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param array                      $value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
@@ -401,8 +361,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
@@ -420,8 +378,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Get detailed foreign keys
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDetailedForeignKeys()
     {
@@ -433,5 +389,19 @@ class Order extends \XLite\Model\Repo\ARepo
                 'delete'          => 'SET NULL',
             ),
         );
+    }
+
+    /**
+     * Delete single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to detach
+     *
+     * @return void
+     */
+    protected function performDelete(\XLite\Model\AEntity $entity)
+    {
+        $entity->setOldStatus(null);
+
+        parent::performDelete($entity);
     }
 }

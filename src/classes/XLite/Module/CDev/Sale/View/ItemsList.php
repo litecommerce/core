@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Sale\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * ItemsList
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -41,8 +37,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLabels(\XLite\Model\Product $product)
     {
@@ -67,8 +61,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -81,8 +73,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * getPageData
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageData()
     {
@@ -97,8 +87,6 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      * @param mixed $data Data
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getOnlyEntities($data)
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Currency
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="currencies",
@@ -45,9 +41,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Currency unique id (ISO 4217 number)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @Column (type="uinteger")
@@ -57,9 +51,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Currency code (ISO 4217 alpha-3)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=3, unique=true)
      */
@@ -68,9 +60,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Symbol
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=16)
      */
@@ -79,9 +69,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Prefix
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32)
      */
@@ -90,9 +78,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Suffix
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32)
      */
@@ -101,9 +87,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Number of digits after the decimal separator.
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="smallint")
      */
@@ -111,9 +95,7 @@ class Currency extends \XLite\Model\Base\I18n
 
     /**
      * Decimal part delimiter
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=8)
      */
@@ -122,9 +104,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Thousand delimier
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=8)
      */
@@ -133,9 +113,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Orders
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\Order", mappedBy="currency")
      */
@@ -144,9 +122,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Countries
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\Country", mappedBy="currency", cascade={"all"})
      */
@@ -160,8 +136,6 @@ class Currency extends \XLite\Model\Base\I18n
      * TODO - Doctrine is not generate setter for identifier. We must reworkt it
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setCurrencyId($value)
     {
@@ -174,8 +148,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundValue($value)
     {
@@ -188,8 +160,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function roundValueAsInteger($value)
     {
@@ -202,8 +172,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param integer $value Value
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function convertIntegerToFloat($value)
     {
@@ -216,8 +184,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function formatValue($value)
     {
@@ -228,8 +194,6 @@ class Currency extends \XLite\Model\Base\I18n
      * Get minimum value 
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getMinimumValue()
     {
@@ -242,8 +206,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -259,8 +221,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function formatParts($value)
     {

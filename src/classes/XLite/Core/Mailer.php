@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,17 +28,13 @@ namespace XLite\Core;
 /**
  * Mailer core class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Mailer extends \XLite\Base\Singleton
 {
     /**
      * Mailer instance
      *
-     * @var   \XLite\View\Mailer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\View\Mailer
      */
     protected static $mailer = null;
 
@@ -48,9 +42,7 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Interface to use in mail
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected static $mailInterface = \XLite::CUSTOMER_INTERFACE;
 
@@ -61,8 +53,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string               $password Profile password
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendProfileCreatedUserNotification(\XLite\Model\Profile $profile, $password = null)
     {
@@ -84,8 +74,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Profile $profile Profile object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendProfileCreatedAdminNotification(\XLite\Model\Profile $profile)
     {
@@ -104,8 +92,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Profile $profile Profile object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendProfileUpdatedUserNotification(\XLite\Model\Profile $profile)
     {
@@ -124,8 +110,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Profile $profile Profile object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendProfileUpdatedAdminNotification(\XLite\Model\Profile $profile)
     {
@@ -144,8 +128,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $userLogin Login of deleted profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendProfileDeletedAdminNotification($userLogin)
     {
@@ -164,8 +146,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $postedLogin Login that was used in failed login attempt
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendFailedAdminLoginNotification($postedLogin)
     {
@@ -193,8 +173,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $userPassword User password
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendRecoverPasswordRequest($userLogin, $userPassword)
     {
@@ -222,8 +200,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $userPassword User password (unencrypted)
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendRecoverPasswordConfirmation($userLogin, $userPassword)
     {
@@ -247,8 +223,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order model
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendOrderCreated(\XLite\Model\Order $order)
     {
@@ -258,50 +232,53 @@ class Mailer extends \XLite\Base\Singleton
             )
         );
 
-        static::sendOrderCreatedCustomer($order->getProfile()->getLogin());
+        if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer) {
+            static::sendOrderCreatedCustomer($order);
+        }
 
-        static::sendOrderCreatedAdmin();
+        if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif) {
+            static::sendOrderCreatedAdmin($order);
+        }
     }
 
     /**
      * Send created order mail to customer
      *
-     * @param string $login Customer email
+     * @param \XLite\Model\Order $order Order model
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public static function sendOrderCreatedCustomer($login)
+    public static function sendOrderCreatedCustomer(\XLite\Model\Order $order)
     {
         static::setMailInterface(\XLite::CUSTOMER_INTERFACE);
 
         static::compose(
             \XLite\Core\Config::getInstance()->Company->orders_department,
-            $login,
+            $order->getProfile()->getLogin(),
             'order_created'
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
     }
 
     /**
      * Send created order mail to admin
      *
+     * @param \XLite\Model\Order $order Order model
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public static function sendOrderCreatedAdmin()
+    public static function sendOrderCreatedAdmin(\XLite\Model\Order $order)
     {
-        if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif) {
+        static::setMailInterface(\XLite::ADMIN_INTERFACE);
 
-            static::setMailInterface(\XLite::ADMIN_INTERFACE);
+        static::compose(
+            \XLite\Core\Config::getInstance()->Company->site_administrator,
+            \XLite\Core\Config::getInstance()->Company->orders_department,
+            'order_created_admin'
+        );
 
-            static::compose(
-                \XLite\Core\Config::getInstance()->Company->site_administrator,
-                \XLite\Core\Config::getInstance()->Company->orders_department,
-                'order_created_admin'
-            );
-        }
+        \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
     }
 
     /**
@@ -310,8 +287,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendProcessOrder(\XLite\Model\Order $order)
     {
@@ -321,7 +296,7 @@ class Mailer extends \XLite\Base\Singleton
             )
         );
 
-        static::sendProcessOrderAdmin();
+        static::sendProcessOrderAdmin($order);
 
         static::sendProcessOrderCustomer($order);
     }
@@ -329,11 +304,11 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Send processed order mail to Admin
      *
+     * @param \XLite\Model\Order $order Order model
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public static function sendProcessOrderAdmin()
+    public static function sendProcessOrderAdmin(\XLite\Model\Order $order)
     {
         static::setMailInterface(\XLite::ADMIN_INTERFACE);
 
@@ -342,6 +317,8 @@ class Mailer extends \XLite\Base\Singleton
             \XLite\Core\Config::getInstance()->Company->orders_department,
             'order_processed'
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
     }
 
     /**
@@ -350,8 +327,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order model
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendProcessOrderCustomer(\XLite\Model\Order $order)
     {
@@ -363,6 +338,8 @@ class Mailer extends \XLite\Base\Singleton
                 $order->getProfile()->getLogin(),
                 'order_processed'
             );
+
+            \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
         }
     }
 
@@ -372,8 +349,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order model
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendFailedOrder(\XLite\Model\Order $order)
     {
@@ -383,7 +358,7 @@ class Mailer extends \XLite\Base\Singleton
             )
         );
 
-        static::sendFailedOrderAdmin();
+        static::sendFailedOrderAdmin($order);
 
         static::sendFailedOrderCustomer($order);
     }
@@ -391,11 +366,11 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Send failed order mail to Admin
      *
+     * @param \XLite\Model\Order $order Order model
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public static function sendFailedOrderAdmin()
+    public static function sendFailedOrderAdmin(\XLite\Model\Order $order)
     {
         static::setMailInterface(\XLite::ADMIN_INTERFACE);
 
@@ -404,6 +379,8 @@ class Mailer extends \XLite\Base\Singleton
             \XLite\Core\Config::getInstance()->Company->orders_department,
             'order_failed'
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
     }
 
     /**
@@ -412,8 +389,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order model
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendFailedOrderCustomer(\XLite\Model\Order $order)
     {
@@ -425,6 +400,8 @@ class Mailer extends \XLite\Base\Singleton
                 $order->getProfile()->getLogin(),
                 'order_failed'
             );
+
+            \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
         }
     }
 
@@ -434,8 +411,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $key Access key
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendSafeModeAccessKeyNotification($key)
     {
@@ -461,8 +436,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $body Body test email text
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendTestEmail($from, $to, $body = '')
     {
@@ -489,8 +462,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $interface Interface to use in mail OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function setMailInterface($interface = \XLite::CUSTOMER_INTERFACE)
     {
@@ -502,8 +473,6 @@ class Mailer extends \XLite\Base\Singleton
      * Returns mailer instance
      *
      * @return \XLite\View\Mailer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getMailer()
     {
@@ -522,8 +491,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param mixed  $value Variable value OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function register($name, $value = '')
     {
@@ -547,8 +514,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param boolean $doSend        ____param_comment____ OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function compose($from, $to, $dir, $customHeaders = array(), $doSend = true)
     {

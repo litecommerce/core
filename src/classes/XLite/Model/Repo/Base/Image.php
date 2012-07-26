@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Base;
@@ -30,8 +28,6 @@ namespace XLite\Model\Repo\Base;
 /**
  * Image abstract repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Image extends \XLite\Model\Repo\Base\Storage
 {
@@ -39,8 +35,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Storage
      * Get allowed file system root list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getAllowedFileSystemRoots()
     {
@@ -55,8 +49,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Storage
      * Get file system images storage root path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFileSystemRoot()
     {
@@ -67,8 +59,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Storage
      * Get web images storage root path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWebRoot()
     {
@@ -81,8 +71,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Storage
      * @param string $sizeName Image size cell name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFileSystemCacheRoot($sizeName)
     {
@@ -95,8 +83,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Storage
      * @param string $sizeName Image size cell name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWebCacheRoot($sizeName)
     {
@@ -107,8 +93,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Storage
      * Check - check image hash in Custoemr front-end or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCheckImage()
     {

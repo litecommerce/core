@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Profiler
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\SQLLogger
 {
@@ -48,108 +44,84 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     /**
      * List of executed queries
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $queries = array();
 
     /**
      * List of memory measuring points
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $memoryPoints = array();
 
     /**
      * Templates profiling enabled flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $templatesProfilingEnabled = false;
 
     /**
      * Enabled flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $enabled = false;
 
     /**
      * Start time
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      */
     protected $start_time = null;
 
     /**
      * Stop time
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      */
     protected $stop_time = null;
 
     /**
      * Included files list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $includedFiles = array();
 
     /**
      * Included files total size
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $includedFilesTotal = 0;
 
     /**
      * Included files count
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $includedFilesCount = 0;
 
     /**
      * Last time
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      */
     protected $lastTime = 0;
 
     /**
      * Time points
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $points = array();
 
     /**
      * Profiler should not start on these targets
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $disallowedTargets = array(
         'image',
@@ -158,27 +130,21 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     /**
      * Use xdebug stack trace
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $useXdebugStackTrace = false;
 
     /**
      * Current query
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $currentQuery;
 
     /**
      * List of plain text messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $messages = array();
 
@@ -187,8 +153,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Check - templates profiling mode is enabled or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isTemplatesProfilingEnabled()
     {
@@ -200,8 +164,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -212,8 +174,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Destructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __destruct()
     {
@@ -226,8 +186,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param string $name Peroperty name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -254,8 +212,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param array $b File info 2
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sortCallback($a, $b)
     {
@@ -275,8 +231,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param array  $params Query arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logSQL($sql, array $params = null)
     {
@@ -289,8 +243,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param string $query Query
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addQuery($query)
     {
@@ -317,8 +269,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param string $query Query
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setQueryTime($query)
     {
@@ -331,8 +281,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Add memory measure point
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addMemoryPoint()
     {
@@ -350,8 +298,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param array  $types  The SQL parameter types OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function startQuery($sql, array $params = null, array $types = null)
     {
@@ -363,8 +309,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Mark the last started query as stopped. This can be used for timing of queries
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function stopQuery()
     {
@@ -378,8 +322,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param boolean $additional Additional metric flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function log($timePoint, $additional = false)
     {
@@ -432,8 +374,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param string $message Message text
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addMessage($message)
     {
@@ -445,8 +385,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * There are some targets which are not require profiler
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isTargetAllowed()
     {
@@ -457,8 +395,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * getStartupFlag
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStartupFlag()
     {
@@ -476,8 +412,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param boolean $start Enable flag
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function start($start)
     {
@@ -494,8 +428,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Stop profiler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function stop()
     {
@@ -526,8 +458,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Display profiler report
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function display()
     {
@@ -722,8 +652,6 @@ HTML;
      * Get back trace
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBackTrace()
     {

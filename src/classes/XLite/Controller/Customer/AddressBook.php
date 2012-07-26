@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,17 +28,13 @@ namespace XLite\Controller\Customer;
 /**
  * Addresses management controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddressBook extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * address
      *
-     * @var   \XLite\Model\Address
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Address
      */
     protected $address = null;
 
@@ -48,8 +42,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -60,8 +52,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * getAddress
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddress()
     {
@@ -72,8 +62,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * Get return URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnURL()
     {
@@ -100,8 +88,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * @param integer $profileId Profile ID
      *  
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function correctProfileIdForURLParams($profileId)
     {
@@ -116,8 +102,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * Alias
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -128,8 +112,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return string
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -140,8 +122,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * Add part to the location nodes list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -154,8 +134,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * getModelFormClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -166,8 +144,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * doActionSave
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSave()
     {
@@ -178,8 +154,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -197,8 +171,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * doActionCancelDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionCancelDelete()
     {

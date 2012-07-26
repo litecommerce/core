@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product\Modify;
@@ -30,8 +28,6 @@ namespace XLite\View\Form\Product\Modify;
 /**
  * Details
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Single extends \XLite\View\Form\Product\Modify\Base\Single
 {
@@ -39,8 +35,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -51,8 +45,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * Ability to add the 'enctype="multipart/form-data"' form attribute
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isMultipart()
     {
@@ -63,8 +55,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * Get validator
      *
      * @return \XLite\Core\Validator\HashArray
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidator()
     {
@@ -80,8 +70,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * Get product identificator from request
      *
      * @return integer Product identificator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProductId()
     {
@@ -94,8 +82,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * @param mixed $data Data
      *
      * @return null
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setDataValidators(&$data)
     {

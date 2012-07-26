@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\AuthorizeNet\Model\Payment\Processor;
@@ -33,17 +31,13 @@ namespace XLite\Module\CDev\AuthorizeNet\Model\Payment\Processor;
  * Find the latest API document here:
  * http://www.authorize.net/support/SIM_guide.pdf
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 {
     /**
      * AVS messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $avserr = array(
         'A' => 'Address (Street) matches, ZIP does not',
@@ -64,9 +58,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     /**
      * CVV messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $cvverr = array(
         'M' => 'Match',
@@ -79,9 +71,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     /**
      * Error messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $err = array(
         '1' => 'This transaction has been approved.',
@@ -208,8 +198,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * Get operation types
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOperationTypes()
     {
@@ -223,8 +211,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSettingsWidget()
     {
@@ -237,8 +223,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -290,8 +274,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -304,8 +286,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * Get return type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnType()
     {
@@ -316,8 +296,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * Returns the list of settings available for this payment processor
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     public function getAvailableSettings()
     {
@@ -335,8 +313,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * Get redirect form URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormURL()
     {
@@ -349,8 +325,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * Get redirect form fields list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFields()
     {
@@ -436,8 +410,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @param string $data Data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHMAC($key, $data)
     {

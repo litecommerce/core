@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Form;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Form;
 /**
  * Abstract form widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * Chech if widget is exported into Drupal and current form has its method = "GET"
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDrupalGetForm()
     {
@@ -52,8 +46,6 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * This JavaScript code will be performed when form submits
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSOnSubmitCode()
     {
@@ -64,8 +56,6 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * JavaScript: compose the "{'a':<a>,'b':<b>,...}" string (JS array) by the params array
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormParamsAsJSArray()
     {
@@ -76,8 +66,6 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

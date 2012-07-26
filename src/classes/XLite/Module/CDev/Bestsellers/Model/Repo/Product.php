@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Bestsellers\Model\Repo;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Bestsellers\Model\Repo;
 /**
  * The "OrderItem" model repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorator
 {
@@ -43,8 +39,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * @param integer                $cat   Category identificator OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findBestsellers(\XLite\Core\CommonCell $cnd, $count = 0, $cat = 0)
     {
@@ -61,8 +55,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * @param integer                $cat   Category identificator
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder object
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineBestsellersQuery(\XLite\Core\CommonCell $cnd, $count, $cat)
     {

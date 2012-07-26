@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Order page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Order extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.11
+     *
+     * @var array
      */
     protected $params = array('target', 'order_id', 'page');
 
@@ -48,8 +42,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -57,11 +49,9 @@ class Order extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * handleRequest 
-     * 
+     * handleRequest
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function handleRequest()
     {
@@ -79,7 +69,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
                     \XLite\Core\Request::getInstance()->transactionType = \XLite\Core\Request::getInstance()->action;
                     \XLite\Core\Request::getInstance()->action = 'PaymentTransaction';
                     \XLite\Core\Request::getInstance()->setRequestMethod('POST');
-                } 
+                }
             }
         }
 
@@ -90,8 +80,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -100,11 +88,9 @@ class Order extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get order 
-     * 
+     * Get order
+     *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getOrder()
     {
@@ -118,8 +104,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * TODO: to remove
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRequestData()
     {
@@ -133,25 +117,55 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
-        $request = \XLite\Core\Request::getInstance();
+        $data = $this->getRequestData();
+        $orderId = \XLite\Core\Request::getInstance()->order_id;
 
-        return \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateById(
-            \XLite\Core\Request::getInstance()->order_id,
-            $this->getRequestData()
+        $changes = $this->getOrderChanges($orderId, $data);
+
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateById(
+            $orderId,
+            $data
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerOrderChanges($orderId, $changes);
+    }
+
+    /**
+     * Return requested changes for the order
+     *
+     * @param integer $orderId Order identificator
+     * @param array   $data    Data to change
+     *
+     * @return array
+     */
+    protected function getOrderChanges($orderId, array $data)
+    {
+        $changes = array();
+        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
+
+        foreach ($data as $name => $value) {
+
+            $orderValue = $order->{'get' . ucfirst($name)}();
+
+            if ($orderValue !== $value) {
+
+                $changes[$name] = array(
+                    'old' => $orderValue,
+                    'new' => $value,
+                );
+            }
+        }
+
+        return $changes;
     }
 
     /**
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionPaymentTransaction()
     {
@@ -175,8 +189,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * getViewerTemplate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {
@@ -195,8 +207,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -204,6 +214,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
 
         $list['default'] = 'General info';
         $list['invoice'] = 'Invoice';
+        $list['history'] = 'History';
 
         return $list;
     }
@@ -212,8 +223,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {
@@ -221,6 +230,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
 
         $list['default'] = 'order/page/info.tab.tpl';
         $list['invoice'] = 'order/page/invoice.tpl';
+        $list['history'] = 'order/history.tpl';
 
         return $list;
     }

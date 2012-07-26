@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.17
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * DataSource model
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="data_sources")
@@ -47,9 +43,7 @@ class DataSource extends \XLite\Model\AEntity
     /**
      * Unique data source id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -60,9 +54,7 @@ class DataSource extends \XLite\Model\AEntity
     /**
      * Data source type
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -71,9 +63,7 @@ class DataSource extends \XLite\Model\AEntity
     /**
      * Data source parameters (relation)
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\DataSource\Parameter", mappedBy="dataSource", cascade={"all"})
      */
@@ -85,8 +75,6 @@ class DataSource extends \XLite\Model\AEntity
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -103,8 +91,6 @@ class DataSource extends \XLite\Model\AEntity
      * @param string $name Parameter name
      *  
      * @return \XLite\Model\DataSource\Parameter
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getParameter($name)
     {
@@ -121,8 +107,6 @@ class DataSource extends \XLite\Model\AEntity
      * @param string $name Parameter name
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getParameterValue($name)
     {
@@ -139,8 +123,6 @@ class DataSource extends \XLite\Model\AEntity
      * @param mixed  $value Parameter value
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function setParameterValue($name, $value)
     {
@@ -165,8 +147,6 @@ class DataSource extends \XLite\Model\AEntity
      * Get data source based on model shop type
      * 
      * @return \XLite\Core\DataSource\ADataSource
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function detectSource()
     {
@@ -183,8 +163,6 @@ class DataSource extends \XLite\Model\AEntity
      * Get concrete model widget class to be used in templates
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getModelWidgetClass()
     {

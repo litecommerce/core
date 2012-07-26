@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Page header
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Header extends \XLite\View\AResourcesContainer
 {
@@ -39,8 +35,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Get head prefixes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public static function defineHeadPrefixes()
     {
@@ -51,8 +45,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Get meta description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMetaDescription()
     {
@@ -65,8 +57,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Get default meta description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getDefaultMetaDescription()
     {
@@ -79,8 +69,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Get title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTitle()
     {
@@ -91,8 +79,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Get default title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getDefaultTitle()
     {
@@ -103,8 +89,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -115,8 +99,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Get collected meta tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMetaResources()
     {
@@ -127,8 +109,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Get script
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getScript()
     {
@@ -139,8 +119,6 @@ class Header extends \XLite\View\AResourcesContainer
      * Get head tag attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getHeadAttributes()
     {

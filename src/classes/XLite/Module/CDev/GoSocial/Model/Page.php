@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\Module\CDev\GoSocial\Model;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\Model;
 /**
  * Page
  *
- * @see   ____class_see____
- * @since 1.0.15
  *
  * @LC_Dependencies ("CDev\SimpleCMS")
  */
@@ -40,9 +36,7 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\Model\Page implements \
     /**
      * Custom Open grasph meta tags
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -51,9 +45,7 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\Model\Page implements \
     /**
      * Show Social share buttons or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -65,8 +57,6 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\Model\Page implements \
      * @param boolean $preprocessed Preprocessed OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getOpenGraphMetaTags($preprocessed = true)
     {
@@ -79,8 +69,6 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\Model\Page implements \
      * Define Open Graph meta tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineOpenGraphMetaTags()
     {
@@ -113,8 +101,6 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\Model\Page implements \
      * Get generated Open Graph meta tags
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function generateOpenGraphMetaTags()
     {
@@ -134,8 +120,6 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\Model\Page implements \
      * @param string $tags Tags content
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function preprocessOpenGraphMetaTags($tags)
     {

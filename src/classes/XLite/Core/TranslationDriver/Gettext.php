@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\TranslationDriver;
@@ -35,8 +33,6 @@ if (!defined('LC_MESSAGES')) {
 /**
  * gettext-based driver
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 {
@@ -52,27 +48,21 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     /**
      * Dynamic domains list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $domains = array();
 
     /**
      * Last language code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $lastLanguage = null;
 
     /**
      * msgfmt script path (cache)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $msgfmtPath = null;
 
@@ -83,8 +73,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function translate($name, $code)
     {
@@ -104,8 +92,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * Check - valid driver or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isValid()
     {
@@ -145,8 +131,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * Reset language driver
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function reset()
     {
@@ -163,8 +147,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkCurrentLocale($code)
     {
@@ -177,8 +159,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setLocale($code)
     {
@@ -196,8 +176,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocaleByCode($code)
     {
@@ -210,8 +188,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDomain($code)
     {
@@ -241,8 +217,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkIndex($code)
     {
@@ -275,8 +249,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function createIndexFile($path, $code)
     {
@@ -341,8 +313,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function createIndexFileBin($path, $code)
     {
@@ -399,8 +369,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * Get msgfmt script path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMsgFmtExecutable()
     {

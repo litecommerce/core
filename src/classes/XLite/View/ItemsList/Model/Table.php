@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\View\ItemsList\Model;
@@ -30,8 +28,6 @@ namespace XLite\View\ItemsList\Model;
 /**
  * Abstract admin model-based items list (table)
  *
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class Table extends \XLite\View\ItemsList\Model\AModel
 {
@@ -51,18 +47,14 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     /**
      * Columns (local cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var array
      */
     protected $columns;
 
     /**
      * Main column index
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var integer
      */
     protected $mainColumn;
 
@@ -70,8 +62,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Define columns structure
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     abstract protected function defineColumns();
 
@@ -79,8 +69,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get a list of CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -95,8 +83,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get a list of JavaScript files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -111,8 +97,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Check - pager box is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function isPagerVisible()
     {
@@ -124,8 +108,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get preprocessed columns structire
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getColumns()
     {
@@ -168,8 +150,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Returnd columns count
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getColumnsCount()
     {
@@ -180,8 +160,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Check - table header is visible or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.20
      */
     protected function isTableHeaderVisible()
     {
@@ -200,8 +178,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get main column
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getMainColumn()
     {
@@ -235,8 +211,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column Column
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isMainColumn(array $column)
     {
@@ -252,8 +226,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param \XLite\Model\AEntity $entity Model
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getColumnValue(array $column, \XLite\Model\AEntity $entity)
     {
@@ -280,8 +252,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get field objects list (only inline-based form fields)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldObjects()
     {
@@ -328,8 +298,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get switcher field 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getSwitcherField()
     {
@@ -344,8 +312,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get sort field 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getSortField()
     {
@@ -367,8 +333,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get create field classes
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getCreateFieldClasses()
     {
@@ -410,8 +374,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get create line columns
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getCreateColumns()
     {
@@ -464,8 +426,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * List has top creation box
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isTopInlineCreation()
     {
@@ -476,8 +436,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * List has bottom creation box
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isBottomInlineCreation()
     {
@@ -488,8 +446,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -503,8 +459,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array  $column Column
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getCellListNamePart($type, array $column)
     {
@@ -517,8 +471,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {
@@ -535,8 +487,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column Column
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getHeadClass(array $column)
     {
@@ -550,8 +500,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getColumnClass(array $column, \XLite\Model\AEntity $entity = null)
     {
@@ -568,8 +516,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasColumnAttention(array $column, \XLite\Model\AEntity $entity = null)
     {
@@ -583,8 +529,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param string  $template Template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getActionCellClass($i, $template)
     {
@@ -599,8 +543,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get top actions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getTopActions()
     {
@@ -620,8 +562,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get bottom actions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getBottomActions()
     {
@@ -645,8 +585,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get left actions tempaltes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getLeftActions()
     {
@@ -674,8 +612,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get right actions tempaltes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getRightActions()
     {
@@ -694,8 +630,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param \XLite\Model\AEntity $entity Entity
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isAllowEntityRemove(\XLite\Model\AEntity $entity)
     {
@@ -710,8 +644,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Check - body tempalte is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function isPageBodyVisible()
     {
@@ -722,8 +654,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Check - table header is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isHeaderVisible()
     {
@@ -734,8 +664,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * isFooterVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -746,8 +674,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Return file name for body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBodyTemplate()
     {
@@ -758,8 +684,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Return dir which contains the page body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -772,8 +696,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param \XLite\Model\AEntity $entity Entity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function removeEntity(\XLite\Model\AEntity $entity)
     {
@@ -790,8 +712,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column COlumn
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isColumnSorted(array $column)
     {
@@ -806,8 +726,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column Column
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getSortDirectionNext(array $column)
     {
@@ -827,8 +745,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column Column
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getSortLinkClass(array $column)
     {
@@ -848,8 +764,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Check - search-in-head mechanism is available or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isHeadSearchVisible()
     {
@@ -871,8 +785,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column Column info
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isSearchColumn(array $column)
     {
@@ -886,8 +798,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column ____param_comment____
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getSearchCellClass(array $column)
     {

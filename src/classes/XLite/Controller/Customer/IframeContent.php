@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,17 +28,13 @@ namespace XLite\Controller\Customer;
 /**
  * Iframe content controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class IframeContent extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target');
 
@@ -48,8 +42,6 @@ class IframeContent extends \XLite\Controller\Customer\ACustomer
      * Preprocessor for no-action reaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -93,8 +85,6 @@ HTML;
      * Assemble form body (field set)
      *
      * @return string HTML
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleFormBody(\XLite\Model\IframeContent $content)
     {

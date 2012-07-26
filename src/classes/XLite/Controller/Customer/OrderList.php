@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,17 +28,13 @@ namespace XLite\Controller\Customer;
 /**
  * Orders list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderList extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'page');
 
@@ -48,8 +42,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Handles the request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -72,8 +64,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -87,8 +77,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * @param mixed  $value Property value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function set($name, $value)
     {
@@ -109,8 +97,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -121,8 +107,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Add part to the location nodes list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -136,8 +120,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * TODO: to revise
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSearch()
     {
@@ -242,8 +224,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Reset search conditions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionReset()
     {
@@ -258,8 +238,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -273,8 +251,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {

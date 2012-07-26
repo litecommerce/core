@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Form unique id
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\FormId")
  * @Table  (name="form_ids",
@@ -49,9 +45,7 @@ class FormId extends \XLite\Model\AEntity
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -62,9 +56,7 @@ class FormId extends \XLite\Model\AEntity
     /**
      * Session id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer", nullable=false)
      */
@@ -73,9 +65,7 @@ class FormId extends \XLite\Model\AEntity
     /**
      * Form unique id
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32)
      */
@@ -84,9 +74,7 @@ class FormId extends \XLite\Model\AEntity
     /**
      * Date
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -98,8 +86,6 @@ class FormId extends \XLite\Model\AEntity
      * @param string $value Form id
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setFormId($value)
     {
@@ -111,8 +97,6 @@ class FormId extends \XLite\Model\AEntity
      * @param integer $value Date
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setDate($value)
     {
@@ -122,8 +106,6 @@ class FormId extends \XLite\Model\AEntity
      * Prepare form id
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      * @PrePersist
      */
     public function prepareFormId()

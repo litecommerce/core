@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\WidgetParam;
@@ -30,17 +28,13 @@ namespace XLite\Model\WidgetParam;
 /**
  * ____description____
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Float extends \XLite\Model\WidgetParam\AWidgetParam
 {
     /**
      * Param type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = 'float';
 
@@ -50,8 +44,6 @@ class Float extends \XLite\Model\WidgetParam\AWidgetParam
      * @param mixed $value Value to validate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidaionSchema($value)
     {

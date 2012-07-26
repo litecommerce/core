@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Customer;
 /**
  * Featured products widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="300")
  */
@@ -41,9 +37,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
     /**
      * Featured products
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $featuredProducts = null;
 
@@ -53,8 +47,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
      * @param array $params Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -70,8 +62,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
      * Get widget display mode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -84,8 +74,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -96,8 +84,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -108,8 +94,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -125,8 +109,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
      * Return products list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {

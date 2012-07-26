@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Sale\View\Form;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View\Form;
 /**
  * "Set the sale price" dialog form class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SaleSelectedDialog extends \XLite\View\Form\AForm
 {
@@ -39,8 +35,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -51,8 +45,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -63,8 +55,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * Get validator
      *
      * @return \XLite\Core\Validator\HashArray
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidator()
     {
@@ -82,8 +72,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * @param mixed &$data Data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setDataValidators(&$data)
     {
@@ -94,8 +82,6 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
      * Called before the includeCompiledFile()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initView()
     {

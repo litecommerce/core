@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.19
  */
 
 namespace XLite\Core\EventDriver;
@@ -30,8 +28,6 @@ namespace XLite\Core\EventDriver;
 /**
  * AMQP-based event driver 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class AMQP extends \XLite\Core\EventDriver\AEventDriver
 {
@@ -40,18 +36,14 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
     /**
      * Connection
      *
-     * @var   \AMQPConnection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \AMQPConnection
      */
     protected $connection;
 
     /**
      * Channel
      *
-     * @var   \AMQPChannel
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \AMQPChannel
      */
     protected $channel;
 
@@ -59,8 +51,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * Check driver
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function isValid()
     {
@@ -71,8 +61,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * Get driver code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function getCode()
     {
@@ -83,8 +71,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * Current driver is blocking
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function isBlocking()
     {
@@ -98,8 +84,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * @param array  $arguments Arguments OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function fire($name, array $arguments = array())
     {
@@ -128,8 +112,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * @param boolean $reset Reset flag OPTIONAL
      *
      * @return \AMQPChannel
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getChannel($reset = false)
     {
@@ -151,8 +133,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * @param string $name Queue name
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function redeclareQueue($name)
     {
@@ -179,8 +159,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * Declare exchange and queue
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function declareQueue($name)
     {
@@ -209,8 +187,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * @param string   $tag      Consumer tag OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function consume($queue, $listener, $tag = null)
     {
@@ -237,8 +213,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * @param \AMQPMessage $message Mesasge
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function sendAck(\AMQPMessage $message)
     {
@@ -249,8 +223,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * Wait messages
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function wait()
     {
@@ -265,8 +237,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * Get exchange name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getExchange()
     {
@@ -277,8 +247,6 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
      * Initialize connection
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initializeConnection()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Module settings
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Module extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Module object
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $module;
 
@@ -48,8 +42,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * handleRequest
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -64,8 +56,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * Return current module options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -77,8 +67,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -96,8 +84,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
      *
      * @return \XLite\Model\Module
      * @throws \Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModule()
     {
@@ -116,8 +102,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * Get current module ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleID()
     {
@@ -128,8 +112,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * Update module settings
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -142,8 +124,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * getModelFormClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {

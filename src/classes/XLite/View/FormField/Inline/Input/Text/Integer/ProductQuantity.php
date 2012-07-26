@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\View\FormField\Inline\Input\Text\Integer;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text\Integer;
 /**
  * Product quantity
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
 {
@@ -39,8 +35,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * Save value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function saveValue()
     {
@@ -51,8 +45,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * Get entity value for field
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getEntityValue()
     {
@@ -63,8 +55,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * Check - field is editable or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isEditable()
     {
@@ -77,8 +67,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * @param array $field Field data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldParams(array $field)
     {
@@ -89,8 +77,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      * Get view template
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getViewTemplate()
     {

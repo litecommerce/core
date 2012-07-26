@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\AmazonS3Images\Model\Base;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\Model\Base;
 /**
  * Image abstract store
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  *
@@ -46,9 +42,7 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
     /**
      * S3 icons cache
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      *
      * @Column (type="array", nullable=true)
      */
@@ -57,18 +51,14 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
     /**
      * AWS S3 client
      * 
-     * @var   \XLite\Module\CDev\AmazonS3Images\Core\S3
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var \XLite\Module\CDev\AmazonS3Images\Core\S3
      */
     protected $s3;
 
     /**
      * Forbid Amazon S3 storage for loading
      * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var boolean
      */
     protected $s3Forbid = false;
 
@@ -78,8 +68,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param boolean $flag Flag OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function setS3Forbid($flag = false)
     {
@@ -92,8 +80,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * Get body
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getBody()
     {
@@ -114,8 +100,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param integer $length Length OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function readOutput($start = null, $length = null)
     {
@@ -144,8 +128,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param boolean $forceFile Flag OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function isFileExists($path = null, $forceFile = false)
     {
@@ -163,8 +145,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * Get URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURL()
     {
@@ -182,8 +162,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * Get file extension
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getExtension()
     {
@@ -200,8 +178,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string $key Key in $_FILES service array
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loadFromRequest($key)
     {
@@ -231,8 +207,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string $basename File name OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loadFromLocalFile($path, $basename = null)
     {
@@ -281,8 +255,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string $path Path OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function removeFile($path = null)
     {
@@ -306,8 +278,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string $path Path to use OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function getStoragePath($path = null)
     {
@@ -325,8 +295,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * Get local path for file-based PHP functions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocalPath()
     {
@@ -359,8 +327,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * Update file path - change file extension taken from MIME information.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     protected function updatePathByMIME()
     {
@@ -371,8 +337,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * Get S3 client
      * 
      * @return \XLite\Module\CDev\AmazonS3Images\Core\S3
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getS3()
     {
@@ -392,8 +356,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string $path Path from DB OPTIONAL
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function generateS3Path($path = null)
     {
@@ -413,8 +375,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string $name File name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getResizedPath($size, $name)
     {
@@ -430,8 +390,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string $name File name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getResizedPublicURL($size, $name)
     {
@@ -446,8 +404,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string $path Resized image path
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isResizedIconAvailable($path)
     {
@@ -466,8 +422,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @param string  $path   Write path
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function resizeIcon($width, $height, $path)
     {
@@ -504,8 +458,6 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * Use S3 icons
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isUseS3Icons()
     {

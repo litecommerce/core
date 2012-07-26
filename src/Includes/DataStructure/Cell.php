@@ -14,15 +14,13 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 namespace Includes\DataStructure;
@@ -31,18 +29,13 @@ namespace Includes\DataStructure;
  * Common cell
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 class Cell
 {
     /**
      * Array of properties
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected $properties = array();
 
@@ -52,9 +45,6 @@ class Cell
      * @param array $data data to set
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = null)
     {
@@ -67,9 +57,6 @@ class Cell
      * @param string $name property name
      *
      * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -83,9 +70,6 @@ class Cell
      * @param mixed  $value property value
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -98,9 +82,6 @@ class Cell
      * @param string $name property name
      *
      * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __isset($name)
     {
@@ -113,9 +94,6 @@ class Cell
      * @param string $name property name
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __unset($name)
     {
@@ -126,9 +104,6 @@ class Cell
      * Return all properties
      *
      * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getData()
     {
@@ -141,9 +116,6 @@ class Cell
      * @param array $data data to set
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setData(array $data)
     {

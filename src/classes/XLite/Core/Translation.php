@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Translation core rutine
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 {
@@ -43,18 +39,14 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     /**
      * Translation driver
      *
-     * @var   \XLite\Core\TranslationDriver\ATranslationDriver
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\TranslationDriver\ATranslationDriver
      */
     protected $driver;
 
     /**
      * Translation drivers query
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $driversQuery = array(
         '\XLite\Core\TranslationDriver\Gettext',
@@ -70,8 +62,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * @param string $code      Language code OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function lbl($name, array $arguments = array(), $code = null)
     {
@@ -84,8 +74,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * @param string $code Specified code OPTIONAL
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function getLanguageQuery($code = null)
     {
@@ -102,8 +90,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Reset driver cache
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function reset()
     {
@@ -118,8 +104,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * @param string $code      Language code OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function translate($name, array $arguments = array(), $code = null)
     {
@@ -148,8 +132,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Get REST entity names
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRESTNames()
     {
@@ -165,8 +147,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * @param array  $arguments Arguments
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslationREST($id, $arguments)
     {
@@ -185,8 +165,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * @param array  $args   Substitute arguments
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processSubstitute($string, array $args)
     {
@@ -204,8 +182,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Get translation driver
      *
      * @return \XLite\Core\TranslationDriver\ATranslationDriver
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDriver()
     {
@@ -220,8 +196,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Define translation driver
      *
      * @return \XLite\Core\TranslationDriver\ATranslationDriver
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineDriver()
     {

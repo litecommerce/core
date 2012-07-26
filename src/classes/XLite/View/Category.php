@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Category widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center", zone="customer")
  */
@@ -46,8 +42,6 @@ class Category extends \XLite\View\AView
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -62,8 +56,6 @@ class Category extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -74,8 +66,6 @@ class Category extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -86,8 +76,6 @@ class Category extends \XLite\View\AView
      * Return description with postprocessing WEB LC root constant
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDescription()
     {
@@ -102,8 +90,6 @@ class Category extends \XLite\View\AView
      * Register tags to be replaced with some URLs
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWebPreprocessingTags()
     {
@@ -116,8 +102,6 @@ class Category extends \XLite\View\AView
      * Register URLs that should be given instead of tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWebPreprocessingURL()
     {

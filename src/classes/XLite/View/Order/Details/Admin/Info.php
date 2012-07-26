@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,43 +13,49 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.24
  */
 
 namespace XLite\View\Order\Details\Admin;
 
 /**
- * Orer info 
- * 
- * @see   ____class_see____
- * @since 1.0.24
+ * Order info
+ *
  */
 class Info extends \XLite\View\AView
 {
     /**
      * Shipping modifier (cache)
      *
-     * @var   \XLite\Model\Order\Modifier
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order\Modifier
      */
     protected $shippingModifier;
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'order/page/info.js';
+
+        return $list;
+    }
 
     /**
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -64,8 +70,6 @@ class Info extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -78,8 +82,6 @@ class Info extends \XLite\View\AView
      * Get shipping modifier
      *
      * @return \XLite\Model\Order\Modifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getShippingModifier()
     {
@@ -92,11 +94,9 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get order formatted creation date 
-     * 
+     * Get order formatted creation date
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getOrderDate()
     {
@@ -104,11 +104,9 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get profile URL 
-     * 
+     * Get profile URL
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getProfileURL()
     {
@@ -120,11 +118,9 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get profile name 
-     * 
+     * Get profile name
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getProfileName()
     {
@@ -139,10 +135,8 @@ class Info extends \XLite\View\AView
 
     /**
      * Check - has profile separate modification page or not
-     * 
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function hasProfilePage()
     {
@@ -154,8 +148,6 @@ class Info extends \XLite\View\AView
      * Get order formatted total
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getOrderTotal()
     {
@@ -163,11 +155,9 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get shipping cost 
-     * 
+     * Get shipping cost
+     *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getShippingCost()
     {
@@ -175,11 +165,9 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get membership 
-     * 
+     * Get membership
+     *
      * @return \XLite\Model\Membership
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getMembership()
     {
@@ -196,8 +184,6 @@ class Info extends \XLite\View\AView
      * Get columns span
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getColumnsSpan()
     {
@@ -208,8 +194,6 @@ class Info extends \XLite\View\AView
      * Get item fescription block columns count
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemDescriptionCount()
     {
@@ -220,8 +204,6 @@ class Info extends \XLite\View\AView
      * Get surcharge totals
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getSurchargeTotals()
     {
@@ -235,8 +217,6 @@ class Info extends \XLite\View\AView
      * @param array  $surcharge Surcharge
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getSurchargeClassName($type, array $surcharge)
     {
@@ -251,8 +231,6 @@ class Info extends \XLite\View\AView
      * @param array $surcharge Surcharge
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function formatSurcharge(array $surcharge)
     {
@@ -261,10 +239,8 @@ class Info extends \XLite\View\AView
 
     /**
      * Check - customer notes block is visible or not
-     * 
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isCustomerNotesVisible()
     {
@@ -273,10 +249,8 @@ class Info extends \XLite\View\AView
 
     /**
      * Get list of actual payment sums (authorized, captured, refunded)
-     * 
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getPaymentTransactionSums()
     {
@@ -285,10 +259,8 @@ class Info extends \XLite\View\AView
 
     /**
      * Returns true if order has payment transaction sums greater than zero
-     * 
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function hasPaymentTransactionSums()
     {

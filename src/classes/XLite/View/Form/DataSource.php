@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.17
  */
 
 namespace XLite\View\Form;
@@ -30,8 +28,6 @@ namespace XLite\View\Form;
 /**
  * Ecwid data source form
  *
- * @see   ____class_see____
- * @since 1.0.17
  */
 class DataSource extends \XLite\View\Form\AForm
 {
@@ -39,8 +35,6 @@ class DataSource extends \XLite\View\Form\AForm
      * Get default target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultTarget()
     {
@@ -51,8 +45,6 @@ class DataSource extends \XLite\View\Form\AForm
      * Get default action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultAction()
     {
@@ -63,8 +55,6 @@ class DataSource extends \XLite\View\Form\AForm
      * getDefaultClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultClassName()
     {

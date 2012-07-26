@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Shipping\Processor;
@@ -30,8 +28,6 @@ namespace XLite\Model\Shipping\Processor;
 /**
  * Shipping processor model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Offline extends \XLite\Model\Shipping\Processor\AProcessor
 {
@@ -43,9 +39,7 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     /**
      * Unique processor Id
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $processorId = 'offline';
 
@@ -53,8 +47,6 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * getProcessorName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProcessorName()
     {
@@ -65,8 +57,6 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * Enable admin to remove offline shipping methods
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMethodDeleteEnabled()
     {
@@ -80,8 +70,6 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache (not used in offline processor) OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRates($modifier, $ignoreCache = false)
     {
@@ -115,8 +103,6 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * Returns true if shipping methods named may be modified by admin
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMethodNamesAdjustable()
     {

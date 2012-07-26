@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\AmazonS3Images\Model\Repo\Base;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\Model\Repo\Base;
 /**
  * Image abstract repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -41,8 +37,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * Get managed image repositories 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public static function getManagedRepositories()
     {
@@ -56,8 +50,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * Count S3 images 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function countS3Images()
     {
@@ -68,8 +60,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * Count non-S3 images
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function countNoS3Images()
     {
@@ -82,8 +72,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * @param integer $limit Limit OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function findS3Images($limit = null)
     {
@@ -96,8 +84,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * @param integer $limit Limit OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function findNoS3Images($limit = null)
     {
@@ -108,8 +94,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * Define query for countS3Images() method
      * 
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineCountS3ImagesQuery()
     {
@@ -124,8 +108,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * Define query for countNoS3Images() method
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineCountNoS3ImagesQuery()
     {
@@ -142,8 +124,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * @param integer $limit Limit
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineFindS3ImagesQuery($limit)
     {
@@ -164,8 +144,6 @@ abstract class Image extends \XLite\Model\Repo\Base\Image implements \XLite\Base
      * @param integer $limit Limit
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineFindNoS3ImagesQuery($limit)
     {

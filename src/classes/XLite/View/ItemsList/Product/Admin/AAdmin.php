@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Admin;
@@ -30,8 +28,6 @@ namespace XLite\View\ItemsList\Product\Admin;
 /**
  * AAdmin
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
 {
@@ -39,8 +35,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -51,8 +45,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * getDisplayMode
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -63,8 +55,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * getDisplayStyle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getChangeabilityType()
     {
@@ -75,8 +65,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * getDisplayStyle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayStyle()
     {
@@ -87,8 +75,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

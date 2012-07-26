@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Form\Profiles;
@@ -30,8 +28,6 @@ namespace XLite\View\Form\Profiles;
 /**
  * \XLite\View\Form\Profiles\ProfilesList
  *
- * @see   ____class_see____
- * @since 1.0.4
  */
 class ProfilesList extends \XLite\View\Form\Profiles\AProfiles
 {
@@ -40,8 +36,6 @@ class ProfilesList extends \XLite\View\Form\Profiles\AProfiles
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.4
      */
     protected function getDefaultTarget()
     {
@@ -52,8 +46,6 @@ class ProfilesList extends \XLite\View\Form\Profiles\AProfiles
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.4
      */
     protected function getDefaultAction()
     {

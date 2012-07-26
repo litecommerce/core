@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Upgrade;
@@ -30,8 +28,6 @@ namespace XLite\Upgrade;
 /**
  * Logger 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Logger extends \XLite\Base\Singleton
 {
@@ -39,8 +35,6 @@ class Logger extends \XLite\Base\Singleton
      * Clear log file
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clear()
     {
@@ -51,8 +45,6 @@ class Logger extends \XLite\Base\Singleton
      * Return log file name
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLogFile()
     {
@@ -63,8 +55,6 @@ class Logger extends \XLite\Base\Singleton
      * Return link to view the log file
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLogURL()
     {
@@ -79,8 +69,6 @@ class Logger extends \XLite\Base\Singleton
      * @param boolean $showTopMessage Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logInfo($message, array $args = array(), $showTopMessage = false)
     {
@@ -95,8 +83,6 @@ class Logger extends \XLite\Base\Singleton
      * @param boolean $showTopMessage Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logWarning($message, array $args = array(), $showTopMessage = false)
     {
@@ -111,8 +97,6 @@ class Logger extends \XLite\Base\Singleton
      * @param boolean $showTopMessage Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logError($message, array $args = array(), $showTopMessage = false)
     {
@@ -128,8 +112,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string  $topMessageType \XLite\Core\TopMessage class constant OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function log($message, array $args = array(), $showTopMessage = false, $topMessageType = null)
     {
@@ -148,8 +130,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $message Message text
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function write($message)
     {
@@ -162,8 +142,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $type Prefix type
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPrefix($type)
     {
@@ -176,8 +154,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $message Message text
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTopMessage($message)
     {

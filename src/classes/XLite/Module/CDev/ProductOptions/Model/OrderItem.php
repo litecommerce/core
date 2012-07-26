@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -30,17 +28,13 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 /**
  * Order item
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     /**
      * Item options
      *
-     * @var   \Doctrine\ORM\PersistentCollection|array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\ORM\PersistentCollection|array
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\ProductOptions\Model\OrderItemOption", mappedBy="order_item", cascade={"all"})
      * @OrderBy   ({"orderby"="ASC", "option_id"="ASC"})
@@ -52,8 +46,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * This key is used when checking if item is unique in the cart
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getKey()
     {
@@ -64,8 +56,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Clone item object.
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -91,8 +81,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Check - has item product options or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasOptions()
     {
@@ -105,8 +93,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @param array $options Options (prepared, from request)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setProductOptions(array $options)
     {
@@ -161,8 +147,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * TODO - remove
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProductOptions()
     {
@@ -173,8 +157,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Count item product options
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function countProductOptions()
     {
@@ -185,8 +167,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Get price
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     /*
     public function getPrice()
@@ -210,8 +190,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Get weight
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWeight()
     {
@@ -233,8 +211,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Get event cell base information
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getEventCell()
     {
@@ -257,8 +233,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Check if item is valid
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isValid()
     {
@@ -282,8 +256,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -297,8 +269,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Return hash of the options names/values
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSerializedOptions()
     {

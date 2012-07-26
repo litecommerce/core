@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.23
  */
 
 namespace XLite\Core\EventListener\Base;
@@ -30,17 +28,13 @@ namespace XLite\Core\EventListener\Base;
 /**
  * Abstract countable task
  * 
- * @see   ____class_see____
- * @since 1.0.23
  */
 abstract class Countable extends \XLite\Core\EventListener\AEventListener
 {
     /**
      * Event record 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.23
+     * @var array
      */
     protected $record;
 
@@ -48,8 +42,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Get event name 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     abstract protected function getEventName();
 
@@ -57,8 +49,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Get length 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     abstract protected function getLength();
 
@@ -66,8 +56,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Get items 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     abstract protected function getItems();
 
@@ -77,8 +65,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * @param mixed $item Item
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     abstract protected function processItem($item);
 
@@ -89,8 +75,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * @param array  $arguments Event arguments OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function handleEvent($name, array $arguments)
     {
@@ -124,8 +108,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Initialize step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function initializeStep()
     {
@@ -138,8 +120,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Check step valid state
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function isStepValid()
     {
@@ -150,8 +130,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Start step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function startStep()
     {
@@ -164,8 +142,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Run current step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function runCurrentStep()
     {
@@ -182,8 +158,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Finish step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function finishStep()
     {
@@ -198,8 +172,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Finish task 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function finishTask()
     {

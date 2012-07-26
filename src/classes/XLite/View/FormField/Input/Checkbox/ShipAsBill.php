@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input\Checkbox;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Input\Checkbox;
 /**
  * \XLite\View\FormField\Input\Checkbox\ShipAsBill
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
 {
@@ -39,8 +35,6 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      * Return a value for the "id" attribute of the field input tag
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldId()
     {
@@ -51,8 +45,6 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -67,8 +59,6 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      * getDefaultValue
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultValue()
     {
@@ -79,8 +69,6 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -91,8 +79,6 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -103,8 +89,6 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      * Determines if checkbox is checked
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isChecked()
     {

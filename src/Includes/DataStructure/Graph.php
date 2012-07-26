@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\DataStructure;
@@ -30,8 +28,6 @@ namespace Includes\DataStructure;
 /**
  * Graph 
  *
- * @see   ____class_see____
- * @since 1.0.10
  */
 class Graph
 {
@@ -43,18 +39,14 @@ class Graph
     /**
      * Node unique key
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $key;
 
     /**
      * Node children
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $children = array();
 
@@ -66,8 +58,6 @@ class Graph
      * @param string $key Node unique key OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($key = self::ROOT_NODE_KEY)
     {
@@ -78,8 +68,6 @@ class Graph
      * Getter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getKey()
     {
@@ -90,8 +78,6 @@ class Graph
      * Getter
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getChildren()
     {
@@ -104,8 +90,6 @@ class Graph
      * @param string $key Key to check OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function isRoot($key = null)
     {
@@ -122,8 +106,6 @@ class Graph
      * @param self $node Node to add
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addChild(self $node)
     {
@@ -136,8 +118,6 @@ class Graph
      * @param self $node Node to remove
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function removeChild(self $node)
     {
@@ -157,8 +137,6 @@ class Graph
      * @param string $key Key to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setKey($key)
     {
@@ -172,8 +150,6 @@ class Graph
      * @param self $newParent Replant to
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function replant(self $oldParent, self $newParent)
     {
@@ -194,8 +170,6 @@ class Graph
      * @param boolean  $isStarted Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function walkThrough($callback, $invert = false, self $parent = null, $isStarted = false)
     {
@@ -221,8 +195,6 @@ class Graph
      * @param string $key Key to search OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAll($key = null)
     {
@@ -245,8 +217,6 @@ class Graph
      * @param string $key Key to search
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function find($key)
     {
@@ -261,8 +231,6 @@ class Graph
      * Check graph integrity
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkIntegrity()
     {
@@ -279,8 +247,6 @@ class Graph
      * @param self   $node Node  Node caused the error OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleError($code, self $node = null)
     {
@@ -294,8 +260,6 @@ class Graph
      * @param self   $node Node  Node caused the error OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareErrorMessage($code, self $node = null)
     {
@@ -313,8 +277,6 @@ class Graph
      * @param integer $offset Level offset OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function draw(self $root = null, $offset = 0)
     {
@@ -340,8 +302,6 @@ class Graph
      * @param self $node Current node
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function drawAdditional(self $node)
     {

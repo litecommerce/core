@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.10
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Import-export controller
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 class ImportExport extends \XLite\Controller\Admin\AAdmin
 {
@@ -57,45 +53,35 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     /**
      * FIXME- backward compatibility
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'page');
 
     /**
      * Columns information
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var array
      */
     protected $columns;
 
     /**
      * File pointer 
      * 
-     * @var   resource
-     * @see   ____var_see____
-     * @since 1.0.10
+     * @var resource
      */
     protected $filePointer;
 
     /**
      * Export id 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var string
      */
     protected $exportId;
 
     /**
      * Import cell 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.11
+     * @var array
      */
     protected $importCell;
 
@@ -103,8 +89,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -117,8 +101,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -133,8 +115,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {
@@ -153,8 +133,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -198,8 +176,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Define product columns 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function defineProductColumns()
     {
@@ -225,8 +201,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Define calculated columns 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function defineCalculatedColumns()
     {
@@ -267,8 +241,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Export action
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function doActionExport()
     {
@@ -290,8 +262,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Start export 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function startExport()
     {
@@ -310,8 +280,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Finish export 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function finishExport()
     {
@@ -323,8 +291,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Export file header 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function exportHeader()
     {
@@ -337,8 +303,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Product $product Product
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function exportProduct(\XLite\Model\Product $product)
     {
@@ -371,8 +335,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array $row Row data
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function assembleExportRow(array $row)
     {
@@ -385,8 +347,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param mixed $data Data
      *
      * @return string Y or N
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function exportByBoolean($data)
     {
@@ -399,8 +359,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param integer $date Date as UNIX timestamp
      *  
      * @return string RFC 2822 formatted date
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function exportByDate($date)
     {
@@ -413,8 +371,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Product $product Product
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function exportCategories(\XLite\Model\Product $product)
     {
@@ -433,8 +389,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Product $product Product
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function exportImages(\XLite\Model\Product $product)
     {
@@ -470,8 +424,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param string               $name    $cell name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function exportInventory(\XLite\Model\Product $product, $name)
     {
@@ -491,8 +443,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Product $product Product
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function exportClasses(\XLite\Model\Product $product)
     {
@@ -513,8 +463,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Ge loaded status
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isImportFileLoaded()
     {
@@ -525,8 +473,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Run controller
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function run()
     {
@@ -541,8 +487,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Import step
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function doActionImport()
     {
@@ -587,8 +531,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Get import cell 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getImportCell()
     {
@@ -625,8 +567,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Process import step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function processImportStep()
     {
@@ -754,8 +694,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Start import step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function startImportStep()
     {
@@ -794,8 +732,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array $row Row
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function assembleImportRow(array $row)
     {
@@ -817,8 +753,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array $list Row
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function checkRequiredImportFields(array $list)
     {
@@ -848,8 +782,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array                $list    Row data
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function importRow(\XLite\Model\Product $product, array $list)
     {
@@ -887,8 +819,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * Clear import cell 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function clearImportCell()
     {
@@ -911,8 +841,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array $list Row data
      *  
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getProduct(array $list)
     {
@@ -947,8 +875,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Product $product  Product OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function logImportWarning(
         $message,
@@ -993,8 +919,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array  $info Column info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function decodeByString($data, array $info)
     {
@@ -1017,8 +941,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array  $info Column info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function decodeByFloat($data, array $info)
     {
@@ -1032,8 +954,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array  $info Column info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function decodeByInteger($data, array $info)
     {
@@ -1047,8 +967,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array  $info Column info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function decodeByBoolean($data, array $info)
     {
@@ -1070,8 +988,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param array  $info Column info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function decodeByDate($data, array $info)
     {
@@ -1090,8 +1006,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param string               $data    Data
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function importCategories(\XLite\Model\Product $product, $data)
     {
@@ -1170,8 +1084,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param string               $data    Data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function importImages(\XLite\Model\Product $product, $data)
     {
@@ -1247,8 +1159,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param string               $name    Cell name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function importInventory(\XLite\Model\Product $product, $data, $name)
     {
@@ -1271,8 +1181,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param string               $data    Data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function importClasses(\XLite\Model\Product $product, $data)
     {

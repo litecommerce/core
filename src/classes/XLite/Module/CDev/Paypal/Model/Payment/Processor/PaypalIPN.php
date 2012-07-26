@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.1.0
  */
 
 namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 /**
  * Paypal IPN processor (helper class)
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class PaypalIPN extends \XLite\Base\Singleton
 {
@@ -47,8 +43,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Return true if received callback request is Paypal IPN 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function isCallbackIPN()
     {
@@ -62,8 +56,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * @param \XLite\Model\Payment\Base\Processor $processor   Payment processor object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processCallbackIPN($transaction, $processor)
     {
@@ -205,20 +197,87 @@ class PaypalIPN extends \XLite\Base\Singleton
                 // No default actions
         }
 
-        $transaction->setStatus($status);
+        if ($transaction->getStatus() != $status) {
+           $transaction->setStatus($status);
+           $transaction->registerTransactionInOrderHistory('callback, IPN');
+        }
 
         if (isset($backendTransactionStatus)) {
-            $backendTransaction->setStatus($backendTransactionStatus);
+
+            if ($backendTransaction->getStatus() != $backendTransactionStatus) {
+                $backendTransaction->setStatus($backendTransactionStatus);
+                $backendTransaction->registerTransactionInOrderHistory('callback, IPN');
+            }
+
             $processor->updateInitialBackendTransaction($transaction, $status);
+
+        } elseif (!empty($request->parent_txn_id)) {
+            \XLite\Core\OrderHistory::getInstance()->registerTransaction(
+                $transaction->getOrder()->getOrderId(),
+                sprintf(
+                    'IPN received [method: %s, amount: %s, payment status: %s]',
+                    $transaction->getPaymentMethod()->getName(),
+                    $request->transaction_entity,
+                    $request->mc_gross,
+                    $request->payment_status
+                ),
+                $this->getRequestData(),
+                'Note: received IPN does not relate to any backend transaction registered with the order. It is possible if you update payment directly on Paypal site or if your customer or Paypal updated the payment.'
+            );
         }
+    }
+
+    /**
+     * getRequestData 
+     * 
+     * @return array
+     */
+    protected function getRequestData()
+    {
+        $result = array();
+
+        foreach ($this->defineSavedData() as $key => $name) {
+            if (isset(\XLite\Core\Request::getInstance()->$key)) {
+                $result = array(
+                    'name'  => $name,
+                    'value' => \XLite\Core\Request::getInstance()->$key
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Define saved into transaction data schema
+     *
+     * @return array
+     */
+    protected function defineSavedData()
+    {
+        return array(
+            'secureid'       => 'Transaction id',
+            'mc_gross'       => 'Payment amount',
+            'payment_type'   => 'Payment type',
+            'payment_status' => 'Payment status',
+            'pending_reason' => 'Pending reason',
+            'reason_code'    => 'Reason code',
+            'mc_currency'    => 'Payment currency',
+            'auth_id'        => 'Authorization ID',
+            'auth_status'    => 'Status of authorization',
+            'auth_exp'       => 'Authorization expiration date and time',
+            'auth_amount'    => 'Authorization amount',
+            'payer_id'       => 'Unique customer ID',
+            'payer_email'    => 'Customer\'s primary email address',
+            'txn_id'         => 'Original transaction ID',
+            'parent_txn_id'  => 'Parent transaction ID'
+        );
     }
 
     /**
      * Return URL for IPN verification transaction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getIPNURL()
     {
@@ -229,8 +288,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Get IPN verification status
      *
      * @return boolean TRUE if verification status is received
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getIPNVerification()
     {
@@ -257,8 +314,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Get redirect form URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getFormURL()
     {
@@ -271,8 +326,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Return TRUE if the test mode is ON
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function isTestMode()
     {

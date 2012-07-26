@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Decorator\DataStructure\Graph;
@@ -30,44 +28,34 @@ namespace Includes\Decorator\DataStructure\Graph;
 /**
  * Classes
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Classes extends \Includes\DataStructure\Graph
 {
     /**
      * Reflection object
      *
-     * @var   \ReflectionClass
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \ReflectionClass
      */
     protected $reflection;
 
     /**
      * Flag for so called "low-level" nodes
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isLowLevelNode;
 
     /**
      * Flag for so called "top-level" stub nodes
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isTopLevelNode;
 
     /**
      * Flag to determine if node was changed (e.g. its key was modified)
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isChanged = false;
 
@@ -79,8 +67,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $node Node to add
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addChild(self $node)
     {
@@ -93,8 +79,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getClass()
     {
@@ -105,8 +89,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Getter for the flag
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLowLevelNode()
     {
@@ -117,8 +99,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Getter for the flag
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isTopLevelNode()
     {
@@ -129,8 +109,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return name of parent class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getParentClass()
     {
@@ -143,8 +121,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $class Class name to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function setParentClass($class)
     {
@@ -155,8 +131,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return list of class implementing interfaces
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInterfaces()
     {
@@ -169,8 +143,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $interface Name of interface to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isImplements($interface)
     {
@@ -181,8 +153,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Check if class decorates another one
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDecorator()
     {
@@ -193,8 +163,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return name of the module where the class defined
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModuleName()
     {
@@ -205,8 +173,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return top-level child
      *
      * @return self
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTopLevelNode()
     {
@@ -224,8 +190,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param boolean $setFlag Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setKey($key, $setFlag = false)
     {
@@ -246,8 +210,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Mark node as "low-level"
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setLowLevelNodeFlag()
     {
@@ -258,8 +220,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Mark node as "top-level"
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setTopLevelNodeFlag()
     {
@@ -277,8 +237,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $dir   Dir to file OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFile($class = null, $dir = LC_DIR_CACHE_CLASSES)
     {
@@ -291,8 +249,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $class Class name OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPath($class = null)
     {
@@ -305,8 +261,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSource(self $parent = null)
     {
@@ -323,8 +277,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param boolean $asTags  Flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function addLinesToDocBlock(array $lines, $replace = false, $asTags = true)
     {
@@ -363,8 +315,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param boolean $asTags Flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function removeLinesFromDocBlock(array $lines, $asTags = true)
     {
@@ -381,8 +331,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getActualSource(self $parent = null)
     {
@@ -402,8 +350,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getEmptySource(self $parent = null)
     {
@@ -422,8 +368,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return source code for regular node
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRegularSource()
     {
@@ -436,8 +380,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Node to get class name OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getActualParentClassName(self $parent = null)
     {
@@ -448,8 +390,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return namespace by class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getActualNamespace()
     {
@@ -462,8 +402,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return base part of the class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClassBaseName()
     {
@@ -476,8 +414,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Parse class name into parts
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClassNameParts()
     {
@@ -497,8 +433,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTag($name, $forceTokenizer = false)
     {
@@ -512,8 +446,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param array  $value Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function setTag($name, array $value)
     {
@@ -528,8 +460,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTags($forceTokenizer = false)
     {
@@ -552,8 +482,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param boolean $reversible Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function clearTags($reversible = false)
     {
@@ -570,8 +498,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
      *
      * @return \ReflectionClass
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReflection($forceTokenizer = false)
     {
@@ -616,8 +542,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $class Class name to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareClassName($class)
     {
@@ -630,8 +554,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $node Current node
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function drawAdditional(self $node)
     {
@@ -650,8 +572,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $class New class name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function moveClassFile($class)
     {

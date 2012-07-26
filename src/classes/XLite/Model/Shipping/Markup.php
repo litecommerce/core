@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Shipping;
@@ -30,8 +28,6 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping markup model
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Markup")
  * @Table (name="shipping_markups",
@@ -52,9 +48,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * A unique ID of the markup
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -65,9 +59,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup condition: min weight of products in the order
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -76,9 +68,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup condition: max weight of products in the order
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -87,9 +77,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup condition: min order subtotal
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -98,9 +86,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup condition: max order subtotal
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -109,9 +95,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup condition: min product items in the order
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -120,9 +104,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup condition: max product items in the order
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -131,9 +113,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup value: flat rate value
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -142,9 +122,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup value: percent value
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=4, scale=2)
      */
@@ -153,9 +131,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup value: flat rate value per product item
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -164,9 +140,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Markup value: flat rate value per weight unit
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -175,9 +149,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Shipping method (relation)
      *
-     * @var   \XLite\Model\Shipping\Method
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Shipping\Method
      *
      * @ManyToOne  (targetEntity="XLite\Model\Shipping\Method", inversedBy="shipping_markups")
      * @JoinColumn (name="method_id", referencedColumnName="method_id")
@@ -187,9 +159,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Zone (relation)
      *
-     * @var   \XLite\Model\Zone
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Zone
      *
      * @ManyToOne  (targetEntity="XLite\Model\Zone", inversedBy="shipping_markups")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
@@ -199,9 +169,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Calculated markup value
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      */
     protected $markupValue = 0;
 
@@ -209,8 +177,6 @@ class Markup extends \XLite\Model\AEntity
      * getMarkupValue
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMarkupValue()
     {
@@ -223,8 +189,6 @@ class Markup extends \XLite\Model\AEntity
      * @param integer $value Markup value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setMarkupValue($value)
     {

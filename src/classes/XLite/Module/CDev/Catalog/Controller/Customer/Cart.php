@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Catalog\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Catalog\Controller\Customer;
 /**
  * Cart
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
@@ -40,8 +36,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * Parses the request variables if necessary. Attempts to call the specified action function
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {

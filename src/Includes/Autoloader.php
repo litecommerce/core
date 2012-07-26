@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes;
@@ -30,17 +28,13 @@ namespace Includes;
 /**
  * Autoloader
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Autoloader
 {
     /**
      * List of registered autoload functions
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $functions = array(
         '__lc_autoload',
@@ -50,10 +44,7 @@ abstract class Autoloader
     /**
      * The directory where LC classes are located
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var string
      */
     protected static $lcAutoloadDir = LC_DIR_CACHE_CLASSES;
 
@@ -63,8 +54,6 @@ abstract class Autoloader
      * @param string $class name of the class to load
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function __lc_autoload($class)
     {
@@ -96,8 +85,6 @@ abstract class Autoloader
      * @param string $class name of the class to load
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function __lc_autoload_includes($class)
     {
@@ -114,8 +101,6 @@ abstract class Autoloader
      * @param string $method function name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function addFunction($method)
     {
@@ -132,8 +117,6 @@ abstract class Autoloader
      * Register autoload functions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function registerAll()
     {
@@ -152,8 +135,6 @@ abstract class Autoloader
      * Register the autoload function for the Doctrine library
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function registerDoctrineAutoloader()
     {
@@ -174,8 +155,6 @@ abstract class Autoloader
      * Autoloader for PEAR2
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function registerPEARAutolader()
     {
@@ -188,8 +167,6 @@ abstract class Autoloader
      * @param string $dir New autoload directory
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function switchLCAutoloadDir()
     {
@@ -200,8 +177,6 @@ abstract class Autoloader
      * Return path ot the autoloader current dir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getLCAutoloadDir()
     {

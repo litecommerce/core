@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.17
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Money modificator
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="money_modificators")
@@ -41,9 +37,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * ID 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -54,9 +48,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Class name
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string")
      */
@@ -65,9 +57,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Method-modificator 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -76,9 +66,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Method-validator 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -87,9 +75,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Position 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -98,9 +84,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Behavior limitation
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -109,9 +93,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Purpose limitation
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -127,8 +109,6 @@ class MoneyModificator extends \XLite\Model\AEntity
      * @param string               $purpose   Purpose
      *  
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function apply($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {

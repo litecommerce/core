@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.19
  */
 
 namespace XLite\Model\Repo;
@@ -30,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Temporary variables repository
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class TmpVar extends \XLite\Model\Repo\ARepo
 {
@@ -47,8 +43,6 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      * @param mixed  $value Variable value
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function setVar($name, $value)
     {
@@ -75,8 +69,6 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      * @param string $name Variable name
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getVar($name)
     {
@@ -102,8 +94,6 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      * @param string $name Event task name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function initializeEventState($name)
     {
@@ -116,8 +106,6 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      * @param string $name Event task name
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function getEventState($name)
     {
@@ -131,8 +119,6 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      * @param array  $rec  Event task state
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function setEventState($name, array $rec)
     {
@@ -145,8 +131,6 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      * @param string $name Event task name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function removeEventState($name)
     {
@@ -163,8 +147,6 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      * @param string $name Event task name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function isFinishedEventState($name)
     {
@@ -180,8 +162,6 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      * @param string $name Event task name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function getEventStatePercent($name)
     {

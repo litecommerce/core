@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View;
@@ -30,17 +28,13 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 /**
  * Abstract widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     /**
      * Relative path from web directory path to the XLite web directory
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected static $drupalRelativePath = null;
 
@@ -52,8 +46,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param string $path Absolute resource path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function modifyResourcePath($path)
     {
@@ -66,8 +58,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param string $path Path to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function prepareBasePath($path)
     {
@@ -80,8 +70,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Return relative path from web directory path to the XLite web directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDrupalRelativePath()
     {
@@ -115,8 +103,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -134,8 +120,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Return theme common files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getThemeFiles()
     {
@@ -154,8 +138,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param string $interface Interface OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function prepareResource(array $data, $interface = null)
     {

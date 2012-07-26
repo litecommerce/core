@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,26 +28,20 @@ namespace XLite\Model\Repo;
 /**
  * Zone repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Zone extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SECONDARY;
 
     /**
      * Alternative record identifiers
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $alternativeIdentifier = array(
         array('zone_name'),
@@ -61,8 +53,6 @@ class Zone extends \XLite\Model\Repo\ARepo
      * Define cache cells
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -92,8 +82,6 @@ class Zone extends \XLite\Model\Repo\ARepo
      * findAllZones
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllZones()
     {
@@ -111,8 +99,6 @@ class Zone extends \XLite\Model\Repo\ARepo
      * defineGetZones
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindAllZones()
     {
@@ -133,8 +119,6 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @param integer $zoneId Zone Id
      *
      * @return \XLite\Model\Zone
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findZone($zoneId)
     {
@@ -157,8 +141,6 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @param mixed $zoneId ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindZone($zoneId)
     {
@@ -179,8 +161,6 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @param array $address Address data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findApplicableZones($address)
     {
@@ -218,8 +198,6 @@ class Zone extends \XLite\Model\Repo\ARepo
      * Return default zone
      *
      * @return \XLite\Model\Zone
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultZone()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Customer;
@@ -30,8 +28,6 @@ namespace XLite\View\ItemsList\Product\Customer;
 /**
  * ACustomer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 {
@@ -101,9 +97,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Widget types
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $widgetTypes = array(
         self::WIDGET_TYPE_SIDEBAR  => 'Sidebar',
@@ -115,8 +109,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -130,8 +122,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get display modes for sidebar widget type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getSidebarDisplayModes()
     {
@@ -146,8 +136,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get display modes for center widget type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getCenterDisplayModes()
     {
@@ -162,8 +150,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get icon sizes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getIconSizes()
     {
@@ -182,8 +168,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function __construct(array $params = array())
     {
@@ -207,8 +191,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param array $params Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -254,8 +236,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -273,8 +253,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -287,8 +265,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProductCellClass($product)
     {
@@ -303,8 +279,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -319,8 +293,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -331,8 +303,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -343,8 +313,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -379,8 +347,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get display modes
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayModes()
     {
@@ -393,8 +359,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return 'OrderBy' parameter
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.6
      */
     protected function getOrderBy()
     {
@@ -413,8 +377,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * getSortByModeDefault
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -425,8 +387,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -441,8 +401,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param array $params Params to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkSideBarParams(array $params)
     {
@@ -453,8 +411,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return dir which contains the page body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -465,8 +421,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Check - current widget type is sidebar
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSidebar()
     {
@@ -477,8 +431,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Check if pager control row is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPagerVisible()
     {
@@ -491,8 +443,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * isDisplayModeSelectorVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisplayModeSelectorVisible()
     {
@@ -503,8 +453,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * isSortBySelectorVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSortBySelectorVisible()
     {
@@ -515,8 +463,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * isHeaderVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isHeaderVisible()
     {
@@ -527,8 +473,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * getDisplayMode
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -541,8 +485,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param string $displayMode Value to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisplayModeSelected($displayMode)
     {
@@ -556,8 +498,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param string $displayMode Display mode
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayModeLinkClassName($displayMode)
     {
@@ -584,8 +524,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return products split into rows
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProductRows()
     {
@@ -605,8 +543,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get grid columns range
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getGridColumnsRange()
     {
@@ -622,8 +558,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Check whether a CSS layout should be used for "Grid" mode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCSSLayout()
     {
@@ -634,8 +568,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * getPageBodyFile
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyFile()
     {
@@ -653,8 +585,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * getSidebarMaxItems
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSidebarMaxItems()
     {
@@ -665,8 +595,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get products list for sidebar widget
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSideBarData()
     {
@@ -680,8 +608,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param integer $count List length
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAdditionalItemClass($i, $count)
     {
@@ -706,8 +632,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get grid item width (percent)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getGridItemWidth()
     {
@@ -718,8 +642,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return the maximal icon width
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIconWidth()
     {
@@ -730,8 +652,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return the maximal icon height
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIconHeight()
     {
@@ -742,8 +662,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get table columns count
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTableColumnsCount()
     {
@@ -754,8 +672,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Check status of 'More...' link for sidebar list
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isShowMoreLink()
     {
@@ -766,8 +682,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get 'More...' link URL for sidebar list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMoreLinkURL()
     {
@@ -778,8 +692,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get 'More...' link text for sidebar list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMoreLinkText()
     {
@@ -791,8 +703,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * TODO: check if there is a more convinient way to do that
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPopupCSS()
     {
@@ -809,8 +719,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * TODO: check if there is a more convinient way to do that
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPopupJS()
     {
@@ -828,8 +736,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isProductAdded(\XLite\Model\Product $product)
     {
@@ -842,8 +748,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getLabels(\XLite\Model\Product $product)
     {

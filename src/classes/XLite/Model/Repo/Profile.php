@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * The Profile model repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Model\Repo\ARepo
 {
@@ -68,27 +64,21 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * currentSearchCnd
      *
-     * @var   \XLite\Core\CommonCell
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\CommonCell
      */
     protected $currentSearchCnd = null;
 
     /**
      * Password characters list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $chars = array(
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -107,8 +97,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param boolean                $countOnly Flag: return items list or only items count OPTIONAL
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -136,8 +124,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param array $fields CMS identifiers
      *
      * @return \XLite\Model\Profile|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByCMSId(array $fields)
     {
@@ -150,8 +136,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param string $login User's login
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByLogin($login)
     {
@@ -166,8 +150,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param integer $orderId  Order ID related to the profile OPTIONAL
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByLoginPassword($login, $password = null, $orderId = 0)
     {
@@ -178,8 +160,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Find recently logged in administrators
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findRecentAdmins()
     {
@@ -192,8 +172,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Profile $profile Profile object
      *
      * @return \XLite\Model\Profile|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findUserWithSameLogin(\XLite\Model\Profile $profile)
     {
@@ -204,8 +182,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Find the count of administrator accounts
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findCountOfAdminAccounts()
     {
@@ -219,8 +195,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
      *
      * @return \XLite\Model\AEntity|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -245,8 +219,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Generate password
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function generatePassword()
     {
@@ -266,8 +238,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Preprocess condition. Order id must be placed into condition in any case.
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function preprocessCnd(\XLite\Core\CommonCell $cnd)
     {
@@ -282,8 +252,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Return list of handling search params
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHandlingSearchParams()
     {
@@ -314,8 +282,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param string $param Name of param to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSearchParamHasHandler($param)
     {
@@ -330,8 +296,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
@@ -351,8 +315,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * List of fields to use in search by substring
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getNameSubstringSearchFields()
     {
@@ -367,8 +329,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * List of fields to use in search by substring
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAddressSubstringSearchFields()
     {
@@ -390,8 +350,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param string                     $alias        Profile entity alias OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndCommon(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $fieldName, $exactCmp = true, $alias = 'p')
     {
@@ -422,8 +380,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndProfileId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -437,8 +393,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -461,8 +415,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndReferer(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -476,8 +428,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndMembership(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -506,8 +456,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndRoles(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -538,8 +486,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndPermissions(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -562,8 +508,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndLanguage(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -577,8 +521,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndPattern(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -602,8 +544,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndPhone(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -617,8 +557,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndCountry(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -632,8 +570,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndState(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -647,8 +583,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function prepareCndCustomState(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -662,8 +596,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndAddress(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -687,8 +619,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndUserType(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -714,8 +644,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndDateType(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -738,8 +666,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * :FIXME: simplify
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDateRange()
     {
@@ -812,8 +738,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -829,8 +753,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -841,8 +763,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Define query for findRecentAdmins() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindRecentAdminsQuery()
     {
@@ -860,8 +780,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Profile $profile Profile object
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindUserWithSameLoginQuery(\XLite\Model\Profile $profile)
     {
@@ -889,8 +807,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Define query for findCountOfAdminAccounts()
      *
      * @return \Doctrine\ORM\PersistentCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindCountOfAdminAccountsQuery()
     {
@@ -907,8 +823,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Define query for findOneByCMSId()
      *
      * @return \Doctrine\ORM\PersistentCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindOneByCMSIdQuery(array $fields)
     {
@@ -933,8 +847,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param integer $orderId  Order ID related to the profile OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindByLoginPasswordQuery($login, $password, $orderId)
     {
@@ -970,8 +882,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param array $data Record
      *
      * @return boolean|array(mixed)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function collectAlternativeIdentifiersByRecord(array $data)
     {
@@ -1000,8 +910,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param array                $parentAssoc Entity mapped propery method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
@@ -1021,8 +929,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Get detailed foreign keys
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDetailedForeignKeys()
     {
@@ -1042,8 +948,6 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param string $login Login
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineOneByRecord($login)
     {

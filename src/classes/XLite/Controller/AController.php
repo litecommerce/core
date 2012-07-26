@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller;
@@ -30,8 +28,6 @@ namespace XLite\Controller;
 /**
  * Abstract controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AController extends \XLite\Core\Handler
 {
@@ -57,27 +53,21 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Object to keep action status
      *
-     * @var   \XLite\Model\ActionError\Abstract
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\ActionError\Abstract
      */
     protected $actionStatus;
 
     /**
      * returnURL
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $returnURL;
 
     /**
      * params
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $params = array('target');
 
@@ -85,36 +75,28 @@ abstract class AController extends \XLite\Core\Handler
      * Validity flag
      * TODO - check where it's really needed
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $valid = true;
 
     /**
      * Hard (main page redict) redirect in AJAX request
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $hardRedirect = false;
 
     /**
      * Internal (into popup ) redirect in AJAX request
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $internalRedirect = false;
 
     /**
      * Popup silence close in AJAX request
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $silenceClose = false;
 
@@ -122,9 +104,7 @@ abstract class AController extends \XLite\Core\Handler
      * Pure action flag in AJAX request
      * Set to true if the client does not require any action
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $pureAction = false;
 
@@ -132,8 +112,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get target by controller class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getTargetByClassName()
     {
@@ -149,8 +127,6 @@ abstract class AController extends \XLite\Core\Handler
      * FIXME: to revise
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPage()
     {
@@ -164,8 +140,6 @@ abstract class AController extends \XLite\Core\Handler
      * getPages
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -176,8 +150,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return list of page templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getPageTemplates()
     {
@@ -194,8 +166,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $exeptions Parameter keys string OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAllParams($exeptions = null)
     {
@@ -217,8 +187,6 @@ abstract class AController extends \XLite\Core\Handler
      * isRedirectNeeded
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isRedirectNeeded()
     {
@@ -229,8 +197,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTarget()
     {
@@ -241,8 +207,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAction()
     {
@@ -258,8 +222,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShopURL($url = '', $secure = null, array $params = array())
     {
@@ -270,8 +232,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get return URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnURL()
     {
@@ -288,8 +248,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $url URL to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setReturnURL($url)
     {
@@ -302,8 +260,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param array $params Query params to use
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setReturnURLParams(array $params)
     {
@@ -315,8 +271,6 @@ abstract class AController extends \XLite\Core\Handler
      * Parses the request variables if necessary. Attempts to call the specified action function
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -342,8 +296,6 @@ abstract class AController extends \XLite\Core\Handler
      * Alias: check for an AJAX request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAJAX()
     {
@@ -354,8 +306,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return Viewer object
      *
      * @return \XLite\View\Controller
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getViewer()
     {
@@ -368,8 +318,6 @@ abstract class AController extends \XLite\Core\Handler
      * Process request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processRequest()
     {
@@ -390,8 +338,6 @@ abstract class AController extends \XLite\Core\Handler
      * FIXME - may be there is a better way to handle this?
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function postprocess()
     {
@@ -401,8 +347,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -413,8 +357,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check whether the title is to be displayed in the content area
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isTitleVisible()
     {
@@ -425,8 +367,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return the page title (for the <title> tag)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPageTitle()
     {
@@ -437,8 +377,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check if an error occured
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isActionError()
     {
@@ -453,8 +391,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param integer $code    Status code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setActionStatus($status, $message = '', $code = 0)
     {
@@ -468,8 +404,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param integer $code    Status code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setActionError($message = '', $code = 0)
     {
@@ -483,8 +417,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param integer $code    Status code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setActionSuccess($message = '', $code = 0)
     {
@@ -496,8 +428,6 @@ abstract class AController extends \XLite\Core\Handler
      * TODO - check where it's really needed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isValid()
     {
@@ -508,8 +438,6 @@ abstract class AController extends \XLite\Core\Handler
      * Initialize controller
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -520,8 +448,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check - is secure connection or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isHTTPS()
     {
@@ -532,8 +458,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get access level
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevel()
     {
@@ -544,8 +468,6 @@ abstract class AController extends \XLite\Core\Handler
      * getProperties
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProperties()
     {
@@ -564,8 +486,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param array $params URL parameters OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURL(array $params = array())
     {
@@ -580,8 +500,6 @@ abstract class AController extends \XLite\Core\Handler
      * getPageTemplate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPageTemplate()
     {
@@ -594,8 +512,6 @@ abstract class AController extends \XLite\Core\Handler
      * tabber is not used in customer area
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTabPages()
     {
@@ -606,8 +522,6 @@ abstract class AController extends \XLite\Core\Handler
      * getUploadedFile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getUploadedFile()
     {
@@ -637,8 +551,6 @@ abstract class AController extends \XLite\Core\Handler
      * checkUploadedFile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkUploadedFile()
     {
@@ -671,8 +583,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get controller charset
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCharset()
     {
@@ -683,8 +593,6 @@ abstract class AController extends \XLite\Core\Handler
      * isSecure
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSecure()
     {
@@ -695,8 +603,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return the reserved ID of root category
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRootCategoryId()
     {
@@ -707,8 +613,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return current category Id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoryId()
     {
@@ -719,8 +623,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get meta description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMetaDescription()
     {
@@ -731,8 +633,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get meta keywords
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getKeywords()
     {
@@ -745,8 +645,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param array $params Form constructor params OPTIONAL
      *
      * @return \XLite\View\Model\AModel|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModelForm(array $params = array())
     {
@@ -769,8 +667,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -781,8 +677,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return default redirect code
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultRedirectCode()
     {
@@ -793,8 +687,6 @@ abstract class AController extends \XLite\Core\Handler
      * Default URL to redirect
      *
      * @return string
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function getDefaultReturnURL()
     {
@@ -807,8 +699,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $url Redirect URL OPTIONAL
      *
      * @return void
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function redirect($url = null)
     {
@@ -840,8 +730,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get redirect mode - force redirect or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRedirectMode()
     {
@@ -852,8 +740,6 @@ abstract class AController extends \XLite\Core\Handler
      * Select template to use
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {
@@ -864,8 +750,6 @@ abstract class AController extends \XLite\Core\Handler
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -880,8 +764,6 @@ abstract class AController extends \XLite\Core\Handler
      * Class name for the \XLite\View\Model\ form (optional)
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -894,8 +776,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $action Performed action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function actionPostprocess($action)
     {
@@ -910,8 +790,6 @@ abstract class AController extends \XLite\Core\Handler
      * Call controller action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callAction()
     {
@@ -935,8 +813,6 @@ abstract class AController extends \XLite\Core\Handler
      * Run controller
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function run()
     {
@@ -952,8 +828,6 @@ abstract class AController extends \XLite\Core\Handler
      * Do redirect
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doRedirect()
     {
@@ -969,8 +843,6 @@ abstract class AController extends \XLite\Core\Handler
      * Translate top messages to HTTP headers (AJAX)
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function translateTopMessagesToHTTPHeaders()
     {
@@ -991,8 +863,6 @@ abstract class AController extends \XLite\Core\Handler
      * Assign AJAX response status to HTTP header(s)
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assignAJAXResponseStatus()
     {
@@ -1031,8 +901,6 @@ abstract class AController extends \XLite\Core\Handler
      * Preprocessor for no-action run
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -1042,8 +910,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check controller visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -1054,8 +920,6 @@ abstract class AController extends \XLite\Core\Handler
      * Display 404 page
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function display404()
     {
@@ -1069,8 +933,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param boolean $flag Internal redirect status OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setInternalRedirect($flag = true)
     {
@@ -1085,8 +947,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param boolean $flag Internal redirect status OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setHardRedirect($flag = true)
     {
@@ -1101,8 +961,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param boolean $flag Silence close status OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setSilenceClose($flag = true)
     {
@@ -1117,8 +975,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param boolean $flag Flag
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setPureAction($flag = false)
     {
@@ -1131,8 +987,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check if current viewer is for an AJAX request
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isAJAXViewer()
     {
@@ -1143,8 +997,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return class of current viewer
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerClass()
     {
@@ -1159,8 +1011,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $output Output
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function printAJAXOuput($output)
     {
@@ -1172,8 +1022,6 @@ abstract class AController extends \XLite\Core\Handler
      * Mark controller run thread as access denied
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function markAsAccessDenied()
     {
@@ -1189,8 +1037,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $contentType Content type OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function startDownload($filename, $contentType = 'application/force-download')
     {
@@ -1203,8 +1049,6 @@ abstract class AController extends \XLite\Core\Handler
      * startImage
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function startImage()
     {
@@ -1216,8 +1060,6 @@ abstract class AController extends \XLite\Core\Handler
      * startDump
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function startDump()
     {
@@ -1238,8 +1080,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param mixed $url ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function filterXliteFormID($url)
     {
@@ -1265,8 +1105,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get viewer parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerParams()
     {
@@ -1293,8 +1131,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get current logged user profile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -1305,8 +1141,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check - need use secure protocol or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function needSecure()
     {
@@ -1320,8 +1154,6 @@ abstract class AController extends \XLite\Core\Handler
      * Redirect to secure protocol
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function redirectToSecure()
     {
@@ -1336,8 +1168,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get current language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrentLanguage()
     {
@@ -1348,8 +1178,6 @@ abstract class AController extends \XLite\Core\Handler
      * Change current language
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function doActionChangeLanguage()
     {

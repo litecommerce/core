@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Model\Currency;
@@ -30,8 +28,6 @@ namespace XLite\View\Model\Currency;
 /**
  * Currency model widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Currency extends \XLite\View\Model\AModel
 {
@@ -43,9 +39,7 @@ class Currency extends \XLite\View\Model\AModel
     /**
      * Schema of the currency section
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $currencySchema = array(
         'trailing_zeroes' => array(
@@ -85,9 +79,7 @@ class Currency extends \XLite\View\Model\AModel
     /**
      * Currency (cache)
      *
-     * @var   \XLite\Model\Currency
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Currency
      */
     protected $currency = null;
 
@@ -95,8 +87,6 @@ class Currency extends \XLite\View\Model\AModel
      * getCurrencySchema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrencySchema()
     {
@@ -121,8 +111,6 @@ class Currency extends \XLite\View\Model\AModel
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFormFieldsForSectionDefault()
     {
@@ -135,8 +123,6 @@ class Currency extends \XLite\View\Model\AModel
      * @param string $name Field name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDefaultFieldValue($name)
     {
@@ -158,8 +144,6 @@ class Currency extends \XLite\View\Model\AModel
      * This object will be used if another one is not passed
      *
      * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -176,8 +160,6 @@ class Currency extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -188,8 +170,6 @@ class Currency extends \XLite\View\Model\AModel
      * Return specific CSS class for dialog wrapper
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDialogCSSClass()
     {
@@ -200,8 +180,6 @@ class Currency extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSubmitButtonLabel()
     {
@@ -212,8 +190,6 @@ class Currency extends \XLite\View\Model\AModel
      * Return class of button panel widget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getButtonPanelClass()
     {
@@ -226,8 +202,6 @@ class Currency extends \XLite\View\Model\AModel
      * prepareObjectForMapping <- getModelObject <- getDefaultModelObject (or getParam(self::PARAM_MODEL_OBJECT))
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareDataForMapping()
     {
@@ -264,8 +238,6 @@ class Currency extends \XLite\View\Model\AModel
      *                    array('thousandDelimiter' => $thousandDelimiter, 'decimalDelimiter' => $decimalDelimiter)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormatInfo(array $data)
     {
@@ -285,8 +257,6 @@ class Currency extends \XLite\View\Model\AModel
      * @param mixed $name Field/property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelObjectValue($name)
     {

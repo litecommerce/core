@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -30,8 +28,6 @@ namespace XLite\View\Model\Profile;
 /**
  * Administrator profile model widget. This widget is used in the admin interface
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AdminMain extends \XLite\View\Model\AModel
 {
@@ -45,9 +41,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Schema of the "Account summary" section
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $summarySchema = array(
         'referer' => array(
@@ -80,9 +74,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Schema of the "E-mail & Password" section
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $mainSchema = array(
         'login' => array(
@@ -114,9 +106,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Schema of the "User access" section
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $accessSchema = array(
         'access_level' => array(
@@ -150,8 +140,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return value for the "register" mode param
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getRegisterMode()
     {
@@ -165,8 +153,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * @param array $sections Sections list OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -179,8 +165,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isRegisterMode()
     {
@@ -193,8 +177,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * @param boolean $checkMode Check mode or not OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileId($checkMode = true)
     {
@@ -206,8 +188,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * getRequestProfileId
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestProfileId()
     {
@@ -218,8 +198,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Check for the form errors
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isValid()
     {
@@ -230,8 +208,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -247,8 +223,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * @param string $name Field name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDefaultFieldValue($name)
     {
@@ -290,8 +264,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -309,8 +281,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -321,8 +291,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -333,8 +301,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFieldsForSectionMain()
     {
@@ -354,8 +320,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFieldsForSectionAccess()
     {
@@ -379,8 +343,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFieldsForSectionSummary()
     {
@@ -393,8 +355,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * @param array $data Data to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {
@@ -472,8 +432,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * @param \XLite\Model\Profile $profile Profile
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function needSetRootAccess(\XLite\Model\Profile $profile)
     {
@@ -502,8 +460,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Prepare request data for mapping profile object
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareDataForMapping()
     {
@@ -530,8 +486,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * TODO: simplify
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkPassword()
     {
@@ -564,8 +518,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Check profile data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkProfileData()
     {
@@ -594,8 +546,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return list of the class-specific sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfileMainSections()
     {
@@ -612,8 +562,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * @param string $login Profile login
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getErrorActionValidateInputMessage($login)
     {
@@ -625,8 +573,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Process the errors occured during the "validateInput" action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessErrorActionValidateInput()
     {
@@ -639,8 +585,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform some actions on success
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessSuccessActionCreate()
     {
@@ -651,8 +595,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform some actions on success
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessSuccessActionUpdate()
     {
@@ -663,8 +605,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform some actions on success
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessSuccessActionModify()
     {
@@ -675,8 +615,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform some actions on success
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessSuccessActionDelete()
     {
@@ -687,8 +625,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Create profile
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performActionCreate()
     {
@@ -699,8 +635,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Update profile
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performActionUpdate()
     {
@@ -711,8 +645,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform certain action for the model object
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performActionDelete()
     {
@@ -723,8 +655,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform certain action for the model object
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performActionValidateInput()
     {
@@ -737,8 +667,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSubmitButtonLabel()
     {
@@ -749,8 +677,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSubmitButtonStyle()
     {
@@ -761,8 +687,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {

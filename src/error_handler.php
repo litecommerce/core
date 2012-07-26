@@ -14,15 +14,13 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * PHP version 5.0.0
+ * PHP version 5.3.0
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 define('LC_ERR_TAG_MSG',   '@MSG@');
@@ -39,8 +37,6 @@ define('LC_ERROR_PAGE_MESSAGE', 'ERROR: "' . LC_ERR_TAG_ERROR . '" (' . LC_ERR_T
  * @param string  $page    Template of message to display
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function showErrorPage($code, $message, $page = LC_ERROR_PAGE_MESSAGE, $prefix = 'ERROR_')
 {

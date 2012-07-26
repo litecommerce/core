@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,8 +29,6 @@ namespace XLite\Controller\Admin;
 /**
  * Products list controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ProductList extends \XLite\Controller\Admin\AAdmin
 {
@@ -40,8 +36,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -54,8 +48,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * @param string $paramName Parameter name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCondition($paramName)
     {
@@ -75,8 +67,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -85,22 +75,18 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Check - search panel is visible or not
-     * 
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function isSearchVisible()
     {
-        return 0 < \XLite\Core\Database::getRepo('Xlite\Model\Product')->count();
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\Product')->count();
     }
 
     /**
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -112,8 +98,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -124,8 +108,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * doActionSearch
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSearch()
     {
@@ -141,8 +123,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * It is based on search params from Product Items list viewer
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchParams()
     {
@@ -154,8 +134,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * Return search parameters for product list from Product Items list viewer
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchParamsCommon()
     {
@@ -178,8 +156,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * Return search parameters for product list given as checkboxes: (0, 1) values
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchParamsCheckboxes()
     {
@@ -204,8 +180,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * Get search conditions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getConditions()
     {

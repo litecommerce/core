@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\GoSocial\View\Button;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\Button;
 /**
  * Pinterest button
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="buttons.share.bar", weight="300")
  */
@@ -46,8 +42,6 @@ class Pinterest extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -58,8 +52,6 @@ class Pinterest extends \XLite\View\AView
      * Get button attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getButtonAttributes()
     {
@@ -72,8 +64,6 @@ class Pinterest extends \XLite\View\AView
      * Get button URL (query  part)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getButtonURL()
     {
@@ -89,8 +79,6 @@ class Pinterest extends \XLite\View\AView
      * Get button URL (query  part)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getButtonURLQuery()
     {
@@ -107,8 +95,6 @@ class Pinterest extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

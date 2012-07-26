@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,26 +28,20 @@ namespace XLite\Model;
 /**
  * Double-linked list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Collection extends \XLite\Base\SuperClass
 {
     /**
      * Start element
      *
-     * @var   \XLite_Model_ListNode
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite_Model_ListNode
      */
     protected $head = null;
 
     /**
      * End element
      *
-     * @var   \XLite_Model_ListNode
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite_Model_ListNode
      */
     protected $tail = null;
 
@@ -61,8 +53,6 @@ class Collection extends \XLite\Base\SuperClass
      * @param array  $args   Callback arguments OPTIONAL
      *
      * @return \XLite\Model\ListNode
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByCallbackResult($method, array $args = array())
     {
@@ -81,8 +71,6 @@ class Collection extends \XLite\Base\SuperClass
      * @param string $key Node identifier
      *
      * @return \XLite\Model\ListNode
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByKey($key)
     {
@@ -96,8 +84,6 @@ class Collection extends \XLite\Base\SuperClass
      * @param \XLite\Model\ListNode $node New node to insert
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function insertBefore($key, \XLite\Model\ListNode $node)
     {
@@ -123,8 +109,6 @@ class Collection extends \XLite\Base\SuperClass
      * @param \XLite\Model\ListNode $node New node to insert
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function insertAfter($key, \XLite\Model\ListNode $node)
     {
@@ -149,8 +133,6 @@ class Collection extends \XLite\Base\SuperClass
      * @param \XLite\Model\ListNode $node Node to add
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function add(\XLite\Model\ListNode $node)
     {
@@ -165,8 +147,6 @@ class Collection extends \XLite\Base\SuperClass
      * Return first element of the list
      *
      * @return \XLite\Model\ListNode
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getHead()
     {
@@ -177,8 +157,6 @@ class Collection extends \XLite\Base\SuperClass
      * Return last element of the list
      *
      * @return \XLite\Model\ListNode
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTail()
     {
@@ -190,8 +168,6 @@ class Collection extends \XLite\Base\SuperClass
      * Check if list is initialized
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isInitialized()
     {

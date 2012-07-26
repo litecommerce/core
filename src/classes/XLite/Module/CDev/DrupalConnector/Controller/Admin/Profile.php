@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Admin;
 /**
  * \XLite\Module\CDev\DrupalConnector\Controller\Admin\Profile
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDe
      * Prevent users registering by administrator
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Resources container routine
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AResourcesContainer extends \XLite\View\Container
 {
@@ -41,8 +37,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * @param array $params
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getResourceCacheDir(array $params)
     {
@@ -55,8 +49,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * @param array $resources
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSResourceFromCache(array $resources)
     {
@@ -78,8 +70,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * @param array $resource
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isValidResource($resource)
     {
@@ -90,8 +80,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * Return latest time stamp of cache build procedure
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getLatestCacheTimestamp()
     {
@@ -104,8 +92,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * @param array $resources
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSResourceFromCache(array $resources)
     {
@@ -121,8 +107,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * @param string $prepareCacheFileMethod Method of $this object to read one resource entity and do some inner work if it is necessary
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getResourceFromCache($type, array $resources, array $paramsForCache, $prepareCacheFileMethod)
     {
@@ -158,8 +142,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * @param string $filePath CSS cache file path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCSSCache($filePath)
     {
@@ -182,8 +164,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * @param string $filePath JS cache file path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareJSCache($filePath)
     {
@@ -194,8 +174,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * Check if the CSS resources should be aggregated
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doCSSAggregation()
     {
@@ -206,8 +184,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * Check if the JS resources should be aggregated
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doJSAggregation()
     {
@@ -220,8 +196,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * @param string $url
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getResourceURL($url)
     {
@@ -232,8 +206,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * Get collected javascript resources
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSResources()
     {
@@ -244,8 +216,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * Get collected CSS resources
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCSSResources()
     {
@@ -256,8 +226,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * Get collected JS resources
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAggregateJSResources()
     {
@@ -268,8 +236,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * Get collected CSS resources
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAggregateCSSResources()
     {
@@ -290,8 +256,6 @@ abstract class AResourcesContainer extends \XLite\View\Container
      * Return default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,25 +13,21 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.22
  */
 
 namespace XLite\Controller\Admin;
 
 /**
  * Event task controller
- * 
- * @see   ____class_see____
- * @since 1.0.22
+ *
  */
 class EventTask extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -51,8 +45,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -61,10 +53,8 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Run task
-     * 
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function doActionRun()
     {
@@ -103,7 +93,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
 
         if ($errors) {
             foreach ($errors as $message) {
-                \Xlite\Core\TopMessage::addError($message);
+                \XLite\Core\TopMessage::addError($message);
             }
             $result = false;
         }
@@ -115,8 +105,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Run task
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function doActionTouch()
     {
@@ -124,7 +112,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
         $state = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState($event);
 
         $this->setPureAction(true);
-        
+
         $data = array(
             'percent' => $state && 0 < $state['position'] ? min(100, round($state['position'] / $state['length'] * 100)) : 0,
             'error'   => false,
@@ -137,8 +125,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Process request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processRequest()
     {

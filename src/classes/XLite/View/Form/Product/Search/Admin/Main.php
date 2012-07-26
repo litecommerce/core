@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product\Search\Admin;
@@ -30,8 +28,6 @@ namespace XLite\View\Form\Product\Search\Admin;
 /**
  * Main
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
 {
@@ -41,8 +37,6 @@ class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * NOTE - this function designed for AJAX easy switch on/off
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {
@@ -53,8 +47,6 @@ class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -65,8 +57,6 @@ class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

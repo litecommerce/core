@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin\Base;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin\Base;
 /**
  * Catalog
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 {
@@ -48,8 +44,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * NOTE: this function is public since it's neede for widgets
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     abstract public function isNew();
 
@@ -57,8 +51,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Return class name for the controller main form
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     abstract protected function getFormClass();
 
@@ -66,8 +58,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Return entity object
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     abstract protected function getEntity();
 
@@ -75,8 +65,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Add new entity
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     abstract protected function doActionAdd();
 
@@ -84,8 +72,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Modify existing entity
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     abstract protected function doActionUpdate();
 
@@ -97,8 +83,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -109,8 +93,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Return current (or default) category object
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategory()
     {
@@ -123,8 +105,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * @param string $field Name of the field to retrieve OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPostedData($field = null)
     {
@@ -153,8 +133,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Function is public since it's used in templates
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getCleanURLMaxLength()
     {
@@ -167,8 +145,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * @param string $name Product name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function generateCleanURL($name)
     {
@@ -212,8 +188,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * @param string $suffix   Suffix
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setCleanURLWarning($cleanURL, $suffix)
     {
@@ -231,8 +205,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * doActionModify
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function doActionModify()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Currency repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Currency extends \XLite\Model\Repo\Base\I18n
 {
@@ -44,18 +40,14 @@ class Currency extends \XLite\Model\Repo\Base\I18n
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Alternative record identifiers
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $alternativeIdentifier = array(
         array('code'),
@@ -66,8 +58,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * Find all used into orders currency
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllSortedByName()
     {
@@ -78,8 +68,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * Find all used into orders currency
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findUsed()
     {
@@ -91,8 +79,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * Define query for findAllSortedByName() method
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllSortedByNameQuery()
     {
@@ -105,8 +91,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * Define query for findUsed() method
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindUsedQuery()
     {
@@ -123,8 +107,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -146,8 +128,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function searchCount(\Doctrine\ORM\QueryBuilder $qb)
     {
@@ -162,8 +142,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
     {
@@ -174,8 +152,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * Return list of handling search params
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHandlingSearchParams()
     {
@@ -193,8 +169,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder, $countOnly)
     {
@@ -212,8 +186,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * @param string $param Name of param to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSearchParamHasHandler($param)
     {
@@ -228,8 +200,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * @param boolean                    $countOnly    "Count only" flag. Do not need to add "order by" clauses if only count is needed.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value, $countOnly)
     {
@@ -246,8 +216,6 @@ class Currency extends \XLite\Model\Repo\Base\I18n
      * @param array                      $value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {

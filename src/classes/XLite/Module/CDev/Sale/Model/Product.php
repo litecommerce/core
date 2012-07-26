@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Sale\Model;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Sale\Model;
 /**
  * Product
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @HasLifecycleCallbacks
  */
@@ -50,9 +46,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Flag, if the product participates in the sale
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -62,9 +56,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * self::SALE_DISCOUNT_TYPE_PRICE   if "sale value" is considered as "Sale price",
      * self::SALE_DISCOUNT_TYPE_PERCENT if "sale value" is considered as "Percent Off".
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32, nullable=false)
      */
@@ -73,9 +65,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * "Sale value"
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -84,9 +74,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * "Sale value" price calculated
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -96,8 +84,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Get discount type 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     public function getDiscountType()
     {
@@ -109,8 +95,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Based on "salePriceValue" and "discountType" fields values
      * 
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     public function getSalePercent()
     {
@@ -141,8 +125,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @param float $value Base OPTIONAL
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSalePrice($value = null)
     {
@@ -170,8 +152,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Return sale product price difference
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSalePriceDifference()
     {
@@ -200,8 +180,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Return product list price (price for customer interface)
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getClearPrice()
     {
@@ -212,8 +190,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Prepare update date
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PreUpdate
      */

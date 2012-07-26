@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
@@ -31,8 +29,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
  * \XLite\Module\CDev\DrupalConnector\View\Model\Profile\Main
  * TODO: check if this class needed
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecorator
 {
@@ -40,8 +36,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * Process the errors occured during the "validateInput" action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessErrorActionValidateInput()
     {
@@ -57,8 +51,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * Perform certain action for the model object
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performActionValidateInput()
     {
@@ -78,8 +70,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * @param array &$data Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareFieldParamsAccessLevel(&$data)
     {
@@ -97,8 +87,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * @param array &$data Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareFieldParamsStatus(&$data)
     {
@@ -113,8 +101,6 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * @param array $data Data to set up
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {

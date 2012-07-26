@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\XMLSitemapDrupal;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemapDrupal;
 /**
  * XML sitemap module main class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -39,8 +35,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -51,8 +45,6 @@ abstract class Main extends \XLite\Module\AModule
      * Get module major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMajorVersion()
     {
@@ -63,8 +55,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -75,8 +65,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -87,8 +75,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -99,8 +85,6 @@ abstract class Main extends \XLite\Module\AModule
      * Return module dependencies
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDependencies()
     {
@@ -111,8 +95,6 @@ abstract class Main extends \XLite\Module\AModule
      * Decorator run this method at the end of cache rebuild
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function runBuildCacheHandler()
     {

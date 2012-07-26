@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,26 +28,20 @@ namespace XLite\Model\Repo;
 /**
  * Membership repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Membership extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SECONDARY;
 
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'orderby';
 
@@ -59,8 +51,6 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * Define cache cells
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -83,8 +73,6 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * Find all languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllMemberships()
     {
@@ -95,8 +83,6 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * Define query builder for findAllMemberships()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllMembershipsQuery()
     {
@@ -111,8 +97,6 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * Find all active languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findActiveMemberships()
     {
@@ -123,8 +107,6 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * Define query builder for findActiveMemberships()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineActiveMembershipsQuery()
     {
@@ -144,8 +126,6 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * @param boolean $onlyActive Search only in active mebmerships OPTIONAL
      *
      * @return \XLite\Model\Membership|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByName($name, $onlyActive = true)
     {
@@ -159,8 +139,6 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * @param boolean $onlyActive Search only in active mebmerships
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineOneByNameQuery($name, $onlyActive)
     {

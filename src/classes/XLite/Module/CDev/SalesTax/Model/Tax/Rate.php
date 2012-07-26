@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\SalesTax\Model\Tax;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\SalesTax\Model\Tax;
 /**
  * Rate
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="sales_tax_rates")
@@ -48,9 +44,7 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Product unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -61,9 +55,7 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Value
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -72,9 +64,7 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=1)
      */
@@ -83,9 +73,7 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Position
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -94,9 +82,7 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Tax (relation)
      *
-     * @var   \XLite\Module\CDev\SalesTax\Model\Tax
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\SalesTax\Model\Tax
      *
      * @ManyToOne  (targetEntity="XLite\Module\CDev\SalesTax\Model\Tax", inversedBy="rates")
      * @JoinColumn (name="tax_id", referencedColumnName="id")
@@ -106,9 +92,7 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Zone (relation)
      *
-     * @var   \XLite\Model\Zone
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Zone
      *
      * @ManyToOne  (targetEntity="XLite\Model\Zone")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
@@ -118,9 +102,7 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Product class (relation)
      *
-     * @var   \XLite\Model\ProductClass
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\ProductClass
      *
      * @ManyToOne  (targetEntity="XLite\Model\ProductClass")
      * @JoinColumn (name="product_class_id", referencedColumnName="id")
@@ -130,9 +112,7 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Membership (relation)
      *
-     * @var   \XLite\Model\Membership
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Membership
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
@@ -146,8 +126,6 @@ class Rate extends \XLite\Model\AEntity
      * @param \XLite\Model\Membership $membership Membership OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isApplied(array $zones, \XLite\Model\Membership $membership = null)
     {
@@ -164,8 +142,6 @@ class Rate extends \XLite\Model\AEntity
      * @param \XLite\Model\Zone $zone Zone OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setZone(\XLite\Model\Zone $zone = null)
     {
@@ -178,8 +154,6 @@ class Rate extends \XLite\Model\AEntity
      * @param \XLite\Model\ProductClass $class Product class OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setProductClass(\XLite\Model\ProductClass $class = null)
     {
@@ -192,8 +166,6 @@ class Rate extends \XLite\Model\AEntity
      * @param \XLite\Model\Membership $membership Membership OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setMembership(\XLite\Model\Membership $membership = null)
     {
@@ -208,8 +180,6 @@ class Rate extends \XLite\Model\AEntity
      * @param array $items Items
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function calculate(array $items)
     {
@@ -230,8 +200,6 @@ class Rate extends \XLite\Model\AEntity
      * @param array $items Items
      *  
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBasis(array $items)
     {
@@ -253,8 +221,6 @@ class Rate extends \XLite\Model\AEntity
      * @param array $items Items
      *  
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getQuantity(array $items)
     {
@@ -273,8 +239,6 @@ class Rate extends \XLite\Model\AEntity
      * @param array $items ____param_comment____
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function calculatePercent(array $items)
     {
@@ -287,8 +251,6 @@ class Rate extends \XLite\Model\AEntity
      * @param array $items Items
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function calculateAbsolute(array $items)
     {

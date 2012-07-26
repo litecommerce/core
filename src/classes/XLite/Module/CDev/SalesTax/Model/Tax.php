@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\SalesTax\Model;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\SalesTax\Model;
 /**
  * Tax
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="sales_taxes")
@@ -41,9 +37,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Product unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -54,9 +48,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Eenabled
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -65,9 +57,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Tax rates (relation)
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\SalesTax\Model\Tax\Rate", mappedBy="tax", cascade={"all"})
      * @OrderBy ({"position" = "ASC"})
@@ -80,8 +70,6 @@ class Tax extends \XLite\Model\Base\I18n
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -98,8 +86,6 @@ class Tax extends \XLite\Model\Base\I18n
      * @param \Doctrine\Common\Collections\ArrayCollection $productClasses Product classes OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFilteredRates(
         array $zones,
@@ -126,8 +112,6 @@ class Tax extends \XLite\Model\Base\I18n
      * @param \Doctrine\Common\Collections\ArrayCollection $productClasses Product classes OPTIONAL
      *
      * @return \XLite\Module\CDev\SalesTax\Model\Tax\Rate
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFilteredRate(
         array $zones,

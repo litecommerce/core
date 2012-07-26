@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Checkout failed page
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -41,8 +37,6 @@ class CheckoutFailed extends \XLite\View\AView
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -58,8 +52,6 @@ class CheckoutFailed extends \XLite\View\AView
      * Get continue URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getContinueURL()
     {
@@ -82,8 +74,6 @@ class CheckoutFailed extends \XLite\View\AView
      * Get Re-order URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getReorderURL()
     {
@@ -94,8 +84,6 @@ class CheckoutFailed extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

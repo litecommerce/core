@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -30,17 +28,13 @@ namespace XLite\Core\Validator;
 /**
  * String
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class String extends \XLite\Core\Validator\Scalar
 {
     /**
      * Non-empty validation flag
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $nonEmpty = false;
 
@@ -50,8 +44,6 @@ class String extends \XLite\Core\Validator\Scalar
      * @param boolean $nonEmpty Non-empty flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($nonEmpty = false)
     {
@@ -66,8 +58,6 @@ class String extends \XLite\Core\Validator\Scalar
      * @param boolean $nonEmpty Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function markAsNonEmpty($nonEmpty = true)
     {
@@ -81,8 +71,6 @@ class String extends \XLite\Core\Validator\Scalar
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {

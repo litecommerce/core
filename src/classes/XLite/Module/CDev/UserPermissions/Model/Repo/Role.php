@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.17
  */
 
 namespace XLite\Module\CDev\UserPermissions\Model\Repo;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\UserPermissions\Model\Repo;
 /**
  * Role repository
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
 {
@@ -43,9 +39,7 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
     /**
      * currentSearchCnd
      *
-     * @var   \XLite\Core\CommonCell
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\CommonCell
      */
     protected $currentSearchCnd = null;
 
@@ -53,8 +47,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * Get permanent role 
      * 
      * @return \XLite\Model\Role
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getPermanentRole()
     {
@@ -65,8 +57,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * Define query for getPermanentRole() method
      * 
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineGetPermanentRoleQuery()
     {
@@ -87,8 +77,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -110,8 +98,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function searchCount(\Doctrine\ORM\QueryBuilder $qb)
     {
@@ -126,8 +112,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
     {
@@ -142,8 +126,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder, $countOnly)
     {
@@ -161,8 +143,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * @param string $param Name of param to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSearchParamHasHandler($param)
     {
@@ -173,8 +153,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * Return list of handling search params
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHandlingSearchParams()
     {
@@ -190,8 +168,6 @@ class Role extends \XLite\Model\Repo\Role implements \XLite\Base\IDecorator
      * @param array                      $value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
@@ -30,17 +28,13 @@ namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
 /**
  * \XLite\Module\CDev\FeaturedProducts\Controller\Admin\Categories
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Base\IDecorator
 {
     /**
      * FIXME- backward compatibility
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('category_id');
 
@@ -51,8 +45,6 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * @param string $paramName Parameter name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCondition($paramName)
     {
@@ -72,8 +64,6 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * Get featured products list
      *
      * @return array(\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct) Objects
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFeaturedProductsList()
     {
@@ -86,8 +76,6 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * doActionAddFeaturedProducts
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAddFeaturedProducts()
     {
@@ -154,8 +142,6 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * Process action 'update_featured_products'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateFeaturedProducts()
     {
@@ -205,8 +191,6 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * Get search conditions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getConditions()
     {

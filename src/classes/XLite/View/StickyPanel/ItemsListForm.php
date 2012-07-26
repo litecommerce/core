@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\View\StickyPanel;
@@ -30,26 +28,20 @@ namespace XLite\View\StickyPanel;
 /**
  * Panel form items list-based form
  *
- * @see   ____class_see____
- * @since 1.0.15
  */
 class ItemsListForm extends \XLite\View\Base\FormStickyPanel
 {
     /**
      * Buttons list (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var array
      */
     protected $buttonsList;
 
     /**
      * Additional buttons (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var array
      */
     protected $additionalButtons;
 
@@ -57,8 +49,6 @@ class ItemsListForm extends \XLite\View\Base\FormStickyPanel
      * Get buttons widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getButtons()
     {
@@ -73,8 +63,6 @@ class ItemsListForm extends \XLite\View\Base\FormStickyPanel
      * Define buttons widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineButtons()
     {
@@ -109,8 +97,6 @@ class ItemsListForm extends \XLite\View\Base\FormStickyPanel
      * Get additional buttons
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getAdditionalButtons()
     {
@@ -125,8 +111,6 @@ class ItemsListForm extends \XLite\View\Base\FormStickyPanel
      * Define additional buttons
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function defineAdditionalButtons()
     {
@@ -137,8 +121,6 @@ class ItemsListForm extends \XLite\View\Base\FormStickyPanel
      * Get class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getClass()
     {

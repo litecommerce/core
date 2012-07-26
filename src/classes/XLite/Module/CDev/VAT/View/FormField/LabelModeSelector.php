@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\VAT\View\FormField;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\VAT\View\FormField;
 /**
  * Label 'Inc/exc.VAT' display mode selector widget
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class LabelModeSelector extends \XLite\View\FormField\Select\Regular
 {
@@ -46,8 +42,6 @@ class LabelModeSelector extends \XLite\View\FormField\Select\Regular
      * getDefaultOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getDefaultOptions()
     {

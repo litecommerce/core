@@ -3,10 +3,10 @@
 # Fixtures
 #
 # @author    Creative Development LLC <info@cdev.ru>
-# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
-# @since     1.0.0
+
 XLite\Model\Config:
   - name: access_key
     category: CDev\AmazonS3Images
@@ -54,3 +54,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Connection to Amazon S3 failed. Check whether the AWS Access key и AWS Secret key specified in the module settings are correct.', translations: [{ code: en, label: 'Connection to Amazon S3 failed. Check whether the AWS Access key и AWS Secret key specified in the module settings are correct.' }] }
   - { name: 'Couldn''t move image X', translations: [{ code: en, label: 'Couldn''t move image {{path}}' }] }
   - { name: 'Couldn''t move X images. See log for details.', translations: [{ code: en, label: 'Couldn''t move {{count}} images. See log for details.' }] }
+  - { name: 'Images are being moved to the file system on your server. Now you can leave this page and open it later to check the progress.', translations: [{ code: en, label: 'Images are being moved to the file system on your server. Now you can leave this page and open it later to check the progress.' }] }
+  - { name: 'Images are being moved to Amazon S3 servers. Now you can leave this page and open it later to check the progress.', translations: [{ code: en, label: 'Images are being moved to Amazon S3 servers. Now you can leave this page and open it later to check the progress.' }] }
+  - { name: 'Images are being moved to the file system on your server. If you leave this page the process will be put on hold until you open it in your browser again.', translations: [{ code: en, label: 'Images are being moved to the file system on your server. If you leave this page the process will be put on hold until you open it in your browser again.' }] }
+  - { name: 'Images are being moved to Amazon S3 servers. If you leave this page the process will be put on hold until you open it in your browser again.', translations: [{ code: en, label: 'Images are being moved to Amazon S3 servers. If you leave this page the process will be put on hold until you open it in your browser again.' }] }
+

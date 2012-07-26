@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * Checkout controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * Get login URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLoginURL()
     {
@@ -54,8 +48,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * isCreateProfile
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCreateProfile()
     {
@@ -68,8 +60,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * FIXME
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateProfile()
     {
@@ -124,8 +114,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * FIXME
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveAnonymousProfile()
     {
@@ -175,8 +163,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * Login anonymous profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function loginAnonymousProfile()
     {
@@ -196,8 +182,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @param string $password Password
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sendCreateProfileNotifications($password)
     {
@@ -207,8 +191,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * Clone profile and move profile to original profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function cloneProfile()
     {
@@ -222,8 +204,6 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * Get redirect mode - force redirect or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRedirectMode()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Orders statistics page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrdersStats extends \XLite\Controller\Admin\Stats
 {
@@ -49,8 +45,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -61,8 +55,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * getPageTemplate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPageTemplate()
     {
@@ -73,8 +65,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * Get row headings
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRowTitles()
     {
@@ -91,9 +81,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     /**
      * Status rows as row identificator => included statuses
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
+     * @var array
      */
     public function getStatusRows()
     {
@@ -135,8 +123,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      *
      * @param  string $row Row identificator
      * @return boolean
-     * @see    ____var_see____
-     * @since  3.0.0
      */
     public function isTotalsRow($row)
     {
@@ -153,8 +139,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * Get data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
      */
     public function getStatsRows()
     {
@@ -165,8 +149,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * Prepare statistics table
      *
      * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
      */
     public function getStats()
     {
@@ -182,8 +164,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * Get data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
      */
     protected function getData()
     {
@@ -199,8 +179,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * @param \XLite\Model\Order $order Order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function collectStatsRecord($row, $order)
     {
@@ -224,8 +202,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * @param \XLite\Model\Order $order Order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processStatsRecord($order)
     {

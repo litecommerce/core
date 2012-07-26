@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\GoogleAnalytics\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\GoogleAnalytics\View;
 /**
  * Abstract widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -57,8 +51,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Display widget as Standalone-specific
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isIncludeController()
     {

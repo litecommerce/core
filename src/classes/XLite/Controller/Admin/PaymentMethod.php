@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Payment method
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
      * getPaymentMethod
      *
      * @return \XLite\Model\Payment\Method
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPaymentMethod()
     {
@@ -52,8 +46,6 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
      * Update payment method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\View\FormField\Inline;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Inline;
 /**
  * Abstract inline form-field
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class AInline extends \XLite\View\AView
 {
@@ -48,9 +44,7 @@ abstract class AInline extends \XLite\View\AView
     /**
      * Form fields 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var array
      */
     protected $fields;
 
@@ -58,8 +52,6 @@ abstract class AInline extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -74,8 +66,6 @@ abstract class AInline extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -90,8 +80,6 @@ abstract class AInline extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -109,8 +97,6 @@ abstract class AInline extends \XLite\View\AView
      * Get entity
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getEntity()
     {
@@ -121,8 +107,6 @@ abstract class AInline extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -133,8 +117,6 @@ abstract class AInline extends \XLite\View\AView
      * Check - field is editable or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isEditable()
     {
@@ -145,8 +127,6 @@ abstract class AInline extends \XLite\View\AView
      * Check - field is editable or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasSeparateView()
     {
@@ -157,8 +137,6 @@ abstract class AInline extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -172,8 +150,6 @@ abstract class AInline extends \XLite\View\AView
      * Get container class 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {
@@ -190,8 +166,6 @@ abstract class AInline extends \XLite\View\AView
      * Get view template 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getViewTemplate()
     {
@@ -202,8 +176,6 @@ abstract class AInline extends \XLite\View\AView
      * Get field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldTemplate()
     {
@@ -216,8 +188,6 @@ abstract class AInline extends \XLite\View\AView
      * @param array $field Field
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getViewValue(array $field)
     {
@@ -242,8 +212,6 @@ abstract class AInline extends \XLite\View\AView
      * @param string $name Feild name
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getField($name)
     {
@@ -258,8 +226,6 @@ abstract class AInline extends \XLite\View\AView
      * @param string $name Field name
      *  
      * @return \XLite\View\FormField\AFormField
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getFieldWidget($name)
     {
@@ -274,8 +240,6 @@ abstract class AInline extends \XLite\View\AView
      * @param array $field Field
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getFieldClassName(array $field)
     {
@@ -290,8 +254,6 @@ abstract class AInline extends \XLite\View\AView
      * Define fields 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     abstract protected function defineFields();
 
@@ -302,8 +264,6 @@ abstract class AInline extends \XLite\View\AView
      * @param mixed $key  Row key OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function setValueFromRequest(array $data = array(), $key = null)
     {
@@ -327,8 +287,6 @@ abstract class AInline extends \XLite\View\AView
      * Validate
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function validate()
     {
@@ -349,8 +307,6 @@ abstract class AInline extends \XLite\View\AView
      * Save value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function saveValue()
     {
@@ -384,8 +340,6 @@ abstract class AInline extends \XLite\View\AView
      * Get field label 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getLabel()
     {
@@ -396,8 +350,6 @@ abstract class AInline extends \XLite\View\AView
      * Get fields 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getFields()
     {
@@ -423,8 +375,6 @@ abstract class AInline extends \XLite\View\AView
      * Get field widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getFieldWidgets()
     {
@@ -443,8 +393,6 @@ abstract class AInline extends \XLite\View\AView
      * @param array $field Field data
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldParams(array $field)
     {
@@ -472,8 +420,6 @@ abstract class AInline extends \XLite\View\AView
      * @param array $field Field
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getNameParts(array $field)
     {
@@ -496,8 +442,6 @@ abstract class AInline extends \XLite\View\AView
      * @param array $field Field
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getFieldEntityValue(array $field)
     {
@@ -515,8 +459,6 @@ abstract class AInline extends \XLite\View\AView
      * @param mixed $key   Row key OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function setFieldValue(array $field, array $data, $key = null)
     {
@@ -531,8 +473,6 @@ abstract class AInline extends \XLite\View\AView
      * @param mixed $key   Row key OPTIONAL
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function isolateFieldValue(array $field, array $data, $key = null)
     {
@@ -563,8 +503,6 @@ abstract class AInline extends \XLite\View\AView
      * @param mixed $value Value
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function transferValueToField(array $field, $value)
     {
@@ -579,8 +517,6 @@ abstract class AInline extends \XLite\View\AView
      * @param mixed $value Value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function preprocessValueBeforeSave($value)
     {
@@ -593,8 +529,6 @@ abstract class AInline extends \XLite\View\AView
      * @param array $field Feild info
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function validateField(array $field)
     {

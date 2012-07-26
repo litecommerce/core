@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.1
  */
 
 namespace XLite\Module\CDev\PaypalWPS\Model\Payment\Processor;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\PaypalWPS\Model\Payment\Processor;
 /**
  * Paypal Website Payments Standard payment processor
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
 {
@@ -52,8 +48,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function getSettingsWidget()
     {
@@ -66,8 +60,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processCallback(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -140,8 +132,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -168,8 +158,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -182,8 +170,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Return URL for IPN verification transaction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getIPNURL()
     {
@@ -194,8 +180,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Get IPN verification status
      *
      * @return boolean TRUE if verification status is received
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getIPNVerification()
     {
@@ -225,8 +209,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Get redirect form URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getFormURL()
     {
@@ -239,8 +221,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Return TRUE if the test mode is ON
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function isTestMode()
     {
@@ -252,8 +232,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Return ITEM NAME for request
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getItemName()
     {
@@ -264,8 +242,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Get redirect form fields list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getFormFields()
     {
@@ -318,8 +294,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Return amount value. Specific for Paypal
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getAmountValue()
     {
@@ -336,8 +310,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Return Country field value. if no country defined we should use '' value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     protected function getCountryFieldValue()
     {
@@ -350,8 +322,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Return State field value. If country is US then state code must be used.
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     protected function getStateFieldValue()
     {
@@ -364,8 +334,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Return Phone structure. specific for Paypal
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getPhone()
     {
@@ -397,8 +365,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * Define saved into transaction data schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function defineSavedData()
     {
@@ -426,8 +392,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * @param array $list Form fields list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function logRedirect(array $list)
     {
@@ -442,8 +406,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {

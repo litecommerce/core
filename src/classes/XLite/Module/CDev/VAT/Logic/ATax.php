@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\VAT\Logic;
@@ -30,17 +28,13 @@ namespace XLite\Module\CDev\VAT\Logic;
 /**
  * Common tax business logic (base class for product and shipping tax logic)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ATax extends \XLite\Logic\ALogic
 {
     /**
      * Taxes (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var array
      */
     protected $taxes;
 
@@ -49,8 +43,6 @@ abstract class ATax extends \XLite\Logic\ALogic
      * Get taxes 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTaxes()
     {
@@ -65,8 +57,6 @@ abstract class ATax extends \XLite\Logic\ALogic
      * Get zones list 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getZonesList()
     {
@@ -85,8 +75,6 @@ abstract class ATax extends \XLite\Logic\ALogic
      * Get membership 
      * 
      * @return \XLite\Model\Membership
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMembership()
     {
@@ -97,8 +85,6 @@ abstract class ATax extends \XLite\Logic\ALogic
      * Get profile 
      * 
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -115,8 +101,6 @@ abstract class ATax extends \XLite\Logic\ALogic
      * Get default profile if user is not authorized
      * 
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultProfile()
     {
@@ -127,8 +111,6 @@ abstract class ATax extends \XLite\Logic\ALogic
      * Get address for zone calculator
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAddress()
     {

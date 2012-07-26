@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Cart
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Cart")
  * @HasLifecycleCallbacks
@@ -47,9 +43,7 @@ class Cart extends \XLite\Model\Order
     /**
      * Array of instances for all derived classes
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $instances = array();
 
@@ -57,8 +51,6 @@ class Cart extends \XLite\Model\Order
      * Method to access a singleton
      *
      * @return \XLite\Model\Cart
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getInstance()
     {
@@ -130,8 +122,6 @@ class Cart extends \XLite\Model\Order
      * @param \XLite\Model\Order $object Cart
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function setObject(\XLite\Model\Order $object)
     {
@@ -144,8 +134,6 @@ class Cart extends \XLite\Model\Order
      * Prepare order before save data operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PrePersist
      * @PreUpdate
@@ -161,8 +149,6 @@ class Cart extends \XLite\Model\Order
      * Prepare order before create entity
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PrePersist
      */
@@ -175,8 +161,6 @@ class Cart extends \XLite\Model\Order
      * Clear cart
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clear()
     {
@@ -197,8 +181,6 @@ class Cart extends \XLite\Model\Order
      * @param integer $productId ID of the product to look for
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isProductAdded($productId)
     {
@@ -221,8 +203,6 @@ class Cart extends \XLite\Model\Order
      * Prepare order before remove operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      * @PreRemove
      */
     public function prepareBeforeRemove()
@@ -236,8 +216,6 @@ class Cart extends \XLite\Model\Order
      * Mark cart as order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function markAsOrder()
     {
@@ -248,8 +226,6 @@ class Cart extends \XLite\Model\Order
      * Check if the cart has a "Cart" status. ("in progress", "temporary")
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasCartStatus()
     {
@@ -260,8 +236,6 @@ class Cart extends \XLite\Model\Order
      * If we can proceed with checkout with current cart
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkCart()
     {
@@ -276,8 +250,6 @@ class Cart extends \XLite\Model\Order
      * Initialize new cart
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function initializeCart()
     {

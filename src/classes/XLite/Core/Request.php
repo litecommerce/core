@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Request
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Request extends \XLite\Base\Singleton
 {
@@ -43,18 +39,14 @@ class Request extends \XLite\Base\Singleton
     /**
      * Cureent request method
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $requestMethod = null;
 
     /**
      * Request data
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $data = array();
 
@@ -65,8 +57,6 @@ class Request extends \XLite\Base\Singleton
      * @param array $data Custom data OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function mapRequest(array $data = array())
     {
@@ -89,8 +79,6 @@ class Request extends \XLite\Base\Singleton
      * Return all data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getData()
     {
@@ -103,8 +91,6 @@ class Request extends \XLite\Base\Singleton
      * @param boolean $prepare Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getGetData($prepare = true)
     {
@@ -117,8 +103,6 @@ class Request extends \XLite\Base\Singleton
      * @param boolean $prepare Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getPostData($prepare = true)
     {
@@ -131,8 +115,6 @@ class Request extends \XLite\Base\Singleton
      * @param boolean $prepare Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getCookieData($prepare = true)
     {
@@ -145,8 +127,6 @@ class Request extends \XLite\Base\Singleton
      * @param boolean $prepare Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getServerData($prepare = true)
     {
@@ -157,8 +137,6 @@ class Request extends \XLite\Base\Singleton
      * Return current request method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestMethod()
     {
@@ -171,8 +149,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $method New request method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setRequestMethod($method)
     {
@@ -183,8 +159,6 @@ class Request extends \XLite\Base\Singleton
      * Check if current request method is "GET"
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isGet()
     {
@@ -195,8 +169,6 @@ class Request extends \XLite\Base\Singleton
      * Check if current request method is "POST"
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPost()
     {
@@ -207,8 +179,6 @@ class Request extends \XLite\Base\Singleton
      * Check if current request method is "HEAD"
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isHead()
     {
@@ -219,8 +189,6 @@ class Request extends \XLite\Base\Singleton
      * Check - is AJAX request or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAJAX()
     {
@@ -231,8 +199,6 @@ class Request extends \XLite\Base\Singleton
      * Check for secure connection
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isHTTPS()
     {
@@ -243,8 +209,6 @@ class Request extends \XLite\Base\Singleton
      * Check - is command line interface or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCLI()
     {
@@ -257,8 +221,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $name Property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -272,8 +234,6 @@ class Request extends \XLite\Base\Singleton
      * @param mixed  $value Property value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -286,8 +246,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $name Property name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __isset($name)
     {
@@ -299,8 +257,6 @@ class Request extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -314,8 +270,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $value Value to sanitize
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doUnescapeSingle($value)
     {
@@ -328,8 +282,6 @@ class Request extends \XLite\Base\Singleton
      * @param mixed $data Data to sanitize
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doUnescape($data)
     {
@@ -344,8 +296,6 @@ class Request extends \XLite\Base\Singleton
      * @param mixed $request Request data
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function normalizeRequestData($request)
     {
@@ -362,8 +312,6 @@ class Request extends \XLite\Base\Singleton
      * @param mixed $data Data to sanitize
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepare($data)
     {
@@ -388,8 +336,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $name  Argument name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkControlArgument($value, $name)
     {

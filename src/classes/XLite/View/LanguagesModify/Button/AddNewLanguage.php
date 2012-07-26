@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\LanguagesModify\Button;
@@ -30,8 +28,6 @@ namespace XLite\View\LanguagesModify\Button;
 /**
  * Add new language button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddNewLanguage extends \XLite\View\Button\Regular
 {
@@ -44,8 +40,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -60,8 +54,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -72,8 +64,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * getDefaultStyle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultStyle()
     {
@@ -84,8 +74,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * JavaScript: default JS code to execute
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {
@@ -97,8 +85,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

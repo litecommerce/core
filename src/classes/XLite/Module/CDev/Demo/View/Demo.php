@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Demo\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Demo\View;
 /**
  * Demo panel widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.main.page.header_wrapper", zone="admin", weight="1")
  * @ListChild (list="layout.main", zone="customer", weight="1")
@@ -42,8 +38,6 @@ class Demo extends \XLite\View\AView
      * Get additional header
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAdditionalHeader()
     {
@@ -94,8 +88,6 @@ HTML;
      * @param string $template Tempalte OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     public function display($template = null)
     {
@@ -106,8 +98,6 @@ HTML;
      * Get default template 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function getDefaultTemplate()
     {

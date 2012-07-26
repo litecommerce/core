@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Upgrade\Entry\Module;
@@ -30,8 +28,6 @@ namespace XLite\Upgrade\Entry\Module;
 /**
  * AModule
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AModule extends \XLite\Upgrade\Entry\AEntry
 {
@@ -39,8 +35,6 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
      * Update database records
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function updateDBRecords();
 
@@ -51,8 +45,6 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
      * @param array|null $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function upgrade($isTestMode = true, $filesToOverwrite = null)
     {
@@ -82,8 +74,6 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
      * Return path where the upgrade helper scripts are placed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */            
     protected function getUpgradeHelperPath()
     {

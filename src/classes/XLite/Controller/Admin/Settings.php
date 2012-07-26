@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Settings. TODO FULL REFACTOR!!!
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Settings extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,9 +35,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * params
      * FIXME
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     public $params = array('target', 'page');
 
@@ -49,9 +43,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * page
      * FIXME
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     public $page = 'General';
 
@@ -59,9 +51,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * _waiting_list
      * FIXME
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     public $_waiting_list = null;
 
@@ -70,8 +60,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -84,8 +72,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get tab names
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -104,8 +90,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {
@@ -126,8 +110,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get options for current tab (category)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -138,8 +120,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * getModelFormClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -152,8 +132,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Check for the GDLib extension
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isGDLibLoaded()
     {
@@ -164,8 +142,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * isOpenBasedirRestriction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isOpenBasedirRestriction()
     {
@@ -180,8 +156,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param string $name Type of value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function get($name)
     {
@@ -442,8 +416,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param string $dir Directory path
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDirPermission($dir)
     {
@@ -475,8 +447,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param string $dir ____param_comment____ OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDirPermissionStr($dir = '')
     {
@@ -491,8 +461,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param mixed $file ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFilePermission($file)
     {
@@ -518,8 +486,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param string $file ____param_comment____ OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFilePermissionStr($file = '')
     {
@@ -535,8 +501,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param mixed &$subdirErrors ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkSubdirs($path, &$subdirErrors)
     {
@@ -586,8 +550,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * doActionPhpinfo
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionPhpinfo()
     {
@@ -598,8 +560,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Re-generate safe mode access key
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionSafeModeKeyRegen()
     {
@@ -613,8 +573,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Clean aggregation cache directory
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionCleanAggregationCache()
     {
@@ -629,8 +587,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionUpdate()
     {
@@ -641,8 +597,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * isWin
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isWin()
     {
@@ -655,8 +609,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param mixed $stateId ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStateById($stateId)
     {
@@ -667,8 +619,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get safe mode access key
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSafeModeKey()
     {
@@ -679,8 +629,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get Hard Reset URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getHardResetURL()
     {
@@ -691,7 +639,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get Soft Reset URL
      *
      * @return string
-     * @see    ____func_see____
      */
     public function getSoftResetURL()
     {
@@ -702,7 +649,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Flag to has email error
      *
      * @return string
-     * @see    ____func_see____
      */
     public function hasTestEmailError()
     {
@@ -713,7 +659,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Return error test email sending
      *
      * @return string
-     * @see    ____func_see____
      */
     public function getTestEmailError()
     {
@@ -730,7 +675,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Action to send test email notification
      *
      * @return void
-     * @see    ____func_see____
      */
     protected function doActionTestEmail()
     {

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.19
  */
 
 namespace XLite\Module\CDev\AmazonS3Images\Core;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\Core;
 /**
  * AWS S3 client
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class S3 extends \XLite\Base\Singleton
 {
@@ -40,27 +36,21 @@ class S3 extends \XLite\Base\Singleton
     /**
      * AWS S3 client 
      * 
-     * @var   \S3
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var \S3
      */
     protected $client;
 
     /**
      * Valid status
      * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var boolean
      */
     protected $valid = false;
 
     /**
      * URL prefix
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      */
     protected $urlPrefix;
 
@@ -68,8 +58,6 @@ class S3 extends \XLite\Base\Singleton
      * Check valid status
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function isValid()
     {
@@ -84,8 +72,6 @@ class S3 extends \XLite\Base\Singleton
      * @param array  $httpHeaders HTTP headers OPTIONAL
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function write($path, $data, array $httpHeaders = array())
     {
@@ -119,8 +105,6 @@ class S3 extends \XLite\Base\Singleton
      * @param array  $httpHeaders HTTP headers OPTIONAL
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function copy($from, $to, array $httpHeaders = array())
     {
@@ -151,8 +135,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $path Short path
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function read($path)
     {
@@ -176,8 +158,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $path Short path
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function delete($path)
     {
@@ -202,8 +182,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $path Short path
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function deleteDirectory($path)
     {
@@ -228,8 +206,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $path Short path
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function readDirectory($path)
     {
@@ -253,8 +229,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $path Short path
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function isDir($path)
     {
@@ -289,8 +263,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $path Short path
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getURL($path)
     {
@@ -311,8 +283,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $path Short path
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function isExists($path)
     {
@@ -337,8 +307,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $path Short path
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function generateUniquePath($path)
     {
@@ -370,8 +338,6 @@ class S3 extends \XLite\Base\Singleton
      * @param string $bucket    S3 bucket
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function checkSettings($accessKey, $secretKey, $bucket)
     {
@@ -396,8 +362,6 @@ class S3 extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function __construct()
     {

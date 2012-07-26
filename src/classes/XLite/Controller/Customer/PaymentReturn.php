@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Web-based payment method return
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 {
@@ -39,8 +35,6 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
      * Handles the request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -55,8 +49,6 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
      * TODO - check if it's really needed; remove if not
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkStorefrontAccessability()
     {
@@ -67,8 +59,6 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
      * Process return
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionReturn()
     {
@@ -109,6 +99,8 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 
         if ($txn) {
             $txn->getPaymentMethod()->getProcessor()->processReturn($txn);
+
+            $txn->registerTransactionInOrderHistory('web');
 
             if ($txn->getNote()) {
                 \XLite\Core\TopMessage::getInstance()->add(
@@ -161,8 +153,6 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
      * @param integer $time Redirect delay OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doHTMLRedirect($url, $time = 1)
     {
@@ -188,8 +178,6 @@ HTML;
      * @param string $url URL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doHTMLRedirectWithIframeDestroying($url)
     {

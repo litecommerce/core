@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Category repository class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Category extends \XLite\Model\Repo\Base\I18n
 {
@@ -43,18 +39,14 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Maximum value of the "rpos" field in all records
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.6
+     * @var integer
      */
     protected $maxRightPos;
 
     /**
      * Flush unit-of-work changes after every record loading
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $flushAfterLoading = true;
 
@@ -62,8 +54,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Return the reserved ID of root category
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRootCategoryId()
     {
@@ -74,8 +64,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Return the category enabled condition
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getEnabledCondition()
     {
@@ -90,8 +78,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param boolean $excludeRoot Do not include root category into the search result OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function createQueryBuilder($alias = null, $code = null, $excludeRoot = true)
     {
@@ -113,8 +99,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category ID
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategory($categoryId)
     {
@@ -127,8 +111,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $rootId ID of the subtree root OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategories($rootId = null)
     {
@@ -141,8 +123,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $rootId ID of the subtree root OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoriesPlainList($rootId = null)
     {
@@ -155,8 +135,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $rootId ID of the subtree root
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSubcategories($rootId)
     {
@@ -170,8 +148,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param boolean               $hasSelf  Flag to include itself OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSiblings(\XLite\Model\Category $category, $hasSelf = false)
     {
@@ -184,8 +160,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSubtree($categoryId)
     {
@@ -200,8 +174,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoryPath($categoryId)
     {
@@ -216,8 +188,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoryDepth($categoryId)
     {
@@ -232,8 +202,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product ID
      *
      * @return \Doctrine\ORM\PersistentCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllByProductId($productId)
     {
@@ -252,8 +220,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer                    $rpos         Right position OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addSubTreeCondition(
         \Doctrine\ORM\QueryBuilder $queryBuilder,
@@ -279,8 +245,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Define the Doctrine query
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineMaxRightPosQuery()
     {
@@ -296,8 +260,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFullTreeQuery($categoryId)
     {
@@ -314,8 +276,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSubcategoriesQuery($categoryId)
     {
@@ -342,8 +302,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param boolean               $hasSelf  Flag to include itself OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSiblingsQuery(\XLite\Model\Category $category, $hasSelf = false)
     {
@@ -364,8 +322,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSubtreeQuery($categoryId)
     {
@@ -380,8 +336,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCategoryPathQuery($categoryId)
     {
@@ -412,8 +366,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCategoryDepthQuery($categoryId)
     {
@@ -428,8 +380,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSearchByProductIdQuery($productId)
     {
@@ -449,8 +399,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $offset       Increment OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineUpdateIndexQuery($index, $relatedIndex, $offset = 2)
     {
@@ -475,8 +423,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
@@ -494,8 +440,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addOrderByCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
@@ -511,8 +455,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addExcludeRootCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
@@ -527,8 +469,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Return maximum index in the "nested set" tree
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMaxRightPos()
     {
@@ -546,8 +486,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\Category $parent Parent category object OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareNewCategoryData(\XLite\Model\Category $entity, \XLite\Model\Category $parent = null)
     {
@@ -576,8 +514,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $scEnabled The "subcategories_count_enabled" flag value
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareQuickFlags($scAll, $scEnabled)
     {
@@ -594,8 +530,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param mixed $categoryId Category ID
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCategoryId($categoryId)
     {
@@ -609,8 +543,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                 $flags  Flags to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateQuickFlags(\XLite\Model\Category $entity, array $flags)
     {
@@ -636,8 +568,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Main category
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     public function deleteSubcategories($categoryId)
     {
@@ -650,8 +580,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\AEntity|array $entity Data to insert OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performInsert($entity = null)
     {
@@ -694,8 +622,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                $data   Data to save OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
     {
@@ -712,8 +638,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\AEntity $entity Entity to detach
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performDelete(\XLite\Model\AEntity $entity)
     {
@@ -751,8 +675,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array $regular Regular fields info OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleRegularFieldsFromRecord(array $record, array $regular = array())
     {
@@ -775,8 +697,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                $parentAssoc Entity mapped propery method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
@@ -813,8 +733,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array $assocs Associations info OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleAssociationsFromRecord(array $record, array $assocs = array())
     {
@@ -829,8 +747,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Get detailed foreign keys
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDetailedForeignKeys()
     {

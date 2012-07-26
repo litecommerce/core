@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock;
@@ -30,8 +28,6 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock;
 /**
  * ADocBlock
  *
- * @see   ____class_see____
- * @since 1.0.22
  */
 abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
@@ -39,8 +35,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * Execute certain hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {
@@ -53,8 +47,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function correctTags(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -69,8 +61,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function correctTagsOnElement(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -95,8 +85,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function checkRewriteCondition(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -109,8 +97,6 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getTagsToAdd(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {

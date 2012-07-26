@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Abstract handler (common parent for viewer and controller)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Handler extends \XLite\Base
 {
@@ -55,9 +51,7 @@ abstract class Handler extends \XLite\Base
     /**
      * Widget params
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $widgetParams;
 
@@ -68,8 +62,6 @@ abstract class Handler extends \XLite\Base
      * @param array $params Handler params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -82,8 +74,6 @@ abstract class Handler extends \XLite\Base
      * Initialize handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -95,8 +85,6 @@ abstract class Handler extends \XLite\Base
      * @param array $params Handler params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -125,8 +113,6 @@ abstract class Handler extends \XLite\Base
      * @param string $param Param name OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWidgetParams($param = null)
     {
@@ -143,8 +129,6 @@ abstract class Handler extends \XLite\Base
      * getWidgetSettings
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWidgetSettings()
     {
@@ -160,8 +144,6 @@ abstract class Handler extends \XLite\Base
      * @param \XLite\Model\WidgetParam\AWidgetParam $param Widget parameter
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWidgetSettingsFilter(\XLite\Model\WidgetParam\AWidgetParam $param)
     {
@@ -174,8 +156,6 @@ abstract class Handler extends \XLite\Base
      * @param array $attrs Attributes to check
      *
      * @return array Errors list
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validateAttributes(array $attrs)
     {
@@ -208,8 +188,6 @@ abstract class Handler extends \XLite\Base
      * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function buildURL($target = '', $action = '', array $params = array())
     {
@@ -224,8 +202,6 @@ abstract class Handler extends \XLite\Base
      * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function buildFullURL($target = '', $action = '', array $params = array())
     {
@@ -241,8 +217,6 @@ abstract class Handler extends \XLite\Base
      * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function buildURLPath($target, $action = '', array $params = array())
     {
@@ -261,8 +235,6 @@ abstract class Handler extends \XLite\Base
      * @param array  $params Additional params OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function buildURLArguments($target, $action = '', array $params = array())
     {
@@ -284,8 +256,6 @@ abstract class Handler extends \XLite\Base
      * TODO: after the multiple inheritance should be moved to the AAdmin class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPrefixPostedData()
     {
@@ -299,8 +269,6 @@ abstract class Handler extends \XLite\Base
      * TODO: after the multiple inheritance should be moved to the AAdmin class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPrefixSelected()
     {
@@ -315,8 +283,6 @@ abstract class Handler extends \XLite\Base
      * @param string $prefix Index in the request array
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getRequestDataByPrefixArray($prefix)
     {
@@ -330,8 +296,6 @@ abstract class Handler extends \XLite\Base
      * @param string $field  Name of the field to retrieve OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRequestDataByPrefix($prefix, $field = null)
     {
@@ -344,8 +308,6 @@ abstract class Handler extends \XLite\Base
      * @param string $field Name of the field to retrieve OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPostedData($field = null)
     {
@@ -356,8 +318,6 @@ abstract class Handler extends \XLite\Base
      * Return selected index array
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSelected()
     {
@@ -370,8 +330,6 @@ abstract class Handler extends \XLite\Base
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -386,8 +344,6 @@ abstract class Handler extends \XLite\Base
      * @param string $param Param to fetch
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getParam($param)
     {
@@ -400,8 +356,6 @@ abstract class Handler extends \XLite\Base
      * isExported
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isExported()
     {
@@ -414,8 +368,6 @@ abstract class Handler extends \XLite\Base
      * @param array $params List of params to use
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getParamsHash(array $params)
     {

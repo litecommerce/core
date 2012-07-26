@@ -52,12 +52,12 @@ class XLite_Sniffs_PHP_Commenting_ClassCommentSniff extends XLite_Sniffs_PHP_Com
 
     protected $tags = array(
 		'see'        => array(
-        	'required'       => true,
+        	'required'       => false,
             'allow_multiple' => false,
             'order_text'     => 'follows @link',
         ),
         'since'      => array(
-            'required'       => true,
+            'required'       => false,
             'allow_multiple' => false,
             'order_text'     => 'follows @see (if used) or @link',
         ),

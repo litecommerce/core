@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 /**
@@ -31,8 +29,6 @@
  * TODO: to revise
  * TODO[SINGLETON]: lowest priority
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class XLite extends \XLite\Base
 {
@@ -70,54 +66,42 @@ class XLite extends \XLite\Base
     /**
      * Current area flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $adminZone = false;
 
     /**
      * URL type flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var boolean
      */
     protected static $cleanURL = false;
 
     /**
      * Called controller
      *
-     * @var   \XLite\Controller\AController
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Controller\AController
      */
     protected static $controller = null;
 
     /**
      * Flag; determines if we need to cleanup (and, as a result, to rebuild) classes and templates cache
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $isNeedToCleanupCache = false;
 
     /**
      * TODO - check if it's realy needed
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $_xlite_form_id = null;
 
     /**
      * Current currency
      *
-     * @var   \XLite\Model\Currency
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Currency
      */
     protected $currentCurrency;
 
@@ -125,8 +109,6 @@ class XLite extends \XLite\Base
      * Check is admin interface
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isAdminZone()
     {
@@ -137,8 +119,6 @@ class XLite extends \XLite\Base
      * Check is cache building
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function isCacheBuilding()
     {
@@ -149,8 +129,6 @@ class XLite extends \XLite\Base
      * Check if clean URL used
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function isCleanURL()
     {
@@ -163,8 +141,6 @@ class XLite extends \XLite\Base
      * @param boolean $flag If it's needed to cleanup cache or not
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function setCleanUpCacheFlag($flag)
     {
@@ -175,8 +151,6 @@ class XLite extends \XLite\Base
      * Get controller
      *
      * @return \XLite\Controller\AController
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getController()
     {
@@ -203,8 +177,6 @@ class XLite extends \XLite\Base
      * @param mixed $controller Controller OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function setController($controller = null)
     {
@@ -217,8 +189,6 @@ class XLite extends \XLite\Base
      * Return current target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getTarget()
     {
@@ -233,8 +203,6 @@ class XLite extends \XLite\Base
      * Assemble and get controller class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getControllerClass()
     {
@@ -247,8 +215,6 @@ class XLite extends \XLite\Base
      * @param mixed $names List (or single value) of option names OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptions($names = null)
     {
@@ -259,8 +225,6 @@ class XLite extends \XLite\Base
      * Clean up classes cache (if needed)
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __destruct()
     {
@@ -273,8 +237,6 @@ class XLite extends \XLite\Base
      * Return current endpoint script
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getScript()
     {
@@ -289,8 +251,6 @@ class XLite extends \XLite\Base
      * @param array   $params   Optional URL params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShopURL($url = '', $isSecure = null, array $params = array())
     {
@@ -301,8 +261,6 @@ class XLite extends \XLite\Base
      * Return instance of the abstract factory sigleton
      *
      * @return \XLite\Model\Factory
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFactory()
     {
@@ -315,8 +273,6 @@ class XLite extends \XLite\Base
      * @param string $message Error message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doGlobalDie($message)
     {
@@ -327,8 +283,6 @@ class XLite extends \XLite\Base
      * Initialize all active modules
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function initModules()
     {
@@ -339,8 +293,6 @@ class XLite extends \XLite\Base
      * Perform an action and redirect
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function runController()
     {
@@ -351,8 +303,6 @@ class XLite extends \XLite\Base
      * Return viewer object
      *
      * @return \XLite\View\Controller|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getViewer()
     {
@@ -368,8 +318,6 @@ class XLite extends \XLite\Base
      * Process request
      *
      * @return \XLite
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processRequest()
     {
@@ -386,8 +334,6 @@ class XLite extends \XLite\Base
      * @param boolean $adminZone Admin interface flag OPTIONAL
      *
      * @return \XLite
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function run($adminZone = false)
     {
@@ -421,8 +367,6 @@ class XLite extends \XLite\Base
      * Get current currency
      *
      * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrency()
     {
@@ -438,8 +382,6 @@ class XLite extends \XLite\Base
      * Return current action
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAction()
     {
@@ -450,8 +392,6 @@ class XLite extends \XLite\Base
      * Clear some data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function clearDataOnStartup()
     {
@@ -465,8 +405,6 @@ class XLite extends \XLite\Base
      * Dispatch request
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function dispatchRequest()
     {
@@ -483,8 +421,6 @@ class XLite extends \XLite\Base
      * Return target by clean URL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function getTargetByCleanURL()
     {
@@ -508,8 +444,6 @@ class XLite extends \XLite\Base
      * Get application version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     final public function getVersion()
     {
@@ -520,8 +454,6 @@ class XLite extends \XLite\Base
      * Get application major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     final public function getMajorVersion()
     {
@@ -532,8 +464,6 @@ class XLite extends \XLite\Base
      * Get application minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     final public function getMinorVersion()
     {
@@ -547,8 +477,6 @@ class XLite extends \XLite\Base
      * @param string $operator Comparison operator
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     final public function checkVersion($version, $operator)
     {

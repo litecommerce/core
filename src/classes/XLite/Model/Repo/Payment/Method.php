@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Payment;
@@ -30,35 +28,27 @@ namespace XLite\Model\Repo\Payment;
 /**
  * Payment method repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Method extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SECONDARY;
 
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'orderby';
 
     /**
      * Alternative record identifiers
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $alternativeIdentifier = array(
         array('service_name'),
@@ -70,8 +60,6 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * Find all methods
      *
      * @return \Doctrine\Common\Collection\Colelction
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllMethods()
     {
@@ -82,8 +70,6 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * Define query for findAllMethods() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllMethodsQuery()
     {
@@ -98,8 +84,6 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * Find all active methods
      *
      * @return \Doctrine\Common\Collection\Colelction
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllActive()
     {
@@ -118,8 +102,6 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * Define query for findAllActive() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllActiveQuery()
     {
