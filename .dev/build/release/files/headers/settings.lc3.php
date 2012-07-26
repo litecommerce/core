@@ -19,6 +19,7 @@ $GPL = array(
 
 $externalPatterns = array(
     'Module/CDev/AmazonS3Images/lib',
+    'Module/CDev/ContactUs/recaptcha/recaptchalib.php',
     'Includes/Decorator/Plugin/Doctrine/Utils/ModelGenerator',
     'skins/common/js/jquery',
     'skins/common/js/php.js',
