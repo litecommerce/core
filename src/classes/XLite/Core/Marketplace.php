@@ -94,7 +94,7 @@ class Marketplace extends \XLite\Base\Singleton
      * Some regexps
      */
     const REGEXP_VERSION  = '/\d+\.?[\w-\.]*/';
-    const REGEXP_WORD     = '/\w+/';
+    const REGEXP_WORD     = '/[\w\"\']+/';
     const REGEXP_NUMBER   = '/\d+/';
     const REGEXP_HASH     = '/\w{32}/';
     const REGEXP_CURRENCY = '/[A-Z]{1,3}/';
@@ -640,13 +640,22 @@ class Marketplace extends \XLite\Base\Singleton
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'options' => array('regexp' => static::REGEXP_WORD),
             ),
-            static::FIELD_READABLE_AUTHOR => FILTER_SANITIZE_STRING,
-            static::FIELD_READABLE_NAME   => FILTER_SANITIZE_STRING,
+            static::FIELD_READABLE_AUTHOR => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => static::REGEXP_WORD),
+            ),
+            static::FIELD_READABLE_NAME   => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => static::REGEXP_WORD),
+            ),
             static::FIELD_MODULE_ID => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'options' => array('regexp' => static::REGEXP_HASH),
             ),
-            static::FIELD_DESCRIPTION => FILTER_SANITIZE_STRING,
+            static::FIELD_DESCRIPTION => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => static::REGEXP_WORD),
+            ),
             static::FIELD_PRICE => FILTER_VALIDATE_FLOAT,
             static::FIELD_CURRENCY => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
