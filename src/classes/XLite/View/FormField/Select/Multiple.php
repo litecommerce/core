@@ -78,8 +78,6 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
      * @param array $attrs Field attributes to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setCommonAttributes(array $attrs)
     {
