@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,30 +13,28 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.18
  */
 
 namespace XLite\Module\CDev\ContactUs\Controller\Customer;
 
 /**
- * Contact us controller 
- * 
+ * Contact us controller
+ *
  * @see   ____class_see____
  * @since 1.0.18
  */
 class ContactUs extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Default title 
+     * Default title
      */
     const DEFAULT_TITLE = 'Contact us';
 
@@ -44,8 +42,6 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
      * Fields
      *
      * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
      */
     protected $requiredFields = array(
         'name'    => 'Your name',
@@ -53,13 +49,11 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
         'subject' => 'Subject',
         'message' => 'Message'
     );
-    
+
     /**
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -71,8 +65,6 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -85,8 +77,6 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
      * @param string $field Field
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getValue($field)
     {
@@ -115,8 +105,6 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -124,11 +112,9 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Send message 
+     * Send message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function doActionSend()
     {
@@ -154,7 +140,7 @@ class ContactUs extends \XLite\Controller\Customer\ACustomer
             $isValid
             && false === filter_var($data['email'], FILTER_VALIDATE_EMAIL)
         ) {
-            
+
             $isValid = false;
             \XLite\Core\TopMessage::addError(
                 \XLite\Core\Translation::lbl(
