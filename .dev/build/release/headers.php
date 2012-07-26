@@ -190,8 +190,6 @@ function check($fileName, $newHeader)
 
     $fileType = preg_replace('/^.*\.(\w+)$/sSU', '\1', basename($fileName));
 
-    $newHeader = preg_replace('/[\n\r]/', '', $newHeader);
-
     if ('tpl' == $fileType) {
 
         $newHeader = preg_replace('/(^.*$)\Z/SUm', '', $newHeader);
@@ -206,8 +204,6 @@ function check($fileName, $newHeader)
 
     if (file_exists($fileName)) {
         $content = file_get_contents($fileName);
-
-        $content = preg_replace('/[\r\n]/', '', $content);
 
         if (preg_match('/(' . $headerPattern . ')/sSU', $content, $match)) {
             $result = true;
