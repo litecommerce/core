@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * ModuleKey
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ModuleKey extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +37,6 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
      * Return page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -55,8 +51,6 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
      * Action of license key registration
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRegisterKey()
     {

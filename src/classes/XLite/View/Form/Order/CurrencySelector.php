@@ -28,8 +28,6 @@ namespace XLite\View\Form\Order;
 /**
  * Currency selector form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CurrencySelector extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class CurrencySelector extends \XLite\View\Form\AForm
      * getDefaultFormMethod
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultFormMethod()
     {
@@ -49,8 +45,6 @@ class CurrencySelector extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {

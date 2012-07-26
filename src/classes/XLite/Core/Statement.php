@@ -28,35 +28,27 @@ namespace XLite\Core;
 /**
  * Statement
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Statement extends \Doctrine\DBAL\Statement
 {
     /**
      * SQL query
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $_sql;
 
     /**
      * The bound parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $_params = array();
 
     /**
      * The underlying driver statement
      *
-     * @var   \Doctrine\DBAL\Driver\Statement
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\DBAL\Driver\Statement
      */
     protected $_stmt;
 
@@ -67,8 +59,6 @@ class Statement extends \Doctrine\DBAL\Statement
      *
      * @return boolean
      * @throws \XLite\Core\PDOException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function execute($params = null)
     {

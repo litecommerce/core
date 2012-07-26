@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Console mode main widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Console extends \XLite\View\AView
 {
@@ -39,8 +37,6 @@ class Console extends \XLite\View\AView
      * @param string $template Template file name OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function display($template = null)
     {
@@ -50,8 +46,6 @@ class Console extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

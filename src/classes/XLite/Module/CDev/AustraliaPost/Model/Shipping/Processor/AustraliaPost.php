@@ -29,26 +29,20 @@ namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
  * Shipping processor model
  * API documentation: http://drc.edeliver.com.au/
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
 {
     /**
      * Unique processor Id
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $processorId = 'aupost';
 
     /**
      * Australia Post API URL
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $apiURL = 'http://drc.edeliver.com.au/ratecalc.asp';
 
@@ -57,8 +51,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
      * getProcessorName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProcessorName()
     {
@@ -72,8 +64,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
      * @param boolean                                    $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRates($inputData, $ignoreCache = false)
     {
@@ -102,8 +92,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
      * Disable the possibility to edit the names of shipping methods in the interface of administrator
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMethodNamesAdjustable()
     {
@@ -117,8 +105,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareInputData(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
@@ -156,8 +142,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
      * @param boolean $ignoreCache Flag: if true then do not get rates from cache
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doQuery($data, $ignoreCache)
     {
@@ -263,8 +247,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
      *   '
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponse($stringData)
     {

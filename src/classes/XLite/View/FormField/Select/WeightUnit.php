@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Weight unit selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class WeightUnit extends \XLite\View\FormField\Select\Regular
 {
@@ -37,8 +35,6 @@ class WeightUnit extends \XLite\View\FormField\Select\Regular
      * Get default attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAttributes()
     {
@@ -53,8 +49,6 @@ class WeightUnit extends \XLite\View\FormField\Select\Regular
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

@@ -28,8 +28,6 @@ namespace XLite\Upgrade\Entry\Module;
 /**
  * Uploaded
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
 {
@@ -41,9 +39,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Module metadata
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $metadata;
 
@@ -51,8 +47,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return module actual name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -63,8 +57,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry readable name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -75,8 +67,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return icon URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIconURL()
     {
@@ -87,8 +77,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry old major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMajorVersionOld()
     {
@@ -99,8 +87,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry old minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMinorVersionOld()
     {
@@ -111,8 +97,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry new major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMajorVersionNew()
     {
@@ -123,8 +107,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry new minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMinorVersionNew()
     {
@@ -135,8 +117,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry revision date
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRevisionDate()
     {
@@ -147,8 +127,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return module author readable name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAuthor()
     {
@@ -159,8 +137,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     public function getDescription()
     {
@@ -171,8 +147,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Check if module is enabled
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEnabled()
     {
@@ -183,8 +157,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Check if module is installed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isInstalled()
     {
@@ -195,8 +167,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry pack size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPackSize()
     {
@@ -207,8 +177,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return module dependencies
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDependencies()
     {
@@ -219,8 +187,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Unpack archive
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function unpack()
     {
@@ -234,8 +200,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Calculate hashes for current version
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function loadHashesForInstalledFiles()
     {
@@ -266,8 +230,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * @param string $path Path to the module package
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($path)
     {
@@ -291,8 +253,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Names of variables to serialize
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __sleep()
     {
@@ -308,8 +268,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * @param string $name Array index
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMetadata($name)
     {
@@ -323,8 +281,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * @param array  $args   Call arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callModuleMethod($method, array $args = array())
     {
@@ -335,8 +291,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Find installed module
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleInstalled()
     {
@@ -347,8 +301,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Return common module data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleData()
     {
@@ -368,8 +320,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      * Update database records
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateDBRecords()
     {

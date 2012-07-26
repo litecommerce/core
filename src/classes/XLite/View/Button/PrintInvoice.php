@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * 'Print invoice' button widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="page.tabs.after", zone="admin", weight="100")
  */
@@ -53,8 +51,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Return list of allowed targets
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public static function getAllowedTargets()
     {
@@ -69,8 +65,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -84,8 +78,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Return CSS files list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -99,8 +91,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -111,8 +101,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -127,8 +115,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Get default CSS class name
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getDefaultStyle()
     {
@@ -139,8 +125,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Get default label 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getDefaultLabel()
     {
@@ -151,8 +135,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Get order ID 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getOrderId()
     {
@@ -169,8 +151,6 @@ class PrintInvoice extends \XLite\View\Button\AButton
      * Return URL params to use with onclick event
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getURLParams()
     {

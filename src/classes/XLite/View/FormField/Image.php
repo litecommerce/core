@@ -28,8 +28,6 @@ namespace XLite\View\FormField;
 /**
  * Image loader
  * 
- * @see   ____class_see____
- * @since 1.0.18
  */
 class Image extends \XLite\View\FormField\AFormField
 {
@@ -44,8 +42,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -56,8 +52,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -68,8 +62,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -91,8 +83,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -103,8 +93,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Check - remove button is visible or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function isRemoveButtonVisible()
     {
@@ -115,8 +103,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get remove button label 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getRemoveButtonLabel()
     {
@@ -127,8 +113,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get default wrapper class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultWrapperClass()
     {
@@ -139,8 +123,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get button label 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getButtonLabel()
     {
@@ -151,8 +133,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get object
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getObject()
     {
@@ -163,8 +143,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get object id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getObjectId()
     {
@@ -175,8 +153,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get file object
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getFileObject()
     {
@@ -187,8 +163,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get file object id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getFileObjectId()
     {

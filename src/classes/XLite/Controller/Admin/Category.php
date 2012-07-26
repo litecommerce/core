@@ -28,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Category page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Category extends \XLite\Controller\Admin\Base\Catalog
 {
     /**
      * Backward compatibility
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     public $params = array('target', 'category_id', 'mode');
 
@@ -50,8 +46,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * NOTE: this function is public since it's neede for widgets
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isNew()
     {
@@ -62,8 +56,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Return class name for the controller main form
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function getFormClass()
     {
@@ -74,8 +66,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Alias
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getEntity()
     {
@@ -90,8 +80,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -105,8 +93,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {
@@ -125,8 +111,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Check current category
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public function isRoot()
     {
@@ -138,8 +122,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Return current (or default) category object
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategory()
     {
@@ -156,8 +138,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Return ID for parent category
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public function getParentCategoryId()
     {
@@ -174,8 +154,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Check if category has an image
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     public function hasImage()
     {
@@ -186,8 +164,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -200,8 +176,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * @param string $field Name of the field to retrieve OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPostedData($field = null)
     {
@@ -231,8 +205,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * doActionAdd
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -251,8 +223,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {

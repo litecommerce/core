@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node\Sales;
 /**
  * Abstract sales node
  * 
- * @see   ____class_see____
- * @since 1.0.18
  */
 abstract class ASales extends \XLite\View\TopMenu\Node
 {
@@ -37,8 +35,6 @@ abstract class ASales extends \XLite\View\TopMenu\Node
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function checkACL()
     {

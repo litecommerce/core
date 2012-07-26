@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Measure dump data
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="measure_dumps")
@@ -39,9 +37,7 @@ class MeasureDump extends \XLite\Model\AEntity
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class MeasureDump extends \XLite\Model\AEntity
     /**
      * Data
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string")
      */
@@ -63,9 +57,7 @@ class MeasureDump extends \XLite\Model\AEntity
     /**
      * Big data
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */

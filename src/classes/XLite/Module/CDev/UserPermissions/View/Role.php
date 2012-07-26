@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\UserPermissions\View;
 /**
  * Role
  * 
- * @see   ____class_see____
- * @since 1.0.15
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -39,8 +37,6 @@ class Role extends \XLite\View\Dialog
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class Role extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

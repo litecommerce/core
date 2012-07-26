@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * DataSource model
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="data_sources")
@@ -45,9 +43,7 @@ class DataSource extends \XLite\Model\AEntity
     /**
      * Unique data source id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -58,9 +54,7 @@ class DataSource extends \XLite\Model\AEntity
     /**
      * Data source type
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -69,9 +63,7 @@ class DataSource extends \XLite\Model\AEntity
     /**
      * Data source parameters (relation)
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\DataSource\Parameter", mappedBy="dataSource", cascade={"all"})
      */
@@ -83,8 +75,6 @@ class DataSource extends \XLite\Model\AEntity
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -101,8 +91,6 @@ class DataSource extends \XLite\Model\AEntity
      * @param string $name Parameter name
      *  
      * @return \XLite\Model\DataSource\Parameter
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getParameter($name)
     {
@@ -119,8 +107,6 @@ class DataSource extends \XLite\Model\AEntity
      * @param string $name Parameter name
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getParameterValue($name)
     {
@@ -137,8 +123,6 @@ class DataSource extends \XLite\Model\AEntity
      * @param mixed  $value Parameter value
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function setParameterValue($name, $value)
     {
@@ -163,8 +147,6 @@ class DataSource extends \XLite\Model\AEntity
      * Get data source based on model shop type
      * 
      * @return \XLite\Core\DataSource\ADataSource
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function detectSource()
     {
@@ -181,8 +163,6 @@ class DataSource extends \XLite\Model\AEntity
      * Get concrete model widget class to be used in templates
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getModelWidgetClass()
     {

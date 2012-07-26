@@ -28,8 +28,6 @@ namespace XLite\View\LanguagesModify;
 /**
  * Edit language label
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class EditLabel extends \XLite\View\AView
 {
@@ -41,9 +39,7 @@ class EditLabel extends \XLite\View\AView
     /**
      * Label (cache)
      *
-     * @var   \XLite\Model\LanguageLabel
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\LanguageLabel
      */
     protected $label = null;
 
@@ -52,8 +48,6 @@ class EditLabel extends \XLite\View\AView
      * Get label
      *
      * @return \XLite\Model\LanguageLabel|boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLabel()
     {
@@ -76,8 +70,6 @@ class EditLabel extends \XLite\View\AView
      * @param string $code Language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslation($code)
     {
@@ -88,8 +80,6 @@ class EditLabel extends \XLite\View\AView
      * Get added languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddedLanguages()
     {
@@ -102,8 +92,6 @@ class EditLabel extends \XLite\View\AView
      * @param \XLite\Model\Language $language Language_
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isRequiredLanguage(\XLite\Model\Language $language)
     {
@@ -114,8 +102,6 @@ class EditLabel extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -126,8 +112,6 @@ class EditLabel extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -144,8 +128,6 @@ class EditLabel extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

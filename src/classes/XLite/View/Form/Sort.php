@@ -28,8 +28,6 @@ namespace XLite\View\Form;
 /**
  * Sort form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Sort extends \XLite\View\Form\AForm
 {
@@ -44,8 +42,6 @@ class Sort extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -56,8 +52,6 @@ class Sort extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -68,8 +62,6 @@ class Sort extends \XLite\View\Form\AForm
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -86,8 +78,6 @@ class Sort extends \XLite\View\Form\AForm
      * Initialization
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initView()
     {
@@ -100,8 +90,6 @@ class Sort extends \XLite\View\Form\AForm
      * getFormDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormDefaultParams()
     {

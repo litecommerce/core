@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Button to use with popup
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class APopupButton extends \XLite\View\Button\AButton
 {
@@ -37,8 +35,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function prepareURLParams();
 
@@ -46,8 +42,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * Return array of URL params for JS
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURLParams()
     {
@@ -60,8 +54,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * Return CSS files list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -75,8 +67,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -91,8 +81,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * Return content for popup button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getButtonContent()
     {
@@ -103,8 +91,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -115,8 +101,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * Defines CSS class for widget to use in templates
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

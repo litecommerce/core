@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\FormField\Select;
 /**
  * Facebook Like button layot styles selector
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class FBLayoutStyle extends \XLite\View\FormField\Select\Regular
 {
@@ -37,8 +35,6 @@ class FBLayoutStyle extends \XLite\View\FormField\Select\Regular
      * getDefaultOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getDefaultOptions()
     {

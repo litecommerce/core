@@ -28,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * QuickLook
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class QuickLook extends \XLite\Controller\Customer\Product
 {

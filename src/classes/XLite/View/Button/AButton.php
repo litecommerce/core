@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Abstract button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AButton extends \XLite\View\AView
 {
@@ -47,8 +45,6 @@ abstract class AButton extends \XLite\View\AView
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -62,8 +58,6 @@ abstract class AButton extends \XLite\View\AView
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -77,8 +71,6 @@ abstract class AButton extends \XLite\View\AView
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -89,8 +81,6 @@ abstract class AButton extends \XLite\View\AView
      * getDefaultStyle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultStyle()
     {
@@ -101,8 +91,6 @@ abstract class AButton extends \XLite\View\AView
      * getDefaultDisableState
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultDisableState()
     {
@@ -113,8 +101,6 @@ abstract class AButton extends \XLite\View\AView
      * Return button text
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getButtonLabel()
     {
@@ -125,8 +111,6 @@ abstract class AButton extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -146,8 +130,6 @@ abstract class AButton extends \XLite\View\AView
      * getClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {
@@ -158,8 +140,6 @@ abstract class AButton extends \XLite\View\AView
      * getId
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getId()
     {
@@ -170,8 +150,6 @@ abstract class AButton extends \XLite\View\AView
      * Return button name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getName()
     {
@@ -182,8 +160,6 @@ abstract class AButton extends \XLite\View\AView
      * Return button value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValue()
     {
@@ -194,8 +170,6 @@ abstract class AButton extends \XLite\View\AView
      * hasName
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasName()
     {
@@ -206,8 +180,6 @@ abstract class AButton extends \XLite\View\AView
      * hasValue
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasValue()
     {
@@ -218,8 +190,6 @@ abstract class AButton extends \XLite\View\AView
      * hasClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasClass()
     {
@@ -230,8 +200,6 @@ abstract class AButton extends \XLite\View\AView
      * isDisabled
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisabled()
     {

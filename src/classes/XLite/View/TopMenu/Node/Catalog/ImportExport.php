@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node\Catalog;
 /**
  * Import / export
  * 
- * @see   ____class_see____
- * @since 1.0.18
  *
  * @ListChild (list="menu.catalog", weight="400", zone="admin")
  */
@@ -39,8 +37,6 @@ class ImportExport extends \XLite\View\TopMenu\Node\Catalog\ACatalog
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

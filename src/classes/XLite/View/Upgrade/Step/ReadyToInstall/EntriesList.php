@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade\Step\ReadyToInstall;
 /**
  * EntriesList
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", weight="100", zone="admin")
  */
@@ -39,8 +37,6 @@ class EntriesList extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstal
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -51,8 +47,6 @@ class EntriesList extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstal
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -63,8 +57,6 @@ class EntriesList extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstal
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {

@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Invoice widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -38,9 +36,7 @@ class InvoicePage extends \XLite\View\Dialog
     /**
      * Order (cache)
      *
-     * @var   \XLite\Model\Order
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order
      */
     protected $order;
 
@@ -48,8 +44,6 @@ class InvoicePage extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -63,8 +57,6 @@ class InvoicePage extends \XLite\View\Dialog
      * Get order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrder()
     {
@@ -80,8 +72,6 @@ class InvoicePage extends \XLite\View\Dialog
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -92,8 +82,6 @@ class InvoicePage extends \XLite\View\Dialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -104,8 +92,6 @@ class InvoicePage extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -116,8 +102,6 @@ class InvoicePage extends \XLite\View\Dialog
      * Return file name for the center part template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBody()
     {

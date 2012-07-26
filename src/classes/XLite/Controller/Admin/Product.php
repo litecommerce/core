@@ -28,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Product
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Controller\Admin\Base\Catalog
 {
     /**
      * Backward compatibility
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     public $params = array('target', 'id', 'product_id', 'page', 'backURL');
 
@@ -50,8 +46,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * NOTE: this function is public since it's neede for widgets
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isNew()
     {
@@ -62,8 +56,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Return class name for the controller main form
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function getFormClass()
     {
@@ -74,8 +66,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Alias
      *
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getEntity()
     {
@@ -90,8 +80,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -102,8 +90,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -122,8 +108,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {
@@ -147,8 +131,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Alias
      *
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProduct()
     {
@@ -165,8 +147,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -177,8 +157,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * getInventory
      *
      * @return \XLite\Model\Inventory
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInventory()
     {
@@ -189,8 +167,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Get product category id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoryId()
     {
@@ -209,8 +185,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * NOTE: this function is public since it's neede for widgets
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProductId()
     {
@@ -229,8 +203,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * @param \XLite\Model\Product $product Current product
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategoryProducts(\XLite\Model\Product $product)
     {
@@ -256,8 +228,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * @param \XLite\Model\Product $product ____param_comment____
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClasses(\XLite\Model\Product $product)
     {
@@ -284,8 +254,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * @param string $field Name of the field to retrieve OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPostedData($field = null)
     {
@@ -319,8 +287,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * doActionAdd
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -351,8 +317,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -379,8 +343,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Delete detailed image
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeleteImage()
     {
@@ -410,8 +372,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Update image
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateImages()
     {
@@ -449,8 +409,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      * Update inventory
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateInventory()
     {

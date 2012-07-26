@@ -28,8 +28,6 @@ namespace XLite\Model\Payment;
 /**
  * Transaction data storage
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="payment_transaction_data",
@@ -50,9 +48,7 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Primary key
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -63,9 +59,7 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Record name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -74,9 +68,7 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Record public name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -85,9 +77,7 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Access level
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=1)
      */
@@ -96,9 +86,7 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Value
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -107,9 +95,7 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Transaction
      *
-     * @var   \XLite\Model\Payment\Transaction
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Payment\Transaction
      *
      * @ManyToOne  (targetEntity="XLite\Model\Payment\Transaction", inversedBy="data")
      * @JoinColumn (name="transaction_id", referencedColumnName="transaction_id")
@@ -120,8 +106,6 @@ class TransactionData extends \XLite\Model\AEntity
      * Check record availability
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAvailable()
     {

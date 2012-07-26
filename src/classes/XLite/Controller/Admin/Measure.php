@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Measure
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Measure extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Measure extends \XLite\Controller\Admin\AAdmin
      * Measure action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionMeasure()
     {
@@ -72,8 +68,6 @@ class Measure extends \XLite\Controller\Admin\AAdmin
      * Request probe script
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function requestProbe()
     {

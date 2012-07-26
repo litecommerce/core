@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Invoice widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Invoice extends \XLite\View\Invoice implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Invoice extends \XLite\View\Invoice implements \XLite\Base\IDecorator
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {

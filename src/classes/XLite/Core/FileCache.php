@@ -29,53 +29,41 @@ namespace XLite\Core;
  * File system cache
  * FIXME: must be completely refactored
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class FileCache extends \Doctrine\Common\Cache\CacheProvider
 {
     /**
      * Cache directory path
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $path = null;
 
     /**
      * File header
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $header = '<?php die(); ?>';
 
     /**
      * File header length
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $headerLength = 15;
 
     /**
      * TTL block length
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $ttlLength = 11;
 
     /**
      * Validation cache
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $validationCache = array();
 
@@ -85,8 +73,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($path = null)
     {
@@ -99,8 +85,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $path Path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setPath($path)
     {
@@ -119,8 +103,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * Get cache path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPath()
     {
@@ -133,8 +115,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $id ____param_comment____
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getNamespacedId($id)
     {
@@ -150,8 +130,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $id ____param_comment____
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getNamespacedIdToDelete($id)
     {
@@ -168,8 +146,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $prefix Prefix
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function deleteByPrefix($prefix)
     {
@@ -197,8 +173,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $regex Regular expression
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function deleteByRegex($regex)
     {
@@ -222,8 +196,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * Get cache repository ids list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIds()
     {
@@ -246,8 +218,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * Delete all cache entries
      *
      * @return array Array of the deleted cache ids
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function deleteAll()
     {
@@ -272,8 +242,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $id CEll id
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doFetch($id)
     {
@@ -294,8 +262,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $id CEll id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doContains($id)
     {
@@ -312,8 +278,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param integer $lifeTime Cell TTL OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doSave($id, $data, $lifeTime = 0)
     {
@@ -331,8 +295,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $id Cell id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doDelete($id)
     {
@@ -351,8 +313,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * doFlush
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function doFlush()
     {
@@ -363,8 +323,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * doGetStats
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function doGetStats()
     {
@@ -377,8 +335,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $id Cell id
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPathById($id)
     {
@@ -391,8 +347,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      * @param string $path CEll file path
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isKeyValid($path)
     {

@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Event task controller
  *
- * @see   ____class_see____
- * @since 1.0.22
  */
 class EventTask extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -49,8 +45,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -61,8 +55,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Run task
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function doActionRun()
     {
@@ -113,8 +105,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Run task
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function doActionTouch()
     {
@@ -135,8 +125,6 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
      * Process request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processRequest()
     {

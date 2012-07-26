@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text;
 /**
  * Price 
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Price extends \XLite\View\FormField\Inline\Base\Single
 {
@@ -37,8 +35,6 @@ class Price extends \XLite\View\FormField\Inline\Base\Single
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -53,8 +49,6 @@ class Price extends \XLite\View\FormField\Inline\Base\Single
      * Define form field
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineFieldClass()
     {
@@ -67,8 +61,6 @@ class Price extends \XLite\View\FormField\Inline\Base\Single
      * @param array $field Field
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getViewValue(array $field)
     {
@@ -82,8 +74,6 @@ class Price extends \XLite\View\FormField\Inline\Base\Single
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {
@@ -94,8 +84,6 @@ class Price extends \XLite\View\FormField\Inline\Base\Single
      * Get view template
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getViewTemplate()
     {
@@ -106,8 +94,6 @@ class Price extends \XLite\View\FormField\Inline\Base\Single
      * Get currency 
      * 
      * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getCurrency()
     {
@@ -120,8 +106,6 @@ class Price extends \XLite\View\FormField\Inline\Base\Single
      * @param array $field Field data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldParams(array $field)
     {
@@ -134,8 +118,6 @@ class Price extends \XLite\View\FormField\Inline\Base\Single
      * @param array $field Field
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getFieldEntityValue(array $field)
     {

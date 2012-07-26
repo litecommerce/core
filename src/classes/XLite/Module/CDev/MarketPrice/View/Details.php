@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\MarketPrice\View;
 /**
  * Details 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -54,8 +50,6 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
      * @param \XLite\Model\Product $product Current product
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isShowMarketPrice(\XLite\Model\Product $product)
     {
@@ -68,8 +62,6 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
      * @param \XLite\Model\Product $product Current product
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSaveDifference(\XLite\Model\Product $product)
     {
@@ -82,8 +74,6 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
      * @param \XLite\Model\Product $product Current product
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLabels(\XLite\Model\Product $product)
     {

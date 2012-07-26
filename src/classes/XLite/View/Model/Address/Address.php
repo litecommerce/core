@@ -28,8 +28,6 @@ namespace XLite\View\Model\Address;
 /**
  * Profile model widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Address extends \XLite\View\Model\AModel
 {
@@ -42,9 +40,7 @@ class Address extends \XLite\View\Model\AModel
      *       self::SCHEMA_REQUIRED => true,
      *   ),
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $addressSchema = array(
         'title' => array(
@@ -130,9 +126,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * Address instance
      *
-     * @var   \XLite\Model\Address
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Address
      */
     protected $address = null;
 
@@ -140,8 +134,6 @@ class Address extends \XLite\View\Model\AModel
      * getAddressSchema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddressSchema()
     {
@@ -160,8 +152,6 @@ class Address extends \XLite\View\Model\AModel
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFormFieldsForSectionDefault()
     {
@@ -177,8 +167,6 @@ class Address extends \XLite\View\Model\AModel
      * getRequestAddressId
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestAddressId()
     {
@@ -189,8 +177,6 @@ class Address extends \XLite\View\Model\AModel
      * Return current address ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddressId()
     {
@@ -201,8 +187,6 @@ class Address extends \XLite\View\Model\AModel
      * getRequestProfileId
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestProfileId()
     {
@@ -213,8 +197,6 @@ class Address extends \XLite\View\Model\AModel
      * Return current profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileId()
     {
@@ -227,8 +209,6 @@ class Address extends \XLite\View\Model\AModel
      * Returns widget head
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -239,8 +219,6 @@ class Address extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -275,8 +253,6 @@ class Address extends \XLite\View\Model\AModel
      * @param string $name Name of form field
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFieldName($name)
     {
@@ -287,8 +263,6 @@ class Address extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -301,8 +275,6 @@ class Address extends \XLite\View\Model\AModel
      * @param array &$fields Widgets list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setStateSelectorIds(array &$fields)
     {
@@ -320,8 +292,6 @@ class Address extends \XLite\View\Model\AModel
      * @param string $name Field/property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelObjectValue($name)
     {
@@ -334,8 +304,6 @@ class Address extends \XLite\View\Model\AModel
      * Some JavaScript code to insert
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTopInlineJSCode()
     {
@@ -346,8 +314,6 @@ class Address extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSubmitButtonLabel()
     {
@@ -358,8 +324,6 @@ class Address extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -379,8 +343,6 @@ class Address extends \XLite\View\Model\AModel
      * prepareDataForMapping
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareDataForMapping()
     {
@@ -426,8 +388,6 @@ class Address extends \XLite\View\Model\AModel
      * @param string $section Current section name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateFields(array $data, $section)
     {
@@ -442,8 +402,6 @@ class Address extends \XLite\View\Model\AModel
      * @param array $data Current section data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareDataToValidate($data)
     {

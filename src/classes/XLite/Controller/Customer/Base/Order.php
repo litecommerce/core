@@ -28,17 +28,13 @@ namespace XLite\Controller\Customer\Base;
 /**
  * Order
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Order extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Order (cache)
      *
-     * @var   \XLite\Model\Order
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order
      */
     protected $order;
 
@@ -46,8 +42,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Return current order ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderId()
     {
@@ -58,8 +52,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Return current order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrder()
     {
@@ -74,8 +66,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Check if currently logged user is an admin
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isAdmin()
     {
@@ -86,8 +76,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Check if order corresponds to current user
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkOrderProfile()
     {
@@ -99,8 +87,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Check order access
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkOrderAccess()
     {
@@ -111,8 +97,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -123,8 +107,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Add the base part of the location path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {

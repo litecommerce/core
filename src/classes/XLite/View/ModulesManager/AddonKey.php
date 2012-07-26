@@ -28,8 +28,6 @@ namespace XLite\View\ModulesManager;
 /**
  * Enter addon key page
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -39,8 +37,6 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -54,8 +50,6 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -69,8 +63,6 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -81,8 +73,6 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

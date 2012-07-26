@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
 /**
  * The Profile model repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorator
 {
@@ -42,8 +40,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @param integer              $cmsProfileId CMS profile id
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function linkProfiles(\XLite\Model\Profile $profile, $cmsProfileId)
     {
@@ -61,8 +57,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @param integer $cmsProfileId CMS profile id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineUnlinkProfilesQuery($cmsProfileId)
     {
@@ -84,8 +78,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @param integer $cmsProfileId CMS profile id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineLinkProfilesQuery($profileId, $cmsProfileId)
     {
@@ -110,8 +102,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @param array $roles Roles list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAdminsWithoutRoles($roles)
     {
@@ -125,8 +115,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @param array $roles Roles list
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAdminsWithoutRolesQuery($roles)
     {
@@ -160,8 +148,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @param array $roles Roles list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findCustomersWithRoles($roles)
     {
@@ -175,8 +161,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @param array $roles Roles list
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCustomersWithRolesQuery($roles)
     {
@@ -213,8 +197,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * Returns an array of all profiles with order_id = NULL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllProfilesArray()
     {
@@ -226,8 +208,6 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * Define query for findAllProfilesArray() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllProfilesArrayQuery()
     {

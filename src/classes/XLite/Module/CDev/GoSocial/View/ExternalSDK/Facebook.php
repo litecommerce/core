@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\ExternalSDK;
 /**
  * Facebook SDK loader 
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class Facebook extends \XLite\View\ExternalSDK\Facebook implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Facebook extends \XLite\View\ExternalSDK\Facebook implements \XLi
      * Get SDK URL hash query
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getQuery()
     {

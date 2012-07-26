@@ -29,8 +29,6 @@ namespace XLite\View\Button;
 /**
  * Delete address button widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DeleteAddress extends \XLite\View\Button\Regular
 {
@@ -43,8 +41,6 @@ class DeleteAddress extends \XLite\View\Button\Regular
      * getJSFiles
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -58,8 +54,6 @@ class DeleteAddress extends \XLite\View\Button\Regular
      * Register CSS files for delete address button
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -73,8 +67,6 @@ class DeleteAddress extends \XLite\View\Button\Regular
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -89,8 +81,6 @@ class DeleteAddress extends \XLite\View\Button\Regular
      * Return JS parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSParams()
     {
@@ -104,8 +94,6 @@ class DeleteAddress extends \XLite\View\Button\Regular
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -116,8 +104,6 @@ class DeleteAddress extends \XLite\View\Button\Regular
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

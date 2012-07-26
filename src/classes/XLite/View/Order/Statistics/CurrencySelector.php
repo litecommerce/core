@@ -28,26 +28,20 @@ namespace XLite\View\Order\Statistics;
 /**
  * Currency selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CurrencySelector extends \XLite\View\AView
 {
     /**
      * Current currency
      *
-     * @var   \XLite\Model\Currency
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Currency
      */
     protected $currency;
 
     /**
      * Currencies (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $currencies;
 
@@ -55,8 +49,6 @@ class CurrencySelector extends \XLite\View\AView
      * Get currencies
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrencies()
     {
@@ -73,8 +65,6 @@ class CurrencySelector extends \XLite\View\AView
      * @param \XLite\Model\Currency $currency Currency
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCurrencySelected(\XLite\Model\Currency $currency)
     {
@@ -95,8 +85,6 @@ class CurrencySelector extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -107,8 +95,6 @@ class CurrencySelector extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

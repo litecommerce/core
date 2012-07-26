@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\Button;
 /**
  * Google+ button
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="buttons.share.bar", weight="200")
  */
@@ -39,8 +37,6 @@ class GooglePlus extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -51,8 +47,6 @@ class GooglePlus extends \XLite\View\AView
      * Get button attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getButtonAttributes()
     {
@@ -65,8 +59,6 @@ class GooglePlus extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

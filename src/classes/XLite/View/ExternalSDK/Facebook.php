@@ -28,8 +28,6 @@ namespace XLite\View\ExternalSDK;
 /**
  * Facebook SDK loader
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Facebook extends \XLite\View\ExternalSDK\AExternalSDK
 {
@@ -37,8 +35,6 @@ class Facebook extends \XLite\View\ExternalSDK\AExternalSDK
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -49,8 +45,6 @@ class Facebook extends \XLite\View\ExternalSDK\AExternalSDK
      * Get javascript SDK URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getSDKUrl()
     {
@@ -61,8 +55,6 @@ class Facebook extends \XLite\View\ExternalSDK\AExternalSDK
      * Get locale 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getLocale()
     {
@@ -73,8 +65,6 @@ class Facebook extends \XLite\View\ExternalSDK\AExternalSDK
      * Get SDK URL hash query 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getQuery()
     {

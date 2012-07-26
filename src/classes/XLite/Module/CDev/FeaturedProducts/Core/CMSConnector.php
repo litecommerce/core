@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FeaturedProducts\Core;
 /**
  * CMSConnector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\B
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {

@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 /**
  * 'Powered by' widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PoweredBy extends \XLite\View\PoweredBy implements \XLite\Base\IDecorator
 {
     /**
      * Advertise phrases
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $phrases = array(
         'Powered by [e-commerce CMS]: LiteCommerce plus Drupal',
@@ -65,8 +61,6 @@ class PoweredBy extends \XLite\View\PoweredBy implements \XLite\Base\IDecorator
      * Check - display widget as link or as box
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLink()
     {
@@ -79,8 +73,6 @@ class PoweredBy extends \XLite\View\PoweredBy implements \XLite\Base\IDecorator
      * Return a Powered By message
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMessage()
     {

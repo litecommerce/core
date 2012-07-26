@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * \XLite\Module\CDev\DrupalConnector\Controller\Customer\Profile
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\IDecorator
 {
@@ -46,8 +44,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Return params for the "Personal info" part of the register form
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormPartMain()
     {
@@ -58,8 +54,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Return params for the "Addresses" part of the register form
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormPartAddresses()
     {
@@ -70,8 +64,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Return params for the whole register form
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormPartAll()
     {
@@ -84,8 +76,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @param string $type Part(s) identifier
      *
      * @return \XLite\View\Model\Profile\AProfile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormPart($type)
     {
@@ -99,8 +89,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Register the account with the basic data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRegisterBasic()
     {
@@ -117,8 +105,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Update the account with the basic data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateBasic()
     {
@@ -135,8 +121,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Cancel account (disable)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionCancel()
     {
@@ -153,8 +137,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Delete an account
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -165,8 +147,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Update access level of users with drupal roles with permission 'lc admin'
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateRoles()
     {
@@ -177,8 +157,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Delete roles and update access level of users with these roles
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeleteRole()
     {
@@ -209,8 +187,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Find users with drupal roles with permission 'lc admin' and update access level
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateAdminAccessLevels()
     {
@@ -246,8 +222,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @param integer $accessLevel Access level
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateAccessLevel(array $profiles, $accessLevel)
     {
@@ -267,8 +241,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @param \XLite\Model\Profile $profile Profile
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function updateProfileRole(\XLite\Model\Profile $profile)
     {

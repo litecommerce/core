@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Order history events
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="order_history_events")
@@ -39,9 +37,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Order history event unique id
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Event creation timestamp
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -63,9 +57,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Code of event
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -74,9 +66,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Human-readable description of event
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=1024, nullable=true)
      */
@@ -85,9 +75,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Data for human-readable description
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -96,9 +84,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Event comment
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -107,9 +93,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Event details
      *
-     * @var   \XLite\Model\OrderHistoryEventsData
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\OrderHistoryEventsData
      *
      * @OneToMany (targetEntity="XLite\Model\OrderHistoryEventsData", mappedBy="event", cascade={"all"})
      */
@@ -118,9 +102,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Relation to a order entity
      *
-     * @var   \XLite\Model\Order
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order
      *
      * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="events", fetch="LAZY")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -130,9 +112,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     /**
      * Author profile of the event
      *
-     * @var   \XLite\Model\Profile
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Profile
      *
      * @ManyToOne   (targetEntity="XLite\Model\Profile", inversedBy="event", cascade={"merge", "detach"})
      * @JoinColumn (name="author_id", referencedColumnName="profile_id")
@@ -144,8 +124,6 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      * Data getter
      *
      * @return array
-     * @see   ____var_see____
-     * @since 1.0.0
      */
     public function getData()
     {
@@ -158,8 +136,6 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      * @param array $data Data to store
      *
      * @return void
-     * @see   ____var_see____
-     * @since 1.0.0
      */
     public function setData(array $data)
     {
@@ -170,8 +146,6 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      * Description getter
      *
      * @return string
-     * @see   ____var_see____
-     * @since 1.0.0
      */
     public function getDescription()
     {
@@ -184,8 +158,6 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      * @param array $details Array of event details array($name => $value)
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function setDetails(array $details)
     {

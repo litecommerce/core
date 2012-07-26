@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input;
 /**
  * Text
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Text extends \XLite\View\FormField\Inline\Base\Single
 {
@@ -37,8 +35,6 @@ class Text extends \XLite\View\FormField\Inline\Base\Single
      * Define form field
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineFieldClass()
     {
@@ -49,8 +45,6 @@ class Text extends \XLite\View\FormField\Inline\Base\Single
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Model\Product\Admin;
 /**
  * Search product
  *
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
 {
@@ -58,8 +56,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -77,8 +73,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Get a list of CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -92,8 +86,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Define columns structure
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineColumns()
     {
@@ -122,8 +114,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Get list name suffixes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getListNameSuffixes()
     {
@@ -134,8 +124,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Get panel class
      *
      * @return \XLite\View\Base\FormStickyPanel
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getPanelClass()
     {
@@ -148,8 +136,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Return search parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getSearchParams()
     {
@@ -168,8 +154,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -190,8 +174,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -204,8 +186,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -233,8 +213,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -246,8 +224,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * array(<Field to order>, <Sort direction>)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.6
      */
     protected function getOrderBy()
     {
@@ -258,8 +234,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * getSortByModeDefault
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -274,8 +248,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -289,8 +261,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getColumnClass(array $column, \XLite\Model\AEntity $entity = null)
     {
@@ -310,8 +280,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasColumnAttention(array $column, \XLite\Model\AEntity $entity = null)
     {
@@ -327,8 +295,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Mark list as removable
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isRemoved()
     {
@@ -339,8 +305,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Mark list as switchyabvle (enable / disable)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isSwitchable()
     {

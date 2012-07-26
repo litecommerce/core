@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\USPS\View;
 /**
  * Top menu widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopMenu extends \XLite\View\TopMenu implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ class TopMenu extends \XLite\View\TopMenu implements \XLite\Base\IDecorator
      * @param string $target Target name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRelatedTargets($target)
     {

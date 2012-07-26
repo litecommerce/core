@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Product\Customer;
 /**
  * Search
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  */
 class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
@@ -56,8 +54,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * :TODO: refactor
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getSearchParams()
     {
@@ -75,8 +71,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -90,8 +84,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return target to retrive this widget from AJAX
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getWidgetTarget()
     {
@@ -102,8 +94,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Returns CSS classes for the container element
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getListCSSClasses()
     {
@@ -114,8 +104,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -131,8 +119,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -148,8 +134,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -160,8 +144,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListHead()
     {
@@ -172,8 +154,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Check if head title is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isHeadVisible()
     {
@@ -184,8 +164,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Check if header is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isHeaderVisible()
     {
@@ -196,8 +174,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Check if pager is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPagerVisible()
     {
@@ -208,8 +184,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * isFooterVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -220,8 +194,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Search widget must be visible always.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -232,8 +204,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -244,8 +214,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Get URL common parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonParams()
     {
@@ -256,8 +224,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -295,8 +261,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -313,8 +277,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * TODO refactor
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -338,8 +300,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -355,8 +315,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param \XLite\Core\CommonCell $cnd Search condition
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCnd(\XLite\Core\CommonCell $cnd)
     {

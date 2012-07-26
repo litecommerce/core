@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments;
 /**
  * File atachments module main class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -37,8 +35,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function getAuthorName()
     {
@@ -49,8 +45,6 @@ abstract class Main extends \XLite\Module\AModule
      * Get module major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMajorVersion()
     {
@@ -61,8 +55,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function getMinorVersion()
     {
@@ -73,8 +65,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function getModuleName()
     {
@@ -85,8 +75,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function getDescription()
     {

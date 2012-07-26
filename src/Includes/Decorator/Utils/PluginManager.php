@@ -28,8 +28,6 @@ namespace Includes\Decorator\Utils;
 /**
  * PluginManager 
  *
- * @see   ____class_see____
- * @since 1.0.22
  */
 abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
 {
@@ -41,9 +39,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     /**
      * List of registered plugins
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $plugins;
 
@@ -53,8 +49,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @param string $hook Hook name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function invokeHook($hook)
     {
@@ -83,8 +77,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @param string $hook Hook name OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getPlugins($hook = null)
     {
@@ -115,8 +107,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * Return configuration file
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getConfigFile()
     {

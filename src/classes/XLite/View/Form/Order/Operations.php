@@ -28,8 +28,6 @@ namespace XLite\View\Form\Order;
 /**
  * Operations form
  * 
- * @see   ____class_see____
- * @since 1.0.24
  */
 class Operations extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class Operations extends \XLite\View\Form\AForm
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Operations extends \XLite\View\Form\AForm
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class Operations extends \XLite\View\Form\AForm
      * Required form parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonFormParams()
     {

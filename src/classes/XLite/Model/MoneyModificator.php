@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Money modificator
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="money_modificators")
@@ -39,9 +37,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * ID 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Class name
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string")
      */
@@ -63,9 +57,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Method-modificator 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -74,9 +66,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Method-validator 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -85,9 +75,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Position 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -96,9 +84,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Behavior limitation
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -107,9 +93,7 @@ class MoneyModificator extends \XLite\Model\AEntity
     /**
      * Purpose limitation
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -125,8 +109,6 @@ class MoneyModificator extends \XLite\Model\AEntity
      * @param string               $purpose   Purpose
      *  
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function apply($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {

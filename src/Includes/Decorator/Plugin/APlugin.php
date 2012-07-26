@@ -29,8 +29,6 @@ namespace Includes\Decorator\Plugin;
  * Abstract base class for all plugins
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class APlugin extends \Includes\Decorator\ADecorator
 {

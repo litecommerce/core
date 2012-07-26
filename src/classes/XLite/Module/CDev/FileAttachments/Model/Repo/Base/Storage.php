@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\Model\Repo\Base;
 /**
  * Abstract storage repository
  * 
- * @see   ____class_see____
- * @since 1.0.11
  */
 abstract class Storage extends \XLite\Model\Repo\Base\Storage implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Storage extends \XLite\Model\Repo\Base\Storage implements \XLite\
      * Define all storage-based repositories classes list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function defineStorageRepositories()
     {

@@ -28,8 +28,6 @@ namespace Includes\Utils;
 /**
  * Array manager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ArrayManager extends \Includes\Utils\AUtils
 {
@@ -42,8 +40,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param array  $skip        Values to skip OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isUnique(array $array, &$firstValue, array $skip = null)
     {
@@ -70,9 +66,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param boolean        $strict Flag; return value or null in any case
      *
      * @return array|mixed|null
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getIndex(array $data, $index = null, $strict = false)
     {
@@ -87,8 +80,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param boolean $invert Flag; determines which function to use: "diff" or "intersect" OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function filterByKeys(array $data, array $keys, $invert = false)
     {
@@ -105,9 +96,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param boolean $isGetter Determines if the second param is a property name or a method
      *
      * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getObjectField($object, $field, $isGetter = false)
     {
@@ -121,9 +109,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param string $field Field to return
      *
      * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getArraysArrayFieldValues(array $array, $field)
     {
@@ -142,8 +127,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param mixed  $value Value to use for comparison
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function searchAllInArraysArray(array $array, $field, $value)
     {
@@ -167,8 +150,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param mixed  $value Value to use for comparison
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function searchInArraysArray(array $array, $field, $value)
     {
@@ -185,8 +166,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getObjectsArrayFieldValues(array $array, $field, $isGetter = true)
     {
@@ -206,8 +185,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function searchAllInObjectsArray(array $array, $field, $value, $isGetter = true)
     {
@@ -231,8 +208,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function searchInObjectsArray(array $array, $field, $value, $isGetter = true)
     {
@@ -249,8 +224,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sumObjectsArrayFieldValues(array $array, $field, $isGetter = true)
     {
@@ -268,8 +241,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param mixed    $userData Additional data OPTIONAL
      *
      * @return array|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function findValue(&$data, $callback, $userData = null)
     {
@@ -299,8 +270,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param mixed    $userData Additional data OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function filter(&$data, $callback, $userData = null)
     {
@@ -325,8 +294,6 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param boolean $moveDirection Direction: true - before, false - after OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function rearrangeArray(array $array, array $filterArray, $moveDirection = false)
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * Catalog 
  *
- * @see   ____class_see____
- * @since 1.0.24
  */
 abstract class Catalog extends \XLite\Controller\Customer\Catalog implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Catalog extends \XLite\Controller\Customer\Catalog implements \XL
      * Check if redirect to clean URL is needed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isRedirectToCleanURLNeeded()
     {

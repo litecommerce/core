@@ -28,8 +28,6 @@ namespace XLite\View\Checkout;
 /**
  * Checkout steps block
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="checkout.main", weight="200")
  */
@@ -38,27 +36,21 @@ class Steps extends \XLite\View\AView
     /**
      * Shipping modifier (cache)
      *
-     * @var   \XLite\Model\Order\Modifier
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order\Modifier
      */
     protected $shippingModifier;
 
     /**
      * Steps (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $steps;
 
     /**
      * Current step
      *
-     * @var   \XLite\View\Checkout\Step\AStep
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\View\Checkout\Step\AStep
      */
     protected $currentStep;
 
@@ -67,8 +59,6 @@ class Steps extends \XLite\View\AView
      * Get steps
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSteps()
     {
@@ -103,8 +93,6 @@ class Steps extends \XLite\View\AView
      * Get current step
      *
      * @return \XLite\View\Checkout\Step\AStep
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrentStep()
     {
@@ -126,8 +114,6 @@ class Steps extends \XLite\View\AView
      * @param \XLite\View\Checkout\Step\AStep $step Step
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCurrentStep(\XLite\View\Checkout\Step\AStep $step)
     {
@@ -140,8 +126,6 @@ class Steps extends \XLite\View\AView
      * @param \XLite\View\Checkout\Step\AStep $step Step
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEnabledStep(\XLite\View\Checkout\Step\AStep $step)
     {
@@ -154,8 +138,6 @@ class Steps extends \XLite\View\AView
      * @param \XLite\View\Checkout\Step\AStep $step Step
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPreviousStep(\XLite\View\Checkout\Step\AStep $step)
     {
@@ -168,8 +150,6 @@ class Steps extends \XLite\View\AView
      * @param \XLite\View\Checkout\Step\AStep $step Step
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isFutureStep(\XLite\View\Checkout\Step\AStep $step)
     {
@@ -195,8 +175,6 @@ class Steps extends \XLite\View\AView
      * Get current step number
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStepNumber()
     {
@@ -217,8 +195,6 @@ class Steps extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -231,8 +207,6 @@ class Steps extends \XLite\View\AView
      * @param \XLite\View\Checkout\Step\AStep $step Step
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasLeftArrow(\XLite\View\Checkout\Step\AStep $step)
     {
@@ -247,8 +221,6 @@ class Steps extends \XLite\View\AView
      * @param \XLite\View\Checkout\Step\AStep $step Step
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasRightArrow(\XLite\View\Checkout\Step\AStep $step)
     {
@@ -261,8 +233,6 @@ class Steps extends \XLite\View\AView
      * Define checkout widget steps
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSteps()
     {
@@ -279,8 +249,6 @@ class Steps extends \XLite\View\AView
      * Get modifier
      *
      * @return \XLite\Model\Order\Modifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getShippingModifier()
     {

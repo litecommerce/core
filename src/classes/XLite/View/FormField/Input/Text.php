@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input;
 /**
  * Text
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Text extends \XLite\View\FormField\Input\Base\String
 {
@@ -37,8 +35,6 @@ class Text extends \XLite\View\FormField\Input\Base\String
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -49,8 +45,6 @@ class Text extends \XLite\View\FormField\Input\Base\String
      * Get a list of JS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {

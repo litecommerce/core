@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Search;
 /**
  * ASearch
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ASearch extends \XLite\View\Form\Product\AProduct
 {
@@ -39,8 +37,6 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
      * NOTE - this function designed for AJAX easy switch on/off
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {
@@ -51,8 +47,6 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
      * getDefaultFormMethod
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultFormMethod()
     {
@@ -63,8 +57,6 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

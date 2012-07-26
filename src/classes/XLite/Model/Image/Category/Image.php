@@ -28,8 +28,6 @@ namespace XLite\Model\Image\Category;
 /**
  * Category
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="category_images")
@@ -39,9 +37,7 @@ class Image extends \XLite\Model\Base\Image
     /**
      * Relation to a category entity
      *
-     * @var   \XLite\Model\Category
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Category
      *
      * @OneToOne   (targetEntity="XLite\Model\Category", inversedBy="image")
      * @JoinColumn (name="category_id", referencedColumnName="category_id")

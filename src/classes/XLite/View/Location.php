@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Bread crumbs widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Location extends \XLite\View\AView
 {
@@ -42,8 +40,6 @@ class Location extends \XLite\View\AView
      * Return breadcrumbs
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getNodes()
     {
@@ -62,8 +58,6 @@ class Location extends \XLite\View\AView
      * Get a list of CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -77,8 +71,6 @@ class Location extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -89,8 +81,6 @@ class Location extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -105,8 +95,6 @@ class Location extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

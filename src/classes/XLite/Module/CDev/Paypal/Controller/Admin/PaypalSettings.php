@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\Controller\Admin;
 /**
  * Paypal settings controller
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PaypalSettings extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class PaypalSettings extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -50,8 +46,6 @@ class PaypalSettings extends \XLite\Controller\Admin\AAdmin
      * Save options
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSaveOptions()
     {
@@ -78,8 +72,6 @@ class PaypalSettings extends \XLite\Controller\Admin\AAdmin
      * Return allowed module options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleOptions()
     {

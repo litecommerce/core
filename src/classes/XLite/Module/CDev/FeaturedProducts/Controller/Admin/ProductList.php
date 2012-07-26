@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
 /**
  * \XLite\Module\CDev\FeaturedProducts\Controller\Admin\Categories
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\
      * doActionSearch
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSearchFeaturedProducts()
     {

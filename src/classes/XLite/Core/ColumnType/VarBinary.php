@@ -28,8 +28,6 @@ namespace XLite\Core\ColumnType;
 /**
  * Binary (varbinary) type with variable length
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class VarBinary extends \Doctrine\DBAL\Types\StringType
 {
@@ -45,8 +43,6 @@ class VarBinary extends \Doctrine\DBAL\Types\StringType
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform         Platform
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSQLDeclaration(array $fieldDeclaration, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {
@@ -57,8 +53,6 @@ class VarBinary extends \Doctrine\DBAL\Types\StringType
      * Get type name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {

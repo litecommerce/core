@@ -28,8 +28,6 @@ namespace XLite\Model\Payment\Base;
 /**
  * Abstract credit card-based processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class CreditCard extends \XLite\Model\Payment\Base\Online
 {
@@ -76,8 +74,6 @@ abstract class CreditCard extends \XLite\Model\Payment\Base\Online
      * Get input template
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -88,8 +84,6 @@ abstract class CreditCard extends \XLite\Model\Payment\Base\Online
      * Get operation types
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOperationTypes()
     {

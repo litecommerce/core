@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Model\Order\Admin;
 /**
  * Recent orders list 
  * 
- * @see   ____class_see____
- * @since 1.0.24
  */
 class Recent extends \XLite\View\ItemsList\Model\Order\Admin\Search
 {
@@ -37,8 +35,6 @@ class Recent extends \XLite\View\ItemsList\Model\Order\Admin\Search
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -49,8 +45,6 @@ class Recent extends \XLite\View\ItemsList\Model\Order\Admin\Search
      * getEmptyListTemplate
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getEmptyListTemplate()
     {

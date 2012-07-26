@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * Color
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Color extends \XLite\View\FormField\Input\Text
 {
@@ -37,8 +35,6 @@ class Color extends \XLite\View\FormField\Input\Text
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -53,8 +49,6 @@ class Color extends \XLite\View\FormField\Input\Text
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonFiles()
     {
@@ -72,8 +66,6 @@ class Color extends \XLite\View\FormField\Input\Text
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {
@@ -88,8 +80,6 @@ class Color extends \XLite\View\FormField\Input\Text
      * Get default maximum size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultMaxSize()
     {

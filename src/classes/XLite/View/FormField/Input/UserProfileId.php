@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input;
 /**
  * \XLite\View\FormField\Input\UserProfileId
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class UserProfileId extends \XLite\View\FormField\Input\Checkbox
 {
@@ -37,8 +35,6 @@ class UserProfileId extends \XLite\View\FormField\Input\Checkbox
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {

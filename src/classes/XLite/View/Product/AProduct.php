@@ -28,8 +28,6 @@ namespace XLite\View\Product;
 /**
  * Abstract product-based widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProduct extends \XLite\View\AView
 {
@@ -37,8 +35,6 @@ abstract class AProduct extends \XLite\View\AView
      * getDir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -49,8 +45,6 @@ abstract class AProduct extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

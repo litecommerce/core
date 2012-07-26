@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Product\Admin;
 /**
  * AAdmin
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
 {
@@ -37,8 +35,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -49,8 +45,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * getDisplayMode
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -61,8 +55,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * getDisplayStyle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getChangeabilityType()
     {
@@ -73,8 +65,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * getDisplayStyle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayStyle()
     {
@@ -85,8 +75,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

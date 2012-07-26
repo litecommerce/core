@@ -28,8 +28,6 @@ namespace XLite\View\Form\Category\Modify;
 /**
  * Single 
  *
- * @see   ____class_see____
- * @since 1.0.21
  */
 class Single extends \XLite\View\Form\Category\Modify\AModify
 {
@@ -37,8 +35,6 @@ class Single extends \XLite\View\Form\Category\Modify\AModify
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Single extends \XLite\View\Form\Category\Modify\AModify
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class Single extends \XLite\View\Form\Category\Modify\AModify
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {
@@ -77,8 +69,6 @@ class Single extends \XLite\View\Form\Category\Modify\AModify
      * Get validator
      *
      * @return \XLite\Core\Validator\HashArray
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function getValidator()
     {
@@ -94,8 +84,6 @@ class Single extends \XLite\View\Form\Category\Modify\AModify
      * @param mixed $data Data
      *
      * @return null
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function setDataValidators($data)
     {

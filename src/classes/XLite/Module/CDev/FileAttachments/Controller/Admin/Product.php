@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\Controller\Admin;
 /**
  * Product controller
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -57,8 +53,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {
@@ -77,8 +71,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Remove file
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRemoveAttachment()
     {
@@ -103,8 +95,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update files
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateAttachments()
     {

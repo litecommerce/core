@@ -28,35 +28,27 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
 /**
  * \XLite\View\Model\Profile\AdminMain
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Base\IDecorator
 {
     /**
      * List of fields of the "E-mail & Password" section that must be locked
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $mainSchemaReadonlyFields = array('login');
 
     /**
      * List of fields of the "E-mail & Password" section that must be removed
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $mainSchemaRemovedFields = array('password', 'password_conf');
 
     /**
      * List of fields of the "User access" section that must be locked
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $accessSchemaReadonlyFields = array('access_level', 'status');
 
@@ -67,8 +59,6 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
      * @param string $name Field name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDefaultFieldValue($name)
     {
@@ -103,8 +93,6 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFieldsForSectionMain()
     {
@@ -131,8 +119,6 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
      * @param array  $lockFields Array of elements (keys) that must be locked
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function lockSectionField(&$data, $key, $lockFields)
     {
@@ -146,8 +132,6 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFieldsForSectionAccess()
     {

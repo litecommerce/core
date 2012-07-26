@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Subcategories list
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="100")
  */
@@ -52,9 +50,7 @@ class Subcategories extends \XLite\View\Dialog
     /**
      * Display modes
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_LIST  => 'List',
@@ -65,8 +61,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -81,8 +75,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return list of required CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -99,8 +91,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -111,8 +101,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -123,8 +111,6 @@ class Subcategories extends \XLite\View\Dialog
      * Get widget display mode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -137,8 +123,6 @@ class Subcategories extends \XLite\View\Dialog
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -149,8 +133,6 @@ class Subcategories extends \XLite\View\Dialog
      * Widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -173,8 +155,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return the maximal icon width
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIconWidth()
     {
@@ -185,8 +165,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return the maximal icon height
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIconHeight()
     {
@@ -197,8 +175,6 @@ class Subcategories extends \XLite\View\Dialog
      * getColumnsCount
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getColumnsCount()
     {
@@ -209,8 +185,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return subcategories split into rows
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategoryRows()
     {
@@ -225,8 +199,6 @@ class Subcategories extends \XLite\View\Dialog
      * Check for subcategories
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasSubcategories()
     {
@@ -237,8 +209,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return subcategories
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSubcategories()
     {
@@ -249,8 +219,6 @@ class Subcategories extends \XLite\View\Dialog
      * Check if the category is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function isCategoryVisible()
     {

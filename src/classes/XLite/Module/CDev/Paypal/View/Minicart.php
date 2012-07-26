@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\View;
 /**
  * Extend Minicart widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDecorator
      * getCSSFiles 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function getCSSFiles()
     {

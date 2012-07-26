@@ -28,8 +28,6 @@ namespace XLite\View\Form;
 /**
  * Ecwid data source form
  *
- * @see   ____class_see____
- * @since 1.0.17
  */
 class DataSource extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class DataSource extends \XLite\View\Form\AForm
      * Get default target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class DataSource extends \XLite\View\Form\AForm
      * Get default action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class DataSource extends \XLite\View\Form\AForm
      * getDefaultClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultClassName()
     {

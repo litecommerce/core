@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector;
 /**
  * Logger
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Logger extends \XLite\Logger implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ class Logger extends \XLite\Logger implements \XLite\Base\IDecorator
      * FIXME: is it really needed?
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {

@@ -29,8 +29,6 @@
  * @param boolean $restart Restart helper
  *
  * @return \XLite\Core\QuickAccess
- * @see    ____func_see____
- * @since  1.0.0
  */
 function xlite($restart = false)
 {
@@ -525,7 +523,6 @@ function generate_code($length = 8)
 * Strips slashes and trims the specified array values
 * (strips from strings only)
 *
-* @access private
 * @param  array $array The array to strip slashes
 */
 function func_strip_slashes(&$array)
@@ -840,9 +837,6 @@ function func_htmlspecialchars($str) {
  * @param string $dbURL Database Url string (e.g. mysql://username:password@localhost/databasename)
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function isLiteCommerceInstalled($dbURL = null, &$message)
 {
@@ -946,9 +940,6 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
  *   (host must be urlencoded if mysql works via non-standard socket)
  *
  * @return array
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function parseDbURL($dbURL)
 {
@@ -991,9 +982,6 @@ function parseDbURL($dbURL)
  * Do connection to the database with params user specified
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function dbConnect ($data = null, &$errorMsg = null)
 {
@@ -1040,9 +1028,6 @@ function dbConnect ($data = null, &$errorMsg = null)
  * Execute SQL query and return the first column of first row of the result
  *
  * @return mixed
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function dbFetchColumn($sql, &$errorMsg = null)
 {
@@ -1062,9 +1047,6 @@ function dbFetchColumn($sql, &$errorMsg = null)
  * Execute SQL query and return the result as an associated array
  *
  * @return array
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function dbFetchAll($sql, &$errorMsg = null)
 {
@@ -1084,9 +1066,6 @@ function dbFetchAll($sql, &$errorMsg = null)
  * Execute SQL query
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function dbExecute($sql, &$errorMsg = null)
 {
@@ -1106,9 +1085,6 @@ function dbExecute($sql, &$errorMsg = null)
  * @param bool   $is_restore   ?
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
 {
@@ -1205,9 +1181,6 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
  * @param bool   $ignoreErrors Ignore errors flag
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function showQueryStatus($myerr, $ignoreErrors)
 {
@@ -1227,8 +1200,6 @@ function showQueryStatus($myerr, $ignoreErrors)
  * Alternative debug backtrace assembler
  *
  * @return array
- * @see    ____func_see____
- * @since  1.0.0
  */
 function func_debug_backtrace()
 {
@@ -1267,8 +1238,6 @@ function func_debug_backtrace()
  * Alternative debug backtrace printer
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function func_debug_print_backtrace()
 {
@@ -1279,8 +1248,6 @@ function func_debug_print_backtrace()
  * Returns LiteCommerce tables prefix
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.0
  */
 function get_xlite_tables_prefix()
 {
@@ -1298,8 +1265,6 @@ if (!function_exists('mb_stripos')) {
  * @param integer $offset   The position in haystack  to start searching OPTIONAL
  *
  * @return integer
- * @see    ____func_see____
- * @since  1.0.6
  */
 function mb_stripos($haystack, $needle, $offset = 0)
 {

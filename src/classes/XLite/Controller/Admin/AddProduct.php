@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * New product page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddProduct extends \XLite\Controller\Admin\Product
 {

@@ -28,8 +28,6 @@ namespace XLite\Model\Payment\Processor;
 /**
  * Purchase order
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
 {
@@ -37,8 +35,6 @@ class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
      * Get input template
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -51,8 +47,6 @@ class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
      * @param array $data Input data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputErrors(array $data)
     {
@@ -72,8 +66,6 @@ class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
      * Get input data labels list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInputDataLabels()
     {
@@ -89,8 +81,6 @@ class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
      * Get input data access levels list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInputDataAccessLevels()
     {

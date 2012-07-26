@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Payment method
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
      * getPaymentMethod
      *
      * @return \XLite\Model\Payment\Method
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPaymentMethod()
     {
@@ -50,8 +46,6 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
      * Update payment method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {

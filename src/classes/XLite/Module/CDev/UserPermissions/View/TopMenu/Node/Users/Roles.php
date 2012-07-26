@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\UserPermissions\View\TopMenu\Node\Users;
 /**
  * Roles
  *
- * @see   ____class_see____
- * @since 1.0.18
  *
  * @ListChild (list="menu.users", weight="300", zone="admin")
  */
@@ -39,8 +37,6 @@ class Roles extends \XLite\View\TopMenu\Node
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

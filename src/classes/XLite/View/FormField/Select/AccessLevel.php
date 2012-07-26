@@ -28,17 +28,13 @@ namespace XLite\View\FormField\Select;
 /**
  * \XLite\View\FormField\Select\AccessLevel
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AccessLevel extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Determines if this field is visible for customers or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isAllowedForCustomer = false;
 
@@ -47,8 +43,6 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
      * getDefaultOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
@@ -65,8 +59,6 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
      * Check field value validity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkFieldValue()
     {

@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Iframe content 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="iframe_contents")
@@ -39,9 +37,7 @@ class IframeContent extends \XLite\Model\AEntity
     /**
      * Unique id 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class IframeContent extends \XLite\Model\AEntity
     /**
      * Form URL
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string")
      */
@@ -63,9 +57,7 @@ class IframeContent extends \XLite\Model\AEntity
     /**
      * Form method
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=16)
      */
@@ -74,9 +66,7 @@ class IframeContent extends \XLite\Model\AEntity
     /**
      * Form data 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      *
      * @Column (type="array")
      */

@@ -28,8 +28,6 @@ namespace XLite\View\ProductClass;
 /**
  * Product classes main input widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class MainInput extends \XLite\View\AView
 {
@@ -41,8 +39,6 @@ class MainInput extends \XLite\View\AView
      * Return allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -57,8 +53,6 @@ class MainInput extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -74,8 +68,6 @@ class MainInput extends \XLite\View\AView
      * getDefaultTemplate()
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

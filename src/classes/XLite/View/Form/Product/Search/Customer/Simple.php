@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Search\Customer;
 /**
  * Simple form for searching products widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Simple extends \XLite\View\AView
 {
@@ -37,8 +35,6 @@ class Simple extends \XLite\View\AView
      * Return CSS files list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -54,8 +50,6 @@ class Simple extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

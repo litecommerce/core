@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Product class controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ProductClass extends \XLite\Controller\Admin\AAdmin
 {
@@ -44,9 +42,7 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
     /**
      * data
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $data = array(
         'status' => self::STATUS_ERROR,
@@ -57,8 +53,6 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -69,8 +63,6 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
      * Remove product class
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRemove()
     {
@@ -87,8 +79,6 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
      * AJAX product class update
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -106,8 +96,6 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
      * AJAX product class adding
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -128,8 +116,6 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
      * Send JSON data after "ADD" action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function actionPostprocessAdd()
     {

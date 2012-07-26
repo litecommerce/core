@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Pick address from address book
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -38,9 +36,7 @@ class SelectAddress extends \XLite\View\Dialog
     /**
      * Columns number
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $columnsNumber = 2;
 
@@ -48,8 +44,6 @@ class SelectAddress extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -64,8 +58,6 @@ class SelectAddress extends \XLite\View\Dialog
      * FIXME - decompose these files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -81,8 +73,6 @@ class SelectAddress extends \XLite\View\Dialog
      * @param \XLite\Model\Address $address Address
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSelectedAddress(\XLite\Model\Address $address)
     {
@@ -96,8 +86,6 @@ class SelectAddress extends \XLite\View\Dialog
      * Get addresses list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddresses()
     {
@@ -108,8 +96,6 @@ class SelectAddress extends \XLite\View\Dialog
      * Check - profile has addresses list or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasAddresses()
     {
@@ -123,8 +109,6 @@ class SelectAddress extends \XLite\View\Dialog
      * @param integer              $i       Address position in addresses list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItemClassName(\XLite\Model\Address $address, $i)
     {
@@ -145,8 +129,6 @@ class SelectAddress extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -157,8 +139,6 @@ class SelectAddress extends \XLite\View\Dialog
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

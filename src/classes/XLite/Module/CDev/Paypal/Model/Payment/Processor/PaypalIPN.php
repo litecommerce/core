@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 /**
  * Paypal IPN processor (helper class)
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class PaypalIPN extends \XLite\Base\Singleton
 {
@@ -45,8 +43,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Return true if received callback request is Paypal IPN 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function isCallbackIPN()
     {
@@ -60,8 +56,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * @param \XLite\Model\Payment\Base\Processor $processor   Payment processor object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processCallbackIPN($transaction, $processor)
     {
@@ -237,8 +231,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * getRequestData 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getRequestData()
     {
@@ -260,8 +252,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Define saved into transaction data schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function defineSavedData()
     {
@@ -288,8 +278,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Return URL for IPN verification transaction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getIPNURL()
     {
@@ -300,8 +288,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Get IPN verification status
      *
      * @return boolean TRUE if verification status is received
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getIPNVerification()
     {
@@ -328,8 +314,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Get redirect form URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getFormURL()
     {
@@ -342,8 +326,6 @@ class PaypalIPN extends \XLite\Base\Singleton
      * Return TRUE if the test mode is ON
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function isTestMode()
     {

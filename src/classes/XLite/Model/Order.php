@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Class represents an order
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Order")
  * @Table  (name="orders",
@@ -76,9 +74,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Order unique id
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -89,9 +85,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Order profile
      *
-     * @var   \XLite\Model\Profile
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Profile
      *
      * @OneToOne   (targetEntity="XLite\Model\Profile", cascade={"all"})
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
@@ -101,9 +95,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Original profile
      *
-     * @var   \XLite\Model\Profile
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Profile
      *
      * @ManyToOne  (targetEntity="XLite\Model\Profile")
      * @JoinColumn (name="orig_profile_id", referencedColumnName="profile_id")
@@ -113,9 +105,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Shipping method unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -124,9 +114,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Shipping method name
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="string", nullable=true)
      */
@@ -135,9 +123,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Shipping tracking code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32)
      */
@@ -146,9 +132,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Order creation timestamp
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -157,9 +141,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Last order renew date
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -168,9 +150,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Status code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=1)
      */
@@ -179,9 +159,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Customer notes
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -190,9 +168,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Admin notes
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -201,9 +177,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Order details
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\OrderDetail", mappedBy="order", cascade={"all"})
      * @OrderBy   ({"name" = "ASC"})
@@ -213,9 +187,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Order events queue
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="order", cascade={"all"})
      */
@@ -224,9 +196,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Order items
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\OrderItem", mappedBy="order", cascade={"all"})
      */
@@ -235,9 +205,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Order surcharges
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\Order\Surcharge", mappedBy="owner", cascade={"all"})
      * @OrderBy   ({"id" = "ASC"})
@@ -247,9 +215,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Payment transactions
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\Transaction", mappedBy="order", cascade={"all"})
      */
@@ -258,9 +224,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Currency
      *
-     * @var   \XLite\Model\Currency
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Currency
      *
      * @ManyToOne  (targetEntity="XLite\Model\Currency", inversedBy="orders", cascade={"merge","detach"})
      * @JoinColumn (name="currency_id", referencedColumnName="currency_id")
@@ -270,9 +234,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * 'Add item' error code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $addItemError;
 
@@ -281,9 +243,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * top index - old status, second index - new one
      * (<old_status> ----> <new_status>: $statusHandlers[$old][$new])
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $statusHandlers = array(
 
@@ -357,18 +317,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Order previous status
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $oldStatus = self::STATUS_INPROGRESS;
 
     /**
      * Modifiers (cache)
      *
-     * @var   \XLite\DataSet\Collection\OrderModifier
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\DataSet\Collection\OrderModifier
      */
     protected $modifiers;
 
@@ -378,8 +334,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $status Status to get OPTIONAL
      *
      * @return array | string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedStatuses($status = null)
     {
@@ -405,8 +359,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param \XLite\Model\OrderItem $newItem Item to add
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addItem(\XLite\Model\OrderItem $newItem)
     {
@@ -438,8 +390,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get 'Add item' error code
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddItemError()
     {
@@ -452,8 +402,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param \XLite\Model\OrderItem $item Another item
      *
      * @return \XLite\Model\OrderItem|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItemByItem(\XLite\Model\OrderItem $item)
     {
@@ -472,8 +420,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param integer $itemId Item id
      *
      * @return \XLite\Model\OrderItem|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItemByItemId($itemId)
     {
@@ -492,8 +438,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param integer $productId Product ID to use
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItemsByProductId($productId)
     {
@@ -510,8 +454,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Normalize items
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function normalizeItems()
     {
@@ -550,8 +492,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Return items number
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function countItems()
     {
@@ -562,8 +502,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Return order items total quantity
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function countQuantity()
     {
@@ -580,8 +518,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Checks whether the shopping cart/order is empty
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEmpty()
     {
@@ -592,8 +528,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Check order subtotal
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMinOrderAmountError()
     {
@@ -604,8 +538,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Check order subtotal
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMaxOrderAmountError()
     {
@@ -616,8 +548,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Check - is order processed or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isProcessed()
     {
@@ -628,8 +558,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Check - os order queued or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isQueued()
     {
@@ -640,8 +568,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Check item amounts
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItemsWithWrongAmounts()
     {
@@ -662,8 +588,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get original profile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrigProfile()
     {
@@ -676,8 +600,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param \XLite\Model\Profile $profile Profile OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setProfile(\XLite\Model\Profile $profile = null)
     {
@@ -696,8 +618,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param \XLite\Model\Profile $profile Profile OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setOrigProfile(\XLite\Model\Profile $profile = null)
     {
@@ -710,8 +630,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param \XLite\Model\Profile $profile Profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setProfileCopy(\XLite\Model\Profile $profile)
     {
@@ -730,8 +648,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $status Status
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setOldStatus($status)
     {
@@ -742,8 +658,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get items list fingerprint
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItemsFingerprint()
     {
@@ -771,8 +685,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * to send to a payment service
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDescription()
     {
@@ -789,8 +701,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get order fingerprint for event subsystem
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getEventFingerprint()
     {
@@ -825,8 +735,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $name Details cell name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDetail($name)
     {
@@ -845,8 +753,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $label Cell label OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setDetail($name, $value, $label = null)
     {
@@ -869,8 +775,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get meaning order details
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMeaningDetails()
     {
@@ -889,8 +793,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Called when an order successfully placed by a client
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processSucceed()
     {
@@ -913,8 +815,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Mark cart as order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function markAsOrder()
     {
@@ -925,8 +825,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * TODO - rework after tax subsystem rework
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function refreshItems()
     {
@@ -938,8 +836,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -956,8 +852,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Return list of available payment methods
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPaymentMethods()
     {
@@ -977,8 +871,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Renew payment method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function renewPaymentMethod()
     {
@@ -993,8 +885,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get payment method
      *
      * @return \XLite\Model\Payment\Method|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPaymentMethod()
     {
@@ -1016,8 +906,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string                 $key  Key
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkItemKeyEqual(\XLite\Model\OrderItem $item, $key)
     {
@@ -1031,8 +919,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param integer                $itemId Item id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkItemIdEqual(\XLite\Model\OrderItem $item, $itemId)
     {
@@ -1046,8 +932,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string                   $name   Name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkDetailName(\XLite\Model\OrderDetail $detail, $name)
     {
@@ -1061,8 +945,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string                           $status      Status
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkPaymentTransactionStatusEqual(\XLite\Model\Payment\Transaction $transaction, $status)
     {
@@ -1076,8 +958,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param integer                $productId Product id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isItemProductIdEqual(\XLite\Model\OrderItem $item, $productId)
     {
@@ -1091,8 +971,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param integer                     $lastPaymentId Last selected payment method id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkLastPaymentMethod(\XLite\Model\Payment\Method $pmethod, $lastPaymentId)
     {
@@ -1113,8 +991,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param float                       $value         Payment transaction value OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setPaymentMethod($paymentMethod, $value = null)
     {
@@ -1143,8 +1019,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Unset payment method 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function unsetPaymentMethod()
     {
@@ -1161,8 +1035,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get active payment transactions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActivePaymentTransactions()
     {
@@ -1181,8 +1053,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get first open (not payed) payment transaction
      *
      * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFirstOpenPaymentTransaction()
     {
@@ -1199,8 +1069,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get open (not-payed) total
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOpenTotal()
     {
@@ -1217,8 +1085,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Check - order is open (has initialized transactions and has open total) or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isOpen()
     {
@@ -1229,8 +1095,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Has unpaid total?
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function hasUnpaidTotal()
     {
@@ -1241,8 +1105,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get totally payed total
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPayedTotal()
     {
@@ -1262,8 +1124,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Payed - order has not open total and all payment transactions are failed or completed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPayed()
     {
@@ -1274,8 +1134,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Check - order has in-progress payments or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function hasInprogressPayments()
     {
@@ -1295,8 +1153,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Assign last used payment method
      *
      * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assignLastPaymentMethod()
     {
@@ -1322,8 +1178,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param float                       $value  Value OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addPaymentTransaction(\XLite\Model\Payment\Method $method, $value = null)
     {
@@ -1365,8 +1219,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Called when an order becomes processed, before saving it to the database
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sendProcessMail()
     {
@@ -1397,8 +1249,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Called when the order status changed to failed
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sendFailMail()
     {
@@ -1433,8 +1283,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get modifiers
      *
      * @return \XLite\DataSet\Collection\OrderModifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModifiers()
     {
@@ -1462,8 +1310,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $code Modifier code
      *
      * @return \XLite\Model\Order\Modifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModifier($type, $code)
     {
@@ -1485,8 +1331,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $type Type
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isModifierByType($type)
     {
@@ -1508,8 +1352,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $type Modifier type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModifiersByType($type)
     {
@@ -1528,8 +1370,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get items exclude surcharges info
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItemsExcludeSurcharges()
     {
@@ -1550,8 +1390,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get items included surcharges totals
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     public function getItemsIncludeSurchargesTotals()
     {
@@ -1578,8 +1416,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Common method to update cart/order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function updateOrder()
     {
@@ -1597,8 +1433,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Calculate order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function calculate()
     {
@@ -1624,8 +1458,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Renew order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     public function renew()
     {
@@ -1644,8 +1476,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Soft renew
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public function renewSoft()
     {
@@ -1656,8 +1486,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Reinitialize currency
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function reinitializeCurrency()
     {
@@ -1673,8 +1501,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Define order currency
      *
      * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     protected function defineCurrency()
     {
@@ -1685,8 +1511,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Reset surcharges list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function resetSurcharges()
     {
@@ -1705,8 +1529,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Calculate initial order values
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function calculateInitialValues()
     {
@@ -1728,8 +1550,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Finalize items calculation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function finalizeItemsCalculation()
     {
@@ -1754,8 +1574,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $type Surcharge type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargesByType($type)
     {
@@ -1777,8 +1595,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param boolean $include Surcharge include flag OPTIONAL
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargesSubtotal($type = null, $include = null)
     {
@@ -1803,8 +1619,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $type Surcharge type OPTIONAL
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargesTotal($type = null)
     {
@@ -1819,8 +1633,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Prepare order before save data operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PrePersist
      * @PreUpdate
@@ -1840,8 +1652,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Prepare order before remove operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PreRemove
      */
@@ -1860,8 +1670,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $type Type of current operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function prepareEntityBeforeCommit($type)
     {
@@ -1881,8 +1689,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $value Status code
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setStatus($value)
     {
@@ -1898,8 +1704,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Check if order status was changed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isStatusChanged()
     {
@@ -1913,8 +1717,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $new New order status
      *
      * @return string|array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStatusHandlers($old, $new)
     {
@@ -1930,8 +1732,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param string $new New status
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function changeStatusPostprocess($old, $new)
     {
@@ -1944,8 +1744,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * A "change status" handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processCheckout()
     {
@@ -1955,8 +1753,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * A "change status" handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processUncheckout()
     {
@@ -1966,8 +1762,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * A "change status" handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processQueue()
     {
@@ -1977,8 +1771,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * A "change status" handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processProcess()
     {
@@ -1990,8 +1782,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * A "change status" handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processDecline()
     {
@@ -2002,8 +1792,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * A "change status" handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processFail()
     {
@@ -2021,8 +1809,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param integer                $sign Flag; "1" or "-1"
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemInventoryAmount(\XLite\Model\OrderItem $item, $sign)
     {
@@ -2035,8 +1821,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @param integer $sign Flag; "1" or "-1"
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function changeItemsInventory($sign)
     {
@@ -2049,8 +1833,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Order processed: decrease products inventory
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function decreaseInventory()
     {
@@ -2061,8 +1843,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Order declined: increase products inventory
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function increaseInventory()
     {
@@ -2077,8 +1857,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get allowed actions 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getAllowedActions()
     {
@@ -2089,8 +1867,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get allowed payment actions 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getAllowedPaymentActions()
     {
@@ -2117,8 +1893,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Get array of payment transaction sums (how much is authorized, captured and refunded) 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function getPaymentTransactionSums()
     {

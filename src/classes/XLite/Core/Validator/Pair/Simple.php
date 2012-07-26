@@ -28,53 +28,41 @@ namespace XLite\Core\Validator\Pair;
 /**
  * Hash array simple pair validator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Simple extends \XLite\Core\Validator\Pair\APair
 {
     /**
      * Validation mode
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $mode = self::STRICT;
 
     /**
      * Cell name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $name;
 
     /**
      * Public name 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $publicName;
 
     /**
      * Cell value validator
      *
-     * @var   \XLite\Core\Validator\AValidator
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\Validator\AValidator
      */
     protected $validator;
 
     /**
      * Default value
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $defaultValue;
 
@@ -82,8 +70,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * Get name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -96,8 +82,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param string $name Name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setName($name)
     {
@@ -110,8 +94,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param string $name Name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setPublicName($name)
     {
@@ -122,8 +104,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * Get validator
      *
      * @return \XLite\Core\Validator\AValidator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getValidator()
     {
@@ -136,8 +116,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param \XLite\Core\Validator\AValidator $validator Validator
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setValidator(\XLite\Core\Validator\AValidator $validator)
     {
@@ -150,8 +128,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param mixed $value Default value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setDefaultValue($value)
     {
@@ -164,8 +140,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param array $data Data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function find(array $data)
     {
@@ -179,8 +153,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -219,8 +191,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param mixed $data Daa
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sanitize($data)
     {

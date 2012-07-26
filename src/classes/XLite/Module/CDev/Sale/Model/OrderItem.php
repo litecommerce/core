@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\Model;
 /**
  * Order item
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * Get price
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPrice()
     {

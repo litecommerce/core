@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * 'Powered by' widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="sidebar.footer", zone="customer")
  */
@@ -44,9 +42,7 @@ class PoweredBy extends \XLite\View\AView
     /**
      * Advertise phrases
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $phrases = array(
         'Powered by LiteCommerce [shopping cart]',
@@ -72,8 +68,6 @@ class PoweredBy extends \XLite\View\AView
      * Check - display widget as link or as box
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLink()
     {
@@ -84,8 +78,6 @@ class PoweredBy extends \XLite\View\AView
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -100,8 +92,6 @@ class PoweredBy extends \XLite\View\AView
      * Return a Powered By message
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMessage()
     {
@@ -117,8 +107,6 @@ class PoweredBy extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -129,8 +117,6 @@ class PoweredBy extends \XLite\View\AView
      * Get a Powered By phrase
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPhrase()
     {
@@ -177,8 +163,6 @@ class PoweredBy extends \XLite\View\AView
      * getCurrentYear 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getCurrentYear()
     {

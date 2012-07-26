@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * Stub controller to get widgets on non-LC pages
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Drupal extends \XLite\Controller\Customer\ACustomer
 {
@@ -37,8 +35,6 @@ class Drupal extends \XLite\Controller\Customer\ACustomer
      * Do not perform any action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {

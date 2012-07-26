@@ -28,17 +28,13 @@ namespace XLite\Core\DataSource\Importer;
 /**
  * Product importer
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 abstract class Product extends \XLite\Base
 {
     /**
      * Product fields 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.21
+     * @var array
      */
     protected $productFields = array(
         'sku'         => 'sku',
@@ -51,27 +47,21 @@ abstract class Product extends \XLite\Base
     /**
      * Collection 
      * 
-     * @var   \XLite\Core\DataSource\Base\Products
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var \XLite\Core\DataSource\Base\Products
      */
     protected $collection;
 
     /**
      * Adding count 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var integer
      */
     protected $addCount = 0;
 
     /**
      * Updating count 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var integer
      */
     protected $updateCount = 0;
 
@@ -81,8 +71,6 @@ abstract class Product extends \XLite\Base
      * @param \XLite\Core\DataSource\Base\Products $collection Products collection
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function __construct(\XLite\Core\DataSource\Base\Products $collection)
     {
@@ -93,8 +81,6 @@ abstract class Product extends \XLite\Base
      * Get adding count 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getAddCount()
     {
@@ -105,8 +91,6 @@ abstract class Product extends \XLite\Base
      * Get updating count 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getUpdateCount()
     {
@@ -119,8 +103,6 @@ abstract class Product extends \XLite\Base
      * Run importer
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function run()
     {
@@ -131,8 +113,6 @@ abstract class Product extends \XLite\Base
      * Run import 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function runImport()
     {
@@ -151,8 +131,6 @@ abstract class Product extends \XLite\Base
      * Check step 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function checkStep()
     {
@@ -163,8 +141,6 @@ abstract class Product extends \XLite\Base
      * Get cell 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getCell()
     {
@@ -177,8 +153,6 @@ abstract class Product extends \XLite\Base
      * @param array $cell CEll
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function import(array $cell)
     {
@@ -200,8 +174,6 @@ abstract class Product extends \XLite\Base
      * @param array $cell Cell
      *  
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function detectProduct(array $cell)
     {
@@ -221,8 +193,6 @@ abstract class Product extends \XLite\Base
      * @param array $cell Cell
      *  
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function createProduct(array $cell)
     {
@@ -241,8 +211,6 @@ abstract class Product extends \XLite\Base
      * @param array                $cell    Cell
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function update(\XLite\Model\Product $product, array $cell)
     {
@@ -272,8 +240,6 @@ abstract class Product extends \XLite\Base
      * @param array                $images  Images
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function updateImages(\XLite\Model\Product $product, array $images)
     {
@@ -306,8 +272,6 @@ abstract class Product extends \XLite\Base
      * @param array                $image   Image info
      *  
      * @return \XLite\Model\Image\Product\Image
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function detectImage(\XLite\Model\Product $product, array $image)
     {
@@ -333,8 +297,6 @@ abstract class Product extends \XLite\Base
      * @param array                $image   Image info
      *
      * @return \XLite\Model\Image\Product\Image
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function createImage(\XLite\Model\Product $product, array $image)
     {
@@ -359,8 +321,6 @@ abstract class Product extends \XLite\Base
      * Load image to local file system or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isLoadImageToLocalFileSystem()
     {
@@ -378,8 +338,6 @@ abstract class Product extends \XLite\Base
      * @param array                $categories Categories
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function updateCategories(\XLite\Model\Product $product, array $categories)
     {

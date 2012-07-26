@@ -28,17 +28,13 @@ namespace XLite\Core;
 /**
  * DB-based configuration registry
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Config extends \XLite\Base\Singleton
 {
     /**
      * Config (cache)
      *
-     * @var   \XLite\Core\CommonCell
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\CommonCell
      */
     protected $config;
 
@@ -47,8 +43,6 @@ class Config extends \XLite\Base\Singleton
      * Method to access a singleton
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getInstance()
     {
@@ -59,8 +53,6 @@ class Config extends \XLite\Base\Singleton
      * Reset state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function updateInstance()
     {
@@ -74,8 +66,6 @@ class Config extends \XLite\Base\Singleton
      * @param mixed $force ____param_comment____ OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function readConfig($force = false)
     {
@@ -90,8 +80,6 @@ class Config extends \XLite\Base\Singleton
      * Update and re-read options
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function update()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Moneybookers;
 /**
  * Moneybookers payment gateway integration (iframe)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -37,8 +35,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -49,8 +45,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -61,8 +55,6 @@ abstract class Main extends \XLite\Module\AModule
      * Get module major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMajorVersion()
     {
@@ -73,8 +65,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -85,8 +75,6 @@ abstract class Main extends \XLite\Module\AModule
      * Fet description 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     public static function getDescription()
     {
@@ -98,8 +86,6 @@ abstract class Main extends \XLite\Module\AModule
      * Return link to settings form
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getSettingsForm()
     {
@@ -110,8 +96,6 @@ abstract class Main extends \XLite\Module\AModule
      * Determines if we need to show settings form link
      * 
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function showSettingsForm()
     {

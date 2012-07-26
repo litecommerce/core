@@ -28,35 +28,27 @@ namespace XLite\Core;
 /**
  * Image operator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ImageOperator extends \XLite\Base\SuperClass
 {
     /**
      * Engine
      *
-     * @var   \XLite\Core\ImageOperator\AImageOperator
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\ImageOperator\AImageOperator
      */
     protected static $engine;
 
     /**
      * Model
      *
-     * @var   \XLite\Model\Base\Image
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Base\Image
      */
     protected $model;
 
     /**
      * Prepared flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $prepared = false;
 
@@ -68,8 +60,6 @@ class ImageOperator extends \XLite\Base\SuperClass
      * @param array  $args   Arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function __callStatic($method, array $args = array())
     {
@@ -81,8 +71,6 @@ class ImageOperator extends \XLite\Base\SuperClass
      * Get engine
      *
      * @return \XLite\Core\ImageOperator\AImageOperator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getEngine()
     {
@@ -105,8 +93,6 @@ class ImageOperator extends \XLite\Base\SuperClass
      * @param \XLite\Model\Base\Image $image Image
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(\XLite\Model\Base\Image $image)
     {
@@ -120,8 +106,6 @@ class ImageOperator extends \XLite\Base\SuperClass
      * @param array  $args   Arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -135,8 +119,6 @@ class ImageOperator extends \XLite\Base\SuperClass
      * Prepare image
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepare()
     {

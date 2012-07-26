@@ -28,8 +28,6 @@ namespace XLite\View\Form\ItemsList\Order;
 /**
  * List
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\View\Form\ItemsList\AItemsList
 {
@@ -37,8 +35,6 @@ class Main extends \XLite\View\Form\ItemsList\AItemsList
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Main extends \XLite\View\Form\ItemsList\AItemsList
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

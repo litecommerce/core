@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Order\Admin;
 /**
  * AAdmin
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Order\AOrder
 {
@@ -37,8 +35,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Order\AOrder
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -49,8 +45,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Order\AOrder
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

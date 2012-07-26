@@ -28,8 +28,6 @@ namespace XLite\View\JS;
 /**
  * \XLite\View\JS\AJS
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AJS extends \XLite\View\AView
 {

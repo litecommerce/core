@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View\Form;
 /**
  * "Set the sale price" dialog form class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
      * @param mixed &$data Data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setSaleDataValidators(&$data)
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 /**
  * Payflow Link payment processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APaypal
 {
@@ -37,8 +35,6 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APay
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function getSettingsTemplateDir()
     {
@@ -49,8 +45,6 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APay
      * Get the list of merchant countries where this payment processor can work
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAllowedMerchantCountries()
     {
@@ -63,8 +57,6 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APay
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {

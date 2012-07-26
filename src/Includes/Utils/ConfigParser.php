@@ -29,28 +29,20 @@ namespace Includes\Utils;
  * ConfigParser
  *
  * @package    XLite
- * @see        ____class_see____
- * @since      1.0.0
  */
 abstract class ConfigParser extends \Includes\Utils\AUtils
 {
     /**
      * Options cache
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $options;
 
     /**
      * List of function to modify options
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $mutators = array(
         'setWebDirWOSlash'
@@ -59,10 +51,7 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
     /**
      * List of additional source files for options gathering
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $configFiles = array(
         'config.php',
@@ -73,9 +62,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * Return path to the main config file
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getMainFile()
     {
@@ -88,9 +74,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * @param string $file file which caused an error
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function handleFileAbsenceError($file)
     {
@@ -103,9 +86,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * @param string $file file which caused an error
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function handleFileWrongFormatError($file)
     {
@@ -118,9 +98,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * @param string $file file to check
      *
      * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function checkFile($file)
     {
@@ -134,9 +111,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * @param string $errorHandler name of error handler (method)
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function parseCommon($file, $errorHandler = null)
     {
@@ -157,9 +131,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * Parse main config file
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function parseMainFile()
     {
@@ -170,9 +141,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * Parse local config file
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function parseLocalFile($fileName)
     {
@@ -186,9 +154,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * @param array $options options list
      *
      * @return array|mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getOptionsByNames(array $names, $options)
     {
@@ -202,9 +167,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * Exceute the mutators stack
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function executeMutators()
     {
@@ -217,8 +179,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * Create the "web_dir_wo_slash" option
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function setWebDirWOSlash()
     {
@@ -232,9 +192,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * @param array|string $names option names tree
      *
      * @return array|mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getOptions($names = null)
     {
@@ -258,9 +215,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * @param string $fileName Config file name
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function registerConfigFile($fileName)
     {

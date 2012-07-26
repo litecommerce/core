@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Viewer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -55,8 +51,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param \XLite\Model\Product $product Product model
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSalePercent(\XLite\Model\Product $product)
     {
@@ -69,8 +63,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param \XLite\Model\Product $product Product model
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function participateSale(\XLite\Model\Product $product)
     {

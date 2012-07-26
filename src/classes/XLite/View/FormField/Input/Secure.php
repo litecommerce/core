@@ -29,8 +29,6 @@ namespace XLite\View\FormField\Input;
 /**
  * Secure input
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Secure extends \XLite\View\FormField\Input\Base\String
 {
@@ -38,8 +36,6 @@ class Secure extends \XLite\View\FormField\Input\Base\String
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {

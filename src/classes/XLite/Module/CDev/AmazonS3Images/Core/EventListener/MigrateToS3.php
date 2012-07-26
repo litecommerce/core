@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\Core\EventListener;
 /**
  * Migrate to Amazon S3
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
 {
@@ -39,8 +37,6 @@ class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
      * Get event name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function getEventName()
     {
@@ -53,8 +49,6 @@ class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
      * @param mixed $item Item
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function processItem($item)
     {
@@ -89,8 +83,6 @@ class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
      * Check step valid state
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function isStepValid()
     {
@@ -102,8 +94,6 @@ class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
      * Get images list length 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getLength()
     {
@@ -120,8 +110,6 @@ class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
      * Get items
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function getItems()
     {
@@ -147,8 +135,6 @@ class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
      * Finish task
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function finishTask()
     {

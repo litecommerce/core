@@ -29,8 +29,6 @@ namespace Includes\Utils;
  * Operator
  *
  * @package    XLite
- * @see        ____class_see____
- * @since      1.0.0
  */
 abstract class Operator extends \Includes\Utils\AUtils
 {
@@ -38,9 +36,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * Return length of the "dummy" buffer for flush
      *
      * @return int
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDummyBufferLength()
     {
@@ -51,9 +46,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * Perform the "flush" itself
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function flushBuffers()
     {
@@ -68,8 +60,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * @param string $jsOutput JS output
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getJSMessage($message, $jsOutput)
     {
@@ -85,9 +75,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * @param int    $code     operation code
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function redirect($location, $code = 302)
     {
@@ -113,9 +100,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * Refresh current page
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function refresh()
     {
@@ -130,8 +114,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * @param string  $jsOutput   Flag to quick output OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function flush($message, $dummyFlush = false, $jsOutput = null)
     {
@@ -161,8 +143,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * @param boolean $addNewline Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function showMessage($message, $addNewline = true)
     {
@@ -181,9 +161,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * @param array $args     call arguments
      *
      * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function executeWithCustomMaxExecTime($time, $callback, array $args = array())
     {
@@ -206,8 +183,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * @param string $name Class name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function checkIfClassExists($name)
     {
@@ -228,8 +203,6 @@ abstract class Operator extends \Includes\Utils\AUtils
      * @param string $name Class name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function checkIfLCClass($name)
     {

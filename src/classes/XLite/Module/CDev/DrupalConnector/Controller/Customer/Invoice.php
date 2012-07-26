@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * Invoice controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Invoice extends \XLite\Controller\Customer\Invoice implements \XLite\Base\IDecorator
 {
@@ -40,8 +38,6 @@ class Invoice extends \XLite\Controller\Customer\Invoice implements \XLite\Base\
      * @param array  $args LC URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {

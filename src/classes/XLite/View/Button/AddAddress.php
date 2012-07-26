@@ -29,8 +29,6 @@ namespace XLite\View\Button;
 /**
  * Add address button widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddAddress extends \XLite\View\Button\APopupButton
 {
@@ -43,8 +41,6 @@ class AddAddress extends \XLite\View\Button\APopupButton
      * getJSFiles
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -58,8 +54,6 @@ class AddAddress extends \XLite\View\Button\APopupButton
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -74,8 +68,6 @@ class AddAddress extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
@@ -90,8 +82,6 @@ class AddAddress extends \XLite\View\Button\APopupButton
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

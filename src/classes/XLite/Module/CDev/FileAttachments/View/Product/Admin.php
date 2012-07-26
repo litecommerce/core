@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\View\Product;
 /**
  * Product attachments tab
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 class Admin extends \XLite\View\AView
 {
@@ -43,8 +41,6 @@ class Admin extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -59,8 +55,6 @@ class Admin extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -76,8 +70,6 @@ class Admin extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -92,8 +84,6 @@ class Admin extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -104,8 +94,6 @@ class Admin extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -118,8 +106,6 @@ class Admin extends \XLite\View\AView
      * Get product 
      * 
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getProduct()
     {
@@ -132,8 +118,6 @@ class Admin extends \XLite\View\AView
      * @param \XLite\Module\CDev\FileAttachments\Model\Product\Attachment $attachment Attachment
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getItemClass(\XLite\Module\CDev\FileAttachments\Model\Product\Attachment $attachment)
     {

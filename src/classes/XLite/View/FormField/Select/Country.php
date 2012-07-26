@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * \XLite\View\FormField\Select\Country
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Country extends \XLite\View\FormField\Select\Regular
 {
@@ -43,9 +41,7 @@ class Country extends \XLite\View\FormField\Select\Regular
     /**
      * Display only enabled countries
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $onlyEnabled = true;
 
@@ -55,8 +51,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -71,8 +65,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -90,8 +82,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * @param string $inputId    DOM Id of the "States" inputbox
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setStateSelectorIds($selectorId, $inputId)
     {
@@ -104,8 +94,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -122,8 +110,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * Get selector default options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
@@ -143,8 +129,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * getOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOptions()
     {
@@ -156,8 +140,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * getDefaultValue
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultValue()
     {
@@ -168,8 +150,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * Some JavaScript code to insert
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInlineJSCode()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View;
 /**
  * Header 
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class Header extends \XLite\View\Header implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Header extends \XLite\View\Header implements \XLite\Base\IDecorat
      * Get head prefixes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public static function defineHeadPrefixes()
     {

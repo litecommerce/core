@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Base;
 /**
  * Storage abstract repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Storage extends \XLite\Model\Repo\ARepo
 {
@@ -37,8 +35,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * Get storage name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     abstract public function getStorageName();
 
@@ -46,8 +42,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * Get file system images storage root path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     abstract public function getFileSystemRoot();
 
@@ -55,8 +49,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * Get web images storage root path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     abstract public function getWebRoot();
 
@@ -64,8 +56,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * Check - store remote image into local file system or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public function isStoreRemote()
     {
@@ -76,8 +66,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * Get allowed file system root list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getAllowedFileSystemRoots()
     {
@@ -93,8 +81,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Base\Storage $entity Exclude entity
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function findOneByFullPath($path, \XLite\Model\Base\Storage $entity)
     {
@@ -121,8 +107,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Base\Storage $entity Exclude path
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function findByFullPath($path, \XLite\Model\Base\Storage $entity)
     {
@@ -150,8 +134,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Base\Storage $entity Exclude entity
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function allowRemovePath($path, \XLite\Model\Base\Storage $entity)
     {
@@ -171,8 +153,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * Define all storage-based repositories classes list
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function defineStorageRepositories()
     {
@@ -190,8 +170,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * @param integer $id       Excluding entity id OPTIONAL
      *  
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function defineFindOneByFullPathQuery($path, $absolute, $id = null)
     {
@@ -219,8 +197,6 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      * @param integer $id       Excluding entity id OPTIONAL
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function defineFindByFullPathQuery($path, $absolute, $id = null)
     {

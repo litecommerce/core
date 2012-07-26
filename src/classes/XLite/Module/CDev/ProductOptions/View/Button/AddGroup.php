@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View\Button;
 /**
  * Link as button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddGroup extends \XLite\View\Button\Link
 {
@@ -37,8 +35,6 @@ class AddGroup extends \XLite\View\Button\Link
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -61,8 +57,6 @@ class AddGroup extends \XLite\View\Button\Link
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {

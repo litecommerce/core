@@ -28,8 +28,6 @@ namespace XLite\Controller\Console;
 /**
  * Main controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\Controller\Console\AConsole
 {

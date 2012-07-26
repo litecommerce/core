@@ -28,8 +28,6 @@ namespace XLite\View\Form\Profiles;
 /**
  * Profiles abstract form
  *
- * @see   ____class_see____
- * @since 1.0.4
  */
 abstract class AProfiles extends \XLite\View\Form\AForm
 {
@@ -38,8 +36,6 @@ abstract class AProfiles extends \XLite\View\Form\AForm
      * getDefaultClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.4
      */
     protected function getDefaultClassName()
     {

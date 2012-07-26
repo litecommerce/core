@@ -28,8 +28,6 @@ namespace XLite\View\Form\Cart\Item;
 /**
  * Update cart item form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Update extends \XLite\View\Form\Cart\Item\AItem
 {
@@ -37,8 +35,6 @@ class Update extends \XLite\View\Form\Cart\Item\AItem
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

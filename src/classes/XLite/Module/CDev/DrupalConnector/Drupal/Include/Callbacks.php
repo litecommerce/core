@@ -27,8 +27,6 @@
  * Return LC controller title
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorGetControllerTitle()
 {
@@ -39,8 +37,6 @@ function lcConnectorGetControllerTitle()
  * Return LC controller page content
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorGetControllerContent()
 {
@@ -54,8 +50,6 @@ function lcConnectorGetControllerContent()
  * @param array &$formState Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorValidateWidgetModifyForm(array &$form, array &$formState)
 {
@@ -72,8 +66,6 @@ function lcConnectorValidateWidgetModifyForm(array &$form, array &$formState)
  * @param array &$form_state Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorSubmitWidgetModifyForm(array &$form, array &$formState)
 {
@@ -90,8 +82,6 @@ function lcConnectorSubmitWidgetModifyForm(array &$form, array &$formState)
  * @param array &$form_state Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorSubmitWidgetDeleteForm(array &$form, array &$formState)
 {
@@ -108,8 +98,6 @@ function lcConnectorSubmitWidgetDeleteForm(array &$form, array &$formState)
  * @param array &$form_state Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorUserProfileFormSubmit(array &$form, array &$formState)
 {
@@ -126,8 +114,6 @@ function lcConnectorUserProfileFormSubmit(array &$form, array &$formState)
  * @param array &$form_state Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorUserPermissionsSubmit(array &$form, array &$formState)
 {
@@ -143,8 +129,6 @@ function lcConnectorUserPermissionsSubmit(array &$form, array &$formState)
  * @param array &$context Batch process context data
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorUserSync(array &$context)
 {
@@ -161,8 +145,6 @@ function lcConnectorUserSync(array &$context)
  * @param array   $operations Batch process operations array
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorUserSyncFinishedCallback($success, array $results, array $operations)
 {

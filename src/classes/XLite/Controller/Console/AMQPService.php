@@ -28,8 +28,6 @@ namespace XLite\Controller\Console;
 /**
  * AMQP service 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class AMQPService extends \XLite\Controller\Console\AConsole
 {
@@ -37,8 +35,6 @@ class AMQPService extends \XLite\Controller\Console\AConsole
      * Declare queues 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function doActionDeclareQueues()
     {
@@ -62,8 +58,6 @@ class AMQPService extends \XLite\Controller\Console\AConsole
      * Remove all queues 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function doActionRemoveQueues()
     {

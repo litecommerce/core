@@ -28,26 +28,20 @@ namespace XLite\View\OrderList;
 /**
  * Abstract order list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AOrderList extends \XLite\View\Dialog
 {
     /**
      * Orders list (cache)
      *
-     * @var   array(\XLite\Model\Order)
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array(\XLite\Model\Order)
      */
     protected $orders = null;
 
     /**
      * Widget class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $widgetClass = '';
 
@@ -55,8 +49,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Get orders
      *
      * @return array(\XLite\Model\Order)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getOrders();
 
@@ -64,8 +56,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Get widget keys
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getWidgetKeys();
 
@@ -73,8 +63,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -88,8 +76,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Get class identifier as CSS class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getClassIdentifier()
     {
@@ -100,8 +86,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Get AJAX request parameters as javascript object definition
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAJAXRequestParamsAsJSObject()
     {
@@ -131,8 +115,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * @param boolean                $data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkIsAvailableToOrder(\XLite\Model\OrderItem $item, $data)
     {
@@ -143,8 +125,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -155,8 +135,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -167,8 +145,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -179,8 +155,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * Get AJAX request parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAJAXRequestParams()
     {
@@ -199,8 +173,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * @param \XLite\Model\Order $order
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function showReorder(\XLite\Model\Order $order)
     {

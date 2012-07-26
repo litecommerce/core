@@ -28,17 +28,13 @@ namespace XLite\Core\Validator\Enum;
 /**
  * AEnum 
  *
- * @see   ____class_see____
- * @since 1.0.21
  */
 abstract class AEnum extends \XLite\Core\Validator\Scalar
 {
     /**
      * Items list 
      * 
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $list = array();
 
@@ -49,8 +45,6 @@ abstract class AEnum extends \XLite\Core\Validator\Scalar
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {

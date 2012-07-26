@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Catalog\View;
 /**
  * Product options list
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @LC_Dependencies ("CDev\ProductOptions")
  */
@@ -39,8 +37,6 @@ abstract class ProductOptions extends \XLite\Module\CDev\ProductOptions\View\Pro
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -55,8 +51,6 @@ abstract class ProductOptions extends \XLite\Module\CDev\ProductOptions\View\Pro
      * Get product options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -77,8 +71,6 @@ abstract class ProductOptions extends \XLite\Module\CDev\ProductOptions\View\Pro
      * @param \XLite\Module\CDev\ProductOptions\Model\OptionGroup $option Option group
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTemplateNameByOption(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $option)
     {

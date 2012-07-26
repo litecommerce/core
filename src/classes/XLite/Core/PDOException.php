@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Extended PDO exception
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PDOException extends \PDOException
 {
@@ -41,8 +39,6 @@ class PDOException extends \PDOException
      * @param array         $params SQL query parameters OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(\PDOException $e, $query = null, array $params = array())
     {

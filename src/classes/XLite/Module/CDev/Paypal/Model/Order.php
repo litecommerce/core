@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\Model;
 /**
  * Order model
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * if Payflow Link or Paypal Advanced are avavilable
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function getPaymentMethods()
     {
@@ -82,8 +78,6 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @param \XLite\Model\Payment\Method $method Payment method object
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function isExpressCheckout($method)
     {

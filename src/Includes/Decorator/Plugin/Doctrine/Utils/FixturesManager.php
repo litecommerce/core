@@ -28,17 +28,13 @@ namespace Includes\Decorator\Plugin\Doctrine\Utils;
 /**
  * FixturesManager 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
     /**
      * Fixtures cache
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var array
      */
     protected static $fixtures;
 
@@ -46,8 +42,6 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * Get fixtures paths list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getFixtures()
     {
@@ -86,8 +80,6 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * @param string $file Fixture file path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function addFixtureToList($file)
     {
@@ -100,8 +92,6 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * Get file path with fixtures paths
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getFixturesFilePath()
     {
@@ -112,8 +102,6 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * Save fixtures to file
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function saveFile()
     {
@@ -132,8 +120,6 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * @param string $file File name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function checkFile($file)
     {

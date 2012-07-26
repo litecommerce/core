@@ -28,8 +28,6 @@ namespace XLite\View\ModulesManager;
 /**
  * Banner 
  *
- * @see   ____class_see____
- * @since 1.0.19
  */
 class Banner extends \XLite\View\ModulesManager\AModulesManager
 {
@@ -37,8 +35,6 @@ class Banner extends \XLite\View\ModulesManager\AModulesManager
      * Widget CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getCSSFiles()
     {
@@ -52,8 +48,6 @@ class Banner extends \XLite\View\ModulesManager\AModulesManager
      * Return templates dir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getDir()
     {
@@ -64,8 +58,6 @@ class Banner extends \XLite\View\ModulesManager\AModulesManager
      * Is banner visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isVisible()
     {
@@ -76,8 +68,6 @@ class Banner extends \XLite\View\ModulesManager\AModulesManager
      * Return banner URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getBannerURL()
     {

@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Image
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Image extends \XLite\View\AView
 {
@@ -57,9 +55,7 @@ class Image extends \XLite\View\AView
     /**
      * Allowed properties names
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $allowedProperties = array(
         'className'   => 'class',
@@ -76,18 +72,14 @@ class Image extends \XLite\View\AView
     /**
      * Additioanl properties
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $properties = array();
 
     /**
      * Resized thumbnail URL
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $resizedURL = null;
 
@@ -98,8 +90,6 @@ class Image extends \XLite\View\AView
      * @param array $params Widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -117,8 +107,6 @@ class Image extends \XLite\View\AView
      * Get image URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURL()
     {
@@ -154,8 +142,6 @@ class Image extends \XLite\View\AView
      * Get image alternative text
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAlt()
     {
@@ -166,8 +152,6 @@ class Image extends \XLite\View\AView
      * Get properties
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProperties()
     {
@@ -179,8 +163,6 @@ class Image extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -191,8 +173,6 @@ class Image extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -214,8 +194,6 @@ class Image extends \XLite\View\AView
      * checkImage
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkImage()
     {
@@ -227,8 +205,6 @@ class Image extends \XLite\View\AView
      * checkDefaultImage
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkDefaultImage()
     {
@@ -240,8 +216,6 @@ class Image extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -267,8 +241,6 @@ class Image extends \XLite\View\AView
      * Return a CSS style centering the image vertically and horizontally
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setImagePaddings()
     {
@@ -309,8 +281,6 @@ class Image extends \XLite\View\AView
      * @param string $style CSS styles to be added to the end of "style" attribute
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addInlineStyle($style)
     {
@@ -327,8 +297,6 @@ class Image extends \XLite\View\AView
      * TODO: replace getResizedThumbnailURL to getResizedURL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processImage()
     {
@@ -356,8 +324,6 @@ class Image extends \XLite\View\AView
      * Preprocess default image
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processDefaultImage()
     {

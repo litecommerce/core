@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View\Button;
 /**
  * Delete slected option groups button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DeleteSelectedGroups extends \XLite\View\Button\DeleteSelected
 {
@@ -37,8 +35,6 @@ class DeleteSelectedGroups extends \XLite\View\Button\DeleteSelected
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

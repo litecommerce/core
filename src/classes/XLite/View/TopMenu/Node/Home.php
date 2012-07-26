@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node;
 /**
  * Home
  * 
- * @see   ____class_see____
- * @since 1.0.18
  *
  * @ListChild (list="menus", weight="100", zone="admin")
  */
@@ -39,8 +37,6 @@ class Home extends \XLite\View\TopMenu\Node
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -55,8 +51,6 @@ class Home extends \XLite\View\TopMenu\Node
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function checkACL()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\View;
 /**
  * Paypal payment method settings dialog
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PaypalSettings extends \XLite\View\Dialog
 {
@@ -43,8 +41,6 @@ class PaypalSettings extends \XLite\View\Dialog
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -59,8 +55,6 @@ class PaypalSettings extends \XLite\View\Dialog
      * getPaymentProcessor 
      * 
      * @return \XLite\Payment\Base\Processor
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function getPaymentProcessor()
     {
@@ -74,8 +68,6 @@ class PaypalSettings extends \XLite\View\Dialog
      * defineWidgetParams 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function defineWidgetParams()
     {
@@ -90,8 +82,6 @@ class PaypalSettings extends \XLite\View\Dialog
      * getPaypalMethodTemplate 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getDir()
     {
@@ -104,8 +94,6 @@ class PaypalSettings extends \XLite\View\Dialog
      * Get register URL 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPaypalRegisterURL()
     {

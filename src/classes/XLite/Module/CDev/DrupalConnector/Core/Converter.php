@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 /**
  * Miscelaneous convertion routines
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
 {
@@ -52,8 +50,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $interface Interface script OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
@@ -91,8 +87,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $node   Node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildDrupalPath($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
@@ -118,8 +112,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $node   Node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
@@ -133,8 +125,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param array  $args Additional arguments OIPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function normalizeDrupalURL($url, array $args = array())
     {

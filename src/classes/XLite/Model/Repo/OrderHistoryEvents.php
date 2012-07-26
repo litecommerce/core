@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Order history events repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderHistoryEvents extends \XLite\Model\Repo\ARepo
 {
@@ -39,8 +37,6 @@ class OrderHistoryEvents extends \XLite\Model\Repo\ARepo
      * @param integer $orderId Order identificator
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function search($orderId)
     {
@@ -63,8 +59,6 @@ class OrderHistoryEvents extends \XLite\Model\Repo\ARepo
      * @param array   $details     Event details OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerEvent($orderId, $code, $description, array $data = array(), $comment = '', $details = array())
     {

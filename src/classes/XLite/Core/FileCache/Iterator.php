@@ -28,17 +28,13 @@ namespace XLite\Core\FileCache;
 /**
  * Iterator 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Iterator extends \FilterIterator
 {
     /**
      * Regular expression
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $regexp;
 
@@ -48,8 +44,6 @@ class Iterator extends \FilterIterator
      * @param string $regexp Regular expression
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setRegexp($regexp)
     {
@@ -60,8 +54,6 @@ class Iterator extends \FilterIterator
      * Accepter
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function accept()
     {

@@ -28,17 +28,13 @@ namespace XLite\Core\EventListener\Base;
 /**
  * Abstract countable task
  * 
- * @see   ____class_see____
- * @since 1.0.23
  */
 abstract class Countable extends \XLite\Core\EventListener\AEventListener
 {
     /**
      * Event record 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.23
+     * @var array
      */
     protected $record;
 
@@ -46,8 +42,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Get event name 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     abstract protected function getEventName();
 
@@ -55,8 +49,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Get length 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     abstract protected function getLength();
 
@@ -64,8 +56,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Get items 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     abstract protected function getItems();
 
@@ -75,8 +65,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * @param mixed $item Item
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     abstract protected function processItem($item);
 
@@ -87,8 +75,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * @param array  $arguments Event arguments OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function handleEvent($name, array $arguments)
     {
@@ -122,8 +108,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Initialize step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function initializeStep()
     {
@@ -136,8 +120,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Check step valid state
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function isStepValid()
     {
@@ -148,8 +130,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Start step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function startStep()
     {
@@ -162,8 +142,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Run current step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function runCurrentStep()
     {
@@ -180,8 +158,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Finish step 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function finishStep()
     {
@@ -196,8 +172,6 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      * Finish task 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function finishTask()
     {

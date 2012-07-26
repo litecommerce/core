@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Config cell class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ConfigCell extends \XLite\Core\CommonCell
 {

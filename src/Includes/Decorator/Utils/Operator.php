@@ -28,8 +28,6 @@ namespace Includes\Decorator\Utils;
 /**
  * Operator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Operator extends \Includes\Decorator\Utils\AUtils
 {
@@ -41,9 +39,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
     /**
      * Tags to ignore
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var array
      */
     protected static $ignoredTags = array('see', 'since');
 
@@ -53,8 +49,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Parse all PHP class files and create the graph
      *
      * @return \Includes\Decorator\DataStructure\Graph\Classes
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function createClassesTree()
     {
@@ -99,8 +93,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Parse PHP files and return plain array with the class descriptors
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getClassesTreeIndex()
     {
@@ -139,8 +131,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Get iterator for class files
      *
      * @return \Includes\Utils\FileFilter
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getClassFileIterator()
     {
@@ -158,8 +148,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Check all module dependencies and create the graph
      *
      * @return \Includes\Decorator\DataStructure\Graph\Modules
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function createModulesGraph()
     {
@@ -204,8 +192,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Get all active modules and return plain array with the module descriptors
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModulesGraphIndex()
     {
@@ -232,8 +218,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function decorateClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -285,8 +269,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function divideChildrenIntoGroups(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -316,8 +298,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node2 Node to compare (second)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function compareClassWeight(
         \Includes\Decorator\DataStructure\Graph\Classes $node1,
@@ -335,8 +315,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to get weight
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModuleWeight(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -354,8 +332,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $parent Parent class node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function writeClassFile(
         \Includes\Decorator\DataStructure\Graph\Classes $node,
@@ -375,8 +351,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array  $tags    Tags to search OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getTags($content, array $tags = array())
     {
@@ -399,8 +373,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array $tags List of tags to search
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getTagPattern(array $tags)
     {
@@ -413,8 +385,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array $matches Data from preg_match_all()
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function parseTags(array $matches)
     {
@@ -465,8 +435,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param string $value Value to parse
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function parseTagValue($value)
     {

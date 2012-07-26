@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoogleAnalytics\View;
 /**
  * Additional bloc for Checkout success page
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -39,8 +37,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -67,8 +61,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Get account id from Drupal module
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAccount()
     {
@@ -79,8 +71,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Get commands for _gat
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getGatCommands()
     {
@@ -152,8 +142,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -165,8 +153,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Display widget as Drupal-specific
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisplayDrupal()
     {
@@ -182,8 +168,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * @param string $string String
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function escapeJavascript($string)
     {

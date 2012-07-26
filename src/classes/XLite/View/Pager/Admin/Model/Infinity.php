@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Admin\Model;
 /**
  * Infinity pager
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Infinity extends \XLite\View\Pager\Admin\Model\AModel
 {
@@ -37,8 +35,6 @@ class Infinity extends \XLite\View\Pager\Admin\Model\AModel
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -52,8 +48,6 @@ class Infinity extends \XLite\View\Pager\Admin\Model\AModel
      * Get items per page (default)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {
@@ -64,8 +58,6 @@ class Infinity extends \XLite\View\Pager\Admin\Model\AModel
      * Return maximal possible items number per page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageMax()
     {
@@ -76,8 +68,6 @@ class Infinity extends \XLite\View\Pager\Admin\Model\AModel
      * getItemsPerPage
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPage()
     {
@@ -88,8 +78,6 @@ class Infinity extends \XLite\View\Pager\Admin\Model\AModel
      * Return ID of the current page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageId()
     {
@@ -100,8 +88,6 @@ class Infinity extends \XLite\View\Pager\Admin\Model\AModel
      * Get direcory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

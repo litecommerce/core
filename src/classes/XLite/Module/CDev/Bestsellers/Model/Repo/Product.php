@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Bestsellers\Model\Repo;
 /**
  * The "OrderItem" model repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorator
 {
@@ -41,8 +39,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * @param integer                $cat   Category identificator OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findBestsellers(\XLite\Core\CommonCell $cnd, $count = 0, $cat = 0)
     {
@@ -59,8 +55,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * @param integer                $cat   Category identificator
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder object
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineBestsellersQuery(\XLite\Core\CommonCell $cnd, $count, $cat)
     {

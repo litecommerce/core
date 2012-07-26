@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Facebook Like button
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="buttons.share", weight="100")
  */
@@ -44,8 +42,6 @@ class FacebookLike extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -60,8 +56,6 @@ class FacebookLike extends \XLite\View\AView
      * Get width
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWidth()
     {
@@ -73,8 +67,6 @@ class FacebookLike extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -85,8 +77,6 @@ class FacebookLike extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -102,8 +92,6 @@ class FacebookLike extends \XLite\View\AView
      * Get defaul width
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getDefaultWidth()
     {
@@ -114,8 +102,6 @@ class FacebookLike extends \XLite\View\AView
      * Get button attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getButtonAttributes()
     {

@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * AddonsListMarketplace
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
 {
@@ -37,8 +35,6 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {

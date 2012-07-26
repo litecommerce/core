@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * \XLite\View\Address
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Address extends \XLite\View\Dialog
 {
@@ -56,9 +54,7 @@ class Address extends \XLite\View\Dialog
     /**
      * schema
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $schema = array(
         'title' => array(
@@ -123,8 +119,6 @@ class Address extends \XLite\View\Dialog
      * getSchemaFields
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSchemaFields()
     {
@@ -138,8 +132,6 @@ class Address extends \XLite\View\Dialog
      * @param boolean $processValue Process value flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldValue($fieldName, $processValue = false)
     {
@@ -176,8 +168,6 @@ class Address extends \XLite\View\Dialog
      * getProfileId
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileId()
     {
@@ -188,8 +178,6 @@ class Address extends \XLite\View\Dialog
      * Get a list of JS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -206,8 +194,6 @@ class Address extends \XLite\View\Dialog
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -221,8 +207,6 @@ class Address extends \XLite\View\Dialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -233,8 +217,6 @@ class Address extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -245,8 +227,6 @@ class Address extends \XLite\View\Dialog
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -269,8 +249,6 @@ class Address extends \XLite\View\Dialog
      * getDefaultTemplate
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -281,8 +259,6 @@ class Address extends \XLite\View\Dialog
      * useBodyTemplate
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function useBodyTemplate()
     {

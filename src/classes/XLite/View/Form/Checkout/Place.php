@@ -28,8 +28,6 @@ namespace XLite\View\Form\Checkout;
 /**
  * Place order form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Place extends \XLite\View\Form\Checkout\ACheckout
 {
@@ -38,8 +36,6 @@ class Place extends \XLite\View\Form\Checkout\ACheckout
      * NOTE - this function designed for AJAX easy switch on/off
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {
@@ -50,8 +46,6 @@ class Place extends \XLite\View\Form\Checkout\ACheckout
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

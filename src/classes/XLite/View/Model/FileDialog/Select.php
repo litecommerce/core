@@ -28,8 +28,6 @@ namespace XLite\View\Model\FileDialog;
 /**
  * File select dialog model widget
  *
- * @see   ____class_see____
- * @since 1.0.11
  */
 class Select extends \XLite\View\Model\AModel
 {
@@ -38,8 +36,6 @@ class Select extends \XLite\View\Model\AModel
      * Return object name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getObject()
     {
@@ -50,8 +46,6 @@ class Select extends \XLite\View\Model\AModel
      * Return object identificator
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getObjectId()
     {
@@ -62,8 +56,6 @@ class Select extends \XLite\View\Model\AModel
      * Return file object name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getFileObject()
     {
@@ -74,8 +66,6 @@ class Select extends \XLite\View\Model\AModel
      * Return file object identificator
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getFileObjectId()
     {
@@ -86,8 +76,6 @@ class Select extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -98,8 +86,6 @@ class Select extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {

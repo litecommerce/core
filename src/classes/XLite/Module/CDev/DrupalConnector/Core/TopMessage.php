@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 /**
  * Top message
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopMessage extends \XLite\Core\TopMessage implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class TopMessage extends \XLite\Core\TopMessage implements \XLite\Base\IDecorato
      * Clear list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clearTopMessages()
     {

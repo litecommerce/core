@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Product multilingual data
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  *
@@ -46,9 +44,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
     /**
      * Product name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -57,9 +53,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
     /**
      * Product description
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -68,9 +62,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
     /**
      * Product brief description
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -79,9 +71,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
     /**
      * Meta tags
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -90,9 +80,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
     /**
      * Product meta description
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -101,9 +89,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
     /**
      * Meta title
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */

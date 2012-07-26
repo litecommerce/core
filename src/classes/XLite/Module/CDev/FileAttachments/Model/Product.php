@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\FileAttachments\Model;
 /**
  * Product 
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Product attachments
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\FileAttachments\Model\Product\Attachment", mappedBy="product", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})

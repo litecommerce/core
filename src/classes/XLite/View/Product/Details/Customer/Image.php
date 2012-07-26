@@ -28,8 +28,6 @@ namespace XLite\View\Product\Details\Customer;
 /**
  * Image
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="product.details.page.image.photo", weight="10")
  * @ListChild (list="product.details.quicklook.image", weight="10")
@@ -57,9 +55,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     /**
      * Product has any image to ZOOM
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isZoom;
 
@@ -68,8 +64,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -84,8 +78,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -101,8 +93,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * depending on whether it is a quicklook popup, or not
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getZoomAdjustX()
     {
@@ -116,8 +106,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -128,8 +116,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Return current template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -142,8 +128,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -163,8 +147,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Check if the product has any image to ZOOM
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasZoomImage()
     {
@@ -191,8 +173,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Get zoom image
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getZoomImageURL()
     {
@@ -203,8 +183,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Get zoom layer width
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getZoomWidth()
     {
@@ -215,8 +193,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Return the max image width depending on whether it is a quicklook popup, or not
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWidgetMaxWidth()
     {
@@ -229,8 +205,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Get product image container max height
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getWidgetMaxHeight()
     {
@@ -253,8 +227,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Return data to send to JS
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSData()
     {

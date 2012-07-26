@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\UserPermissions\Controller\Admin;
 /**
  * Roles 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Roles extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Roles extends \XLite\Controller\Admin\AAdmin
      * Update list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {

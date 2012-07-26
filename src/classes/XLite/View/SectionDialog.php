@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Section-based dialog
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class SectionDialog extends \XLite\View\SimpleDialog
 {
@@ -37,8 +35,6 @@ abstract class SectionDialog extends \XLite\View\SimpleDialog
      * Define sections list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function defineSections();
 
@@ -46,8 +42,6 @@ abstract class SectionDialog extends \XLite\View\SimpleDialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -61,8 +55,6 @@ abstract class SectionDialog extends \XLite\View\SimpleDialog
      * Return file name for the center part template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBody()
     {

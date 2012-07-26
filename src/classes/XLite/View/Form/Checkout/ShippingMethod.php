@@ -28,8 +28,6 @@ namespace XLite\View\Form\Checkout;
 /**
  * Shipping method selection
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingMethod extends \XLite\View\Form\Checkout\ACheckout
 {
@@ -37,8 +35,6 @@ class ShippingMethod extends \XLite\View\Form\Checkout\ACheckout
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

@@ -28,8 +28,6 @@ namespace XLite\Model\Image\Product;
 /**
  * Product image
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="product_images")
@@ -39,9 +37,7 @@ class Image extends \XLite\Model\Base\Image
     /**
      * Alternative image text
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -50,9 +46,7 @@ class Image extends \XLite\Model\Base\Image
     /**
      * Image position
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -61,9 +55,7 @@ class Image extends \XLite\Model\Base\Image
     /**
      * Relation to a product entity
      *
-     * @var   \XLite\Model\Product
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Product
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="images")
      * @JoinColumn (name="product_id", referencedColumnName="product_id")

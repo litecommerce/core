@@ -29,8 +29,6 @@ namespace XLite\View\Form\Search\Product;
  * Simple product search form
  * FIXME - to remove
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Simple extends \XLite\View\Form\AForm
 {
@@ -38,8 +36,6 @@ class Simple extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -50,8 +46,6 @@ class Simple extends \XLite\View\Form\AForm
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

@@ -28,8 +28,6 @@ namespace XLite\Model\QueryBuilder;
 /**
  * Abstract query builder
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
 {
@@ -37,18 +35,14 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
     /**
      * Service flags 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var array
      */
     protected $flags = array();
 
     /**
      * Linked joins 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.21
+     * @var array
      */
     protected $joins = array();
 
@@ -58,8 +52,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * Get result
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getResult()
     {
@@ -70,8 +62,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * Get result as object array.
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getObjectResult()
     {
@@ -88,8 +78,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * Get result as array
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getArrayResult()
     {
@@ -100,8 +88,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * Get single result
      *
      * @return \XLite\Model\AEntity|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSingleResult()
     {
@@ -122,8 +108,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * Get single scalar result
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSingleScalarResult()
     {
@@ -144,8 +128,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * Get iterator
      *
      * @return \Iterator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function iterate()
     {
@@ -156,8 +138,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * Execute query
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function execute()
     {
@@ -168,8 +148,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * Get only entities
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOnlyEntities()
     {
@@ -198,8 +176,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * @param string $name Flag name
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getFlag($name)
     {
@@ -213,8 +189,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * @param mixed  $value Value OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function setFlag($name, $value = true)
     {
@@ -232,8 +206,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * @param string $alias The alias of the join OPTIONAL
      *  
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public function linkInner($join, $alias = null)
     {
@@ -256,8 +228,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * @param string $alias The alias of the join OPTIONAL
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public function linkLeft($join, $alias = null)
     {
@@ -280,8 +250,6 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * @param string $prefix Parameter prefix OPTIONAL
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public function getInCondition(array $data, $prefix = 'id')
     {

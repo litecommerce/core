@@ -28,17 +28,13 @@ namespace XLite\Model\Payment\Base;
 /**
  * Abstract credit card, web-based (iframe) processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
 {
     /**
      * Payment widget data 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $paymentWidgetData = array();
 
@@ -46,8 +42,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * Get iframe data
      *
      * @return string|array URL or POST data
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getIframeData();
 
@@ -55,8 +49,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * Get input template
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -67,8 +59,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * Get return request owner transaction or null
      *
      * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnOwnerTransaction()
     {
@@ -79,8 +69,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * Get payment widget data 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPaymentWidgetData()
     {
@@ -91,8 +79,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * Get iframe form URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIframeFormURL()
     {
@@ -102,8 +88,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * Get iframe size 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIframeSize()
     {
@@ -114,8 +98,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * Do initial payment
      *
      * @return string Status code
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doInitialPayment()
     {
@@ -153,8 +135,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * @param array $data Form elements
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleFormIframe(array $data)
     {
@@ -174,8 +154,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      * @param string $data Iframe URL
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleURLIframe($data)
     {

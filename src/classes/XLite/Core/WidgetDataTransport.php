@@ -28,17 +28,13 @@ namespace XLite\Core;
 /**
  * Widget data transport
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class WidgetDataTransport extends \XLite\Base
 {
     /**
      * Handler to use
      *
-     * @var   \XLite\View\AView|null
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\View\AView|null
      */
     protected $handler;
 
@@ -49,8 +45,6 @@ class WidgetDataTransport extends \XLite\Base
      * @param \XLite\View\AView|null $handler Passed handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($handler)
     {
@@ -61,8 +55,6 @@ class WidgetDataTransport extends \XLite\Base
      * Get widget
      *
      * @return \XLite\View\AView
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProtectedWidget()
     {
@@ -76,8 +68,6 @@ class WidgetDataTransport extends \XLite\Base
      * @param array  $args   Call arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {

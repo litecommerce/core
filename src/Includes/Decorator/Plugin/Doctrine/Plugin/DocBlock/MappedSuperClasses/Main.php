@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\MappedSuperClasses;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
 {
@@ -39,8 +37,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function checkRewriteCondition(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -53,8 +49,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getTagsToAdd(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {

@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Form regular selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Regular extends \XLite\View\FormField\Select\ASelect
 {

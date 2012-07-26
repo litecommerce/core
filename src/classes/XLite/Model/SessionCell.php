@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Session
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\SessionCell")
  * @Table  (name="session_cells",
@@ -46,9 +44,7 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Cell unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -59,9 +55,7 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Session id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -70,9 +64,7 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -81,9 +73,7 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Value
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -92,9 +82,7 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Value type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=16)
      */
@@ -106,8 +94,6 @@ class SessionCell extends \XLite\Model\AEntity
      * @param mixed $value Variable to check
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getTypeByValue($value)
     {
@@ -126,8 +112,6 @@ class SessionCell extends \XLite\Model\AEntity
      * @param string $type  Field type OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function prepareValueForGet($value, $type = null)
     {
@@ -172,8 +156,6 @@ class SessionCell extends \XLite\Model\AEntity
      * @param string $type  Field type OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function prepareValueForSet($value, $type = null)
     {
@@ -203,8 +185,6 @@ class SessionCell extends \XLite\Model\AEntity
      * Get value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getValue()
     {
@@ -217,8 +197,6 @@ class SessionCell extends \XLite\Model\AEntity
      * @param mixed $value Value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setValue($value)
     {

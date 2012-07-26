@@ -28,8 +28,6 @@ namespace XLite\View\ModulesManager;
 /**
  * Addons search and installation widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AModulesManager extends \XLite\View\Dialog
 {
@@ -37,8 +35,6 @@ class AModulesManager extends \XLite\View\Dialog
      * Return module identificator
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleId()
     {
@@ -49,8 +45,6 @@ class AModulesManager extends \XLite\View\Dialog
      * Return templates directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

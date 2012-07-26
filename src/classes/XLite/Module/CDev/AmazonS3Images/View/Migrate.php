@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\View;
 /**
  * Migrate images
  * 
- * @see   ____class_see____
- * @since 1.0.19
  *
  * @ListChild (list="crud.settings.footer", zone="admin", weight="100")
  */
@@ -39,8 +37,6 @@ class Migrate extends \XLite\View\AView
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class Migrate extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -71,8 +65,6 @@ class Migrate extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -87,8 +79,6 @@ class Migrate extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -99,8 +89,6 @@ class Migrate extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -113,8 +101,6 @@ class Migrate extends \XLite\View\AView
      * Get migration process started code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getMigrateStarted()
     {
@@ -139,8 +125,6 @@ class Migrate extends \XLite\View\AView
      * Get migrate percent
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getPercentMigrate()
     {
@@ -169,8 +153,6 @@ class Migrate extends \XLite\View\AView
      * Check - has S3 images or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function hasS3Images()
     {
@@ -200,8 +182,6 @@ class Migrate extends \XLite\View\AView
      * Check migrate from Amazon S3 form visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isMigrateFromS3Visible()
     {
@@ -216,8 +196,6 @@ class Migrate extends \XLite\View\AView
      * Check - has non-S3 images  or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function hasNoS3Images()
     {
@@ -237,8 +215,6 @@ class Migrate extends \XLite\View\AView
      * Check migrate to Amazon S3 form visibility
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isMigrateToS3Visible()
     {

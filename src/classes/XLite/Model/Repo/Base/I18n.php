@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Base;
 /**
  * Translations-owner abstract reporitory
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class I18n extends \XLite\Model\Repo\ARepo
 {
@@ -40,8 +38,6 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      * @param string $code  Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function createQueryBuilder($alias = null, $code = null)
     {
@@ -56,8 +52,6 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      * @param string                     $code         Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addLanguageQuery(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null, $code = null, $translationsAlias = 'translations')
     {

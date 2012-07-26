@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Order history event data 
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="order_history_event_data",
@@ -43,9 +41,7 @@ class OrderHistoryEventsData extends \XLite\Model\AEntity
     /**
      * Primary key
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -56,9 +52,7 @@ class OrderHistoryEventsData extends \XLite\Model\AEntity
     /**
      * Record name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -67,9 +61,7 @@ class OrderHistoryEventsData extends \XLite\Model\AEntity
     /**
      * Value
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -78,9 +70,7 @@ class OrderHistoryEventsData extends \XLite\Model\AEntity
     /**
      * Transaction
      *
-     * @var   \XLite\Model\Payment\Transaction
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Payment\Transaction
      *
      * @ManyToOne  (targetEntity="XLite\Model\OrderHistoryEvents", inversedBy="details")
      * @JoinColumn (name="event_id", referencedColumnName="event_id")

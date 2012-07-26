@@ -28,8 +28,6 @@ namespace XLite\View\Payment;
 /**
  * Payment method
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -39,8 +37,6 @@ class Method extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -54,8 +50,6 @@ class Method extends \XLite\View\Dialog
      * Check widget visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isVisible()
     {
@@ -69,8 +63,6 @@ class Method extends \XLite\View\Dialog
      * Get payment method
      *
      * @return \XLite\Model\Payment\Metho
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPaymentMethod()
     {
@@ -82,8 +74,6 @@ class Method extends \XLite\View\Dialog
      * Check - is settings widget is widget class or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isWidgetSettings()
     {
@@ -98,8 +88,6 @@ class Method extends \XLite\View\Dialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -112,8 +100,6 @@ class Method extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

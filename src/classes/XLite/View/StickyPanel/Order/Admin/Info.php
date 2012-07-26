@@ -28,8 +28,6 @@ namespace XLite\View\StickyPanel\Order\Admin;
 /**
  * Orer info sticky panel
  * 
- * @see   ____class_see____
- * @since 1.0.16
  */
 class Info extends \XLite\View\StickyPanel\ItemsListForm
 {

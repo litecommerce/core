@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\Moneybookers\Model\Payment\Processor;
 /**
  * Moneybookers payment processor
  * 
- * @see   ____class_see____
- * @since 1.0.23
  */
 class Moneybookers extends \XLite\Model\Payment\Base\Iframe
 {
     /**
      * Allowed languages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $allowedLanguages = array(
         'EN', 'DE', 'ES', 'FR', 'IT', 'PL', 'GR', 'RO', 'RU', 'TR',
@@ -48,9 +44,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Allowed currencies codes
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $allowedCurrencies = array(
         'EUR', 'TWD', 'USD', 'THB', 'GBP', 'CZK', 'HKD', 'HUF', 'SGD', 'SKK',
@@ -62,9 +56,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Statuses
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $statuses = array(
         '-2' => 'Failed',
@@ -76,9 +68,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Failed reason codes and messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $failedReasons = array(
         '01' => 'Referred',
@@ -152,9 +142,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Payment types
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $paymentTypes = array(
         'MBD' => 'Moneybooker direct',
@@ -165,9 +153,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Payment type countries
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $paymentTypeCountries = array(
         'WLT'   => true,
@@ -218,9 +204,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Payment type icons
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $paymentTypeIcons = array(
         'WLT'   => 'by_ewallet_90x45.gif',
@@ -281,8 +265,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get platform name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getPlatformName()
     {
@@ -293,8 +275,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get platform secret word
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getPlatformSecretWord()
     {
@@ -305,8 +285,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get platform email
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getPlatformEmail()
     {
@@ -317,8 +295,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get platform customer id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getPlatformCustomerID()
     {
@@ -331,8 +307,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -347,8 +321,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
@@ -361,8 +333,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Payment method has settings into Module settings section
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasModuleSettings()
     {
@@ -376,8 +346,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIconPath(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
@@ -400,8 +368,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
     {
@@ -414,8 +380,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -441,8 +405,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processCallback(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -537,8 +499,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get iframe size
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIframeSize()
     {
@@ -549,8 +509,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get iframe data
      *
      * @return string|array URL or POST data
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIframeData()
     {
@@ -563,8 +521,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get Moneybookers session id
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSessionId()
     {
@@ -656,8 +612,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLanguageCode()
     {
@@ -670,8 +624,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get country code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCountryCode()
     {
@@ -683,8 +635,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get currency code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrencyCode()
     {
@@ -695,8 +645,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get post URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPostURL()
     {
@@ -709,8 +657,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Define saved into transaction data schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSavedData()
     {
@@ -728,8 +674,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param string $serviceName Payment method service name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function convertServiceNameToType($serviceName)
     {
@@ -743,8 +687,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Order $order Order
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPaymentTypeAllowed($type, \XLite\Model\Order $order)
     {
@@ -769,8 +711,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {

@@ -29,8 +29,6 @@ namespace Includes;
  * ErrorHandler
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class ErrorHandler
 {
@@ -47,9 +45,6 @@ abstract class ErrorHandler
      * @param integer $code    Error code
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function throwException($message, $code)
     {
@@ -64,9 +59,6 @@ abstract class ErrorHandler
      * @param string  $backtrace Stack trace OPTIONAL
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function logInfo($message, $code, $backtrace = null)
     {
@@ -104,8 +96,6 @@ abstract class ErrorHandler
      * Return path to the log file
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getLogFile()
     {
@@ -116,9 +106,6 @@ abstract class ErrorHandler
      * Return name of the error page file (.html)
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getErrorPageFileDefault()
     {
@@ -129,9 +116,6 @@ abstract class ErrorHandler
      * Return name of the error page file (.html)
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getErrorPageFileFromConfig()
     {
@@ -142,9 +126,6 @@ abstract class ErrorHandler
      * Return name of the error page file (.html)
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getErrorPageFile()
     {
@@ -155,9 +136,6 @@ abstract class ErrorHandler
      * Return content of the error page file (.html)
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getErrorPageFileContent()
     {
@@ -168,9 +146,6 @@ abstract class ErrorHandler
      * Return content of the error page file (.html)
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getErrorPage()
     {
@@ -185,9 +160,6 @@ abstract class ErrorHandler
      * @param string $page    Error page or message template
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function showErrorPage($code, $message, $page = null)
     {
@@ -198,9 +170,6 @@ abstract class ErrorHandler
      * Shutdown function
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function shutdown()
     {
@@ -213,9 +182,6 @@ abstract class ErrorHandler
      * @param array $error catched error
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function handleError(array $error)
     {
@@ -233,9 +199,6 @@ abstract class ErrorHandler
      * @param \Exception $exception catched exception
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function handleException(\Exception $exception)
     {
@@ -250,9 +213,6 @@ abstract class ErrorHandler
      * @param integer $code    Error code
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function fireError($message, $code = self::ERROR_UNKNOWN)
     {
@@ -265,8 +225,6 @@ abstract class ErrorHandler
      * @param string $method Name of an abstract method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function fireErrorAbstractMethodCall($method)
     {
@@ -277,9 +235,6 @@ abstract class ErrorHandler
      * Check if LC is installed
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function checkIsLCInstalled()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Product options list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SaleDiscountTypes extends \XLite\View\AView
 {
@@ -48,8 +46,6 @@ class SaleDiscountTypes extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -64,8 +60,6 @@ class SaleDiscountTypes extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -80,8 +74,6 @@ class SaleDiscountTypes extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -92,8 +84,6 @@ class SaleDiscountTypes extends \XLite\View\AView
      * Return percent off value.
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPercentOffValue()
     {
@@ -104,8 +94,6 @@ class SaleDiscountTypes extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

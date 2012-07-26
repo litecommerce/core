@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\MarketPrice\Model;
 /**
  * Product 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Product market price
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */

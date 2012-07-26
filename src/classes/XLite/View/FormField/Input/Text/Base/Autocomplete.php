@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text\Base;
 /**
  * Autocomplete 
  * 
- * @see   ____class_see____
- * @since 1.0.24
  */
 abstract class Autocomplete extends \XLite\View\FormField\Input\Text
 {
@@ -37,8 +35,6 @@ abstract class Autocomplete extends \XLite\View\FormField\Input\Text
      * Get dictionary name
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     abstract protected function getDictionary();
 
@@ -46,8 +42,6 @@ abstract class Autocomplete extends \XLite\View\FormField\Input\Text
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -64,8 +58,6 @@ abstract class Autocomplete extends \XLite\View\FormField\Input\Text
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {
@@ -82,8 +74,6 @@ abstract class Autocomplete extends \XLite\View\FormField\Input\Text
      * @param array $attrs Field attributes to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setCommonAttributes(array $attrs)
     {
@@ -98,8 +88,6 @@ abstract class Autocomplete extends \XLite\View\FormField\Input\Text
      * Get URL 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getURL()
     {

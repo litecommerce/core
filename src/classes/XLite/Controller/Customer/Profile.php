@@ -28,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * User profile page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Controller\Customer\ACustomer
 {
@@ -44,8 +42,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * Return value for the "register" mode param
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getRegisterMode()
     {
@@ -56,8 +52,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * handleRequest 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -72,8 +66,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * Returns title of the page
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -86,8 +78,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isRegisterMode()
     {
@@ -99,8 +89,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * Define current location for breadcrumbs
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -111,8 +99,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * Add part to the location nodes list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -125,8 +111,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * Return class name of the register form
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -137,8 +121,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * Check if profile is not exists
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionValidate()
     {
@@ -149,8 +131,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * doActionRegister
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRegister()
     {
@@ -185,8 +165,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -208,8 +186,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * doActionModify
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionModify()
     {
@@ -227,8 +203,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {

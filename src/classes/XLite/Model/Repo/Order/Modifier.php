@@ -28,26 +28,20 @@ namespace XLite\Model\Repo\Order;
 /**
  * Order modifier repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Modifier extends \XLite\Model\Repo\ARepo
 {
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'weight';
 
     /**
      * Alternative record identifiers
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $alternativeIdentifier = array(
         array('class'),
@@ -57,8 +51,6 @@ class Modifier extends \XLite\Model\Repo\ARepo
      * Find all active modifiers
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findActive()
     {
@@ -81,8 +73,6 @@ class Modifier extends \XLite\Model\Repo\ARepo
      * Define query for findActive() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindActiveQuery()
     {

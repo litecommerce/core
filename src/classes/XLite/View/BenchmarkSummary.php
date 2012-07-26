@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Benchmark summary block
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="main", weight="300", zone="admin")
  */
@@ -38,9 +36,7 @@ class BenchmarkSummary extends \XLite\View\AView
     /**
      * Measure (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $measure;
 
@@ -48,8 +44,6 @@ class BenchmarkSummary extends \XLite\View\AView
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -64,8 +58,6 @@ class BenchmarkSummary extends \XLite\View\AView
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function checkACL()
     {
@@ -77,8 +69,6 @@ class BenchmarkSummary extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -89,8 +79,6 @@ class BenchmarkSummary extends \XLite\View\AView
      * Check - benchmark did run in past or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isAlreadyMeasure()
     {
@@ -103,8 +91,6 @@ class BenchmarkSummary extends \XLite\View\AView
      * Get measure
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMeasure()
     {
@@ -126,8 +112,6 @@ class BenchmarkSummary extends \XLite\View\AView
      * Get last measure date
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLastDate()
     {
@@ -138,8 +122,6 @@ class BenchmarkSummary extends \XLite\View\AView
      * Get hosting score
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHostingScore()
     {
@@ -150,8 +132,6 @@ class BenchmarkSummary extends \XLite\View\AView
      * Check - score is high or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isHighScore()
     {

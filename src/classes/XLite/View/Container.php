@@ -31,8 +31,6 @@ namespace XLite\View;
  * :TODO:  waiting for the multiple inheritance
  * :FIXME: must extend the AView class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
 {
@@ -40,8 +38,6 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getDir();
 
@@ -49,8 +45,6 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -61,8 +55,6 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * isWrapper
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isWrapper()
     {
@@ -73,8 +65,6 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * Return file name for body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBodyTemplate()
     {
@@ -85,8 +75,6 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * Return current template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -97,8 +85,6 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * Return file name for the center part template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBody()
     {
@@ -109,8 +95,6 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * Determines if need to display only a widget body
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function useBodyTemplate()
     {

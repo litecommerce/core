@@ -28,8 +28,6 @@ namespace XLite\Upgrade\Entry\Module;
 /**
  * AModule
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AModule extends \XLite\Upgrade\Entry\AEntry
 {
@@ -37,8 +35,6 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
      * Update database records
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function updateDBRecords();
 
@@ -49,8 +45,6 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
      * @param array|null $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function upgrade($isTestMode = true, $filesToOverwrite = null)
     {
@@ -80,8 +74,6 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
      * Return path where the upgrade helper scripts are placed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */            
     protected function getUpgradeHelperPath()
     {

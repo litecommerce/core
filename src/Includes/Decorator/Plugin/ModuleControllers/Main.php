@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\ModuleControllers;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\APlugin
 {
@@ -42,8 +40,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * Execute certain hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {
@@ -57,8 +53,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function changeControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -73,8 +67,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isModuleController(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -87,8 +79,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to get and prepare class
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareModuleControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {

@@ -28,8 +28,6 @@ namespace XLite\View\Console;
 /**
  * Abstract console-based widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AConsole extends \XLite\View\AView
 {

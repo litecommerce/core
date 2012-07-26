@@ -29,8 +29,6 @@ namespace XLite\View\Button;
 /**
  * Delete user button widget. Customer area.
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DeleteUser extends \XLite\View\Button\APopupButton
 {
@@ -38,8 +36,6 @@ class DeleteUser extends \XLite\View\Button\APopupButton
      * getJSFiles
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -53,8 +49,6 @@ class DeleteUser extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
@@ -69,8 +63,6 @@ class DeleteUser extends \XLite\View\Button\APopupButton
      * Return default button label
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -81,8 +73,6 @@ class DeleteUser extends \XLite\View\Button\APopupButton
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -93,8 +83,6 @@ class DeleteUser extends \XLite\View\Button\APopupButton
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

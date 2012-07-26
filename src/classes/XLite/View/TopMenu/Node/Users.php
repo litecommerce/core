@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node;
 /**
  * Users
  * 
- * @see   ____class_see____
- * @since 1.0.18
  *
  * @ListChild (list="menus", weight="400", zone="admin")
  */
@@ -39,8 +37,6 @@ class Users extends \XLite\View\TopMenu\Node
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

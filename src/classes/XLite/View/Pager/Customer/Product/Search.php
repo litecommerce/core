@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Customer\Product;
 /**
  * Pager for the search products page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Search extends \XLite\View\Pager\Customer\Product\AProduct
 {
@@ -37,8 +35,6 @@ class Search extends \XLite\View\Pager\Customer\Product\AProduct
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {

@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Orders list controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class RecentOrders extends \XLite\Controller\Admin\OrderList
 {
@@ -37,8 +35,6 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,8 +45,6 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      * Handles the request.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {

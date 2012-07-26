@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Moneybookers\Controller\Admin;
 /**
  * Moneybookers settings controller
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,8 +45,6 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
      * Validate email
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionCheckEmail()
     {
@@ -110,8 +104,6 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
      * Activate Moneybookers Quick Checkout
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionActivate()
     {
@@ -140,8 +132,6 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
      * Validate secret word
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionValidateSecretWord()
     {
@@ -204,8 +194,6 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
      * Set order id prefix
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSetOrderPrefix()
     {

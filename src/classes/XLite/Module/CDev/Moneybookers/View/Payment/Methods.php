@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Moneybookers\View\Payment;
 /**
  * Payment methods widget
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Methods extends \XLite\View\Payment\Methods implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class Methods extends \XLite\View\Payment\Methods implements \XLite\Base\IDecora
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {

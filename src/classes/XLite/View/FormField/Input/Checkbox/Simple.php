@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Checkbox;
 /**
  * Simple checkbox
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Simple extends \XLite\View\FormField\Input\Checkbox
 {
@@ -37,8 +35,6 @@ class Simple extends \XLite\View\FormField\Input\Checkbox
      * Determines if checkbox is checked
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isChecked()
     {
@@ -49,8 +45,6 @@ class Simple extends \XLite\View\FormField\Input\Checkbox
      * getCommonAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Switch state button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SwitchState extends \XLite\View\Button\Regular
 {
@@ -42,8 +40,6 @@ class SwitchState extends \XLite\View\Button\Regular
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -54,8 +50,6 @@ class SwitchState extends \XLite\View\Button\Regular
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -70,8 +64,6 @@ class SwitchState extends \XLite\View\Button\Regular
      * Get style 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function  getStyle()
     {

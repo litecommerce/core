@@ -29,8 +29,6 @@ namespace XLite\View\Button;
 /**
  * Delete profile button. Admin area.
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DeleteProfile extends \XLite\View\Button\Regular
 {
@@ -39,8 +37,6 @@ class DeleteProfile extends \XLite\View\Button\Regular
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -51,8 +47,6 @@ class DeleteProfile extends \XLite\View\Button\Regular
      * Return specified JS code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getJSCode()
     {

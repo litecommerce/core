@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\View\Taxes;
 /**
  * Zone selector 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ZoneSelector extends \XLite\View\Taxes\ZoneSelector
 {
@@ -37,8 +35,6 @@ class ZoneSelector extends \XLite\View\Taxes\ZoneSelector
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

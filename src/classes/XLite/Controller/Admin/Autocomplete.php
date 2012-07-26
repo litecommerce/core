@@ -28,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Autocomplete controller 
  * 
- * @see   ____class_see____
- * @since 1.0.24
  */
 class Autocomplete extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Data 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var array
      */
     protected $data = array();
 
@@ -46,8 +42,6 @@ class Autocomplete extends \XLite\Controller\Admin\AAdmin
      * Preprocessor for no-action run
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -71,8 +65,6 @@ class Autocomplete extends \XLite\Controller\Admin\AAdmin
      * @param array $data Key-value data
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function processData(array $data)
     {
@@ -92,8 +84,6 @@ class Autocomplete extends \XLite\Controller\Admin\AAdmin
      * Process request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processRequest()
     {

@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Form field widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class FormField extends \XLite\View\AView
 {
@@ -44,8 +42,6 @@ class FormField extends \XLite\View\AView
      * FIXME - to check
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getValue()
     {
@@ -57,8 +53,6 @@ class FormField extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -69,8 +63,6 @@ class FormField extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

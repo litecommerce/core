@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Payment;
 /**
  * Payment transaction
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Transaction extends \XLite\Model\Repo\ARepo
 {
@@ -40,8 +38,6 @@ class Transaction extends \XLite\Model\Repo\ARepo
      * @param integer $orderId Order id OPTIONAL
      *
      * @return \XLite\Model\Payment\Transaction
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByParams(array $params, $orderId = null)
     {
@@ -55,8 +51,6 @@ class Transaction extends \XLite\Model\Repo\ARepo
      * @param integer $orderId Order id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineOneByParamsQuery(array $params, $orderId)
     {

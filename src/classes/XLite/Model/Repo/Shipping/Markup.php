@@ -28,17 +28,13 @@ namespace XLite\Model\Repo\Shipping;
 /**
  * Shipping method model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Markup extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SECONDARY;
 
@@ -50,8 +46,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier  Shipping order modifier
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findMarkupsByProcessor($processor, \XLite\Logic\Order\Modifier\Shipping $modifier)
     {
@@ -93,8 +87,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param integer $methodId Method Id OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findMarkupsByZoneAndMethod($zoneId = null, $methodId = null)
     {
@@ -107,8 +99,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param array $ids Array of markup Id
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findMarkupsByIds($ids)
     {
@@ -124,8 +114,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param integer                              $zoneId   Zone Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addMarkupCondition(\Doctrine\ORM\QueryBuilder $qb, \XLite\Logic\Order\Modifier\Shipping $modifier, $zoneId)
     {
@@ -167,8 +155,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param integer                              $zoneId    Zone Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindMarkupsByProcessorQuery($processor, \XLite\Logic\Order\Modifier\Shipping $modifier, $zoneId)
     {
@@ -193,8 +179,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param integer $methodId Method Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)
     {
@@ -223,8 +207,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param array $ids Array of markup id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindMarkupsByIdsQuery($ids)
     {

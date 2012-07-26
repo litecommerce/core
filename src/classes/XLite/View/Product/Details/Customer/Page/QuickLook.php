@@ -28,8 +28,6 @@ namespace XLite\View\Product\Details\Customer\Page;
 /**
  * QuickLook
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -39,8 +37,6 @@ class QuickLook extends \XLite\View\Product\Details\Customer\Page\APage
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class QuickLook extends \XLite\View\Product\Details\Customer\Page\APage
      * getDir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {

@@ -28,26 +28,20 @@ namespace XLite\Core\ImageOperator;
 /**
  * ImageMagic
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
 {
     /**
      * Image file store
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $image;
 
     /**
      * Image Magick installation path
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $imageMagick = '';
 
@@ -55,8 +49,6 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
      * Return Image Magick executable
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public static function getImageMagickExecutable()
     {
@@ -71,8 +63,6 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
      * Check - enabled or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isEnabled()
     {
@@ -86,8 +76,6 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
      * @param \XLite\Model\Base\Image $image Image
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setImage(\XLite\Model\Base\Image $image)
     {
@@ -102,8 +90,6 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
      * Get image content
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getImage()
     {
@@ -117,8 +103,6 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
      * @param integer $height Height
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function resize($width, $height)
     {
@@ -144,8 +128,6 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
      * @param string $newImage File path to new image
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function execFilmStripLook($newImage)
     {
@@ -168,8 +150,6 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
      * @param integer $height   Height
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function execResize($newImage, $width, $height)
     {

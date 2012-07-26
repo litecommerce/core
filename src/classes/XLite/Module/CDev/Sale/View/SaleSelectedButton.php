@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Sale selected popup button
  *
- * @see   ____class_see____
- * @since 1.0.6
  */
 class SaleSelectedButton extends \XLite\View\Button\APopupButton
 {
@@ -37,8 +35,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -52,8 +48,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
@@ -67,8 +61,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      * Return default button label
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -79,8 +71,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

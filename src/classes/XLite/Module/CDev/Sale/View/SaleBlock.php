@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Sale products block widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="600")
  * @ListChild (list="sidebar.first", zone="customer", weight="170")
@@ -45,8 +43,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -64,8 +60,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * @param array $params Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -80,8 +74,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -106,8 +98,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * @param \XLite\Core\CommonCell $cnd Initial search conditions
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchConditions(\XLite\Core\CommonCell $cnd)
     {
@@ -127,8 +117,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * Returns maximum allowed items count
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMaxItemsCount()
     {
@@ -139,8 +127,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -169,8 +155,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * Get 'More...' link URL for Sale products list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMoreLinkURL()
     {
@@ -181,8 +165,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * Get 'More...' link text for Sale products list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMoreLinkText()
     {
@@ -193,8 +175,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
      * Check status of 'More...' link for sidebar list
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isShowMoreLink()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View;
 /**
  * Facebook comments
  * 
- * @see   ____class_see____
- * @since 1.0.15
  *
  * @ListChild (list="product.details.page.tab.comments")
  */
@@ -39,8 +37,6 @@ class FacebookComments extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -51,8 +47,6 @@ class FacebookComments extends \XLite\View\AView
      * Get button attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getAttributes()
     {

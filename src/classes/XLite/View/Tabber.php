@@ -29,8 +29,6 @@ namespace XLite\View;
  * Tabber is a component allowing to organize your dialog into pages and
  * switch between the page using Tabs at the top.
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Tabber extends \XLite\View\AView
 {
@@ -45,8 +43,6 @@ class Tabber extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -57,8 +53,6 @@ class Tabber extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -76,8 +70,6 @@ class Tabber extends \XLite\View\AView
      * Get prepared pages array for tabber
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTabberPages()
     {

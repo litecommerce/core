@@ -28,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Surcharge
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -47,9 +45,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * Type names 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $typeNames = array(
         self::TYPE_TAX      => 'Tax cost',
@@ -61,9 +57,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -74,9 +68,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * Type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="fixedstring", length=8)
      */
@@ -85,9 +77,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * Code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -96,9 +86,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * Control class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -107,9 +95,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * Surcharge include flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -118,9 +104,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * Surcharge evailability
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -129,9 +113,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * Value
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -140,9 +122,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     /**
      * Name (stored)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -152,8 +132,6 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * Get order
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getOrder();
 
@@ -161,8 +139,6 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * Get unque surcharge key 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getKey()
     {
@@ -173,8 +149,6 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * Get modifier
      *
      * @return \XLite\Model\Order\Modifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModifier()
     {
@@ -194,8 +168,6 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * Get surcharge info
      *
      * @return \XLite\DataSet\Transport\Surcharge
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInfo()
     {
@@ -210,8 +182,6 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * Get name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -224,8 +194,6 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * Get type name 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTypeName()
     {
@@ -240,8 +208,6 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * @param float $value Value
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     public function setValue($value)
     {

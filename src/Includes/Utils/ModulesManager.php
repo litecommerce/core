@@ -34,8 +34,6 @@ define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
 /**
  * ModulesManager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ModulesManager extends \Includes\Utils\AUtils
 {
@@ -52,18 +50,14 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     /**
      * List of active modules
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $activeModules;
 
     /**
      * Data for class tree walker
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $quotedPaths;
 
@@ -75,8 +69,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $moduleName Module actual name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getClassNameByModuleName($moduleName)
     {
@@ -89,8 +81,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $className Class name to parse
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleNameByClassName($className)
     {
@@ -104,8 +94,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getActualName($author, $name)
     {
@@ -119,8 +107,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getClassNameByAuthorAndName($author, $name)
     {
@@ -134,8 +120,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getRelativeDir($author, $name)
     {
@@ -149,8 +133,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAbsoluteDir($author, $name)
     {
@@ -164,8 +146,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleIconFile($author, $name)
     {
@@ -179,8 +159,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleYAMLFile($author, $name)
     {
@@ -193,8 +171,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $file File name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function getFileModule($file)
     {
@@ -212,8 +188,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Initialize active modules
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function initModules()
     {
@@ -228,8 +202,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $module Module actual name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isModuleInstalled($module)
     {
@@ -244,8 +216,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param array  $args   Call arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function callModuleMethod($module, $method, array $args = array())
     {
@@ -266,8 +236,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param array  $additionalData Data to add to result OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModuleDataFromClass($author, $name, array $additionalData = array())
     {
@@ -309,8 +277,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return list of active modules (or check a single module)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getActiveModules()
     {
@@ -342,8 +308,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string|null $moduleName Module name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isActiveModule($moduleName)
     {
@@ -356,8 +320,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param array $moduleNames Module names
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function areActiveModules(array $moduleNames)
     {
@@ -368,8 +330,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Disable modules with non-correct versions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function checkVersions()
     {
@@ -384,8 +344,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Disable some (or all) modules in SafeMode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function performSafeModeProtection()
     {
@@ -406,8 +364,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Disable modules with incorrect dependencies
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function correctDependencies()
     {
@@ -431,8 +387,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Disable so called "mutual exclusive" modules
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function excludeMutualModules()
     {
@@ -455,8 +409,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $key Module actual name (key)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function disableModule($key)
     {
@@ -492,8 +444,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public static function getModuleProtectedStructures($author, $name)
     {
@@ -556,8 +506,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Get modules list file path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModulesFilePath()
     {
@@ -572,8 +520,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Fetch modules list from the database
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function fetchModulesListFromDB()
     {
@@ -591,8 +537,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return name of the table where the module info is stored
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getTableName()
     {
@@ -603,8 +547,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Part of SQL query to fetch composed module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModuleNameField()
     {
@@ -617,8 +559,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Fetch list of active modules from DB
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModulesList()
     {
@@ -656,8 +596,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Remove file with active modules list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function removeFile()
     {
@@ -670,8 +608,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param array $modules Modules array
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function saveModulesToFile(array $modules)
     {
@@ -699,8 +635,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function switchModule($author, $name)
     {
@@ -747,8 +681,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return pattern to check PHP file paths
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPathPatternForPHP()
     {
@@ -768,8 +700,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return pattern to check .tpl file paths
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPathPatternForTemplates()
     {
@@ -784,8 +714,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Modules $node Current module node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleQuotedPathsCallback(\Includes\Decorator\DataStructure\Graph\Modules $node)
     {
@@ -796,8 +724,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return list of relative module paths
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModuleQuotedPaths()
     {
@@ -819,8 +745,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $extension File extension
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getPathPattern($rootPath, $dir, $extension)
     {

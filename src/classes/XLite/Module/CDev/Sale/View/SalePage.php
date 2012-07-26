@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Sale products list widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -39,8 +37,6 @@ class SalePage extends \XLite\Module\CDev\Sale\View\ASale
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class SalePage extends \XLite\Module\CDev\Sale\View\ASale
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -67,8 +61,6 @@ class SalePage extends \XLite\Module\CDev\Sale\View\ASale
      * Returns empty widget head title (controller page header will be used instead)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -79,8 +71,6 @@ class SalePage extends \XLite\Module\CDev\Sale\View\ASale
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

@@ -28,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Products search
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Search extends \XLite\Controller\Customer\ACustomer
 {
@@ -39,8 +37,6 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * @param string $paramName Name of parameter
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCondition($paramName)
     {
@@ -62,8 +58,6 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * @param mixed  $value     Value to check with OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getChecked($paramName, $value = 'Y')
     {
@@ -75,8 +69,6 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -87,8 +79,6 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * doActionSearch TODO refactor with XLite\Controller\Admin\ProductList::doActionSearch()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSearch()
     {
@@ -125,8 +115,6 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * Get search conditions TODO refactor with XLite\Controller\Admin\ProductList::getConditions()
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getConditions()
     {

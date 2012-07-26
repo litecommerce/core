@@ -28,17 +28,13 @@ namespace XLite\View\Checkout\Step;
 /**
  * Payment checkout step
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Payment extends \XLite\View\Checkout\Step\AStep
 {
     /**
      * Modifier (cache)
      *
-     * @var   \XLite\Model\Order\Modifier
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order\Modifier
      */
     protected $modifier;
 
@@ -54,8 +50,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Get step name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStepName()
     {
@@ -66,8 +60,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Get step title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -78,8 +70,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Check if step is completed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCompleted()
     {
@@ -93,8 +83,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Check main button visibility (inactive mode)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isInactiveButtonVisible()
     {
@@ -105,8 +93,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Return list of available payment methods
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPaymentMethods()
     {
@@ -117,8 +103,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Check - billing address is completed or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAddressCompleted()
     {
@@ -135,8 +119,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * @param \XLite\Model\Payment\Method $method Payment methods
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPaymentSelected(\XLite\Model\Payment\Method $method)
     {
@@ -147,8 +129,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Check - shipping and billing addrsses are same or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSameAddress()
     {
@@ -159,8 +139,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Check - display Address book button or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDisplayAddressButton()
     {
@@ -175,8 +153,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * @param string $icon Icon local path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function preparePaymentMethodIcon($icon)
     {
@@ -187,8 +163,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * Return flag if the cart has been already payed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPayedCart()
     {

@@ -28,8 +28,6 @@ namespace XLite\Core\Validator\Pair;
 /**
  * Country-state validator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CountryState extends \XLite\Core\Validator\Pair\APair
 {
@@ -40,8 +38,6 @@ class CountryState extends \XLite\Core\Validator\Pair\APair
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -89,8 +85,6 @@ class CountryState extends \XLite\Core\Validator\Pair\APair
      * @param mixed $data Daa
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sanitize($data)
     {

@@ -29,8 +29,6 @@ namespace XLite\Controller\Admin;
  * Controller for Database restore page
  * :TODO: must be completly refactored
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
 {
@@ -39,8 +37,6 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
      *
      * @return void
      * @throws
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRestoreFromUploadedFile()
     {
@@ -69,8 +65,6 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
      * doActionRestoreFromLocalFile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRestoreFromLocalFile()
     {
@@ -86,8 +80,6 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
      * @param mixed $sqlFile File with SQL data for loading into database
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function restoreDatabase($sqlFile)
     {
@@ -150,8 +142,6 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
      * getPageReturnURL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageReturnURL()
     {

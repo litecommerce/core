@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
 /**
  * \XLite\Module\CDev\DrupalConnector\Model\Profile
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
     /**
      * User roles defined on Drupal side
      *
-     * @var   \XLite\Module\CDev\DrupalConnector\Model\DrupalRole
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\DrupalConnector\Model\DrupalRole
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\DrupalConnector\Model\DrupalRole", mappedBy="profile", cascade={"all"})
      */
@@ -49,8 +45,6 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * Get CMS profile
      *
      * @return object|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCMSProfile()
     {
@@ -65,8 +59,6 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * @param array $newDrupalRoles Array of Drupal role IDs
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function updateDrupalRoles($newDrupalRoles)
     {
@@ -108,8 +100,6 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * @param boolean $cloneMode Flag which means that update is launched in clone mode OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function update($cloneMode = false)
     {
@@ -125,8 +115,6 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * Set CMS name property before profile creation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCreate()
     {
@@ -141,8 +129,6 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * Allow to suppress 'email already exists...' message in some cases (e.g. in user sync process)
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addErrorEmailExists() 
     {

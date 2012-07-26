@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\ModuleHandlers;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Main extends \Includes\Decorator\Plugin\APlugin
 {
@@ -37,8 +35,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * Execute certain hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function executeHookHandler()
     {

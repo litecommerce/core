@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Recover password dialog
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -39,8 +37,6 @@ class RecoverPassword extends \XLite\View\SectionDialog
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class RecoverPassword extends \XLite\View\SectionDialog
      * Define sections list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSections()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Bestsellers\View;
 /**
  * Bestsellers widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="400")
  * @ListChild (list="sidebar.first", zone="customer", weight="150")
@@ -47,18 +45,14 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Category id
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $rootCategoryId = null;
 
     /**
      * Bestsellers products
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $bestsellProducts = null;
 
@@ -67,8 +61,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -86,8 +78,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function __construct(array $params = array())
     {
@@ -103,8 +93,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param array $params Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -119,8 +107,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Get title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -131,8 +117,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -143,8 +127,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -179,8 +161,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -196,8 +176,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -223,8 +201,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return category Id to use
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRootId()
     {
@@ -243,8 +219,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * SIDEBAR/CENTER and so on.
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -264,8 +238,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

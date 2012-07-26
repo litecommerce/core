@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Logic\Product;
 /**
  * Product tax business logic
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
 {
@@ -43,8 +41,6 @@ class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
      * @param string $classesAlias Produyct classes table alias (ex. 'classes')
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     public function getSearchPriceCondition($priceField, $classesAlias)
     {
@@ -73,8 +69,6 @@ class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
      * @param float                $price   Price OPTIONAL
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function calculateProductTaxes(\XLite\Model\Product $product, $price)
     {
@@ -102,8 +96,6 @@ class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
      * @param float                $price   Price
      *  
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.21
      */
     public function getVATValue(\XLite\Model\Product $product, $price)
     {
@@ -127,8 +119,6 @@ class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
      * @param float                $price   Price
      *  
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function deductTaxFromPrice(\XLite\Model\Product $product, $price)
     {

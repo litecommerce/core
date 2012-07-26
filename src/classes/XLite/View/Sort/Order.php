@@ -28,8 +28,6 @@ namespace XLite\View\Sort;
 /**
  * Order sort widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="orders.panel", weight="20")
  */
@@ -40,8 +38,6 @@ class Order extends \XLite\View\Sort\ASort
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

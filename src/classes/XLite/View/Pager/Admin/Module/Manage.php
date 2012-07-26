@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Admin\Module;
 /**
  * Pager for the orders search page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Manage extends \XLite\View\Pager\Admin\Module\AModule
 {
@@ -37,8 +35,6 @@ class Manage extends \XLite\View\Pager\Admin\Module\AModule
      * isVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -49,8 +45,6 @@ class Manage extends \XLite\View\Pager\Admin\Module\AModule
      * getItemsPerPageDefault
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {
@@ -61,8 +55,6 @@ class Manage extends \XLite\View\Pager\Admin\Module\AModule
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Profile\Admin;
 /**
  * AAdmin 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Profile\AProfile
 {

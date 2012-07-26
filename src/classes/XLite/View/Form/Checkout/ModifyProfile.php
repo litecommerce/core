@@ -28,8 +28,6 @@ namespace XLite\View\Form\Checkout;
 /**
  * Register form (Checkout page)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
 {
@@ -37,8 +35,6 @@ class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -49,8 +45,6 @@ class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
      * getDefaultClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultClassName()
     {

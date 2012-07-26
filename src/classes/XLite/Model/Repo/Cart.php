@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Cart repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cart extends \XLite\Model\Repo\ARepo
 {
@@ -39,8 +37,6 @@ class Cart extends \XLite\Model\Repo\ARepo
      * @param integer $orderId Order id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function markAsOrder($orderId)
     {
@@ -55,8 +51,6 @@ class Cart extends \XLite\Model\Repo\ARepo
      * @param integer $orderId Order id
      *
      * @return \Doctrine\DBAL\Statement|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineMarkAsOrderQuery($orderId)
     {

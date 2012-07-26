@@ -28,35 +28,27 @@ namespace XLite\Core\Task;
 /**
  * Abstract task
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ATask extends \XLite\Base
 {
     /**
      * Model
      *
-     * @var   \XLite\Model\Task
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Task
      */
     protected $model;
 
     /**
      * Last step flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $lastStep = false;
 
     /**
      * Result operation message
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $message = 'done';
 
@@ -64,8 +56,6 @@ abstract class ATask extends \XLite\Base
      * Get title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getTitle();
 
@@ -73,8 +63,6 @@ abstract class ATask extends \XLite\Base
      * Run step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function runStep();
 
@@ -84,8 +72,6 @@ abstract class ATask extends \XLite\Base
      * @param \XLite\Model\Task $model Model
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(\XLite\Model\Task $model)
     {
@@ -96,8 +82,6 @@ abstract class ATask extends \XLite\Base
      * Get message
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMessage()
     {
@@ -108,8 +92,6 @@ abstract class ATask extends \XLite\Base
      * Check - task ready or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isReady()
     {
@@ -120,8 +102,6 @@ abstract class ATask extends \XLite\Base
      * Run task
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function run()
     {
@@ -149,8 +129,6 @@ abstract class ATask extends \XLite\Base
      * Prepare step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareStep()
     {
@@ -160,8 +138,6 @@ abstract class ATask extends \XLite\Base
      * Check - current step is last or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isLastStep()
     {
@@ -172,8 +148,6 @@ abstract class ATask extends \XLite\Base
      * Finalize task (last step)
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function finalizeTask()
     {
@@ -184,8 +158,6 @@ abstract class ATask extends \XLite\Base
      * Finalize step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function finalizeStep()
     {
@@ -195,8 +167,6 @@ abstract class ATask extends \XLite\Base
      * Check availability
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isValid()
     {
@@ -207,8 +177,6 @@ abstract class ATask extends \XLite\Base
      * Close task
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function close()
     {

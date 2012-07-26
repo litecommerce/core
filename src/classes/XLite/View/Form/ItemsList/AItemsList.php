@@ -28,8 +28,6 @@ namespace XLite\View\Form\ItemsList;
 /**
  * Abstract items list form
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class AItemsList extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ abstract class AItemsList extends \XLite\View\Form\AForm
      * getDefaultClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultClassName()
     {
@@ -49,8 +45,6 @@ abstract class AItemsList extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

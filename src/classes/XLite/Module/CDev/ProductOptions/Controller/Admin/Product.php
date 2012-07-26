@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Admin;
 /**
  * Product modify
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -57,8 +53,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {
@@ -77,8 +71,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update option groups list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateOptionGroups()
     {
@@ -115,8 +107,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete selected option groups
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeleteOptionGroups()
     {
@@ -148,8 +138,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update option group
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateOptionGroup()
     {
@@ -253,8 +241,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete selected options
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeleteOptions()
     {
@@ -288,8 +274,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update option groups exceptions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateOptionGroupsExceptions()
     {
@@ -335,8 +319,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete option groups exceptions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeleteOptionGroupsExceptions()
     {
@@ -370,8 +352,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @param array                                          $data   Data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveOption(\XLite\Module\CDev\ProductOptions\Model\Option $option, array $data)
     {
@@ -432,8 +412,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @param array   $data Exception cell data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveException($eid, array $data)
     {

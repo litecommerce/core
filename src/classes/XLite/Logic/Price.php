@@ -28,17 +28,13 @@ namespace XLite\Logic;
 /**
  * Price 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class Price extends \XLite\Logic\ALogic
 {
     /**
      * Modifiers 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var array
      */
     protected $modifiers;
 
@@ -51,8 +47,6 @@ class Price extends \XLite\Logic\ALogic
      * @param string               $purpose   Purpose OPTIONAL
      *  
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function apply(\XLite\Model\AEntity $model, $method, array $behaviors = array(), $purpose = 'net')
     {
@@ -71,8 +65,6 @@ class Price extends \XLite\Logic\ALogic
      * Get modifiers 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getModifiers()
     {
@@ -87,8 +79,6 @@ class Price extends \XLite\Logic\ALogic
      * Define modifiers 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineModifiers()
     {
@@ -103,8 +93,6 @@ class Price extends \XLite\Logic\ALogic
      * @param string $purpose   Purpose
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function prepareModifiers(array $modifiers, array $behaviors, $purpose)
     {

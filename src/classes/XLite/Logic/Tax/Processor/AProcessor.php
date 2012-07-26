@@ -28,17 +28,13 @@ namespace XLite\Logic\Tax\Processor;
 /**
  * Abstract tax processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProcessor extends \XLite\Logic\ALogic
 {
     /**
      * Order
      *
-     * @var   \XLite\Model\Order
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order
      */
     protected $order;
 
@@ -48,8 +44,6 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      * @param \XLite\Model\Order $order Context
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setContext(\XLite\Model\Order $order)
     {
@@ -60,8 +54,6 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      * Get processor context
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getContext()
     {
@@ -72,8 +64,6 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      * Check if process is ready or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isReady()
     {
@@ -86,8 +76,6 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      * Check - processor is modify product price or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isProductPriceModifier()
     {
@@ -101,8 +89,6 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      * @param float                $amount  Currenct product price OPTIONAL
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function reverseProductPrice(\XLite\Model\Product $product, $amount = null)
     {
@@ -116,8 +102,6 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      * @param float                $amount  Product restored price
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function restoreProductPrice(\XLite\Model\Product $product, $amount)
     {
@@ -132,8 +116,6 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      * Calculate order tax
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function calculateOrderTax()
     {

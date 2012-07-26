@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Doctrine-based MySQL schema manager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class MySqlSchemaManager extends \Doctrine\DBAL\Schema\MySqlSchemaManager
 {
@@ -37,8 +35,6 @@ class MySqlSchemaManager extends \Doctrine\DBAL\Schema\MySqlSchemaManager
      * Return a list of all tables in the current database
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function listTableNames()
     {

@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\Catalog\Drupal;
 /**
  * Handler
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\Module implements \XLite\Base\IDecorator
 {
     /**
      * Catalog portal to remove 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.23
+     * @var array
      */
     protected $catalogToRemove = array(
         '\XLite\Controller\Customer\OrderList',
@@ -55,8 +51,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\Module implements
      * @param integer $type       Node type OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function registerPortal($url, $controller, $title = '', $type = MENU_LOCAL_TASK)
     {

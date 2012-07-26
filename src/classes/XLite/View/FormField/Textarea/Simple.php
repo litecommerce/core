@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Textarea;
 /**
  * Textarea
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Simple extends \XLite\View\FormField\Textarea\ATextarea
 {
@@ -37,8 +35,6 @@ class Simple extends \XLite\View\FormField\Textarea\ATextarea
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {

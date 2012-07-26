@@ -28,8 +28,6 @@ namespace XLite\View\StickyPanel;
 /**
  * Panel for Currency management form.
  *
- * @see   ____class_see____
- * @since 1.1.0
  */
 class Currency extends \XLite\View\Base\FormStickyPanel
 {
@@ -37,8 +35,6 @@ class Currency extends \XLite\View\Base\FormStickyPanel
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -53,8 +49,6 @@ class Currency extends \XLite\View\Base\FormStickyPanel
      * Get buttons widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getButtons()
     {

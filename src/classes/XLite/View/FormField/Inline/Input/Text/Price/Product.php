@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text\Price;
 /**
  * Product price
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Product extends \XLite\View\FormField\Inline\Input\Text\Price
 {
@@ -39,8 +37,6 @@ class Product extends \XLite\View\FormField\Inline\Input\Text\Price
      * @param array $field Field data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldParams(array $field)
     {

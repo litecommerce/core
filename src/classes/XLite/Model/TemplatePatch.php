@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Template patch
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\TemplatePatch")
  * @Table  (name="template_patches",
@@ -43,9 +41,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * Patch id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -56,9 +52,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * Zone
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=16)
      */
@@ -67,9 +61,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * Language code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=2)
      */
@@ -78,9 +70,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * Template
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=64)
      */
@@ -89,9 +79,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * Patch type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=8)
      */
@@ -100,9 +88,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * XPath query
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -111,9 +97,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * XPath insertaion type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=16)
      */
@@ -122,9 +106,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * XPath replacement block
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -133,9 +115,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * Regular expression patter
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -144,9 +124,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * Regular expression replacement block
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -155,9 +133,7 @@ class TemplatePatch extends \XLite\Model\AEntity
     /**
      * Custom callback name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */

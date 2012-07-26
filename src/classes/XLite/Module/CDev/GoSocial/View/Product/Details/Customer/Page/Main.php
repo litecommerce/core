@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\Product\Details\Customer\Page;
 /**
  * Main product page
  *
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
      * Register Meta tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMetaTags()
     {
@@ -53,8 +49,6 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -69,8 +63,6 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -85,8 +77,6 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
      * Register Meta tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getNamespaces()
     {

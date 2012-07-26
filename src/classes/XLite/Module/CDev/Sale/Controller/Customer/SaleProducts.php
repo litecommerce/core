@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\Controller\Customer;
 /**
  * Sale products page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SaleProducts extends \XLite\Controller\Customer\ACustomer
 {
@@ -37,8 +35,6 @@ class SaleProducts extends \XLite\Controller\Customer\ACustomer
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,8 +45,6 @@ class SaleProducts extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {

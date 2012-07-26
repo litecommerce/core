@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text;
 /**
  * Position
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Position extends \XLite\View\FormField\Inline\Base\Single
 {
@@ -37,8 +35,6 @@ class Position extends \XLite\View\FormField\Inline\Base\Single
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -53,8 +49,6 @@ class Position extends \XLite\View\FormField\Inline\Base\Single
      * Define form field
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineFieldClass()
     {
@@ -65,8 +59,6 @@ class Position extends \XLite\View\FormField\Inline\Base\Single
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {
@@ -79,8 +71,6 @@ class Position extends \XLite\View\FormField\Inline\Base\Single
      * @param array $field Field data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldParams(array $field)
     {

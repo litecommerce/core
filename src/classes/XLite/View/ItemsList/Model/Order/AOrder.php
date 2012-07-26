@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Model\Order;
 /**
  * Abstract order-based list
  * 
- * @see   ____class_see____
- * @since 1.0.24
  */
 abstract class AOrder extends \XLite\View\ItemsList\Model\Table
 {
@@ -37,8 +35,6 @@ abstract class AOrder extends \XLite\View\ItemsList\Model\Table
      * Define repository name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineRepositoryName()
     {
@@ -49,8 +45,6 @@ abstract class AOrder extends \XLite\View\ItemsList\Model\Table
      * Get list name suffixes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getListNameSuffixes()
     {
@@ -61,8 +55,6 @@ abstract class AOrder extends \XLite\View\ItemsList\Model\Table
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {

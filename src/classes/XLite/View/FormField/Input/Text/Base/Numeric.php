@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text\Base;
 /**
  * Numeric
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Numeric extends \XLite\View\FormField\Input\Text
 {
@@ -45,8 +43,6 @@ abstract class Numeric extends \XLite\View\FormField\Input\Text
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -64,8 +60,6 @@ abstract class Numeric extends \XLite\View\FormField\Input\Text
      * Check field validity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkFieldValidity()
     {
@@ -82,8 +76,6 @@ abstract class Numeric extends \XLite\View\FormField\Input\Text
      * Check range 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function checkRange()
     {
@@ -120,8 +112,6 @@ abstract class Numeric extends \XLite\View\FormField\Input\Text
      * Assemble validation rules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleValidationRules()
     {
@@ -144,8 +134,6 @@ abstract class Numeric extends \XLite\View\FormField\Input\Text
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {

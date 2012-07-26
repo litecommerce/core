@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Model\Order\Admin;
 /**
  * Abstract admin order-based list
  *
- * @see   ____class_see____
- * @since 1.0.24
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
 {
@@ -49,8 +47,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
      * @param \XLite\Model\Order $entity Order
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getOrderActions(\XLite\Model\Order $entity)
     {
@@ -108,8 +104,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
      * @param \XLite\Model\Order $entity Order
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function hasPaymentActions(\XLite\Model\Order $entity)
     {
@@ -124,8 +118,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
      * Get list of transaction types to filter allowed backend transactions list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getTransactionsFilter()
     {
@@ -138,8 +130,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
      * @param \XLite\Model\Order $entity Order
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function defineOrderActions(\XLite\Model\Order $entity)
     {

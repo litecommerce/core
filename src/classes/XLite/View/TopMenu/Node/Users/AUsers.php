@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node\Users;
 /**
  * Abstract users node
  * 
- * @see   ____class_see____
- * @since 1.0.18
  */
 abstract class AUsers extends \XLite\View\TopMenu\Node
 {
@@ -37,8 +35,6 @@ abstract class AUsers extends \XLite\View\TopMenu\Node
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function checkACL()
     {

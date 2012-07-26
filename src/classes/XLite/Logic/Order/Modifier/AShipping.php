@@ -28,17 +28,13 @@ namespace XLite\Logic\Order\Modifier;
 /**
  * Abstract shipping modifier
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AShipping extends \XLite\Logic\Order\Modifier\AModifier
 {
     /**
      * Modifier type (see \XLite\Model\Base\Surcharge)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = \XLite\Model\Base\Surcharge::TYPE_SHIPPING;
 }

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Product option modifier widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ProductOptionModifier extends \XLite\View\AView
 {
@@ -44,8 +42,6 @@ class ProductOptionModifier extends \XLite\View\AView
      * Get modifiers
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModifiers()
     {
@@ -58,8 +54,6 @@ class ProductOptionModifier extends \XLite\View\AView
      * @param \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge $surcharge Modifier
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModifierTemplate(\XLite\Module\CDev\ProductOptions\Model\OptionSurcharge $surcharge)
     {
@@ -71,8 +65,6 @@ class ProductOptionModifier extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -83,8 +75,6 @@ class ProductOptionModifier extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -104,8 +94,6 @@ class ProductOptionModifier extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Base;
 /**
  * Common repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Common extends \XLite\Model\Repo\ARepo
 {

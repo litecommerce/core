@@ -28,8 +28,6 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\UpdateModules;
 /**
  * Main 
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
@@ -37,8 +35,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Execute certain hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeHookHandler()
     {
@@ -66,8 +62,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Get iterator for module files
      *
      * @return \Includes\Utils\FileFilter
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleMainFileIterator()
     {
@@ -78,8 +72,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Pattern to use for paths in "Module" directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModulesPathPattern()
     {

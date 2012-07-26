@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Measure
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Measure")
  * @Table  (name="measures")
@@ -39,9 +37,7 @@ class Measure extends \XLite\Model\AEntity
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ class Measure extends \XLite\Model\AEntity
     /**
      * Date (UNIX timestamp)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */
@@ -63,9 +57,7 @@ class Measure extends \XLite\Model\AEntity
     /**
      * File system test : time (msec.)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */
@@ -74,9 +66,7 @@ class Measure extends \XLite\Model\AEntity
     /**
      * Database test : time (msec.)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */
@@ -85,9 +75,7 @@ class Measure extends \XLite\Model\AEntity
     /**
      * Camputation test : time (msec.)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */

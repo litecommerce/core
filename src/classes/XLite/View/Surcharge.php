@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Common surcharge
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Surcharge extends \XLite\View\AView
 {
@@ -45,8 +43,6 @@ class Surcharge extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -61,8 +57,6 @@ class Surcharge extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -73,8 +67,6 @@ class Surcharge extends \XLite\View\AView
      * Return surcharge
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.2
      */
     protected function getSurcharge()
     {
@@ -85,8 +77,6 @@ class Surcharge extends \XLite\View\AView
      * Return currency
      *
      * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.2
      */
     protected function getCurrency()
     {
@@ -97,8 +87,6 @@ class Surcharge extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -120,8 +108,6 @@ class Surcharge extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

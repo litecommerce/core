@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\Controller\Admin;
 /**
  * Module settings
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * handleRequest
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -58,8 +54,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * Check amazon S3 settings 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function checkAmazonS3Settings()
     {

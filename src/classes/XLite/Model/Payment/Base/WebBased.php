@@ -28,8 +28,6 @@ namespace XLite\Model\Payment\Base;
 /**
  * Abstract credit card, web-based processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 {
@@ -44,8 +42,6 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * Get redirect form URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getFormURL();
 
@@ -53,8 +49,6 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * Get redirect form fields list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getFormFields();
 
@@ -63,8 +57,6 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * Get input template
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -75,8 +67,6 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * Get return request owner transaction or null
      *
      * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnOwnerTransaction()
     {
@@ -87,8 +77,6 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * Do custom redirect after customer's return
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doCustomReturnRedirect()
     {
@@ -99,8 +87,6 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * Do initial payment
      *
      * @return string Status code
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doInitialPayment()
     {
@@ -155,8 +141,6 @@ HTML;
      * Get form method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormMethod()
     {
@@ -167,8 +151,6 @@ HTML;
      * Assemble form body (field set)
      *
      * @return string HTML
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleFormBody()
     {
@@ -192,8 +174,6 @@ HTML;
      * @param array $list Form fields list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logRedirect(array $list)
     {

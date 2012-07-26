@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Memberships selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Memberships extends \XLite\View\FormField\Select\Multiple
 {
@@ -37,8 +35,6 @@ class Memberships extends \XLite\View\FormField\Select\Multiple
      * Get Memberships list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMembershipsList()
     {
@@ -54,8 +50,6 @@ class Memberships extends \XLite\View\FormField\Select\Multiple
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

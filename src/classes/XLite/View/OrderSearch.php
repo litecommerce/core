@@ -28,34 +28,26 @@ namespace XLite\View;
 /**
  * Orders search widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderSearch extends \XLite\View\Dialog
 {
     /**
      * Orders list (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $orders = null;
     /**
      * Orders total count
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $totalCount = null;
 
     /**
      * Conditions (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $conditions = null;
 
@@ -64,8 +56,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -82,8 +72,6 @@ class OrderSearch extends \XLite\View\Dialog
      * @param string $name Condition name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCondition($name)
     {
@@ -94,8 +82,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Check - used conditions is default or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDefaultConditions()
     {
@@ -106,8 +92,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Get orders
      *
      * @return array(\XLite\Model\Order)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrders()
     {
@@ -124,8 +108,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Get orders list count
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCount()
     {
@@ -136,8 +118,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Get total count
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTotalCount()
     {
@@ -152,8 +132,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -169,8 +147,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -185,8 +161,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -197,8 +171,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -209,8 +181,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Get conditions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getConditions()
     {
@@ -277,8 +247,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Get profile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfile()
     {

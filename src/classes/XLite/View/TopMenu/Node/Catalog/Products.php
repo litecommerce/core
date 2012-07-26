@@ -28,8 +28,6 @@ namespace XLite\View\TopMenu\Node\Catalog;
 /**
  * Products
  * 
- * @see   ____class_see____
- * @since 1.0.18
  *
  * @ListChild (list="menu.catalog", weight="50", zone="admin")
  */
@@ -39,8 +37,6 @@ class Products extends \XLite\View\TopMenu\Node\Catalog\ACatalog
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

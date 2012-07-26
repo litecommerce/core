@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select\CheckboxList;
 /**
  * Multiple select based on checkboxes list
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 abstract class ACheckboxList extends \XLite\View\FormField\Select\Multiple
 {
@@ -38,8 +36,6 @@ abstract class ACheckboxList extends \XLite\View\FormField\Select\Multiple
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -54,8 +50,6 @@ abstract class ACheckboxList extends \XLite\View\FormField\Select\Multiple
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonFiles()
     {
@@ -76,8 +70,6 @@ abstract class ACheckboxList extends \XLite\View\FormField\Select\Multiple
      * @param array $attrs Field attributes to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareAttributes(array $attrs)
     {
@@ -93,8 +85,6 @@ abstract class ACheckboxList extends \XLite\View\FormField\Select\Multiple
      * Get default attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAttributes()
     {

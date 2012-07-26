@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Profile
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -47,8 +45,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $roles Array of user's roles in Drupal
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isRoleHasAdminPermission(array $roles)
     {
@@ -72,8 +68,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Check if current page is the "Reset password" one
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isResetPasswordPage()
     {
@@ -98,8 +92,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param boolean    $addConfirmation Flag; add password confirmation field or not OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfileData(\stdClass $user, $edit, $addConfirmation = true)
     {
@@ -183,8 +175,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array|null $edit Data from request
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfileDataLogin(\stdClass $user, $edit)
     {
@@ -218,8 +208,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param mixed     $category The active category of user information being edited
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionPresave(array &$edit, \stdClass $account, $category)
     {
@@ -234,8 +222,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param mixed     $category The active category of user information being edited
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionInsert(array &$edit, \stdClass $account, $category)
     {
@@ -250,8 +236,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param mixed     $category The active category of user information being edited
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionUpdate(array &$edit, \stdClass $account, $category)
     {
@@ -266,8 +250,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param mixed     $method  The method of user cancelling selected on Drupal side
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionCancel(array &$edit, \stdClass $account, $method)
     {
@@ -281,8 +263,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param \stdClass $account The user object on which the operation is performed
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionDelete(array &$edit, \stdClass $account)
     {
@@ -297,8 +277,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param mixed     $category The active category of user information being edited
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionLogin(array &$edit, \stdClass $account, $category)
     {
@@ -313,8 +291,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param mixed     $category The active category of user information being edited
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionLogout(array &$edit, \stdClass $account, $category)
     {
@@ -327,8 +303,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $roles The array of roles
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionUpdateRoles($roles)
     {
@@ -341,8 +315,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $roles The array of roles
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performActionDeleteRole($roles)
     {
@@ -358,8 +330,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param mixed     $category The active category of user information being edited
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function performAction($action, array &$edit, \stdClass $account, $category)
     {

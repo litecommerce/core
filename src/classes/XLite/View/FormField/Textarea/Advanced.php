@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Textarea;
 /**
  * Textarea
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Advanced extends \XLite\View\FormField\Textarea\Simple
 {

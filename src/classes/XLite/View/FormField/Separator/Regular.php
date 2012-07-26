@@ -29,8 +29,6 @@ namespace XLite\View\FormField\Separator;
 /**
  * \XLite\View\FormField\Separator\Regular
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Regular extends \XLite\View\FormField\Separator\ASeparator
 {
@@ -38,8 +36,6 @@ class Regular extends \XLite\View\FormField\Separator\ASeparator
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {

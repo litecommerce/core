@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Image upload component.
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ImageUpload extends \XLite\View\AView
 {
@@ -44,9 +42,7 @@ class ImageUpload extends \XLite\View\AView
     /**
      * Show delete control
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     public $showDelete = true;
 
@@ -54,8 +50,6 @@ class ImageUpload extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -66,8 +60,6 @@ class ImageUpload extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -85,8 +77,6 @@ class ImageUpload extends \XLite\View\AView
      * Check if object has image
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function hasImage()
     {
@@ -109,8 +99,6 @@ class ImageUpload extends \XLite\View\AView
      * Check if image is on file system
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isFS()
     {

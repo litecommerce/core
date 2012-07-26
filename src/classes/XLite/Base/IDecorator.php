@@ -28,8 +28,6 @@ namespace XLite\Base;
 /**
  * Decorator interface
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 interface IDecorator
 {

@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * \XLite\View\FormField\Select\TestLiveMode
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class TestLiveMode extends \XLite\View\FormField\Select\Regular
 {
@@ -43,8 +41,6 @@ class TestLiveMode extends \XLite\View\FormField\Select\Regular
      * getDefaultOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getDefaultOptions()
     {

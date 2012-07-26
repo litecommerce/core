@@ -28,8 +28,6 @@ namespace XLite\Base;
 /**
  * Module patcher interface
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 interface IPatcher
 {
@@ -94,8 +92,6 @@ interface IPatcher
      * Get patches
      *
      * @return array(array)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPatches();
 }

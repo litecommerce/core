@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Modify;
 /**
  * Details
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Single extends \XLite\View\Form\Product\Modify\Base\Single
 {
@@ -37,8 +35,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -49,8 +45,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * Ability to add the 'enctype="multipart/form-data"' form attribute
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isMultipart()
     {
@@ -61,8 +55,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * Get validator
      *
      * @return \XLite\Core\Validator\HashArray
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidator()
     {
@@ -78,8 +70,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * Get product identificator from request
      *
      * @return integer Product identificator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProductId()
     {
@@ -92,8 +82,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * @param mixed $data Data
      *
      * @return null
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setDataValidators(&$data)
     {

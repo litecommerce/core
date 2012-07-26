@@ -29,8 +29,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Button;
 /**
  * Delete profile button (profiles administration page)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DeleteProfile extends \XLite\View\Button\DeleteProfile implements \XLite\Base\IDecorator
 {
@@ -38,8 +36,6 @@ class DeleteProfile extends \XLite\View\Button\DeleteProfile implements \XLite\B
      * Disable button 'Add user'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

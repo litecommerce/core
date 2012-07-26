@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
 /**
  * Option repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Option extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'orderby';
 
@@ -49,8 +45,6 @@ class Option extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
      *
      * @return \XLite\Model\AEntity|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -78,8 +72,6 @@ class Option extends \XLite\Model\Repo\Base\I18n
      * @param string $name  Option name (any language)
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\Option|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineOneBySkuAndNameQuery($sku, $group, $name)
     {

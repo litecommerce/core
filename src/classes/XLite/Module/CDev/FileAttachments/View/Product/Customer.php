@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\View\Product;
 /**
  * File attachments list for customer interface
  * 
- * @see   ____class_see____
- * @since 1.0.10
  *
  * @ListChild (list="product.details.page.tab.description", weight="50")
  */
@@ -44,8 +42,6 @@ class Customer extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -61,8 +57,6 @@ class Customer extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getDefaultTemplate()
     {
@@ -73,8 +67,6 @@ class Customer extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function defineWidgetParams()
     {
@@ -89,8 +81,6 @@ class Customer extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function isVisible()
     {
@@ -103,8 +93,6 @@ class Customer extends \XLite\View\AView
      * Get product 
      * 
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getProduct()
     {
@@ -115,8 +103,6 @@ class Customer extends \XLite\View\AView
      * Get attachments 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getAttachments()
     {

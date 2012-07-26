@@ -28,17 +28,13 @@ namespace XLite\Controller\Admin\Base;
 /**
  * Base controller for Backup/Restore section
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * sqldumpFile
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $sqldumpFile = null;
 
@@ -47,8 +43,6 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -59,8 +53,6 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * handleRequest
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -77,8 +69,6 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * isFileExists
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isFileExists()
     {
@@ -89,8 +79,6 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * isFileWritable
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isFileWritable()
     {
@@ -106,8 +94,6 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * isDirExists
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDirExists()
     {

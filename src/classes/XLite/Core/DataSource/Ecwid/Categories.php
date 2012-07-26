@@ -28,26 +28,20 @@ namespace XLite\Core\DataSource\Ecwid;
 /**
  * Ecwid categories collection
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Categories extends \XLite\Core\DataSource\Base\Categories
 {
     /**
      * Stores current iterator position
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      */
     protected $position;
 
     /**
      * Contains categories data
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var array
      */
     protected $categories;
 
@@ -57,8 +51,6 @@ class Categories extends \XLite\Core\DataSource\Base\Categories
      * @param \XLite\Core\DataSource\Ecwid $dataSource Ecwid data source
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function __construct(\XLite\Core\DataSource\Ecwid $dataSource)
     {
@@ -73,8 +65,6 @@ class Categories extends \XLite\Core\DataSource\Base\Categories
      * Countable::count 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function count()
     {
@@ -86,8 +76,6 @@ class Categories extends \XLite\Core\DataSource\Base\Categories
      * Returns current category index
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function key()
     {
@@ -99,8 +87,6 @@ class Categories extends \XLite\Core\DataSource\Base\Categories
      * Sets position to the start
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function rewind()
     {
@@ -112,8 +98,6 @@ class Categories extends \XLite\Core\DataSource\Base\Categories
      * Advances position one step forward
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function next()
     {
@@ -125,8 +109,6 @@ class Categories extends \XLite\Core\DataSource\Base\Categories
      * Checks if current position is valid
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function valid()
     {
@@ -141,8 +123,6 @@ class Categories extends \XLite\Core\DataSource\Base\Categories
      *  
      * @return void
      * @throws OutOfBoundException
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function seek($position)
     {
@@ -159,8 +139,6 @@ class Categories extends \XLite\Core\DataSource\Base\Categories
      * 
      * @return void
      * @throws OutOfBoundException
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function current()
     {

@@ -28,8 +28,6 @@ namespace XLite\Core\Doctrine\Annotation;
 /**
  * Purpose
  * 
- * @see   ____class_see____
- * @since 1.0.19
  *
  * @Annotation
  */
@@ -38,18 +36,14 @@ class Purpose extends \Doctrine\Common\Annotations\Annotation
     /**
      * Purpose name 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      */
     public $name;
 
     /**
      * Purpose source (default - base property)
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var string
      */
     public $source;
 }

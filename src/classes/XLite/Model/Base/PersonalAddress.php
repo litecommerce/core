@@ -28,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Abstract address model
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -38,9 +36,7 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
     /**
      * Title
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=32)
      */
@@ -49,9 +45,7 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
     /**
      * First name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -60,9 +54,7 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
     /**
      * Last name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=128)
      */
@@ -72,8 +64,6 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
      * Get address fields list
      *
      * @return array(string)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAddressFields()
     {
@@ -85,8 +75,6 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
      * Get full name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -99,8 +87,6 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
      * @param string $value Full name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setName($value)
     {

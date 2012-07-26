@@ -28,17 +28,13 @@ namespace XLite\Model\WidgetParam;
 /**
  * ____description____
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Object extends \XLite\Model\WidgetParam\AWidgetParam
 {
     /**
      * class
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $class = null;
 
@@ -52,8 +48,6 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
      * @param string $class     Object class OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($label, $value = null, $isSetting = false, $class = null)
     {
@@ -72,8 +66,6 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
      * @param mixed $value Value to validate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidaionSchema($value)
     {

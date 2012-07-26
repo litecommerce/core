@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Tasks repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Task extends \XLite\Model\Repo\ARepo
 {
@@ -37,8 +35,6 @@ class Task extends \XLite\Model\Repo\ARepo
      * Get current query
      *
      * @return \Iterator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrentQuery()
     {
@@ -49,8 +45,6 @@ class Task extends \XLite\Model\Repo\ARepo
      * Define query for getCurrentQuery() method
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineGetCurrentQueryQuery()
     {

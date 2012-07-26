@@ -28,17 +28,13 @@ namespace XLite\View;
 /**
  * CoreVersionTopLink
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CoreVersionTopLink extends \XLite\View\AView
 {
     /**
      * Flags
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $updateFlags;
 
@@ -47,8 +43,6 @@ class CoreVersionTopLink extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -59,8 +53,6 @@ class CoreVersionTopLink extends \XLite\View\AView
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function checkACL()
     {
@@ -72,8 +64,6 @@ class CoreVersionTopLink extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -84,8 +74,6 @@ class CoreVersionTopLink extends \XLite\View\AView
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrentCoreVersion()
     {
@@ -96,8 +84,6 @@ class CoreVersionTopLink extends \XLite\View\AView
      * Check if there is a new core version
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCoreUpgradeAvailable()
     {
@@ -110,8 +96,6 @@ class CoreVersionTopLink extends \XLite\View\AView
      * Check if there are updates (new core revision and/or module revisions)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function areUpdatesAvailable()
     {
@@ -124,8 +108,6 @@ class CoreVersionTopLink extends \XLite\View\AView
      * Return upgrade flags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUpdateFlags()
     {

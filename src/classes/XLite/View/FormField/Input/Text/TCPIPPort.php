@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * TCP/IP port 
  * 
- * @see   ____class_see____
- * @since 1.0.22
  */
 class TCPIPPort extends \XLite\View\FormField\Input\Text\Integer
 {
@@ -37,8 +35,6 @@ class TCPIPPort extends \XLite\View\FormField\Input\Text\Integer
      * Get default maximum size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultMaxSize()
     {
@@ -49,8 +45,6 @@ class TCPIPPort extends \XLite\View\FormField\Input\Text\Integer
      * Assemble validation rules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleValidationRules()
     {

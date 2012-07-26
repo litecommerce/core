@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Role repository 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Role extends \XLite\Model\Repo\Base\I18n
 {
@@ -39,8 +37,6 @@ class Role extends \XLite\Model\Repo\Base\I18n
      * @param string $code Permission code
      *
      * @return \XLite\Model\Role
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function findOneByPermissionCode($code)
     {
@@ -53,8 +49,6 @@ class Role extends \XLite\Model\Repo\Base\I18n
      * @param string $name Name
      *  
      * @return \XLite\Model\Role
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function findOneByName($name)
     {
@@ -68,8 +62,6 @@ class Role extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
      *
      * @return \XLite\Model\AEntity|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -91,8 +83,6 @@ class Role extends \XLite\Model\Repo\Base\I18n
      * Find one root-based role
      * 
      * @return \XLite\Model\Role
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     public function findOneRoot()
     {
@@ -105,8 +95,6 @@ class Role extends \XLite\Model\Repo\Base\I18n
      * @param string $code Permission code
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineFindOneByPermissionCodeQuery($code)
     {
@@ -123,8 +111,6 @@ class Role extends \XLite\Model\Repo\Base\I18n
      * @param string $name Name
      *  
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function defineFindOneByNameQuery($name)
     {
@@ -138,8 +124,6 @@ class Role extends \XLite\Model\Repo\Base\I18n
      * Define query for findOneRoot() method
      * 
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.23
      */
     protected function defineFindOneRootQuery()
     {

@@ -28,8 +28,6 @@ namespace XLite\Core\Validator\String;
 /**
  * Switcher
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Switcher extends \XLite\Core\Validator\String
 {
@@ -40,8 +38,6 @@ class Switcher extends \XLite\Core\Validator\String
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -58,8 +54,6 @@ class Switcher extends \XLite\Core\Validator\String
      * @param mixed $data Daa
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sanitize($data)
     {

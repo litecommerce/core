@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Doctrine-based connection
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Connection extends \Doctrine\DBAL\Connection
 {
@@ -39,8 +37,6 @@ class Connection extends \Doctrine\DBAL\Connection
      * @param string $statement The SQL statement to prepare
      *
      * @return \Doctrine\DBAL\Driver\Statement
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function prepare($statement)
     {
@@ -62,8 +58,6 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return \Doctrine\DBAL\Driver\Statement
      * @throws \XLite\Core\PDOException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeQuery(
         $query,
@@ -93,8 +87,6 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return integer The number of affected rows
      * @throws \XLite\Core\PDOException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeUpdate($query, array $params = array(), array $types = array())
     {
@@ -115,8 +107,6 @@ class Connection extends \Doctrine\DBAL\Connection
      * @param array  $data      Data
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function replace($tableName, array $data)
     {

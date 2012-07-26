@@ -28,8 +28,6 @@ namespace XLite\Model\DataSource;
 /**
  * Data source Parameter model
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="data_source_parameters")
@@ -39,9 +37,7 @@ class Parameter extends \XLite\Model\Base\NameValue
     /**
      * DataSource (relation)
      *
-     * @var   \XLite\Model\DataSource
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var \XLite\Model\DataSource
      *
      * @ManyToOne (targetEntity="XLite\Model\DataSource", inversedBy="parameters")
      * @JoinColumn (name="data_source_id", referencedColumnName="id")

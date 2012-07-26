@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * 404 controller
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PageNotFound extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class PageNotFound extends \XLite\Controller\Admin\AAdmin
      * Get access level
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevel()
     {

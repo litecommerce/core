@@ -28,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Login page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Login extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,18 +39,14 @@ class Login extends \XLite\Controller\Customer\ACustomer
     /**
      * Controlelr parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'mode');
 
     /**
      * Profile
      *
-     * @var   \XLite\Model\Profile|integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Profile|integer
      */
     protected $profile;
 
@@ -60,8 +54,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -72,8 +64,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * handleRequest 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -91,8 +81,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Perform some actions after the "login" action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function redirectFromLogin()
     {
@@ -113,8 +101,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShopURL($url = '', $secure = null, array $params = array())
     {
@@ -128,8 +114,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -140,8 +124,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Return URL to redirect from login
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRedirectFromLoginURL()
     {
@@ -152,8 +134,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Log in using the login and password from request
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performLogin()
     {
@@ -167,8 +147,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Login
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogin()
     {
@@ -202,8 +180,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Log out
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogoff()
     {
@@ -227,8 +203,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Perform some actions before redirect
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function actionPostprocessLogin()
     {
@@ -241,8 +215,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * @param mixed $result Result of log in procedure
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addLoginFailedMessage($result)
     {

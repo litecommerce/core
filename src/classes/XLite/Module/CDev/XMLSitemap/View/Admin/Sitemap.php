@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\View\Admin;
 /**
  * Sitemap page widget 
  * 
- * @see   ____class_see____
- * @since 1.0.12
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -39,8 +37,6 @@ class Sitemap extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -54,8 +50,6 @@ class Sitemap extends \XLite\View\Dialog
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -69,8 +63,6 @@ class Sitemap extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -81,8 +73,6 @@ class Sitemap extends \XLite\View\Dialog
      * Get sitemap URL 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function getSitemapURL()
     {

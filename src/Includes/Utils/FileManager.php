@@ -28,8 +28,6 @@ namespace Includes\Utils;
 /**
  * FileManager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class FileManager extends \Includes\Utils\AUtils
 {
@@ -39,8 +37,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file File name to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isExists($file)
     {
@@ -53,8 +49,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file File name to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isReadable($file)
     {
@@ -67,8 +61,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file File name to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isWriteable($file)
     {
@@ -81,8 +73,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file File name to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isFile($file)
     {
@@ -95,8 +85,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file Dir name to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isDir($file)
     {
@@ -109,8 +97,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file File to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isFileReadable($file)
     {
@@ -123,8 +109,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file Dir to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isDirReadable($file)
     {
@@ -137,8 +121,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file File to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isFileWriteable($file)
     {
@@ -151,8 +133,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file Dir to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isDirWriteable($file)
     {
@@ -165,8 +145,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $path File or path to check
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isOperateable($path)
     {
@@ -179,8 +157,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file File path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDir($file)
     {
@@ -193,8 +169,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $path Path to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getRealPath($path)
     {
@@ -208,8 +182,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $compareTo Base part of the path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getRelativePath($path, $compareTo)
     {
@@ -226,8 +198,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param boolean $check Flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getCanonicalDir($dir, $check = true)
     {
@@ -249,8 +219,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $mode Permissions OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function mkdir($dir, $mode = 0755)
     {
@@ -264,8 +232,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $mode Permissions OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function mkdirRecursive($dir, $mode = 0755)
     {
@@ -279,8 +245,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $dir Directory path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function unlinkRecursive($dir)
     {
@@ -307,8 +271,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $dirTo   Catalog to which files will be copied
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function copyRecursive($dirFrom, $dirTo)
     {
@@ -340,8 +302,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $skipCheck Flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getHash($path, $skipCheck = false)
     {
@@ -355,8 +315,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $file File name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getUniquePath($dir, $file)
     {
@@ -378,8 +336,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $mode Permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function chmod($path, $mode)
     {
@@ -393,8 +349,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $skipCheck Flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function read($path, $skipCheck = false)
     {
@@ -410,8 +364,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $mode  Permisions to set OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function write($path, $data, $flags = 0, $mode = 0644)
     {
@@ -430,8 +382,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $mode    Permisions to set OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function replace($path, $data, $pattern, $flags = 0, $mode = 0644)
     {
@@ -445,8 +395,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $skipCheck Flag OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function deleteFile($path, $skipCheck = false)
     {
@@ -460,8 +408,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $skipCheck Flag OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function deleteDir($dir, $skipCheck = false)
     {
@@ -476,8 +422,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param boolean $overwrite Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function copy($pathFrom, $pathTo, $overwrite = true)
     {
@@ -501,8 +445,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param boolean $overwrite Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public static function move($pathFrom, $pathTo, $overwrite = true)
     {
@@ -526,8 +468,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $name  Result file name OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function moveUploadedFile($key, $dirTo = LC_DIR_TMP, $name = null)
     {
@@ -551,8 +491,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $skipCheck Flag OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getFileSize($path, $skipCheck = false)
     {
@@ -565,8 +503,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $dir A directory of the filesystem or disk partition OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDiskFreeSpace($dir = LC_DIR_ROOT)
     {
@@ -579,8 +515,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string $filename File name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function findExecutable($filename)
     {

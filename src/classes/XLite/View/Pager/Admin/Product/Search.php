@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Admin\Product;
 /**
  * Pager for the products search page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Search extends \XLite\View\Pager\Admin\Product\AProduct
 {
@@ -44,8 +42,6 @@ class Search extends \XLite\View\Pager\Admin\Product\AProduct
      * Return current category model object
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategory()
     {
@@ -56,8 +52,6 @@ class Search extends \XLite\View\Pager\Admin\Product\AProduct
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -74,8 +68,6 @@ class Search extends \XLite\View\Pager\Admin\Product\AProduct
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {

@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Currency management page widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  */
 class CurrencyViewInfo extends \XLite\View\Dialog
@@ -38,8 +36,6 @@ class CurrencyViewInfo extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -53,8 +49,6 @@ class CurrencyViewInfo extends \XLite\View\Dialog
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -68,8 +62,6 @@ class CurrencyViewInfo extends \XLite\View\Dialog
      * getJSFiles
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -83,8 +75,6 @@ class CurrencyViewInfo extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -95,8 +85,6 @@ class CurrencyViewInfo extends \XLite\View\Dialog
      * Return specific CSS class for dialog wrapper
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDialogCSSClass()
     {

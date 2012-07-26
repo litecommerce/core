@@ -28,8 +28,6 @@ namespace XLite\View\StickyPanel\Order\Admin;
 /**
  * Search order list sticky panel
  * 
- * @see   ____class_see____
- * @since 1.0.16
  */
 class Search extends \XLite\View\StickyPanel\Order\Admin\AAdmin
 {

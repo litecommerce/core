@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Side-bar box
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class SideBarBox extends \XLite\View\Container
 {
@@ -37,8 +35,6 @@ abstract class SideBarBox extends \XLite\View\Container
      * Return default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\UserPermissions\View\Form;
 /**
  * Roles list form
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Roles extends \XLite\View\Form\ItemsList\AItemsList
 {
@@ -37,8 +35,6 @@ class Roles extends \XLite\View\Form\ItemsList\AItemsList
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Roles extends \XLite\View\Form\ItemsList\AItemsList
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * "Continue shopping" button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ContinueShopping extends \XLite\View\Button\GoBack
 {
@@ -37,8 +35,6 @@ class ContinueShopping extends \XLite\View\Button\GoBack
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -49,8 +45,6 @@ class ContinueShopping extends \XLite\View\Button\GoBack
      * getClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {
@@ -61,8 +55,6 @@ class ContinueShopping extends \XLite\View\Button\GoBack
      * JavaScript: default JS code to execute
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {

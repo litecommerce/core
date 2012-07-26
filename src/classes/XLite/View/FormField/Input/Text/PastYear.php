@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * Past year(s)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PastYear extends \XLite\View\FormField\Input\Text\Integer
 {
@@ -37,8 +35,6 @@ class PastYear extends \XLite\View\FormField\Input\Text\Integer
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -52,8 +48,6 @@ class PastYear extends \XLite\View\FormField\Input\Text\Integer
      * Get default maximum size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultMaxSize()
     {

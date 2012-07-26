@@ -28,8 +28,6 @@ namespace XLite\Model\Payment\Processor;
 /**
  * E-check
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Check extends \XLite\Model\Payment\Processor\Offline
 {
@@ -37,8 +35,6 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      * Get input template
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -49,8 +45,6 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      * Check - display check number or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDisplayNumber()
     {
@@ -62,8 +56,6 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      * Get input data labels list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInputDataLabels()
     {
@@ -81,8 +73,6 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      * Get input data access levels list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInputDataAccessLevels()
     {

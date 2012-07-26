@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select\CheckboxList;
 /**
  * Roles 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Roles extends \XLite\View\FormField\Select\CheckboxList\ACheckboxList
 {
@@ -37,8 +35,6 @@ class Roles extends \XLite\View\FormField\Select\CheckboxList\ACheckboxList
      * Return default options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * Date
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Date extends \XLite\View\FormField\Input\Text
 {
@@ -43,8 +41,6 @@ class Date extends \XLite\View\FormField\Input\Text
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -59,8 +55,6 @@ class Date extends \XLite\View\FormField\Input\Text
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -76,8 +70,6 @@ class Date extends \XLite\View\FormField\Input\Text
      * Check field validity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkFieldValidity()
     {
@@ -94,8 +86,6 @@ class Date extends \XLite\View\FormField\Input\Text
      * Check range 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function checkRange()
     {
@@ -132,8 +122,6 @@ class Date extends \XLite\View\FormField\Input\Text
      * Sanitize value
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function sanitize()
     {
@@ -144,8 +132,6 @@ class Date extends \XLite\View\FormField\Input\Text
      * getCommonAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {
@@ -164,8 +150,6 @@ class Date extends \XLite\View\FormField\Input\Text
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {
@@ -180,8 +164,6 @@ class Date extends \XLite\View\FormField\Input\Text
      * Get default maximum size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultMaxSize()
     {

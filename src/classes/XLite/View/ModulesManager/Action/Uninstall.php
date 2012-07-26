@@ -28,8 +28,6 @@ namespace XLite\View\ModulesManager\Action;
 /**
  * 'Uninstall' action link for Module list (Modules manage)
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="100", zone="admin")
  */
@@ -39,8 +37,6 @@ class Uninstall extends \XLite\View\ModulesManager\Action\AAction
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -51,8 +47,6 @@ class Uninstall extends \XLite\View\ModulesManager\Action\AAction
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

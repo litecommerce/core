@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Date selector widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Date extends \XLite\View\FormField
 {
@@ -45,27 +43,21 @@ class Date extends \XLite\View\FormField
     /**
      * Parameters for prefilling the form
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array();
 
     /**
      * Lower year
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $lowerYear = 2000;
 
     /**
      * Higher year
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $higherYear = 2035;
 
@@ -74,8 +66,6 @@ class Date extends \XLite\View\FormField
      * Return widget default template
      *
      * @return string
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -86,8 +76,6 @@ class Date extends \XLite\View\FormField
      * Define widget parameters
      *
      * @return void
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -104,8 +92,6 @@ class Date extends \XLite\View\FormField
      * Prefill form
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initView()
     {
@@ -129,8 +115,6 @@ class Date extends \XLite\View\FormField
      * Get field prefix value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getField()
     {
@@ -141,8 +125,6 @@ class Date extends \XLite\View\FormField
      * Get days list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDays()
     {
@@ -160,8 +142,6 @@ class Date extends \XLite\View\FormField
      * Get months list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMonths()
     {
@@ -178,8 +158,6 @@ class Date extends \XLite\View\FormField
      * Get years list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getYears()
     {
@@ -202,8 +180,6 @@ class Date extends \XLite\View\FormField
      * Get month
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMonth()
     {
@@ -216,8 +192,6 @@ class Date extends \XLite\View\FormField
      * @param integer $monthIndex Number of month (1..12) OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMonthString($monthIndex = 0)
     {
@@ -228,8 +202,6 @@ class Date extends \XLite\View\FormField
      * Get day
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDay()
     {
@@ -240,8 +212,6 @@ class Date extends \XLite\View\FormField
      * Get year
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getYear()
     {

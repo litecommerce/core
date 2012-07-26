@@ -28,8 +28,6 @@ namespace XLite\View\StickyPanel\Product\Admin;
 /**
  * Abstract product panel for admin interface
  * 
- * @see   ____class_see____
- * @since 1.0.16
  */
 abstract class AAdmin extends \XLite\View\StickyPanel\Product\AProduct
 {

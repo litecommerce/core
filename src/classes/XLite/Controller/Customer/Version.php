@@ -28,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Version 
  *
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Version extends \XLite\Controller\Customer\ACustomer
 {
@@ -37,8 +35,6 @@ class Version extends \XLite\Controller\Customer\ACustomer
      * Preprocessor for no-action ren
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -51,8 +47,6 @@ class Version extends \XLite\Controller\Customer\ACustomer
      * Method to compose different messages
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getInfoMessage()
     {
@@ -68,8 +62,6 @@ class Version extends \XLite\Controller\Customer\ACustomer
      * Return info about current LC version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getVersionMessage()
     {
@@ -80,8 +72,6 @@ class Version extends \XLite\Controller\Customer\ACustomer
      * Return info about installed modules
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getModulesMessage()
     {

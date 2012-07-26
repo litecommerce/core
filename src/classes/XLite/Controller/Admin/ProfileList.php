@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Profile list controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ProfileList extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -49,8 +45,6 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -61,8 +55,6 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {

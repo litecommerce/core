@@ -28,17 +28,13 @@ namespace XLite\Model\WidgetParam;
 /**
  * ____description____
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class File extends \XLite\Model\WidgetParam\AWidgetParam
 {
     /**
      * Param type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = 'string';
 
@@ -49,8 +45,6 @@ class File extends \XLite\Model\WidgetParam\AWidgetParam
      * @param mixed $value Value to validate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidaionSchema($value)
     {

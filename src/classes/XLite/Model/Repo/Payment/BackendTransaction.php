@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Payment;
 /**
  * Payment backend transaction repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class BackendTransaction extends \XLite\Model\Repo\ARepo
 {

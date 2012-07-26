@@ -28,8 +28,6 @@ namespace XLite\Model;
 /**
  * Language translations
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="language_translations",
@@ -43,9 +41,7 @@ class LanguageTranslation extends \XLite\Model\Base\Translation
     /**
      * Language name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=64, nullable=false)
      */

@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin\Base;
 /**
  * AddonsList
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AddonsList extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ abstract class AddonsList extends \XLite\Controller\Admin\AAdmin
      * Initialize controller
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {

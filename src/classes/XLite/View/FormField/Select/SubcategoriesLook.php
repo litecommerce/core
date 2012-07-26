@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Sibcategories look selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SubcategoriesLook extends \XLite\View\FormField\Select\Regular
 {
@@ -37,8 +35,6 @@ class SubcategoriesLook extends \XLite\View\FormField\Select\Regular
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

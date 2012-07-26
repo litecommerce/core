@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 /**
  * Request
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Request extends \XLite\Core\Request implements \XLite\Base\IDecorator
 {
@@ -39,8 +37,6 @@ class Request extends \XLite\Core\Request implements \XLite\Base\IDecorator
      * @param mixed $request Request data
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function normalizeRequestData($request)
     {

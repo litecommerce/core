@@ -29,17 +29,13 @@ namespace XLite\Controller\Customer;
  * Password recovery controller
  * TODO: full refactoring is needed
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * params
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $params = array('target', 'mode', 'email', 'link_mailed');
 
@@ -47,8 +43,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * Add the base part of the location path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -61,8 +55,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -73,8 +65,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * doActionRecoverPassword
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRecoverPassword()
     {
@@ -95,8 +85,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * doActionConfirm
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionConfirm()
     {
@@ -115,8 +103,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * @param mixed $email ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function requestRecoverPassword($email)
     {
@@ -136,8 +122,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * @param mixed $requestID ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doPasswordRecovery($email, $requestID)
     {

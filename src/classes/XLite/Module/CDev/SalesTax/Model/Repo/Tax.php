@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\SalesTax\Model\Repo;
 /**
  * Tax repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Tax extends \XLite\Model\Repo\ARepo
 {
@@ -37,8 +35,6 @@ class Tax extends \XLite\Model\Repo\ARepo
      * Get tax
      *
      * @return \XLite\Module\CDev\SalesTax\Model\Tax
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getTax()
     {
@@ -57,8 +53,6 @@ class Tax extends \XLite\Model\Repo\ARepo
      * Find active taxes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findActive()
     {
@@ -75,8 +69,6 @@ class Tax extends \XLite\Model\Repo\ARepo
      * Define query for findActive() method
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineFindActiveQuery()
     {
@@ -91,8 +83,6 @@ class Tax extends \XLite\Model\Repo\ARepo
      * Create tax
      *
      * @return \XLite\Module\CDev\SalesTax\Model\Tax
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function createTax()
     {

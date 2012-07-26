@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments\View\Form;
 /**
  * Attachments form
  * 
- * @see   ____class_see____
- * @since 1.0.23
  */
 class Attachments extends \XLite\View\Form\Product\Modify\Base\Single
 {
@@ -37,8 +35,6 @@ class Attachments extends \XLite\View\Form\Product\Modify\Base\Single
      * Get default action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

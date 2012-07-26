@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View\Form\Item;
 /**
  * Change options form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ChangeOptions extends \XLite\View\Form\AForm
 {
@@ -46,8 +44,6 @@ class ChangeOptions extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -58,8 +54,6 @@ class ChangeOptions extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -70,8 +64,6 @@ class ChangeOptions extends \XLite\View\Form\AForm
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -88,8 +80,6 @@ class ChangeOptions extends \XLite\View\Form\AForm
      * Initialization
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initView()
     {
@@ -102,8 +92,6 @@ class ChangeOptions extends \XLite\View\Form\AForm
      * Get form default parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormDefaultParams()
     {

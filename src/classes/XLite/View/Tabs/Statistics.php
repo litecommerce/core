@@ -28,8 +28,6 @@ namespace XLite\View\Tabs;
 /**
  * Tabs related to user profile section
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -38,9 +36,7 @@ class Statistics extends \XLite\View\Tabs\ATabs
     /**
      * Description of tabs related to user profile section and their targets
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $tabs = array(
         'orders_stats' => array(

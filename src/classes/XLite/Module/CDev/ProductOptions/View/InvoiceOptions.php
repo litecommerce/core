@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Invoice item options
  *
- * @see   ____class_see____
- * @since 1.0.0
  * @ListChild (list="invoice.item.name", weight="100")
  */
 class InvoiceOptions extends \XLite\View\AView
@@ -43,8 +41,6 @@ class InvoiceOptions extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -55,8 +51,6 @@ class InvoiceOptions extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -71,8 +65,6 @@ class InvoiceOptions extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\Form\Address;
 /**
  * Profile abstract form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Address extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class Address extends \XLite\View\Form\AForm
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {
@@ -68,8 +64,6 @@ class Address extends \XLite\View\Form\AForm
      * getDefaultClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultClassName()
     {

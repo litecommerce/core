@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Demo\Controller\Admin;
 /**
  * CacheManagement
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CacheManagement extends \XLite\Controller\Admin\CacheManagement implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ class CacheManagement extends \XLite\Controller\Admin\CacheManagement implements
      * URL to redirect if action is forbidden
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getForbidInDemoModeRedirectURL()
     {

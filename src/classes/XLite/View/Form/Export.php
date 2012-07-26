@@ -28,8 +28,6 @@ namespace XLite\View\Form;
 /**
  * Export form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Export extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class Export extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Export extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

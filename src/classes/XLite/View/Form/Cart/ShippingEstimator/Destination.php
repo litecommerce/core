@@ -28,8 +28,6 @@ namespace XLite\View\Form\Cart\ShippingEstimator;
 /**
  * Shipping estimator destination form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Destination extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstimator
 {
@@ -37,8 +35,6 @@ class Destination extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstim
      * Get default form action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

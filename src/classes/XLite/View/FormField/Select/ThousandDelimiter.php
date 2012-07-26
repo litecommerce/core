@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Thousand delimiter selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ThousandDelimiter extends \XLite\View\FormField\Select\Regular
 {
@@ -37,8 +35,6 @@ class ThousandDelimiter extends \XLite\View\FormField\Select\Regular
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {

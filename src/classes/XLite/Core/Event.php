@@ -28,17 +28,13 @@ namespace XLite\Core;
 /**
  * Events subsystem
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Event extends \XLite\Base\Singleton
 {
     /**
      * Events list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $events = array();
 
@@ -49,8 +45,6 @@ class Event extends \XLite\Base\Singleton
      * @param string $message Error message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function invalidElement($name, $message)
     {
@@ -64,8 +58,6 @@ class Event extends \XLite\Base\Singleton
      * @param array  $arguments Event arguments
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function __callStatic($name, array $arguments)
     {
@@ -82,8 +74,6 @@ class Event extends \XLite\Base\Singleton
      * @param array  $arguments Event arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function trigger($name, array $arguments = array())
     {
@@ -97,8 +87,6 @@ class Event extends \XLite\Base\Singleton
      * Display events
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function display()
     {
@@ -111,8 +99,6 @@ class Event extends \XLite\Base\Singleton
      * Clear list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clear()
     {

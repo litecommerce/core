@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoogleAnalytics\View;
 /**
  * Abstract widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -55,8 +51,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Display widget as Standalone-specific
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isIncludeController()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\Upgrade\Step\Prepare;
 /**
  * StatusMessages
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", weight="200", zone="admin")
  */
@@ -39,8 +37,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -51,8 +47,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Return list of diagnostic messages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMessages()
     {
@@ -63,8 +57,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

@@ -29,8 +29,6 @@ namespace Includes\Decorator\Plugin\Templates;
  * ATemplates
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
 {
@@ -43,30 +41,21 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     /**
      * List of .tpl files
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $annotatedTemplates;
 
     /**
      * List of .tpl files with @InheritedListChild tag
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $inheritedTemplates;
 
     /**
      * List of zones
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $zones = array(
         'console' => \XLite\Model\ViewList::INTERFACE_CONSOLE,
@@ -78,9 +67,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * Return templates list
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAnnotatedTemplates()
     {
@@ -112,9 +98,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * Get iterator for template files
      *
      * @return \Includes\Utils\FileFilter
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTemplateFileIterator()
     {
@@ -131,9 +114,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * @param string $path Template file path
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addTags(array $data, $path)
     {

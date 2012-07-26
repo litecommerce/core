@@ -28,8 +28,6 @@ namespace XLite\View;
 /**
  * Order history widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  */
 class OrderHistory extends \XLite\View\AView
@@ -43,8 +41,6 @@ class OrderHistory extends \XLite\View\AView
      * Get order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrderId()
     {
@@ -55,8 +51,6 @@ class OrderHistory extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -71,8 +65,6 @@ class OrderHistory extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -87,8 +79,6 @@ class OrderHistory extends \XLite\View\AView
      * Return default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -99,8 +89,6 @@ class OrderHistory extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -112,8 +100,6 @@ class OrderHistory extends \XLite\View\AView
      * Get blocks for the events of order
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderHistoryEventsBlock()
     {
@@ -133,8 +119,6 @@ class OrderHistory extends \XLite\View\AView
      * @param \XLite\Model\OrderHistoryEvents $event Event object
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function isDisplayDetails(\XLite\Model\OrderHistoryEvents $event)
     {
@@ -147,8 +131,6 @@ class OrderHistory extends \XLite\View\AView
      * @param \XLite\Model\OrderHistoryEvents $event
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDate(\XLite\Model\OrderHistoryEvents $event)
     {
@@ -161,8 +143,6 @@ class OrderHistory extends \XLite\View\AView
      * @param \XLite\Model\OrderHistoryEvents $event
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDescription(\XLite\Model\OrderHistoryEvents $event)
     {
@@ -175,8 +155,6 @@ class OrderHistory extends \XLite\View\AView
      * @param \XLite\Model\OrderHistoryEvents $event
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getComment(\XLite\Model\OrderHistoryEvents $event)
     {
@@ -189,8 +167,6 @@ class OrderHistory extends \XLite\View\AView
      * @param \XLite\Model\OrderHistoryEvents $event
      *
      * @return type
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDetails(\XLite\Model\OrderHistoryEvents $event)
     {
@@ -216,8 +192,6 @@ class OrderHistory extends \XLite\View\AView
      * Get number of columns to display event details 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getColumnsNumber()
     {
@@ -230,8 +204,6 @@ class OrderHistory extends \XLite\View\AView
      * @param integer $date
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDayDate($date)
     {
@@ -244,8 +216,6 @@ class OrderHistory extends \XLite\View\AView
      * @param string $index
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHeaderBlock($index)
     {

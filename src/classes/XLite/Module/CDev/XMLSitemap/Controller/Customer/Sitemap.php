@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\Controller\Customer;
 /**
  * Sitemap controller
  * 
- * @see   ____class_see____
- * @since 1.0.12
  */
 class Sitemap extends \XLite\Controller\Customer\ACustomer
 {
@@ -37,8 +35,6 @@ class Sitemap extends \XLite\Controller\Customer\ACustomer
      * Run controller
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function run()
     {
@@ -49,8 +45,6 @@ class Sitemap extends \XLite\Controller\Customer\ACustomer
      * Preprocessor for no-action ren
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -76,8 +70,6 @@ class Sitemap extends \XLite\Controller\Customer\ACustomer
      * @param string $content Content
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function displayContent($content)
     {
@@ -96,8 +88,6 @@ class Sitemap extends \XLite\Controller\Customer\ACustomer
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function checkAccess()
     {

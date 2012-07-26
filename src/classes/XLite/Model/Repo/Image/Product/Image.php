@@ -28,17 +28,13 @@ namespace XLite\Model\Repo\Image\Product;
 /**
  * Product image
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Image extends \XLite\Model\Repo\Base\Image
 {
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'orderby';
 
@@ -46,8 +42,6 @@ class Image extends \XLite\Model\Repo\Base\Image
      * Returns the name of the directory within 'root/images' where images stored
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStorageName()
     {

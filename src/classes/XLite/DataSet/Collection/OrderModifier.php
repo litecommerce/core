@@ -28,8 +28,6 @@ namespace XLite\DataSet\Collection;
 /**
  * Order modifiers collection
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderModifier extends \XLite\DataSet\Collection
 {
@@ -40,8 +38,6 @@ class OrderModifier extends \XLite\DataSet\Collection
      * @param mixed $key     Element key
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkElement($element, $key)
     {

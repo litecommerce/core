@@ -28,8 +28,6 @@ namespace XLite\View\Order\Details\Admin;
 /**
  * Transactions 
  * 
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="order.details", zone="admin")
  */
@@ -45,8 +43,6 @@ class Transactions extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -57,8 +53,6 @@ class Transactions extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -73,8 +67,6 @@ class Transactions extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -89,8 +81,6 @@ class Transactions extends \XLite\View\AView
      * Get transactions 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTransactions()
     {
@@ -103,8 +93,6 @@ class Transactions extends \XLite\View\AView
      * @param \XLite\Model\Payment\Transaction $transaction Transaction
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTransactionStatus(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -117,8 +105,6 @@ class Transactions extends \XLite\View\AView
      * @param \XLite\Model\Payment\Transaction $transaction Transaction
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTransactionData(\XLite\Model\Payment\Transaction $transaction)
     {

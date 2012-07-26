@@ -28,17 +28,13 @@ namespace XLite\View\ItemsList\Module;
 /**
  * Abstract product list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AModule extends \XLite\View\ItemsList\AItemsList
 {
     /**
      * List of core versions to update
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $coreVersions;
 
@@ -48,8 +44,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function isInstalled(\XLite\Model\Module $module);
 
@@ -57,8 +51,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -69,8 +61,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Get widget templates directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -81,8 +71,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Return "empty list" catalog
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getEmptyListDir()
     {
@@ -93,8 +81,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Return dir which contains the page body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -105,8 +91,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * getJSHandlerClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSHandlerClassName()
     {
@@ -119,8 +103,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasErrors(\XLite\Model\Module $module)
     {
@@ -133,8 +115,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function canEnable(\XLite\Model\Module $module)
     {
@@ -158,8 +138,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function canDisable(\XLite\Model\Module $module)
     {
@@ -172,8 +150,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isEnabled(\XLite\Model\Module $module)
     {
@@ -189,8 +165,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -206,8 +180,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isModuleCompatible(\XLite\Model\Module $module)
     {
@@ -221,8 +193,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCoreUpgradeNeeded(\XLite\Model\Module $module)
     {
@@ -236,8 +206,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isModuleUpgradeNeeded(\XLite\Model\Module $module)
     {
@@ -251,8 +219,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param string              $operator Comparison operator
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkModuleMajorVersion(\XLite\Model\Module $module, $operator)
     {
@@ -265,8 +231,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getDependencyModules(\XLite\Model\Module $module)
     {
@@ -279,8 +243,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasWrongDependencies(\XLite\Model\Module $module)
     {
@@ -297,8 +259,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function isModuleUpdateAvailable(\XLite\Model\Module $module);
 
@@ -306,8 +266,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Return list of core versions for update
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCoreVersions()
     {
@@ -324,8 +282,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param string $majorVersion core version to check
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCoreUpgradeAvailable($majorVersion)
     {
@@ -338,8 +294,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleForUpdate(\XLite\Model\Module $module)
     {
@@ -352,8 +306,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleFromMarketplace(\XLite\Model\Module $module)
     {
@@ -366,8 +318,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleInstalled(\XLite\Model\Module $module)
     {
@@ -380,8 +330,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleVersion(\XLite\Model\Module $module)
     {
@@ -398,8 +346,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getDependencyData(\XLite\Model\Module $module)
     {
@@ -434,8 +380,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getDependencyHRef(\XLite\Model\Module $module)
     {
@@ -448,8 +392,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getDependencyStatus(\XLite\Model\Module $module)
     {
@@ -462,8 +404,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getDependencyCSSClass(\XLite\Model\Module $module)
     {
@@ -476,8 +416,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Get search substring value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getSearchSubstring()
     {

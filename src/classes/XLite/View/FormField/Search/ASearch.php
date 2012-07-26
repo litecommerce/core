@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Search;
 /**
  * Abstract items lsit search cell
  * 
- * @see   ____class_see____
- * @since 1.0.24
  */
 abstract class ASearch extends \XLite\View\AView
 {
@@ -48,9 +46,7 @@ abstract class ASearch extends \XLite\View\AView
     /**
      * Fields 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var array
      */
     protected $fields;
 
@@ -58,8 +54,6 @@ abstract class ASearch extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -74,8 +68,6 @@ abstract class ASearch extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -87,8 +79,6 @@ abstract class ASearch extends \XLite\View\AView
      * Get column 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getColumn()
     {
@@ -99,8 +89,6 @@ abstract class ASearch extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -113,8 +101,6 @@ abstract class ASearch extends \XLite\View\AView
      * Define fields 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     abstract protected function defineFields();
 
@@ -122,8 +108,6 @@ abstract class ASearch extends \XLite\View\AView
      * Get fields 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getFields()
     {
@@ -148,8 +132,6 @@ abstract class ASearch extends \XLite\View\AView
      * @param string $name Name
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function displayField($name)
     {
@@ -173,8 +155,6 @@ abstract class ASearch extends \XLite\View\AView
      * @param array $field Field info
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function assembleFieldParameters(array $field)
     {
@@ -199,8 +179,6 @@ abstract class ASearch extends \XLite\View\AView
      * @param array $field Field info
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function assembleFieldClass(array $field)
     {
@@ -216,8 +194,6 @@ abstract class ASearch extends \XLite\View\AView
      * @param string $name Condition name
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function getCondition($name)
     {

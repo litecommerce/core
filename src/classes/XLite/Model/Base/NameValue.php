@@ -28,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Name-value abstract storage
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @MappedSuperclass
  */
@@ -39,9 +37,7 @@ abstract class NameValue extends \XLite\Model\AEntity
     /**
      * Unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -52,9 +48,7 @@ abstract class NameValue extends \XLite\Model\AEntity
     /**
      * Parameter name 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="string")
      */
@@ -63,9 +57,7 @@ abstract class NameValue extends \XLite\Model\AEntity
     /**
      * Semi-serialized parameter value representation
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var string
      *
      * @Column (type="text")
      */
@@ -75,8 +67,6 @@ abstract class NameValue extends \XLite\Model\AEntity
      * Get parameter value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getValue()
     {
@@ -91,8 +81,6 @@ abstract class NameValue extends \XLite\Model\AEntity
      * @param mixed $value Parameter value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function setValue($value)
     {

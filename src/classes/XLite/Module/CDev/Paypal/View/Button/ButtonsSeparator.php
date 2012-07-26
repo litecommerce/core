@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\View\Button;
 /**
  * Checkout buttons separator
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="cart.panel.totals", weight="90")
  * @ListChild (list="minicart.horizontal.buttons", weight="90")
@@ -40,8 +38,6 @@ class ButtonsSeparator extends \XLite\View\Button\ButtonsSeparator
      * isExpressCheckoutEnabled 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function isVisible()
     {

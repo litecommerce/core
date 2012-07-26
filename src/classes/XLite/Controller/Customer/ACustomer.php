@@ -28,35 +28,27 @@ namespace XLite\Controller\Customer;
 /**
  * Abstract controller for Customer interface
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\Controller\AController
 {
     /**
      * cart
      *
-     * @var   \XLite\Model\Cart
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Cart
      */
     protected $cart;
 
     /**
      * Initial cart fingerprint
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $initialCartFingerprint;
 
     /**
      * Breadcrumbs
      *
-     * @var   \XLite\View\Location
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\View\Location
      */
     protected $locationPath;
 
@@ -66,8 +58,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Return current location path
      *
      * @return \XLite\View\Location
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLocationPath()
     {
@@ -82,8 +72,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Method to create the location line
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineLocationPath()
     {
@@ -104,8 +92,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -116,8 +102,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Add part to the location nodes list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -133,8 +117,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * @param array  $subnodes Node subnodes OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addLocationNode($name, $link = null, array $subnodes = null)
     {
@@ -147,8 +129,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Return current category Id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoryId()
     {
@@ -159,8 +139,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Return cart instance
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCart()
     {
@@ -176,8 +154,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShopURL($url = '', $secure = null, array $params = array())
     {
@@ -192,8 +168,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Check if cuurrent user is logged in
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLogged()
     {
@@ -204,8 +178,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Handles the request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -224,8 +196,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Stub for the CMS connectors
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkStorefrontAccessability()
     {
@@ -236,8 +206,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Perform some actions to prohibit access to storefornt
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function closeStorefront()
     {
@@ -249,8 +217,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Return template to use in a CMS
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCMSTemplate()
     {
@@ -261,8 +227,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Select template to use
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {
@@ -273,8 +237,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Recalculates the shopping cart
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateCart()
     {
@@ -290,8 +252,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Assemble updateCart event
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleEvent()
     {
@@ -345,8 +305,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * isCartProcessed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCartProcessed()
     {
@@ -357,8 +315,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Get or create cart profile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCartProfile()
     {
@@ -385,8 +341,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Check - need use secure protocol or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function needSecure()
     {
@@ -400,8 +354,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Preprocessor for no-action run
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -416,8 +368,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Check if redirect to clean URL is needed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function isRedirectToCleanURLNeeded()
     {
@@ -431,8 +381,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Redirect to clean URL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function performRedirectToCleanURL()
     {

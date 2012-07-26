@@ -29,8 +29,6 @@ namespace Includes\Pattern;
  * APattern
  *
  * @package    XLite
- * @see        ____class_see____
- * @since      1.0.0
  */
 abstract class APattern
 {

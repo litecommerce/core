@@ -28,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Order page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Order extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.11
+     * @var array
      */
     protected $params = array('target', 'order_id', 'page');
 
@@ -46,8 +42,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -58,8 +52,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * handleRequest
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function handleRequest()
     {
@@ -88,8 +80,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -101,8 +91,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Get order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getOrder()
     {
@@ -116,8 +104,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * TODO: to remove
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRequestData()
     {
@@ -131,8 +117,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -156,8 +140,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * @param array   $data    Data to change
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderChanges($orderId, array $data)
     {
@@ -184,8 +166,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionPaymentTransaction()
     {
@@ -209,8 +189,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * getViewerTemplate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {
@@ -229,8 +207,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -247,8 +223,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {

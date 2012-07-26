@@ -30,8 +30,6 @@ namespace XLite\Module\CDev\DrupalConnector\View;
  * This widget checks if LiteCommerce is located within lc_connector module or not
  * (see for details: https://github.com/litecommerce/core/wiki/Moving-LiteCommerce-subdirectory-to-the-Drupal-directory)
  *
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @ListChild (list="admin.main.page.content.center", zone="admin", weight="400")
  */
@@ -41,8 +39,6 @@ class CheckLocation extends \XLite\View\AView
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function getAllowedTargets()
     {
@@ -58,8 +54,6 @@ class CheckLocation extends \XLite\View\AView
      * SIDEBAR/CENTER and so on.
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getDefaultTemplate()
     {
@@ -70,8 +64,6 @@ class CheckLocation extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function isVisible()
     {
@@ -82,8 +74,6 @@ class CheckLocation extends \XLite\View\AView
      * isWrongLocation 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function isWrongLocation()
     {

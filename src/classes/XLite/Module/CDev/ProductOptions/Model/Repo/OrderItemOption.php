@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
 /**
  * Orer item option repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderItemOption extends \XLite\Model\Repo\ARepo
 {
@@ -40,8 +38,6 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
      * @param integer $orderId Order id
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByItemIdAndOrderId($itemId, $orderId)
     {
@@ -56,8 +52,6 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
      * @param integer $orderId Order id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineByItemIdAndOrderIdQuery($itemId, $orderId)
     {
@@ -71,8 +65,6 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
      * Get detailed foreign keys
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDetailedForeignKeys()
     {

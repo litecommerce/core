@@ -28,8 +28,6 @@ namespace XLite\View\Pager\Admin\Model;
 /**
  * Common pager for model-based items lists
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class AModel extends \XLite\View\Pager\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ abstract class AModel extends \XLite\View\Pager\Admin\AAdmin
      * Check visibility
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     public function isVisible()
     {
@@ -49,8 +45,6 @@ abstract class AModel extends \XLite\View\Pager\Admin\AAdmin
      * Get items per page (default)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Moneybookers\View;
 /**
  * Moneybookers settings dialog
  * 
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -39,8 +37,6 @@ class MoneybookersSettings extends \XLite\View\Dialog
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +51,6 @@ class MoneybookersSettings extends \XLite\View\Dialog
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -71,8 +65,6 @@ class MoneybookersSettings extends \XLite\View\Dialog
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -87,8 +79,6 @@ class MoneybookersSettings extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -101,8 +91,6 @@ class MoneybookersSettings extends \XLite\View\Dialog
      * Get register URL 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRegisterURL()
     {

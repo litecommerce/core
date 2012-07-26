@@ -28,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Taxes controller
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Taxes extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * FIXME- backward compatibility
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'page');
 
@@ -46,8 +42,6 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -60,8 +54,6 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
      * Get tax 
      * 
      * @return object
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTax()
     {

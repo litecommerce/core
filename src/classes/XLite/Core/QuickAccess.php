@@ -28,35 +28,27 @@ namespace XLite\Core;
 /**
  * Quick access class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class QuickAccess
 {
     /**
      * Entity manager (cache)
      *
-     * @var   \Doctrine\ORM\EntityManager
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\ORM\EntityManager
      */
     protected $em;
 
     /**
      * Translator (cache)
      *
-     * @var   \XLite\Core\Translation
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\Translation
      */
     protected $translation;
 
     /**
      * Entities cache
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $entities = array();
 
@@ -69,8 +61,6 @@ class QuickAccess
      * @param string $code      Language code OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function t($name, array $arguments = array(), $code = null)
     {
@@ -82,8 +72,6 @@ class QuickAccess
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -113,8 +101,6 @@ class QuickAccess
      * Get entity manager
      *
      * @return \Doctrine\ORM\EntityManager
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function em()
     {
@@ -127,8 +113,6 @@ class QuickAccess
      * @param string $name Entity name (full - XLite\Model\Product or short - Model\Product)
      *
      * @return \XLite\Model\Repo\ARepo
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function repo($name)
     {

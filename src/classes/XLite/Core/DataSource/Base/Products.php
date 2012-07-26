@@ -29,8 +29,6 @@ namespace XLite\Core\DataSource\Base;
  * Abstract products collection
  * Implements SeekableIterator and Countable interfaces
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 abstract class Products extends Collection
 {
@@ -38,8 +36,6 @@ abstract class Products extends Collection
      * Performs a basic validation over a collection of products
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isValid()
     {

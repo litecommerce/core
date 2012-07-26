@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Checkbox\Switcher;
 /**
  * Enabled state switcher
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Enabled extends \XLite\View\FormField\Inline\Input\Checkbox\Switcher
 {
@@ -39,8 +37,6 @@ class Enabled extends \XLite\View\FormField\Inline\Input\Checkbox\Switcher
      * @param mixed $value Value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function preprocessSavedValue($value)
     {
@@ -51,8 +47,6 @@ class Enabled extends \XLite\View\FormField\Inline\Input\Checkbox\Switcher
      * Check - field has view or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasSeparateView()
     {

@@ -28,8 +28,6 @@ namespace XLite\Core\EventListener;
 /**
  * Probe 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class Probe extends \XLite\Core\EventListener\AEventListener
 {
@@ -40,8 +38,6 @@ class Probe extends \XLite\Core\EventListener\AEventListener
      * @param array  $arguments Event arguments OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function handleEvent($name, array $arguments)
     {

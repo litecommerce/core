@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\VAT\View\FormField;
 /**
  * Label 'Inc/exc.VAT' display mode selector widget
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class LabelModeSelector extends \XLite\View\FormField\Select\Regular
 {
@@ -44,8 +42,6 @@ class LabelModeSelector extends \XLite\View\FormField\Select\Regular
      * getDefaultOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getDefaultOptions()
     {

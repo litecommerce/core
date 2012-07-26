@@ -28,8 +28,6 @@ namespace XLite\Model\Repo\Base;
 /**
  * Common translation repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Translation extends \XLite\Model\Repo\ARepo
 {
@@ -40,8 +38,6 @@ class Translation extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
      *
      * @return \XLite\Model\AEntity|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -56,8 +52,6 @@ class Translation extends \XLite\Model\Repo\ARepo
      * Get repository type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRepoType()
     {

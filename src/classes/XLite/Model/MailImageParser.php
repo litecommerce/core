@@ -29,35 +29,27 @@ namespace XLite\Model;
  * Mail images parser
  * TODO: full refactoring is required
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class MailImageParser extends \XLite\Core\FlexyCompiler
 {
     /**
      * webdir
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     public $webdir;
 
     /**
      * images
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     public $images;
 
     /**
      * counter
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     public $counter;
 
@@ -67,8 +59,6 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * FIXME - we must found anoither way... now it is antipattern Public Morozov
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -79,8 +69,6 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * flexy
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function flexy()
     {
@@ -90,8 +78,6 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * postprocess
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function postprocess()
     {
@@ -147,8 +133,6 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * @param mixed $end   ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function substImage($start, $end)
     {
@@ -173,8 +157,6 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * @param mixed $img ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getImgSubstitution($img)
     {
@@ -220,8 +202,6 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * Removes any images that were parsed
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function unlinkImages()
     {

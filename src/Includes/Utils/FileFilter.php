@@ -29,48 +29,34 @@ namespace Includes\Utils;
  * FileFilter
  *
  * @package    XLite
- * @see        ____class_see____
- * @since      1.0.0
  */
 class FileFilter extends \Includes\Utils\AUtils
 {
     /**
      * Directory to iterate over
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var string
      */
     protected $dir;
 
     /**
      * Pattern to filter files by path
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var string
      */
     protected $pattern;
 
     /**
      * Mode
      *
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var int
      */
     protected $mode;
 
     /**
      * Cache
      *
-     * @var    \Includes\Utils\FileFilter\FilterIterator
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var \Includes\Utils\FileFilter\FilterIterator
      */
     protected $iterator;
 
@@ -79,9 +65,6 @@ class FileFilter extends \Includes\Utils\AUtils
      * Return the directory iterator
      *
      * @return \RecursiveIteratorIterator
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUnfilteredIterator()
     {
@@ -97,9 +80,6 @@ class FileFilter extends \Includes\Utils\AUtils
      * Return the directory iterator
      *
      * @return \Includes\Utils\FileFilter\FilterIterator
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIterator()
     {
@@ -118,9 +98,6 @@ class FileFilter extends \Includes\Utils\AUtils
      * @param int    $mode    Filtering mode OPTIONAL
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($dir, $pattern = null, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
     {

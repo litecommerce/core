@@ -28,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Main page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Main extends \XLite\Controller\Admin\AAdmin
      * Returns the page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,8 +45,6 @@ class Main extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -61,8 +55,6 @@ class Main extends \XLite\Controller\Admin\AAdmin
      * doActionUpdateInventoryProducts
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateInventoryProducts()
     {

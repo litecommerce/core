@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\SalesTax\Controller\Admin;
 /**
  * Taxes controller
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Base\IDecorator
 {
@@ -44,8 +42,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -59,8 +55,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTemplates()
     {
@@ -78,8 +72,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Get tax 
      * 
      * @return object
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTax()
     {
@@ -100,8 +92,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Update tax rate
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSalesTaxUpdate()
     {
@@ -178,8 +168,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Remove tax rate 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSalesTaxRemoveRate()
     {
@@ -211,8 +199,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Switch tax state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSalesTaxSwitch()
     {

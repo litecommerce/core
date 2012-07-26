@@ -28,8 +28,6 @@ namespace XLite\View\Account;
 /**
  * Delete account confirmation widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Delete extends \XLite\View\AView
 {
@@ -37,8 +35,6 @@ class Delete extends \XLite\View\AView
      * getDefaultTemplate
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

@@ -28,17 +28,13 @@ namespace XLite\Core;
 /**
  * Event listener (common) 
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class EventListener extends \XLite\Base\Singleton
 {
     /**
      * Errors 
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
+     * @var array
      */
     protected $errors = array();
 
@@ -49,8 +45,6 @@ class EventListener extends \XLite\Base\Singleton
      * @param array  $arguments Event arguments OPTIONAL
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function handle($name, array $arguments = array())
     {
@@ -79,8 +73,6 @@ class EventListener extends \XLite\Base\Singleton
      * Get errors 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public function getErrors()
     {
@@ -91,8 +83,6 @@ class EventListener extends \XLite\Base\Singleton
      * Get events 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     public function getEvents()
     {
@@ -103,8 +93,6 @@ class EventListener extends \XLite\Base\Singleton
      * Get listeners 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getListeners()
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 /**
  * Paypal Express Checkout payment processor
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APaypal
 {
@@ -56,18 +54,14 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
     /**
      * Live PostURL 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.1.0
+     * @var string
      */
     protected $livePostURL = 'https://www.paypal.com/cgi-bin/webscr';
 
     /**
      * Test PostURL 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.1.0
+     * @var string
      */
     protected $testPostURL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 
@@ -76,8 +70,6 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function getSettingsWidget()
     {
@@ -88,8 +80,6 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function getSettingsTemplateDir()
     {
@@ -102,8 +92,6 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
     {
@@ -114,8 +102,6 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      * Get the list of merchant countries where this payment processor can work
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAllowedMerchantCountries()
     {
@@ -126,8 +112,6 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      * Perform 'SetExpressCheckout' request and get Token value from Paypal
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function doSetExpressCheckout(\XLite\Model\Payment\Method $method)
     {
@@ -154,8 +138,6 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      * @param string $token Express Checkout token
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function redirectToPaypal($token)
     {
@@ -188,8 +170,6 @@ HTML;
      * @param string                      $token  Token
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function doGetExpressCheckoutDetails(\XLite\Model\Payment\Method $method, $token)
     {
@@ -217,8 +197,6 @@ HTML;
      * @param \XLite\Model\Payment\Transaction $transaction Payment transaction object
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -237,8 +215,6 @@ HTML;
      * Get PostURL to redirect customer to Paypal
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getExpressCheckoutPostURL()
     {
@@ -251,8 +227,6 @@ HTML;
      * @param string $token Express Checkout token
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getPostParams($token)
     {
@@ -272,8 +246,6 @@ HTML;
      * Get array of parameters for SET_EXPRESS_CHECKOUT request
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSetExpressCheckoutRequestParams()
     {
@@ -329,8 +301,6 @@ HTML;
      * Return array of parameters for 'GetExpressCheckoutDetails' request 
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getGetExpressCheckoutDetailsRequestParams()
     {
@@ -349,8 +319,6 @@ HTML;
      * Do initial payment and return status
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function doInitialPayment()
     {
@@ -386,8 +354,6 @@ HTML;
      * Returns true if token initialized and is not expired
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function isTokenValid()
     {
@@ -399,8 +365,6 @@ HTML;
      * Perform 'DoExpressCheckoutPayment' request and return status of payment transaction
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function doExpressCheckoutPayment()
     {
@@ -463,8 +427,6 @@ HTML;
      * Return array of parameters for 'DoExpressCheckoutPayment' request 
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDoExpressCheckoutPaymentRequestParams($transaction = null, $customParams = array())
     {
@@ -496,8 +458,6 @@ HTML;
      * @param boolean $asCancel Flag: true if URL is for Cancel action) OPTIONAL
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
      */
     protected function getECReturnURL($asCancel = false)
     {
@@ -522,8 +482,6 @@ HTML;
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {
@@ -545,8 +503,6 @@ HTML;
      * @param array $params Array of URL parameters OPTIONAL
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRedirectURL($params = array())
     {

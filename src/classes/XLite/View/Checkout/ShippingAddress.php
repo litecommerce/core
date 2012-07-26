@@ -28,8 +28,6 @@ namespace XLite\View\Checkout;
 /**
  * Shipping address block
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingAddress extends \XLite\View\AView
 {
@@ -37,8 +35,6 @@ class ShippingAddress extends \XLite\View\AView
      * Get shipping address
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddress()
     {
@@ -68,8 +64,6 @@ class ShippingAddress extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

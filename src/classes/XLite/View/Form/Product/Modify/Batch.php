@@ -28,8 +28,6 @@ namespace XLite\View\Form\Product\Modify;
 /**
  * List
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Batch extends \XLite\View\Form\Product\Modify\AModify
 {
@@ -37,8 +35,6 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -49,8 +45,6 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -61,8 +55,6 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
      * Get validator
      *
      * @return \XLite\Core\Validator\HashArray
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidator()
     {
@@ -80,8 +72,6 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
      * Get validator products data
      *
      * @return null
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDataValidator()
     {

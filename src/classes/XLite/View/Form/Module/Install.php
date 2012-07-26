@@ -28,8 +28,6 @@ namespace XLite\View\Form\Module;
 /**
  * Install
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Install extends \XLite\View\Form\Module\AModule
 {
@@ -37,8 +35,6 @@ class Install extends \XLite\View\Form\Module\AModule
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {

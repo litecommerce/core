@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\AmazonS3Images\View\Form;
 /**
  * Migrate form
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 class Migrate extends \XLite\View\Form\AForm
 {
@@ -37,8 +35,6 @@ class Migrate extends \XLite\View\Form\AForm
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {

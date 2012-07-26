@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\UserPermissions\View\Model;
 /**
  * Role 
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Role extends \XLite\View\Model\AModel
 {
     /**
      * Shema default
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $schemaDefault = array(
         'name' => array(
@@ -60,8 +56,6 @@ class Role extends \XLite\View\Model\AModel
      * Return current model ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModelId()
     {
@@ -72,8 +66,6 @@ class Role extends \XLite\View\Model\AModel
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFieldsForSectionDefault()
     {
@@ -89,8 +81,6 @@ class Role extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Module\CDev\UserPermissions\Model\Role
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -105,8 +95,6 @@ class Role extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -117,8 +105,6 @@ class Role extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -142,8 +128,6 @@ class Role extends \XLite\View\Model\AModel
      * @param array $data Data to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {
@@ -195,8 +179,6 @@ class Role extends \XLite\View\Model\AModel
      * Add top message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addDataSavedTopMessage()
     {
@@ -214,8 +196,6 @@ class Role extends \XLite\View\Model\AModel
      * @param mixed $name Field/property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelObjectValue($name)
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * Address book page controller
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class AddressBook extends \XLite\Controller\Customer\AddressBook implements \XLite\Base\IDecorator
 {
@@ -41,8 +39,6 @@ class AddressBook extends \XLite\Controller\Customer\AddressBook implements \XLi
      * @param array  $pageArgs LC-specific URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -62,8 +58,6 @@ class AddressBook extends \XLite\Controller\Customer\AddressBook implements \XLi
      * @param array  $args LC URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
@@ -84,8 +78,6 @@ class AddressBook extends \XLite\Controller\Customer\AddressBook implements \XLi
      * @param integer $id Drupal profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected static function getLCProfileId($id)
     {
@@ -98,8 +90,6 @@ class AddressBook extends \XLite\Controller\Customer\AddressBook implements \XLi
      * @param integer $id LC profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected static function getDrupalProfileId($id)
     {
@@ -110,8 +100,6 @@ class AddressBook extends \XLite\Controller\Customer\AddressBook implements \XLi
      * Check if current page is the "Orders" portal
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected static function isPortal()
     {
@@ -123,8 +111,6 @@ class AddressBook extends \XLite\Controller\Customer\AddressBook implements \XLi
      * Initialization
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function init()
     {
@@ -142,8 +128,6 @@ class AddressBook extends \XLite\Controller\Customer\AddressBook implements \XLi
      * @param integer $profileId Profile ID
      *  
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function correctProfileIdForURLParams($profileId)
     {

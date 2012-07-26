@@ -28,8 +28,6 @@ namespace XLite\Model\Payment\Processor;
 /**
  * Common offline processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Offline extends \XLite\Model\Payment\Base\Processor
 {
@@ -37,8 +35,6 @@ class Offline extends \XLite\Model\Payment\Base\Processor
      * Do initial payment
      *
      * @return string Status code
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doInitialPayment()
     {

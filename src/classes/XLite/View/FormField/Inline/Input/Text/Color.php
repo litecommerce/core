@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text;
 /**
  * Color
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Color extends \XLite\View\FormField\Inline\Base\Single
 {
@@ -37,8 +35,6 @@ class Color extends \XLite\View\FormField\Inline\Base\Single
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -53,8 +49,6 @@ class Color extends \XLite\View\FormField\Inline\Base\Single
      * Define form field
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineFieldClass()
     {
@@ -65,8 +59,6 @@ class Color extends \XLite\View\FormField\Inline\Base\Single
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {
@@ -77,8 +69,6 @@ class Color extends \XLite\View\FormField\Inline\Base\Single
      * Get view template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getViewTemplate()
     {

@@ -28,8 +28,6 @@ namespace XLite\View\Form\Cart\Item;
 /**
  * Abstract cart item form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AItem extends \XLite\View\Form\AForm
 {
@@ -43,8 +41,6 @@ abstract class AItem extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -55,8 +51,6 @@ abstract class AItem extends \XLite\View\Form\AForm
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -71,8 +65,6 @@ abstract class AItem extends \XLite\View\Form\AForm
      * Called before the includeCompiledFile()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initView()
     {

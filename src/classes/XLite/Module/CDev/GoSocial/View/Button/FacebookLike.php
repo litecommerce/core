@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View\Button;
 /**
  * Facebook like button
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class FacebookLike extends \XLite\View\Button\FacebookLike implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class FacebookLike extends \XLite\View\Button\FacebookLike implements \
      * Get button attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getButtonAttributes()
     {
@@ -56,8 +52,6 @@ abstract class FacebookLike extends \XLite\View\Button\FacebookLike implements \
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -69,8 +63,6 @@ abstract class FacebookLike extends \XLite\View\Button\FacebookLike implements \
      * Get defaul width
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getDefaultWidth()
     {

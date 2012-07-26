@@ -28,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Session repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Session extends \XLite\Model\Repo\ARepo
 {
@@ -42,18 +40,14 @@ class Session extends \XLite\Model\Repo\ARepo
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Public session id characters list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $chars = array(
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -72,8 +66,6 @@ class Session extends \XLite\Model\Repo\ARepo
      * Find cell by session id and name
      *
      * @return \XLite\Model\SessionCell|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function removeExpired()
     {
@@ -84,8 +76,6 @@ class Session extends \XLite\Model\Repo\ARepo
      * Define query for removeExpired() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRemoveExpiredQuery()
     {
@@ -105,8 +95,6 @@ class Session extends \XLite\Model\Repo\ARepo
      * @param string $sid Public session id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function countBySid($sid)
     {
@@ -119,8 +107,6 @@ class Session extends \XLite\Model\Repo\ARepo
      * @param string $sid Public session id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCountBySidQuery($sid)
     {
@@ -138,8 +124,6 @@ class Session extends \XLite\Model\Repo\ARepo
      * Generate public session id
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function generatePublicSessionId()
     {
@@ -170,8 +154,6 @@ class Session extends \XLite\Model\Repo\ARepo
      * @param string $sid Public session id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPublicSessionIdValid($sid)
     {

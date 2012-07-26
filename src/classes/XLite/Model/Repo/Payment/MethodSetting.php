@@ -28,17 +28,13 @@ namespace XLite\Model\Repo\Payment;
 /**
  * Payment method setting repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class MethodSetting extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SECONDARY;
 }

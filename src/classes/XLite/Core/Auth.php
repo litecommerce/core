@@ -28,8 +28,6 @@ namespace XLite\Core;
 /**
  * Authorization routine
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Auth extends \XLite\Base
 {
@@ -49,9 +47,7 @@ class Auth extends \XLite\Base
     /**
      * The list of session vars that must be cleared on logoff
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $sessionVarsToClear = array(
         'profile_id',
@@ -61,9 +57,7 @@ class Auth extends \XLite\Base
     /**
      * Profile (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var array
      */
     protected $profile;
 
@@ -74,8 +68,6 @@ class Auth extends \XLite\Base
      * @param string $password Password string to encrypt
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function encryptPassword($password)
     {
@@ -89,8 +81,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile Profile object
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loginProfile(\XLite\Model\Profile $profile)
     {
@@ -131,8 +121,6 @@ class Auth extends \XLite\Base
      * @param string $name Session variable name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addSessionVarToClear($name)
     {
@@ -143,8 +131,6 @@ class Auth extends \XLite\Base
      * Returns the list of session vars that must be cleared on logoff
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSessionVarsToClear()
     {
@@ -159,8 +145,6 @@ class Auth extends \XLite\Base
      * @param string $secureHash Secret token OPTIONAL
      *
      * @return \XLite\Model\Profile|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function login($login, $password, $secureHash = null)
     {
@@ -214,8 +198,6 @@ class Auth extends \XLite\Base
      * Logs off the currently logged profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logoff()
     {
@@ -232,8 +214,6 @@ class Auth extends \XLite\Base
      * Checks whether user is logged
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLogged()
     {
@@ -246,8 +226,6 @@ class Auth extends \XLite\Base
      * @param integer $profileId Profile Id OPTIONAL
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfile($profileId = null)
     {
@@ -279,8 +257,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile Profile to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkProfile(\XLite\Model\Profile $profile)
     {
@@ -293,8 +269,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile User profile OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAdmin(\XLite\Model\Profile $profile = null)
     {
@@ -311,8 +285,6 @@ class Auth extends \XLite\Base
      * @param string $type Profile type (see getUserTypes() for list of allowed values)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevel($type)
     {
@@ -325,8 +297,6 @@ class Auth extends \XLite\Base
      * Gets the access level for administrator
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAdminAccessLevel()
     {
@@ -337,8 +307,6 @@ class Auth extends \XLite\Base
      * Gets the access level for a customer
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCustomerAccessLevel()
     {
@@ -349,8 +317,6 @@ class Auth extends \XLite\Base
      * Returns all user types configured for this system
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getUserTypes()
     {
@@ -364,8 +330,6 @@ class Auth extends \XLite\Base
      * Return list of all allowed access level values (by default - array(0, 100))
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevelsList()
     {
@@ -376,8 +340,6 @@ class Auth extends \XLite\Base
      * getUserTypesRaw
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getUserTypesRaw()
     {
@@ -391,8 +353,6 @@ class Auth extends \XLite\Base
      * @param string $hashString Hash string to save
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setSecureHash($hashString)
     {
@@ -404,8 +364,6 @@ class Auth extends \XLite\Base
      * Remind recent login from cookies
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function remindLogin()
     {
@@ -419,8 +377,6 @@ class Auth extends \XLite\Base
      * @param string $password Administrator user password
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loginAdministrator($login, $password)
     {
@@ -449,8 +405,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Base $resource Resource
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAuthorized(\XLite\Base $resource)
     {
@@ -470,8 +424,6 @@ class Auth extends \XLite\Base
      * Reset default values for the "profile" property
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function resetProfileCache()
     {
@@ -486,8 +438,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile Profile to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkProfileAccessibility(\XLite\Model\Profile $profile)
     {
@@ -498,8 +448,6 @@ class Auth extends \XLite\Base
      * Clear some session variables on logout
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function clearSessionVars()
     {
@@ -515,8 +463,6 @@ class Auth extends \XLite\Base
      * @param string $hashString String to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkSecureHash($hashString)
     {
@@ -540,8 +486,6 @@ class Auth extends \XLite\Base
      * @param mixed $login User's login
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function rememberLogin($login)
     {
@@ -558,8 +502,6 @@ class Auth extends \XLite\Base
      * Get stored profiel id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStoredProfileId()
     {
@@ -570,8 +512,6 @@ class Auth extends \XLite\Base
      * Protected constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function __construct()
     {
@@ -588,8 +528,6 @@ class Auth extends \XLite\Base
      * @param string $code Permission code
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermissionAllowed($code)
     {
@@ -604,8 +542,6 @@ class Auth extends \XLite\Base
      * @param string|array $code Permission code(s)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermissionAllowedOr($code)
     {

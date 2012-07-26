@@ -28,35 +28,27 @@ namespace XLite\Model\Repo;
 /**
  * Country repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Country extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'country';
 
     /**
      * Alternative record identifiers
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $alternativeIdentifier = array(
         array('code'),
@@ -68,8 +60,6 @@ class Country extends \XLite\Model\Repo\ARepo
      * Define cache cells
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -102,8 +92,6 @@ class Country extends \XLite\Model\Repo\ARepo
      * Find all enabled countries
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllEnabled()
     {
@@ -120,8 +108,6 @@ class Country extends \XLite\Model\Repo\ARepo
      * Define query builder for findAllEnabled()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllEnabledQuery()
     {
@@ -140,8 +126,6 @@ class Country extends \XLite\Model\Repo\ARepo
      * Find all countries
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllCountries()
     {
@@ -158,8 +142,6 @@ class Country extends \XLite\Model\Repo\ARepo
      * Define query builder for findAllCountries()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllCountriesQuery()
     {
@@ -176,8 +158,6 @@ class Country extends \XLite\Model\Repo\ARepo
      * Get hash array (key - enabled country code, value - empty array)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findCountriesStates()
     {
@@ -198,8 +178,6 @@ class Country extends \XLite\Model\Repo\ARepo
      * Define query builder for findCountriesStates()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCountriesStatesQuery()
     {
@@ -217,8 +195,6 @@ class Country extends \XLite\Model\Repo\ARepo
      * @param array $data Countries
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function postprocessCountriesStates(array $data)
     {

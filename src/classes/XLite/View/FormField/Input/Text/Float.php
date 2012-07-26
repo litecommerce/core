@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * Float
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
 {
@@ -42,8 +40,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -58,8 +54,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -74,8 +68,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Sanitize value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function sanitize()
     {
@@ -86,8 +78,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Assemble validation rules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleValidationRules()
     {
@@ -104,8 +94,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {
@@ -120,8 +108,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Get default maximum size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultMaxSize()
     {
@@ -132,8 +118,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * getCommonAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {
@@ -154,8 +138,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Get mantis
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getE()
     {

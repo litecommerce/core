@@ -28,8 +28,6 @@ namespace XLite\View\Button\Addon;
 /**
  * Enter license key popup text
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class EnterLicenseKey extends \XLite\View\Button\APopupButton
 {
@@ -37,8 +35,6 @@ class EnterLicenseKey extends \XLite\View\Button\APopupButton
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -53,8 +49,6 @@ class EnterLicenseKey extends \XLite\View\Button\APopupButton
      * Return content for popup button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -65,8 +59,6 @@ class EnterLicenseKey extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
@@ -81,8 +73,6 @@ class EnterLicenseKey extends \XLite\View\Button\APopupButton
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {

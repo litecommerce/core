@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\GoSocial\View;
 /**
  * Main page page
  *
- * @see   ____class_see____
- * @since 1.0.15
  *
  * @LC_Dependencies ("CDev\SimpleCMS")
  */
@@ -39,8 +37,6 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\View\CustomerPage imple
      * Register Meta tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMetaTags()
     {
@@ -55,8 +51,6 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\View\CustomerPage imple
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -71,8 +65,6 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\View\CustomerPage imple
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -87,8 +79,6 @@ abstract class Page extends \XLite\Module\CDev\SimpleCMS\View\CustomerPage imple
      * Register Meta tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getNamespaces()
     {

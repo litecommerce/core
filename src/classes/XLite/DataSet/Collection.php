@@ -28,8 +28,6 @@ namespace XLite\DataSet;
 /**
  * Collection
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Collection extends \Doctrine\Common\Collections\ArrayCollection
 {
@@ -41,8 +39,6 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      * @param array $elements Elements OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $elements = array())
     {
@@ -57,8 +53,6 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      * @param mixed $value  Value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function offsetSet($offset, $value)
     {
@@ -71,8 +65,6 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      * Filter elements
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function filterElements()
     {
@@ -90,8 +82,6 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      * @param mixed $key     Element key
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkElement($element, $key)
     {
@@ -108,8 +98,6 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      * @param mixed $element Element
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPreviousSiblings($element)
     {
@@ -132,8 +120,6 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      * @param mixed $element Element
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getNextSiblings($element)
     {

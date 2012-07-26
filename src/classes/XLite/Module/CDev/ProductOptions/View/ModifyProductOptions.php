@@ -28,17 +28,13 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Modify product options
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ModifyProductOptions extends \XLite\View\AView
 {
     /**
      * Option groups list (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $options;
 
@@ -46,8 +42,6 @@ class ModifyProductOptions extends \XLite\View\AView
      * Get product id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProductId()
     {
@@ -58,8 +52,6 @@ class ModifyProductOptions extends \XLite\View\AView
      * Get options groups list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -79,8 +71,6 @@ class ModifyProductOptions extends \XLite\View\AView
      * @param \XLite\Module\CDev\ProductOptions\Model\OptionGroup $option Option group
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptionGroupLink(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $option)
     {
@@ -100,8 +90,6 @@ class ModifyProductOptions extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -115,8 +103,6 @@ class ModifyProductOptions extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -127,8 +113,6 @@ class ModifyProductOptions extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

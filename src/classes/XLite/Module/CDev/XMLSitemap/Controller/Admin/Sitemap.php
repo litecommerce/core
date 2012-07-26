@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\Controller\Admin;
 /**
  * Sitemap 
  * 
- * @see   ____class_see____
- * @since 1.0.12
  */
 class Sitemap extends \XLite\Controller\Admin\AAdmin
 {
@@ -37,8 +35,6 @@ class Sitemap extends \XLite\Controller\Admin\AAdmin
      * Get engines 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function getEngines()
     {
@@ -70,8 +66,6 @@ class Sitemap extends \XLite\Controller\Admin\AAdmin
      * Place URL into engine's endpoints
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function doActionLocate()
     {

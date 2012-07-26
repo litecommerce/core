@@ -29,8 +29,6 @@ namespace XLite\View\FormField\Input;
 /**
  * Password
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Password extends \XLite\View\FormField\Input\Secure
 {
@@ -40,8 +38,6 @@ class Password extends \XLite\View\FormField\Input\Secure
      * @param array $attrs Field attributes to prepare
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setCommonAttributes(array $attrs)
     {

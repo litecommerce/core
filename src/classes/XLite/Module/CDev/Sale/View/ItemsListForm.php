@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Items list form button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ItemsListForm extends \XLite\View\StickyPanel\Product\Admin\AAdmin implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class ItemsListForm extends \XLite\View\StickyPanel\Product\Admin\AAdmi
      * Define additional buttons
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected function defineAdditionalButtons()
     {

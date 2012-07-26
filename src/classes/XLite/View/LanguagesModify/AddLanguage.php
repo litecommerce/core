@@ -28,8 +28,6 @@ namespace XLite\View\LanguagesModify;
 /**
  * Add (activate) language dialog
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddLanguage extends \XLite\View\AView
 {
@@ -37,8 +35,6 @@ class AddLanguage extends \XLite\View\AView
      * Get inactive languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInactiveLanguages()
     {
@@ -51,8 +47,6 @@ class AddLanguage extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -63,8 +57,6 @@ class AddLanguage extends \XLite\View\AView
      * Check widget visibility
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

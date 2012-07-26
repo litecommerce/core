@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\AustraliaPost\Controller\Admin;
 /**
  * ____description____
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Aupost extends \XLite\Controller\Admin\ShippingSettings
 {
@@ -37,8 +35,6 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,8 +45,6 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      * getOptionsCategory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOptionsCategory()
     {
@@ -61,8 +55,6 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      * doActionTest
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionTest()
     {

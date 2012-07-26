@@ -28,17 +28,13 @@ namespace XLite\Core\DataSource;
 /**
  * Abstract data source
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 abstract class ADataSource
 {
     /**
      * Data source configuration
      * 
-     * @var   \XLite\Model\DataSource
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var \XLite\Model\DataSource
      */
     protected $configuration;
 
@@ -46,8 +42,6 @@ abstract class ADataSource
      * Get standardized data source information array
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     abstract public function getInfo();
 
@@ -55,8 +49,6 @@ abstract class ADataSource
      * Checks whether the data source is valid
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     abstract public function isValid();
 
@@ -64,8 +56,6 @@ abstract class ADataSource
      * Request and return products collection
      * 
      * @return \XLite\Core\DataSource\Base\Products
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     abstract public function getProductsCollection();
 
@@ -73,8 +63,6 @@ abstract class ADataSource
      * Request and return categories collection
      * 
      * @return \XLite\Core\DataSource\Base\Categories
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     abstract public function getCategoriesCollection();
 
@@ -82,8 +70,6 @@ abstract class ADataSource
      * Get all data sources
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function getDataSources()
     {
@@ -98,8 +84,6 @@ abstract class ADataSource
      * @param \XLite\Model\DataSource $configuration Data source configuration model
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function __construct(\XLite\Model\DataSource $configuration)
     {
@@ -110,8 +94,6 @@ abstract class ADataSource
      * Get current data source configuration object
      * 
      * @return \XLite\Model\DataSource
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getConfiguration()
     {

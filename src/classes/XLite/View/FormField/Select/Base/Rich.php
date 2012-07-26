@@ -31,8 +31,6 @@ abstract class Rich extends \XLite\View\FormField\Select\Regular
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -47,8 +45,6 @@ abstract class Rich extends \XLite\View\FormField\Select\Regular
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonFiles()
     {
@@ -69,8 +65,6 @@ abstract class Rich extends \XLite\View\FormField\Select\Regular
      * @param array $attrs Field attributes to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareAttributes(array $attrs)
     {

@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\SalesTax\Model;
 /**
  * Tax multilingual data
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="sales_tax_translations",
@@ -44,9 +42,7 @@ class TaxTranslation extends \XLite\Model\Base\Translation
     /**
      * Name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */

@@ -28,17 +28,13 @@ namespace XLite\Controller\Customer;
 /**
  * Storage
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Storage extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Storage 
      * 
-     * @var   \XLite\Model\Base\Storage
-     * @see   ____var_see____
-     * @since 1.0.11
+     * @var \XLite\Model\Base\Storage
      */
     protected $storage;
 
@@ -46,8 +42,6 @@ class Storage extends \XLite\Controller\Customer\ACustomer
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -58,8 +52,6 @@ class Storage extends \XLite\Controller\Customer\ACustomer
      * Download
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDownload()
     {
@@ -73,8 +65,6 @@ class Storage extends \XLite\Controller\Customer\ACustomer
      * Get storage 
      * 
      * @return \XLite\Model\Base\Storage
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getStorage()
     {
@@ -102,8 +92,6 @@ class Storage extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Base\Storage $storage Storage
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function readStorage(\XLite\Model\Base\Storage $storage)
     {

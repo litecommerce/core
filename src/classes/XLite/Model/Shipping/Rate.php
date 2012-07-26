@@ -28,53 +28,41 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping rate model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Rate extends \XLite\Base\SuperClass
 {
     /**
      * Shipping method object
      *
-     * @var   \XLite\Model\Shipping\Method
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Shipping\Method
      */
     protected $method = null;
 
     /**
      * Shipping markup object
      *
-     * @var   \XLite\Model\Shipping\Markup
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Shipping\Markup
      */
     protected $markup = null;
 
     /**
      * Base rate value
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      */
     protected $baseRate = 0;
 
     /**
      * Markup rate value
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      */
     protected $markupRate = 0;
 
     /**
      * Rate's extra data (real-time rate calculation's details)
      *
-     * @var   \XLite\Core\CommonCell
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Core\CommonCell
      */
     protected $extraData = null;
 
@@ -82,8 +70,6 @@ class Rate extends \XLite\Base\SuperClass
      * Public class constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -94,8 +80,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMethod
      *
      * @return \XLite\Model\Shipping\Method
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMethod()
     {
@@ -108,8 +92,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param \XLite\Model\Shipping\Method $method Shipping method object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setMethod($method)
     {
@@ -120,8 +102,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMarkup
      *
      * @return \XLite\Model\Shipping\Markup
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMarkup()
     {
@@ -134,8 +114,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param \XLite\Model\Shipping\Markup $markup Shipping markup object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setMarkup($markup)
     {
@@ -146,8 +124,6 @@ class Rate extends \XLite\Base\SuperClass
      * getBaseRate
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getBaseRate()
     {
@@ -160,8 +136,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param float $baseRate Base rate value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setBaseRate($baseRate)
     {
@@ -172,8 +146,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMarkupRate
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMarkupRate()
     {
@@ -186,8 +158,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param float $markupRate Markup rate value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setMarkupRate($markupRate)
     {
@@ -198,8 +168,6 @@ class Rate extends \XLite\Base\SuperClass
      * getExtraData
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getExtraData()
     {
@@ -212,8 +180,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param \XLite\Core\CommonCell $extraData Rate's extra data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setExtraData(\XLite\Core\CommonCell $extraData)
     {
@@ -224,8 +190,6 @@ class Rate extends \XLite\Base\SuperClass
      * getTotalRate
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTotalRate()
     {
@@ -236,8 +200,6 @@ class Rate extends \XLite\Base\SuperClass
      * Get taxable basis 
      * 
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     public function getTaxableBasis()
     {
@@ -248,8 +210,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMethodId
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMethodId()
     {
@@ -262,8 +222,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMethodName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMethodName()
     {

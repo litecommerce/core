@@ -28,8 +28,6 @@ namespace XLite\View\ItemsList\Product;
 /**
  * Abstract product list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProduct extends \XLite\View\ItemsList\AItemsList
 {
@@ -47,8 +45,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Return current display mode
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getDisplayMode();
 
@@ -59,8 +55,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -78,8 +72,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -95,8 +87,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -113,8 +103,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -127,8 +115,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * NOTE: do not use "$this" pointer here (see "get[CSS/JS]Files()")
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -139,8 +125,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Return dir which contains the page body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -152,8 +136,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * array(<Field to order>, <Sort direction>)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.6
      */
     protected function getOrderBy()
     {
@@ -164,8 +146,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * getSortByModeDefault
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -176,8 +156,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -193,8 +171,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * getJSHandlerClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSHandlerClassName()
     {

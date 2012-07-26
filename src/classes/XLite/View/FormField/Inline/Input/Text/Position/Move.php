@@ -28,8 +28,6 @@ namespace XLite\View\FormField\Inline\Input\Text\Position;
 /**
  * Order by position (soratable)
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Move extends \XLite\View\FormField\Inline\Input\Text\Position
 {
@@ -37,8 +35,6 @@ class Move extends \XLite\View\FormField\Inline\Input\Text\Position
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -53,8 +49,6 @@ class Move extends \XLite\View\FormField\Inline\Input\Text\Position
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -69,8 +63,6 @@ class Move extends \XLite\View\FormField\Inline\Input\Text\Position
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {
@@ -81,8 +73,6 @@ class Move extends \XLite\View\FormField\Inline\Input\Text\Position
      * Get field template
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getFieldTemplate()
     {
@@ -93,8 +83,6 @@ class Move extends \XLite\View\FormField\Inline\Input\Text\Position
      * Check - field has view or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasSeparateView()
     {
