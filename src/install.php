@@ -26,10 +26,6 @@
 
 /**
  * LiteCommerce (standalone edition) web installation wizard
- *
- * @package LiteCommerce
- * @see     ____class_see____
- * @since   1.0.0
  */
 
 

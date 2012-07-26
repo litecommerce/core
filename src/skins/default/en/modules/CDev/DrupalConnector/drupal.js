@@ -205,7 +205,6 @@ jQuery(document).ready(
  * @param HTMLFormElement $form current form
  *
  * @return void
- * @since  1.0.0
  */
 function drupalOnSubmitGetForm(form)
 {
