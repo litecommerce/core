@@ -164,4 +164,7 @@ Powered by LiteCommerce [e-commerce software] and Drupal CMS
 Powered by LiteCommerce [e-commerce solution] and Drupal CMS
 "
 
+REPLACE_HEADERS_SETTINGS=""
+
+CHECK_HEADERS_SETTINGS="./files/headers/settings.lc3.php"
 

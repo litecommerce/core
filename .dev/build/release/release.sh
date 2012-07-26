@@ -453,6 +453,14 @@ if [ ! "${GENERATE_CORE}" ]; then
 	[ "$LC3_CLEAN_URL" ] && echo "*** LC3_CLEAN URL: $LC3_CLEAN_URL"
 fi
 
+if [ "$REPLACE_HEADERS_SETTINGS" ]; then
+	echo "*** HEADERS REPLACE SETTINGS: $REPLACE_HEADERS_SETTINGS"
+fi
+
+if [ "$CHECK_HEADERS_SETTINGS" ]; then
+	echo "*** HEADERS CHECKING SETTINGS: $CHECK_HEADERS_SETTINGS"
+fi
+
 echo "*** OUTPUT_DIR: $OUTPUT_DIR"
 
 [ $SAFE_MODE ] && echo "*** SAFE_MODE enabled"
@@ -499,6 +507,38 @@ if [ ! $SAFE_MODE ]; then
 	find . -name ".git*" -exec rm -rf {} \;
 	cd ..
 	echo " [ok]"
+
+	if [ "$REPLACE_HEADERS_SETTINGS" ]; then
+		echo -n "Replacing the headers..."
+		cd ${TMP_XLITE_REPO}/.dev/build/release/
+		$PHP headers.php -s $REPLACE_HEADERS_SETTINGS > LOG.replace-headers
+		_ERR=`grep "ERROR" LOG.replace-headers`
+		if [ "${_ERR}" ]; then
+			echo "Error of replacing headers:"
+			echo
+			cat LOG.replace-headers
+			exit 2
+		fi
+		echo "OK"
+		rm -rf LOG.replace-headers
+	fi
+
+	if [ "$CHECK_HEADERS_SETTINGS" ]; then
+		echo -n "Checking the headers..."
+		cd ${TMP_XLITE_REPO}/.dev/build/release/
+		$PHP headers.php -s $CHECK_HEADERS_SETTINGS > LOG.check-headers
+		_ERR=`grep "ERROR" LOG.check-headers`
+		if [ "${_ERR}" ]; then
+			echo "Error of checking headers:"
+			echo
+			cat LOG.check-headers
+			exit 2
+		fi
+		echo "OK"
+		rm -rf LOG.check-headers
+	fi
+
+	cd ${OUTPUT_DIR}
 
 	if [ -d ${TMP_XLITE_REPO}/src -a -d ${TMP_XLITE_REPO}/.dev ]; then
 		mv ${TMP_XLITE_REPO}/src ${LITECOMMERCE_DIRNAME}
@@ -782,19 +822,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		fi
 
 		chmod 400 .phar/.metadata.bin
-
-		# Create upgrade dir
-		if [ -d ${BASE_DIR}/../upgrades/core/$VERSION ]; then
-
-			mkdir -p .core-upgrades/$VERSION
-
-			cp ${CURRENT_DIR}/upgrades/core/$VERSION/* .core-upgrades/$VERSION/
-
-		else
-
-			echo "WARNING! Upgrades scripts not found!"
-
-		fi
 
 	fi
 
