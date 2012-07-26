@@ -32,13 +32,17 @@ namespace XLite\View\FormField\Select;
 class WeightUnit extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * Get default attributes
+     * Set common attributes
+     *
+     * @param array $attrs Field attributes to prepare
      *
      * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected function getDefaultAttributes()
+    protected function setCommonAttributes(array $attrs)
     {
-        $list = parent::getDefaultAttributes();
+        $list = parent::setCommonAttributes($attrs);
 
         $list['onchange'] = 'javascript: if (this.form.weight_symbol) { this.form.weight_symbol.value = this.value; }';
 

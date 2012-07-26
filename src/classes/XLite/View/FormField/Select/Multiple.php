@@ -73,13 +73,17 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
     }
 
     /**
-     * Get default attributes
+     * Set common attributes
+     *
+     * @param array $attrs Field attributes to prepare
      *
      * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected function getDefaultAttributes()
+    protected function setCommonAttributes(array $attrs)
     {
-        return parent::getDefaultAttributes() + array('multiple' => 'multiple');
+        return parent::setCommonAttributes($attrs) + array('multiple' => 'multiple');
     }
 
     /**
