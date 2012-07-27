@@ -2521,6 +2521,7 @@ function update_config_settings($params)
         'Shipping::anonymous_country' => $defaultCountry,
         'General::time_zone'          => $defaultTimezone,
         'Company::start_year'         => date('Y'),
+        'Version::timestamp'          => time(),
     );
 
     foreach ($options as $key => $value) {
@@ -2532,6 +2533,15 @@ function update_config_settings($params)
         if (isset($configOption)) {
             $configOption->setValue($value);
             \XLite\Core\Database::getRepo('XLite\Model\Config')->update($configOption);
+
+        } else {
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                array(
+                    'category' => $cat,
+                    'name'     => $name,
+                    'value'    => $value,
+                )
+            );
         }
     }
 }
