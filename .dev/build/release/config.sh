@@ -39,8 +39,18 @@ CLEAR_OUTPUT_DIR=1
 LITECOMMERCE_DIRNAME="litecommerce"
 DRUPAL_DIRNAME="drupal"
 
+# These parameters are used as as part of distributive package file name
 LITECOMMERCE_DISTR_NAME="litecommerce3"
 LITECOMMERCE_CORE_DISTR_NAME="lc-core"
+
+# Title of LiteCommerce (used only in progress messages)
+LITECOMMERCE_TITLE="LiteCommerce"
+
+# Set this to non-empty value if you need generate lc_connector module and lc3_clean theme
+PACK_DRUPAL_MODULES=""
+
+# Set this to empty value if you don't want  to generate ECMS package
+BUILD_DRUPAL_PACKAGE="Y"
 
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
