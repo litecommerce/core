@@ -39,6 +39,9 @@ CLEAR_OUTPUT_DIR=1
 LITECOMMERCE_DIRNAME="litecommerce"
 DRUPAL_DIRNAME="drupal"
 
+LITECOMMERCE_DISTR_NAME="litecommerce3"
+LITECOMMERCE_CORE_DISTR_NAME="lc-core"
+
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
 CDev/Bestsellers

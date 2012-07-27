@@ -832,8 +832,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		# Do not create LC Standalone distributive when generate demo version
 		if [ "x${DEMO_VERSION}" = "x" ]; then
 
-			tar -czf litecommerce3-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
-			zip -rq litecommerce3-${VERSION}.zip ${LITECOMMERCE_DIRNAME}
+			tar -czf ${LITECOMMERCE_DISTR_NAME}-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
+			zip -rq ${LITECOMMERCE_DISTR_NAME}-${VERSION}.zip ${LITECOMMERCE_DIRNAME}
 
 			echo -e "\n  + LiteCommerce $VERSION distributive is completed"
 
@@ -843,7 +843,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		# Generate core package
 		cd ${LITECOMMERCE_DIRNAME}
-		tar -czf ${OUTPUT_DIR}/lc-core-${CORE_VERSION}.tar.gz * .phar
+		tar -czf ${OUTPUT_DIR}/${LITECOMMERCE_CORE_DISTR_NAME}-${CORE_VERSION}.tar.gz * .phar
 		cd $OUTPUT_DIR
 
 		rm -rf ${LITECOMMERCE_DIRNAME}
