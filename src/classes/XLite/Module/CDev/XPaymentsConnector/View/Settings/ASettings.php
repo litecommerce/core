@@ -23,86 +23,55 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Module\CDev\XPaymentsConnector;
+namespace XLite\Module\CDev\XPaymentsConnector\View\Settings;
 
 /**
- * X-Payments connector module
+ * Settings
  * 
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.19
  */
-abstract class Main extends \XLite\Module\AModule
+abstract class ASettings extends \XLite\View\AView
 {
     /**
-     * Author name
+     * Return list of allowed targets
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $list = parent::getAllowedTargets();
+
+        $list[] = 'module';
+
+        return $list;
+    }
+
+    /**
+     * Return templates directory name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function getDir()
     {
-        return 'Creative Development LLC';
+        return 'modules/CDev/XPaymentsConnector/settings';
     }
 
     /**
-     * Get module major version
+     * Check if widget is visible
      *
-     * @return string
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getMajorVersion()
+    protected function isVisible()
     {
-        return '1.1';
-    }
-
-    /**
-     * Module version
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getMinorVersion()
-    {
-        return '0';
-    }
-
-    /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'X-Payments connector';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'X-Payments connector';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean 
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return true;
+        return parent::isVisible()
+            && 'CDev\\XPaymentsConnector' == $this->getModule()->getActualName();
     }
 
 }

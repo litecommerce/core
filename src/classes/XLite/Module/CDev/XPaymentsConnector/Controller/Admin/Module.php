@@ -34,7 +34,86 @@ namespace XLite\Module\CDev\XPaymentsConnector\Controller\Admin;
 abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDecorator
 {
     /**
-     * Deploy
+     * Required fields
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected $requiredFields = array(
+        'store_id',
+        'url',
+        'public_key',
+        'private_key',
+        'private_key_password',
+    );
+
+    /**
+     * Map fields
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected $mapFields = array(
+        'store_id'              => 'xpc_shopping_cart_id',
+        'url'                   => 'xpc_xpayments_url',
+        'public_key'            => 'xpc_public_key',
+        'private_key'           => 'xpc_private_key',
+        'private_key_password'  => 'xpc_private_key_password',
+    );
+
+    /**
+     * Get configuration array from configuration deployement path
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getConfiguration()
+    {
+        return unserialize(base64_decode(\XLite\Core\Request::getInstance()->deploy_configuration));
+    }
+
+    /**
+     * Check if the deploy configuration is correct array
+     *
+     * @param array $configuration Configuration array
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkDeployConfiguration($configuration)
+    {
+        return is_array($configuration)
+            && ($this->requiredFields === array_intersect(array_keys($configuration), $this->requiredFields));
+    }
+
+    /**
+     * Store configuration array into DB
+     *
+     * @param array $configuration Configuration array
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setConfiguration($configuration)
+    {
+        foreach ($this->mapFields as $origName => $dbName) {
+            $setting = \XLite\Core\Database::getRepo('XLite\Model\Config')
+                ->findOneBy(array('name' => $dbName, 'category' => 'CDev\XPaymentsConnector'));
+
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->update(
+                $setting,
+                array('value' => $configuration[$origName])
+            );
+        }
+    }
+
+    /**
+     * Deploy configuration
      *
      * @return void
      * @see    ____func_see____
@@ -46,17 +125,46 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
             $this->getModuleID()
             && 'CDev\XPaymentsConnector' == $this->getModule()->getActualName()
         ) {
-            $core = \XLite\Module\CDev\XPaymentsConnector\Core\XPayments::getInstance();
+            $xpcConfig = $this->getConfiguration();
 
-            $xpcConfig = $core->getConfiguration(\XLite\Core\Request::getInstance()->deploy_configuration);
-
-            if (true === $core->checkDeployConfiguration($xpcConfig)) {
-
-                $core->setConfiguration($xpcConfig);
+            if (true === $this->checkDeployConfiguration($xpcConfig)) {
+                $this->setConfiguration($xpcConfig);
                 \XLite\Core\TopMessage::addInfo('Configuration has been successfully deployed');
 
             } else {
                 \XLite\Core\TopMessage::addError('Your configuration string is not correct');    
+            }
+        }
+    }
+
+    /**
+     * Test module
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionTestModule()
+    {
+        if (
+            $this->getModuleID()
+            && 'CDev\XPaymentsConnector' == $this->getModule()->getActualName()
+        ) {
+            $result = \XLite\Module\CDev\XPaymentsConnector\Core\XPaymentsClient::getInstance()->requestTest();
+
+            if (true === $result['status']) {
+                \XLite\Core\TopMessage::addInfo('Test transaction completed successfully');
+
+            } else {
+                $message = false === $result['status']
+                    ? $result['response']
+                    : $result['response']['message'];
+
+                \XLite\Core\TopMessage::addWarning('Test transaction failed. Please check the X-Payment Connector settings and try again. If all options is ok review your X-Payments settings and make sure you have properly defined shopping cart properties.');    
+        
+                if ($message) {
+                    \XLite\Core\TopMessage::addError($message);
+                }
             }
         }
     }
