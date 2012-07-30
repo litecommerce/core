@@ -40,7 +40,7 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
     public function handleRequest()
     {
         if (empty(\XLite\Core\Config::getInstance()->Version->timestamp)) {
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOptions(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Version',
                     'name'     => 'timestamp',
