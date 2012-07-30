@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XPaymentsConnector\Core;
 /**
  * XPayments client
  *
- * @see   ____class_see____
- * @since 1.0.19
  */
 class XPaymentsClient extends \XLite\Base\Singleton
 {
@@ -74,9 +72,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
     /**
      * Paypal dp solutions
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var array
      */
     protected $xpcPaypalDpSolutions = array(
         'pro' => self::XPC_WPP_DP, 
@@ -86,9 +82,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
     /**
      * Errors 
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var array 
      */
     protected $xpcErrors = array(
         self::XPC_API_EXPIRED => 'To update your X-Payments connector module download the file xpc_api.php from the File Area of your Qualiteam account and copy it to the <xcart_dir>/modules/XPayments_Connector/ directory, replacing the existing file.'
@@ -98,8 +92,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * Check - module is configured or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isModuleConfigured()
     {
@@ -110,8 +102,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * Make test request to X-Payments
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function requestTest()
     {
@@ -148,8 +138,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param array  $schema Request schem OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getApiRequest($target, $action, $data = array(), $schema = array())
     {
@@ -294,8 +282,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * Get X-Payments Connector configuration errors
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleSystemErrors()
     {
@@ -351,8 +337,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * Check module requirements
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkRequirements()
     {
@@ -383,8 +367,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param string $msg Error message
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getApiError($msg)
     {
@@ -399,8 +381,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param array $data Data to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isAnonymousArray($data)
     {
@@ -415,8 +395,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param integer $level Current recursion level OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function convertHashToXml($data, $level = 0)
     {
@@ -446,8 +424,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param string  $type  Value for 'type' attribute OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function writeXmlTag($data, $name, $level = 0, $type = '')
     {
@@ -474,8 +450,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param string $charset Charset OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function convertLocalToUtf8($string, $charset = null)
     {
@@ -514,8 +488,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param string $data Request data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function encryptXml($data)
     {
@@ -571,8 +543,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param string $data Data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function makeMd5Raw($data)
     {
@@ -589,8 +559,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * CURL headers collector callback
      *
      * @return mixed 
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurlHeadersCollector()
     {
@@ -627,8 +595,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param string &$error Error message
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateXmlAgainstSchema($xml, $schema, &$error)
     {
@@ -669,8 +635,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param string $data Encrypted data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function decryptXml($data)
     {
@@ -743,8 +707,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param array $response Response data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processApiError($response)
     {
@@ -768,8 +730,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * @param string $xml XML string
      *
      * @return array|string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function convertXmlToHash($xml)
     {
@@ -796,8 +756,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * Return validation schema for test request
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRequestTestSchema()
     {

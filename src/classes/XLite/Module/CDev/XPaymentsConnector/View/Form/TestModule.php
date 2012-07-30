@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XPaymentsConnector\View\Form;
 /**
  * Test module form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TestModule extends \XLite\View\Form\Settings
 {
@@ -37,8 +35,6 @@ class TestModule extends \XLite\View\Form\Settings
      * Get default action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

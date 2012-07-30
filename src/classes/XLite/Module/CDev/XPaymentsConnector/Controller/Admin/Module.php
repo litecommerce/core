@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XPaymentsConnector\Controller\Admin;
 /**
  * Module settings
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDecorator
 {
@@ -37,8 +35,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * Required fields
      *
      * @var   array
-     * @see   ____var_see____
-     * @since 1.0.19
      */
     protected $requiredFields = array(
         'store_id',
@@ -52,8 +48,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * Map fields
      *
      * @var   array
-     * @see   ____var_see____
-     * @since 1.0.19
      */
     protected $mapFields = array(
         'store_id'              => 'xpc_shopping_cart_id',
@@ -67,8 +61,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * Get configuration array from configuration deployement path
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getConfiguration()
     {
@@ -81,8 +73,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * @param array $configuration Configuration array
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkDeployConfiguration($configuration)
     {
@@ -96,8 +86,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * @param array $configuration Configuration array
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setConfiguration($configuration)
     {
@@ -116,8 +104,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * Deploy configuration
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeployConfiguration()
     {
@@ -141,8 +127,6 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      * Test module
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionTestModule()
     {

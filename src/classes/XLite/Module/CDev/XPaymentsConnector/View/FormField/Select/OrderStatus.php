@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XPaymentsConnector\View\FormField\Select;
 /**
  * Order status selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderStatus extends \XLite\View\FormField\Select\Regular
 {
@@ -37,8 +35,6 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      * Return default options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
