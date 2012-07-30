@@ -318,10 +318,33 @@ ProductDetailsView.prototype.switchImage = function(diff)
 // Select image from gallery
 ProductDetailsView.prototype.selectImage = function(pos)
 {
-  this.gallery.removeClass('selected');
-
   // Refresh main image and another options + cloud zoom plugin restart
   next = this.gallery.eq(pos);
+  var middle = jQuery('img.middle', next).eq(0);
+
+  if (0 < middle.length && !middle.width()) {
+
+    // Change image delay if image did not loaded
+    if ('undefined' == typeof(middle.data('load-counter'))) {
+      middle.data('load-counter', 5);
+
+    } else {
+      middle.data('load-counter', middle.data('load-counter') - 1);
+    }
+
+    if (0 < middle.data('load-counter')) {
+      var owner = this;
+      setTimeout(
+        function() {
+          owner.selectImage(pos);
+        },
+        200
+      );
+    }
+  }
+
+  this.gallery.removeClass('selected');
+
   next.addClass('selected');
 
   if (this.zoomWidget) {
@@ -339,8 +362,6 @@ ProductDetailsView.prototype.selectImage = function(pos)
 
     cloud.attr('href', jQuery('a', next).attr('href'));
   }
-
-  var middle = jQuery('img.middle', next).eq(0)
 
   if (0 < middle.length) {
 
