@@ -26,10 +26,10 @@
 namespace XLite\Module\CDev\XPaymentsConnector\View\Form;
 
 /**
- * Test module form
+ * Import payment methods form
  *
  */
-class TestModule extends \XLite\View\Form\Settings
+class ImportPaymentMethods extends \XLite\View\Form\Settings
 {
     /**
      * Get default action
@@ -38,6 +38,6 @@ class TestModule extends \XLite\View\Form\Settings
      */
     protected function getDefaultAction()
     {
-        return 'xpc_test';
+        return 'xpc_import';
     }
 }

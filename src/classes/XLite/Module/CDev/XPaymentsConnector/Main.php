@@ -28,7 +28,6 @@ namespace XLite\Module\CDev\XPaymentsConnector;
 /**
  * X-Payments connector module
  * 
- * @see   ____class_see____
  */
 abstract class Main extends \XLite\Module\AModule
 {

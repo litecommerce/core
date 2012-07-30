@@ -23,21 +23,34 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Module\CDev\XPaymentsConnector\View\Form;
+namespace XLite\Module\CDev\XPaymentsConnector\View\Settings;
 
 /**
- * Test module form
- *
+ * Import payment methods 
+ * 
+ * @ListChild (list="crud.settings.footer", zone="admin", weight="200")
  */
-class TestModule extends \XLite\View\Form\Settings
+class ImportPaymentMethods extends \XLite\Module\CDev\XPaymentsConnector\View\Settings\ASettings
 {
     /**
-     * Get default action
+     * Return widget default template
      *
      * @return string
      */
-    protected function getDefaultAction()
+    protected function getDefaultTemplate()
     {
-        return 'xpc_test';
+        return $this->getDir() . '/import_payment_methods.tpl';
     }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && \XLite\Module\CDev\XPaymentsConnector\Core\XPaymentsClient::getInstance()->isModuleConfigured();
+    }
+
 }

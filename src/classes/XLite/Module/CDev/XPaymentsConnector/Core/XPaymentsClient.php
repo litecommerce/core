@@ -31,6 +31,22 @@ namespace XLite\Module\CDev\XPaymentsConnector\Core;
  */
 class XPaymentsClient extends \XLite\Base\Singleton
 {
+    const XPC_TRAN_TYPE_SALE          = 'sale';
+    const XPC_TRAN_TYPE_AUTH          = 'auth';
+    const XPC_TRAN_TYPE_CAPTURE       = 'capture';
+    const XPC_TRAN_TYPE_CAPTURE_PART  = 'capturePart';
+    const XPC_TRAN_TYPE_CAPTURE_MULTI = 'captureMulti';
+    const XPC_TRAN_TYPE_VOID          = 'void';
+    const XPC_TRAN_TYPE_VOID_PART     = 'voidPart';
+    const XPC_TRAN_TYPE_VOID_MULTI    = 'voidMulti';
+    const XPC_TRAN_TYPE_REFUND        = 'refund';
+    const XPC_TRAN_TYPE_REFUND_PART   = 'refundPart';
+    const XPC_TRAN_TYPE_REFUND_MULTI  = 'refundMulti';
+    const XPC_TRAN_TYPE_GET_INFO      = 'getInfo';
+    const XPC_TRAN_TYPE_ACCEPT        = 'accept';
+    const XPC_TRAN_TYPE_DECLINE       = 'decline';
+    const XPC_TRAN_TYPE_TEST          = 'test';
+
     const REQ_CURL    = 1;
     const REQ_OPENSSL = 2;
     const REQ_DOM     = 4;
@@ -127,6 +143,32 @@ class XPaymentsClient extends \XLite\Base\Singleton
             'status'   => $status,
             'response' => $response,
         );
+    }
+
+    /**
+     * Get list of available payment configurations from X-Payments 
+     *
+     * @return array
+     */
+    public function requestPaymentMethods()
+    {
+        list($status, $response) = $this->getApiRequest(
+            'payment_confs',
+            'get',
+            array(),
+            $this->getRequestPaymentMethodsSchema()
+        );
+
+        if ($status) {
+            if (!isset($response['payment_module']) || !is_array($response['payment_module'])) {
+                $status = array();
+
+            } else {
+                $status = $response['payment_module'];
+            }
+        }
+
+        return $status;
     }
 
     /**
@@ -774,4 +816,64 @@ class XPaymentsClient extends \XLite\Base\Singleton
 </xsd:element>';
     }
 
+    /**
+     * Return validation schema for test request
+     *
+     * @return array
+     */
+    protected function getRequestPaymentMethodsSchema()
+    {
+        return '
+<xsd:element name="' . static::XPC_MODULE_INFO . '" minOccurs="0" maxOccurs="unbounded">
+ <xsd:complexType>
+  <xsd:sequence>
+
+   <xsd:element name="name" type="xsd:string"/>
+
+   <xsd:element name="id" type="xsd:positiveInteger"/>
+
+   <xsd:element name="transactionTypes">
+    <xsd:complexType>
+     <xsd:sequence>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_SALE . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_AUTH . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_CAPTURE . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_CAPTURE_PART . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_CAPTURE_MULTI . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_VOID . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_VOID_PART . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_VOID_MULTI . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_REFUND . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_REFUND_PART . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_REFUND_MULTI . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_GET_INFO . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_ACCEPT . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_DECLINE . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="' . static::XPC_TRAN_TYPE_TEST . '" type="xsd:boolean" default="0"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+
+   <xsd:element name="authCaptureInfo">
+    <xsd:complexType>
+     <xsd:sequence>
+       <xsd:element name="authExp" type="xsd:nonNegativeInteger"/>
+       <xsd:element name="captMinLimit" type="xsd:string"/>
+       <xsd:element name="captMaxLimit" type="xsd:string"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+
+   <xsd:element name="moduleName" type="xsd:string"/>
+
+   <xsd:element name="settingsHash" type="xsd:string"/>
+
+  </xsd:sequence>
+
+  <xsd:attribute name="type" type="xsd:string"/>
+
+ </xsd:complexType>
+</xsd:element>
+        ';
+    }
 }
