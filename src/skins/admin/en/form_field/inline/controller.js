@@ -57,7 +57,7 @@ CommonForm.elementControllers.push(
       // Save field into view
       this.saveField = function()
       {
-        field.find(this.viewValuePattern).html(this.getFieldFormattedValue());
+        field.find(this.viewValuePattern).html(htmlspecialchars(this.getFieldFormattedValue(), null, null, false));
       }
 
       // Get field(s) formatted value (usage as view content)
