@@ -1,0 +1,819 @@
+<?php
+// vim: set ts=4 sw=4 sts=4 et:
+
+/**
+ * LiteCommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+namespace XLite\Module\CDev\XPaymentsConnector\Core;
+
+/**
+ * XPayments client
+ *
+ * @see   ____class_see____
+ * @since 1.0.19
+ */
+class XPaymentsClient extends \XLite\Base\Singleton
+{
+    const REQ_CURL    = 1;
+    const REQ_OPENSSL = 2;
+    const REQ_DOM     = 4;
+
+    const XPC_SYSERR_CARTID      = 1;
+    const XPC_SYSERR_URL         = 2;
+    const XPC_SYSERR_PUBKEY      = 4;
+    const XPC_SYSERR_PRIVKEY     = 8;
+    const XPC_SYSERR_PRIVKEYPASS = 16;
+
+    const XPC_WPP_DP   = 'PayPal WPP Direct Payment';
+    const XPC_WPPPE_DP = 'PayPal WPPPE Direct Payment';
+
+    const XPC_API_EXPIRED = 506;
+    const XPC_API_VERSION = '1.1';
+
+    // Salt block length
+    const XPC_SALT_LENGTH = 32;
+
+    // Salt generator start character code
+    const XPC_SALT_BEGIN = 33;
+
+    // Salt generator end character code
+    const XPC_SALT_END = 255;
+
+    // Encryption check length
+    const XPC_CHUNK_LENGTH = 128;
+
+    // Root-level tag for all XML messages
+    const XPC_TAG_ROOT = 'data';
+
+    // Value of the 'type' attribute for list items in XML
+    const XPC_TYPE_CELL = 'cell';
+
+    const XPC_MODULE_INFO = 'payment_module';
+
+    const DEFAULT_CHARSET = 'UTF-8';
+
+    /**
+     * Paypal dp solutions
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected $xpcPaypalDpSolutions = array(
+        'pro' => self::XPC_WPP_DP, 
+        'uk'  => self::XPC_WPPPE_DP
+    );
+
+    /**
+     * Errors 
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected $xpcErrors = array(
+        self::XPC_API_EXPIRED => 'To update your X-Payments connector module download the file xpc_api.php from the File Area of your Qualiteam account and copy it to the <xcart_dir>/modules/XPayments_Connector/ directory, replacing the existing file.'
+    );
+
+    /**
+     * Check - module is configured or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isModuleConfigured()
+    {
+        return 0 === $this->getModuleSystemErrors();
+    }
+
+    /**
+     * Make test request to X-Payments
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function requestTest()
+    {
+        srand();
+    
+        // Make test request
+        list($status, $response) = $this->getApiRequest(
+            'connect',
+            'test',
+            array('testCode' => ($hashCode = strval(rand(0, 1000000)))),
+            $this->getRequestTestSchema()
+        );
+    
+        // Compare MD5 hashes
+        if ($status) {
+            $status = md5($hashCode) === $response['hashCode'];
+            if (!$status) {
+                $this->getApiError('Test connection data is not valid');
+            }
+        }
+    
+        return array(
+            'status'   => $status,
+            'response' => $response,
+        );
+    }
+
+    /**
+     * Make X-Payments API request
+     *
+     * @param string $target Request target
+     * @param string $action Request action
+     * @param array  $data   Request data OPTIONAL
+     * @param array  $schema Request schem OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getApiRequest($target, $action, $data = array(), $schema = array())
+    {
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+    
+        // Check requirements
+        if (!$this->isModuleConfigured()) {
+            return $this->getApiError('Module is not configured');
+        }
+    
+        if (0 !== $this->checkRequirements()) {
+            return $this->getApiError('Check module requirements is failed');
+        }
+    
+        $data['target'] = $target;
+        $data['action'] = $action;
+    
+        // send API version
+        $data['api_version'] = static::XPC_API_VERSION;
+    
+        // Convert array to XML
+        $xml = $this->convertHashToXml($data);
+    
+        if (!$xml) {
+            return $this->getApiError('Data is not valid');
+        }
+    
+        // Encrypt
+        $xml = $this->encryptXml($xml);
+    
+        if (!$xml) {
+            return $this->getApiError('Data is not encrypted');
+        }
+    
+        // HTTPS request
+        $post = array(
+            'cart_id' => $config->xpc_shopping_cart_id,
+            'request' => $xml,
+        );
+    
+        $this->getCurlHeadersCollector(false);
+        $ch = curl_init();
+    
+        curl_setopt($ch, CURLOPT_URL, $config->xpc_xpayments_url . '/api.php');
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 15000);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+        curl_setopt($ch, CURLOPT_HEADERFUNCTION, array($this, 'getCurlHeadersCollector'));
+    
+        curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+    
+        if (!empty(\XLite\Core\Config::getInstance()->Security->https_proxy)) {
+            // uncomment this line if you need proxy tunnel
+            // curl_setopt ($ch, CURLOPT_HTTPPROXYTUNNEL, true);
+            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+            curl_setopt($ch, CURLOPT_PROXY, \XLite\Core\Config::getInstance()->Security->https_proxy);
+        }
+    
+        // insecure key is supported by curl since version 7.10
+        $version = curl_version();
+    
+        if (is_array($version)) {
+            $version = 'libcurl/' . $version['version'];
+        }
+    
+        if (preg_match('/libcurl\/([^ $]+)/Ss', $version, $m)) {
+            $parts = explode('.', $m[1]);
+            if (7 < $parts[0] || (7 == $parts[0] && 10 <= $parts[1])) {
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
+            }
+        }
+    
+        $body = curl_exec($ch);
+        $errno = curl_errno($ch);
+        $error = curl_error($ch);
+    
+        $headers = $this->getCurlHeadersCollector(true);
+    
+        curl_close($ch);
+    
+        // Check raw data
+        if (substr($body, 0, 3) !== 'API') {
+    
+            $this->getApiError(
+                'Response is not valid.\nResponse headers: ' 
+                . var_export($headers, true) . '\nResponse: ' . $body . '\n'
+            );
+    
+            return array(false, 'Response is not valid.<br />Check logs.');
+    
+        }
+    
+        // Decrypt
+        list($responseStatus, $response) = $this->decryptXml($body);
+    
+        if (!$responseStatus) {
+            return $this->getApiError('Response is not decrypted (Error: ' . $response . ')');
+        }
+    
+        // Validate XML
+        if (!empty($schema) && !$this->validateXmlAgainstSchema($response, $schema, $error)) {
+            return $this->getApiError('XML in response has a wrong format. Additional info: "' . $error . '"');
+        }
+    
+        // Convert XML to array
+        $response = $this->convertXmlToHash($response);
+    
+        if (!is_array($response)) {
+            return $this->getApiError('Unable to convert response into XML');
+        }
+    
+        // The 'Data' tag must be set in response
+        if (!isset($response[static::XPC_TAG_ROOT])) {
+            return $this->getApiError('Response does not contain any data');
+        }
+    
+        $response = $response[static::XPC_TAG_ROOT];
+    
+        // Process errors
+        $error = $this->processApiError($response);
+    
+        if ($error) {
+            return array(
+                null,
+                array(
+                    'status'        => 0,
+                    'message'       => $error,
+                    'error_message' => '' == $response['is_error_message'] ? '' : $response['error_message'],
+                )
+            );
+        }
+    
+        return array(true, $response);
+    }
+
+    /**
+     * Get X-Payments Connector configuration errors
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleSystemErrors()
+    {
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+    
+        $failed = 0;
+    
+        // Check shopping cart id
+        if (
+            empty($config->xpc_shopping_cart_id) 
+            || !preg_match('/^[\da-f]{32}$/Ss', $config->xpc_shopping_cart_id)
+        ) {
+            $failed |= static::XPC_SYSERR_CARTID;
+        }
+    
+        // Check URL
+        if (
+            empty($config->xpc_xpayments_url)
+            || (function_exists('is_url') && !is_url($config->xpc_xpayments_url))
+        ) {
+            $failed |= static::XPC_SYSERR_URL;
+        }
+    
+        $parsedURL = @parse_url($config->xpc_xpayments_url);
+    
+        if (
+            !$parsedURL 
+            || !isset($parsedURL['scheme']) 
+            || !in_array($parsedURL['scheme'], array( 'https', 'http')) 
+        ) {
+            $failed |= static::XPC_SYSERR_URL;
+        }
+    
+        // Check public key
+        if (empty($config->xpc_public_key)) {
+            $failed |= static::XPC_SYSERR_PUBKEY;
+        }
+    
+        // Check private key
+        if (empty($config->xpc_private_key)) {
+            $failed |= static::XPC_SYSERR_PRIVKEY;
+        }
+    
+        // Check private key password
+        if (empty($config->xpc_private_key_password)) {
+            $failed |= static::XPC_SYSERR_PRIVKEYPASS;
+        }
+    
+        return $failed;
+    }
+
+    /**
+     * Check module requirements
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkRequirements()
+    {
+        $code = 0;
+
+        if (!function_exists('curl_init')) {
+            $code = $code | static::REQ_CURL;
+        }
+
+        if (
+            !function_exists('openssl_pkey_get_public') || !function_exists('openssl_public_encrypt')
+            || !function_exists('openssl_get_privatekey') || !function_exists('openssl_private_decrypt')
+            || !function_exists('openssl_free_key')
+        ) {
+            $code = $code | static::REQ_OPENSSL;
+        }
+
+        if (!class_exists('DOMDocument')) {
+            $code = $code | static::REQ_DOM;
+        }
+
+        return $code;
+    }
+
+    /**
+     * Format and log API errors
+     *
+     * @param string $msg Error message
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getApiError($msg)
+    {
+        \XLite\Logger::getInstance()->log($msg, LOG_ERR);
+
+        return array(false, $msg);
+    }
+    
+    /**
+     * Check if passed variable is an array with numeric keys
+     *
+     * @param array $data Data to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isAnonymousArray($data)
+    {
+        return is_array($data) 
+            && (1 > count(preg_grep('/^\d+$/', array_keys($data), PREG_GREP_INVERT)));
+    }
+    
+    /**
+     * Convert hash array to XML
+     *
+     * @param array   $data  Hash array
+     * @param integer $level Current recursion level OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function convertHashToXml($data, $level = 0)
+    {
+        $xml = '';
+    
+        foreach ($data as $name => $value) {
+    
+            if ($this->isAnonymousArray($value)) {
+                foreach ($value as $item) {
+                    $xml .= $this->writeXmlTag($item, $name, $level, static::XPC_TYPE_CELL);
+                }
+            } else {
+                $xml .= $this->writeXmlTag($value, $name, $level);
+            }
+    
+        }
+    
+        return $xml;
+    }
+    
+    /**
+     * Write XML tag for current level
+     *
+     * @param mixed   $data  Node content
+     * @param string  $name  Node name
+     * @param integer $level Current recursion level OPTIONAL
+     * @param string  $type  Value for 'type' attribute OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function writeXmlTag($data, $name, $level = 0, $type = '')
+    {
+        $xml    = '';
+        $indent = str_repeat('  ', $level);
+    
+        // Open tag
+        $xml .= $indent . '<' . $name . (empty($type) ? '' : ' type="' . $type . '"') . '>';
+        // Sublevel tags or tag value
+        $xml .= is_array($data) 
+            ? "\n" . $this->convertHashToXml($data, $level + 1) . $indent 
+            : $this->convertLocalToUtf8($data);
+
+        // Close tag
+        $xml .= '</' . $name . '>' . "\n";
+    
+        return $xml;
+    }
+    
+    /**
+     * Convert local string ti UTF-8
+     *
+     * @param string $string  Request data
+     * @param string $charset Charset OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function convertLocalToUtf8($string, $charset = null)
+    {
+        if (is_null($charset)) {
+            $charset = static::DEFAULT_CHARSET;
+        }
+    
+        $charset = strtolower(trim($charset));
+    
+        if (function_exists('utf8_encode') && 'iso-8859-1' == $charset) {
+            $string = utf8_encode($string);
+    
+        } elseif (function_exists('iconv')) {
+            $string = iconv($charset, 'utf-8', $string);
+    
+        } else {
+    
+            $len = strlen($string);
+            $data = '';
+            for ($i = 0; $i < $len; $i++) {
+                $c = ord(substr($string, $i, 1));
+                if (!(22 > $c || 127 < $c)) {
+                    $data .= substr($string, $i, 1);
+                }
+            }
+    
+            $string = $data;
+        }
+    
+        return $string;
+    }
+    
+    /**
+     * Encrypt data (RSA)
+     *
+     * @param string $data Request data
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function encryptXml($data)
+    {
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+    
+        // Preprocess
+        srand(time());
+        $salt = '';
+        for ($i = 0; $i < static::XPC_SALT_LENGTH; $i++) {
+            $salt .= chr(rand(static::XPC_SALT_BEGIN, static::XPC_SALT_END));
+        }
+    
+        $lenSalt = strlen($salt);
+    
+        $crcType = 'MD5';
+        $crc = $this->makeMd5Raw($data);
+    
+        $crc = str_repeat(' ', 8 - strlen($crcType)) . $crcType . $crc;
+        $lenCRC = strlen($crc);
+    
+        $lenData = strlen($data);
+    
+        $data = str_repeat('0', 12 - strlen((string)$lenSalt)) . $lenSalt . $salt
+            . str_repeat('0', 12 - strlen((string)$lenCRC)) . $lenCRC . $crc
+            . str_repeat('0', 12 - strlen((string)$lenData)) . $lenData . $data;
+    
+        // Encrypt
+        $key = openssl_pkey_get_public($config->xpc_public_key);
+        if (!$key) {
+            return false;
+        }
+    
+        $data = str_split($data, static::XPC_CHUNK_LENGTH);
+        $crypttext = null;
+        foreach ($data as $k => $chunk) {
+            if (!openssl_public_encrypt($chunk, $crypttext, $key)) {
+                return false;
+            }
+    
+            $data[$k] = $crypttext;
+        }
+    
+        // Postprocess
+        $data = array_map('base64_encode', $data);
+    
+        return 'API' . implode("\n", $data);
+    }
+    
+    
+    /**
+     * Make MD5 hash in raw format
+     *
+     * @param string $data Data
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function makeMd5Raw($data)
+    {
+        $crc = md5($data);
+        $str = '';
+        for ($i = 0; $i < 32; $i += 2) {
+            $str .= chr(hexdec(substr($crc, $i, 2)));
+        }
+    
+        return $str;
+    }
+    
+    /**
+     * CURL headers collector callback
+     *
+     * @return mixed 
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCurlHeadersCollector()
+    {
+        static $headers = '';
+    
+        $args = func_get_args();
+    
+        if (count($args) == 1) {
+    
+            $return = '';
+    
+            if ($args[0] == true) {
+                $return = $headers;
+            }
+    
+            $headers = '';
+    
+            return $return;
+        }
+    
+        if (trim($args[1]) != '') {
+            $headers .= $args[1];
+        }
+    
+        return strlen($args[1]);
+    
+    }
+    
+    /**
+     * Validate received XML
+     *
+     * @param string $xml    XML to validate
+     * @param string $schema XML schema
+     * @param string &$error Error message
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function validateXmlAgainstSchema($xml, $schema, &$error)
+    {
+        // We use DOMDocument object to validate XML againest schema
+        $dom = new \DOMDocument;
+        $dom->loadXML($xml);
+    
+        // Add common schema elements
+        $schema = '
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+ <xsd:element name="' . static::XPC_TAG_ROOT . '">
+
+  <xsd:complexType>
+   <xsd:sequence>
+
+    ' . $schema . '
+    <xsd:element name="error" type="xsd:string"/>
+    <xsd:element name="error_message" type="xsd:string"/>
+    <xsd:element name="is_error_message" type="xsd:string" minOccurs="0"/>
+
+   </xsd:sequence>
+  </xsd:complexType>
+
+ </xsd:element>
+
+</xsd:schema>';
+    
+        // Validate XML againest schema
+        $result = @$dom->schemaValidateSource($schema);
+    
+        return $result;
+    }
+    
+    /**
+     * Decrypt (RSA)
+     *
+     * @param string $data Encrypted data
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function decryptXml($data)
+    {
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+    
+        // Decrypt
+        $res = openssl_get_privatekey($config->xpc_private_key, $config->xpc_private_key_password);
+        if (!$res) {
+            return array(false, 'Private key is not initialized');
+        }
+    
+        $data = substr($data, 3);
+    
+        $data = explode("\n", $data);
+        $data = array_map('base64_decode', $data);
+        foreach ($data as $k => $s) {
+            if (!openssl_private_decrypt($s, $newsource, $res)) {
+                return array(false, 'Can not decrypt chunk');
+            }
+    
+            $data[$k] = $newsource;
+        }
+    
+        openssl_free_key($res);
+    
+        $data = implode('', $data);
+    
+        // Postprocess
+        $lenSalt = substr($data, 0, 12);
+        if (!preg_match('/^\d+$/Ss', $lenSalt)) {
+            return array(false, 'Salt length prefix has wrong format');
+        }
+    
+        $lenSalt = intval($lenSalt);
+        $data = substr($data, 12 + intval($lenSalt));
+    
+        $lenCRC = substr($data, 0, 12);
+        if (!preg_match('/^\d+$/Ss', $lenCRC) || 9 > $lenCRC) {
+            return array(false, 'CRC length prefix has wrong format');
+        }
+    
+        $lenCRC = intval($lenCRC);
+        $crcType = trim(substr($data, 12, 8));
+        if ('MD5' !== $crcType) {
+            return array(false, 'CRC hash is not MD5');
+        }
+        $crc = substr($data, 20, $lenCRC - 8);
+    
+        $data = substr($data, 12 + $lenCRC);
+    
+        $lenData = substr($data, 0, 12);
+        if (!preg_match('/^\d+$/Ss', $lenData)) {
+            return array(false, 'Data block length prefix has wrong format');
+        }
+    
+        $data = substr($data, 12, intval($lenData));
+    
+        $currentCRC = $this->makeMd5Raw($data);
+        if ($currentCRC !== $crc) {
+            return array(false, 'Original CRC and calculated CRC is not equal');
+        }
+    
+        return array(true, $data);
+    }
+    
+    
+    /**
+     * Process API response errors
+     *
+     * @param array $response Response data
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function processApiError($response)
+    {
+        $error = false;
+    
+        if (isset($response['error']) && $response['error']) {
+    
+            $error = 'X-Payments error (code: ' . $response['error'] . '): '
+                . (isset($response['error_message']) ? $response['error_message'] : 'Unknown')
+                . (isset($this->xpcErrors[$response['error']]) ? $this->xpcErrors[$response['error']] : '');
+    
+            $this->getApiError($error);
+        }
+    
+        return $error;
+    }
+    
+    /**
+     * Convert XML to hash array
+     *
+     * @param string $xml XML string
+     *
+     * @return array|string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function convertXmlToHash($xml)
+    {
+        $data = array();
+    
+        while (!empty($xml) && preg_match('/<([\w\d]+)(?:\s*type=["\'](\w+)["\']\s*)?>(.*)<\/\1>/Us', $xml, $matches)) {
+    
+            // Sublevel tags or tag value
+            if (static::XPC_TYPE_CELL === $matches[2]) {
+                $data[$matches[1]][] = $this->convertXmlToHash($matches[3]);
+            } else {
+                $data[$matches[1]] = $this->convertXmlToHash($matches[3]);
+            }
+    
+            // Exclude parsed part from XML
+            $xml = str_replace($matches[0], '', $xml);
+    
+        }
+    
+        return empty($data) ? $xml : $data;
+    }
+
+    /**
+     * Return validation schema for test request
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRequestTestSchema()
+    {
+        return '
+<xsd:element name="hashCode" minOccurs="0">
+
+ <xsd:simpleType>
+  <xsd:restriction base="xsd:string">
+
+   <xsd:maxLength value="32"/>
+   <xsd:minLength value="32"/>
+
+  </xsd:restriction>
+ </xsd:simpleType>
+
+</xsd:element>';
+    }
+
+}
