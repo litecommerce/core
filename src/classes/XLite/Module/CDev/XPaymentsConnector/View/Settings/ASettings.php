@@ -28,8 +28,6 @@ namespace XLite\Module\CDev\XPaymentsConnector\View\Settings;
 /**
  * Settings
  * 
- * @see   ____class_see____
- * @since 1.0.19
  */
 abstract class ASettings extends \XLite\View\AView
 {
@@ -37,8 +35,6 @@ abstract class ASettings extends \XLite\View\AView
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -53,8 +49,6 @@ abstract class ASettings extends \XLite\View\AView
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -65,8 +59,6 @@ abstract class ASettings extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

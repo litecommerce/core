@@ -28,9 +28,6 @@ namespace XLite\Module\CDev\XPaymentsConnector\View\Settings;
 /**
  * Deploy configuration 
  * 
- * @see   ____class_see____
- * @since 1.0.19
- *
  * @ListChild (list="crud.settings.header", zone="admin", weight="100")
  */
 class DeployConfiguration extends \XLite\Module\CDev\XPaymentsConnector\View\Settings\ASettings
@@ -39,8 +36,6 @@ class DeployConfiguration extends \XLite\Module\CDev\XPaymentsConnector\View\Set
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

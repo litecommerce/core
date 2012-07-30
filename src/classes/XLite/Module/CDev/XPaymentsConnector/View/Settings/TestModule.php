@@ -28,9 +28,6 @@ namespace XLite\Module\CDev\XPaymentsConnector\View\Settings;
 /**
  * Test module 
  * 
- * @see   ____class_see____
- * @since 1.0.19
- *
  * @ListChild (list="crud.settings.footer", zone="admin", weight="100")
  */
 class TestModule extends \XLite\Module\CDev\XPaymentsConnector\View\Settings\ASettings
@@ -39,8 +36,6 @@ class TestModule extends \XLite\Module\CDev\XPaymentsConnector\View\Settings\ASe
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -51,8 +46,6 @@ class TestModule extends \XLite\Module\CDev\XPaymentsConnector\View\Settings\ASe
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
