@@ -28,7 +28,6 @@ namespace XLite\Module\CDev\GoSocial\Model;
 /**
  * Page
  *
- *
  * @LC_Dependencies ("CDev\SimpleCMS")
  */
 abstract class Page extends \XLite\Module\CDev\SimpleCMS\Model\Page implements \XLite\Base\IDecorator

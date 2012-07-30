@@ -26,37 +26,63 @@
 namespace XLite\Module\CDev\GoSocial\View\Button;
 
 /**
- * Facebook like button
- * 
+ * Facebook Like button
+ *
+ * @ListChild (list="buttons.share", weight="100")
  */
-abstract class FacebookLike extends \XLite\View\Button\FacebookLike implements \XLite\Base\IDecorator
+class FacebookLike extends \XLite\View\AView
 {
     /**
-     * Get button attributes
+     * Widget parameters
+     */
+    const PARAM_WIDTH  = 'width';
+
+    /**
+     * Register JS files
      *
      * @return array
      */
-    protected function getButtonAttributes()
+    public function getJSFiles()
     {
-        $list = parent::getButtonAttributes();
+        $list = parent::getJSFiles();
 
-        $list['send']       = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_send_button ? 'true' : 'false';
-        $list['layout']     = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_layout;
-        $list['show-faces'] = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_show_faces ? 'true' : 'false';
-        $list['action']     = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_verb;
+        $list[] = 'modules/CDev/GoSocial/button/js/facebook_like.js';
 
         return $list;
     }
 
     /**
-     * Check if widget is visible
+     * Get width
      *
-     * @return boolean
+     * @return integer
      */
-    protected function isVisible()
+    protected function getWidth()
     {
-        return parent::isVisible()
-            && \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_use;
+        return $this->getParam(self::PARAM_WIDTH);
+    }
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/CDev/GoSocial/button/facebook_like.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_WIDTH => new \XLite\Model\WidgetParam\Int('Width', $this->getDefaultWidth()),
+        );
     }
 
     /**
@@ -69,4 +95,30 @@ abstract class FacebookLike extends \XLite\View\Button\FacebookLike implements \
         return 360;
     }
 
+    /**
+     * Get button attributes
+     *
+     * @return array
+     */
+    protected function getButtonAttributes()
+    {
+        return array(
+            'width'         => $this->getWidth(),
+            'send'          => \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_send_button ? 'true' : 'false',
+            'layout'        => \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_layout,
+            'show-faces'    => \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_show_faces ? 'true' : 'false',
+            'action'        => \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_verb,
+        );
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_use;
+    }
 }

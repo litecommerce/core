@@ -26,11 +26,41 @@
 namespace XLite\Module\CDev\GoSocial\View\ExternalSDK;
 
 /**
- * Facebook SDK loader 
- * 
+ * Facebook SDK loader
+ *
  */
-abstract class Facebook extends \XLite\View\ExternalSDK\Facebook implements \XLite\Base\IDecorator
+class Facebook extends \XLite\View\ExternalSDK\AExternalSDK
 {
+    /**
+     * Return widget default template
+     *
+     * @return string
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/CDev/GoSocial/sdk/facebook.tpl';
+    }
+
+    /**
+     * Get javascript SDK URL
+     *
+     * @return string
+     */
+    protected function getSDKUrl()
+    {
+        return 'http://connect.facebook.net/' . $this->getLocale() . '/all.js#' . http_build_query($this->getQuery());
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string
+     */
+    protected function getLocale()
+    {
+        return 'en_US';
+    }
+
     /**
      * Get SDK URL hash query
      *
@@ -38,8 +68,10 @@ abstract class Facebook extends \XLite\View\ExternalSDK\Facebook implements \XLi
      */
     protected function getQuery()
     {
-        $query = parent::getQuery();
-    
+        $query = array(
+            'xfbml' => 1,
+        );
+
         if (\XLite\Core\Config::getInstance()->CDev->GoSocial->fb_app_id) {
             $query['appId'] = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_app_id;
         }

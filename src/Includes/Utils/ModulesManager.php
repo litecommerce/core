@@ -174,7 +174,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function getFileModule($file)
     {
-        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED 
+        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED
             . '(\w+)' . LC_DS_QUOTED . '(\w+)' . LC_DS_QUOTED . '/Si';
 
         return preg_match($pattern, $file, $matches) ? ($matches[1] . '\\' . $matches[2]) : null;
@@ -462,38 +462,43 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
                 $intefaces = \Includes\Decorator\Utils\Tokenizer::getInterfaces($path);
                 $class     = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
 
-                $reflectionClass = new \ReflectionClass($class);
+                if (class_exists($class)) {
 
-                if ($class && is_subclass_of($class, '\XLite\Model\AEntity') && !$reflectionClass->isAbstract()) {
-                    $class = ltrim($class, '\\');
-                    $len   = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+                    $reflectionClass = new \ReflectionClass($class);
 
-                    // DO NOT remove leading backslash in interface name
-                    if (in_array('\XLite\Base\IDecorator', $intefaces)) {
-                        $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
-                        $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
-                        $table    = substr($metadata->getTableName(), $len);
+                    if (
+                        $class
+                        && is_subclass_of($class, '\XLite\Model\AEntity')
+                        && !$reflectionClass->isAbstract()
+                    ) {
+                        $class = ltrim($class, '\\');
+                        $len   = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
 
-                        $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
-                        $schema = $tool->getCreateSchemaSql(array($metadata));
+                        // DO NOT remove leading backslash in interface name
+                        if (in_array('\XLite\Base\IDecorator', $intefaces)) {
+                            $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
+                            $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
+                            $table    = substr($metadata->getTableName(), $len);
 
-                        foreach ((array) $metadata->reflFields as $field => $reflection) {
-                            $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
+                            $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
+                            $schema = $tool->getCreateSchemaSql(array($metadata));
 
-                            if (
-                                $reflection->class === $class
-                                && !empty($metadata->fieldMappings[$field])
-                                && preg_match($pattern, $schema[0], $matches)
-                            ) {
-                                $columns[$table][$field] = $matches[1];
+                            foreach ((array) $metadata->reflFields as $field => $reflection) {
+                                $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
+
+                                if (
+                                    $reflection->class === $class
+                                    && !empty($metadata->fieldMappings[$field])
+                                    && preg_match($pattern, $schema[0], $matches)
+                                ) {
+                                    $columns[$table][$field] = $matches[1];
+                                }
                             }
+                        } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
+                            $tables[] = substr(
+                                \XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len
+                            );
                         }
-
-                    } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
-                        $tables[] = substr(
-                            \XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(),
-                            $len
-                        );
                     }
                 }
             }
