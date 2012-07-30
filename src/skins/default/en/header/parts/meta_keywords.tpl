@@ -11,4 +11,4 @@
  * @ListChild (list="head", weight="700")
  *}
 
-<meta IF="getKeywords()" name="keywords" content="{getKeywords():r}" />
+<meta IF="getKeywords()" name="keywords" content="{t(getKeywords()):r}" />
