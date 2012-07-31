@@ -109,10 +109,15 @@ class PaypalIPN extends \XLite\Base\Singleton
 
                         $status = $transaction::STATUS_SUCCESS;
 
-                        if (
-                            isset($backendTransaction)
-                            && \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE == $backendTransaction->getType()
-                        ) {
+                        if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH == $transaction->getType()) {
+    
+                            if (!isset($backendTransaction)) {
+                                $backendTransaction = $this->registerBackendTransaction(
+                                    $transaction,
+                                    \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE
+                                );
+                            }
+
                             $backendTransactionStatus = $transaction::STATUS_SUCCESS;
                         }
 
@@ -154,12 +159,14 @@ class PaypalIPN extends \XLite\Base\Singleton
                             $status = $transaction::STATUS_FAILED;
                         }
 
-                        if (
-                            isset($backendTransaction)
-                            && \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID == $backendTransaction->getType()
-                        ) {
-                            $backendTransactionStatus = $transaction::STATUS_SUCCESS;
+                        if (!isset($backendTransaction)) {
+                            $backendTransaction = $this->registerBackendTransaction(
+                                $transaction,
+                                \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID
+                            );
                         }
+
+                        $backendTransactionStatus = $transaction::STATUS_SUCCESS;
 
                         break;
 
@@ -178,12 +185,14 @@ class PaypalIPN extends \XLite\Base\Singleton
 
                     case 'Refunded':
 
-                        if (
-                            isset($backendTransaction)
-                            && \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND == $backendTransaction->getType()
-                        ) {
-                            $backendTransactionStatus = $transaction::STATUS_SUCCESS;
+                        if (!isset($backendTransaction)) {
+                            $backendTransaction = $this->registerBackendTransaction(
+                                $transaction,
+                                \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND
+                            );
                         }
+
+                        $backendTransactionStatus = $transaction::STATUS_SUCCESS;
 
                         $status = $transaction::STATUS_FAILED;
 
@@ -238,9 +247,10 @@ class PaypalIPN extends \XLite\Base\Singleton
 
         foreach ($this->defineSavedData() as $key => $name) {
             if (isset(\XLite\Core\Request::getInstance()->$key)) {
-                $result = array(
-                    'name'  => $name,
-                    'value' => \XLite\Core\Request::getInstance()->$key
+                $result[] = array(
+                    'name'  => $key,
+                    'value' => \XLite\Core\Request::getInstance()->$key,
+                    'label' => $name,
                 );
             }
         }
@@ -330,5 +340,35 @@ class PaypalIPN extends \XLite\Base\Singleton
     protected function isTestMode()
     {
         return !empty(\XLite\Core\Request::getInstance()->test_ipn);
+    }
+
+    /**
+     * Register backend transaction 
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction     Payment transaction object
+     * @param string                           $transactionType Type of backend transaction
+     *  
+     * @return \XLite\Model\Payment\BackendTransaction
+     */
+    protected function registerBackendTransaction($transaction, $transactionType)
+    {
+        $backendTransaction = $transaction->createBackendTransaction($transactionType);
+
+        $transactionData = $this->getRequestData();
+        $transactionData[] = array(
+            'name'  => 'PPREF',
+            'value' => \XLite\Core\Request::getInstance()->txn_id,
+            'label' => 'Unique PayPal transaction ID (PPREF)',
+        );
+
+        foreach ($transactionData as $data) {
+            $backendTransaction->setDataCell(
+                $data['name'],
+                $data['value'],
+                $data['label']
+            );
+        }
+
+        return $backendTransaction;
     }
 }
