@@ -90,7 +90,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @var array
      */
-    protected $substutionalSkins = array();
+    protected $substitutionalSkins = array();
 
     /**
      * Skin paths
@@ -111,7 +111,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @var boolean
      */
-    protected $substutionalSkinsCache = false;
+    protected $substitutionalSkinsCache = false;
 
     // {{{ Common getters
 
@@ -168,24 +168,24 @@ class Layout extends \XLite\Base\Singleton
     // {{{ Substitutional skins routines
 
     /**
-     * Add substutional skin
+     * Add substitutional skin
      *
      * @param string $name      Skin name
      * @param string $interface Interface code OPTIONAL
      *
      * @return void
      */
-    public function addSubstutionalSkin($name, $interface = \XLite::CUSTOMER_INTERFACE)
+    public function addSubstitutionalSkin($name, $interface = \XLite::CUSTOMER_INTERFACE)
     {
-        if (!isset($this->substutionalSkins[$interface])) {
-            $this->substutionalSkins[$interface] = array();
+        if (!isset($this->substitutionalSkins[$interface])) {
+            $this->substitutionalSkins[$interface] = array();
         }
 
-        array_unshift($this->substutionalSkins[$interface], $name);
+        array_unshift($this->substitutionalSkins[$interface], $name);
     }
 
     /**
-     * Remove substutional skin
+     * Remove substitutional skin
      *
      * @param string $name      Skin name
      * @param string $interface Interface code OPTIONAL
@@ -195,18 +195,18 @@ class Layout extends \XLite\Base\Singleton
     public function removeSubstutionalSkin($name, $interface = null)
     {
         if (isset($interface)) {
-            if (isset($this->substutionalSkins[$interface])) {
-                $key = array_search($name, $this->substutionalSkins[$interface]);
+            if (isset($this->substitutionalSkins[$interface])) {
+                $key = array_search($name, $this->substitutionalSkins[$interface]);
                 if (false !== $key) {
-                    unset($this->substutionalSkins[$interface][$key]);
+                    unset($this->substitutionalSkins[$interface][$key]);
                 }
             }
 
         } else {
-            foreach ($this->substutionalSkins as $interface => $list) {
+            foreach ($this->substitutionalSkins as $interface => $list) {
                 $key = array_search($name, $list);
                 if (false !== $key) {
-                    unset($this->substutionalSkins[$interface][$key]);
+                    unset($this->substitutionalSkins[$interface][$key]);
                 }
             }
         }
@@ -223,7 +223,7 @@ class Layout extends \XLite\Base\Singleton
     {
         $interface = $interface ?: $this->currentInterface;
 
-        $list = isset($this->substutionalSkins[$interface]) ? $this->substutionalSkins[$interface] : array();
+        $list = isset($this->substitutionalSkins[$interface]) ? $this->substitutionalSkins[$interface] : array();
 
         $list[] = $this->getBaseSkinByInterface($interface);
 
@@ -555,7 +555,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return void
      */
-    protected function restoreSubstitutonalSkins()
+    protected function restoreSubstitutionalSkins()
     {
         $data = \XLite\Core\Database::getCacheDriver()->fetch(
             get_called_class() . '.SubstitutonalSkins'
@@ -679,11 +679,11 @@ class Layout extends \XLite\Base\Singleton
 
         $this->setOptions();
 
-        $this->substutionalSkinsCache = (bool)\XLite::getInstance()
+        $this->substitutionalSkinsCache = (bool)\XLite::getInstance()
             ->getOptions(array('performance', 'substitutional_skins_cache'));
 
-        if ($this->substutionalSkinsCache) {
-            $this->restoreSubstitutonalSkins();
+        if ($this->substitutionalSkinsCache) {
+            $this->restoreSubstitutionalSkins();
             register_shutdown_function(array($this, 'saveSubstitutonalSkins'));
         }
     }
