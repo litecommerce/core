@@ -172,8 +172,16 @@ abstract class Address extends \XLite\Model\AEntity
 
             // Set by state object
             if ($state->getStateId()) {
-                $this->state = $state;
-                $this->setCustomState('');
+                if (!$this->state || $this->state->getStateId() != $state->getStateId()) {
+
+                    // :KLUDGE: Detach old state (issue #41812)
+                    if ($this->state) {
+                        \XLite\Core\Database::getEM()->detach($this->state);
+                    }
+
+                    $this->state = $state;
+                    $this->setCustomState('');
+                }
 
             } else {
 
