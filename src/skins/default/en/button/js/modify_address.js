@@ -24,7 +24,11 @@ decorate(
   'callback',
   function (selector)
   {
-    // Some autoloading could be added
+    jQuery(selector).find('form').each(
+      function () {
+        new CommonForm(this);
+      }
+    );
   }
 );
 
