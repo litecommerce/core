@@ -186,6 +186,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
         $address = $this->getAddress();
 
         if (isset($address)) {
+            $address->getProfile()->getAddresses()->removeElement($address);
             \XLite\Core\Database::getEM()->remove($address);
             \XLite\Core\Database::getEM()->flush();
 

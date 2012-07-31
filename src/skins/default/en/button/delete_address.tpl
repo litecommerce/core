@@ -9,6 +9,6 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<button type="button" class="{getClass()}">
+<button type="button" class="{getClass()}" title="{t(#Delete#)}">
 {displayCommentedData(getJSParams())}
 </button>

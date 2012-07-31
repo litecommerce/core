@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 
-<button type="button" onclick="javascript: {getJSCode():h}" class="{getClass()}"{if:getId()} id="{getId()}"{end:} {if:isDisabled()} disabled="disabled" {end:}>
+<button type="button" onclick="javascript: {getJSCode():h}" class="{getClass()}"{if:getId()} id="{getId()}"{end:} {if:isDisabled()} disabled="disabled" {end:} title="{t(getButtonLabel())}">
   <span>{t(getButtonLabel())}</span>
 </button>

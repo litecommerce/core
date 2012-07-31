@@ -18,5 +18,19 @@ function PopupButtonAddAddress()
 extend(PopupButtonAddAddress, PopupButton);
 
 PopupButtonAddAddress.prototype.pattern = '.add-address';
+PopupButtonAddAddress.prototype.enableBackgroundSubmit = false;
+
+decorate(
+  'PopupButtonAddAddress',
+  'callback',
+  function (selector)
+  {
+    jQuery(selector).find('form').each(
+      function () {
+        new CommonForm(this);
+      }
+    );
+  }
+);
 
 core.autoload(PopupButtonAddAddress);
