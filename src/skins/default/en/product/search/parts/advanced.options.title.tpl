@@ -14,5 +14,5 @@
 
 <li><label for="by-title">
   <input type="checkbox" name="by_title" id="by-title" value="Y" checked="{getChecked(#by_title#)}" />
-  {t(#Title#)}
+  {t(#Product title#)}
 </label></li>

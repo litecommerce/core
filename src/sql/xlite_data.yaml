@@ -476,7 +476,7 @@ XLite\Model\LanguageLabel:
   - { name: Placed on X by Y, translations: [{ code: en, label: 'Placed on <span class="date">{{date}}</span> by <span class="name">{{name}}</span>' }] }
   - { name: Placed on X by Y link, translations: [{ code: en, label: 'Placed on <span class="date">{{date}}</span> by <a href="{{url}}" class="name">{{name}}</a>' }] }
   - { name: Order Total X, translations: [{ code: en, label: 'Order Total: <span>{{total}}</span>' }] }
-
+  - { name: Product title, translations: [{ code: en, label: Product title }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

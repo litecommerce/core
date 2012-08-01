@@ -1393,5 +1393,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Any word', translations: [{ code: 'ru', label: 'Любое слово' }] }
   - { name: 'Exact phrase', translations: [{ code: 'ru', label: 'Вся фраза' }] }
   - { name: 'More search options', translations: [{ code: 'ru', label: 'Настройки поиска' }] }
+  - { name: 'Less search options', translations: [{ code: 'ru', label: 'Скрыть настройки поиска' }] }
   - { name: 'Search in', translations: [{ code: 'ru', label: 'Искать в' }] }
+  - { name: 'Product title', translations: [{ code: 'ru', label: 'Название продукта' }] }
 
