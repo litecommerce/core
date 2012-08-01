@@ -57,7 +57,7 @@ class SitemapGenerator extends \XLite\Base\Singleton
         foreach (glob(LC_DIR_DATA . 'xmlsitemap.*.xml') as $path) {
             $name = basename($path);
             $loc = \XLite::getInstance()->getShopURL(
-                \XLite\Core\Converter::buildURL('sitemap', '', array('index' => substr($name, 11, -4)), 'cart.php')
+                \XLite\Core\Converter::buildURL('sitemap', '', array('index' => substr($name, 11, -4)), \XLite::CART_SELF)
             );
             $time = filemtime($path);
             $string .= '<sitemap>'
@@ -199,7 +199,7 @@ class SitemapGenerator extends \XLite\Base\Singleton
         $target = $loc['target'];
         unset($loc['target']);
 
-        return \XLite\Core\Converter::buildURL($target, '', $loc, 'cart.php');
+        return \XLite\Core\Converter::buildURL($target, '', $loc, \XLite::CART_SELF);
     }
 
     /**

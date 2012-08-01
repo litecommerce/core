@@ -66,7 +66,9 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      */
     protected function getDrupalURL()
     {
-        return \XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url;
+        return \XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url
+            ?
+            : \XLite\Core\Converter::buildURL(null, null, array(), \XLite::CART_SELF);
     }
 
     /**
@@ -76,8 +78,7 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
      */
     protected function hasDrupalURL()
     {
-        return isset(\XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url)
-            && !empty(\XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url);
+        return (bool)$this->getDrupalURL();
     }
 
     /**
