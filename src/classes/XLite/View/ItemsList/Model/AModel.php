@@ -227,7 +227,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
                     foreach ($fields as $inline) {
                         $this->saveCell($inline);
                     }
-                    \XLite\Core\Database::getEM()->persist($entity);
+                    $entity->getRepository()->insert($entity);
                     $count++;
 
                 } else {
@@ -420,7 +420,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function removeEntity(\XLite\Model\AEntity $entity)
     {
-        \XLite\Core\Database::getEM()->remove($entity);
+        $entity->getRepository()->delete($entity, false);
 
         return true;
     }
@@ -490,6 +490,10 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
         foreach ($this->prepareInlineFields() as $field) {
             $count++;
             $this->saveCell($field);
+        }
+
+        foreach ($this->getPageData() as $entity) {
+            $entity->getRepository()->update($entity, array(), false);
         }
 
         return $count;
