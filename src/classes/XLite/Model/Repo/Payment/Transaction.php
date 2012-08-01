@@ -55,16 +55,16 @@ class Transaction extends \XLite\Model\Repo\ARepo
     protected function defineOneByParamsQuery(array $params, $orderId)
     {
         $qb = $this->createQueryBuilder()
-            ->addSelect('COUNT(d.record_id) cnt')
+            ->addSelect('COUNT(d.data_id) as cnt')
             ->innerJoin('t.data', 'd')
             ->having('cnt = :cnt')
-            ->setPrameter('cnt', count($params))
+            ->setParameter('cnt', count($params))
             ->setMaxResults(1);
 
         if (isset($orderId)) {
             $qb->innerJoin('t.order', 'o')
                 ->andWhere('o.order_id = :orderId')
-                ->setPrameter('orderId', $orderId);
+                ->setParameter('orderId', $orderId);
         }
 
         $i = 1;
