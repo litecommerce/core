@@ -10,3 +10,7 @@
  *}
 
 {t(#Sorry, your order payment is failed.#):h}
+
+<hr />
+
+<div IF="getFailureReason()" class="reason">{t(#Failure reason:#)} {getFailureReason()}</div>

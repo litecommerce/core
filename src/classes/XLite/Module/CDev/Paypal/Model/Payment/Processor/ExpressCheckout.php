@@ -251,6 +251,17 @@ HTML;
     {
         $cart = \XLite\Model\Cart::getInstance();
 
+        $shippingModifier = $cart->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+
+        if ($shippingModifier && $shippingModifier->canApply()) {
+            $noShipping = '0';
+            $freightAmt = $cart->getCurrency()->roundValue($cart->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_SHIPPING));
+
+        } else {
+            $noShipping = '1';
+            $freightAmt = 0;
+        }
+
         $postData = array(
             'TRXTYPE'           => $this->getSetting('transaction_type'),
             'TENDER'            => 'P',
@@ -259,10 +270,10 @@ HTML;
             'CANCELURL'         => urldecode($this->getECReturnURL(true)),
             'AMT'               => $cart->getCurrency()->roundValue($cart->getTotal()),
             'CURRENCY'          => $cart->getCurrency()->getCode(),
-            'FREIGHTAMT'        => $cart->getCurrency()->roundValue($cart->getSurchargeSumByType('SHIPPING')),
+            'FREIGHTAMT'        => $freightAmt,
             'HANDLINGAMT'       => 0,
             'INSURANCEAMT'      => 0,
-            'NOSHIPPING'        => 0,
+            'NOSHIPPING'        => $noShipping,
             'INVNUM'            => $cart->getOrderId(),
             'ALLOWNOTE'         => 1,
             'CUSTOM'            => $cart->getOrderId(),
@@ -280,17 +291,22 @@ HTML;
 
         } elseif (self::EC_TYPE_MARK == $type) {
             $postData += array(
-                'ADDROVERRIDE'      => 'N',
-                'PHONENUM'    => $this->getProfile()->getBillingAddress()->getPhone(),
-                'EMAIL'       => $this->getProfile()->getLogin(),
-                'SHIPTONAME'        => $this->getProfile()->getShippingAddress()->getFirstname() . $this->getProfile()->getShippingAddress()->getLastname(),
-                'SHIPTOSTREET'      => $this->getProfile()->getShippingAddress()->getStreet(),
-                'SHIPTOSTREET2'     => '',
-                'SHIPTOCITY'        => $this->getProfile()->getShippingAddress()->getCity(),
-                'SHIPTOSTATE'       => $this->getProfile()->getShippingAddress()->getState()->getCode(),
-                'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
-                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode(),
+                'ADDROVERRIDE'  => 'N',
+                'PHONENUM'      => $this->getProfile()->getBillingAddress()->getPhone(),
+                'EMAIL'         => $this->getProfile()->getLogin(),
             );
+
+            if ('1' !==$noShipping) {
+                $postData += array(
+                    'SHIPTONAME'    => $this->getProfile()->getShippingAddress()->getFirstname() . $this->getProfile()->getShippingAddress()->getLastname(),
+                    'SHIPTOSTREET'  => $this->getProfile()->getShippingAddress()->getStreet(),
+                    'SHIPTOSTREET2' => '',
+                    'SHIPTOCITY'    => $this->getProfile()->getShippingAddress()->getCity(),
+                    'SHIPTOSTATE'   => $this->getProfile()->getShippingAddress()->getState()->getCode(),
+                    'SHIPTOZIP'     => $this->getProfile()->getShippingAddress()->getZipcode(),
+                    'SHIPTOCOUNTRY' => $this->getProfile()->getShippingAddress()->getCountry()->getCode(),
+                );
+            }
         }
 
         return $postData;
@@ -438,7 +454,7 @@ HTML;
             'PAYERID'      => \XLite\Core\Session::getInstance()->ec_payer_id,
             'AMT'          => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
             'CURRENCY'     => $this->getCurrencyCode(),
-            'FREIGHTAMT'   => $this->getOrder()->getCurrency()->roundValue($this->getOrder()->getSurchargeSumByType('SHIPPING')),
+            'FREIGHTAMT'   => $this->getOrder()->getCurrency()->roundValue($this->getOrder()->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_SHIPPING)),
             'HANDLINGAMT'  => 0,
             'INSURANCEAMT' => 0,
             'NOTIFYURL'    => $this->getCallbackURL(null, true),
