@@ -44,9 +44,19 @@ class BillingAddress extends \XLite\View\AView
      *
      * @return boolean
      */
-    public function isSameAddress()
+    protected function isSameAddress()
     {
         return $this->getCart()->getProfile() && $this->getCart()->getProfile()->isEqualAddress();
+    }
+
+    /**
+     * Check - billing address is editable or not
+     *
+     * @return void
+     */
+    protected function isEditableAddress()
+    {
+        return !$this->isSameAddress() || !$this->isSameAddressVisible();
     }
 
     /**
@@ -54,7 +64,7 @@ class BillingAddress extends \XLite\View\AView
      *
      * @return \XLite\Model\Address
      */
-    public function getSameAddress()
+    protected function getSameAddress()
     {
         $address = null;
         $profile = $this->getCart()->getProfile();
@@ -65,7 +75,6 @@ class BillingAddress extends \XLite\View\AView
 
         return $address;
     }
-
 
     /**
      * Return widget default template
