@@ -265,6 +265,18 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     // Payment methods list
     jQuery('.payment-step form.methods', this.base)
       .commonController('enableBackgroundSubmit')
+      .bind(
+        'beforeSubmit',
+        function() {
+          jQuery('.payment-step.current .button-row button', this.base).addClass('disabled');
+        }
+      )
+      .bind(
+        'afterSubmit',
+        function() {
+          jQuery('.payment-step.current .button-row button', this.base).removeClass('disabled');
+        }
+      )
       .find('ul input')
       .change(
         function(event) {
