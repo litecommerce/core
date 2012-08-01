@@ -103,7 +103,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
 
         if ($errors) {
             foreach ($errors as $message) {
-                \Xlite\Core\TopMessage::addError($message);
+                \XLite\Core\TopMessage::addError($message);
             }
             $result = false;
         }

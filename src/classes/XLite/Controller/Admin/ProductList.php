@@ -92,7 +92,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     public function isSearchVisible()
     {
-        return 0 < \XLite\Core\Database::getRepo('Xlite\Model\Product')->count();
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\Product')->count();
     }
 
     /**
