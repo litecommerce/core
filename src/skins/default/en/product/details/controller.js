@@ -172,6 +172,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
       // TODO: improve to skip additional JS manipulations
       // like resizing etc when it is not needed
       this.selectImage(0);
+
     } else if (this.zoomWidget && !cloud.data('zoom')) {
       cloud.CloudZoom();
     }
@@ -316,10 +317,33 @@ ProductDetailsView.prototype.switchImage = function(diff)
 // Select image from gallery
 ProductDetailsView.prototype.selectImage = function(pos)
 {
-  this.gallery.removeClass('selected');
-
   // Refresh main image and another options + cloud zoom plugin restart
   next = this.gallery.eq(pos);
+  var middle = jQuery('img.middle', next).eq(0);
+
+  if (0 < middle.length && !middle.width()) {
+
+    // Change image delay if image did not loaded
+    if ('undefined' == typeof(middle.data('load-counter'))) {
+      middle.data('load-counter', 5);
+
+    } else {
+      middle.data('load-counter', middle.data('load-counter') - 1);
+    }
+
+    if (0 < middle.data('load-counter')) {
+      var owner = this;
+      setTimeout(
+        function() {
+          owner.selectImage(pos);
+        },
+        200
+      );
+    }
+  }
+
+  this.gallery.removeClass('selected');
+
   next.addClass('selected');
 
   if (this.zoomWidget) {
@@ -338,29 +362,46 @@ ProductDetailsView.prototype.selectImage = function(pos)
     cloud.attr('href', jQuery('a', next).attr('href'));
   }
 
-  var middle = jQuery('img.middle', next).eq(0)
+  if (0 < middle.length) {
 
-  if (middle) {
+    var w = middle.width();
+    var h = middle.height();
 
-    jQuery('.image .product-photo img', this.base)
+    var img = jQuery('.image .product-photo img', this.base);
+
+    var maxWidth = img.data('max-width') ? img.data('max-width') : parseInt(img.css('max-width'));
+    if (!maxWidth && img.parent().data('max-width')) {
+      maxWidth = img.parent().data('max-width');
+    }
+    var maxHeight = img.data('max-height') ? img.data('max-height') : parseInt(img.css('max-height'));
+    if (!maxHeight) {
+      maxHeight = img.parent().data('max-height');
+    }
+
+    var croppedDimensions = cropDimension(w, h, maxWidth, maxHeight);
+    w = croppedDimensions[0];
+    h = croppedDimensions[1];
+
+    img
       .hide()
       .attr('src', middle.attr('src'))
-      .width(middle.width())
-      .height(middle.height())
+      .width(w)
+      .height(h)
       .show();
 
     // Center align images
-    var shiftX = Math.max(0, jQuery('.image .product-photo', this.base).width() - middle.width());
-    var shiftY = Math.max(0, jQuery('.image .product-photo', this.base).height() - middle.height());
+    jQuery('.image .product-photo img').css('padding', 0);
+    var shiftX = Math.max(0, jQuery('.image .product-photo', this.base).width() - w);
+    var shiftY = Math.max(0, jQuery('.image .product-photo', this.base).height() - h);
 
     if (this.zoomWidget) {
 
-      jQuery('.image .product-photo .wrapper').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
+      jQuery('.image .product-photo .wrapper').css('padding', (shiftY / 2) + 'px ' + (shiftX / 2) + 'px');
       jQuery('img', cloud).css('padding', 0);
 
     } else {
 
-      jQuery('.image .product-photo img').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
+      jQuery('.image .product-photo img').css('padding', (shiftY / 2) + 'px ' + (shiftX / 2) + 'px');
     }
   }
 

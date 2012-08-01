@@ -262,7 +262,49 @@ TableItemsList.prototype.listeners.headSearch = function(handler)
       var result = false;
       jQuery(this).parents('td').eq(0).find('input,select,textarea').each(
         function () {
-          result = handler.setURLParam(this.name, this.value) || result;
+          if (jQuery(this).is('select[multiple="multiple"]')) {
+
+            var params = {};
+
+            var name = this.name.replace('[]', '');
+            var regexp = new RegExp('^' + name + '\[[0-9]*\]$');
+            var processParams = function(k, v) {
+              if (!regexp.test(k)) {
+                params[k] = v;
+              }
+            }
+
+            jQuery.each(
+              handler.params.urlparams,
+              processParams
+            );
+            handler.params.urlparams = params;
+
+            params = {};
+            jQuery.each(
+              handler.params.urlajaxparams,
+              processParams
+            );
+            handler.params.urlajaxparams = params;
+
+            result = true;
+            handler.setURLParam(name, '')
+
+            var select = this;
+            var i = 0;
+
+            jQuery(this.options).each(
+              function() {
+                if (this.selected) {
+                  result = handler.setURLParam(name + '[' + i + ']', this.value) || result;
+                  i++
+                }
+              }
+            );
+
+          } else {
+            result = handler.setURLParam(this.name, this.value) || result;
+          }
         }
       );
 

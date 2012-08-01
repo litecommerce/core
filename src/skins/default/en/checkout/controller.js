@@ -369,13 +369,15 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       'ready2checkout',
       function (e) {
         jQuery('.review-step.current .button-row button', this)
-          .removeClass('disabled');
+          .removeClass('disabled')
+          .removeAttr('disabled');
       }
     ).bind(
       'agree2checkout',
       function (e) {
         jQuery('.review-step.current .button-row button', this)
-          .addClass('disabled');
+          .addClass('disabled')
+          .attr('disabled', 'disabled');
       }
     ).bind(
       'notready2checkout',

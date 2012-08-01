@@ -497,3 +497,30 @@ function attachTooltip(elm, content) {
     }
   );
 }
+
+function cropDimension(width, height, maxWidth, maxHeight)
+{
+  maxWidth = isNaN(maxWidth) ? 0 : Math.max(0, maxWidth);
+  maxHeight = isNaN(maxHeight) ? 0 : Math.max(0, maxHeight);
+
+  if (0 < width && 0 < height && (0 < maxWidth || 0 < maxHeight)) {
+
+    if (0 < maxWidth && 0 < maxHeight) {
+      var kWidth = width > maxWidth ? maxWidth / width : 1;
+      var kHeight = height > maxHeight ? maxHeight / height : 1;
+      var k = kWidth < kHeight ? kWidth : kHeight;
+
+    } else if (0 < maxWidth) {
+      var k = width > maxWidth ? maxWidth / width : 1;
+
+    } else if (0 < maxHeight) {
+      var k = height > maxHeight ? maxHeight / height : 1;
+
+    }
+
+    width = Math.max(1, Math.round(k * width));
+    height = Math.max(1, Math.round(k * height));
+  }
+
+  return [width, height];
+}

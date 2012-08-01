@@ -135,6 +135,7 @@ class Portal extends \XLite\Base\SuperClass
     {
         return array(
             'title'           => $this->getTitle(),
+            'title callback'  => $this->getTitleCallback(),
             'page callback'   => $this->getContentCallback(),
             'access callback' => $this->getAccessCallback(),
             'type'            => $this->getType(),
@@ -184,6 +185,18 @@ class Portal extends \XLite\Base\SuperClass
     protected function getContentCallback()
     {
         return 'lcConnectorGetControllerContent';
+    }
+
+    /**
+     * Return portal default title callback
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTitleCallback()
+    {
+        return 'lcConnectorProcessControllerTitle';
     }
 
     /**

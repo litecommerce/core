@@ -212,10 +212,10 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
 
         if ($this->getProduct()->hasImage()) {
             foreach ($this->getProduct()->getImages() as $img) {
-                if ($img->getWidth() > $this->getWidgetMaxWidth()) {
-                    $maxHeight = max($img->getHeight() * $this->getWidgetMaxWidth() / $img->getWidth(), $maxHeight);
-                } else {
-                    $maxHeight = max($img->getHeight(), $maxHeight);
+                if (0 < $img->getHeight()) {
+                    $maxHeight = $img->getWidth() > $this->getWidgetMaxWidth()
+                        ? max($img->getHeight() * $this->getWidgetMaxWidth() / $img->getWidth(), $maxHeight)
+                        : max($img->getHeight(), $maxHeight);
                 }
             }
         }

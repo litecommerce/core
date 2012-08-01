@@ -14,6 +14,10 @@ var stateSelectors = [];
 
 function StateSelector(countrySelectorId, stateSelectorId, stateInputId)
 {
+    if (!countrySelectorId || !stateSelectorId || !stateInputId) {
+      return;
+    }
+
     this.countrySelectBox = jQuery('#' + countrySelectorId);
     this.stateSelectBox = jQuery('#' + stateSelectorId);
     this.stateInputBox = jQuery('#' + stateInputId);

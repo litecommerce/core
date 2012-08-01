@@ -34,6 +34,20 @@ function lcConnectorGetControllerTitle()
 }
 
 /**
+ * Process LC controller title
+ *
+ * @param string $title Title
+ *
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function lcConnectorProcessControllerTitle($title)
+{
+    return \XLite\Core\Translation::lbl($title);
+}
+
+/**
  * Return LC controller page content
  *
  * @return string

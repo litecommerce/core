@@ -16,7 +16,7 @@
 
   <ul class="address-text">
 
-    <li class="address-text-label address-text-label-{fieldName}">{fieldData.label}:</li>
+    <li class="address-text-label address-text-label-{fieldName}">{t(fieldData.label)}:</li>
 
     <li class="address-text-value">{getFieldValue(fieldName,1)}</li>
 

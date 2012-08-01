@@ -9,32 +9,51 @@
  * @link      http://www.litecommerce.com/
  */
 
-function ButtonDeleteAddress()
+function ButtonDeleteAddress(obj)
 {
-  var obj = this;
+  this.button = jQuery(obj);
+  this.button.get(0).deleteAddressController = this;
 
-  jQuery('.delete-address').each(
-    function () {
-      var o = jQuery(this);
-      var addressId = core.getCommentedData(o, 'address_id');
-      var warningText = core.getCommentedData(o, 'warning_text');
+  this.addressId = core.getCommentedData(this.button, 'address_id');
+  this.warningText = core.getCommentedData(this.button, 'warning_text');
 
-      o.click(function (event) {
-        result = confirm(warningText);
-        if (result) {
-          self.location = URLHandler.buildURL(obj.getParams(addressId));
-        }
-      });
+  this.button.click(
+    function(event) {
+      return this.deleteAddressController.displayPopup(event);
     }
   );
 }
 
-ButtonDeleteAddress.prototype.getParams = function (addressId) {
+ButtonDeleteAddress.autoload = function()
+{
+  jQuery('.delete-address').each(
+    function () {
+      new ButtonDeleteAddress(this);
+    }
+  );
+}
+
+ButtonDeleteAddress.prototype.button = null;
+
+ButtonDeleteAddress.prototype.addressId = null;
+
+ButtonDeleteAddress.prototype.warningText = null;
+
+ButtonDeleteAddress.prototype.getParams = function()
+{
   return {
-    'address_id'  : addressId,
-    'target'      : 'address_book',
-    'action'      : 'delete'
+    'address_id' : this.addressId,
+    'target'     : 'address_book',
+    'action'     : 'delete'
   };
+}
+
+ButtonDeleteAddress.prototype.displayPopup = function()
+{
+  result = confirm(this.warningText);
+  if (result) {
+    self.location = URLHandler.buildURL(this.getParams());
+  }
 }
 
 core.autoload(ButtonDeleteAddress);

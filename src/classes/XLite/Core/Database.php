@@ -473,6 +473,9 @@ class Database extends \XLite\Base\Singleton
         // Set charset for DB connection
         $this->setCharset();
 
+        // Set session variables
+        $this->setSessionVariables();
+
         // Bind events
         $events = array(\Doctrine\ORM\Events::loadClassMetadata);
         if (static::$cacheDriver) {
@@ -1523,8 +1526,41 @@ OUT;
     }
 
     /**
-     * Create annotation driver
-     *
+     * Set DB session variables 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function setSessionVariables()
+    {
+        $connection = static::$em->getConnection();
+
+        foreach ($this->getSessionVariables() as $name => $value) {
+            if (is_string($value)) {
+                $value = '\'' . addslashes($value) . '\'';
+            }
+            $connection->executeQuery('SET ' . $name . ' = ' . $value);
+        }
+    }
+
+    /**
+     * Get DB session variables 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getSessionVariables()
+    {
+        return array(
+            'wait_timeout' => 2592000,
+        );
+    }
+
+    /**
+     * Create annotation driver 
+     * 
      * @param string $path Path
      *
      * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver

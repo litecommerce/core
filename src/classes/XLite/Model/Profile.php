@@ -677,5 +677,33 @@ class Profile extends \XLite\Model\AEntity
         return $allowed;
     }
 
+    /**
+     * Check - one from specified permissions is allowed or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function isPermissionAllowedOr()
+    {
+        $allowed = false;
+
+        if (0 < count($this->getRoles())) {
+            foreach (func_get_args() as $code) {
+                foreach ($this->getRoles() as $role) {
+                    if ($role->isPermissionAllowed($code)) {
+                        $allowed = true;
+                        break;
+                    }
+                }
+            }
+
+        } elseif (0 == \XLite\Core\Database::getRepo('XLite\Model\Role')->count()) {
+            $allowed = true;
+        }
+
+        return $allowed;
+    }
+
     // }}}
 }

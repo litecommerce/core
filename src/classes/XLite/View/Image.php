@@ -116,7 +116,7 @@ class Image extends \XLite\View\AView
 
             // Specified image
 
-            $url = $this->getParam(self::PARAM_USE_CACHE)
+            $url = ($this->getParam(self::PARAM_USE_CACHE) && $this->resizedURL)
                 ? $this->resizedURL
                 : $this->getParam(self::PARAM_IMAGE)->getFrontURL();
         }
@@ -303,6 +303,74 @@ class Image extends \XLite\View\AView
         $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
         $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
 
+        if ($this->getParam(self::PARAM_IMAGE)->getWidth() && $this->getParam(self::PARAM_IMAGE)->getHeight()) {
+
+            if ($this->needResize()) {
+                $this->resizeImage($maxw, $maxh);
+
+            } else {
+                $this->scaleImage($maxw, $maxh);
+            }
+
+        } else {
+            if (0 < $maxw) {
+                $this->addInlineStyle('max-width: ' . $maxw . 'px;');
+                $this->properties['data-max-width'] = $maxw;
+            }
+
+            if (0 < $maxh) {
+                $this->addInlineStyle('max-height: ' . $maxh . 'px;');
+                $this->properties['data-max-height'] = $maxh;
+            }
+        }
+    }
+
+    /**
+     * Preprocess default image
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function processDefaultImage()
+    {
+        list($this->properties['width'], $this->properties['height']) = \XLite\Core\ImageOperator::getCroppedDimensions(
+            \XLite::getInstance()->getOptions(array('images', 'default_image_width')),
+            \XLite::getInstance()->getOptions(array('images', 'default_image_height')),
+            max(0, $this->getParam(self::PARAM_MAX_WIDTH)),
+            max(0, $this->getParam(self::PARAM_MAX_HEIGHT))
+        );
+
+        // Center the image vertically and horizontally
+        if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
+            $this->setImagePaddings();
+        }
+    }
+
+    /**
+     * Check - need resize or crop
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function needResize()
+    {
+        return \XLite\Model\Base\Storage::STORAGE_URL != $this->getParam(self::PARAM_IMAGE)->getStorageType();
+    }
+
+    /**
+     * Resize image 
+     * 
+     * @param integer $maxw Maximum width
+     * @param integer $maxh Maximum height
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function resizeImage($maxw, $maxh)
+    {
         $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL')
             ? 'getResizedURL'
             : 'getResizedThumbnailURL';
@@ -321,17 +389,20 @@ class Image extends \XLite\View\AView
     }
 
     /**
-     * Preprocess default image
+     * Scale image
+     *
+     * @param integer $maxw Maximum width
+     * @param integer $maxh Maximum height
      *
      * @return void
      */
-    protected function processDefaultImage()
+    protected function scaleImage($maxw, $maxh)
     {
         list($this->properties['width'], $this->properties['height']) = \XLite\Core\ImageOperator::getCroppedDimensions(
-            \XLite::getInstance()->getOptions(array('images', 'default_image_width')),
-            \XLite::getInstance()->getOptions(array('images', 'default_image_height')),
-            max(0, $this->getParam(self::PARAM_MAX_WIDTH)),
-            max(0, $this->getParam(self::PARAM_MAX_HEIGHT))
+            $this->getParam(self::PARAM_IMAGE)->getWidth(),
+            $this->getParam(self::PARAM_IMAGE)->getHeight(),
+            $maxw,
+            $maxh
         );
 
         // Center the image vertically and horizontally

@@ -17,13 +17,18 @@ function PopupButtonAddAddress()
 extend(PopupButtonAddAddress, PopupButton);
 
 PopupButtonAddAddress.prototype.pattern = '.add-address';
+PopupButtonAddAddress.prototype.enableBackgroundSubmit = false;
 
 decorate(
   'PopupButtonAddAddress',
   'callback',
   function (selector)
   {
-    // Some autoloading could be added
+    jQuery(selector).find('form').each(
+      function () {
+        new CommonForm(this);
+      }
+    );
   }
 );
 

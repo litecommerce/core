@@ -11,6 +11,167 @@ XLite\Model\Language:
   directives: { addModel: 'XLite\Model\LanguageTranslation' }
   - { code: 'ru', translations: [{ code: 'ru', name: 'Русский' }] }
 
+XLite\Model\Currency:
+  directives: { addModel: 'XLite\Model\CurrencyTranslation' }
+  - { currency_id: 784, translations: [{ code: ru, name: 'Дирхам ОАЭ' }] }
+  - { currency_id: 971, translations: [{ code: ru, name: 'Афгани' }] }
+  - { currency_id: 8, translations: [{ code: ru, name: 'Албанский лек' }] }
+  - { currency_id: 51, translations: [{ code: ru, name: 'Армянский драм' }] }
+  - { currency_id: 532, translations: [{ code: ru, name: 'Гульден' }] }
+  - { currency_id: 973, translations: [{ code: ru, name: 'Кванза' }] }
+  - { currency_id: 32, translations: [{ code: ru, name: 'Аргентинское песо' }] }
+  - { currency_id: 36, translations: [{ code: ru, name: 'Австралийский доллар' }] }
+  - { currency_id: 533, translations: [{ code: ru, name: 'Арубанский флорин' }] }
+  - { currency_id: 944, translations: [{ code: ru, name: 'Азербайджанский манат' }] }
+  - { currency_id: 977, translations: [{ code: ru, name: 'Конвертируемая марка' }] }
+  - { currency_id: 52, translations: [{ code: ru, name: 'Барбадосский доллар' }] }
+  - { currency_id: 50, translations: [{ code: ru, name: 'Така' }] }
+  - { currency_id: 975, translations: [{ code: ru, name: 'Болгарский лев' }] }
+  - { currency_id: 48, translations: [{ code: ru, name: 'Бахрейнский динар' }] }
+  - { currency_id: 108, translations: [{ code: ru, name: 'Бурундийский франк' }] }
+  - { currency_id: 60, translations: [{ code: ru, name: 'Бермудский доллар' }] }
+  - { currency_id: 96, translations: [{ code: ru, name: 'Брунейский доллар' }] }
+  - { currency_id: 68, translations: [{ code: ru, name: 'Боливиано' }] }
+  - { currency_id: 986, translations: [{ code: ru, name: 'Бразильский реал' }] }
+  - { currency_id: 44, translations: [{ code: ru, name: 'Багамский доллар' }] }
+  - { currency_id: 64, translations: [{ code: ru, name: 'Нгултрум' }] }
+  - { currency_id: 72, translations: [{ code: ru, name: 'Пула' }] }
+  - { currency_id: 974, translations: [{ code: ru, name: 'Белорусский рубль' }] }
+  - { currency_id: 84, translations: [{ code: ru, name: 'Белизский доллар' }] }
+  - { currency_id: 124, translations: [{ code: ru, name: 'Канадский доллар' }] }
+  - { currency_id: 976, translations: [{ code: ru, name: 'Конголезский франк' }] }
+  - { currency_id: 756, translations: [{ code: ru, name: 'Швейцарский франк' }] }
+  - { currency_id: 152, translations: [{ code: ru, name: 'Чилийское песо' }] }
+  - { currency_id: 156, translations: [{ code: ru, name: 'Юань' }] }
+  - { currency_id: 170, translations: [{ code: ru, name: 'Колумбийское песо' }] }
+  - { currency_id: 188, translations: [{ code: ru, name: 'Костариканский колон' }] }
+  - { currency_id: 192, translations: [{ code: ru, name: 'Кубинское песо' }] }
+  - { currency_id: 132, translations: [{ code: ru, name: 'Эскудо Кабо-Верде' }] }
+  - { currency_id: 203, translations: [{ code: ru, name: 'Чешская крона' }] }
+  - { currency_id: 262, translations: [{ code: ru, name: 'Франк Джибути' }] }
+  - { currency_id: 208, translations: [{ code: ru, name: 'Датская крона' }] }
+  - { currency_id: 214, translations: [{ code: ru, name: 'Доминиканское песо' }] }
+  - { currency_id: 12, translations: [{ code: ru, name: 'Алжирский динар' }] }
+  - { currency_id: 818, translations: [{ code: ru, name: 'Египетский фунт' }] }
+  - { currency_id: 232, translations: [{ code: ru, name: 'Накфа' }] }
+  - { currency_id: 230, translations: [{ code: ru, name: 'Эфиопский быр' }] }
+  - { currency_id: 978, translations: [{ code: ru, name: 'Евро' }] }
+  - { currency_id: 242, translations: [{ code: ru, name: 'Доллар Фиджи' }] }
+  - { currency_id: 238, translations: [{ code: ru, name: 'Фунт Фолклендских островов' }] }
+  - { currency_id: 826, translations: [{ code: ru, name: 'Фунт' }] }
+  - { currency_id: 981, translations: [{ code: ru, name: 'Лари' }] }
+  - { currency_id: 936, translations: [{ code: ru, name: 'Седи' }] }
+  - { currency_id: 292, translations: [{ code: ru, name: 'Гибралтарский фунт' }] }
+  - { currency_id: 270, translations: [{ code: ru, name: 'Даласи' }] }
+  - { currency_id: 324, translations: [{ code: ru, name: 'Гвинейский франк' }] }
+  - { currency_id: 320, translations: [{ code: ru, name: 'Кетсаль' }] }
+  - { currency_id: 328, translations: [{ code: ru, name: 'Гайанский доллар' }] }
+  - { currency_id: 344, translations: [{ code: ru, name: 'Гонконгский доллар' }] }
+  - { currency_id: 340, translations: [{ code: ru, name: 'Лемпира' }] }
+  - { currency_id: 191, translations: [{ code: ru, name: 'Хорватская куна' }] }
+  - { currency_id: 332, translations: [{ code: ru, name: 'Гурд' }] }
+  - { currency_id: 348, translations: [{ code: ru, name: 'Форинт' }] }
+  - { currency_id: 360, translations: [{ code: ru, name: 'Рупия' }] }
+  - { currency_id: 376, translations: [{ code: ru, name: 'Шекель' }] }
+  - { currency_id: 356, translations: [{ code: ru, name: 'Индийская рупия' }] }
+  - { currency_id: 368, translations: [{ code: ru, name: 'Иракский динар' }] }
+  - { currency_id: 364, translations: [{ code: ru, name: 'Иранский риал' }] }
+  - { currency_id: 352, translations: [{ code: ru, name: 'Исландская крона' }] }
+  - { currency_id: 388, translations: [{ code: ru, name: 'Ямайский доллар' }] }
+  - { currency_id: 400, translations: [{ code: ru, name: 'Иорданский динар' }] }
+  - { currency_id: 392, translations: [{ code: ru, name: 'Иена' }] }
+  - { currency_id: 404, translations: [{ code: ru, name: 'Кенийский шиллинг' }] }
+  - { currency_id: 417, translations: [{ code: ru, name: 'Сом' }] }
+  - { currency_id: 116, translations: [{ code: ru, name: 'Риель' }] }
+  - { currency_id: 174, translations: [{ code: ru, name: 'Франк Комор' }] }
+  - { currency_id: 408, translations: [{ code: ru, name: 'Северокорейская вона' }] }
+  - { currency_id: 410, translations: [{ code: ru, name: 'Вона' }] }
+  - { currency_id: 414, translations: [{ code: ru, name: 'Кувейтский динар' }] }
+  - { currency_id: 136, translations: [{ code: ru, name: 'Доллар Островов Кайман' }] }
+  - { currency_id: 398, translations: [{ code: ru, name: 'Тенге' }] }
+  - { currency_id: 418, translations: [{ code: ru, name: 'Кип' }] }
+  - { currency_id: 422, translations: [{ code: ru, name: 'Ливанский фунт' }] }
+  - { currency_id: 144, translations: [{ code: ru, name: 'Шри-ланкийская рупия' }] }
+  - { currency_id: 430, translations: [{ code: ru, name: 'Либерийский доллар' }] }
+  - { currency_id: 426, translations: [{ code: ru, name: 'Лоти' }] }
+  - { currency_id: 440, translations: [{ code: ru, name: 'Литовский лит' }] }
+  - { currency_id: 428, translations: [{ code: ru, name: 'Латвийский лат' }] }
+  - { currency_id: 434, translations: [{ code: ru, name: 'Ливийский динар' }] }
+  - { currency_id: 504, translations: [{ code: ru, name: 'Марокканский дирхам' }] }
+  - { currency_id: 498, translations: [{ code: ru, name: 'Молдавский лей' }] }
+  - { currency_id: 969, translations: [{ code: ru, name: 'Малагасийский ариари' }] }
+  - { currency_id: 807, translations: [{ code: ru, name: 'Денар' }] }
+  - { currency_id: 104, translations: [{ code: ru, name: 'Кьят' }] }
+  - { currency_id: 496, translations: [{ code: ru, name: 'Тугрик' }] }
+  - { currency_id: 446, translations: [{ code: ru, name: 'Патака' }] }
+  - { currency_id: 478, translations: [{ code: ru, name: 'Угия' }] }
+  - { currency_id: 480, translations: [{ code: ru, name: 'Маврикийская рупия' }] }
+  - { currency_id: 462, translations: [{ code: ru, name: 'Руфия' }] }
+  - { currency_id: 454, translations: [{ code: ru, name: 'Квача' }] }
+  - { currency_id: 484, translations: [{ code: ru, name: 'Мексиканское песо' }] }
+  - { currency_id: 458, translations: [{ code: ru, name: 'Малайзийский ринггит' }] }
+  - { currency_id: 943, translations: [{ code: ru, name: 'Метикал' }] }
+  - { currency_id: 516, translations: [{ code: ru, name: 'Доллар Намибии' }] }
+  - { currency_id: 566, translations: [{ code: ru, name: 'Найра' }] }
+  - { currency_id: 558, translations: [{ code: ru, name: 'Золотая кордоба' }] }
+  - { currency_id: 578, translations: [{ code: ru, name: 'Норвежская крона' }] }
+  - { currency_id: 524, translations: [{ code: ru, name: 'Непальская рупия' }] }
+  - { currency_id: 554, translations: [{ code: ru, name: 'Новозеландский доллар' }] }
+  - { currency_id: 512, translations: [{ code: ru, name: 'Оманский риал' }] }
+  - { currency_id: 590, translations: [{ code: ru, name: 'Бальбоа' }] }
+  - { currency_id: 604, translations: [{ code: ru, name: 'Новый соль' }] }
+  - { currency_id: 598, translations: [{ code: ru, name: 'Кина' }] }
+  - { currency_id: 608, translations: [{ code: ru, name: 'Филиппинское песо' }] }
+  - { currency_id: 586, translations: [{ code: ru, name: 'Gакистанская рупия' }] }
+  - { currency_id: 985, translations: [{ code: ru, name: 'Злотый' }] }
+  - { currency_id: 600, translations: [{ code: ru, name: 'Гуарани' }] }
+  - { currency_id: 634, translations: [{ code: ru, name: 'Катарский риал' }] }
+  - { currency_id: 946, translations: [{ code: ru, name: 'Новый лей' }] }
+  - { currency_id: 941, translations: [{ code: ru, name: 'Сербский динар' }] }
+  - { currency_id: 643, translations: [{ code: ru, name: 'Российский рубль' }] }
+  - { currency_id: 646, translations: [{ code: ru, name: 'Франк Руанды' }] }
+  - { currency_id: 682, translations: [{ code: ru, name: 'Саудовский риял' }] }
+  - { currency_id: 90, translations: [{ code: ru, name: 'Доллар Соломоновых Островов' }] }
+  - { currency_id: 690, translations: [{ code: ru, name: 'Сейшельская рупия' }] }
+  - { currency_id: 938, translations: [{ code: ru, name: 'Суданский фунт' }] }
+  - { currency_id: 752, translations: [{ code: ru, name: 'Шведская крона' }] }
+  - { currency_id: 702, translations: [{ code: ru, name: 'Сингапурский доллар' }] }
+  - { currency_id: 654, translations: [{ code: ru, name: 'Фунт Святой Елены' }] }
+  - { currency_id: 694, translations: [{ code: ru, name: 'Леоне' }] }
+  - { currency_id: 706, translations: [{ code: ru, name: 'Сомалийский шиллинг' }] }
+  - { currency_id: 968, translations: [{ code: ru, name: 'Суринамский доллар' }] }
+  - { currency_id: 728, translations: [{ code: ru, name: 'Южносуданский фунт' }] }
+  - { currency_id: 678, translations: [{ code: ru, name: 'Добра' }] }
+  - { currency_id: 222, translations: [{ code: ru, name: 'Сальвадорский колон' }] }
+  - { currency_id: 760, translations: [{ code: ru, name: 'Сирийский фунт' }] }
+  - { currency_id: 748, translations: [{ code: ru, name: 'Лилангени' }] }
+  - { currency_id: 764, translations: [{ code: ru, name: 'Бат' }] }
+  - { currency_id: 972, translations: [{ code: ru, name: 'Сомони' }] }
+  - { currency_id: 934, translations: [{ code: ru, name: 'Новый манат' }] }
+  - { currency_id: 788, translations: [{ code: ru, name: 'Тунисский динар' }] }
+  - { currency_id: 776, translations: [{ code: ru, name: 'Паанга' }] }
+  - { currency_id: 949, translations: [{ code: ru, name: 'Турецкая лира' }] }
+  - { currency_id: 780, translations: [{ code: ru, name: 'Доллар Тринидада и Тобаго' }] }
+  - { currency_id: 901, translations: [{ code: ru, name: 'Новый тайваньский доллар' }] }
+  - { currency_id: 834, translations: [{ code: ru, name: 'Танзанийский шиллинг' }] }
+  - { currency_id: 980, translations: [{ code: ru, name: 'Гривна' }] }
+  - { currency_id: 800, translations: [{ code: ru, name: 'Угандийский шиллинг' }] }
+  - { currency_id: 840, translations: [{ code: ru, name: 'Доллар США' }] }
+  - { currency_id: 858, translations: [{ code: ru, name: 'Уругвайское песо' }] }
+  - { currency_id: 860, translations: [{ code: ru, name: 'Узбекский сум' }] }
+  - { currency_id: 937, translations: [{ code: ru, name: 'Боливар фуэрте' }] }
+  - { currency_id: 704, translations: [{ code: ru, name: 'Донг' }] }
+  - { currency_id: 548, translations: [{ code: ru, name: 'Вату' }] }
+  - { currency_id: 882, translations: [{ code: ru, name: 'Тала' }] }
+  - { currency_id: 950, translations: [{ code: ru, name: 'Франк КФА BEAC' }] }
+  - { currency_id: 951, translations: [{ code: ru, name: 'Восточно-карибский доллар' }] }
+  - { currency_id: 952, translations: [{ code: ru, name: 'Франк КФА BCEAO' }] }
+  - { currency_id: 953, translations: [{ code: ru, name: 'Франк КФП' }] }
+  - { currency_id: 886, translations: [{ code: ru, name: 'Йеменский риал' }] }
+  - { currency_id: 710, translations: [{ code: ru, name: 'Рэнд' }] }
+  - { currency_id: 894, translations: [{ code: ru, name: 'Замбийская квача' }] }
+  - { currency_id: 932, translations: [{ code: ru, name: 'Доллар Зимбабве' }] }
+
 XLite\Model\Config:
   directives: { addModel: 'XLite\Model\ConfigTranslation' }
   - { name: 'add_on_mode', category: 'General', translations: [{ code: 'ru', option_name: 'Работать в режиме стола заказов' }] }

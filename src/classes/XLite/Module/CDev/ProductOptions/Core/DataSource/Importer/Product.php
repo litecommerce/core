@@ -44,7 +44,12 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
         parent::update($product, $cell);
 
         if (isset($cell['optionGroups'])) {
+            $ts = microtime(true);
             $this->updateOptionGroups($product, $cell['optionGroups']);
+            $this->logOperation(
+                'Update option groups (eid: ' . $cell['id'] . ')',
+                microtime(true) - $ts
+            );
         }
     }
 
