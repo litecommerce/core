@@ -247,6 +247,7 @@ abstract class Product extends \XLite\Core\DataSource\Importer\Product implement
     protected function updateOption(\XLite\Module\CDev\ProductOptions\Model\Option $model, array $option)
     {
         $model->setName($option['name']);
+        $model->setEnabled(true);
 
         $this->updateOptionSurcharge($model, $option['modifiers']['price'], 'price');
         $this->updateOptionSurcharge($model, $option['modifiers']['weight'], 'weight');
