@@ -298,6 +298,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
     public function testIsCustom()
     {
         $module = $this->getTestModule1();
+        \XLite\Core\Marketplace::getInstance()->saveAddonsList();
         $this->assertFalse($module->isCustom(), 'check if module ' . self::TEST_MODULE_1 . ' is custom [1]');
     }
 
@@ -449,7 +450,9 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
      */
     protected function getModuleByAuthorAndName($author, $name, $version = null, $revision = null)
     {
-        if (!($module = $this->getRepo()->findOneBy(array('author' => $author, 'name' => $name)))) {
+        $module = $this->getRepo()->findOneBy(array('author' => $author, 'name' => $name));
+
+        if (!$module) {
             $module = new \XLite\Model\Module();
 
             $module->setAuthor($author);
