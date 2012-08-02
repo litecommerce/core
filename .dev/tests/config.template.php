@@ -134,7 +134,7 @@ unsharp_mask_filter_on_resize = off
 ; image_magick_path = "/usr/local/imagemagick/" (in Unix/Linux )
 ; You should consult with your hosting provider to find where Image Magick is installed
 ; If you leave it empty then PHP GD library will be used.
-; 
+;
 image_magick_path =
 
 ;
@@ -150,7 +150,7 @@ auth_code = ""
 ;
 [performance]
 developer_mode = Off
-substitutional_skins_cache = off
+skins_cache = off
 
 ;
 ; Decorator options
