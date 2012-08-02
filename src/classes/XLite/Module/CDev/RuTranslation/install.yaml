@@ -1396,4 +1396,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Less search options', translations: [{ code: 'ru', label: 'Скрыть настройки поиска' }] }
   - { name: 'Search in', translations: [{ code: 'ru', label: 'Искать в' }] }
   - { name: 'Product title', translations: [{ code: 'ru', label: 'Название продукта' }] }
+  - { name: 'Access denied!', translations: [{ code: 'ru', label: 'Доступ закрыт!' }] }
+  - { name: 'You are not allowed to access this resource!', translations: [{ code: 'ru', label: 'У вас недостаточно прав для просмотра этой страницы!' }] }
+
 
