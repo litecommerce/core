@@ -1050,6 +1050,26 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Get visible payment methods
+     *
+     * @return array
+     */
+    public function getVisiblePaymentMethods()
+    {
+        $result = array();
+
+        foreach ($this->getActivePaymentTransactions() as $t) {
+            $result[] = $t->getPaymentMethod();
+        }
+
+        if (0 == count($result) && 0 < count($this->getPaymentTransactions())) {
+            $result[] = $this->getPaymentTransactions()->last()->getPaymentMethod();
+        }
+
+        return $result;
+    }
+
+    /**
      * Get first open (not payed) payment transaction
      *
      * @return \XLite\Model\Payment\Transaction|void
