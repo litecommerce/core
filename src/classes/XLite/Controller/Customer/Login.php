@@ -194,6 +194,8 @@ class Login extends \XLite\Controller\Customer\ACustomer
                 \XLite\Core\Database::getEM()->flush();
 
             } else {
+                $this->getCart()->setProfile(null);
+                $this->getCart()->setOrigProfile(null);
                 $this->updateCart();
             }
         }

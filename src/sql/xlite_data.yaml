@@ -53,7 +53,7 @@ XLite\Model\Config:
   - { name: location_zipcode, category: Company, type: text, orderby: 430, translations: [{ code: en, option_name: 'Zip/postal code' }] }
   - { name: company_phone, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 440, translations: [{ code: en, option_name: Phone }] }
   - { name: login_lifetime, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Number of days to store the last login data' }] }
-  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff' }] }
+  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Clear cart on customer logoff' }] }
   - { name: maximal_order_amount, category: General, type: 'XLite\View\FormField\Input\Text\Float', orderby: 290, value: 99999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Maximum allowed order total' }] }
   - { name: minimal_order_amount, category: General, type: 'XLite\View\FormField\Input\Text\Float', orderby: 280, value: '0', widgetParameters: { min: 0 }, translations: [{ code: en, option_name: 'Minimum allowed order total' }] }
   - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation' }] }
