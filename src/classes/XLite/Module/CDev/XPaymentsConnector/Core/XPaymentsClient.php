@@ -146,6 +146,78 @@ class XPaymentsClient extends \XLite\Base\Singleton
     }
 
     /**
+     * Get payment info
+     *
+     * @param integer $txn_id  ransaction id
+     * @param boleean $refresh Refresh OPTIONAL
+     *
+     * @return array Operation status & payment data array
+     */
+    function requestPaymentInfo($txn_id, $refresh = false)
+    {
+        $data = array(
+            'txnId' => $txn_id,
+            'refresh' => $refresh ? 1 : 0
+        );
+    
+        list($status, $response) = $this->getApiRequest('payment', 'get_info', $data);
+    
+        if ($status) {
+            if (!is_array($response) || !isset($response['status'])) {
+                $this->getApiError('GetInfo request. Server response has not status');
+                $status = false;
+    
+            } elseif (!isset($response['message'])) {
+                $this->getApiError('GetInfo request. Server response has not message');
+                $status = false;
+    
+            } elseif (!isset($response['transactionInProgress'])) {
+                $this->getApiError('GetInfo request. Server response has not transaction progress status');
+                $status = false;
+    
+            } elseif (!isset($response['isFraudStatus'])) {
+                $this->getApiError('GetInfo request. Server response has not fraud filter status');
+                $status = false;
+    
+            } elseif (!isset($response['currency']) || strlen($response['currency']) != 3) {
+                $this->getApiError('GetInfo request. Server response has not currency code or currency code has wrong format');
+                $status = false;
+    
+            } elseif (!isset($response['amount'])) {
+                $this->getApiError('GetInfo request. Server response has not payment amount');
+                $status = false;
+    
+            } elseif (!isset($response['capturedAmount'])) {
+                $this->getApiError('GetInfo request. Server response has not captured amount');
+                $status = false;
+    
+            } elseif (!isset($response['capturedAmountAvail'])) {
+                $this->getApiError('GetInfo request. Server response has not available for capturing amount');
+                $status = false;
+    
+            } elseif (!isset($response['refundedAmount'])) {
+                $this->getApiError('GetInfo request. Server response has not refunded amount');
+                $status = false;
+    
+            } elseif (!isset($response['refundedAmountAvail'])) {
+                $this->getApiError('GetInfo request. Server response has not available for refunding amount');
+                $status = false;
+    
+            } elseif (!isset($response['voidedAmount'])) {
+                $this->getApiError('GetInfo request. Server response has not voided amount');
+                $status = false;
+    
+            } elseif (!isset($response['voidedAmountAvail'])) {
+                $this->getApiError('GetInfo request. Server response has not available for cancelling amount');
+                $status = false;
+    
+            }
+        }
+    
+        return array($status, $response);
+    }
+
+    /**
      * Get list of available payment configurations from X-Payments 
      *
      * @return array
@@ -175,9 +247,9 @@ class XPaymentsClient extends \XLite\Base\Singleton
      * Send request to X-Payments to initialize new payment
      *
      * @param \XLite\Model\Payment\Method $paymentMethod Payment method
-     * @param string                      $refId         Order ID
-     * @param \XLite\Model\Cart           Shopping cart info
-     * @param boolean                      $forceAuth     Force enable AUTH mode
+     * @param integer                     $refId         Transaction ID
+     * @param \XLite\Model\Cart           $cart          Shopping cart info
+     * @param boolean                     $forceAuth     Force enable AUTH mode
      *
      * @return array
      */
@@ -273,9 +345,9 @@ class XPaymentsClient extends \XLite\Base\Singleton
     /**
      * Prepare shopping cart data
      *
-     * @param \XLite\Model\Cart $cart  X-Cart shopping cart
-     * @param string            $refId Order ID
-     * @param boolean                      $forceAuth     Force enable AUTH mode
+     * @param \XLite\Model\Cart $cart      X-Cart shopping cart
+     * @param integer           $refId     Transaction ID
+     * @param boolean           $forceAuth Force enable AUTH mode
      *
      * @return array
      */
@@ -295,7 +367,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
             'taxCost'              => 0.00,
             'discount'             => 0.00,
             'totalCost'            => 0.00,
-            'description'          => 'Order(s) #' . $refId,
+            'description'          => 'Order(s) #' . $cart->getOrderId(),
             'merchantEmail'        => \XLite\Core\Config::getInstance()->Company->orders_department,
             'forceTransactionType' => $forceAuth ? 'A' : '',
         );
