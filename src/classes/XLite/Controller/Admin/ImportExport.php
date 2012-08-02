@@ -499,6 +499,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                     $this->processImportStep();
 
                 } catch (\Exception $e) {
+                    \XLite\Logger::getInstance()->registerException($e);
                     $this->valid = false;
                     \XLite\Core\TopMessage::getInstance()->add(
                         'The import process failed. For more detailed informations see the log',
@@ -508,7 +509,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                         false,
                         false
                     );
-                    \XLite\Logger::getInstance()->registerException($e);
                 }
 
             } else {
@@ -998,6 +998,24 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     // }}}
 
     // {{{ Import complex fields
+
+    /**
+     * Import categories
+     *
+     * @param \XLite\Model\Product $product Product
+     * @param string               $data    Data
+     *
+     * @return void
+     */
+    protected function importCleanURL(\XLite\Model\Product $product, $data)
+    {
+        if (empty($data)) {
+            $product->setCleanURL(null);
+
+        } else {
+            $product->setCleanURL($data);
+        }
+    }
 
     /**
      * Import categories 
