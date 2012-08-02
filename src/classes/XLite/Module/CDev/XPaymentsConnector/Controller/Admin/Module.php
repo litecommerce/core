@@ -139,14 +139,18 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
     /**
      * Payment configuration specified transaction type status
      *
-     * @param array  $pm   Payment configuration
+     * @param mixed  $pm   Payment configuration
      * @param string $type Transaction type
      *
      * @return string
      */
-    public function getTransactionTypeStatus(array $pm, $type)
+    public function getTransactionTypeStatus($pm, $type)
     {
-        return $this->canTransactionType($pm, $type)
+        $status = is_object($pm)
+            ? $pm->getSetting($type)
+            : $this->canTransactionType($pm, $type);
+
+        return $status
             ? static::t('Yes')
             : static::t('No');
     }
@@ -158,9 +162,17 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      */
     public function isPaymentMethodsImported()
     {
-        $conf = new \XLite\Module\CDev\XPaymentsConnector\Model\Configuration();
+        return 0 < count($this->getPaymentMethods());
+    }
 
-        return 0 < count($conf->findAll());
+    /**
+     * Get payment methods
+     *
+     * @return array
+     */
+    public function getPaymentMethods()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findBy(array('class' => 'Module\CDev\XPaymentsConnector\Model\Payment\Processor\XPayments')); 
     }
 
     /**
@@ -236,7 +248,7 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
             if ($list) {
                 \XLite\Core\Session::getInstance()->xpc_payment_methods = $list;
 
-            } elseif (is_array($list))) {
+            } elseif (is_array($list)) {
                 \XLite\Core\TopMessage::addWarning('There are no payment configurations for this store.');
             } else {
                 \XLite\Core\TopMessage::addError(
@@ -262,6 +274,86 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
             $this->setReturnURL(
                 $this->buildURL('module', null, array('moduleId' => $this->getModuleID()))
             );
+        }
+    }
+
+    /**
+     * Import requested payment configurations
+     *
+     * @return void
+     */
+    protected function doActionXpcImport()
+    {
+        if (
+            $this->getModuleID()
+            && 'CDev\XPaymentsConnector' == $this->getModule()->getActualName()
+        ) {
+            $list = \XLite\Core\Session::getInstance()->xpc_payment_methods;
+    
+            if (!empty($list) && is_array($list)) {
+                $result = true;
+                if ($result) {
+                    foreach ($this->getPaymentMethods() as $pm) {
+                        \XLite\Core\Database::getEM()->remove($pm);
+                    }
+    
+                    foreach ($list as $pm) {
+                        $xpm = new \XLite\Model\Payment\Method;
+                        \XLite\Core\Database::getEM()->persist($xpm);
+                        $xpm->setClass('Module\CDev\XPaymentsConnector\Model\Payment\Processor\XPayments');
+                        $xpm->setServiceName('XPayments.' . $pm['id']);
+                        $xpm->setName($pm['moduleName']);
+                        foreach ($pm as $k => $v) {
+                            if (is_array($v)) {
+                                foreach ($v as $k2 => $v2) {
+                                    $xpm->setSetting($k2, $v2);
+                                }
+    
+                            } else {
+                                $xpm->setSetting($k, $v);
+                            }
+                        }
+                        $xpm->setSetting('useLiteInterface', 'N');
+                    }
+    
+                    \XLite\Core\Database::getEM()->flush();
+                    \XLite\Core\Session::getInstance()->xpc_payment_methods = null;
+    
+                    \XLite\Core\TopMessage::getInstance()->addInfo('Payment methods have been successfully imported');
+    
+                } else {
+                    \XLite\Core\TopMessage::addError('Error had occured during the requesting of payment methods from X-Payments. See log files for details.');
+                }
+    
+            } else {
+                \XLite\Core\TopMessage::addError('There are no payment configurations for this store.');
+            }
+        }
+    }
+
+    /**
+     * Update payment methods settings
+     *
+     * @return void
+     */
+    protected function doActionXpcSettings()
+    {
+        if (
+            $this->getModuleID()
+            && 'CDev\XPaymentsConnector' == $this->getModule()->getActualName()
+        ) {
+            $list = \XLite\Core\Request::getInstance()->list;
+
+            if (!empty($list) && is_array($list)) {
+                foreach ($this->getPaymentMethods() as $xpm) {
+                    $xpm->setSetting(
+                        'useLiteInterface', 
+                        isset($list[$xpm->getMethodId()]) ? $list[$xpm->getMethodId()]['lite'] : 'N'
+                    );
+                }
+                \XLite\Core\Database::getEM()->flush();
+				\XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
+            }
         }
     }
 

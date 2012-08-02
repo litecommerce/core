@@ -28,7 +28,7 @@ namespace XLite\Module\CDev\XPaymentsConnector\View\Settings;
 /**
  * Deploy configuration 
  * 
- * @ListChild (list="crud.settings.header", zone="admin", weight="100")
+ * @ListChild (list="crud.settings.header", zone="admin", weight="200")
  */
 class DeployConfiguration extends \XLite\Module\CDev\XPaymentsConnector\View\Settings\ASettings
 {

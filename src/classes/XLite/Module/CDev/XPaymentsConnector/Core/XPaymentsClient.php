@@ -172,6 +172,199 @@ class XPaymentsClient extends \XLite\Base\Singleton
     }
 
     /**
+     * Send request to X-Payments to initialize new payment
+     *
+     * @param \XLite\Model\Payment\Method $paymentMethod Payment method
+     * @param string                      $refId         Order ID
+     * @param \XLite\Model\Cart           Shopping cart info
+     * @param boolean                      $forceAuth     Force enable AUTH mode
+     *
+     * @return array
+     */
+    public function requestPaymentInit(\XLite\Model\Payment\Method $paymentMethod, $refId, \XLite\Model\Cart $cart, $forceAuth)
+    {
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+    
+        // Prepare cart
+        $preparedCart = $this->prepareCart($cart, $refId, $forceAuth);
+    
+        if (!$cart) {
+            return $this->getApiError('Unable to prepare cart data');
+        }
+    
+        // Data to send to X-Payments
+        $data = array(
+            'confId'      => intval($paymentMethod->getSetting('id')),
+            'refId'       => $refId,
+            'cart'        => $preparedCart,
+            'language'    => 'en',
+            'returnUrl'   => \XLite::getInstance()->getShopUrl(
+                \XLite\Core\Converter::buildUrl(
+                    'payment_return',
+                    'return',
+                    array('order_id' => $cart->getOrderId())
+                )
+            ),
+            'callbackUrl' => \XLite::getInstance()->getShopUrl(
+                \XLite\Core\Converter::buildUrl(
+                    'callback',
+                    'callback',
+                    array('order_id' => $cart->getOrderId())
+                )
+            ),
+
+        );
+
+        list($status, $response) = $this->getApiRequest(
+            'payment',
+            'init',
+            $data,
+            $this->getRequestInitSchema()
+        );
+    
+        // The main entry in the response is the 'token'
+        if (
+            $status
+            && (
+                !isset($response['token'])
+                || !is_string($response['token'])
+            )
+        ) {
+    
+            $this->getApiError('Transaction token is not found or has a wrong type');
+    
+            $status = false;
+    
+        }
+    
+        if ($status) {
+    
+            // Use the default URL if X-Payments did not return one
+            if (substr($config->xpc_xpayments_url, -1) == '/') {
+                $config->xpc_xpayments_url = substr($config->xpc_xpayments_url, 0, -1);
+            }
+    
+            // Set fields for the "Redirect to X-Payments" form
+            $response = array(
+                'txnId'       => $response['txnId'],
+                'module_name' => $paymentMethod->getSetting('moduleName'),
+                'url'         => $config->xpc_xpayments_url . '/payment.php',
+                'fields'      => array(
+                    'target' => 'main',
+                    'action' => 'start',
+                    'token'  => $response['token'],
+                ),
+            );
+    
+        } else {
+    
+            $response = array(
+                'detailed_error_message' => isset($response['error_message'])
+                                                ?  $response['error_message']
+                                                : (is_string($response) ? $response : 'Unknown'),
+    
+            );
+    
+        }
+    
+        return array($status, $response);
+    }
+    
+    /**
+     * Prepare shopping cart data
+     *
+     * @param \XLite\Model\Cart $cart  X-Cart shopping cart
+     * @param string            $refId Order ID
+     * @param boolean                      $forceAuth     Force enable AUTH mode
+     *
+     * @return array
+     */
+    protected function prepareCart(\XLite\Model\Cart $cart, $refId, $forceAuth)
+    {
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+
+        $profile = $cart->getProfile();
+    
+        $result = array(
+            'login'                => $profile->getLogin() . ' (User ID #' . $profile->getProfileId() . ')',
+            'billingAddress'       => array(),
+            'shippingAddress'      => array(),
+            'items'                => array(),
+            'currency'             => $cart->getCurrency()->getCode(),
+            'shippingCost'         => 0.00,
+            'taxCost'              => 0.00,
+            'discount'             => 0.00,
+            'totalCost'            => 0.00,
+            'description'          => 'Order(s) #' . $refId,
+            'merchantEmail'        => \XLite\Core\Config::getInstance()->Company->orders_department,
+            'forceTransactionType' => $forceAuth ? 'A' : '',
+        );
+    
+        $namePrefixes = array(
+            'billing',
+            'shipping',
+        );
+    
+        $addressFields = array(
+            'firstname' => '',
+            'lastname'  => '',
+            'address'   => '',
+            'city'      => '',
+            'state'     => 'N/A',
+            'country'   => '',
+            'zipcode'   => '',
+            'phone'     => '',
+            'fax'       => '',
+            'company'   => '',
+        );
+    
+        // Prepare shipping and billing address
+        foreach ($namePrefixes as $type) {
+    
+            $addressIndex = $type . 'Address';
+    
+            foreach ($addressFields as $field => $defValue) {
+                $method = 'address' == $field ? 'street' : $field;
+                $result[$addressIndex][$field] = (
+                    $profile->$addressIndex
+                    && method_exists($profile->$addressIndex, 'get' . $method)
+                    && $profile->$addressIndex->$method
+                )
+                    ? (
+                        is_object($profile->$addressIndex->$method)
+                            ? $profile->$addressIndex->$method->getCode()
+                            : $profile->$addressIndex->$method
+                    )
+                    : $defValue;
+            }
+
+            $result[$addressIndex]['email'] = $profile->getLogin();    
+        }
+
+        // Set items
+        if ($cart->getItems()) {
+    
+            foreach ($cart->getItems() as $item) {
+                $result['items'][] = array(
+                    'sku'      => $item->getSku(),
+                    'name'     => $item->getName(),
+                    'price'    => $item->getPrice(),
+                    'quantity' => $item->getAmount(),
+                );
+            }
+    
+        }
+
+        // Set costs
+        $result['shippingCost'] = round($cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, false), 2);
+        $result['taxCost']      = round($cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_TAX, false), 2);
+        $result['totalCost']    = round($cart->getTotal(), 2);
+        $result['discount']     = round($cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_DISCOUNT, false), 2);
+    
+        return $result;
+    }
+
+    /**
      * Make X-Payments API request
      *
      * @param string $target Request target
@@ -797,7 +990,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
     /**
      * Return validation schema for test request
      *
-     * @return array
+     * @return string
      */
     protected function getRequestTestSchema()
     {
@@ -817,9 +1010,43 @@ class XPaymentsClient extends \XLite\Base\Singleton
     }
 
     /**
+     * Return validation schema for the "init payment" action
+     *
+     * @return string
+     */
+    protected function getRequestInitSchema()
+    {
+        return '
+<xsd:element name="token" minOccurs="0">
+
+ <xsd:simpleType>
+  <xsd:restriction base="xsd:string">
+
+   <xsd:maxLength value="32"/>
+   <xsd:minLength value="32"/>
+
+  </xsd:restriction>
+ </xsd:simpleType>
+
+</xsd:element>
+<xsd:element name="txnId" minOccurs="0">
+
+ <xsd:simpleType>
+  <xsd:restriction base="xsd:string">
+
+   <xsd:maxLength value="32"/>
+   <xsd:minLength value="32"/>
+
+  </xsd:restriction>
+ </xsd:simpleType>
+
+</xsd:element>';
+    }
+
+    /**
      * Return validation schema for test request
      *
-     * @return array
+     * @return string
      */
     protected function getRequestPaymentMethodsSchema()
     {
@@ -873,7 +1100,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
   <xsd:attribute name="type" type="xsd:string"/>
 
  </xsd:complexType>
-</xsd:element>
-        ';
+</xsd:element>';
     }
 }

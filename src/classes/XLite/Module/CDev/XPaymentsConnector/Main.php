@@ -78,7 +78,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'X-Payments connector';
+        return 'This module enables an ability to process payments via X-Payments software';
     }
 
     /**
