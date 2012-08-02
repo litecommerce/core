@@ -265,6 +265,18 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     // Payment methods list
     jQuery('.payment-step form.methods', this.base)
       .commonController('enableBackgroundSubmit')
+      .bind(
+        'beforeSubmit',
+        function() {
+          jQuery('.payment-step.current .button-row button', o.base).addClass('disabled');
+        }
+      )
+      .bind(
+        'afterSubmit',
+        function() {
+          jQuery('.payment-step.current .button-row button', o.base).removeClass('disabled');
+        }
+      )
       .find('ul input')
       .change(
         function(event) {
@@ -696,6 +708,18 @@ ShippingMethodsView.prototype.postprocess = function(isSuccess, initial)
     // Check and save shipping methods
     this.base
       .commonController('enableBackgroundSubmit')
+      .bind(
+        'beforeSubmit',
+        function() {
+          jQuery('.shipping-step.current .button-row button', o.parentWidget.base).addClass('disabled');
+        }
+      )
+      .bind(
+        'afterSubmit',
+        function() {
+          jQuery('.shipping-step.current .button-row button', o.parentWidget.base).removeClass('disabled');
+        }
+      )
       .find('ul.shipping-rates input')
       .change(
         function(event) {

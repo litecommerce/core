@@ -658,13 +658,24 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getCreateSecureTokenRequestParams()
     {
-        $shippingModifier = $this->getOrder()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        $order = $this->getOrder();
+
+        $shippingModifier = $order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+
+        if ($shippingModifier && $shippingModifier->canApply()) {
+            $noShipping = '0';
+            $freightAmt = $order->getCurrency()->roundValue($order->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_SHIPPING));
+
+        } else {
+            $noShipping = '1';
+            $freightAmt = 0;
+        }
 
         $postData = array(
             'CREATESECURETOKEN' => 'Y',
             'SECURETOKENID'     => $this->getSecureTokenId(),
             'TRXTYPE'           => $this->getSetting('transaction_type'),
-            'AMT'               => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
+            'AMT'               => $order->getCurrency()->roundValue($this->transaction->getValue()),
             'BILLTOFIRSTNAME'   => $this->getProfile()->getBillingAddress()->getFirstname(),
             'BILLTOLASTNAME'    => $this->getProfile()->getBillingAddress()->getLastname(),
             'BILLTOSTREET'      => $this->getProfile()->getBillingAddress()->getStreet(),
@@ -678,26 +689,34 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'RETURNURLMETHOD'   => 'POST', // Set the return method for approved transactions (RETURNURL)
             'URLMETHOD'         => 'POST', // Set the return method for cancelled and failed transactions (ERRORURL, CANCELURL)
             'TEMPLATE'          => 'MINLAYOUT', // This enables an iframe layout
-            'INVNUM'            => $this->getOrder()->getOrderId(),
+            'INVNUM'            => $order->getOrderId(),
             'BILLTOPHONENUM'    => $this->getProfile()->getBillingAddress()->getPhone(),
             'BILLTOEMAIL'       => $this->getProfile()->getLogin(),
-            'SHIPTOPHONENUM'    => $this->getProfile()->getShippingAddress()->getPhone(),
-            'SHIPTOFIRSTNAME'   => $this->getProfile()->getShippingAddress()->getFirstname(),
-            'SHIPTOLASTNAME'    => $this->getProfile()->getShippingAddress()->getLastname(),
-            'SHIPTOSTREET'      => $this->getProfile()->getShippingAddress()->getStreet(),
-            'SHIPTOCITY'        => $this->getProfile()->getShippingAddress()->getCity(),
-            'SHIPTOSTATE'       => $this->getProfile()->getShippingAddress()->getState()->getCode(),
-            'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
-            'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode3(),
-            'SHIPTOEMAIL'       => $this->getProfile()->getLogin(),
             'ADDROVERRIDE'      => 'Y',
-            'NOSHIPPING'        => ($shippingModifier && $shippingModifier->canApply()) ? '1' : '0',
+            'NOSHIPPING'        => $noShipping,
+            'FREIGHTAMT'        => $freightAmt,
+            'HANDLINGAMT'       => 0,
+            'INSURANCEAMT'      => 0,
             'SILENTPOST'        => 'TRUE',
             'SILENTPOSTURL'     => urldecode($this->getCallbackURL(null, true)),
             'FORCESILENTPOST'   => 'FALSE',
             'DISABLERECEIPT'    => 'TRUE', // Warning! If set this to 'FALSE' Paypal will redirect buyer to cart.php without target, txnId and other service parameters
             'CURRENCY'          => $this->getCurrencyCode(),
         );
+
+        if ('1' != $noShipping) {
+            $postData += array(
+                'SHIPTOPHONENUM'    => $this->getProfile()->getShippingAddress()->getPhone(),
+                'SHIPTOFIRSTNAME'   => $this->getProfile()->getShippingAddress()->getFirstname(),
+                'SHIPTOLASTNAME'    => $this->getProfile()->getShippingAddress()->getLastname(),
+                'SHIPTOSTREET'      => $this->getProfile()->getShippingAddress()->getStreet(),
+                'SHIPTOCITY'        => $this->getProfile()->getShippingAddress()->getCity(),
+                'SHIPTOSTATE'       => $this->getProfile()->getShippingAddress()->getState()->getCode(),
+                'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
+                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode3(),
+                'SHIPTOEMAIL'       => $this->getProfile()->getLogin(),
+            );
+        }
 
         $postData = $postData + $this->getLineItems();
 
@@ -722,26 +741,42 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
         $items = $obj->getItems();
 
-        //var_dump(is_array($items));
-
         if (!empty($items)) {
             $index = 0;
+
+            // Prepare data about ordered products
 
             foreach ($items as $item) {
                 $lineItems['L_COST' . $index] = $obj->getCurrency()->roundValue($item->getPrice());
                 $lineItems['L_NAME' . $index] = $item->getProduct()->getTranslation()->name;
-                $lineItems['L_SKU' . $index] = $item->getProduct()->getSku();
+                if ($item->getProduct()->getSku()) {
+                    $lineItems['L_SKU' . $index] = $item->getProduct()->getSku();
+                }
                 $lineItems['L_QTY' . $index] = $item->getAmount();
-                //$lineItems['L_TAXAMT' . $index] = $this->getOrder()->getCurrency()->roundValue($item->getTaxValue());
                 $itemsSubtotal += $lineItems['L_COST' . $index] * $lineItems['L_QTY' . $index];
-                //$itemsTaxAmount += $lineItems['L_TAXAMT' . $index] * $lineItems['L_QTY' . $index];
                 $index += 1;
+            }
+
+            // Prepare data about discount
+
+            $discount = $obj->getCurrency()->roundValue($obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_DISCOUNT));
+
+            if (0 != $discount) {
+                $lineItems['L_COST' . $index] = $discount;
+                $lineItems['L_NAME' . $index] = 'Discount';
+                $lineItems['L_QTY' . $index] = 1;
+                $itemsSubtotal += $discount;
             }
 
             $lineItems += array('ITEMAMT' => $itemsSubtotal);
 
-            if (0 < $itemsTaxAmount) {
-                $lineItems += array('TAXAMT'  => $itemsTaxAmount);
+            // Prepare data about summary tax cost
+
+            $taxCost = $obj->getCurrency()->roundValue($obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_TAX));
+
+            if (0 < $taxCost) {
+                $lineItems['L_TAXAMT' . $index] = $taxCost;
+                $lineItems['TAXAMT'] = $taxCost;
             }
         }
 

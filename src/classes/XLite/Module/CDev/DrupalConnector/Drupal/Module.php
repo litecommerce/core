@@ -196,6 +196,16 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         include_once \Includes\Utils\ModulesManager::getAbsoluteDir('CDev', 'DrupalConnector')
             . 'Drupal' . LC_DS . 'Include' . LC_DS . 'Callbacks.php';
+
+        if (defined('DRUPAL_ROOT') && !\XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_path) {
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                array(
+                    'name'     => 'drupal_root_path',
+                    'category' => 'CDev\\DrupalConnector',
+                    'value'    => DRUPAL_ROOT,
+                )
+            );
+        }
     }
 
     /**

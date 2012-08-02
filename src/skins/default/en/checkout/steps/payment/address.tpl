@@ -16,7 +16,7 @@
     <label for="same_address">{t(#The same as shipping#)}</label>
   </div>
 
-  {if:isSameAddress()}
+  {if:!isEditableAddress()}
     <widget template="checkout/parts/address.plain.tpl" address="{getSameAddress()}" />
 
   {else:}

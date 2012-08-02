@@ -285,7 +285,7 @@ abstract class Converter extends \Includes\Utils\AUtils
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        $result = $interface;
+        $result = strval($interface);
         $urlParams = array();
 
         if (!empty($target)) {

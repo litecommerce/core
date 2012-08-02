@@ -42,7 +42,7 @@
 
     <div class="line-2">
 
-      <div class="payment" IF="order.getActivePaymentTransactions()">
+      <div class="payment" IF="order.getVisiblePaymentMethods()">
         <h2>{t(#Payment info#)}</h2>
         <div class="box"><list name="order.payment" /></div>
       </div>

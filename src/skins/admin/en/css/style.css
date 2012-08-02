@@ -1394,8 +1394,10 @@ td.value-attribute
   padding-bottom: 5px;
 }
 
-td.value-attribute .table-value {
+td div.table-value {
   display: inline;
+  float: left;
+  width: auto;
 }
 
 .product-modify-form .name-attribute
@@ -1627,7 +1629,7 @@ div.model-form-buttons {
 
 .model-properties ul.table {
   list-style: none;
-  min-width: 450px;
+  min-width: 1024px;
 }
 
 .model-properties ul.table > li {
@@ -1653,6 +1655,7 @@ div.star {
   .table-value
 {
   line-height: 24px;
+  padding: 5px 0px;
 }
 
 .settings div.table-value {
@@ -1660,7 +1663,8 @@ div.star {
 }
 
 div.table-value {
-  float: left;
+  float: right;
+  width: 80%;
 }
 
 div.table-value input[type="text"],

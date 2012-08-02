@@ -63,7 +63,10 @@ class ExpressCheckout extends \XLite\View\Button\Link
      */
     protected function isVisible()
     {
-        return \XLite\Module\CDev\Paypal\Main::isExpressCheckoutEnabled();
+        return parent::isVisible()
+            && \XLite\Module\CDev\Paypal\Main::isExpressCheckoutEnabled()
+            && $this->getCart()
+            && (0 < $this->getCart()->getTotal());
     }
 
     /**

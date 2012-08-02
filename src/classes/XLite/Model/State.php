@@ -75,7 +75,7 @@ class State extends \XLite\Model\AEntity
      *
      * @var \XLite\Model\Country
      *
-     * @ManyToOne (targetEntity="XLite\Model\Country", inversedBy="states")
+     * @ManyToOne (targetEntity="XLite\Model\Country", inversedBy="states", cascade={"merge","detach"})
      * @JoinColumn (name="country_code", referencedColumnName="code")
      */
     protected $country;

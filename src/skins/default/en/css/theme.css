@@ -1041,10 +1041,9 @@ ul.account-links a:hover
 #main-menu
 {
   border-style: none;
-  height: 50px;
   padding: 0;
   margin: 0 0 13px;
-  background: #589dce url(../images/top-menu.png) repeat-x top left;
+  background: #589dce url(../images/top-menu.png) repeat top left;
 }
 
 .no-breadcrumbs #main-menu
