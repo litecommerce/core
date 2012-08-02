@@ -175,7 +175,7 @@ abstract class Address extends \XLite\Model\AEntity
                 if (!$this->state || $this->state->getStateId() != $state->getStateId()) {
 
                     // :KLUDGE: Detach old state (issue #41812)
-                    if ($this->state) {
+                    if ($this->state && $this->state->getStateId()) {
                         \XLite\Core\Database::getEM()->detach($this->state);
                     }
 
