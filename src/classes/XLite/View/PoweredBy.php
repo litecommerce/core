@@ -120,7 +120,7 @@ class PoweredBy extends \XLite\View\AView
      */
     protected function getPhrase()
     {
-        $phrase = self::PHRASE;
+        $phrase = static::PHRASE;
 
         if (
             isset($this->phrases)
@@ -160,8 +160,8 @@ class PoweredBy extends \XLite\View\AView
     }
 
     /**
-     * getCurrentYear 
-     * 
+     * getCurrentYear
+     *
      * @return string
      */
     protected function getCurrentYear()
