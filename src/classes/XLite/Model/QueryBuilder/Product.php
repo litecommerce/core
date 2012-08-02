@@ -46,25 +46,6 @@ class Product extends \XLite\Model\QueryBuilder\AQueryBuilder
     protected $hasJoinedInventory = false;
 
     /**
-     * Join inventory procedure
-     *
-     * @return \XLite\Model\QueryBuilder\Product
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function innerJoinInventory()
-    {
-        if (!$this->hasJoinedInventory) {
-
-            $this->innerJoin('p.inventory', 'i');
-
-            $this->hasJoinedInventory = true;
-        }
-
-        return $this;
-    }
-
-    /**
      * getResult
      *
      * @return mixed

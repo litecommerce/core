@@ -98,7 +98,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder = $this->createSearchQueryBuilder($countOnly);
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
@@ -692,7 +692,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndInventory(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = self::INV_ALL)
     {
-        $queryBuilder->innerJoinInventory();
+        $queryBuilder->linkInner('p.inventory', 'i');
 
         if (in_array($value, array(self::INV_LOW, self::INV_OUT))) {
             $queryBuilder->andWhere('i.enabled = :enabled')
@@ -729,7 +729,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
             // FIXME - add aliases for sort modes
             if ('i.amount' === $sort) {
-                $queryBuilder->innerJoinInventory();
+                $queryBuilder->linkInner('p.inventory', 'i');
 
             } elseif ('p.price' == $sort && !\XLite::isAdminZone()) {
                 $this->assignCalculatedField($queryBuilder, 'price');
@@ -753,6 +753,30 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
         call_user_func_array(array($this, 'assignFrame'), array_merge(array($queryBuilder), $value));
+    }
+
+    /**
+     * Create search query builder 
+     * 
+     * @param boolean $countOnly Count only flag
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function createSearchQueryBuilder($countOnly)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        if (!$countOnly) {
+            $qb->addSelect('translations')
+                ->linkInner('p.inventory', 'i')
+                ->addSelect('i')
+                ->linkInner('p.images')
+                ->addSelect('images');
+        }
+
+        return $qb;
     }
 
     /**

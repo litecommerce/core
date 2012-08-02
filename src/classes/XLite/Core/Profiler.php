@@ -532,6 +532,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     protected function display()
     {
         $totalQueriesTime = 0;
+        $totalQueries = 0;
         foreach (self::$queries as $q => $d) {
             $cnt = count($d['time']);
             $sum = array_sum($d['time']);
@@ -543,11 +544,12 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
                 'trace' => $d['trace'],
             );
             $totalQueriesTime += $sum;
+            $totalQueries += $cnt;
         }
 
         $execTime = number_format($this->stop_time - $this->start_time, 4, self::DEC_POINT, self::THOUSANDS_SEP);
         $memoryPeak = round(memory_get_peak_usage() / 1024 / 1024, 3);
-        $totalQueries = count(self::$queries);
+        $totalQueriesUnique = count(self::$queries);
         $totalQueriesTime = number_format($totalQueriesTime, 4, self::DEC_POINT, self::THOUSANDS_SEP);
         $dbConnectTime = number_format($this->dbConnectTime, 4, self::DEC_POINT, self::THOUSANDS_SEP);
         $unitOfWorkSize = \XLite\Core\Database::getEM()->getUnitOfWork()->size();
@@ -567,7 +569,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     </tr>
     <tr>
         <td><strong>SQL queries count</strong></td>
-        <td>$totalQueries</td>
+        <td>$totalQueries ($totalQueriesUnique uniques)</td>
     </tr>
     <tr>
         <td><strong>SQL queries duration</strong></td>
