@@ -175,7 +175,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return void
      */
-    public function addSubstitutionalSkin($name, $interface = \XLite::CUSTOMER_INTERFACE)
+    public function addSkin($name, $interface = \XLite::CUSTOMER_INTERFACE)
     {
         if (!isset($this->substitutionalSkins[$interface])) {
             $this->substitutionalSkins[$interface] = array();
@@ -192,7 +192,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return void
      */
-    public function removeSubstutionalSkin($name, $interface = null)
+    public function removeSkin($name, $interface = null)
     {
         if (isset($interface)) {
             if (isset($this->substitutionalSkins[$interface])) {
@@ -409,7 +409,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return void
      */
-    public function saveSubstitutonalSkins()
+    public function saveSkins()
     {
         \XLite\Core\Database::getCacheDriver()->save(
             get_called_class() . '.SubstitutonalSkins',
@@ -555,7 +555,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return void
      */
-    protected function restoreSubstitutionalSkins()
+    protected function restoreSkins()
     {
         $data = \XLite\Core\Database::getCacheDriver()->fetch(
             get_called_class() . '.SubstitutonalSkins'
@@ -683,8 +683,8 @@ class Layout extends \XLite\Base\Singleton
             ->getOptions(array('performance', 'substitutional_skins_cache'));
 
         if ($this->substitutionalSkinsCache) {
-            $this->restoreSubstitutionalSkins();
-            register_shutdown_function(array($this, 'saveSubstitutonalSkins'));
+            $this->restoreSkins();
+            register_shutdown_function(array($this, 'saveSkins'));
         }
     }
 
