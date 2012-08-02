@@ -356,7 +356,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL($this->buildURL('cart'));
 
-        } elseif (0 < $cart->getOpenTotal()) {
+        } elseif (0 < $cart->getOpenTotal() && !in_array($cart->getStatus(), array(\XLite\Model\Order::STATUS_FAILED, \XLite\Model\Order::STATUS_DECLINED))) {
 
             \XLite\Core\TopMessage::addWarning(
                 'Payment was not finished',

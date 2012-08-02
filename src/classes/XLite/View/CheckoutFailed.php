@@ -47,6 +47,19 @@ class CheckoutFailed extends \XLite\View\AView
         return $list;
     }
 
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'checkout/checkout.css';
+
+        return $list;
+    }
+
 
     /**
      * Get continue URL
@@ -78,6 +91,37 @@ class CheckoutFailed extends \XLite\View\AView
     protected function getReorderURL()
     {
         return $this->buildURL('cart', 'add_order', array('order_id' => \XLite\Core\Request::getInstance()->order_id));
+    }
+
+    /**
+     * Get failure reason
+     *
+     * @return string
+     */
+    protected function getFailureReason()
+    {
+        $result = null;
+
+        $order = \XLite\core\Database::getRepo('XLite\Model\Order')->find(\XLite\Core\Request::getInstance()->order_id);
+
+        if (isset($order)) {
+            $transactions = $order->getPaymentTransactions();
+
+            // Get last payment transaction
+            if (!empty($transactions)) {
+                foreach ($transactions as $t) {
+                    $transaction = $t;
+                }
+
+                $reason = $transaction->getDataCell('status');
+
+                if (isset($reason) && $reason->getValue()) {
+                    $result = $reason->getValue();
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**
