@@ -51,7 +51,9 @@ class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\B
      */
     protected function getDrupalLink()
     {
-        return \XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url;
+        return \XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url
+            ?
+            : \XLite\Core\Converter::buildURL(null, null, array(), \XLite::CART_SELF);
     }
 
     /**

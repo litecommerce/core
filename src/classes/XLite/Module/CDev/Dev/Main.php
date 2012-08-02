@@ -23,59 +23,61 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Module\CDev\XMLSitemap\View\Admin;
+namespace XLite\Module\CDev\Dev;
 
 /**
- * Sitemap page widget 
- * 
+ * Dev module
  *
- * @ListChild (list="admin.center", zone="admin")
  */
-class Sitemap extends \XLite\View\Dialog
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'sitemap';
-
-        return $result;
-    }
-
-    /**
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/style.css';
-
-        return $list;
-    }
-
-    /**
-     * Return templates directory name
+     * Author name
      *
      * @return string
      */
-    protected function getDir()
+    public static function getAuthorName()
     {
-        return 'modules/CDev/XMLSitemap/admin';
+        return 'Creative Development LLC';
     }
 
     /**
-     * Get sitemap URL 
-     * 
+     * Module name
+     *
      * @return string
      */
-    protected function getSitemapURL()
+    public static function getModuleName()
     {
-        return \XLite::getInstance()->getShopURL(\XLite\Core\Converter::buildURL('sitemap', '', array(), \XLite::CART_SELF));
+        return 'Development';
+    }
+
+    /**
+     * Get module major version
+     *
+     * @return string
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
+    }
+
+    /**
+     * Module version
+     *
+     * @return string
+     */
+    public static function getMinorVersion()
+    {
+        return '0';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     */
+    public static function getDescription()
+    {
+        return 'This module adjusts some settings to help in deploying software for the development purposes';
     }
 }

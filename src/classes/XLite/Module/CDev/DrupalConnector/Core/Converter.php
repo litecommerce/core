@@ -57,21 +57,28 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
             $target = \XLite::TARGET_DEFAULT;
         }
 
-        if (!\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+        if (
+            \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            || (\XLite::CART_SELF == $interface && \XLite\Module\CDev\DrupalConnector\Core\Caller::getInstance()->isInitialized())
+        ) {
+
+            $portal = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByTarget($target);
+
+            if ($portal) {
+
+                // Drupal URL (portal)
+                list($path, $args) = $portal->getDrupalArgs($target, $action, $params);
+                $result = static::normalizeDrupalURL($path, $args);
+            } else {
+
+                // Drupal URL
+                $result = static::buildDrupalURL($target, $action, $params);
+            }
+    
+        } else {
 
             // Standalone URL
             $result = parent::buildURL($target, $action, $params, $interface);
-
-        } elseif ($portal = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByTarget($target)) {
-
-            // Drupal URL (portal)
-            list($path, $args) = $portal->getDrupalArgs($target, $action, $params);
-            $result = static::normalizeDrupalURL($path, $args);
-
-        } else {
-
-            // Drupal URL
-            $result = static::buildDrupalURL($target, $action, $params);
 
         }
 
@@ -128,6 +135,10 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     protected static function normalizeDrupalURL($url, array $args = array())
     {
-        return preg_replace('/(\/)\%252F([^\/])/iSs', '\1/\2', url($url, array('query' => $args)));
+        return preg_replace(
+            '/(\/)\%252F([^\/])/iSs',
+            '\1/\2',
+            \XLite\Module\CDev\DrupalConnector\Core\Caller::getInstance()->url($url, array('query' => $args))
+        );
     }
 }

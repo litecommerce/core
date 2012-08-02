@@ -12,3 +12,10 @@
 {
   list-style: none;
 }
+
+.order-success-box .reason
+{
+  font-size: 11px;
+  color: #999999;
+  padding-bottom: 25px;
+}

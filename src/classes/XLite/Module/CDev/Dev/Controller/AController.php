@@ -23,27 +23,32 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Module\CDev\Paypal\View\Button;
+namespace XLite\Module\CDev\Dev\Controller;
 
 /**
- * Checkout buttons separator
+ * AController
  *
- *
- * @ListChild (list="cart.panel.totals", weight="90")
- * @ListChild (list="minicart.horizontal.buttons", weight="90")
  */
-class ButtonsSeparator extends \XLite\View\Button\ButtonsSeparator
+abstract class AController extends \XLite\Controller\AController implements \XLite\Base\IDecorator
 {
     /**
-     * isExpressCheckoutEnabled 
-     * 
-     * @return void
+     * Handles the request.
+     * Create installation timestamp if empty (at first software launch)
+     *
+     * @return string
      */
-    protected function isVisible()
+    public function handleRequest()
     {
-        return parent::isVisible()
-            && \XLite\Module\CDev\Paypal\Main::isExpressCheckoutEnabled()
-            && $this->getCart()
-            && (0 < $this->getCart()->getTotal());
+        if (empty(\XLite\Core\Config::getInstance()->Version->timestamp)) {
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                array(
+                    'category' => 'Version',
+                    'name'     => 'timestamp',
+                    'value'    => time(),
+                )
+            );
+        }
+
+        parent::handleRequest();
     }
 }

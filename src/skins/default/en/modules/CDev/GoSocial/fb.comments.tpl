@@ -9,5 +9,5 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<widget class="\XLite\View\ExternalSDK\Facebook" />
+<widget class="\XLite\Module\CDev\GoSocial\View\ExternalSDK\Facebook" />
 <div class="fb-comments"{foreach:getAttributes(),k,v} data-{k}="{v}"{end:}></div>

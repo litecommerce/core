@@ -10,5 +10,5 @@
  *}
 
 {foreach:getFields(),f}
-  {getViewValue(f):h}
+  {getViewValue(f)}
 {end:}
