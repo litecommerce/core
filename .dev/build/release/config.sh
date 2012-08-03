@@ -82,6 +82,7 @@ CDev/Quantum
 CDev/SalesTax
 CDev/Sale
 CDev/SocialLogin
+CDev/SimpleCMS
 CDev/TinyMCE
 CDev/TwoCheckout
 CDev/VAT
@@ -152,7 +153,7 @@ Powered by LiteCommerce [shopping cart software]
 Powered by LiteCommerce [PHP shopping cart]
 Powered by LiteCommerce [PHP shopping cart system]
 Powered by LiteCommerce [eCommerce shopping cart]
-Powered by LiteCommerce [online shopping cart] 
+Powered by LiteCommerce [online shopping cart]
 Powered by LiteCommerce [eCommerce software]
 Powered by LiteCommerce [eCommerce software]
 Powered by LiteCommerce [e-commerce software]

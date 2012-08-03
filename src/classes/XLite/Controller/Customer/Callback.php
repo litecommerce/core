@@ -129,7 +129,11 @@ class Callback extends \XLite\Controller\Customer\ACustomer
 
         } else {
 
-            \XLite\Logger::getInstance()->log('Request callback with undefined payment transaction', LOG_ERR);
+            \XLite\Logger::getInstance()->log(
+                'Request callback with undefined payment transaction' . PHP_EOL
+                . 'Data: ' . var_export(\XLite\Core\Request::getInstance()->getData(), true)
+                , LOG_ERR
+            );
         }
 
         \XLite\Core\Database::getEM()->flush();
