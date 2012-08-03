@@ -281,7 +281,7 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function getGetterURL()
     {
-        return \XLite\Core\Converter::buildURL('storage', 'download', $this->getGetterParams());
+        return \XLite\Core\Converter::buildURL('storage', 'download', $this->getGetterParams(), \XLite::CART_SELF);
     }
 
     /**

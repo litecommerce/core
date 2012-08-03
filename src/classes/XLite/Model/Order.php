@@ -248,7 +248,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected static $statusHandlers = array(
 
         self::STATUS_TEMPORARY => array(
-            self::STATUS_AUTHORIZED => array('checkout', 'process'),
+            self::STATUS_AUTHORIZED => array('checkout', 'authorize', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
@@ -257,7 +257,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         ),
 
         self::STATUS_INPROGRESS => array(
-            self::STATUS_AUTHORIZED => array('checkout', 'process'),
+            self::STATUS_AUTHORIZED => array('checkout', 'authorize', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout', 'queue'),
@@ -268,7 +268,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         self::STATUS_QUEUED => array(
             self::STATUS_TEMPORARY  => array('uncheckout'),
             self::STATUS_INPROGRESS => array('uncheckout'),
-            self::STATUS_AUTHORIZED => array('process'),
+            self::STATUS_AUTHORIZED => array('authorize', 'process'),
             self::STATUS_PROCESSED  => array('process'),
             self::STATUS_COMPLETED  => array('process'),
             self::STATUS_DECLINED   => array('uncheckout', 'fail'),
@@ -300,14 +300,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         ),
 
         self::STATUS_DECLINED => array(
-            self::STATUS_AUTHORIZED => array('checkout', 'process'),
+            self::STATUS_AUTHORIZED => array('checkout', 'authorize', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
         ),
 
         self::STATUS_FAILED => array(
-            self::STATUS_AUTHORIZED => array('checkout', 'process'),
+            self::STATUS_AUTHORIZED => array('checkout', 'authorize', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
@@ -1776,6 +1776,15 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @return void
      */
     protected function processQueue()
+    {
+    }
+
+    /**
+     * A "change status" handler
+     *
+     * @return void
+     */
+    protected function processAuthorize()
     {
     }
 
