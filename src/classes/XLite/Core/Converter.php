@@ -164,7 +164,10 @@ class Converter extends \XLite\Base\Singleton
                 $interface = \XLite::getInstance()->getScript();
             }
 
-            $result = \Includes\Utils\Converter::buildURL($target, $action, $params, $interface) ?: '?';
+            $result = \Includes\Utils\Converter::buildURL($target, $action, $params, $interface);
+            if ($cuFlag && !$result) {
+                $result = \XLite::getInstance()->getShopURL($result, null, array(), \Includes\Utils\URLManager::URL_OUTPUT_SHORT);
+            }
         }
 
         return $result;

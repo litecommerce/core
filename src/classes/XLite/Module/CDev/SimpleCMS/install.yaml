@@ -1,0 +1,40 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+
+XLite\Model\Config:
+  - name: logo
+    category: 'CDev\SimpleCMS'
+    type: 'XLite\Module\CDev\SimpleCMS\View\FormField\Input\Logo'
+    orderby: 100
+    translations:
+      - code: en
+        option_name: 'Logo'
+  - name: page_changefreq
+    category: CDev\XMLSitemap
+    type: 'XLite\Module\CDev\SimpleCMS\View\FormField\Select\ChangeFrequency'
+    orderby: 1000
+    value: daily
+    translations:
+      - code: en
+        option_name: Change frequency for Page page
+  - name: page_priority
+    category: CDev\XMLSitemap
+    type: XLite\View\FormField\Input\Text\Float
+    widgetParameters: { min: 0, max: 1, e: 1}
+    orderby: 1100
+    value: 0.5
+    translations:
+      - code: en
+        option_name: Priority for Page page
+        option_comment: The value should range from 0 to 1.
+XLite\Model\Role\Permission:
+  - { code: manage custom pages, section: Content, translations: [{ code: en, name: Manage custom pages }] }
+  - { code: manage menus, section: Content, translations: [{ code: en, name: Manage menus }] }
+XLite\Model\Role:
+  - { translations: [{ code: en, name: Content management }], permissions: [ {code: manage menus}, {code: manage custom pages} ] }

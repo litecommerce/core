@@ -97,7 +97,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function init()
     {
-        \XLite\Core\Layout::getInstance()->addSubstutionalSkin('test');
+        \XLite\Core\Layout::getInstance()->addSkin('test');
     }
 
 }

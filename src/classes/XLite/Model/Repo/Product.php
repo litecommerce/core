@@ -259,7 +259,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     {
         return $this->createQueryBuilder('p')
             ->select('COUNT(p.product_id) cnt')
-            ->andWhere('p.updateDate > :time')
+            ->andWhere('p.updateDate >= :time')
             ->setParameter('time', $limit)
             ->setMaxResults(1);
     }

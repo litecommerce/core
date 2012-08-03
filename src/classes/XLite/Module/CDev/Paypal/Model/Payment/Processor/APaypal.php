@@ -686,13 +686,14 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'ERRORURL'          => urldecode($this->getReturnURL(null, true)),
             'RETURNURL'         => urldecode($this->getReturnURL(null, true)),
             'CANCELURL'         => urldecode($this->getReturnURL(null, true, true)),
+            'NOTIFYURL'         => $this->getCallbackURL(null, true),
             'RETURNURLMETHOD'   => 'POST', // Set the return method for approved transactions (RETURNURL)
             'URLMETHOD'         => 'POST', // Set the return method for cancelled and failed transactions (ERRORURL, CANCELURL)
             'TEMPLATE'          => 'MINLAYOUT', // This enables an iframe layout
             'INVNUM'            => $order->getOrderId(),
             'BILLTOPHONENUM'    => $this->getProfile()->getBillingAddress()->getPhone(),
             'BILLTOEMAIL'       => $this->getProfile()->getLogin(),
-            'ADDROVERRIDE'      => 'Y',
+            'ADDROVERRIDE'      => '1',
             'NOSHIPPING'        => $noShipping,
             'FREIGHTAMT'        => $freightAmt,
             'HANDLINGAMT'       => 0,
