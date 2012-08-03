@@ -327,7 +327,7 @@ if [ "x${CONFIG}" = "x" ]; then
 	CONFIG="${BASE_DIR}/config.sh"
 fi
 
-if [ -f $CONFIG ]; then
+if [ -f "$CONFIG" ]; then
 	. $CONFIG
 else
 	echo "Failed: Config file not found: ${CONFIG}";
@@ -965,12 +965,17 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 
 		# Move LiteCommerce into LC Connector module directory
-		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} litecommerce
+		if [ "$DEMO_VERSION" = "2" ]; then
+			LCDIRNAME_WITHIN_DRUPAL="demo"
+		else
+			LCDIRNAME_WITHIN_DRUPAL="litecommerce"
+		fi
 
-		cd litecommerce 
+		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} $LCDIRNAME_WITHIN_DRUPAL
 
 		if [ "${TEST_MODE}" = "" -a "${DEMO_VERSION}" = "" ]; then
 			# Add DrupalConnector module
+			cd $LCDIRNAME_WITHIN_DRUPAL 
 			tar -xf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
 		fi
 
@@ -1002,7 +1007,7 @@ if [ !"${ERROR_OF_BUILDING}" ]; then
 	rm -rf ${OUTPUT_DIR}/xlite_dev
 	rm -rf ${OUTPUT_DIR}/modules2remove
 	rm -rf ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}
-	rm ${OUTPUT_DIR}/_drupal-connector-tmp.tar
+	rm -rf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
 
 	echo "Output directory contains (${OUTPUT_DIR}):"
 	ls -al
