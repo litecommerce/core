@@ -1016,8 +1016,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Unset payment method 
-     * 
+     * Unset payment method
+     *
      * @return void
      */
     public function unsetPaymentMethod()
@@ -1152,7 +1152,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Check - order has in-progress payments or not
-     * 
+     *
      * @return boolean
      */
     public function hasInprogressPayments()
@@ -1678,8 +1678,10 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     public function prepareBeforeRemove()
     {
         if (in_array($this->getStatus(), array(self::STATUS_QUEUED, self::STATUS_INPROGRESS))) {
+
             $status = $this->getStatus();
             $this->setStatus(self::STATUS_DECLINED);
+
             $this->changeStatusPostprocess($status, self::STATUS_DECLINED);
         }
     }
@@ -1693,10 +1695,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function prepareEntityBeforeCommit($type)
     {
-        if ($this->isStatusChanged()) {
-            $this->changeStatusPostprocess($this->oldStatus, $this->getStatus());
-            $this->oldStatus = null;
-        }
     }
 
     // }}}
@@ -1716,18 +1714,12 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         $this->status = $value;
 
+        if ($this->oldStatus) {
+            $this->changeStatusPostprocess($this->oldStatus, $this->status);
+        }
+
         // TODO - rework
         //$this->refresh('shippingRates');
-    }
-
-    /**
-     * Check if order status was changed
-     *
-     * @return boolean
-     */
-    protected function isStatusChanged()
-    {
-        return isset($this->oldStatus);
     }
 
     /**
@@ -1883,8 +1875,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     // {{{ Order actions
 
     /**
-     * Get allowed actions 
-     * 
+     * Get allowed actions
+     *
      * @return array
      */
     public function getAllowedActions()
@@ -1893,8 +1885,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get allowed payment actions 
-     * 
+     * Get allowed payment actions
+     *
      * @return array
      */
     public function getAllowedPaymentActions()
@@ -1919,8 +1911,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get array of payment transaction sums (how much is authorized, captured and refunded) 
-     * 
+     * Get array of payment transaction sums (how much is authorized, captured and refunded)
+     *
      * @return array
      */
     public function getPaymentTransactionSums()

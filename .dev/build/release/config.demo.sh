@@ -2,7 +2,7 @@
 # Data definition for LiteCommerce release script
 #
 
-. config.sh
+. ./config.sh
 
 # Trigger to enable generation of demo version
 DEMO_VERSION="1"

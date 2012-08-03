@@ -38,7 +38,19 @@ class Caller extends \XLite\base\Singleton
      */
     protected $initialized;
 
+    /**
+     * Saved $_SERVER['SCRIPT_NAME']
+     * 
+     * @var string
+     */
     protected $oldScriptName;
+
+    /**
+     * Saved content from buffer
+     * 
+     * @var string
+     */
+    protected $savedContent;
 
     // {{{ Initialization
 
@@ -82,6 +94,7 @@ class Caller extends \XLite\base\Singleton
         $result = true;
 
         $this->oldScriptName = null;
+        $this->savedContent = null;
 
         if (!empty($_SERVER['SCRIPT_NAME'])) {
             $this->oldScriptName = $_SERVER['SCRIPT_NAME'];
@@ -134,6 +147,13 @@ class Caller extends \XLite\base\Singleton
             }
         }
 
+        if ($result) {
+            $this->savedContent = @ob_get_contents();
+            if ($this->savedContent) {
+                ob_clean();
+            }
+        }
+
         return $result;
     }
 
@@ -146,6 +166,11 @@ class Caller extends \XLite\base\Singleton
     {
         if ($this->oldScriptName) {
             $_SERVER['SCRIPT_NAME'] = $this->oldScriptName;
+        }
+
+        if ($this->savedContent) {
+            echo $this->savedContent;
+            $this->savedContent = null;
         }
     }
 
