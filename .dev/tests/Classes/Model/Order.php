@@ -201,6 +201,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
             $order::STATUS_TEMPORARY  => 'Cart',
             $order::STATUS_INPROGRESS => 'Incompleted',
             $order::STATUS_QUEUED     => 'Queued',
+            $order::STATUS_AUTHORIZED => 'Authorized',
             $order::STATUS_PROCESSED  => 'Processed',
             $order::STATUS_COMPLETED  => 'Completed',
             $order::STATUS_FAILED     => 'Failed',

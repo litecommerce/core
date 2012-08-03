@@ -298,7 +298,9 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
     public function testIsCustom()
     {
         $module = $this->getTestModule1();
-        \XLite\Core\Marketplace::getInstance()->saveAddonsList();
+        if (\XLite\Core\Marketplace::getInstance()->saveAddonsList()) {
+            $this->markTestSkipped('LC can not update module data from marketplace');
+        }
         $this->assertFalse($module->isCustom(), 'check if module ' . self::TEST_MODULE_1 . ' is custom [1]');
     }
 
