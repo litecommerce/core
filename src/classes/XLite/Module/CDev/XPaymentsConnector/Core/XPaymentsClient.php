@@ -148,15 +148,15 @@ class XPaymentsClient extends \XLite\Base\Singleton
     /**
      * Get payment info
      *
-     * @param integer $txn_id  ransaction id
-     * @param boleean $refresh Refresh OPTIONAL
+     * @param integer $txnId   Transaction id
+     * @param boolean $refresh Refresh OPTIONAL
      *
      * @return array Operation status & payment data array
      */
-    function requestPaymentInfo($txn_id, $refresh = false)
+    public function requestPaymentInfo($txnId, $refresh = false)
     {
         $data = array(
-            'txnId' => $txn_id,
+            'txnId'   => $txnId,
             'refresh' => $refresh ? 1 : 0
         );
     
@@ -180,7 +180,9 @@ class XPaymentsClient extends \XLite\Base\Singleton
                 $status = false;
     
             } elseif (!isset($response['currency']) || strlen($response['currency']) != 3) {
-                $this->getApiError('GetInfo request. Server response has not currency code or currency code has wrong format');
+                $this->getApiError(
+                    'GetInfo request. Server response has not currency code or currency code has wrong format'
+                );
                 $status = false;
     
             } elseif (!isset($response['amount'])) {
@@ -297,10 +299,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
         // The main entry in the response is the 'token'
         if (
             $status
-            && (
-                !isset($response['token'])
-                || !is_string($response['token'])
-            )
+            && (!isset($response['token']) || !is_string($response['token']))
         ) {
     
             $this->getApiError('Transaction token is not found or has a wrong type');
@@ -332,9 +331,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
     
             $response = array(
                 'detailed_error_message' => isset($response['error_message'])
-                                                ?  $response['error_message']
-                                                : (is_string($response) ? $response : 'Unknown'),
-    
+                   ?  $response['error_message'] : (is_string($response) ? $response : 'Unknown'),
             );
     
         }
@@ -342,100 +339,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
         return array($status, $response);
     }
     
-    /**
-     * Prepare shopping cart data
-     *
-     * @param \XLite\Model\Cart $cart      X-Cart shopping cart
-     * @param integer           $refId     Transaction ID
-     * @param boolean           $forceAuth Force enable AUTH mode
-     *
-     * @return array
-     */
-    protected function prepareCart(\XLite\Model\Cart $cart, $refId, $forceAuth)
-    {
-        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
-
-        $profile = $cart->getProfile();
-    
-        $result = array(
-            'login'                => $profile->getLogin() . ' (User ID #' . $profile->getProfileId() . ')',
-            'billingAddress'       => array(),
-            'shippingAddress'      => array(),
-            'items'                => array(),
-            'currency'             => $cart->getCurrency()->getCode(),
-            'shippingCost'         => 0.00,
-            'taxCost'              => 0.00,
-            'discount'             => 0.00,
-            'totalCost'            => 0.00,
-            'description'          => 'Order(s) #' . $cart->getOrderId(),
-            'merchantEmail'        => \XLite\Core\Config::getInstance()->Company->orders_department,
-            'forceTransactionType' => $forceAuth ? 'A' : '',
-        );
-    
-        $namePrefixes = array(
-            'billing',
-            'shipping',
-        );
-    
-        $addressFields = array(
-            'firstname' => '',
-            'lastname'  => '',
-            'address'   => '',
-            'city'      => '',
-            'state'     => 'N/A',
-            'country'   => '',
-            'zipcode'   => '',
-            'phone'     => '',
-            'fax'       => '',
-            'company'   => '',
-        );
-    
-        // Prepare shipping and billing address
-        foreach ($namePrefixes as $type) {
-    
-            $addressIndex = $type . 'Address';
-    
-            foreach ($addressFields as $field => $defValue) {
-                $method = 'address' == $field ? 'street' : $field;
-                $result[$addressIndex][$field] = (
-                    $profile->$addressIndex
-                    && method_exists($profile->$addressIndex, 'get' . $method)
-                    && $profile->$addressIndex->$method
-                )
-                    ? (
-                        is_object($profile->$addressIndex->$method)
-                            ? $profile->$addressIndex->$method->getCode()
-                            : $profile->$addressIndex->$method
-                    )
-                    : $defValue;
-            }
-
-            $result[$addressIndex]['email'] = $profile->getLogin();    
-        }
-
-        // Set items
-        if ($cart->getItems()) {
-    
-            foreach ($cart->getItems() as $item) {
-                $result['items'][] = array(
-                    'sku'      => $item->getSku(),
-                    'name'     => $item->getName(),
-                    'price'    => $item->getPrice(),
-                    'quantity' => $item->getAmount(),
-                );
-            }
-    
-        }
-
-        // Set costs
-        $result['shippingCost'] = round($cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, false), 2);
-        $result['taxCost']      = round($cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_TAX, false), 2);
-        $result['totalCost']    = round($cart->getTotal(), 2);
-        $result['discount']     = round($cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_DISCOUNT, false), 2);
-    
-        return $result;
-    }
-
     /**
      * Make X-Payments API request
      *
@@ -583,6 +486,204 @@ class XPaymentsClient extends \XLite\Base\Singleton
         }
     
         return array(true, $response);
+    }
+
+    /**
+     * Decrypt (RSA)
+     *
+     * @param string $data Encrypted data
+     *
+     * @return string
+     */
+    public function decryptXml($data)
+    {
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+    
+        // Decrypt
+        $res = openssl_get_privatekey($config->xpc_private_key, $config->xpc_private_key_password);
+        if (!$res) {
+            return array(false, 'Private key is not initialized');
+        }
+    
+        $data = substr($data, 3);
+    
+        $data = explode("\n", $data);
+        $data = array_map('base64_decode', $data);
+        foreach ($data as $k => $s) {
+            if (!openssl_private_decrypt($s, $newsource, $res)) {
+                return array(false, 'Can not decrypt chunk');
+            }
+    
+            $data[$k] = $newsource;
+        }
+    
+        openssl_free_key($res);
+    
+        $data = implode('', $data);
+    
+        // Postprocess
+        $lenSalt = substr($data, 0, 12);
+        if (!preg_match('/^\d+$/Ss', $lenSalt)) {
+            return array(false, 'Salt length prefix has wrong format');
+        }
+    
+        $lenSalt = intval($lenSalt);
+        $data = substr($data, 12 + intval($lenSalt));
+    
+        $lenCRC = substr($data, 0, 12);
+        if (!preg_match('/^\d+$/Ss', $lenCRC) || 9 > $lenCRC) {
+            return array(false, 'CRC length prefix has wrong format');
+        }
+    
+        $lenCRC = intval($lenCRC);
+        $crcType = trim(substr($data, 12, 8));
+        if ('MD5' !== $crcType) {
+            return array(false, 'CRC hash is not MD5');
+        }
+        $crc = substr($data, 20, $lenCRC - 8);
+    
+        $data = substr($data, 12 + $lenCRC);
+    
+        $lenData = substr($data, 0, 12);
+        if (!preg_match('/^\d+$/Ss', $lenData)) {
+            return array(false, 'Data block length prefix has wrong format');
+        }
+    
+        $data = substr($data, 12, intval($lenData));
+    
+        $currentCRC = $this->makeMd5Raw($data);
+        if ($currentCRC !== $crc) {
+            return array(false, 'Original CRC and calculated CRC is not equal');
+        }
+    
+        return array(true, $data);
+    }
+    
+    /**
+     * Convert XML to hash array
+     *
+     * @param string $xml XML string
+     *
+     * @return array|string
+     */
+    public function convertXmlToHash($xml)
+    {
+        $data = array();
+    
+        while (!empty($xml) && preg_match('/<([\w\d]+)(?:\s*type=["\'](\w+)["\']\s*)?>(.*)<\/\1>/Us', $xml, $matches)) {
+    
+            // Sublevel tags or tag value
+            if (static::XPC_TYPE_CELL === $matches[2]) {
+                $data[$matches[1]][] = $this->convertXmlToHash($matches[3]);
+            } else {
+                $data[$matches[1]] = $this->convertXmlToHash($matches[3]);
+            }
+    
+            // Exclude parsed part from XML
+            $xml = str_replace($matches[0], '', $xml);
+    
+        }
+    
+        return empty($data) ? $xml : $data;
+    }
+
+    /**
+     * Prepare shopping cart data
+     *
+     * @param \XLite\Model\Cart $cart      X-Cart shopping cart
+     * @param integer           $refId     Transaction ID
+     * @param boolean           $forceAuth Force enable AUTH mode
+     *
+     * @return array
+     */
+    protected function prepareCart(\XLite\Model\Cart $cart, $refId, $forceAuth)
+    {
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+
+        $profile = $cart->getProfile();
+    
+        $result = array(
+            'login'                => $profile->getLogin() . ' (User ID #' . $profile->getProfileId() . ')',
+            'billingAddress'       => array(),
+            'shippingAddress'      => array(),
+            'items'                => array(),
+            'currency'             => $cart->getCurrency()->getCode(),
+            'shippingCost'         => 0.00,
+            'taxCost'              => 0.00,
+            'discount'             => 0.00,
+            'totalCost'            => 0.00,
+            'description'          => 'Order(s) #' . $cart->getOrderId(),
+            'merchantEmail'        => \XLite\Core\Config::getInstance()->Company->orders_department,
+            'forceTransactionType' => $forceAuth ? 'A' : '',
+        );
+    
+        $namePrefixes = array(
+            'billing',
+            'shipping',
+        );
+    
+        $addressFields = array(
+            'firstname' => '',
+            'lastname'  => '',
+            'address'   => '',
+            'city'      => '',
+            'state'     => 'N/A',
+            'country'   => '',
+            'zipcode'   => '',
+            'phone'     => '',
+            'fax'       => '',
+            'company'   => '',
+        );
+    
+        // Prepare shipping and billing address
+        foreach ($namePrefixes as $type) {
+    
+            $addressIndex = $type . 'Address';
+    
+            foreach ($addressFields as $field => $defValue) {
+                $method = 'address' == $field ? 'street' : $field;
+                $result[$addressIndex][$field] = (
+                    $profile->$addressIndex
+                    && method_exists($profile->$addressIndex, 'get' . $method)
+                    && $profile->$addressIndex->$method
+                )
+                    ? (
+                        is_object($profile->$addressIndex->$method)
+                            ? $profile->$addressIndex->$method->getCode() : $profile->$addressIndex->$method
+                    )
+                    : $defValue;
+            }
+
+            $result[$addressIndex]['email'] = $profile->getLogin();    
+        }
+
+        // Set items
+        if ($cart->getItems()) {
+    
+            foreach ($cart->getItems() as $item) {
+                $result['items'][] = array(
+                    'sku'      => $item->getSku(),
+                    'name'     => $item->getName(),
+                    'price'    => $item->getPrice(),
+                    'quantity' => $item->getAmount(),
+                );
+            }
+    
+        }
+
+        // Set costs
+        $result['shippingCost'] = round(
+            $cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, false),
+            2
+        );
+        $result['taxCost'] = round(
+            $cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_TAX, false),
+            2
+        );
+        $result['totalCost'] = round($cart->getTotal(), 2);
+        $result['discount'] = round($cart->getSurchargesSubtotal(\XLite\Model\Base\Surcharge::TYPE_DISCOUNT, false), 2);
+    
+        return $result;
     }
 
     /**
@@ -937,78 +1038,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
     }
     
     /**
-     * Decrypt (RSA)
-     *
-     * @param string $data Encrypted data
-     *
-     * @return string
-     */
-    protected function decryptXml($data)
-    {
-        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
-    
-        // Decrypt
-        $res = openssl_get_privatekey($config->xpc_private_key, $config->xpc_private_key_password);
-        if (!$res) {
-            return array(false, 'Private key is not initialized');
-        }
-    
-        $data = substr($data, 3);
-    
-        $data = explode("\n", $data);
-        $data = array_map('base64_decode', $data);
-        foreach ($data as $k => $s) {
-            if (!openssl_private_decrypt($s, $newsource, $res)) {
-                return array(false, 'Can not decrypt chunk');
-            }
-    
-            $data[$k] = $newsource;
-        }
-    
-        openssl_free_key($res);
-    
-        $data = implode('', $data);
-    
-        // Postprocess
-        $lenSalt = substr($data, 0, 12);
-        if (!preg_match('/^\d+$/Ss', $lenSalt)) {
-            return array(false, 'Salt length prefix has wrong format');
-        }
-    
-        $lenSalt = intval($lenSalt);
-        $data = substr($data, 12 + intval($lenSalt));
-    
-        $lenCRC = substr($data, 0, 12);
-        if (!preg_match('/^\d+$/Ss', $lenCRC) || 9 > $lenCRC) {
-            return array(false, 'CRC length prefix has wrong format');
-        }
-    
-        $lenCRC = intval($lenCRC);
-        $crcType = trim(substr($data, 12, 8));
-        if ('MD5' !== $crcType) {
-            return array(false, 'CRC hash is not MD5');
-        }
-        $crc = substr($data, 20, $lenCRC - 8);
-    
-        $data = substr($data, 12 + $lenCRC);
-    
-        $lenData = substr($data, 0, 12);
-        if (!preg_match('/^\d+$/Ss', $lenData)) {
-            return array(false, 'Data block length prefix has wrong format');
-        }
-    
-        $data = substr($data, 12, intval($lenData));
-    
-        $currentCRC = $this->makeMd5Raw($data);
-        if ($currentCRC !== $crc) {
-            return array(false, 'Original CRC and calculated CRC is not equal');
-        }
-    
-        return array(true, $data);
-    }
-    
-    
-    /**
      * Process API response errors
      *
      * @param array $response Response data
@@ -1031,34 +1060,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
         return $error;
     }
     
-    /**
-     * Convert XML to hash array
-     *
-     * @param string $xml XML string
-     *
-     * @return array|string
-     */
-    protected function convertXmlToHash($xml)
-    {
-        $data = array();
-    
-        while (!empty($xml) && preg_match('/<([\w\d]+)(?:\s*type=["\'](\w+)["\']\s*)?>(.*)<\/\1>/Us', $xml, $matches)) {
-    
-            // Sublevel tags or tag value
-            if (static::XPC_TYPE_CELL === $matches[2]) {
-                $data[$matches[1]][] = $this->convertXmlToHash($matches[3]);
-            } else {
-                $data[$matches[1]] = $this->convertXmlToHash($matches[3]);
-            }
-    
-            // Exclude parsed part from XML
-            $xml = str_replace($matches[0], '', $xml);
-    
-        }
-    
-        return empty($data) ? $xml : $data;
-    }
-
     /**
      * Return validation schema for test request
      *

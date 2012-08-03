@@ -31,18 +31,48 @@ namespace XLite\Module\CDev\XPaymentsConnector\Model\Payment\Processor;
  */
 class XPayments extends \XLite\Model\Payment\Base\WebBased
 {
-   // Payment statuses
+    // Payment statuses
     const NEW_STATUS      = 1;
     const AUTH_STATUS     = 2;
     const DECLINED_STATUS = 3;
     const CHARGED_STATUS  = 4;
 
+    // Payment actions
+    const NEW_ACTION         = 1;
+    const AUTH_ACTION        = 2;
+    const CHARGED_ACTION     = 3;
+    const DECLINED_ACTION    = 4;
+    const REFUND_ACTION      = 5;
+    const PART_REFUND_ACTION = 6;
+
+    // Transaction types
+    const TRAN_TYPE_AUTH          = 'auth';
+    const TRAN_TYPE_CAPTURE       = 'capture';
+    const TRAN_TYPE_CAPTURE_PART  = 'capturePart';
+    const TRAN_TYPE_CAPTURE_MULTI = 'captureMulti';
+    const TRAN_TYPE_VOID          = 'void';
+    const TRAN_TYPE_VOID_PART     = 'voidPart';
+    const TRAN_TYPE_VOID_MULTI    = 'voidMulti';
+    const TRAN_TYPE_REFUND        = 'refund';
+    const TRAN_TYPE_PART_REFUND   = 'refundPart';
+    const TRAN_TYPE_REFUND_MULTI  = 'refundMulti';
+    const TRAN_TYPE_GET_INFO      = 'getInfo';
+    const TRAN_TYPE_ACCEPT        = 'accept';
+    const TRAN_TYPE_DECLINE       = 'decline';
+  
     /**
      * X-Payments client
      *
      * @var \XLite\Module\CDev\XPaymentsConnector\Core\XPaymentsClient
      */
     protected $client;
+
+    /**
+     * Form fields
+     *
+     * @var array
+     */
+    protected $formFields = null;
 
     /**
      * Payment method has settings into Module settings section
@@ -119,6 +149,129 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Process return
+     *
+     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
+     *
+     * @return void
+     */
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
+    {
+        $txnId = \XLite\Core\Request::getInstance()->txnId;
+        list($status, $response) = $this->client->requestPaymentInfo($txnId);
+
+        $transactionStatus = $transaction::STATUS_FAILED;
+
+        if ($status) {
+            $transaction->setDataCell('xpc_message', 'X-Payments response', $response['message']);
+
+            if ($response['isFraudStatus']) {
+                $transaction->setDataCell('xpc_fmf', 'Fraud status', 'blocked');
+            }
+
+            if ($response['amount'] != $transaction->getOrder()->getTotal()) {
+
+                // Total wrong
+                $transaction->setDataCell('error', 'Error', 'Hacking attempt!');
+                $transaction->setDataCell(
+                    'errorDescription',
+                    'Hacking attempt details',
+                    'Total amount doesn\'t match: Order total = '
+                    . $transaction->getOrder()->getTotal()
+                    . ', X-Payments amount = ' . $response['amount']
+                );
+
+            } elseif ($response['currency'] != $transaction->getOrder()->getCurrency()->getCode()) {
+
+                // Currency wrong
+                $transaction->setDataCell('error', 'Error', 'Hacking attempt!');
+                $transaction->setDataCell(
+                    'errorDescription',
+                    'Hacking attempt details',
+                    'Currency code doesn\'t match: Order currency = '
+                    . $transaction->getOrder()->getCurrency()->getCode()
+                    . ', X-Payments currency = ' . $response['currency']
+                );
+
+            } else {
+                $transactionStatus = $this->getTransactionStatusByAction($response['status']);
+            }
+        }
+
+        if ($transactionStatus) {
+            $transaction->setStatus($transactionStatus);
+        }
+    }
+
+    /**
+     * Process callback
+     *
+     * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
+     *
+     * @return void
+     */
+    public function processCallback(\XLite\Model\Payment\Transaction $transaction)
+    {
+        $request = \XLite\Core\Request::getInstance();
+
+        list($status, $updateData) = $this->client->decryptXml($request->updateData);
+        if ($status) {
+            $updateData = $this->client->convertXmlToHash($updateData);
+            $updateData = $updateData['data'];
+        }
+
+        if (
+            $status
+            && $request->txnId
+            && $updateData
+            && isset($updateData['status'])
+        ) {
+
+            $status = $this->getTransactionStatusByAction($updateData['status']);
+
+            if ($status) {
+                $transaction->setStatus($status);
+            }
+        }
+    }
+
+    /**
+     * Get return request owner transaction or null
+     *
+     * @return \XLite\Model\Payment\Transaction|void
+     */
+    public function getReturnOwnerTransaction()
+    {
+        $transactionId = \XLite\Core\Request::getInstance()->refId;
+
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')
+            ->find($transactionId);
+    }
+
+    /**
+     * Get callback request owner transaction or null
+     *
+     * @return \XLite\Model\Payment\Transaction|void
+     */
+    public function getCallbackOwnerTransaction()
+    {
+        $txnId = \XLite\Core\Request::getInstance()->txnId;
+
+        $transaction = null;
+
+        if ($txnId) {
+            $transactionData = \XLite\Core\Database::getRepo('XLite\Model\Payment\TransactionData')
+                ->findOneBy(array('value' => $txnId, 'name' => 'xpc_txnid'));
+            if ($transactionData) {
+                $transaction = $transactionData->getTransaction();
+ 
+            }
+        }
+
+        return $transaction;
+    }
+
+    /**
      * Constructor
      *
      * @return void
@@ -135,8 +288,9 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormURL()
     {
-        return preg_replace('/\/+$/Ss', '', \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector->xpc_xpayments_url)
-            . '/payment.php';
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+
+        return preg_replace('/\/+$/Ss', '', $config->xpc_xpayments_url) . '/payment.php';
     }
 
     /**
@@ -146,104 +300,75 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormFields()
     {
-        $cart = \XLite\Model\Cart::getInstance();
-        $refId = $this->transaction->getTransactionId();
-
-        list($status, $response) = $this->client->requestPaymentInit(
-            $this->transaction->getPaymentMethod(),
-            $refId,
-            $cart,
-            true 
-        );
-
-        return $status
-            ? $response['fields']
-            : array();
-    }
-
-    /**
-     * Process return
-     *
-     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *
-     * @return void
-     */
-    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
-    {
-        parent::processReturn($transaction);
-
-		$txnId = \XLite\Core\Request::getInstance()->txnId;
-		list($status, $response) = $this->client->requestPaymentInfo($txnId);
-
-		$transaction->setDataCell('xpc_txnid', $txnId, 'X-Payments transaction id');
-		$transactionStatus = $transaction::STATUS_FAILED;
-
         if (
-            $status
-            && in_array($response['status'], array(self::AUTH_STATUS, self::CHARGED_STATUS))
+            !is_array($this->formFields)
         ) {
-            $this->transaction->setDataCell('xpc_message', 'X-Payments response', $response['message']);
+            $cart = \XLite\Model\Cart::getInstance();
+            $refId = $this->transaction->getTransactionId();
 
-            if ($response['isFraudStatus']) {
-                $this->transaction->setDataCell('xpc_fmf', 'Fraud status', 'blocked');
+            list($status, $response) = $this->client->requestPaymentInit(
+                $this->transaction->getPaymentMethod(),
+                $refId,
+                $cart,
+                true 
+            );
+
+            if ($status) {
+                $this->transaction->setDataCell('xpc_txnid', $response['txnId'], 'X-Payments transaction id');
             }
 
-            if ($response['amount'] != $transaction->getOrder()->getTotal()) {
+            $this->formFields =  $status
+                ? $response['fields']
+                : array();
+        }
 
-                // Total wrong
-                $transaction->setDataCell('error', 'Error', 'Hacking attempt!');
-                $transaction->setDataCell(
-                    'errorDescription',
-                    'Hacking attempt details',
-                    'Total amount doesn\'t match: Order total = ' 
-					. $transaction->getOrder()->getTotal()
-                    . ', X-Payments amount = ' . $response['amount']
-                );
-
-            } elseif ($response['currency'] != $transaction->getOrder()->getCurrency()->getCode()) {
-
-                // Currency wrong
-                $transaction->setDataCell('error', 'Error', 'Hacking attempt!');
-                $transaction->setDataCell(
-                    'errorDescription',
-                    'Hacking attempt details',
-                    'Currency code doesn\'t match: Order currency = '
-					. $transaction->getOrder()->getCurrency()->getCode()
-                    . ', X-Payments currency = ' . $response['currency']
-                );
-
-            } else {
-
-				$transactionStatus = $transaction::STATUS_SUCCESS;
-            }
-		}
-
-		$transaction->setStatus($transactionStatus);
-	}
-
-    /**
-     * Get return request owner transaction or null
-     *
-     * @return \XLite\Model\Payment\Transaction|void
-     */
-    public function getReturnOwnerTransaction()
-    {
-        $transactionId = \XLite\Core\Request::getInstance()->refId;
-
-        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')
-            ->find($transactionId);
+        return $this->formFields;
     }
 
+
     /**
-     * Process callback
+     * Get transaction status by action 
      *
-     * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
-     *
-     * @return void
+     * @return mixed
      */
-    public function processCallback(\XLite\Model\Payment\Transaction $transaction)
+    protected function getTransactionStatusByAction($action)
     {
-        parent::processCallback($transaction);
-		$this->transaction->setStatus($transaction::STATUS_SUCCESS);
-	}
+        $action = intval($action);
+        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+
+        $cell = false;
+        switch ($action) {
+            case self::NEW_ACTION:
+                $cell = 'xpc_status_new';
+                break;
+
+            case self::AUTH_ACTION:
+                $cell = 'xpc_status_auth';
+                break;
+
+            case self::CHARGED_ACTION:
+                $cell = 'xpc_status_charged';
+                break;
+
+            case self::DECLINED_ACTION:
+                $cell = 'xpc_status_declined';
+                break;
+
+            case self::REFUND_ACTION:
+                $cell = 'xpc_status_refunded';
+                break;
+
+            case self::PART_REFUND_ACTION:
+                $cell = 'xpc_status_part_refunded';
+                break;
+
+            default:
+        }
+
+        return ($cell && isset($config->$cell) && $config->$cell)
+            ? $config->$cell
+            : false;
+    }
+
+
 }

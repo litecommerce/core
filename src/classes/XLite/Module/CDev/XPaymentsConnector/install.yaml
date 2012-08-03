@@ -87,49 +87,49 @@ XLite\Model\Config:
         option_name: 'Mapping rules'
   - name: xpc_status_new
     category: 'CDev\XPaymentsConnector'
-    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\OrderStatus'
+    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\TransactionStatus'
     orderby: 2010
     value: 'I'
     translations:
       - code: en
-        option_name: 'Set order status for "New" payment to'
+        option_name: 'Set transaction status for "New" payment to'
   - name: xpc_status_auth
     category: 'CDev\XPaymentsConnector'
-    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\OrderStatus'
+    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\TransactionStatus'
     orderby: 2020
-    value: 'A'
+    value: 'S'
     translations:
       - code: en
-        option_name: 'Set order status for "Authorized" payment to'
+        option_name: 'Set transaction status for "Authorized" payment to'
   - name: xpc_status_charged
     category: 'CDev\XPaymentsConnector'
-    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\OrderStatus'
+    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\TransactionStatus'
     orderby: 2030
-    value: 'P'
+    value: 'F'
     translations:
       - code: en
-        option_name: 'Set order status for "Charged" payment to'
+        option_name: 'Set transaction status for "Charged" payment to'
   - name: xpc_status_declined
     category: 'CDev\XPaymentsConnector'
-    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\OrderStatus'
+    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\TransactionStatus'
     orderby: 2040
     value: 'F'
     translations:
       - code: en
-        option_name: 'Set order status for "Declined" payment to'
+        option_name: 'Set transaction status for "Declined" payment to'
   - name: xpc_status_refunded
     category: 'CDev\XPaymentsConnector'
-    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\OrderStatus'
+    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\TransactionStatus'
     orderby: 2050
     value: ''
     translations:
       - code: en
-        option_name: 'Set order status for "Refunded" payment to'
+        option_name: 'Set transaction status for "Refunded" payment to'
   - name: xpc_status_part_refunded
     category: 'CDev\XPaymentsConnector'
-    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\OrderStatus'
+    type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\TransactionStatus'
     orderby: 2060
     value: ''
     translations:
       - code: en
-        option_name: 'Set order status for "Partially Refunded" payment to'
+        option_name: 'Set transaction status for "Partially Refunded" payment to'

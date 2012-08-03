@@ -172,7 +172,8 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
      */
     public function getPaymentMethods()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findBy(array('class' => 'Module\CDev\XPaymentsConnector\Model\Payment\Processor\XPayments')); 
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+            ->findBy(array('class' => 'Module\CDev\XPaymentsConnector\Model\Payment\Processor\XPayments')); 
     }
 
     /**
@@ -322,7 +323,10 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
                     \XLite\Core\TopMessage::getInstance()->addInfo('Payment methods have been successfully imported');
     
                 } else {
-                    \XLite\Core\TopMessage::addError('Error had occured during the requesting of payment methods from X-Payments. See log files for details.');
+                    \XLite\Core\TopMessage::addError(
+                        'Error had occured during the requesting of payment methods from X-Payments. '
+                        . 'See log files for details.'
+                    );
                 }
     
             } else {
@@ -352,7 +356,7 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
                     );
                 }
                 \XLite\Core\Database::getEM()->flush();
-				\XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
+                \XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
             }
         }
     }
