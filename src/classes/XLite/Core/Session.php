@@ -655,7 +655,7 @@ class Session extends \XLite\Base\Singleton
      */
     protected function getCurrentLanguage()
     {
-        $code = $this->session->language;
+        $code = $this->__get('language');
         $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
 
         if (!is_array($code)) {
@@ -672,7 +672,7 @@ class Session extends \XLite\Base\Singleton
 
         if (empty($code[$zone])) {
             $this->setLanguage($this->defineCurrentLanguage());
-            $code = $this->session->language;
+            $code = $this->__get('language');
         }
 
         return $code[$zone];
