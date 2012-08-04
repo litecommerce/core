@@ -74,6 +74,9 @@ class MemcacheCache extends AbstractCache
         foreach ($allSlabs as $server => $slabs) {
             if (is_array($slabs)) {
                 foreach (array_keys($slabs) as $slabId) {
+                    if (!is_int($slabId)) {
+                        continue;
+                    }
                     $dump = $this->_memcache->getExtendedStats('cachedump', (int) $slabId);
 
                     if ($dump) {

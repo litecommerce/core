@@ -36,6 +36,15 @@ namespace XLite\Model\Repo;
 class MoneyModificator extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Repository type
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $type = self::TYPE_SERVICE;
+
+    /**
      * Find active modificators list
      * 
      * @return array
@@ -44,7 +53,14 @@ class MoneyModificator extends \XLite\Model\Repo\ARepo
      */
     public function findActive()
     {
-        return $this->defineFindActiveQuery()->getResult();
+        $data = $this->getFromCache('active');
+
+        if (!isset($data)) {
+            $data = $this->defineFindActiveQuery()->getResult();
+            $this->saveToCache($data, 'active');
+        }
+
+        return $data;
     }
 
     /**
@@ -59,5 +75,24 @@ class MoneyModificator extends \XLite\Model\Repo\ARepo
         return $this->createQueryBuilder('m')
             ->orderBy('m.position', 'asc');
     }
+
+    /**
+     * Define cache cells
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineCacheCells()
+    {
+        $list = parent::defineCacheCells();
+
+        $list['active'] = array(
+            self::ATTRS_CACHE_CELL => array(),
+        );
+
+        return $list;
+    }
+
 }
 
