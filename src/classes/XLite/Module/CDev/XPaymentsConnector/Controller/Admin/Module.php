@@ -278,6 +278,26 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
         }
     }
 
+    
+    /**
+     * Set payment method settings
+     *
+     * @param \XLite\Model\Payment\Method $pm       Payment method
+     * @param array                       $settings Settings
+     *
+     * @return void
+     */
+    protected function setSettings(\XLite\Model\Payment\Method $pm, array $settings)
+    {
+        foreach ($settings as $k => $v) {
+            if (is_array($v)) {
+                $this->setSettings($pm, $v);
+            } else {
+                $pm->setSetting($k, $v);
+            }
+        }
+    }
+
     /**
      * Import requested payment configurations
      *
@@ -298,23 +318,14 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
                         \XLite\Core\Database::getEM()->remove($pm);
                     }
     
-                    foreach ($list as $pm) {
-                        $xpm = new \XLite\Model\Payment\Method;
-                        \XLite\Core\Database::getEM()->persist($xpm);
-                        $xpm->setClass('Module\CDev\XPaymentsConnector\Model\Payment\Processor\XPayments');
-                        $xpm->setServiceName('XPayments.' . $pm['id']);
-                        $xpm->setName($pm['moduleName']);
-                        foreach ($pm as $k => $v) {
-                            if (is_array($v)) {
-                                foreach ($v as $k2 => $v2) {
-                                    $xpm->setSetting($k2, $v2);
-                                }
-    
-                            } else {
-                                $xpm->setSetting($k, $v);
-                            }
-                        }
-                        $xpm->setSetting('useLiteInterface', 'N');
+                    foreach ($list as $settings) {
+                        $pm = new \XLite\Model\Payment\Method;
+                        \XLite\Core\Database::getEM()->persist($pm);
+                        $pm->setClass('Module\CDev\XPaymentsConnector\Model\Payment\Processor\XPayments');
+                        $pm->setServiceName('XPayments.' . $settings['id']);
+                        $pm->setName($settings['moduleName']);
+                        $this->setSettings($pm, $settings);
+                        $pm->setSetting('useLiteInterface', 'N');
                     }
     
                     \XLite\Core\Database::getEM()->flush();

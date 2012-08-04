@@ -265,28 +265,30 @@ class XPaymentsClient extends \XLite\Base\Singleton
         if (!$cart) {
             return $this->getApiError('Unable to prepare cart data');
         }
-    
+
+        $returnUrl = \XLite::getInstance()->getShopUrl(
+            \XLite\Core\Converter::buildUrl(
+                'payment_return',
+                'return',
+                array('order_id' => $cart->getOrderId())
+            )
+        );   
+        $callbackUrl = \XLite::getInstance()->getShopUrl(
+            \XLite\Core\Converter::buildUrl(
+                'callback',
+                'callback',
+                array('order_id' => $cart->getOrderId())
+            )
+        );   
+ 
         // Data to send to X-Payments
         $data = array(
             'confId'      => intval($paymentMethod->getSetting('id')),
             'refId'       => $refId,
             'cart'        => $preparedCart,
             'language'    => 'en',
-            'returnUrl'   => \XLite::getInstance()->getShopUrl(
-                \XLite\Core\Converter::buildUrl(
-                    'payment_return',
-                    'return',
-                    array('order_id' => $cart->getOrderId())
-                )
-            ),
-            'callbackUrl' => \XLite::getInstance()->getShopUrl(
-                \XLite\Core\Converter::buildUrl(
-                    'callback',
-                    'callback',
-                    array('order_id' => $cart->getOrderId())
-                )
-            ),
-
+            'returnUrl'   => $returnUrl,
+            'callbackUrl' => $callbackUrl,
         );
 
         list($status, $response) = $this->getApiRequest(
@@ -328,10 +330,10 @@ class XPaymentsClient extends \XLite\Base\Singleton
             );
     
         } else {
-    
+            $detailedErrorMessage = isset($response['error_message'])
+                ? $response['error_message'] : (is_string($response) ? $response : 'Unknown'); 
             $response = array(
-                'detailed_error_message' => isset($response['error_message'])
-                   ?  $response['error_message'] : (is_string($response) ? $response : 'Unknown'),
+                'detailed_error_message' => $detailedErrorMessage 
             );
     
         }
@@ -474,18 +476,16 @@ class XPaymentsClient extends \XLite\Base\Singleton
         // Process errors
         $error = $this->processApiError($response);
     
-        if ($error) {
-            return array(
+        return $error
+            ? array(
                 null,
                 array(
                     'status'        => 0,
                     'message'       => $error,
                     'error_message' => '' == $response['is_error_message'] ? '' : $response['error_message'],
                 )
-            );
-        }
-    
-        return array(true, $response);
+            )
+            : array(true, $response);
     }
 
     /**
@@ -648,7 +648,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
                     && $profile->$addressIndex->$method
                 )
                     ? (
-                        is_object($profile->$addressIndex->$method)
+                        (is_object($profile->$addressIndex->$method))
                             ? $profile->$addressIndex->$method->getCode() : $profile->$addressIndex->$method
                     )
                     : $defValue;
@@ -904,7 +904,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
         // Preprocess
         srand(time());
         $salt = '';
-        for ($i = 0; $i < static::XPC_SALT_LENGTH; $i++) {
+        for ($i = 0; static::XPC_SALT_LENGTH > $i; $i++) {
             $salt .= chr(rand(static::XPC_SALT_BEGIN, static::XPC_SALT_END));
         }
     
@@ -956,7 +956,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
     {
         $crc = md5($data);
         $str = '';
-        for ($i = 0; $i < 32; $i += 2) {
+        for ($i = 0; 32 > $i; $i += 2) {
             $str .= chr(hexdec(substr($crc, $i, 2)));
         }
     
@@ -984,15 +984,15 @@ class XPaymentsClient extends \XLite\Base\Singleton
     
             $headers = '';
     
-            return $return;
+        } else {
+    
+            if (trim($args[1]) != '') {
+                $headers .= $args[1];
+            }
+            $return = strlen($args[1]);
         }
     
-        if (trim($args[1]) != '') {
-            $headers .= $args[1];
-        }
-    
-        return strlen($args[1]);
-    
+        return $return;
     }
     
     /**
