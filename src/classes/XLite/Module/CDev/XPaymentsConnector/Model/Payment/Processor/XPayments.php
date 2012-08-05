@@ -52,18 +52,6 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
     protected $formFields = null;
 
     /**
-     * Transaction types 
-     *
-     * @var array
-     */
-    protected $transactionTypes = array (
-        self::STATUS_NEW      => \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE,
-        self::STATUS_AUTH     => \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH,
-        self::STATUS_DECLINED => \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_DECLINE,
-        self::STATUS_CHARGED  => \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE,
-    );
-
-    /**
      * Transaction statuses
      *
      * @var array
@@ -221,20 +209,16 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
             $updateData = $updateData['data'];
         }
 
-        \XLite\Logger::getInstance()->log(print_r($_POST, true), LOG_ERR);
-        \XLite\Logger::getInstance()->log(print_r($updateData, true), LOG_ERR);
         if (
             $status
             && $request->txnId
             && $updateData
             && isset($updateData['status'])
         ) {
-            $type = $this->getTransactionTypeByStatus($updateData['status']);
-
+            $status = $this->getTransactionStatusByStatus($updateData['status']);
             if ($status) {
-                $backendTransaction = $transaction->createBackendTransaction($type);
-                $backendTransaction->setStatus($transaction::STATUS_SUCCESS);
-                $transaction->setStatus($this->getTransactionStatusByStatus($updateData['status']));
+                $transaction->setStatus($status);
+                $this->registerBackendTransaction($transaction, $updateData);
             }
         }
     }
@@ -361,17 +345,42 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
     /**
      * Get transaction status by action 
      *
-     * @param integer $status Status
+     * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
+     * @param array                            $data        Data
      *
-     * @return mixed
+     * @return void
      */
-    protected function getTransactionTypeByStatus($status)
+    protected function registerBackendTransaction(\XLite\Model\Payment\Transaction $transaction, $data)
     {
-        $status = intval($status);
+        $type = $value = false;
+        switch ($data['status']) {
+            case static::STATUS_NEW:
+                $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE;
+                break;
 
-        return isset($this->transactionTypes[$status])
-            ? $this->transactionTypes[$status]
-            : null;
+            case static::STATUS_AUTH:
+                $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH;
+                break;
+
+            case static::STATUS_DECLINED:
+                $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_DECLINE;
+                break;
+
+            case static::STATUS_CHARGED:
+                $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE;
+                break;
+
+            default:
+
+        }
+
+        if ($type) {
+            $backendTransaction = $transaction->createBackendTransaction($type);
+            $backendTransaction->setStatus($transaction::STATUS_SUCCESS);
+            if ($value) {
+                $backendTransaction->setValue($value);
+            }
+        }
     }
 
 }
