@@ -105,7 +105,7 @@ XLite\Model\Config:
     category: 'CDev\XPaymentsConnector'
     type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Select\TransactionStatus'
     orderby: 2030
-    value: 'F'
+    value: 'S'
     translations:
       - code: en
         option_name: 'Set transaction status for "Charged" payment to'

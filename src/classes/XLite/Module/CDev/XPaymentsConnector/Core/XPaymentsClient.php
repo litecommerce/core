@@ -31,22 +31,6 @@ namespace XLite\Module\CDev\XPaymentsConnector\Core;
  */
 class XPaymentsClient extends \XLite\Base\Singleton
 {
-    const XPC_TRAN_TYPE_SALE          = 'sale';
-    const XPC_TRAN_TYPE_AUTH          = 'auth';
-    const XPC_TRAN_TYPE_CAPTURE       = 'capture';
-    const XPC_TRAN_TYPE_CAPTURE_PART  = 'capturePart';
-    const XPC_TRAN_TYPE_CAPTURE_MULTI = 'captureMulti';
-    const XPC_TRAN_TYPE_VOID          = 'void';
-    const XPC_TRAN_TYPE_VOID_PART     = 'voidPart';
-    const XPC_TRAN_TYPE_VOID_MULTI    = 'voidMulti';
-    const XPC_TRAN_TYPE_REFUND        = 'refund';
-    const XPC_TRAN_TYPE_REFUND_PART   = 'refundPart';
-    const XPC_TRAN_TYPE_REFUND_MULTI  = 'refundMulti';
-    const XPC_TRAN_TYPE_GET_INFO      = 'getInfo';
-    const XPC_TRAN_TYPE_ACCEPT        = 'accept';
-    const XPC_TRAN_TYPE_DECLINE       = 'decline';
-    const XPC_TRAN_TYPE_TEST          = 'test';
-
     const REQ_CURL    = 1;
     const REQ_OPENSSL = 2;
     const REQ_DOM     = 4;
@@ -1135,21 +1119,51 @@ class XPaymentsClient extends \XLite\Base\Singleton
    <xsd:element name="transactionTypes">
     <xsd:complexType>
      <xsd:sequence>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_SALE . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_AUTH . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_CAPTURE . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_CAPTURE_PART . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_CAPTURE_MULTI . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_VOID . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_VOID_PART . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_VOID_MULTI . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_REFUND . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_REFUND_PART . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_REFUND_MULTI . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_GET_INFO . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_ACCEPT . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_DECLINE . '" type="xsd:boolean" default="0"/>
-       <xsd:element name="' . static::XPC_TRAN_TYPE_TEST . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE_PART
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE_MULTI
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID_PART
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID_MULTI
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND_PART
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND_MULTI
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_GET_INFO
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_ACCEPT
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_DECLINE
+            . '" type="xsd:boolean" default="0"/>
+       <xsd:element name="'
+            . \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_TEST
+            . '" type="xsd:boolean" default="0"/>
      </xsd:sequence>
     </xsd:complexType>
    </xsd:element>

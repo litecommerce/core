@@ -32,34 +32,11 @@ namespace XLite\Module\CDev\XPaymentsConnector\Model\Payment\Processor;
 class XPayments extends \XLite\Model\Payment\Base\WebBased
 {
     // Payment statuses
-    const NEW_STATUS      = 1;
-    const AUTH_STATUS     = 2;
-    const DECLINED_STATUS = 3;
-    const CHARGED_STATUS  = 4;
+    const STATUS_NEW      = 1;
+    const STATUS_AUTH     = 2;
+    const STATUS_DECLINED = 3;
+    const STATUS_CHARGED  = 4;
 
-    // Payment actions
-    const NEW_ACTION         = 1;
-    const AUTH_ACTION        = 2;
-    const CHARGED_ACTION     = 3;
-    const DECLINED_ACTION    = 4;
-    const REFUND_ACTION      = 5;
-    const PART_REFUND_ACTION = 6;
-
-    // Transaction types
-    const TRAN_TYPE_AUTH          = 'auth';
-    const TRAN_TYPE_CAPTURE       = 'capture';
-    const TRAN_TYPE_CAPTURE_PART  = 'capturePart';
-    const TRAN_TYPE_CAPTURE_MULTI = 'captureMulti';
-    const TRAN_TYPE_VOID          = 'void';
-    const TRAN_TYPE_VOID_PART     = 'voidPart';
-    const TRAN_TYPE_VOID_MULTI    = 'voidMulti';
-    const TRAN_TYPE_REFUND        = 'refund';
-    const TRAN_TYPE_PART_REFUND   = 'refundPart';
-    const TRAN_TYPE_REFUND_MULTI  = 'refundMulti';
-    const TRAN_TYPE_GET_INFO      = 'getInfo';
-    const TRAN_TYPE_ACCEPT        = 'accept';
-    const TRAN_TYPE_DECLINE       = 'decline';
-  
     /**
      * X-Payments client
      *
@@ -73,6 +50,30 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
      * @var array
      */
     protected $formFields = null;
+
+    /**
+     * Transaction types 
+     *
+     * @var array
+     */
+    protected $transactionTypes = array (
+        self::STATUS_NEW      => \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE,
+        self::STATUS_AUTH     => \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH,
+        self::STATUS_DECLINED => \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_DECLINE,
+        self::STATUS_CHARGED  => \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE,
+    );
+
+    /**
+     * Transaction statuses
+     *
+     * @var array
+     */
+    protected $transactionStatuses = array (
+        self::STATUS_NEW      => \XLite\Model\Payment\Transaction::STATUS_INITIALIZED,
+        self::STATUS_AUTH     => \XLite\Model\Payment\Transaction::STATUS_SUCCESS,
+        self::STATUS_DECLINED => \XLite\Model\Payment\Transaction::STATUS_FAILED,
+        self::STATUS_CHARGED  => \XLite\Model\Payment\Transaction::STATUS_SUCCESS,
+    );
 
     /**
      * Payment method has settings into Module settings section
@@ -194,7 +195,7 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
                 );
 
             } else {
-                $transactionStatus = $this->getTransactionStatusByAction($response['status']);
+                $transactionStatus = $this->getTransactionStatusByStatus($updateData['status']);
             }
         }
 
@@ -220,17 +221,20 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
             $updateData = $updateData['data'];
         }
 
+        \XLite\Logger::getInstance()->log(print_r($_POST, true), LOG_ERR);
+        \XLite\Logger::getInstance()->log(print_r($updateData, true), LOG_ERR);
         if (
             $status
             && $request->txnId
             && $updateData
             && isset($updateData['status'])
         ) {
-
-            $status = $this->getTransactionStatusByAction($updateData['status']);
+            $type = $this->getTransactionTypeByStatus($updateData['status']);
 
             if ($status) {
-                $transaction->setStatus($status);
+                $backendTransaction = $transaction->createBackendTransaction($type);
+                $backendTransaction->setStatus($transaction::STATUS_SUCCESS);
+                $transaction->setStatus($this->getTransactionStatusByStatus($updateData['status']));
             }
         }
     }
@@ -269,6 +273,19 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
         }
 
         return $transaction;
+    }
+
+    /**
+     * Check - payment method is configured or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isConfigured(\XLite\Model\Payment\Method $method)
+    {
+        return parent::isConfigured($method)
+            && \XLite\Module\CDev\XPaymentsConnector\Core\XPaymentsClient::getInstance()->isModuleConfigured();
     }
 
     /**
@@ -325,50 +342,36 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
         return $this->formFields;
     }
 
+    /**
+     * Get transaction status by action 
+     *
+     * @param integer $status Status
+     *
+     * @return mixed
+     */
+    protected function getTransactionStatusByStatus($status)
+    {
+        $status = intval($status);
+
+        return isset($this->transactionStatuses[$status])
+            ? $this->transactionStatuses[$status]
+            : null;
+    }
 
     /**
      * Get transaction status by action 
      *
+     * @param integer $status Status
+     *
      * @return mixed
      */
-    protected function getTransactionStatusByAction($action)
+    protected function getTransactionTypeByStatus($status)
     {
-        $action = intval($action);
-        $config = \XLite\Core\Config::getInstance()->CDev->XPaymentsConnector;
+        $status = intval($status);
 
-        $cell = false;
-        switch ($action) {
-            case self::NEW_ACTION:
-                $cell = 'xpc_status_new';
-                break;
-
-            case self::AUTH_ACTION:
-                $cell = 'xpc_status_auth';
-                break;
-
-            case self::CHARGED_ACTION:
-                $cell = 'xpc_status_charged';
-                break;
-
-            case self::DECLINED_ACTION:
-                $cell = 'xpc_status_declined';
-                break;
-
-            case self::REFUND_ACTION:
-                $cell = 'xpc_status_refunded';
-                break;
-
-            case self::PART_REFUND_ACTION:
-                $cell = 'xpc_status_part_refunded';
-                break;
-
-            default:
-        }
-
-        return ($cell && isset($config->$cell) && $config->$cell)
-            ? $config->$cell
-            : false;
+        return isset($this->transactionTypes[$status])
+            ? $this->transactionTypes[$status]
+            : null;
     }
-
 
 }
