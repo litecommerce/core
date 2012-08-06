@@ -86,6 +86,6 @@ class OrderHistoryEvents extends \XLite\Model\Repo\ARepo
 
         $order->addEvents($event);
 
-        $this->insert($event);
+        $this->insert($event, false);
     }
 }
