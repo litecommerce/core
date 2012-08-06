@@ -1714,7 +1714,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         $this->status = $value;
 
-        if ($this->oldStatus) {
+        if ($this->oldStatus && $this->isPersistent()) {
             $this->changeStatusPostprocess($this->oldStatus, $this->status);
         }
 
