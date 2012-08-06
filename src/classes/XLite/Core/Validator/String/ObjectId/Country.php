@@ -71,7 +71,6 @@ class Country extends \XLite\Core\Validator\String
                 throw $this->throwError('Not a country code');
 
             } else {
-                $country->detach();
                 if ($this->onlyEnabled && !$country->getEnabled()) {
                     throw $this->throwError('Country is not enabled');
                 }
