@@ -13,7 +13,6 @@ $baseDir = realpath(__DIR__ . '/../../../../../src/');
 
 $GPL = array(
     'DrupalConnector',
-    'GoogleAnalytics',
     'XMLSitemapDrupal',
 );
 
@@ -80,7 +79,7 @@ foreach ( (array) glob ($baseDir . '/*.php') as $file) {
 
 // GPL checking
 
-foreach (array('DrupalConnector', 'GoogleAnalytics', 'XMLSitemapDrupal') as $module) {
+foreach ($GPL as $module) {
 
 $settings[] = array(
     'fileName'         => $baseDir . '/classes/XLite/Module/CDev/' . $module,
