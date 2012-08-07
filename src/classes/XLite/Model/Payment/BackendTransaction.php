@@ -112,7 +112,7 @@ class BackendTransaction extends \XLite\Model\AEntity
      *
      * @var string
      *
-     * @Column (type="string", length=8)
+     * @Column (type="string", length=20)
      */
     protected $type;
 
@@ -154,7 +154,7 @@ class BackendTransaction extends \XLite\Model\AEntity
 
     /**
      * Get payment method object related to the parent payment transaction
-     * 
+     *
      * @return \XLite\Model\Payment\Method
      */
     public function getPaymentMethod()
@@ -197,8 +197,8 @@ class BackendTransaction extends \XLite\Model\AEntity
     }
 
     /**
-     * Get human-readable status 
-     * 
+     * Get human-readable status
+     *
      * @return string
      */
     public function getReadableStatus()
@@ -208,9 +208,9 @@ class BackendTransaction extends \XLite\Model\AEntity
 
     /**
      * Return true if operation is allowed for currect transaction
-     * 
+     *
      * @param string $operation Name of operation
-     *  
+     *
      * @return boolean
      */
     public function isOperationAllowed($operation)
@@ -219,8 +219,8 @@ class BackendTransaction extends \XLite\Model\AEntity
     }
 
     /**
-     * Return true if transaction is an initial 
-     * 
+     * Return true if transaction is an initial
+     *
      * @return boolean
      */
     public function isInitial()
@@ -237,12 +237,12 @@ class BackendTransaction extends \XLite\Model\AEntity
     // {{{ Data operations
 
     /**
-     * Set data cell 
-     * 
+     * Set data cell
+     *
      * @param string $name  Data cell name
      * @param string $value Value
      * @param string $label Public name OPTIONAL
-     *  
+     *
      * @return void
      */
     public function setDataCell($name, $value, $label = null)
@@ -271,10 +271,10 @@ class BackendTransaction extends \XLite\Model\AEntity
     }
 
     /**
-     * Get data cell 
-     * 
+     * Get data cell
+     *
      * @param string $name Parameter name
-     *  
+     *
      * @return \XLite\Model\Payment\BackendTransactionData
      */
     public function getDataCell($name)
@@ -292,10 +292,10 @@ class BackendTransaction extends \XLite\Model\AEntity
     }
 
     /**
-     * Register transaction in order history 
-     * 
+     * Register transaction in order history
+     *
      * @param string $suffix Suffix text to add to the end of event description
-     *  
+     *
      * @return void
      */
     public function registerTransactionInOrderHistory($suffix = null)
@@ -311,7 +311,7 @@ class BackendTransaction extends \XLite\Model\AEntity
 
     /**
      * Get description of order history event (language label is returned)
-     * 
+     *
      * @return string
      */
     public function getHistoryEventDescription()
@@ -321,7 +321,7 @@ class BackendTransaction extends \XLite\Model\AEntity
 
     /**
      * Get data for description of order history event (substitution data for language label is returned)
-     * 
+     *
      * @return return
      */
     public function getHistoryEventDescriptionData()
@@ -335,8 +335,8 @@ class BackendTransaction extends \XLite\Model\AEntity
     }
 
     /**
-     * getEventData 
-     * 
+     * getEventData
+     *
      * @return void
      */
     public function getEventData()
