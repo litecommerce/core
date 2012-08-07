@@ -11,14 +11,6 @@
 {* TODO: refactor into lists*}
 <p class="error-message" IF="!product.getImages()">{t(#There are no images loaded for this product#)}</p>
 
-<widget
-  class="\XLite\View\Button\FileSelector"
-  style="main-button"
-  label="Add image"
-  object="product"
-  objectId="{product.getProductId()}"
-  fileObject="images" />
-
 <br /><br />
 
 <form IF="product.getImages()" action="admin.php" name="images_form" method="post">
