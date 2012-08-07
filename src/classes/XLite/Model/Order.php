@@ -1672,17 +1672,11 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Prepare order before remove operation
      *
      * @return void
-     *
-     * @PreRemove
      */
     public function prepareBeforeRemove()
     {
-        if (in_array($this->getStatus(), array(self::STATUS_QUEUED, self::STATUS_INPROGRESS))) {
-
-            $status = $this->getStatus();
+        if (in_array($this->getStatus(), array(static::STATUS_QUEUED, static::STATUS_INPROGRESS))) {
             $this->setStatus(self::STATUS_DECLINED);
-
-            $this->changeStatusPostprocess($status, self::STATUS_DECLINED);
         }
     }
 
@@ -1695,6 +1689,9 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function prepareEntityBeforeCommit($type)
     {
+        if (static::ACTION_DELETE == $type) {
+            $this->prepareBeforeRemove();
+        }
     }
 
     // }}}
