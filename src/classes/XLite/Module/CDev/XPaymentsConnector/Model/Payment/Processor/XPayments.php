@@ -190,6 +190,8 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
         if ($transactionStatus) {
             $transaction->setStatus($transactionStatus);
         }
+
+        $this->transaction = $transaction;
     }
 
     /**
@@ -273,6 +275,49 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Get return type
+     *
+     * @return string
+     */
+    public function getReturnType()
+    {
+        return 'Y' == $this->transaction->getPaymentMethod()->getSetting('useLiteInterface')
+            ? static::RETURN_TYPE_CUSTOM
+            : parent::getReturnType();
+    }
+
+    /**
+     * Do custom redirect after customer's return
+     *
+     * @return void
+     */
+    public function doCustomReturnRedirect()
+    {
+        $orderId = $this->transaction->getOrder()->getOrderId();
+        $page = <<<HTML
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+function func_redirect(orderId) {
+    parent.jQuery('form.place').get(0).setAttribute('action', '?target=checkout&order_id=' + orderId);
+    parent.jQuery('form.place input[name="action"]').val('xpc_return');
+    parent.jQuery('.bright').click();
+}
+</script>
+</head>
+<body onload="javascript: func_redirect('$orderId');">
+Please wait while processing the payment details...
+</body>
+</html>
+HTML;
+
+        print ($page);
+        exit ();
+    }
+
+    /**
      * Constructor
      *
      * @return void
@@ -280,6 +325,24 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
     protected function __construct()
     {
         $this->client = new \XLite\Module\CDev\XPaymentsConnector\Core\XPaymentsClient;
+    }
+
+    /**
+     * Do initial payment
+     *
+     * @return string Status code
+     */
+    protected function doInitialPayment()
+    {
+        $status = parent::doInitialPayment();
+        if (
+            static::PROLONGATION == $status
+            && 'Y' == $this->transaction->getPaymentMethod()->getSetting('useLiteInterface')
+        ) {
+            exit ();
+        }
+
+        return $status;
     }
 
     /**
@@ -318,7 +381,8 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
                 $this->transaction->setDataCell('xpc_txnid', $response['txnId'], 'X-Payments transaction id');
             }
 
-            $this->formFields =  $status
+            \XLite\Core\Database::getEM()->flush();
+            $this->formFields = $status
                 ? $response['fields']
                 : array();
         }
@@ -363,11 +427,23 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
                 break;
 
             case static::STATUS_DECLINED:
-                $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_DECLINE;
+                if (0 == $data['authorized']) {
+                    $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_DECLINE;
+                } elseif ($data['amount'] == $data['voidedAmount']) {
+                    $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID;
+                } else {
+                    $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID_PART;
+                    $value = $data['voidedAmount'];
+                }
                 break;
 
             case static::STATUS_CHARGED:
-                $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE;
+                if ($data['amount'] == $data['capturedAmount']) {
+                    $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE;
+                } else {
+                    $type = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE_PART;
+                    $value = $data['capturedAmount'];
+                }
                 break;
 
             default:
@@ -380,6 +456,7 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
             if ($value) {
                 $backendTransaction->setValue($value);
             }
+            $backendTransaction->registerTransactionInOrderHistory('callback');
         }
     }
 
