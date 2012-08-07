@@ -293,6 +293,9 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
 
         if (isset($product)) {
+
+            $this->updateSKU($product);
+
             $inventory = new \XLite\Model\Inventory();
             $inventory->setProduct($product);
 
@@ -334,7 +337,24 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         // Update all data
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $data);
 
+        $this->updateSKU($product);
+
         \XLite\Core\TopMessage::addInfo('Product info has been updated successfully');
+    }
+
+    /**
+     * Update SKU 
+     * 
+     * @param \XLite\Model\Product $product Product
+     *  
+     * @return void
+     */
+    protected function updateSKU(\XLite\Model\Product $product)
+    {
+        if (!$product->getSKU()) {
+            $product->setSKU(\XLite\Core\Database::getRepo('\XLite\Model\Product')->generateSKU($product));
+            \XLite\Core\Database::getEM()->flush();
+        }
     }
 
     // TODO: refactor
