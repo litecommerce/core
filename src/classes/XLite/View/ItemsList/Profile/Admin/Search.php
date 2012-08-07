@@ -225,24 +225,36 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     protected function getSearchParamsRepo()
     {
         return array_combine(
-            array_map(
-                function ($item) { return constant('\XLite\Model\Repo\Profile::SEARCH_' . $item); },
-                array(
-                    'PATTERN',
-                    'USER_TYPE',
-                    'MEMBERSHIP',
-                    'COUNTRY',
-                    'STATE',
-                    'CUSTOM_STATE',
-                    'ADDRESS',
-                    'PHONE',
-                    'DATE_TYPE',
-                    'DATE_PERIOD',
-                    'START_DATE',
-                    'END_DATE',
-                )
-            ),
+            $this->getSearchParamsRepoKeys(),
             array_keys($this->getSearchParams())
+        );
+    }
+
+    /**
+     * Return repository search parameters names
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSearchParamsRepoKeys()
+    {
+        return array_map(
+            function ($item) { return constant('\XLite\Model\Repo\Profile::SEARCH_' . $item); },
+            array(
+                'PATTERN',
+                'USER_TYPE',
+                'MEMBERSHIP',
+                'COUNTRY',
+                'STATE',
+                'CUSTOM_STATE',
+                'ADDRESS',
+                'PHONE',
+                'DATE_TYPE',
+                'DATE_PERIOD',
+                'START_DATE',
+                'END_DATE',
+            )
         );
     }
 }

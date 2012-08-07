@@ -302,7 +302,7 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
     {
         $fields = array(
             'sid'                   => $this->getSetting('account'),
-            'total'                 => $this->getFormattedPrice($this->transaction->getValue()),
+            'total'                 => $this->getFormattedPrice($this->getPayAmount()),
             'cart_order_id'         => $this->transaction->getTransactionId(),
             'merchant_order_id'     => $this->getSetting('prefix') . $this->getOrder()->getOrderId(),
             'pay_method'            => 'CC',
