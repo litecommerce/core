@@ -671,6 +671,11 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $list = $order->getActivePaymentTransactions();
 
+        $this->assertEquals(0, count($list), 'check length (empty)');
+
+        $order->getPaymentTransactions()->first()->setStatus(\XLite\Model\Payment\Transaction::STATUS_SUCCESS);
+
+        $list = $order->getActivePaymentTransactions();
         $this->assertEquals(1, count($list), 'check length');
         $this->assertEquals(
             'Purchase Order',

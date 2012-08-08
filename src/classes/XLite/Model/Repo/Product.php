@@ -61,6 +61,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     const DESCR_FIELD       = 'translations.description';
     const SKU_FIELD         = 'p.sku';
 
+    const SKU_GENERATION_LIMIT = 50;
+
     /**
      * currentSearchCnd
      *
@@ -236,6 +238,47 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $this->addEnabledCondition($qb, $alias);
 
         return $qb;
+    }
+
+    /**
+     * Generate SKU
+     *
+     * @param \XLite\Model\Product $product Product
+     *
+     * @return string
+     */
+    public function generateSKU(\XLite\Model\Product $product)
+    {
+        $id = $product->getProductId();
+        $id = str_repeat('0', 11 - strlen((string)$id)) . $id;
+        $sku = $id;
+        $i = 0;
+
+        $qb = $this->defineGenerateSKUQuery();
+        
+        while ($i < static::SKU_GENERATION_LIMIT && 0 < intval($qb->setParameter('sku', $sku)->getSingleScalarResult())) {
+            $i++;
+            $sku = $id . '-' . $i;
+        }
+
+        if ($i >= static::SKU_GENERATION_LIMIT) {
+            $sku = md5($sku . microtime(true));
+        }
+
+        return $sku;
+    }
+
+    /**
+     * Define query for generateSKU() method
+     * 
+     * @return \XLite\Model\QueryBuilder\QUeryBuilder
+     */
+    protected function defineGenerateSKUQuery()
+    {
+        return $this->getQueryBuilder()
+            ->from($this->_entityName, 'p')
+            ->select('COUNT(p.product_id) cnt')
+            ->andWhere('p.sku = :sku');
     }
 
     /**
@@ -829,4 +872,5 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
         parent::performDelete($entity);
     }
+
 }

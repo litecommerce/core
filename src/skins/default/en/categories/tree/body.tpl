@@ -12,7 +12,7 @@
   {foreach:getCategories(rootId),idx,_category}
     <li {displayItemClass(idx,_categoryArraySize,_category):h}>
       <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.getCategoryId()))}" {displayLinkClass(idx,_categoryArraySize,_category):h}>{_category.getName()}</a>
-      <widget template="{getBody()}" rootId="{_category.getCategoryId()}" IF="_category.GetSubCategoriesCount()" is_subtree />
+      <widget template="{getBody()}" rootId="{_category.getCategoryId()}" IF="_category.getSubcategoriesCount()" is_subtree />
     </li>
   {end:}
   {foreach:getViewList(#topCategories.children#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w}

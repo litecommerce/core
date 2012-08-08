@@ -51,7 +51,7 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
         $this->assertFalse(is_null($order->getProfile()), 'check profile');
         $this->assertFalse(is_null($order->getProfile()->getBillingAddress()), 'check billing address');
 
-        $this->assertEquals(0, $order->getOpenTotal(), 'check open total');
+        $this->assertEquals($order->getTotal(), $order->getOpenTotal(), 'check open total');
         $this->assertFalse($order->isPayed(), 'check open status');
 
         ob_start();
@@ -61,7 +61,7 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
 
         $this->assertEquals($t::PROLONGATION, $r, 'check result');
         $this->assertEquals($t::STATUS_INPROGRESS, $t->getStatus(), 'check status');
-        $this->assertEquals(0, $order->getOpenTotal(), 'check open total #2');
+        $this->assertEquals($order->getTotal(), $order->getOpenTotal(), 'check open total #2');
         $this->assertFalse($order->isPayed(), 'check payed status');
 
         $oid = $order->getOrderId();

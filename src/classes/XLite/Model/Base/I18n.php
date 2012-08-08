@@ -142,7 +142,7 @@ abstract class I18n extends \XLite\Model\AEntity
         $result = null;
 
         // Select by languages query (current languge -> default language -> hardcoded default language)
-        $query = \XLite\Core\Translation::getLanguageQuery($code);
+        $query = \XLite\Core\Translation::getLanguageQuery($this->getTranslationCode($code));
         foreach ($query as $code) {
             $result = $this->getTranslation($code, true);
             if (isset($result)) {
