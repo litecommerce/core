@@ -32,7 +32,7 @@ namespace XLite\Core;
 class Converter extends \XLite\Base\Singleton
 {
     /**
-     * Sizes 
+     * Sizes
      */
     const GIGABYTE = 1073741824;
     const MEGABYTE = 1048576;
@@ -179,12 +179,13 @@ class Converter extends \XLite\Base\Singleton
      * @param string $target Page identifier OPTIONAL
      * @param string $action Action to perform OPTIONAL
      * @param array  $params Additional params OPTIONAL
+     * @param string $interface Interface script OPTIONAL
      *
      * @return string
      */
-    public static function buildFullURL($target = '', $action = '', array $params = array())
+    public static function buildFullURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        return \XLite::getInstance()->getShopURL(static::buildURL($target, $action, $params));
+        return \XLite::getInstance()->getShopURL(static::buildURL($target, $action, $params, $interface));
     }
 
     /**
@@ -203,7 +204,7 @@ class Converter extends \XLite\Base\Singleton
 
         if ('product' === $target && !empty($params['product_id'])) {
             $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($params['product_id']);
-                
+
             if (isset($product) && $product->getCleanURL()) {
                 $urlParams[] = $product->getCleanURL() . '.html';
 
@@ -618,9 +619,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Convert short size (2M, 8K) to human readable
-     * 
+     *
      * @param string $size Shortsize
-     *  
+     *
      * @return string
      */
     public static function convertShortSizeToHumanReadable($size)
@@ -648,9 +649,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Convert short size (2M, 8K) to normal size (in bytes)
-     * 
+     *
      * @param string $size Short size
-     *  
+     *
      * @return integer
      */
     public static function convertShortSize($size)

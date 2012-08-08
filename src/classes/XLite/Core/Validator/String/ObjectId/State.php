@@ -47,9 +47,6 @@ class State extends \XLite\Core\Validator\String
             $state = $this->sanitize($data);
             if (!$state) {
                 throw $this->throwError('Not a state id');
-
-            } else {
-                $state->detach();
             }
         }
     }

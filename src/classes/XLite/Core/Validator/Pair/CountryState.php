@@ -71,8 +71,6 @@ class CountryState extends \XLite\Core\Validator\Pair\APair
 
         if (!$customState) {
             $data = $this->sanitize($data);
-            $data['country']->detach();
-            $data['state']->detach();
             if ($data['state']->getCountry()->getCode() != $data['country']->getCode()) {
                 throw $this->throwError('Country has not specified state');
             }

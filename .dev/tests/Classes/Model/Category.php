@@ -123,7 +123,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         $qf->setSubcategoriesCountEnabled(1);
         $qf->setSubcategoriesCountAll(2);
 
-        $this->assertEquals(2, $c->getSubCategoriesCount(), 'check count');
+        $this->assertEquals(2, $c->getSubcategoriesCount(), 'check count');
     }
 
     public function testHasSubcategories()
