@@ -81,4 +81,28 @@ abstract class Main extends \XLite\Module\AModule
         return '';
     }
 
+    /**
+     * Decorator run this method at the end of cache rebuild
+     *
+     * @return void
+     */
+    public static function runBuildCacheHandler()
+    {
+        parent::runBuildCacheHandler();
+
+        $enabledRole = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneBy(array('enabled' => true));
+        if (!$enabledRole) {
+            $permanent = \XLite\Core\Database::getRepo('XLite\Model\Role')->getPermanentRole();
+            if (!$permanent) {
+                $permanent = \XLite\Core\Database::getRepo('XLite\Model\Role')->findFrame(0, 1);
+                $permanent = 0 < count($permanent) ? array_shift($permanent) : null;
+            }
+
+            if ($permanent) {
+                $permanent->setEnabled(true);
+                \XLite\Core\Database::getEM()->flush();
+            }
+        }
+    }
+
 }
