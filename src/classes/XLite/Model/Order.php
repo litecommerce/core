@@ -1785,15 +1785,11 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
-     *
-     * @PreRemove
      */
-    public function prepareBeforeRemove()
+    protected function prepareBeforeRemove()
     {
-        if (in_array($this->getStatus(), array(self::STATUS_QUEUED, self::STATUS_INPROGRESS))) {
-            $status = $this->getStatus();
+        if (in_array($this->getStatus(), array(static::STATUS_QUEUED, static::STATUS_INPROGRESS))) {
             $this->setStatus(self::STATUS_DECLINED);
-            $this->changeStatusPostprocess($status, self::STATUS_DECLINED);
         }
     }
 
@@ -1808,9 +1804,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function prepareEntityBeforeCommit($type)
     {
-        if ($this->isStatusChanged()) {
-            $this->changeStatusPostprocess($this->oldStatus, $this->getStatus());
-            $this->oldStatus = null;
+        if (static::ACTION_DELETE == $type) {
+            $this->prepareBeforeRemove();
         }
     }
 
@@ -1829,11 +1824,13 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function setStatus($value)
     {
-        if ($this->getStatus() != $value && !$this->isStatusChanged()) {
-            $this->oldStatus = $this->getStatus();
-        }
+        $this->oldStatus = $this->status != $value ? $this->status : null;
 
         $this->status = $value;
+
+        if ($this->oldStatus && $this->isPersistent()) {
+            $this->changeStatusPostprocess($this->oldStatus, $this->status);
+        }
 
         // TODO - rework
         //$this->refresh('shippingRates');
