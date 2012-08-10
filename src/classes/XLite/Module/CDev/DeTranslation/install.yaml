@@ -1138,6 +1138,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Added to cart', translations: [{ code: 'de', label: 'zum Warenkorb hinzugefügt' }] }
   - { name: 'Click to unblock', translations: [{ code: 'de', label: 'Klicken für Entblockung' }] }
   - { name: 'Activate your paid module license', translations: [{ code: 'de', label: 'Die bezahlte Softwaremodul-Lizenz aktivieren' }] }
+  - { name: 'Activate your license key', translations: [{ code: 'de', label: 'Die bezahlte Lizenz aktivieren' }] }
   - { name: 'Promotions', translations: [{ code: 'de', label: 'Verkaufsaktion' }] }
   - { name: 'Discount', translations: [{ code: 'de', label: 'Rabatt' }] }
   - { name: 'Coupons', translations: [{ code: 'de', label: 'Rabatt-Coupons' }] }

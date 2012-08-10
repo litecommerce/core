@@ -1138,6 +1138,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Added to cart', translations: [{ code: 'ru', label: 'Добавлен в корзину' }] }
   - { name: 'Click to unblock', translations: [{ code: 'ru', label: 'Кликните для разблокировки' }] }
   - { name: 'Activate your paid module license', translations: [{ code: 'ru', label: 'Активировать лицензию' }] }
+  - { name: 'Activate your license key', translations: [{ code: 'ru', label: 'Активировать лицензию' }] }
   - { name: 'Promotions', translations: [{ code: 'ru', label: 'Продвижение' }] }
   - { name: 'Discount', translations: [{ code: 'ru', label: 'Скидка' }] }
   - { name: 'Coupons', translations: [{ code: 'ru', label: 'Купоны' }] }
