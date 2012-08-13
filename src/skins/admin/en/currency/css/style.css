@@ -60,6 +60,8 @@
 
 .currency-form .trailing-zeroes-value {
   padding-left: 0px;
+  width: 10%;
+  float: left;
 }
 
 .currency-form li.input-checkbox {
