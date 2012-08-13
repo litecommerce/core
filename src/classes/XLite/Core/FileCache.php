@@ -193,28 +193,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
     }
 
     /**
-     * Get cache repository ids list
-     *
-     * @return array
-     */
-    public function getIds()
-    {
-        $keys = array();
-
-        $list = glob($this->path . LC_DS . '*.php');
-
-        if ($list) {
-            foreach ($list as $f) {
-                if ($this->isKeyValid($f)) {
-                    $keys[] = substr(basename($f), 0, -4);
-                }
-            }
-        }
-
-        return $keys;
-    }
-
-    /**
      * Delete all cache entries
      *
      * @return array Array of the deleted cache ids
