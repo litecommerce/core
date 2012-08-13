@@ -91,8 +91,16 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         if (!is_null($this->get('email')) && \XLite\Core\Request::getInstance()->request_id) {
 
             if ($this->doPasswordRecovery($this->get('email'), \XLite\Core\Request::getInstance()->request_id)) {
-
-                $this->setReturnURL($this->buildURL('recover_password', '', array('mode' => 'recoverMessage')));
+                $this->setReturnURL(
+                    $this->buildURL(
+                        'recover_password',
+                        '',
+                        array(
+                            'mode'  => 'recoverMessage',
+                            'email' => $this->get('email'),
+                        )
+                    )
+                );
             }
         }
     }
