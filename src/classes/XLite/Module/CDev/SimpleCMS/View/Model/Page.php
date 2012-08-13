@@ -47,12 +47,6 @@ class Page extends \XLite\View\Model\AModel
             self::SCHEMA_LABEL    => 'Enabled',
             self::SCHEMA_REQUIRED => false,
         ),
-        'image' => array(
-            self::SCHEMA_CLASS    => 'XLite\View\FormField\Image',
-            self::SCHEMA_LABEL    => 'Image',
-            self::SCHEMA_REQUIRED => false,
-            \XLite\View\FormField\Image::PARAM_OBJECT => 'page',
-        ),
         'cleanURL' => array(
             self::SCHEMA_CLASS    => 'XLite\Module\CDev\SimpleCMS\View\FormField\Input\Text\CleanURL',
             self::SCHEMA_LABEL    => 'CleanURL',
@@ -72,6 +66,12 @@ class Page extends \XLite\View\Model\AModel
             self::SCHEMA_CLASS    => 'XLite\View\FormField\Textarea\Simple',
             self::SCHEMA_LABEL    => 'Meta keywords',
             self::SCHEMA_REQUIRED => false,
+        ),
+        'image' => array(
+            self::SCHEMA_CLASS    => 'XLite\View\FormField\Image',
+            self::SCHEMA_LABEL    => 'Open graph image',
+            self::SCHEMA_REQUIRED => false,
+            \XLite\View\FormField\Image::PARAM_OBJECT => 'page',
         ),
     );
 
