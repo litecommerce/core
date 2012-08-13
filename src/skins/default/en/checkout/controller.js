@@ -146,7 +146,15 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       .eq(0)
       .commonController(
         'enableBackgroundSubmit',
-        null,
+        function () {
+          var f = this;
+          setTimeout(
+            function() {
+              jQuery(':input', f).attr('readonly', 'readonly');
+            },
+            100
+          );
+        },
         function(event) {
           if (jQuery('#account-links a.log-in').length) {
             jQuery('.error a.log-in', this)
@@ -159,6 +167,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
                 }
               );
           }
+
+          jQuery(':input', this).removeAttr('readonly');
 
           return o.resetAfterSubmit(event);
         }

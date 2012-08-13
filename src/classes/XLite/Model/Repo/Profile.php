@@ -102,7 +102,6 @@ class Profile extends \XLite\Model\Repo\ARepo
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->addGroupBy('p.profile_id')
-            ->addSelect('addresses')
             ->leftJoin('p.addresses', 'addresses')
             ->leftJoin('addresses.country', 'country')
             ->leftJoin('addresses.state', 'state');
