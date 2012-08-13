@@ -71,7 +71,17 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         // show recover message if email is valid
         if ($this->requestRecoverPassword($this->get('email'))) {
 
-            $this->setReturnURL($this->buildURL('recover_password', '', array('mode' => 'recoverMessage', 'link_mailed' => 1)));
+            $this->setReturnURL(
+                $this->buildURL(
+                    'recover_password',
+                    '',
+                    array(
+                        'mode'        => 'recoverMessage',
+                        'link_mailed' => 1,
+                        'email'       => $this->get('email'),
+                    )
+                )
+            );
 
         } else {
 
