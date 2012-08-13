@@ -76,7 +76,7 @@ class Sitemap extends \XLite\Controller\Admin\AAdmin
                 if (in_array($key, $engines)) {
                     $url = urlencode(
                         \XLite::getInstance()->getShopURL(
-                            \XLite\Core\Converter::buildURL('sitemap', '', array(), 'cart.php')
+                            \XLite\Core\Converter::buildURL('sitemap', '', array(), \XLite::CART_SELF)
                         )
                     );
                     $url = str_replace('%url%', $url, $engine['url']);

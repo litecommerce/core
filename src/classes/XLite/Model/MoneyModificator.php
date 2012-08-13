@@ -28,7 +28,6 @@ namespace XLite\Model;
 /**
  * Money modificator
  * 
- *
  * @Entity
  * @Table  (name="money_modificators")
  */
@@ -113,13 +112,15 @@ class MoneyModificator extends \XLite\Model\AEntity
     public function apply($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
         $class = $this->getClass();
-        $validationMethod = $this->getValidator();
-        $calculateMethod = $this->getModificator();
-        if (
-            \XLite\Core\Operator::isClassExists($class)
-            && (!$validationMethod || $class::$validationMethod($model, $property, $behaviors, $purpose))
-        ) {
-            $value = $class::$calculateMethod($value, $model, $property, $behaviors, $purpose);
+
+        if (\XLite\Core\Operator::isClassExists($class)) {
+
+            $validationMethod = $this->getValidator();
+            $calculateMethod = $this->getModificator();
+
+            if (!$validationMethod || $class::$validationMethod($model, $property, $behaviors, $purpose)) {
+                $value = $class::$calculateMethod($value, $model, $property, $behaviors, $purpose);
+            }
         }
 
         return $value;

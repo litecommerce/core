@@ -72,4 +72,4 @@ ini_set('log_errors', true);
 unset($path);
 
 // Set default memory limit
-func_set_memory_limit('128M');
+func_set_memory_limit('256M');

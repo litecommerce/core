@@ -146,7 +146,15 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       .eq(0)
       .commonController(
         'enableBackgroundSubmit',
-        null,
+        function () {
+          var f = this;
+          setTimeout(
+            function() {
+              jQuery(':input', f).attr('readonly', 'readonly');
+            },
+            100
+          );
+        },
         function(event) {
           if (jQuery('#account-links a.log-in').length) {
             jQuery('.error a.log-in', this)
@@ -159,6 +167,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
                 }
               );
           }
+
+          jQuery(':input', this).removeAttr('readonly');
 
           return o.resetAfterSubmit(event);
         }
@@ -268,13 +278,13 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       .bind(
         'beforeSubmit',
         function() {
-          jQuery('.payment-step.current .button-row button', this.base).addClass('disabled');
+          jQuery('.payment-step.current .button-row button', o.base).addClass('disabled');
         }
       )
       .bind(
         'afterSubmit',
         function() {
-          jQuery('.payment-step.current .button-row button', this.base).removeClass('disabled');
+          jQuery('.payment-step.current .button-row button', o.base).removeClass('disabled');
         }
       )
       .find('ul input')
@@ -710,6 +720,18 @@ ShippingMethodsView.prototype.postprocess = function(isSuccess, initial)
     // Check and save shipping methods
     this.base
       .commonController('enableBackgroundSubmit')
+      .bind(
+        'beforeSubmit',
+        function() {
+          jQuery('.shipping-step.current .button-row button', o.parentWidget.base).addClass('disabled');
+        }
+      )
+      .bind(
+        'afterSubmit',
+        function() {
+          jQuery('.shipping-step.current .button-row button', o.parentWidget.base).removeClass('disabled');
+        }
+      )
       .find('ul.shipping-rates input')
       .change(
         function(event) {

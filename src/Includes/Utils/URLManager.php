@@ -67,37 +67,40 @@ abstract class URLManager extends \Includes\Utils\AUtils
         $output = null,
         $isSession = null
     ) {
-        if (!isset($isSecure)) {
-            $isSecure = static::isHTTPS();
-        }
+        if (!preg_match('/^https?:\/\//Ss', $url)) {
 
-        if (!isset($output)) {
-            $output = static::URL_OUTPUT_FULL;
-        }
-
-        $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
-        $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
-
-        if ($host) {
-            $proto = ($isSecure ? 'https' : 'http') . '://';
-
-            if ('/' != substr($url, 0, 1)) {
-                $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
+            if (!isset($isSecure)) {
+                $isSecure = static::isHTTPS();
             }
 
-            $isSession = is_null($isSession) ? $isSecure : $isSession;
-
-            if ($isSession) {
-                $session = \XLite\Core\Session::getInstance();
-                $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
+            if (!isset($output)) {
+                $output = static::URL_OUTPUT_FULL;
             }
 
-            foreach ($params as $name => $value) {
-                $url .= (false !== strpos($url, '?') ? '&' : '?') . $name . '=' . $value;
-            }
+            $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
+            $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
 
-            if (static::URL_OUTPUT_FULL == $output) {
-                $url = $proto . $host . $url;
+            if ($host) {
+                $proto = ($isSecure ? 'https' : 'http') . '://';
+
+                if ('/' != substr($url, 0, 1)) {
+                    $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
+                }
+
+                $isSession = is_null($isSession) ? $isSecure : $isSession;
+
+                if ($isSession) {
+                    $session = \XLite\Core\Session::getInstance();
+                    $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
+                }
+
+                foreach ($params as $name => $value) {
+                    $url .= (false !== strpos($url, '?') ? '&' : '?') . $name . '=' . $value;
+                }
+
+                if (static::URL_OUTPUT_FULL == $output) {
+                    $url = $proto . $host . $url;
+                }
             }
         }
 

@@ -407,7 +407,9 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
     public function getFrontURL()
     {
         return $this->getProductId()
-            ? \XLite::getInstance()->getShopURL(\XLite\Core\Converter::buildURL('product', '', array('product_id' => $this->getProductId()), 'cart.php'))
+            ? \XLite::getInstance()->getShopURL(
+                \XLite\Core\Converter::buildURL('product', '', array('product_id' => $this->getProductId()), \XLite::CART_SELF)
+            )
             : null;
     }
 

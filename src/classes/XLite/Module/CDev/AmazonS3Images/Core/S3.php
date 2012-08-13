@@ -365,21 +365,23 @@ class S3 extends \XLite\Base\Singleton
      */
     protected function __construct()
     {
-        require_once LC_DIR_MODULES . 'CDev' . LC_DS . 'AmazonS3Images' . LC_DS . 'lib' . LC_DS . 'S3.php';
-
         $config = \XLite\Core\Config::getInstance()->CDev->AmazonS3Images;
 
-        $this->client = new \S3($config->access_key, $config->secret_key);
-        \S3::setExceptions(true);
+        if ($config->access_key && $config->secret_key) {
+            require_once LC_DIR_MODULES . 'CDev' . LC_DS . 'AmazonS3Images' . LC_DS . 'lib' . LC_DS . 'S3.php';
 
-        try {
-            if (!$this->client->getBucketLocation($config->bucket)) {
-                $this->client->putBucket($config->bucket);
+            $this->client = new \S3($config->access_key, $config->secret_key);
+            \S3::setExceptions(true);
+
+            try {
+                if (!$this->client->getBucketLocation($config->bucket)) {
+                    $this->client->putBucket($config->bucket);
+                }
+                $this->valid = true;
+
+            } catch (\S3Exception $e) {
+                \XLite\Logger::getInstance()->registerException($e);
             }
-            $this->valid = true;
-
-        } catch (\S3Exception $e) {
-            \XLite\Logger::getInstance()->registerException($e);
         }
     }
 }

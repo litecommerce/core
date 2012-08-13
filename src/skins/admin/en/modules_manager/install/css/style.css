@@ -50,6 +50,12 @@ div.tags div.tags-title {
   margin-bottom: 25px;
 }
 
+.top-controls .addons-search-panel div.table-value {
+  float: left;
+  width: 90%;
+  padding: 0px;
+}
+
 .top-controls.search-form .substring {
   border: 1px solid #a3a3a3;
   border-radius: 3px;

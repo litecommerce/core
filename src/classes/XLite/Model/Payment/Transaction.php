@@ -29,7 +29,7 @@ namespace XLite\Model\Payment;
  * Payment transaction
  *
  *
- * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Transaction")
+ * @Entity
  * @Table  (name="payment_transactions",
  *      indexes={
  *          @Index (name="status", columns={"status"}),

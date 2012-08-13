@@ -118,13 +118,7 @@ class State extends \XLite\Model\Repo\ARepo
      */
     public function findOneByStateId($stateId)
     {
-        $state = $this->defineOneByStateIdQuery($stateId)->getSingleResult();
-
-        if ($state) {
-            $state->detach();
-        }
-
-        return $state;
+        return $this->defineOneByStateIdQuery($stateId)->getSingleResult();
     }
 
     /**

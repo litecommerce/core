@@ -182,6 +182,10 @@ extends XLite_Tests_Model_OrderAbstract
      */
     public function testGetRates()
     {
+        if (!isset($this->testConfig['usps'])) {
+            $this->markTestSkipped('U.S.P.S tests are not condifured');
+        }
+
         $processor = new XLite\Module\CDev\USPS\Model\Shipping\Processor\USPS();
 
         \XLite\Base::getInstance()->config->CDev->USPS->userid = $this->testConfig['usps']['userid'];

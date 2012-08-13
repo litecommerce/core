@@ -165,7 +165,7 @@
         <widget class="\XLite\View\Button\Regular" id="add" label="{t(#Add subcategory#)}" jsCode="onAddChildClick({getCategoryId()})" />
       </td>
 
-      <td IF="category&category.getSubCategoriesCount()" align="right">
+      <td IF="category&category.getSubcategoriesCount()" align="right">
         <widget class="\XLite\View\Button\DeleteCategory" id="delete_all_button" label="{t(#Delete all#)}" />
       </td>
 

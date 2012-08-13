@@ -1238,7 +1238,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     {
         $compiled = LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php';
 
-        if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
+        if (!$this->isTemplateValid($original, $compiled) || $force) {
             \Includes\Utils\FileManager::write($compiled, $this->parse($original));
 
             touch($compiled, filemtime($original));
@@ -1257,7 +1257,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function isTemplateValid($original, $compiled)
     {
-        return \Includes\Utils\FileManager::isExists($compiled) && (filemtime($compiled) == filemtime($original));
+        return \Includes\Utils\FileManager::isExists($compiled)
+            && (!$this->checkTemplateStatus || (filemtime($compiled) == filemtime($original)));
     }
 
     /**

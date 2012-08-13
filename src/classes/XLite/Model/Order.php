@@ -248,7 +248,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected static $statusHandlers = array(
 
         self::STATUS_TEMPORARY => array(
-            self::STATUS_AUTHORIZED => array('checkout', 'process'),
+            self::STATUS_AUTHORIZED => array('checkout', 'authorize', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
@@ -257,7 +257,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         ),
 
         self::STATUS_INPROGRESS => array(
-            self::STATUS_AUTHORIZED => array('checkout', 'process'),
+            self::STATUS_AUTHORIZED => array('checkout', 'authorize', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout', 'queue'),
@@ -268,7 +268,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         self::STATUS_QUEUED => array(
             self::STATUS_TEMPORARY  => array('uncheckout'),
             self::STATUS_INPROGRESS => array('uncheckout'),
-            self::STATUS_AUTHORIZED => array('process'),
+            self::STATUS_AUTHORIZED => array('authorize', 'process'),
             self::STATUS_PROCESSED  => array('process'),
             self::STATUS_COMPLETED  => array('process'),
             self::STATUS_DECLINED   => array('uncheckout', 'fail'),
@@ -300,14 +300,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         ),
 
         self::STATUS_DECLINED => array(
-            self::STATUS_AUTHORIZED => array('checkout', 'process'),
+            self::STATUS_AUTHORIZED => array('checkout', 'authorize', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
         ),
 
         self::STATUS_FAILED => array(
-            self::STATUS_AUTHORIZED => array('checkout', 'process'),
+            self::STATUS_AUTHORIZED => array('checkout', 'authorize', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
@@ -1016,8 +1016,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Unset payment method 
-     * 
+     * Unset payment method
+     *
      * @return void
      */
     public function unsetPaymentMethod()
@@ -1044,6 +1044,26 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             if ($t->isCompleted() || $t->isPending()) {
                 $result[] = $t;
             }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get visible payment methods
+     *
+     * @return array
+     */
+    public function getVisiblePaymentMethods()
+    {
+        $result = array();
+
+        foreach ($this->getActivePaymentTransactions() as $t) {
+            $result[] = $t->getPaymentMethod();
+        }
+
+        if (0 == count($result) && 0 < count($this->getPaymentTransactions())) {
+            $result[] = $this->getPaymentTransactions()->last()->getPaymentMethod();
         }
 
         return $result;
@@ -1132,7 +1152,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Check - order has in-progress payments or not
-     * 
+     *
      * @return boolean
      */
     public function hasInprogressPayments()
@@ -1652,8 +1672,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Prepare order before remove operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareBeforeRemove()
     {
@@ -1699,16 +1717,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         // TODO - rework
         //$this->refresh('shippingRates');
-    }
-
-    /**
-     * Check if order status was changed
-     *
-     * @return boolean
-     */
-    protected function isStatusChanged()
-    {
-        return isset($this->oldStatus);
     }
 
     /**
@@ -1765,6 +1773,15 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @return void
      */
     protected function processQueue()
+    {
+    }
+
+    /**
+     * A "change status" handler
+     *
+     * @return void
+     */
+    protected function processAuthorize()
     {
     }
 
@@ -1855,8 +1872,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     // {{{ Order actions
 
     /**
-     * Get allowed actions 
-     * 
+     * Get allowed actions
+     *
      * @return array
      */
     public function getAllowedActions()
@@ -1865,8 +1882,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get allowed payment actions 
-     * 
+     * Get allowed payment actions
+     *
      * @return array
      */
     public function getAllowedPaymentActions()
@@ -1891,8 +1908,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get array of payment transaction sums (how much is authorized, captured and refunded) 
-     * 
+     * Get array of payment transaction sums (how much is authorized, captured and refunded)
+     *
      * @return array
      */
     public function getPaymentTransactionSums()

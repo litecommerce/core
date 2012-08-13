@@ -235,7 +235,7 @@ class Category extends \XLite\Model\Base\Catalog
      *
      * @return integer|void
      */
-    public function getSubCategoriesCount()
+    public function getSubcategoriesCount()
     {
         $result = null;
 
@@ -258,7 +258,7 @@ class Category extends \XLite\Model\Base\Catalog
      */
     public function hasSubcategories()
     {
-        return 0 < $this->getSubCategoriesCount();
+        return 0 < $this->getSubcategoriesCount();
     }
 
     /**

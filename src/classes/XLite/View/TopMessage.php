@@ -34,6 +34,13 @@ namespace XLite\View;
 class TopMessage extends \XLite\View\AView
 {
     /**
+     * Messages 
+     * 
+     * @var array
+     */
+    protected $messages;
+
+    /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
@@ -41,6 +48,7 @@ class TopMessage extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -54,6 +62,7 @@ class TopMessage extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
+
         $list[] = $this->getDir() . '/controller.js';
 
         return $list;
@@ -80,15 +89,17 @@ class TopMessage extends \XLite\View\AView
     }
 
     /**
-     * getTopMessages
+     * Get top messages
      *
      * @return array
      */
     protected function getTopMessages()
     {
-        \XLite\Core\TopMessage::getInstance()->clear();
+        if (!isset($this->messages)) {
+            $this->messages = \XLite\Core\TopMessage::getInstance()->unloadPreviousMessages();
+        }
 
-        return \XLite\Core\TopMessage::getInstance()->getPreviousMessages();
+        return $this->messages;
     }
 
     /**
