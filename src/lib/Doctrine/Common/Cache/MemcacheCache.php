@@ -64,6 +64,35 @@ class MemcacheCache extends CacheProvider
     /**
      * {@inheritdoc}
      */
+    public function getIds()
+    {
+        $keys = array();
+        $allSlabs = $this->_memcache->getExtendedStats('slabs');
+
+        foreach ($allSlabs as $server => $slabs) {
+            if (is_array($slabs)) {
+                foreach (array_keys($slabs) as $slabId) {
+                    if (!is_int($slabId)) {
+                        continue;
+                    }
+                    $dump = $this->_memcache->getExtendedStats('cachedump', (int) $slabId);
+
+                    if ($dump) {
+                        foreach ($dump as $entries) {
+                            if ($entries) {
+                                $keys = array_merge($keys, array_keys($entries));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $keys;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function doFetch($id)
     {
         return $this->memcache->get($id);

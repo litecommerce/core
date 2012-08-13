@@ -132,7 +132,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
             'post_return_url_approved' => $this->getReturnURL('ID'),
             'post_return_url_declined' => $this->getReturnURL('ID'),
             'ID'                       => $this->transaction->getTransactionId(),
-            'amount'                   => $this->transaction->getValue(),
+            'amount'                   => $this->getPayAmount(),
             'BADDR1'                   => $billingAddress->getStreet(),
             'BZIP1'                    => $billingAddress->getZipcode(),
 

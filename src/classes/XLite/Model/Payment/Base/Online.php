@@ -293,8 +293,8 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     {
         $result = true;
 
-        if ($total && $this->transaction->getValue() != $total) {
-            $msg = 'Total amount doesn\'t match. Transaction total: ' . $this->transaction->getValue()
+        if ($total && $this->getPayAmount() != $total) {
+            $msg = 'Total amount doesn\'t match. Transaction total: ' . $this->getPayAmount()
                 . '; payment gateway amount: ' . $total;
             $this->setDetail(
                 'total_checking_error',
@@ -319,9 +319,9 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     {
         $result = true;
 
-        if ($currency && $this->transaction->getOrder()->getCurrency()->getCode() != $currency) {
+        if ($currency && $this->getPayCurrency()->getCode() != $currency) {
             $msg = 'Currency code doesn\'t match. Order currency: '
-                . $this->transaction->getOrder()->getCurrency()->getCode()
+                . $this->getPayCurrency()->getCode()
                 . '; payment gateway currency: ' . $currency;
             $this->setDetail(
                 'currency_checking_error',

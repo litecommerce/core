@@ -326,7 +326,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     {
         return parent::isApplicable($order, $method)
             && $this->isPaymentTypeAllowed($this->convertServiceNameToType($method->getServiceName()), $order)
-            && in_array(strtoupper($order->getCurrency()->getCode()), $this->allowedCurrencies);
+            && in_array(strtoupper($this->getPayCurrency($order)->getCode()), $this->allowedCurrencies);
     }
 
     /**
@@ -536,7 +536,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             'postal_code'           => $this->getProfile()->getBillingAddress()->getZipcode(),
             'city'                  => $this->getProfile()->getBillingAddress()->getCity(),
             'country'               => $this->getCountryCode(),
-            'amount'                => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
+            'amount'                => $this->getPayCurrency()->roundValue($this->getPayAmount()),
             'currency'              => $this->getCurrencyCode(),
             'status_url'            => $this->getCallbackURL(null, true),
             'return_url'            => $this->getReturnURL(null, true),
@@ -638,7 +638,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getCurrencyCode()
     {
-        return strtoupper($this->getOrder()->getCurrency()->getCode());
+        return strtoupper($this->getPayCurrency()->getCode());
     }
 
     /**

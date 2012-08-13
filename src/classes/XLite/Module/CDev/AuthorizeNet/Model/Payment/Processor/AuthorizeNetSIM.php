@@ -336,7 +336,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
         $string = $this->getSetting('login') . '^'
             . $sequence . '^'
             . $tstamp . '^'
-            . round($this->transaction->getValue(), 2) . '^';
+            . round($this->getPayAmount(), 2) . '^';
 
         $hash = $this->getHMAC(
             $this->getSetting('key'),
@@ -364,7 +364,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
             'x_fp_timestamp'  => $tstamp,
             'x_fp_hash'       => $hash,
             'x_show_form'     => 'PAYMENT_FORM',
-            'x_amount'        => round($this->transaction->getValue(), 2),
+            'x_amount'        => round($this->getPayAmount(), 2),
             'x_currency_code' => $this->getSetting('currency'),
             'x_method'        => 'CC',
 

@@ -1389,3 +1389,14 @@ XLite\Model\LanguageLabel:
   - { name: 'If there are some critical errors occured you can do the following', translations: [{ code: 'ru', label: 'Если во время обновления возникли критические ошибки, вы можете сделать следующее' }] }
   - { name: 'Loading...', translations: [{ code: 'ru', label: 'Загрузка...' }] }
   - { name: 'If this option is ticked all prices in the catalog will be shown with ''inc VAT'' or ''ex VAT'' label depending on whether included VAT into the price or not. If you choose do not display this label, you have to place information about it somewhere on the cat', translations: [{ code: 'ru', label: 'Если эта опция включена, у каждой цены в каталоге будет значок "с НДС" или "без НДС", в зависимости от того, включен ли налог в цену или нет. Если вы не хотите, чтобы такой значок отображался рядом с ценами в каталоге, информацию об НДС нужно разместить на какой-нибудь другой странице каталога, т.к. покупателям должно быть понятно, включен налог в цену или нет.' }] }
+  - { name: 'All words', translations: [{ code: 'ru', label: 'Все слова' }] }
+  - { name: 'Any word', translations: [{ code: 'ru', label: 'Любое слово' }] }
+  - { name: 'Exact phrase', translations: [{ code: 'ru', label: 'Вся фраза' }] }
+  - { name: 'More search options', translations: [{ code: 'ru', label: 'Настройки поиска' }] }
+  - { name: 'Less search options', translations: [{ code: 'ru', label: 'Скрыть настройки поиска' }] }
+  - { name: 'Search in', translations: [{ code: 'ru', label: 'Искать в' }] }
+  - { name: 'Product title', translations: [{ code: 'ru', label: 'Название продукта' }] }
+  - { name: 'Access denied!', translations: [{ code: 'ru', label: 'Доступ закрыт!' }] }
+  - { name: 'You are not allowed to access this resource!', translations: [{ code: 'ru', label: 'У вас недостаточно прав для просмотра этой страницы!' }] }
+
+

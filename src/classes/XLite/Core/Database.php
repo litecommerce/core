@@ -480,10 +480,11 @@ class Database extends \XLite\Base\Singleton
         $events = array(\Doctrine\ORM\Events::loadClassMetadata);
         if (static::$cacheDriver) {
 
-            // Bind cache chekers
+            // Bind cache checkers
             $events[] = \Doctrine\ORM\Events::postPersist;
             $events[] = \Doctrine\ORM\Events::postUpdate;
             $events[] = \Doctrine\ORM\Events::postRemove;
+            $events[] = \Doctrine\ORM\Events::onFlush;
         }
 
         static::$em->getEventManager()->addEventListener($events, $this);
@@ -904,6 +905,22 @@ OUT;
     public function postRemove(\Doctrine\ORM\Event\LifecycleEventArgs $arg)
     {
         $arg->getEntity()->checkCache();
+    }
+
+    /**
+     * onFlush event handler
+     *
+     * @param \Doctrine\ORM\Event\OnFlushEventArgs $arg Event argument
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function onFlush(\Doctrine\ORM\Event\OnFlushEventArgs $arg)
+    {
+        if (\XLite\Core\Profiler::getInstance()->enabled) {
+            \XLite\Core\Profiler::getInstance()->addMessage('Entities flush');
+        }
     }
 
     /**
@@ -1569,4 +1586,5 @@ OUT;
     {
         return $this->configuration->newDefaultAnnotationDriver(array($path));
     }
+
 }

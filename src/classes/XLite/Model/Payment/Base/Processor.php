@@ -211,7 +211,7 @@ abstract class Processor extends \XLite\Base
     {
         $currencies = $this->getAllowedCurrencies($method);
 
-        return !$currencies || in_array($order->getCurrency()->getCode(), $currencies);
+        return !$currencies || in_array($this->getPayCurrency($order)->getCode(), $currencies);
     }
 
     /**
@@ -366,4 +366,33 @@ abstract class Processor extends \XLite\Base
     {
         return array();
     }
+
+    /**
+     * Get pay amount 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getPayAmount()
+    {
+        return $this->transaction->getValue();
+    }
+
+    /**
+     * Get pay currency
+     *
+     * @param \XLite\Model\Order $order Order OPTIONAL
+     *
+     * @return \XLite\Model\Currency
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getPayCurrency(\XLite\Model\Order $order = null)
+    {
+        $order = $order ?: $this->getOrder();
+
+        return $order->getCurrency();
+    }
+
 }

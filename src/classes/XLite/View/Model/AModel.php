@@ -683,7 +683,8 @@ abstract class AModel extends \XLite\View\Dialog
             $savedData[$this->getFormName()] = array(
                 self::SAVED_FORM_DATA => $this->prepareFormDataToSave($data),
             );
-        } else {
+
+        } elseif (is_array($savedData) && isset($savedData[$this->getFormName()])) {
             unset($savedData[$this->getFormName()]);
         }
 

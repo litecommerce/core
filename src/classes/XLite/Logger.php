@@ -304,7 +304,7 @@ class Logger extends \XLite\Base\Singleton
      * Log custom message
      *
      * @param string  $type         Message type
-     * @param string  $message      Message
+     * @param mixed   $message      Message
      * @param boolean $useBackTrace User backtrace flag OPTIONAL
      *
      * @return string
@@ -316,6 +316,10 @@ class Logger extends \XLite\Base\Singleton
         $header = $this->getLogFileHeader();
         if (!file_exists($path) || strlen($header) > filesize($path)) {
             @file_put_contents($path, $header);
+        }
+
+        if (!is_scalar($message)) {
+            $message = var_export($message, true);
         }
 
         $message = trim('[' . @date('H:i:s') . '] ' . $message) . PHP_EOL

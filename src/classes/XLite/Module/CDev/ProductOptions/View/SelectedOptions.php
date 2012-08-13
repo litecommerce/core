@@ -143,6 +143,7 @@ class SelectedOptions extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->getItem()->hasOptions();
+            && $this->getItem()->hasOptions()
+            && 0 < count($this->getItem()->getOptions());
     }
 }

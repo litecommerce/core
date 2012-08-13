@@ -88,7 +88,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
                 switch ($request->payment_status) {
                     case 'Completed':
 
-                        if ($transaction->getValue() == $request->mc_gross) {
+                        if ($this->getPayAmount() == $request->mc_gross) {
 
                             $status = $transaction::STATUS_SUCCESS;
 
@@ -100,7 +100,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
                                 'amount_error',
                                 'Payment transaction\'s amount is corrupted' . PHP_EOL
                                 . 'Amount from request: ' . $request->mc_gross . PHP_EOL
-                                . 'Amount from transaction: ' . $transaction->getValue(),
+                                . 'Amount from transaction: ' . $this->getPayAmount(),
                                 'Hacking attempt'
                             );
 
@@ -264,7 +264,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'shipping'      => 0,
             'handling'      => 0,
             'weight_cart'   => 0,
-            'currency_code' => $this->getOrder()->getCurrency()->getCode(),
+            'currency_code' => $this->getPayCurrency()->getCode(),
 
             'return'        => $this->getReturnURL(null, true),
             'cancel_return' => $this->getReturnURL(null, true, true),
@@ -297,7 +297,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getAmountValue()
     {
-        $value = $this->transaction->getValue();
+        $value = $this->getPayAmount();
 
         settype($value, 'float');
 
