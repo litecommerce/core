@@ -252,6 +252,16 @@ class Auth extends \XLite\Base
     }
 
     /**
+     * Return membership of active profile
+     *
+     * @return integer|null
+     */
+    public function getMembershipId()
+    {
+        return $this->getProfile() ? $this->getProfile()->getMembership()->getMembershipId() : null;
+    }
+
+    /**
      * Check if passed profile is currently logged in
      *
      * @param \XLite\Model\Profile $profile Profile to check
@@ -524,9 +534,9 @@ class Auth extends \XLite\Base
 
     /**
      * Check - specified permission is allowed or not
-     * 
+     *
      * @param string $code Permission code
-     *  
+     *
      * @return boolean
      */
     public function isPermissionAllowed($code)

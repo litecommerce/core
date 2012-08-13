@@ -265,6 +265,18 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $queryBuilder = $this->createQueryBuilder()
             ->addSelect('translations');
+
+        $membership = \XLite\Core\Auth::getInstance()->getMembershipId();
+
+        if ($membership) {
+            $queryBuilder
+                ->where('c.membership = :membershipId OR c.membership IS NULL')
+                ->setParameter('membershipId', \XLite\Core\Auth::getInstance()->getMembershipId());
+        } else {
+            $queryBuilder
+                ->where('c.membership IS NULL');
+        }
+
         $this->addSubTreeCondition($queryBuilder, $categoryId ?: $this->getRootCategoryId());
 
         return $queryBuilder;

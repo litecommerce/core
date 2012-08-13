@@ -10,9 +10,11 @@
  *}
 <ul class="menu menu-list{if:!isSubtree()} catalog-categories catalog-categories-path{end:}">
   {foreach:getCategories(),idx,_category}
+    {if:_category.hasAvailableMembership()}
     <li {displayItemClass(idx,_categoryArraySize,_category):h}>
       <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.category_id))}" {displayLinkClass(idx,_categoryArraySize,_category):h}>{_category.name}</a>
     </li>
+    {end:}
   {end:}
   {foreach:getViewList(#topCategories.children#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w}
     <li {displayListItemClass(idx,wArraySize,w):h}>{w.display()}</li>

@@ -337,6 +337,26 @@ class Category extends \XLite\Model\Base\Catalog
     }
 
     /**
+     * Get membership Id
+     *
+     * @return integer
+     */
+    public function getMembershipId()
+    {
+        return $this->getMembership() ? $this->getMembership()->getMembershipId() : null;
+    }
+
+    /**
+     * Flag if the category and active profile have the same memberships. (when category is displayed or hidden)
+     *
+     * @return boolean
+     */
+    public function hasAvailableMembership()
+    {
+        return is_null($this->getMembershipId()) || $this->getMembershipId() == \XLite\Core\Auth::getInstance()->getMembershipId();
+    }
+
+    /**
      * Return number of products associated with the category
      *
      * TODO: check if result of "getProducts()" is cached by Doctrine
