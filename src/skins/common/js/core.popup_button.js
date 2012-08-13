@@ -29,7 +29,7 @@ PopupButton.prototype.enableBackgroundSubmit = true;
 PopupButton.prototype.options = {'width' : 'auto'};
 
 PopupButton.prototype.afterSubmit = function (selector) {
-}
+};
 
 PopupButton.prototype.callback = function (selector, link)
 {
@@ -60,12 +60,12 @@ PopupButton.prototype.callback = function (selector, link)
       }
     );
   }
-}
+};
 
 PopupButton.prototype.getURLParams = function (button)
 {
   return core.getCommentedData(button, 'url_params');
-}
+};
 
 PopupButton.prototype.eachClick = function (elem)
 {
@@ -78,7 +78,7 @@ PopupButton.prototype.eachClick = function (elem)
     this.callback,
     this
   ) : false;
-}
+};
 
 PopupButton.prototype.eachCallback = function (elem)
 {
@@ -94,4 +94,4 @@ PopupButton.prototype.eachCallback = function (elem)
         obj.eachClick(this);
       }
     );
-}
+};
