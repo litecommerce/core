@@ -48,6 +48,7 @@
 
 .login-page #main {
   margin-left: 0px;
+  min-width: 640px;
 }
 
 .login h1 {
