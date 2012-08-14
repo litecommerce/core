@@ -14,6 +14,11 @@
 
 <p>{t(#Thank you for registering at LiteCommerce#,_ARRAY_(#LiteCommerce#^config.Company.company_name))}!</p>
 
+{if:password}
+  <p>{t(#Your account email is X.#,_ARRAY_(#email#^profile.getLogin()))}</p>
+  <p>{t(#Your account password is X.#,_ARRAY_(#password#^password))}</p>
+{end:}
+
 <p>{signature:h}</p>
 
 </body>

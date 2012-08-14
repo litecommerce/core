@@ -179,6 +179,13 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
     jQuery('.profile .create #create_profile_chk', this.commonBase).change(
       function() {
+        if (this.checked) {
+          jQuery(this).parent().find('p').show();
+
+        } else {
+          jQuery(this).parent().find('p').hide();
+        }
+
         if (this.form.validate(true)) {
           this.form.commonController.submitForce();
         }
