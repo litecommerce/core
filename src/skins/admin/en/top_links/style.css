@@ -33,7 +33,7 @@
 
 #top-links li a
 {
-  background: url("../images/top_links_arrow_bg.gif") no-repeat 100% 7px;
+  background: url(../images/top_links_arrow_bg.gif) no-repeat 100% 7px;
   cursor: default;
 }
 
