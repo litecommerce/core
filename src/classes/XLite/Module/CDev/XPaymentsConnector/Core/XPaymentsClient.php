@@ -76,7 +76,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
      */
     protected $xpcPaypalDpSolutions = array(
         'pro' => self::XPC_WPP_DP, 
-        'uk'  => self::XPC_WPPPE_DP
+        'uk'  => self::XPC_WPPPE_DP,
     );
 
     /**
@@ -105,13 +105,13 @@ class XPaymentsClient extends \XLite\Base\Singleton
      */
     public function requestTest()
     {
-        srand();
-    
+        $hashCode = strval(rand(0, 1000000));        
+ 
         // Make test request
         list($status, $response) = $this->getApiRequest(
             'connect',
             'test',
-            array('testCode' => ($hashCode = strval(rand(0, 1000000)))),
+            array('testCode' => $hashCode),
             $this->getRequestTestSchema()
         );
     
@@ -218,12 +218,9 @@ class XPaymentsClient extends \XLite\Base\Singleton
         );
 
         if ($status) {
-            if (!isset($response['payment_module']) || !is_array($response['payment_module'])) {
-                $status = array();
-
-            } else {
-                $status = $response['payment_module'];
-            }
+            $status = (!isset($response['payment_module']) || !is_array($response['payment_module']))
+                ? array()
+                : $response['payment_module'];
         }
 
         return $status;
@@ -535,7 +532,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
     
         $data = substr($data, 12, intval($lenData));
     
-        $currentCRC = $this->makeMd5Raw($data);
+        $currentCRC = md5($data, true);
         if ($currentCRC !== $crc) {
             return array(false, 'Original CRC and calculated CRC is not equal');
         }
@@ -690,10 +687,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
         }
     
         // Check URL
-        if (
-            empty($config->xpc_xpayments_url)
-            || (function_exists('is_url') && !is_url($config->xpc_xpayments_url))
-        ) {
+        if (empty($config->xpc_xpayments_url)) {
             $failed |= static::XPC_SYSERR_URL;
         }
     
@@ -895,7 +889,7 @@ class XPaymentsClient extends \XLite\Base\Singleton
         $lenSalt = strlen($salt);
     
         $crcType = 'MD5';
-        $crc = $this->makeMd5Raw($data);
+        $crc = md5($data, true);
     
         $crc = str_repeat(' ', 8 - strlen($crcType)) . $crcType . $crc;
         $lenCRC = strlen($crc);
@@ -926,25 +920,6 @@ class XPaymentsClient extends \XLite\Base\Singleton
         $data = array_map('base64_encode', $data);
     
         return 'API' . implode("\n", $data);
-    }
-    
-    
-    /**
-     * Make MD5 hash in raw format
-     *
-     * @param string $data Data
-     *
-     * @return string
-     */
-    protected function makeMd5Raw($data)
-    {
-        $crc = md5($data);
-        $str = '';
-        for ($i = 0; 32 > $i; $i += 2) {
-            $str .= chr(hexdec(substr($crc, $i, 2)));
-        }
-    
-        return $str;
     }
     
     /**

@@ -49,7 +49,7 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
      *
      * @var array
      */
-    protected $formFields = null;
+    protected $formFields;
 
     /**
      * Transaction statuses
@@ -298,12 +298,15 @@ class XPayments extends \XLite\Model\Payment\Base\WebBased
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript">
 function func_redirect(orderId) {
+    try {
     parent.jQuery('form.place').get(0).setAttribute('action', '?target=checkout&order_id=' + orderId);
     parent.jQuery('form.place input[name="action"]').val('xpc_return');
     parent.jQuery('.bright').click();
+    } catch (err) {
+        alert('Internal error. Please contact admin.');
+    }
 }
 </script>
 </head>

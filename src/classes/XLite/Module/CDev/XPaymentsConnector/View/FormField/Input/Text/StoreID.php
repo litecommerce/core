@@ -43,7 +43,7 @@ class StoreID extends \XLite\View\FormField\Input\Text
         if (
             $result
             && $this->getValue()
-            && !preg_match('/^[0-9a-f]{32}?$/Ss', $this->getValue())
+            && !preg_match('/^[0-9a-f]{32}$/Ss', $this->getValue())
         ) {
             $result = false;
             $this->errorMessage = \XLite\Core\Translation::lbl(

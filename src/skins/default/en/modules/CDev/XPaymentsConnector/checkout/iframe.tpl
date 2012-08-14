@@ -11,5 +11,5 @@
 
 <div id="xpc">
   <div class="hide-submit"></div>
-  <iframe id="xpc_iframe" class="xpc_iframe xpc-iframe-shown" frameborder="0" name="xpc_iframe" marginwidth="0" marginheight="0" border="0" style="width: 100%; border: 0px;" src="cart.php?target=checkout&action=checkout&agree=1"></iframe>
+  <iframe id="xpc_iframe" class="xpc_iframe xpc-iframe-shown" frameborder="0" name="xpc_iframe" marginwidth="0" marginheight="0" border="0" style="width: 100%; border: 0px;" src="{buildUrl(#checkout#,#checkout#,_ARRAY_(#agree#^1))}"></iframe>
 </div>

@@ -38,13 +38,12 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      */
     protected function doActionXpcReturn()
     {
-        if (
-            isset(\XLite\Core\Request::getInstance()->notes)
-            && \XLite\Core\Request::getInstance()->notes
-        ) {
+        if (!empty(\XLite\Core\Request::getInstance()->notes)) {
             $orderId = \XLite\Core\Request::getInstance()->order_id;
             $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
-            $order->setNotes(\XLite\Core\Request::getInstance()->notes);
+            if ($order) {
+                $order->setNotes(\XLite\Core\Request::getInstance()->notes);
+            }
         }
 
         parent::doActionReturn();

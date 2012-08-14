@@ -8,13 +8,6 @@
 # @link      http://www.litecommerce.com/
 
 XLite\Model\Config:
-  - name: xpayments_sep_1
-    category: 'CDev\XPaymentsConnector'
-    type: separator
-    orderby: 1000
-    translations:
-      - code: en
-        option_name: 'Connection options'
   - name: xpc_shopping_cart_id
     category: 'CDev\XPaymentsConnector'
     type: 'XLite\Module\CDev\XPaymentsConnector\View\FormField\Input\Text\StoreID'
