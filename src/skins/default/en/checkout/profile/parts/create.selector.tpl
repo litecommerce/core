@@ -14,4 +14,5 @@
   <input type="hidden" name="create_profile" value="0" />
   <input type="checkbox" id="create_profile_chk" name="create_profile" value="1" checked="{isSeparateProfile()}" />
   <label for="create_profile_chk">{t(#Create an account for later use#)}</label>
+  <p{if:!isSeparateProfile()} style="display: none;"{end:}>{t(#Your password will be sent to your e-mail address#)}</p>
 </div>
