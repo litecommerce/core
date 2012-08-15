@@ -74,7 +74,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
                 // Drupal URL
                 $result = static::buildDrupalURL($target, $action, $params);
             }
-    
+
         } else {
 
             // Standalone URL

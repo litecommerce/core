@@ -1833,7 +1833,11 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function getInvoiceLogo()
     {
-        return \XLite\Core\Layout::getInstance()->getResourceWebPath('images/invoice_logo.png');
+        return \XLite\Core\Layout::getInstance()->getResourceWebPath(
+            'images/invoice_logo.png',
+            \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
+            \XLite::CUSTOMER_INTERFACE
+        );
     }
 
 }

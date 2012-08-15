@@ -366,14 +366,6 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
-    jQuery('form.place .terms a', this.base).click(
-      function(event) {
-        event.stopPropagation();
-        self.location = jQuery(this).attr('href');
-        return false;
-      }
-    );
-
 /**
  * There is several events:
  * ready2checkout    - The Checkout button is ready to use
