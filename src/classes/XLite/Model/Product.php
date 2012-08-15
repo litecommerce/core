@@ -440,9 +440,16 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      */
     public function getInventory()
     {
-        return !isset($this->inventory)
-            ? new \XLite\Model\Inventory()
-            : $this->inventory;
+        if (isset($this->inventory)) {
+            $inventory = $this->inventory;
+
+        } else {
+            $inventory = new \XLite\Model\Inventory();
+            $inventory->setProduct($this);
+
+        }
+
+        return $inventory;
     }
 
     /**
