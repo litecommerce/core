@@ -4,16 +4,17 @@
  * Order : line 2
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
+ * @since     1.0.0
  *
  * @ListChild (list="order.operations", weight="200")
  *}
 
 <div class="line-2">
 
-  <div class="payment" IF="order.getVisiblePaymentMethods()">
+  <div class="payment" IF="order.getActivePaymentTransactions()">
     <h2>{t(#Payment info#)}</h2>
     <div class="box"><list name="order.payment" /></div>
   </div>
