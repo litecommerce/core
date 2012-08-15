@@ -189,7 +189,11 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
         if (!$this->getCart()->isEmpty()) {
 
-            if ('Y' == \XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
+            if (\XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
+                
+                if ($this->getCart()->getProfile() && !$this->getCart()->getProfile()->getOrder()) {
+                    $this->getCart()->setProfile(null);
+                }
                 \XLite\Core\Database::getEM()->remove($this->getCart());
                 \XLite\Core\Database::getEM()->flush();
 
