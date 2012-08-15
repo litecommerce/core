@@ -32,12 +32,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
 class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDecorator
 {
     /**
-     * Terms and conditions static page
-     */
-    const TERMS_AND_CONDITIONS = 'terms-and-conditions.html';
-
-
-    /**
      * Get Terms and Conditions page URL
      *
      * @return string
@@ -45,7 +39,7 @@ class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDe
     public function getTermsURL()
     {
         return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            ? url(static::TERMS_AND_CONDITIONS)
+            ? url(\XLite\Core\Config::getInstance()->Company->terms_url)
             : parent::getTermsURL();
     }
 }
