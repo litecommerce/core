@@ -18,7 +18,7 @@
 }
 
 .login #header .logo {
-  background-image: url("../images/logo_admin.png");
+  background-image: url(../images/logo_admin.png);
   height: 81px;
   width: 92px;
 }
@@ -48,6 +48,7 @@
 
 .login-page #main {
   margin-left: 0px;
+  min-width: 640px;
 }
 
 .login h1 {
@@ -68,7 +69,7 @@
 }
 
 .login-box {
-  background: url("../images/keyhole_icon.png") no-repeat 90% 20px transparent;
+  background: url(../images/keyhole_icon.png) no-repeat 90% 20px transparent;
   padding-right: 110px;
   min-height: 200px;
 }

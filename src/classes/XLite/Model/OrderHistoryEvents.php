@@ -31,6 +31,7 @@ namespace XLite\Model;
  *
  * @Entity
  * @Table (name="order_history_events")
+ * @HasLifecycleCallbacks
  */
 class OrderHistoryEvents extends \XLite\Model\AEntity
 {
@@ -77,7 +78,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      *
      * @var string
      *
-     * @Column (type="text")
+     * @Column (type="array")
      */
     protected $data;
 
@@ -88,7 +89,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      *
      * @Column (type="text")
      */
-    protected $comment;
+    protected $comment = '';
 
     /**
      * Event details
@@ -121,25 +122,18 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
 
     
     /**
-     * Data getter
-     *
-     * @return array
-     */
-    public function getData()
-    {
-        return unserialize($this->data);
-    }
-
-    /**
-     * Data setter
-     *
-     * @param array $data Data to store
+     * Prepare order event before save data operation
      *
      * @return void
+     *
+     * @PrePersist
+     * @PreUpdate
      */
-    public function setData(array $data)
+    public function prepareBeforeSave()
     {
-        $this->data = serialize($data);
+        if (!is_numeric($this->date)) {
+            $this->setDate(time());
+        }
     }
 
     /**

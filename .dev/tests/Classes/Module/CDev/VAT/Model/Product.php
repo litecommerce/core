@@ -47,7 +47,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_Module_CDev_
 
         $this->assertTrue(is_array($productTaxes), 'Returned not an array');
 
-        foreach ($productTaxes as $k=>$v) {
+        foreach ($productTaxes as $k => $v) {
             $productTaxes[$k] = number_format(round($v, 2), 2);
         }
 

@@ -52,7 +52,8 @@ class Tooltip extends \XLite\View\AView
      */
     public function getCommonFiles()
     {
-        $list = parent::getJSFiles();
+        $list = parent::getCommonFiles();
+
         $list[static::RESOURCE_JS][] = 'js/tooltip.js';
 
         return $list;

@@ -991,6 +991,20 @@ OUT;
     }
 
     /**
+     * Clean entities cache 
+     * 
+     * @return void
+     */
+    public function cleanEntitiesCache()
+    {
+        foreach (static::getEM()->getMetadataFactory()->getAllMetadata() as $metadata) {
+            if (!$metadata->isMappedSuperclass) {
+                static::getRepo($metadata->name)->cleanCache();
+            }
+        }
+    }
+
+    /**
      * Import SQL
      *
      * @param string $sql SQL

@@ -24,3 +24,12 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Minify JS and CSS resources in Drupa 6.x style
+  - name: terms_url
+    category: Company
+    type: text
+    orderby: 380
+    value: 'terms-and-conditions.html'
+    translations:
+      - code: en
+        option_name: Terms and conditions relative URL
+
