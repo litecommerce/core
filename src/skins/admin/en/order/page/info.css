@@ -2,8 +2,8 @@
 
 /**
  * Order info styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -78,6 +78,12 @@ div.actions .status label {
 
 div.actions .status select {
   width: 230px;
+}
+
+div.actions ul.payment-sums li {
+  font-size: 14px;
+  padding-top: 15px;
+  padding-left: 58px;
 }
 
 /* Note box */
