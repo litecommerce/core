@@ -645,7 +645,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         if ($product && $product->getId()) {
 
             $result = !$product->getInventory()->getEnabled()
-                || $product->getInventory()->getAvailableAmount() >= $this->getAmount();
+                || $product->getInventory()->getAvailableAmount() >= 0;
         }
 
         return $result;

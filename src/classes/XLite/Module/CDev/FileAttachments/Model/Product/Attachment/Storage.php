@@ -63,9 +63,7 @@ class Storage extends \XLite\Model\Base\Storage
             file_put_contents(
                 $path . LC_DS . '.htaccess',
                 'Options -Indexes' . PHP_EOL
-                . '<IfModule mod_access.c>' . PHP_EOL
-                . '    Allow from all' . PHP_EOL
-                . '</IfModule>' . PHP_EOL
+                . 'Allow from all' . PHP_EOL
             );
         }
 

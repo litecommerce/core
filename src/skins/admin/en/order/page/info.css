@@ -92,6 +92,7 @@ div.note {
 }
 
 div.note .table-label {
+  float: none;
   line-height: normal;
 }
 
@@ -106,6 +107,7 @@ div.note .star {
 
 div.note .table-value {
   padding-top: 6px;
+  float: none;
 }
 
 div.note textarea {
