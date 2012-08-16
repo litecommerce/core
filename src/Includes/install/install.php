@@ -1553,7 +1553,10 @@ function doFinishInstallation(&$params, $silentMode = false)
 function x_install_get_host($host)
 {
     if (false !== strstr($host, ':')) {
-        list($result) = explode(':', $host);
+        list($result, $port) = explode(':', $host);
+        if (!$port || (80 != $port && 443 != $port)) {
+            $result = $host;
+        }
 
     } else {
         $result = $host;
