@@ -68,7 +68,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     public function getTermsURL()
     {
-        return $this->buildURL('terms');
+        return \XLite\Core\Config::getInstance()->Company->terms_url;
     }
 
     /**

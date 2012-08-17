@@ -163,7 +163,7 @@ skins_cache = off
 ; Decorator options
 ;
 [decorator]
-time_limit = 240
+time_limit = 600
 use_tokenizer = Off
 disable_software_reset = Off
 use_output = Off

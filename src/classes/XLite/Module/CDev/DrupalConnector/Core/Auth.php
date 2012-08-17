@@ -44,6 +44,7 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
             !$profileId
             && \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
             && !empty($GLOBALS['user'])
+            && !empty($GLOBALS['user']->uid)
         ) {
             $profileId = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()
                 ->getProfileIdByCMSId($GLOBALS['user']->uid);

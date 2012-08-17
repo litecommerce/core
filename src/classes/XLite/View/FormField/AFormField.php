@@ -297,7 +297,7 @@ abstract class AFormField extends \XLite\View\AView
      *
      * @param array $attrs Field attributes to prepare
      *
-     * @return void
+     * @return array
      */
     protected function setCommonAttributes(array $attrs)
     {
@@ -573,5 +573,25 @@ abstract class AFormField extends \XLite\View\AView
         $suffix = str_replace('\\', '-', strtolower($suffix));
 
         return 'input ' . $suffix;
+    }
+
+    /**
+     * Get label container class 
+     * 
+     * @return string
+     */
+    protected function getLabelContainerClass()
+    {
+        return 'table-label ' . $this->getFieldId() . '-label';
+    }
+
+    /**
+     * Get value container class 
+     * 
+     * @return string
+     */
+    protected function getValueContainerClass()
+    {
+        return 'table-value ' . $this->getFieldId() . '-value';
     }
 }

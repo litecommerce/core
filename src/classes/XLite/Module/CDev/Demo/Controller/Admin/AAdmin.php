@@ -55,6 +55,7 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
         'XLite\Controller\Admin\Settings',
         'XLite\Controller\Admin\Upgrade',
         'XLite\Controller\Admin\Aupost',
+        'XLite\Controller\Admin\Storefront',
     );
 
     /**

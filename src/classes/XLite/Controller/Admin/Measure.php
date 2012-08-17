@@ -39,24 +39,15 @@ class Measure extends \XLite\Controller\Admin\AAdmin
     protected function doActionMeasure()
     {
         if (!\XLite\Core\Config::getInstance()->General->probe_key) {
-
-            $probeKey = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy(array('name' => 'probe_key'));
-
-            if (!$probeKey) {
-                $probeKey = new \XLite\Model\Config;
-
-                $probeKey->setName('probe_key');
-                $probeKey->setCategory('General');
-
-                \XLite\Core\Database::getEM()->persist($probeKey);
-            }
-
-            $probeKey->setValue(md5(strval(microtime(true) * 1000000) . uniqid(true)));
-            \XLite\Core\Config::getInstance()->General->probe_key = $probeKey->getValue();
-
-            \XLite\Core\Database::getEM()->flush();
-
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions(true);
+            $key = md5(strval(microtime(true) * 1000000) . uniqid(true));
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                array(
+                    'category' => 'General',
+                    'name'     => 'probe_key',
+                    'value'    => $key,
+                )
+            );
+            \XLite\Core\Config::getInstance()->General->probe_key = $key;
         }
 
         $this->requestProbe();
@@ -83,6 +74,10 @@ class Measure extends \XLite\Controller\Admin\AAdmin
         set_time_limit(0);
 
         $request = new \XLite\Core\HTTP\Request($url);
-        $request->sendRequest();
+        $response = $request->sendRequest();
+
+        if (200 != $response->code) {
+            \XLite\Core\TopMessage::addError('Measuring productivity in manual mode failed.');
+        }
     }
 }

@@ -28,6 +28,7 @@ XLite\Model\Config:
   - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity }] }
   - { name: company_name, category: Company, type: text, orderby: 360, translations: [{ code: en, option_name: 'Company name' }] }
   - { name: company_website, category: Company, type: 'XLite\View\FormField\Input\Text\URL', orderby: 370, translations: [{ code: en, option_name: 'Company website' }] }
+  - { name: terms_url, category: Company, type: text, orderby: 380, value: 'cart.php?target=terms', translations: [{ code: en, option_name: 'Terms and conditions relative URL' }] }
   - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings' }] }
   - { name: customer_security, category: Security, type: checkbox, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
   - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format' }] }
@@ -53,7 +54,7 @@ XLite\Model\Config:
   - { name: location_zipcode, category: Company, type: text, orderby: 430, translations: [{ code: en, option_name: 'Zip/postal code' }] }
   - { name: company_phone, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 440, translations: [{ code: en, option_name: Phone }] }
   - { name: login_lifetime, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Number of days to store the last login data' }] }
-  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Clear cart on customer logoff' }] }
+  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff' }] }
   - { name: maximal_order_amount, category: General, type: 'XLite\View\FormField\Input\Text\Float', orderby: 290, value: 99999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Maximum allowed order total' }] }
   - { name: minimal_order_amount, category: General, type: 'XLite\View\FormField\Input\Text\Float', orderby: 280, value: '0', widgetParameters: { min: 0 }, translations: [{ code: en, option_name: 'Minimum allowed order total' }] }
   - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation' }] }
@@ -357,7 +358,7 @@ XLite\Model\LanguageLabel:
   - { name: '_X items_ in bag', translations: [{ code: en, label: '<a href="#">{{count}} items</a> in bag' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user name is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
-  - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms & Conditions</a>' }] }
+  - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}" target="_blank">Terms & Conditions</a>' }] }
   - { name: 'Place order X', translations: [{ code: en, label: 'Place order: {{total}}' }] }
   - { name: 'Enter a correct email', translations: [{ code: en, label: 'Enter a correct email' }] }
   - { name: 'Enter an integer', translations: [{ code: en, label: 'Enter an integer' }] }
@@ -481,6 +482,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Payment was not finished', translations: [{ code: en, label: 'Oops! Our payment system have not informed us whether your last order is paid, or not. Is there a payment form that you have not completed yet? If so, please complete and submit it. Or you can quickly <a href="{{url}}">re-order products</a> from your last incomplete order.' }] }
   - { name: 'Payment transaction X issued', translations: [{ code: en, label: 'Payment transaction [method: {{trx_method}}, type: {{trx_type}}, amount: {{trx_value}}, status: {{trx_status}}]' }] }
   - { name: 'Backend payment transaction X issued', translations: [{ code: en, label: 'Backend payment transaction [method: {{trx_method}}, type: {{trx_type}}, amount: {{trx_value}}, status: {{trx_status}}]' }] }
+  - { name: 'Your account email is X.', translations: [{ code: en, label: 'Your account email is {{email}}.' }] }
+  - { name: 'Your account password is X.', translations: [{ code: en, label: 'Your account password is {{password}}.' }] }
 
 XLite\Model\Membership:
   directives: { insert: true }

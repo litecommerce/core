@@ -83,9 +83,12 @@ div.tags div.tags-title {
   vertical-align: middle;
   font-family: arial, helvetica, sans-serif;
   font-size: 13px;
+  width: 260px;
+}
+
+.top-controls.search-form input#substring.default-value {
   font-style: italic;
   color: #a5a5a5;
-  width: 260px;
 }
 
 .top-controls .action-buttons .activate-text {

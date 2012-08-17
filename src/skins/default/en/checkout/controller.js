@@ -146,7 +146,15 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       .eq(0)
       .commonController(
         'enableBackgroundSubmit',
-        null,
+        function () {
+          var f = this;
+          setTimeout(
+            function() {
+              jQuery(':input', f).attr('readonly', 'readonly');
+            },
+            100
+          );
+        },
         function(event) {
           if (jQuery('#account-links a.log-in').length) {
             jQuery('.error a.log-in', this)
@@ -160,6 +168,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
               );
           }
 
+          jQuery(':input', this).removeAttr('readonly');
+
           return o.resetAfterSubmit(event);
         }
       )
@@ -169,6 +179,13 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
     jQuery('.profile .create #create_profile_chk', this.commonBase).change(
       function() {
+        if (this.checked) {
+          jQuery(this).parent().find('p').show();
+
+        } else {
+          jQuery(this).parent().find('p').hide();
+        }
+
         if (this.form.validate(true)) {
           this.form.commonController.submitForce();
         }
@@ -346,14 +363,6 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
           jQuery(this).parents('.items-row').find('.modified-subtotal'),
           jQuery(this).html()
         );
-      }
-    );
-
-    jQuery('form.place .terms a', this.base).click(
-      function(event) {
-        event.stopPropagation();
-        self.location = jQuery(this).attr('href');
-        return false;
       }
     );
 

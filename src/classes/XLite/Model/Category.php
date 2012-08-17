@@ -149,7 +149,7 @@ class Category extends \XLite\Model\Base\Catalog
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\Category", mappedBy="parent", cascade={"all"})
-     * @OrderBy({"pos" = "ASC"})
+     * @OrderBy({"pos" = "ASC","lpos" = "ASC"})
      */
     protected $children;
 

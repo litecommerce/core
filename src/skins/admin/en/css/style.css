@@ -297,7 +297,6 @@ body
 .sw-version .current
 {
   color: #8f8f8f;
-  margin-right: 10px;
   float: left;
   font-size: 12px;
 }
@@ -308,6 +307,7 @@ ul.version-note {
 
 ul.version-note li {
   float: left;
+  margin-right: 10px;
 }
 
 ul.version-note li.current {

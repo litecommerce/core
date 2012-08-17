@@ -172,11 +172,7 @@ class TopMessage extends \XLite\Base\Singleton
     {
         $messages = \XLite\Core\Session::getInstance()->topMessages;
 
-        if (!is_array($messages)) {
-            $messages = array();
-        }
-
-        return $messages;
+        return is_array($messages) ? $messages : array();
     }
 
     /**
@@ -186,11 +182,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public function getAJAXMessages()
     {
-        $messages = \XLite\Core\Session::getInstance()->topMessages;
-
-        if (!is_array($messages)) {
-            $messages = array();
-        }
+        $messages = $this->getMessages();
 
         foreach ($messages as $i => $message) {
             if (!$message[static::FIELD_AJAX]) {
@@ -232,7 +224,9 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public function clear()
     {
-        \XLite\Core\Session::getInstance()->topMessages = array();
+        if (!empty(\XLite\Core\Session::getInstance()->topMessages)) {
+            \XLite\Core\Session::getInstance()->topMessages = array();
+        }
     }
 
     /**
@@ -253,19 +247,19 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public function clearAJAX()
     {
-        $messages = \XLite\Core\Session::getInstance()->topMessages;
+        $messages = $this->getMessages();
 
-        if (!is_array($messages)) {
-            $messages = array();
-        }
-
+        $changed = false;
         foreach ($messages as $i => $message) {
             if ($message[static::FIELD_AJAX]) {
                 unset($messages[$i]);
+                $changed = true;
             }
         }
 
-        \XLite\Core\Session::getInstance()->topMessages = $messages;
+        if ($changed) {
+            \XLite\Core\Session::getInstance()->topMessages = $messages;
+        }
     }
 
     /**

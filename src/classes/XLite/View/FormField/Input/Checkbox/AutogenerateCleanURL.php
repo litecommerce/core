@@ -23,47 +23,50 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model\Base;
+namespace XLite\View\FormField\Input\Checkbox;
 
 /**
- * Abstract catalog model
+ * Autogenerate CleanURL
  *
- *
- * @MappedSuperclass
- * @HasLifecycleCallbacks
  */
-abstract class Catalog extends \XLite\Model\Base\I18n
+class AutogenerateCleanURL extends \XLite\View\FormField\Input\Checkbox\Enabled
 {
     /**
-     * Clean URL
+     * Register JS files
      *
-     * @var string
-     *
-     * @Column (type="string", length=255, unique=true, nullable=true)
+     * @return array
      */
-    protected $cleanURL;
-
-    /**
-     * Autogenerate Clean URL
-     *
-     * @var boolean
-     *
-     * @Column (type="boolean")
-     */
-    protected $autogenerateCleanURL = true;
-
-    /**
-     * Lifecycle callback
-     *
-     * @return void
-     *
-     * @PrePersist
-     * @PreUpdate
-     */
-    public function prepareBeforeSave()
+    public function getJSFiles()
     {
-        if (\XLite\Core\Converter::isEmptyString($this->getCleanURL())) {
-            $this->setCleanURL(null);
-        }
+        $list = parent::getJSFiles();
+
+        $list[] = 'form_field/input/checkbox/autogenerate_clean_url.js';
+
+        return $list;
     }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'form_field/input/checkbox/autogenerate_clean_url.css';
+
+        return $list;
+    }
+
+    /**
+     * Get default wrapper class
+     *
+     * @return string
+     */
+    protected function getDefaultWrapperClass()
+    {
+        return trim(parent::getDefaultWrapperClass() . ' auto-clean-url');
+    }
+
 }

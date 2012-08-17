@@ -126,7 +126,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoriesPlainList($rootId = null)
     {
-        return $this->defineFullTreeQuery($rootId)->getArrayResult();
+        $rootId = $rootId ?: $this->getRootCategoryId();
+
+        return $this->getCategoriesPlainListChild($rootId);
     }
 
     /**
@@ -280,6 +282,27 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $this->addSubTreeCondition($queryBuilder, $categoryId ?: $this->getRootCategoryId());
 
         return $queryBuilder;
+    }
+
+    /**
+     * Get categories plain list (child)
+     *
+     * @param integer $categoryId Category id
+     *
+     * @return array
+     */
+    protected function getCategoriesPlainListChild($categoryId)
+    {
+        $list = array();
+
+        foreach ($this->defineSubcategoriesQuery($categoryId)->getArrayResult() as $category) {
+            $list[] = $category;
+            if ($category['lpos'] > $category['rpod'] + 1) {
+                $list = array_merge($list, $this->getCategoriesPlainListChild($category['category_id']));
+            }
+        }
+
+        return $list;
     }
 
     /**

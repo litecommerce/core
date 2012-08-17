@@ -28,6 +28,7 @@ namespace XLite\Module\CDev\Catalog\Drupal;
 /**
  * Handler
  *
+ * @LC_Dependencies ("CDev\DrupalConnector")
  */
 class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\Module implements \XLite\Base\IDecorator
 {

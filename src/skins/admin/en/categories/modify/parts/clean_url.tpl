@@ -15,26 +15,7 @@
   <td>{t(#Clean URL#)}</td>
   <td class="star"></td>
   <td>
-    <input type="text" name="{getNamePostedData(#cleanURL#)}" value="{category.getCleanURL()}" size="50" maxlength="{getCleanURLMaxLength()}" id="cleanURLBox" />
-    <p />
-    <input type="checkbox" name="{getNamePostedData(#autogenerateCleanURL#)}" value="1" checked="{category.getCleanURL()}" id="autogenerateFlag" />
-    <label for="autogenerateFlag" class="note">{t(#Autogenerate Clean URL#)}</label>
+    <widget class="XLite\View\FormField\Input\Text\CleanURL" fieldName="{getNamePostedData(#cleanURL#)}" value="{category.getCleanURL()}" maxlength="{getCleanURLMaxLength()}" label="{t(#Clean URL#)}" fieldOnly="true" disabled="{category.getAutogenerateCleanURL()}" />
+    <widget class="XLite\View\FormField\Input\Checkbox\AutogenerateCleanURL" fieldName="{getNamePostedData(#autogenerateCleanURL#)}" value="{category.getAutogenerateCleanURL()}" label="{t(#Autogenerate Clean URL#)}" />
   </td>
 </tr>
-
-<script type="text/javascript">
-  jQuery().ready(
-    function() {
-      jQuery('#cleanURLBox').keyup(
-        function () {
-          var flag = '' === jQuery(this).val();
-
-          jQuery('#autogenerateFlag').attr('checked', flag);
-          // jQuery('#autogenerateFlag').attr('disabled', !flag);
-        }
-      );
-
-      jQuery('#cleanURLBox').keyup();
-    }
-  );
-</script>
