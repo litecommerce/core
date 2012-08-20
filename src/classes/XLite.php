@@ -467,7 +467,7 @@ class XLite extends \XLite\Base
      */
     final public function getMinorVersion()
     {
-        return '0-RC';
+        return '0';
     }
 
     /**
