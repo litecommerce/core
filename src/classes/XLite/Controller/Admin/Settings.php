@@ -245,7 +245,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
                 break;
 
-            case 'lite_version':
+            case 'core_version':
                 $return = \XLite::getInstance()->getVersion();
                 break;
 
