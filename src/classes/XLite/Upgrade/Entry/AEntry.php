@@ -799,10 +799,13 @@ abstract class AEntry
      */
     public function runHelpers($type)
     {
+        $this->addMessage('runHelpers', 'type: {{type}}', true, array('type' => $type)); 
         $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
 
         if ($this->isInstalled() && $path) {
             $helpers = ('post_rebuild' === $type) ? $this->postRebuildHelpers : $this->getHelpers($type);
+
+            $this->addMessage('runHelpers', 'helpers: ' . var_export($helpers, true), true);
 
             foreach ((array) $helpers as $file) {
                 $function = require_once $path . $file;
