@@ -799,13 +799,10 @@ abstract class AEntry
      */
     public function runHelpers($type)
     {
-        $this->addMessage('runHelpers', 'type: {{type}}', true, array('type' => $type)); 
         $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
 
         if ($this->isInstalled() && $path) {
             $helpers = ('post_rebuild' === $type) ? $this->postRebuildHelpers : $this->getHelpers($type);
-
-            $this->addMessage('runHelpers', 'helpers: ' . var_export($helpers, true), true);
 
             foreach ((array) $helpers as $file) {
                 $function = require_once $path . $file;
@@ -915,13 +912,13 @@ abstract class AEntry
      */
     protected function getUpgradeHelperMinorVersions($majorVersion)
     {
-        $old = $this->getMinorVersionOld();
-        $new = $this->getMinorVersionNew();
+        $old = $this->getMajorVersionOld() . '.' . $this->getMinorVersionOld();
+        $new = $this->getMajorVersionNew() . '.' . $this->getMinorVersionNew();
 
         return array_filter(
             $this->getUpgradeHelperVersions($majorVersion . LC_DS),
-            function ($var) use ($old, $new) {
-                return version_compare($old, $var, '<') && version_compare($new, $var, '>=');
+            function ($var) use ($majorVersion, $old, $new) {
+                return version_compare($old, $majorVersion . '.' . $var, '<') && version_compare($new, $majorVersion . '.' . $var, '>=');
             }
         );
     }
