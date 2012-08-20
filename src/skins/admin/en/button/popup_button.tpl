@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<button type="button" class="{getClass()}" {if:isDisabled()} disabled="disabled"{end:}>
+<button type="button" class="{getClass()}">
   {displayCommentedData(getURLParams())}
   <span>{t(getButtonContent())}</span>
 </button>
