@@ -25,7 +25,7 @@
 
 return function()
 {
-    $entities = (array) \XLite\Core\Database::getRepo('\XLite\Model\Product')->findBySKU('');
+    $entities = (array) \XLite\Core\Database::getRepo('\XLite\Model\Product')->findBySku('');
 
     foreach ($entities as $entity) {
         $entity->setSKU(null);
