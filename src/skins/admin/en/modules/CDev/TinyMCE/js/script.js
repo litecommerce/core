@@ -9,10 +9,12 @@
  * @link      http://www.litecommerce.com/
  */
 
+var configTinyMCE;
+
 jQuery(function() {
 
   // Retrive configuration for the tinyMCE object from the PHP settings
-  var configTinyMCE = core.getCommentedData(jQuery('textarea.tinymce').eq(0).parent().eq(0));
+  configTinyMCE = core.getCommentedData(jQuery('textarea.tinymce').eq(0).parent().eq(0));
 
   // Change baseURL of TinyMCE object for correct loading TinyMCE plugins
   tinyMCE.baseURL = configTinyMCE.base;
@@ -46,7 +48,8 @@ function setAdvancedTinymce(obj)
     theme_advanced_resizing : true,
 
     // Prevents automatic converting URLs to relative ones.
-    convert_urls : false
+    convert_urls : false,
+    setup : setupTinyMCE
   });
 }
 
@@ -72,10 +75,28 @@ function setSimpleTinymce(obj)
     theme_advanced_resizing : true,
 
     // Prevents automatic converting URLs to relative ones.
-    convert_urls : false
+    convert_urls : false,
+    setup : setupTinyMCE
   });
 }
 
+
+function setupTinyMCE(ed)
+{
+  ed.onInit.add(function(ed) {
+    var $elem = ed.dom.select('img')[0];
+    var newSrc = str_replace(configTinyMCE.shopURLRoot , configTinyMCE.shopURL, ed.dom.getAttrib($elem, 'src'));
+
+    ed.dom.setAttrib($elem, 'src', newSrc);
+  });
+
+  ed.onPreProcess.add(function(ed) {
+    var $elem = ed.dom.select('img')[0];
+    var newSrc = str_replace(configTinyMCE.shopURL, configTinyMCE.shopURLRoot, ed.dom.getAttrib($elem, 'src'));
+
+    ed.dom.setAttrib($elem, 'src', newSrc);
+  });
+}
 
 //
 // TODO refactor to class/object model

@@ -32,7 +32,7 @@
         <tr>
           <td class="table-label">{t(#Description#)}:</td>
           <td>&nbsp;</td>
-          <td class="category-description">{category.getDescription():h}</td>
+          <td class="category-description">{category.getViewDescription():h}</td>
         </tr>
 
         <tr>

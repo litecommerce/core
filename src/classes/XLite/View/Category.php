@@ -34,11 +34,6 @@ namespace XLite\View;
 class Category extends \XLite\View\AView
 {
     /**
-     * WEB LC root postprocessing constant
-     */
-    const WEB_LC_ROOT = '{{WEB_LC_ROOT}}';
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -79,40 +74,6 @@ class Category extends \XLite\View\AView
      */
     protected function getDescription()
     {
-        return str_replace(
-            $this->getWebPreprocessingTags(),
-            $this->getWebPreprocessingURL(),
-            $this->getCategory()->getDescription()
-        );
-    }
-
-    /**
-     * Register tags to be replaced with some URLs
-     *
-     * @return array
-     */
-    protected function getWebPreprocessingTags()
-    {
-        return array(
-            static::WEB_LC_ROOT,
-        );
-    }
-
-    /**
-     * Register URLs that should be given instead of tags
-     *
-     * @return array
-     */
-    protected function getWebPreprocessingURL()
-    {
-        // Get URL of shop. If the HTTPS is used then it should be cleaned from ?xid=<xid> construction
-        $url = \XLite::getInstance()->getShopURL(null, \XLite\Core\Request::getInstance()->isHTTPS());
-
-        // We are cleaning URL from unnecessary here <xid> construction
-        $url = preg_replace('/(\?.*)/', '', $url);
-
-        return array(
-            $url,
-        );
+        return $this->getCategory()->getViewDescription();
     }
 }
