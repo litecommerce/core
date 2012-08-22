@@ -912,13 +912,14 @@ abstract class AEntry
      */
     protected function getUpgradeHelperMinorVersions($majorVersion)
     {
-        $old = $this->getMajorVersionOld() . '.' . $this->getMinorVersionOld();
-        $new = $this->getMajorVersionNew() . '.' . $this->getMinorVersionNew();
+        $old = \Includes\Utils\Converter::composeVersion($this->getMajorVersionOld(), $this->getMinorVersionOld());
+        $new = \Includes\Utils\Converter::composeVersion($this->getMajorVersionNew(), $this->getMinorVersionNew());
 
         return array_filter(
             $this->getUpgradeHelperVersions($majorVersion . LC_DS),
             function ($var) use ($majorVersion, $old, $new) {
-                return version_compare($old, $majorVersion . '.' . $var, '<') && version_compare($new, $majorVersion . '.' . $var, '>=');
+                $version = \Includes\Utils\Converter::composeVersion($majorVersion, $var);
+                return version_compare($old, $version, '<') && version_compare($new, $version, '>=');
             }
         );
     }
