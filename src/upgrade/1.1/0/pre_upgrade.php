@@ -25,21 +25,6 @@
 
 return function()
 {
-    // Upgrade to 1.1.0 version is allowed from 1.0.25 version only
-    $curVer = \Includes\Utils\Converter::composeVersion(\XLite::getInstance()->getMajorVersion(), \XLite::getInstance()->getMinorVersion());
-
-    if (version_compare($curVer, '1.0.25', '<')) {
-        \XLite\Core\TopMessage::getInstance()->addWarning('Please upgrade to 1.0.25 version first.');
-        \XLite\Upgrade\Cell::getInstance()->setCoreVersion('1.0.25');
-        \XLite\Upgrade\Cell::getInstance()->clear(false);
-
-        // Redirect
-        $url = \XLite\Core\Converter::buildURL('upgrade');
-        \XLite\Core\Operator::redirect($url);
-
-        return;
-    }
-
     $entities = (array) \XLite\Core\Database::getRepo('\XLite\Model\Product')->findBySku('');
 
     foreach ($entities as $entity) {
