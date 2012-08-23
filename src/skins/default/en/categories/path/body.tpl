@@ -10,12 +10,10 @@
  *}
 <ul class="menu{if:!isSubtree()} catalog-categories catalog-categories-path{end:}">
   {foreach:getCategories(),idx,_category}
-    {if:_category.hasAvailableMembership()}
     <li {displayItemClass(idx,_categoryArraySize,_category):h}>
       <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.getCategoryId()))}" {displayLinkClass(idx,_categoryArraySize,_category):h}>{_category.getName()}</a>
       <widget template="{getBody()}" rootId="{_category.getCategoryId()}" IF="isActiveTrail(_category)&_category.getSubcategoriesCount()" is_subtree />
     </li>
-    {end:}
   {end:}
   {foreach:getViewList(#topCategories.children#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w}
     <li {displayListItemClass(idx,wArraySize,w):h}>{w.display()}</li>
