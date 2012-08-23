@@ -394,8 +394,8 @@ div.install-page
 }
 
 div.install-page #header .logo {
-  height: 70px;
-  width: 82px;
+  height: 81px;
+  width: 92px;
 }
 
 div.install-page #header, #menu {
