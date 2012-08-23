@@ -41,10 +41,10 @@ return function()
             'Markup per weight unit ($)' => 'Markup per weight unit',
             'Per item markup ($)' => 'Per item markup',
             'Per weight unit markup ($)' => 'Per weight unit markup',
-            'I accept Terms and Conditions' => array('I accept Terms and Conditions' => array('I accept <a href="{{URL}}">Terms & Conditions</a>', 'I accept <a href="{{URL}}" target="_blank">Terms & Conditions</a>')),
-            'To get the format of the import data you can export your products to a file' => array('To get the format of the import data you can export your products to a file' => array('To get the format of the import data you can <a href="{{url}}">export your products</a> to a file and then review the format of that file.' => 'To find out the data format for import, you can create a sample data file <a href="{{url}}">by exporting your existing products</a>. Then you can prepare the file for import using the same format.')),
-            'Depending on the size of your data file, importing may take some time.' => array('Depending on the size of your data file, importing may take some time.' => array('Depending on the size of your data file, importing may take some time.' => 'Note that data import time will strongly depend on the size of the file being imported.')),
-            'If you store product images in the database, they are included in the SQL dump file' => array('If you store product images in the database, they are included in the SQL dump file' => array('If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.' => 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back up such images you need to download them directly from the server.')),
+            'I accept Terms and Conditions' => array('I accept Terms and Conditions', array('I accept <a href="{{URL}}">Terms & Conditions</a>', 'I accept <a href="{{URL}}" target="_blank">Terms & Conditions</a>')),
+            'To get the format of the import data you can export your products to a file' => array('To get the format of the import data you can export your products to a file', array('To get the format of the import data you can <a href="{{url}}">export your products</a> to a file and then review the format of that file.', 'To find out the data format for import, you can create a sample data file <a href="{{url}}">by exporting your existing products</a>. Then you can prepare the file for import using the same format.')),
+            'Depending on the size of your data file, importing may take some time.' => array('Depending on the size of your data file, importing may take some time.', array('Depending on the size of your data file, importing may take some time.', 'Note that data import time will strongly depend on the size of the file being imported.')),
+            'If you store product images in the database, they are included in the SQL dump file' => array('If you store product images in the database, they are included in the SQL dump file', array('If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.', 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back up such images you need to download them directly from the server.')),
         ),
         'insert' => array(
             'N it.' => '{{count}} it.',
@@ -179,12 +179,10 @@ return function()
     }
 
     // Update shop_currency option type
-    $data = array (
-        'category' => 'General',
-        'name'     => 'shop_currency',
-        'value'    => \XLite\Core\Config::getInstance()->General->shop_currency,
-        'type'     => '',
-        'orderby'  => 605,
-    );
-    \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption($data);
+    $option = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findOneBy(array('name' => 'shop_currency', 'category' => 'General'));
+    if (isset($option)) {
+        $option->setType('');
+        \XLite\Core\Database::getEM()->persist($option);
+        \XLite\Core\Database::getEM()->flush();
+    }
 };
