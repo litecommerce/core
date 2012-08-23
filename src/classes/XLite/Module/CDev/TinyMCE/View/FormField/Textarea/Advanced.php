@@ -92,6 +92,8 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
     {
         // Base is the web path to the tinymce library directory
         return array(
+            'shopURL' => \XLite::getInstance()->getShopURL(),
+            'shopURLRoot' => \XLite\Model\Category::WEB_LC_ROOT,
             'base' => dirname(\XLite\Singletons::$handler->layout->getResourceWebPath(
                 $this->getDir() . '/js/tinymce/tiny_mce.js',
                 \XLite\Core\Layout::WEB_PATH_OUTPUT_URL

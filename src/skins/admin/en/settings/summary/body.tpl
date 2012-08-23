@@ -8,33 +8,17 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-<script type="text/javascript">
-<!--
-function setVisible(element_id)
-{
-    var element = document.getElementById(element_id);
-    if(!element) return;
-
-    if(element.style.display == ''){
-        element.style.display = 'none';
-    } else {
-        element.style.display = '';
-    }
-}
-//-->
-</script>
-
 <table cellspacing="1" cellpadding="5" class="settings-table">
 
 <tr>
 	<td colspan="2">
     <h2>{t(#Environment info#)}</h2>
   </td>
-</tr>	
+</tr>
 
 <tr>
-  <td class="setting-name">{t(#LiteCommerce core version#)}:</td>
-  <td>{lite_version:h}{if:answeredVersion}&nbsp;&nbsp;({t(#verified version#)}: {if:answeredVersionError}<span class="star">{t(#unknown#)}</span>{else:}{answeredVersion}{end:}){end:}</td>
+  <td class="setting-name">{t(#Core version#)}:</td>
+  <td>{core_version:h}{if:answeredVersion}&nbsp;&nbsp;({t(#verified version#)}: {if:answeredVersionError}<span class="star">{t(#unknown#)}</span>{else:}{answeredVersion}{end:}){end:}</td>
 </tr>
 
 <tr IF="answeredVersionError">
@@ -57,7 +41,7 @@ function setVisible(element_id)
   <td>
     <span>{mysql_server:h}&nbsp;</span>
     <span IF="innodb_support">({t(#InnoDB engine support enabled#)})</span>
-    <span IF="!innodb_support" class="error-message">{t(#Warning! InnoDB engine is not supported. It is required for LiteCommerce operation#)}</span>
+    <span IF="!innodb_support" class="error-message">{t(#Warning! InnoDB engine is not supported. It is required for software operation#)}</span>
   </td>
 </tr>
 
@@ -96,7 +80,7 @@ function setVisible(element_id)
 		{if:v.error=#cannot_create#}<span class="error-message">{t(#cannot create directory#)}</span>{end:}
 		{if:v.error=#cannot_chmod#}<span class="error-message">{t(#cannot set X permissions#,_ARRAY_(#X#^getDirPermissionStr(v.dir)))}</span>{end:}
         {if:v.error=#wrong_owner#}<span class="error-message">{t(#Incorrect owner of X directory#,_ARRAY_(#X#^v.dir))}</span>{end:}
-        {if:v.error=#cannot_chmod_subdirs#}<span class="error-message">{t(#subdirectories problems#)}</span>&nbsp;&nbsp;<a href="javascript: setVisible('details_{k}')" class="navigation-path"><b>{t(#details#)}</b>&nbsp;&gt;&gt</a>{end:}
+        {if:v.error=#cannot_chmod_subdirs#}<span class="error-message">{t(#subdirectories problems#)}</span>&nbsp;&nbsp;<a href="javascript:void(0);" onclick="jQuery('#details_{k}').toggle();" class="navigation-path"><b>{t(#details#)}</b>&nbsp;&gt;&gt</a>{end:}
 	</td>
 </tr>
 <tr class="{getRowClass(k,#dialog-box#,#highlight#)}" style="display : none" id="details_{k}" IF="v.error=#cannot_chmod_subdirs#">

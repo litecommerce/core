@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Popup button
+ * Demo notice
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,6 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<button type="button" class="{getClass()}">
-  {displayCommentedData(getURLParams())}
-  <span>{t(getButtonContent())}</span>
-</button>
+<div style="height: 100px; width: 500px; text-align: center; padding-top: 40px;">
+  <h3 style="color: black;">Sorry, this action is not allowed in demo mode</h3>
+</div>

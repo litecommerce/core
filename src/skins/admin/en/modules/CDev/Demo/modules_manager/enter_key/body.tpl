@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Popup button
+ * Modules
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,4 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<button type="button" class="{getClass()}">
-  {displayCommentedData(getURLParams())}
-  <span>{t(getButtonContent())}</span>
-</button>
+<widget template="modules/CDev/Demo/modules_manager/demo_notice.tpl" />

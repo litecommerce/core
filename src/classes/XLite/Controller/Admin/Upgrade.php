@@ -432,6 +432,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         if ($version) {
             \XLite\Upgrade\Cell::getInstance()->setCoreVersion($version);
             \XLite\Upgrade\Cell::getInstance()->clear(false);
+            $this->setHardRedirect();
 
         } else {
             \XLite\Core\TopMessage::addError('Unexpected error: version value is not passed');

@@ -99,7 +99,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             $list[$name] = 'settings/base.tpl';
         }
 
-        $list['Environment'] = 'summary.tpl';
+        $list['Environment'] = 'settings/summary/body.tpl';
 
         return $list;
     }
@@ -245,7 +245,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
                 break;
 
-            case 'lite_version':
+            case 'core_version':
                 $return = \XLite::getInstance()->getVersion();
                 break;
 

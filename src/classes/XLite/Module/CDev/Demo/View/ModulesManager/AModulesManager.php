@@ -23,57 +23,40 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\Module\CDev\Demo\View\ModulesManager;
 
 /**
- * Category widget
+ * Addons search and installation widget
  *
- *
- * @ListChild (list="center", zone="customer")
  */
-class Category extends \XLite\View\AView
+class AModulesManager extends \XLite\View\ModulesManager\AModulesManager implements \XLite\Base\IDecorator
 {
     /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'category';
-        $result[] = 'main';
-
-        return $result;
-    }
-
-    /**
-     * Return widget default template
-     *
+     * Replace template directory for some targets
+     * 
      * @return string
      */
-    protected function getDefaultTemplate()
+    protected function getDir()
     {
-        return 'category_description.tpl';
+        return $this->checkDemoTarget()
+            ? 'modules/CDev/Demo/modules_manager'
+            : parent::getDir();
     }
 
     /**
-     * Check widget visibility
-     *
+     * Return true if template directory should be replaced for current target
+     * 
      * @return boolean
      */
-    protected function isVisible()
+    protected function checkDemoTarget()
     {
-        return parent::isVisible() && $this->getCategory()->getDescription();
-    }
+        $targets = array(
+            'addon_install',
+            'activate_key',
+            'module_key',
+            'addon_upload',
+        );
 
-    /**
-     * Return description with postprocessing WEB LC root constant
-     *
-     * @return string
-     */
-    protected function getDescription()
-    {
-        return $this->getCategory()->getViewDescription();
+        return in_array(\XLite\Core\Request::getInstance()->target, $targets);
     }
 }

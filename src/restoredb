@@ -219,6 +219,7 @@ if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
     $disabledModules['CDev'][] = 'VAT';
     $disabledModules['CDev'][] = 'Moneybookers';
     $disabledModules['CDev'][] = 'USPS';
+    $disabledModules['CDev'][] = 'Dev';
 }
 
 
