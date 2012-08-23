@@ -31,7 +31,7 @@ namespace XLite\View\ModulesManager;
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class UploadAddons extends \XLite\View\Dialog
+class UploadAddons extends \XLite\View\ModulesManager\AModulesManager
 {
     /**
      * Target that is allowed for Upload Addons widget
@@ -87,6 +87,6 @@ class UploadAddons extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'modules_manager/upload_addons';
+        return parent::getDir() . LC_DS . 'upload_addons';
     }
 }

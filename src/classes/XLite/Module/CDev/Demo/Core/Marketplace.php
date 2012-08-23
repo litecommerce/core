@@ -31,16 +31,5 @@ namespace XLite\Module\CDev\Demo\Core;
  */
 class Marketplace extends \XLite\Core\Marketplace implements \XLite\Base\IDecorator
 {
-    /**
-     * Send request to marketplace endpoint and return the response
-     *
-     * @param string $action Name of the action
-     * @param array  $data   Custom data to send in request OPTIONAL
-     *
-     * @return string
-     */
-    protected function sendRequestToMarketplace($action, array $data = array())
-    {
-        return null;
-    }
+    const TTL_LONG  = 604800; // 7 days
 }

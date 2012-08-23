@@ -29,6 +29,7 @@ CDev/AuthorizeNet
 CDev/Moneybookers
 CDev/Quantum
 CDev/PaypalWPS
+CDev/Paypal
 CDev/USPS
 "
 

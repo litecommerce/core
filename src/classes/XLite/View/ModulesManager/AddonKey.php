@@ -76,6 +76,6 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return 'modules_manager' . LC_DS . 'enter_key';
+        return parent::getDir() . LC_DS . 'enter_key';
     }
 }
