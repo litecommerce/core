@@ -10,8 +10,8 @@
  *
  * @ListChild (list="payment.methods.body", zone="admin", weight="200")
  *}
-<form action="admin.php" method="post" name="payment_methods">
-  <input type="hidden" name="target" value="payment_methods" />
+<form action="admin.php" method="post" name="payment_appearance">
+  <input type="hidden" name="target" value="payment_appearance" />
   <input type="hidden" name="action" value="update" />
 
   <table cellspacing="2" class="data-table payment-methods">
