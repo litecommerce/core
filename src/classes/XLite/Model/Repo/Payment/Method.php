@@ -57,11 +57,11 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     // {{{ Module link
 
     /**
-     * Switch module link 
-     * 
+     * Switch module link
+     *
      * @param boolean             $enabled Module enabled status
      * @param \XLite\Model\Module $module  Model module
-     *  
+     *
      * @return mixed
      */
     public function switchModuleLink($enabled, \XLite\Model\Module $module)
@@ -71,10 +71,10 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
 
     /**
      * Define query for switchModuleLink() method
-     * 
+     *
      * @param boolean             $enabled Module enabled status
      * @param \XLite\Model\Module $module  Model module
-     *  
+     *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      */
     protected function defineQuerySwitchModuleLink($enabled, \XLite\Model\Module $module)
@@ -86,7 +86,57 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
             ->setParameter('enabled', $enabled)
             ->setParameter('class', $module->getActualName());
     }
-    
+
+    // }}}
+
+    // {{{ Search
+
+    /**
+     * Common search
+     *
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        return $countOnly ? $this->searchCount($cnd) : $this->searchResult($cnd);
+    }
+
+    /**
+     * Search routine to get count of all active payment methods
+     *
+     * @param \XLite\Core\CommonCell $cnd Search condition
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function searchCount(\XLite\Core\CommonCell $cnd)
+    {
+
+        // @TODO : Wait for added/enabled flag to be ready!
+        //
+        return count($this->searchResult($cnd));
+    }
+
+    /**
+     * Search routine to get all active payment methods
+     *
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     *
+     * @return \Doctrine\ORM\PersistentCollection
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function searchResult(\XLite\Core\CommonCell $cnd)
+    {
+        return $this->findAllActive();
+    }
+
     // }}}
 
     // {{{ Finders
@@ -104,7 +154,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     /**
      * Find all active methods
      *
-     * @return \Doctrine\Common\Collection\Colelction
+     * @return \Doctrine\Common\Collection\Collection
      */
     public function findAllActive()
     {

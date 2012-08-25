@@ -23,28 +23,22 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View\Tabs;
+namespace XLite\View\Form\ItemsList\Payment;
 
 /**
- * Tabs related to payment settings
+ * Main products items list form
  *
- * @ListChild (list="admin.center", zone="admin")
  */
-class PaymentSettings extends \XLite\View\Tabs\ATabs
+class Main extends \XLite\View\Form\ItemsList\AItemsList
 {
     /**
-     * Description of tabs related to shipping settings and their targets
+     * getDefaultTarget
      *
-     * @var array
+     * @return string
      */
-    protected $tabs = array(
-        'payment_settings' => array(
-            'title'    => 'Configuration',
-            'template' => 'payment/configuration.tpl',
-        ),
-        'payment_appearance' => array(
-            'title'    => 'Appearance',
-            'template' => 'payment/appearance.tpl',
-        ),
-    );
+    protected function getDefaultTarget()
+    {
+        return 'payment_appearance';
+    }
+
 }

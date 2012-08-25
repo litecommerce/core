@@ -49,6 +49,15 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     protected $name;
 
     /**
+     * Title (Name of payment method which is displayed for customer on checkout)
+     *
+     * @var string
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $title = '';
+
+    /**
      * Description
      *
      * @var string
@@ -66,4 +75,14 @@ class MethodTranslation extends \XLite\Model\Base\Translation
      */
     protected $adminDescription = '';
 
+    /**
+     * Title getter
+     * If no title is given then the "name" field must be used
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title ?: $this->getName();
+    }
 }
