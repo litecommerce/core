@@ -41,6 +41,15 @@ namespace XLite\Model\Payment;
 class Method extends \XLite\Model\Base\I18n
 {
     /**
+     * Type codes 
+     */
+    const TYPE_ALLINONE    = 'A';
+    const TYPE_CC_GATEWAY  = 'C';
+    const TYPE_ALTERNATIVE = 'N';
+    const TYPE_OFFLINE     = 'O';
+
+
+    /**
      * Payment method unique id
      *
      * @var integer
@@ -88,6 +97,15 @@ class Method extends \XLite\Model\Base\I18n
     protected $enabled = true;
 
     /**
+     * Type
+     *
+     * @var string
+     *
+     * @Column (type="fixedstring", length=1)
+     */
+    protected $type = self::TYPE_OFFLINE;
+
+    /**
      * Settings
      *
      * @var \XLite\Model\Payment\MethodSetting
@@ -131,7 +149,7 @@ class Method extends \XLite\Model\Base\I18n
             $disabledModule = !isset($modules[$match[1]]);
         }
 
-        return $this->getEnabled()
+        return ($this->getEnabled() || $this->isForcedEnabled())
             && !$disabledModule
             && $this->getProcessor()
             && $this->getProcessor()->isConfigured($this);
@@ -240,4 +258,95 @@ class Method extends \XLite\Model\Base\I18n
 
         parent::__construct($data);
     }
+
+    /**
+     * Get admin zone icon URL
+     *
+     * @return string
+     */
+    public function getAdminIconURL()
+    {
+        return $this->getProcessor()->getAdminIconURL($this);
+    }
+
+    /**
+     * Check - payment method has enabled test mode or not
+     *
+     * @return boolean
+     */
+    public function isTestMode()
+    {
+        return $this->getProcessor()->isTestMode($this);
+    }
+
+    /**
+     * Get warning note
+     *
+     * @return string
+     */
+    public function getWarningNote()
+    {
+        $message = null;
+
+        if (!$this->getProcessor()->isConfigured()) {
+            $message = static::t('The method is not configured and can\'t be used');
+        }
+
+        if (!$message) {
+            $message = $this->getProcessor()->getWarningNote($this);
+        }
+
+        return $message;
+    }
+
+    /**
+     * Check - payment method is forced enabled or not
+     *
+     * @return boolean
+     */
+    public function isForcedEnabled()
+    {
+        return $this->getProcessor()->isForcedEnabled($this);
+    }
+
+    /**
+     * Get note with explanation why payment method was forcibly enabled
+     *
+     * @return string
+     */
+    public function getForcedEnabledNote()
+    {
+        return $this->getProcessor()->getForcedEnabledNote($this);
+    }
+
+    /**
+     * Check - payment method can be enabled or not
+     *
+     * @return boolean
+     */
+    public function canEnable()
+    {
+        return $this->getProcessor()->canEnable($this);
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     *
+     * @return string
+     */
+    public function getForbidEnableNote()
+    {
+        return $this->getProcessor()->canNotEnableNote($this);
+    }
+
+    /**
+     * Get links
+     *
+     * @return array
+     */
+    public function getLinks()
+    {
+        return $this->getProcessor()->getLinks($this);
+    }
+
 }

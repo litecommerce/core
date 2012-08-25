@@ -119,7 +119,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormURL()
     {
-        return $this->isTestMode()
+        return $this->isTestModeEnabled()
             ? 'https://www.sandbox.paypal.com/cgi-bin/webscr'
             : 'https://www.paypal.com/cgi-bin/webscr';
     }
@@ -129,7 +129,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      *
      * @return boolean
      */
-    protected function isTestMode()
+    protected function isTestModeEnabled()
     {
         return \XLite\View\FormField\Select\TestLiveMode::TEST === $this->getSetting('mode');
     }

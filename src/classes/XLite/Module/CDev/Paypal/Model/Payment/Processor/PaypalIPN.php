@@ -327,7 +327,7 @@ class PaypalIPN extends \XLite\Base\Singleton
      */
     protected function getFormURL()
     {
-        return $this->isTestMode()
+        return $this->isTestModeEnabled()
             ? 'https://www.sandbox.paypal.com/cgi-bin/webscr'
             : 'https://www.paypal.com/cgi-bin/webscr';
     }
@@ -337,7 +337,7 @@ class PaypalIPN extends \XLite\Base\Singleton
      *
      * @return boolean
      */
-    protected function isTestMode()
+    protected function isTestModeEnabled()
     {
         return !empty(\XLite\Core\Request::getInstance()->test_ipn);
     }

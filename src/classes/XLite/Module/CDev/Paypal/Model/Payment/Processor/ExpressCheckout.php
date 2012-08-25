@@ -218,7 +218,7 @@ HTML;
      */
     protected function getExpressCheckoutPostURL()
     {
-        return $this->isTestMode() ? $this->testPostURL : $this->livePostURL;
+        return $this->isTestModeEnabled() ? $this->testPostURL : $this->livePostURL;
     }
 
     /**

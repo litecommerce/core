@@ -56,4 +56,14 @@ class MethodTranslation extends \XLite\Model\Base\Translation
      * @Column (type="text")
      */
     protected $description = '';
+
+    /**
+     * Admin description
+     *
+     * @var string
+     *
+     * @Column (type="text")
+     */
+    protected $adminDescription = '';
+
 }
