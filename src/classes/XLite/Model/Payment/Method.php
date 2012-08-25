@@ -97,6 +97,15 @@ class Method extends \XLite\Model\Base\I18n
     protected $enabled = true;
 
     /**
+     * Module enabled status
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $moduleEnabled = true;
+
+    /**
      * Type
      *
      * @var string
@@ -336,7 +345,7 @@ class Method extends \XLite\Model\Base\I18n
      */
     public function getForbidEnableNote()
     {
-        return $this->getProcessor()->canNotEnableNote($this);
+        return $this->getProcessor()->getForbidEnableNote($this);
     }
 
     /**

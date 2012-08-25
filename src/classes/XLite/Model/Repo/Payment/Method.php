@@ -29,7 +29,7 @@ namespace XLite\Model\Repo\Payment;
  * Payment method repository
  *
  */
-class Method extends \XLite\Model\Repo\Base\I18n
+class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Base\IModuleLinked
 {
     /**
      * Repository type
@@ -54,7 +54,42 @@ class Method extends \XLite\Model\Repo\Base\I18n
         array('service_name'),
     );
 
-    // {{{ findAllMethods
+    // {{{ Module link
+
+    /**
+     * Switch module link 
+     * 
+     * @param boolean             $enabled Module enabled status
+     * @param \XLite\Model\Module $module  Model module
+     *  
+     * @return mixed
+     */
+    public function switchModuleLink($enabled, \XLite\Model\Module $module)
+    {
+        return $this->defineQuerySwitchModuleLink($enabled, $module)->execute();
+    }
+
+    /**
+     * Define query for switchModuleLink() method
+     * 
+     * @param boolean             $enabled Module enabled status
+     * @param \XLite\Model\Module $module  Model module
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     */
+    protected function defineQuerySwitchModuleLink($enabled, \XLite\Model\Module $module)
+    {
+        return $this->getQueryBuilder()
+            ->update($this->_entityName, 'e')
+            ->set('e.moduleEnabled', ':enabled')
+            ->where('LOCATE(:class, e.class) > 0')
+            ->setParameter('enabled', $enabled)
+            ->setParameter('class', $module->getActualName());
+    }
+    
+    // }}}
+
+    // {{{ Finders
 
     /**
      * Find all methods
@@ -65,20 +100,6 @@ class Method extends \XLite\Model\Repo\Base\I18n
     {
         return $this->defineAllMethodsQuery()->getResult();
     }
-
-    /**
-     * Define query for findAllMethods() method
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function defineAllMethodsQuery()
-    {
-        return $this->createQueryBuilder();
-    }
-
-    // }}}
-
-    // {{{ findAllActive
 
     /**
      * Find all active methods
@@ -99,6 +120,63 @@ class Method extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
+     * Check - has active payment modules or not
+     * 
+     * @return boolean
+     */
+    public function hasActivePaymentModules()
+    {
+        return 0 < intval($this->defineHasActivePaymentModulesQuery()->getSingleScalarResult());
+    }
+
+    /**
+     * Find offline method (not from modules)
+     * 
+     * @return array
+     */
+    public function findOffline()
+    {
+        $list = array();
+
+        foreach ($this->defineFindOfflineQuery()->getResult() as $method) {
+            if (!preg_match('/\\\Module\\\/Ss', $method->getClass())) {
+                $list[] = $method;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Find offline method (only from modules)
+     *
+     * @return array
+     */
+    public function findOfflineModules()
+    {
+        $list = array();
+
+        foreach ($this->defineFindOfflineQuery()->getResult() as $method) {
+            if (preg_match('/\\\Module\\\/Ss', $method->getClass())) {
+                $list[] = $method;
+            }
+        }
+
+        return $list;
+    }
+
+
+    /**
+     * Define query for findAllMethods() method
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function defineAllMethodsQuery()
+    {
+        return $this->createQueryBuilder();
+    }
+
+    /**
      * Define query for findAllActive() method
      *
      * @return \Doctrine\ORM\QueryBuilder
@@ -108,6 +186,30 @@ class Method extends \XLite\Model\Repo\Base\I18n
         return $this->createQueryBuilder()
             ->andWhere('m.enabled = :true')
             ->setParameter('true', true);
+    }
+
+    /**
+     * Define query for hsActivePaymentModules() method
+     * 
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     */
+    protected function defineHasActivePaymentModulesQuery()
+    {
+        return $this->createPureQueryBuilder()
+            ->andWhere('m.type != :offline')
+            ->setParameter('offline', \XLite\Model\Payment\Method::TYPE_OFFLINE)
+            ->setMaxResults(1);
+    }
+
+    /**
+     * Define query for findOffline() method
+     * 
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     */
+    protected function defineFindOfflineQuery()
+    {
+        return $this->createPureQueryBuilder()
+            ->setParameter('offline', \XLite\Model\Payment\Method::TYPE_OFFLINE);
     }
 
     // }}}
