@@ -67,6 +67,15 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     protected $description = '';
 
     /**
+     * Admin description
+     *
+     * @var string
+     *
+     * @Column (type="text")
+     */
+    protected $adminDescription = '';
+
+    /**
      * Title getter
      * If no title is given then the "name" field must be used
      *
