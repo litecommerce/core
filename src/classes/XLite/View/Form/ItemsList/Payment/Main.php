@@ -23,58 +23,22 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model\Payment;
+namespace XLite\View\Form\ItemsList\Payment;
 
 /**
- * Payment method multilingual data
+ * Main products items list form
  *
- *
- * @Entity
- * @Table (name="payment_method_translations",
- *      indexes={
- *          @Index (name="ci", columns={"code","id"}),
- *          @Index (name="id", columns={"id"})
- *      }
- * )
  */
-class MethodTranslation extends \XLite\Model\Base\Translation
+class Main extends \XLite\View\Form\ItemsList\AItemsList
 {
     /**
-     * Name
-     *
-     * @var string
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $name;
-
-    /**
-     * Title (Name of payment method which is displayed for customer on checkout)
-     *
-     * @var string
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $title;
-
-    /**
-     * Description
-     *
-     * @var string
-     *
-     * @Column (type="text")
-     */
-    protected $description = '';
-
-
-    /**
-     * Title getter
-     * If no title is given then the "name" field must be used
+     * getDefaultTarget
      *
      * @return string
      */
-    public function getTitle()
+    protected function getDefaultTarget()
     {
-        return $this->title ?: $this->getName();
+        return 'payment_appearance';
     }
+
 }

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Payment methods
+ * Payment methods. Appearance tab.
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,4 +9,6 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<list name="payment.methods.body" />
+<widget class="XLite\View\Form\ItemsList\Payment\Main" name="list" />
+  <widget class="\XLite\View\ItemsList\Model\Payment\Methods" />
+<widget name="list" end />

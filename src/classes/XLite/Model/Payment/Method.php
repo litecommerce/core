@@ -118,7 +118,7 @@ class Method extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Check - enabeld method or not
+     * Check - enabled method or not
      * FIXME - must be removed
      *
      * @return boolean
@@ -159,6 +159,28 @@ class Method extends \XLite\Model\Base\I18n
         $entity = $this->getSettingEntity($name);
 
         return $entity ? $entity->getValue() : null;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->getOrderby();
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position Position
+     *
+     * @return integer
+     */
+    public function setPosition($position)
+    {
+        return $this->setOrderby($position);
     }
 
     /**

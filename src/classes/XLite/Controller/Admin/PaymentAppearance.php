@@ -42,11 +42,25 @@ class PaymentAppearance extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Update list
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionUpdate()
+    {
+        $list = new \XLite\View\ItemsList\Model\Payment\Methods();
+        $list->processQuick();
+    }
+
+
+    /**
      * Update payment methods
      *
      * @return void
      */
-    protected function doActionUpdate()
+/*    protected function doActionUpdate()
     {
         $data = \XLite\Core\Request::getInstance()->data;
 
@@ -61,10 +75,9 @@ class PaymentAppearance extends \XLite\Controller\Admin\AAdmin
                 $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find($id);
 
                 if ($m) {
-                    $m->setName($row['name']);
+                    $m->setName($row['title']);
                     $m->setDescription($row['description']);
-                    $m->setOrderby(intval($row['orderby']));
-                    $m->setEnabled(isset($row['enabled']) && '1' == $row['enabled']);
+                    $m->setPosition(intval($row['position']));
 
                     $methods[] = $m;
 
@@ -79,4 +92,6 @@ class PaymentAppearance extends \XLite\Controller\Admin\AAdmin
             }
         }
     }
+ * */
+
 }
