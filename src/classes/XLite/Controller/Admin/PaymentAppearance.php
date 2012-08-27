@@ -29,7 +29,7 @@ namespace XLite\Controller\Admin;
  * Payment methods
  *
  */
-class PaymentMethods extends \XLite\Controller\Admin\AAdmin
+class PaymentAppearance extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Return the current page title (for the content area)
@@ -38,7 +38,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Payment methods';
+        return 'Payment settings';
     }
 
     /**

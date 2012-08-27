@@ -27,25 +27,9 @@ namespace XLite\View\Payment;
 
 /**
  * Payment methods list
- *
- *
- * @ListChild (list="admin.center", zone="admin")
  */
 class Methods extends \XLite\View\Dialog
 {
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'payment_methods';
-
-        return $result;
-    }
-
     /**
      * Get payment methods list
      *
@@ -152,7 +136,7 @@ class Methods extends \XLite\View\Dialog
 
         if ($url) {
             $url .= (false === strpos($url, '?') ? '?' : '&')
-                . 'return=' . urlencode(\XLite\Core\Converter::buildURL('payment_methods'));
+                . 'return=' . urlencode(\XLite\Core\Converter::buildURL('payment_settings'));
         }
 
         return $url;
@@ -190,6 +174,6 @@ class Methods extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'payment' . LC_DS . 'methods';
+        return 'payment/appearance';
     }
 }
