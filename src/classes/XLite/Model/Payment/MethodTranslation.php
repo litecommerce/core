@@ -55,7 +55,7 @@ class MethodTranslation extends \XLite\Model\Base\Translation
      *
      * @Column (type="string", length=255)
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * Description
