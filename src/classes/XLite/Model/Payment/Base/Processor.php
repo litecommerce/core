@@ -366,4 +366,104 @@ abstract class Processor extends \XLite\Base
     {
         return array();
     }
+
+    // {{{ Method helpers
+
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method has enabled test mode or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isTestMode(\XLite\Model\Payment\Method $method)
+    {
+        return false;
+    }
+
+    /**
+     * Get warning note by payment method
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getWarningNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method is forced enabled or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isForcedEnabled(\XLite\Model\Payment\Method $method)
+    {
+        return false;
+    }
+
+    /**
+     * Get note with explanation why payment method was forcibly enabled
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getForcedEnabledNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method can be enabled or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function canEnable(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getForbidEnableNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Get links
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return array
+     */
+    public function getLinks(\XLite\Model\Payment\Method $method)
+    {
+        return array();
+    }
+
+    // }}}
 }

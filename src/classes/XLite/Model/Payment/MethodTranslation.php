@@ -66,7 +66,6 @@ class MethodTranslation extends \XLite\Model\Base\Translation
      */
     protected $description = '';
 
-
     /**
      * Title getter
      * If no title is given then the "name" field must be used
