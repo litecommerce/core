@@ -52,25 +52,4 @@
     </td>
   </tr>
 
-  <tr>
-    <td class="setting-name">
-    <label for="settings_address_override">{t(#Address override#)}*</label>
-    </td>
-    <td>
-    <widget
-      class="\XLite\View\FormField\Select\YesNo"
-      fieldId="settings_address_override"
-      fieldName="settings[address_override]"
-      fieldOnly=true
-      value="{paymentMethod.getSetting(#address_override#)}" />
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="2" class="note">
-      *{t(#The address specified with automatic fill-in variables overrides the PayPal member’s stored address.<br /> Buyers see
-the addresses that you pass in, but they cannot edit them. PayPal does not show addresses if they are invalid or omitted.#):h}
-    </td>
-  </tr>
-
 </table>
