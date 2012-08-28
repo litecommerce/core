@@ -188,9 +188,8 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'bn'            => 'LiteCommerce',
         );
 
-        if ('Y' === $this->getSetting('address_override')) {
-            $fields['address_override'] = 1;
-        }
+        // Always use address passed from shopping cart (prevent customer from selection of other address on Paypal side)
+        $fields['address_override'] = 1;
 
         $fields = array_merge($fields, $this->getPhone());
 
