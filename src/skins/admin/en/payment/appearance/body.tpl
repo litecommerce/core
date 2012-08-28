@@ -8,7 +8,9 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-
+ <div class="payment-appearance-description">
+{t(#Payment methods appearance description#):h}
+ </div>
 <widget class="XLite\View\Form\ItemsList\Payment\Main" name="list" />
   <widget class="\XLite\View\ItemsList\Model\Payment\Methods" />
 <widget name="list" end />

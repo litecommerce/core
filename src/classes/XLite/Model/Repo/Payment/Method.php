@@ -37,6 +37,12 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     const P_ENABLED         = 'enabled';
     const P_MODULE_ENABLED  = 'moduleEnabled';
     const P_ADDED           = 'added';
+    const P_POSITION        = 'position';
+
+    /**
+     * Name of the field which is used for default sorting (ordering)
+     */
+    const FIELD_DEFAULT_POSITION = 'orderby';
 
     /**
      * Repository type
@@ -195,9 +201,10 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     protected function getHandlingSearchParams()
     {
         return array(
-            'enabled',
-            'added',
-            'moduleEnabled',
+            static::P_ENABLED,
+            static::P_ADDED,
+            static::P_MODULE_ENABLED,
+            static::P_POSITION,
         );
     }
 
@@ -247,6 +254,24 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
         $queryBuilder
             ->andWhere($this->getMainAlias($queryBuilder) . '.added = :added_value')
             ->setParameter('added_value', $value);
+    }
+
+    /**
+     * Prepare certain search condition for added flag
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndPosition(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value, $countOnly)
+    {
+        if (!$countOnly) {
+            list($sort, $order) = $value;
+
+            $queryBuilder->addOrderBy($this->getMainAlias($queryBuilder) . '.' . $sort, $order);
+        }
     }
 
     // }}}

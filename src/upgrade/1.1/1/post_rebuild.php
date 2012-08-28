@@ -46,4 +46,12 @@ return function()
     foreach (\XLite\Core\Database::getRepo('XLite\Model\Module')->search($cnd) as $module) {
         $qb->setParameter('class', $module->getActualName())->execute();
     }
+
+    // Loading data to the database from yaml file
+    $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
+
+    if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
+        \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
+    }
+
 };
