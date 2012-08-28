@@ -39,6 +39,12 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     const P_ADDED               = 'added';
     const P_ONLY_PURE_OFFLINE   = 'onlyPureOffline';
     const P_ONLY_MODULE_OFFLINE = 'onlyModuleOffline';
+    const P_POSITION            = 'position';
+
+    /**
+     * Name of the field which is used for default sorting (ordering)
+     */
+    const FIELD_DEFAULT_POSITION = 'orderby';
 
     /**
      * Repository type
@@ -202,6 +208,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
             static::P_ADDED,
             static::P_ONLY_PURE_OFFLINE,
             static::P_ONLY_MODULE_OFFLINE,
+            static::P_POSITION,
         );
     }
 
@@ -254,7 +261,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     }
 
     /**
-     * Prepare certain search condition for added flag
+     * Prepare certain search condition for onlyModuleOffline flag
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      * @param boolean                    $value        Condition data
@@ -274,7 +281,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     }
 
     /**
-     * Prepare certain search condition for added flag
+     * Prepare certain search condition for onlyModuleOffline flag
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      * @param boolean                    $value        Condition data
@@ -290,6 +297,24 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
                 ->andWhere('LOCATE(:modulePrefix, ' . $alias . '.class) > 0 AND ' . $alias . '.type = :offlineType')
                 ->setParameter('offlineType', \XLite\Model\Payment\Method::TYPE_OFFLINE)
                 ->setParameter('modulePrefix', 'Module\\');
+        }
+    }
+
+    /**
+     * Prepare certain search condition for position
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndPosition(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value, $countOnly)
+    {
+        if (!$countOnly) {
+            list($sort, $order) = $value;
+
+            $queryBuilder->addOrderBy($this->getMainAlias($queryBuilder) . '.' . $sort, $order);
         }
     }
 

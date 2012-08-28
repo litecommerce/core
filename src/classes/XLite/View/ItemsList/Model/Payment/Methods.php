@@ -32,34 +32,6 @@ namespace XLite\View\ItemsList\Model\Payment;
 class Methods extends \XLite\View\ItemsList\Model\Table
 {
     /**
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'payment/methods/style.css';
-
-        return $list;
-    }
-
-    /**
-     * Get a list of JS files required to display the widget properly
-     *
-     * @return array
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'payment/methods/controller.js';
-
-        return $list;
-    }
-
-    /**
      * Define columns structure
      *
      * @return array
@@ -149,6 +121,10 @@ class Methods extends \XLite\View\ItemsList\Model\Table
         $result->{\XLite\Model\Repo\Payment\Method::P_ENABLED} = true;
         $result->{\XLite\Model\Repo\Payment\Method::P_MODULE_ENABLED} = true;
         $result->{\XLite\Model\Repo\Payment\Method::P_ADDED} = true;
+        $result->{\XLite\Model\Repo\Payment\Method::P_POSITION} = array(
+            \XLite\Model\Repo\Payment\Method::FIELD_DEFAULT_POSITION,
+            static::SORT_ORDER_ASC,
+        );
 
         return $result;
     }
