@@ -136,4 +136,20 @@ class Methods extends \XLite\View\ItemsList\Model\Table
     {
         return parent::getContainerClass() . ' payment-methods';
     }
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     */
+    protected function getSearchCondition()
+    {
+        $result = parent::getSearchCondition();
+
+        $result->{\XLite\Model\Repo\Payment\Method::P_ENABLED} = true;
+        $result->{\XLite\Model\Repo\Payment\Method::P_MODULE_ENABLED} = true;
+        $result->{\XLite\Model\Repo\Payment\Method::P_ADDED} = true;
+
+        return $result;
+    }
 }

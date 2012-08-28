@@ -32,6 +32,13 @@ namespace XLite\Model\Repo\Payment;
 class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Base\IModuleLinked
 {
     /**
+     * Names of fields that are used in search
+     */
+    const P_ENABLED         = 'enabled';
+    const P_MODULE_ENABLED  = 'moduleEnabled';
+    const P_ADDED           = 'added';
+
+    /**
      * Repository type
      *
      * @var string
@@ -53,6 +60,13 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     protected $alternativeIdentifier = array(
         array('service_name'),
     );
+
+    /**
+     * currentSearchCnd
+     *
+     * @var \XLite\Core\CommonCell
+     */
+    protected $currentSearchCnd = null;
 
     // {{{ Module link
 
@@ -98,43 +112,141 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return $countOnly ? $this->searchCount($cnd) : $this->searchResult($cnd);
+        $queryBuilder = $countOnly
+            ? $this->createPureQueryBuilder()
+            : $this->createQueryBuilder();
+
+        $this->currentSearchCnd = $cnd;
+
+        foreach ($this->currentSearchCnd as $key => $value) {
+            $this->callSearchConditionHandler($value, $key, $queryBuilder, $countOnly);
+        }
+
+        return $countOnly
+            ? $this->searchCount($queryBuilder)
+            : $this->searchResult($queryBuilder);
     }
 
     /**
-     * Search routine to get count of all active payment methods
+     * Search count only routine.
      *
-     * @param \XLite\Core\CommonCell $cnd Search condition
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function searchCount(\XLite\Core\CommonCell $cnd)
+    public function searchCount(\Doctrine\ORM\QueryBuilder $qb)
     {
+        $qb->select('COUNT(DISTINCT ' . $this->getMainAlias($qb) . '.' . $this->getPrimaryKeyField() . ')');
 
-        // @TODO : Wait for added/enabled flag to be ready!
-        //
-        return count($this->searchResult($cnd));
+        return intval($qb->getSingleScalarResult());
     }
 
     /**
-     * Search routine to get all active payment methods
+     * Search result routine.
      *
-     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
      *
      * @return \Doctrine\ORM\PersistentCollection
+     */
+    public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        return $qb->getResult();
+    }
+
+    /**
+     * Call corresponded method to handle a search condition
+     *
+     * @param mixed                      $value        Condition data
+     * @param string                     $key          Condition name
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $countOnly    Count only flag
+     *
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function searchResult(\XLite\Core\CommonCell $cnd)
+    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder, $countOnly)
     {
-        return $this->findAllActive();
+        if ($this->isSearchParamHasHandler($key)) {
+            $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value, $countOnly);
+        }
+    }
+
+    /**
+     * Check if parameter can be used for search
+     *
+     * @param string $parameter Name of parameter to check
+     *
+     * @return boolean
+     */
+    protected function isSearchParamHasHandler($parameter)
+    {
+        return in_array($parameter, $this->getHandlingSearchParams());
+    }
+
+    /**
+     * Return list of handling search params
+     *
+     * @return array
+     */
+    protected function getHandlingSearchParams()
+    {
+        return array(
+            'enabled',
+            'added',
+            'moduleEnabled',
+        );
+    }
+
+    /**
+     * Prepare certain search condition for enabled flag
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndEnabled(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        $queryBuilder
+            ->andWhere($this->getMainAlias($queryBuilder) . '.enabled = :enabled_value')
+            ->setParameter('enabled_value', $value);
+    }
+
+    /**
+     * Prepare certain search condition for moduleEnabled flag
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndModuleEnabled(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        $queryBuilder
+            ->andWhere($this->getMainAlias($queryBuilder) . '.moduleEnabled = :module_enabled_value')
+            ->setParameter('module_enabled_value', $value);
+    }
+
+    /**
+     * Prepare certain search condition for added flag
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndAdded(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        $queryBuilder
+            ->andWhere($this->getMainAlias($queryBuilder) . '.added = :added_value')
+            ->setParameter('added_value', $value);
     }
 
     // }}}
@@ -152,26 +264,18 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     }
 
     /**
-     * Find all active methods
+     * Find all active and ready for checkout payment methods.
      *
      * @return \Doctrine\Common\Collection\Collection
      */
     public function findAllActive()
     {
-        $list = $this->defineAllActiveQuery()->getResult();
-
-        foreach ($list as $k => $v) {
-            if (!$v->isEnabled()) {
-                unset($list[$k]);
-            }
-        }
-
-        return $list;
+        return $this->defineAllActiveQuery()->getResult();
     }
 
     /**
      * Check - has active payment modules or not
-     * 
+     *
      * @return boolean
      */
     public function hasActivePaymentModules()
@@ -181,7 +285,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
 
     /**
      * Find offline method (not from modules)
-     * 
+     *
      * @return array
      */
     public function findOffline()
@@ -240,7 +344,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
 
     /**
      * Define query for hsActivePaymentModules() method
-     * 
+     *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      */
     protected function defineHasActivePaymentModulesQuery()
@@ -253,7 +357,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
 
     /**
      * Define query for findOffline() method
-     * 
+     *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      */
     protected function defineFindOfflineQuery()

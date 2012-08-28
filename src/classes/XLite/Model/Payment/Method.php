@@ -41,7 +41,7 @@ namespace XLite\Model\Payment;
 class Method extends \XLite\Model\Base\I18n
 {
     /**
-     * Type codes 
+     * Type codes
      */
     const TYPE_ALLINONE    = 'A';
     const TYPE_CC_GATEWAY  = 'C';
@@ -106,6 +106,17 @@ class Method extends \XLite\Model\Base\I18n
     protected $moduleEnabled = true;
 
     /**
+     * Added status
+     *
+     * @TODO set it to FALSE by default!
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $added = true;
+
+    /**
      * Type
      *
      * @var string
@@ -152,14 +163,8 @@ class Method extends \XLite\Model\Base\I18n
      */
     public function isEnabled()
     {
-        $modules = \Includes\Utils\ModulesManager::getActiveModules();
-        $disabledModule = false;
-        if (preg_match('/^Module\\\([\w_]+\\\[\w_]+)\\\/Ss', $this->getClass(), $match)) {
-            $disabledModule = !isset($modules[$match[1]]);
-        }
-
         return ($this->getEnabled() || $this->isForcedEnabled())
-            && !$disabledModule
+            && $this->getModuleEnabled()
             && $this->getProcessor()
             && $this->getProcessor()->isConfigured($this);
     }

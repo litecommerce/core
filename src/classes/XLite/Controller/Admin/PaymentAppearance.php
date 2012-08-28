@@ -53,45 +53,4 @@ class PaymentAppearance extends \XLite\Controller\Admin\AAdmin
         $list = new \XLite\View\ItemsList\Model\Payment\Methods();
         $list->processQuick();
     }
-
-
-    /**
-     * Update payment methods
-     *
-     * @return void
-     */
-/*    protected function doActionUpdate()
-    {
-        $data = \XLite\Core\Request::getInstance()->data;
-
-        if (!is_array($data)) {
-            // TODO - add top message
-
-        } else {
-
-            $methods = array();
-
-            foreach ($data as $id => $row) {
-                $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find($id);
-
-                if ($m) {
-                    $m->setName($row['title']);
-                    $m->setDescription($row['description']);
-                    $m->setPosition(intval($row['position']));
-
-                    $methods[] = $m;
-
-                } else {
-                    // TODO - add top message
-                }
-            }
-
-            if (!empty($methods)) {
-                \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->updateInBatch($methods);
-                \XLite\Core\TopMessage::addInfo('Payment methods have been updated');
-            }
-        }
-    }
- * */
-
 }
