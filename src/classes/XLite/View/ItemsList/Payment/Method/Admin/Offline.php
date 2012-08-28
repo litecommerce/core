@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,44 +13,36 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\ItemsList\Payment\Method\Admin;
 
 /**
- * Payment methods
- *
+ * Offline methods
  */
-class PaymentAppearance extends \XLite\Controller\Admin\AAdmin
+class Offline extends \XLite\View\ItemsList\Payment\Method\Admin\AAdmin
 {
     /**
-     * Return the current page title (for the content area)
+     * Return params list to use for search
      *
-     * @return string
+     * @return \XLite\Core\CommonCell
      */
-    public function getTitle()
+    protected function getSearchCondition()
     {
-        return 'Payment settings';
+        $cnd = parent::getSearchCondition();
+
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_ONLY_PURE_OFFLINE} = true;
+
+        return $cnd;
     }
 
-    /**
-     * Update list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionUpdate()
-    {
-        $list = new \XLite\View\ItemsList\Model\Payment\Methods();
-        $list->processQuick();
-    }
 }
+

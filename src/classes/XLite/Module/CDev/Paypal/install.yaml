@@ -10,6 +10,7 @@
 XLite\Model\Payment\Method:
   - service_name: PayflowLink
     class: 'Module\CDev\Paypal\Model\Payment\Processor\PayflowLink'
+    type: C
     translations:
       - code: en
         name: 'Payflow Link'
@@ -28,6 +29,7 @@ XLite\Model\Payment\Method:
 
   - service_name: PaypalAdvanced
     class: 'Module\CDev\Paypal\Model\Payment\Processor\PaypalAdvanced'
+    type: A
     translations:
       - code: en
         name: 'Paypal Payments Advanced'
@@ -46,6 +48,7 @@ XLite\Model\Payment\Method:
 
   - service_name: PaypalWPSUS
     class: 'Module\CDev\Paypal\Model\Payment\Processor\PaypalWPS'
+    type: A
     translations:
       - code: en
         name: 'Paypal Standard'
@@ -58,6 +61,7 @@ XLite\Model\Payment\Method:
 
   - service_name: ExpressCheckout
     class: 'Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout'
+    type: N
     translations:
       - code: en
         name: 'Paypal Express Checkout'
@@ -73,5 +77,3 @@ XLite\Model\Payment\Method:
         value: S
       - name: test
         value: Y
-
-

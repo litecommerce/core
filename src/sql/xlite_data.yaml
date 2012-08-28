@@ -484,6 +484,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Backend payment transaction X issued', translations: [{ code: en, label: 'Backend payment transaction [method: {{trx_method}}, type: {{trx_type}}, amount: {{trx_value}}, status: {{trx_status}}]' }] }
   - { name: 'Your account email is X.', translations: [{ code: en, label: 'Your account email is {{email}}.' }] }
   - { name: 'Your account password is X.', translations: [{ code: en, label: 'Your account password is {{password}}.' }] }
+  - { name: 'Payment methods appearance description', translations: [{ code: en, label: 'Here you can define how your payment methods will look in customer area.<br />Here are shown only the methods enabled on the configuration page.' }] }
 
 XLite\Model\Membership:
   directives: { insert: true }

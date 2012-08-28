@@ -97,7 +97,7 @@ class Methods extends \XLite\View\Dialog
     }
 
     /**
-     * Check - method has module settings 
+     * Check - method has module settings
      *
      * @param \XLite\Model\Payment\Method $method Method
      *
@@ -106,6 +106,19 @@ class Methods extends \XLite\View\Dialog
     public function isModuleConfigurable(\XLite\Model\Payment\Method $method)
     {
         return $method->getProcessor()->hasModuleSettings() && $this->getModuleURL($method);
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/style.css';
+
+        return $list;
     }
 
     /**
@@ -122,10 +135,10 @@ class Methods extends \XLite\View\Dialog
     }
 
     /**
-     * Get module settings URL 
-     * 
+     * Get module settings URL
+     *
      * @param \XLite\Model\Payment\Method $method Method
-     *  
+     *
      * @return string
      */
     protected function getModuleURL(\XLite\Model\Payment\Method $method)
@@ -143,10 +156,10 @@ class Methods extends \XLite\View\Dialog
     }
 
     /**
-     * Get module name 
+     * Get module name
      *
      * @param \XLite\Model\Payment\Method $method Method
-     * 
+     *
      * @return string
      */
     protected function getModuleName(\XLite\Model\Payment\Method $method)
@@ -163,7 +176,7 @@ class Methods extends \XLite\View\Dialog
      */
     protected function getLanguage()
     {
-        return \XLite\Core\Request::getInstance()->language 
+        return \XLite\Core\Request::getInstance()->language
             ?: \XLite\Core\Session::getInstance()->getLanguage()->getCode();
     }
 

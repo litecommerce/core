@@ -23,34 +23,48 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\Payment;
 
 /**
- * Payment methods
- *
+ * Payment configuration page
  */
-class PaymentAppearance extends \XLite\Controller\Admin\AAdmin
+class Configuration extends \XLite\View\AView
 {
     /**
-     * Return the current page title (for the content area)
+     * Register CSS files
+     *
+     * @return array
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'payment/configuration/style.css';
+
+        return $list;
+    }
+
+    /**
+     * Return widget default template
      *
      * @return string
      */
-    public function getTitle()
+    protected function getDefaultTemplate()
     {
-        return 'Payment settings';
+        return 'payment/configuration/body.tpl';
     }
 
+    // {{{ Content helpers
+
     /**
-     * Update list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
+     * Check - has active payment modules 
+     * 
+     * @return boolean
      */
-    protected function doActionUpdate()
+    protected function hasPaymentModules()
     {
-        $list = new \XLite\View\ItemsList\Model\Payment\Methods();
-        $list->processQuick();
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->hasActivePaymentModules();
     }
+
+    // }}}
 }

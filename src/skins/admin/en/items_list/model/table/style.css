@@ -50,10 +50,20 @@
 }
 
 .items-list-table table.list tbody.lines td,
-.items-list-table table.list tbody.lines td .view,
-.items-list-table table.list tbody.lines td .view *
+  .items-list-table table.list tbody.lines td .view,
+  .items-list-table table.list tbody.lines td .view *
 {
   font-size: 14px;
+}
+
+.items-list-table table.list tbody.lines td {
+  cursor: pointer;
+}
+
+.items-list-table table.list tbody.lines td .view,
+  .items-list-table table.list tbody.lines td .view *
+{
+  cursor: text;
 }
 
 .items-list-table table.list tbody.lines td,

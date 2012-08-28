@@ -40,7 +40,7 @@ class PaymentSettings extends \XLite\View\Tabs\ATabs
     protected $tabs = array(
         'payment_settings' => array(
             'title'    => 'Configuration',
-            'template' => 'payment/configuration/body.tpl',
+            'template' => 'payment/configuration.tpl',
         ),
         'payment_appearance' => array(
             'title'    => 'Appearance',
