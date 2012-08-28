@@ -324,7 +324,7 @@ class Method extends \XLite\Model\Base\I18n
     {
         $message = null;
 
-        if (!$this->getProcessor()->isConfigured()) {
+        if (!$this->getProcessor()->isConfigured($this)) {
             $message = static::t('The method is not configured and can\'t be used');
         }
 

@@ -10,6 +10,7 @@
 XLite\Model\Payment\Method:
   - service_name: QuantumGateway
     class: Module\CDev\Quantum\Model\Payment\Processor\Quantum
+    type: C
     translations:
       - code: en
         name: QuantumGateway

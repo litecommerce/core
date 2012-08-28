@@ -1,0 +1,155 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Configuration styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.payment-conf .box {
+  border: 1px solid #dfe5e8;
+  width: 698px;
+  background-color: #f2f2f2;
+  margin-bottom: 50px;
+}
+
+.payment-conf .box h2 {
+  color: #333;
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #fff;
+  margin: 0px;
+  padding-left: 29px;
+  padding-right: 29px;
+  line-height: 80px;
+}
+
+.payment-conf .box .content {
+  background: transparent url(../../images/payment_box_bg.png) repeat-x left top;
+  padding: 33px 29px 36px 29px;
+}
+
+.payment-conf .box .content p {
+  color: #456583;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 3px;
+  margin: 0px;
+}
+
+.payment-conf .no-paument-modules button {
+  margin-top: 17px;
+  margin-bottom: 0px;
+}
+
+/* Offline box  */
+.payment-conf .box.offline-methods .content {
+  padding-bottom: 19px;
+}
+
+.payment-conf .box.offline-methods button.add-method {
+  margin-top: 18px;
+  margin-bottom: 0px;
+}
+
+/* List */
+.payment-conf .methods ul {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 10px 0px;
+}
+
+.payment-conf .methods li {
+  width: 499px;
+  background-color: #fff;
+  height: 40px;
+  padding: 5px;
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.payment-conf .methods li div {
+  display: inline-block;
+}
+
+.payment-conf .methods li .action {
+  height: 40px;
+  vertical-align: top;
+}
+
+.payment-conf .methods li .action .separator {
+  background: transparent url(../../items_list/model/table/images/line-separator.png) repeat-y left top;
+  width: 2px;
+  height: 17px;
+  vertical-align: top;
+  margin-top: 11px;
+}
+
+.payment-conf .methods li .left-action .separator {
+  margin-left: 4px;
+}
+
+.payment-conf .methods li .right-action .separator {
+  margin-right: 4px;
+}
+
+.payment-conf .methods li .switch {
+  width: 34px;
+  height: 34px;
+  border: 3px solid #fff;
+  background-color: transparent;
+}
+
+.payment-conf .methods li .switch.enabled {
+  background-color: #eafde2;
+  border-color: #c2edb0;
+}
+
+.payment-conf .methods li .switch img {
+  background: transparent url(../../images/switch.png) no-repeat left 16px;
+  width: 16px;
+  height: 16px;
+  margin: 10px;
+}
+
+.payment-conf .methods li .switch.enabled img {
+  background-position: left 0px;
+}
+
+.payment-conf .methods li.has-icon .icon {
+  background-color: #fff;
+  border: 0px none;
+  border-radius: 6px 6px 0px 0px;
+  -moz-border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+}
+
+.payment-conf .methods li .title {
+  color: #333;
+  font-size: 16px;
+  padding: 12px 10px;
+  vertical-align: top;
+  width: 335px;
+}
+
+.payment-conf .methods li .remove {
+  padding: 11px 5px;
+}
+
+.payment-conf .methods li .remove img {
+  background: transparent url(../../images/icon_trash.png) no-repeat left top;
+  width: 18px;
+  height: 18px; 
+}
+
+.payment-conf .methods li .configure {
+  padding: 11px 5px;
+}
+
+.payment-conf .methods li .configure img {
+  background: transparent url(../../images/gear.png) no-repeat left top;
+  width: 13px;
+  height: 13px;
+}
+

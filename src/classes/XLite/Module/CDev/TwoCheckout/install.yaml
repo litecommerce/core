@@ -10,6 +10,7 @@
 XLite\Model\Payment\Method:
   - service_name: 2Checkout.com
     class: Module\CDev\TwoCheckout\Model\Payment\Processor\TwoCheckout
+    type: C
     translations:
       - code: en
         name: 2Checkout.com

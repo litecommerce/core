@@ -34,9 +34,11 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     /**
      * Names of fields that are used in search
      */
-    const P_ENABLED         = 'enabled';
-    const P_MODULE_ENABLED  = 'moduleEnabled';
-    const P_ADDED           = 'added';
+    const P_ENABLED             = 'enabled';
+    const P_MODULE_ENABLED      = 'moduleEnabled';
+    const P_ADDED               = 'added';
+    const P_ONLY_PURE_OFFLINE   = 'onlyPureOffline';
+    const P_ONLY_MODULE_OFFLINE = 'onlyModuleOffline';
 
     /**
      * Repository type
@@ -195,9 +197,11 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     protected function getHandlingSearchParams()
     {
         return array(
-            'enabled',
-            'added',
-            'moduleEnabled',
+            static::P_ENABLED,
+            static::P_MODULE_ENABLED,
+            static::P_ADDED,
+            static::P_ONLY_PURE_OFFLINE,
+            static::P_ONLY_MODULE_OFFLINE,
         );
     }
 
@@ -247,6 +251,46 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
         $queryBuilder
             ->andWhere($this->getMainAlias($queryBuilder) . '.added = :added_value')
             ->setParameter('added_value', $value);
+    }
+
+    /**
+     * Prepare certain search condition for added flag
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndOnlyPureOffline(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        if ($value) {
+            $alias = $this->getMainAlias($queryBuilder);
+            $queryBuilder
+                ->andWhere('LOCATE(:modulePrefix, ' . $alias . '.class) = 0 AND ' . $alias . '.type = :offlineType')
+                ->setParameter('offlineType', \XLite\Model\Payment\Method::TYPE_OFFLINE)
+                ->setParameter('modulePrefix', 'Module\\');
+        }
+    }
+
+    /**
+     * Prepare certain search condition for added flag
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndOnlyModuleOffline(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        if ($value) {
+            $alias = $this->getMainAlias($queryBuilder);
+            $queryBuilder
+                ->andWhere('LOCATE(:modulePrefix, ' . $alias . '.class) > 0 AND ' . $alias . '.type = :offlineType')
+                ->setParameter('offlineType', \XLite\Model\Payment\Method::TYPE_OFFLINE)
+                ->setParameter('modulePrefix', 'Module\\');
+        }
     }
 
     // }}}

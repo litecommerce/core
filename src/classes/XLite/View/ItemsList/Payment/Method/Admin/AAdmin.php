@@ -1,0 +1,235 @@
+<?php
+// vim: set ts=4 sw=4 sts=4 et:
+
+/**
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+namespace XLite\View\ItemsList\Payment\Method\Admin;
+
+/**
+ * Abstract admin-based payment methods list
+ */
+abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
+{
+
+    /**
+     * Returns a list of CSS classes (separated with a space character) to be attached to the items list
+     *
+     * @return string
+     */
+    public function getListCSSClasses()
+    {
+        return parent::getListCSSClasses() . ' methods';
+    }
+
+    /**
+     * Return dir which contains the page body template
+     *
+     * @return string
+     */
+    protected function getPageBodyDir()
+    {
+        return 'payment/methods';
+    }
+
+    /**
+     * Return class name for the list pager
+     *
+     * @return string
+     */
+    protected function getPagerClass()
+    {
+        return '\XLite\View\Pager\Admin\Model\Infinity';
+    }
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     */
+    protected function getSearchCondition()
+    {
+        $cnd = parent::getSearchCondition();
+
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_MODULE_ENABLED} = true;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_ADDED} = true;
+
+        return $cnd;
+    }
+
+    /**
+     * Return products list
+     *
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *
+     * @return array|integer
+     */
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, $countOnly);
+    }
+
+    // {{{ Content helpers
+
+    /**
+     * Get line class
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    protected function getLineClass(\XLite\Model\Payment\Method $method)
+    {
+        $classes = array('cell');
+
+        if ($this->hasIcon($method)) {
+            $classes[] = 'has-icon';
+        }
+
+        return implode(' ', $classes);
+    }
+
+    /**
+     * Check - can wwitch method or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    protected function canSwitch(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getEnabled() ? !$method->isForcedEnabled() : $method->canEnable();
+    }
+
+    /**
+     * Check - can enable method or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    protected function canEnable(\XLite\Model\Payment\Method $method)
+    {
+        return $method->canEnable();
+    }
+
+    /**
+     * Get note with explanation why payment method can not be disabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return string
+     */
+    protected function getForbidDisableNote(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getForcedEnabledNote();
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return void
+     */
+    protected function getForbidEnableNote(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getForbidEnableNote();
+    }
+
+    /**
+     * Check - method has icon or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    protected function hasIcon(\XLite\Model\Payment\Method $method)
+    {
+        return (bool)$method->getAdminIconURL();
+    }
+
+    /**
+     * Get icon URL 
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return string
+     */
+    protected function getIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getAdminIconURL();
+    }
+
+    /**
+     * Check - method can remove or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    protected function canRemoveMethod(\XLite\Model\Payment\Method $method)
+    {
+        return !($method->getProcessor() instanceOf \XLite\Model\Payment\Processor\Offline)
+            || get_class($method->getProcessor()) == 'XLite\Model\Payment\Processor\Offline';
+    }
+
+    /**
+     * Check - method has warning or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    protected function hasWarning(\XLite\Model\Payment\Method $method)
+    {
+        return (bool)$method->getWarningNote();
+    }
+
+    /**
+     * Get method warning 
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return string
+     */
+    protected function getWarning(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getWarningNote();
+    }
+
+    /**
+     * Check - method is configurable or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    protected function isConfigurable(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getProcessor() && $method->getProcessor()->getSettingsWidget();
+    }
+
+    // }}}
+
+}

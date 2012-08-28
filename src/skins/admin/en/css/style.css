@@ -955,15 +955,15 @@ button.action,
 button.bright
 {
   font-size: 14px;
-  padding: 6px 20px 6px;
-  height: 36px;
+  padding: 7px 20px 5px;
+  height: 33px;
   -moz-border-radius: 19px;
   -webkit-border-radius: 19px;
   border-radius: 19px;
 }
 
 button.action span {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 button.bright span {
