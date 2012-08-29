@@ -40,6 +40,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     const P_ONLY_PURE_OFFLINE   = 'onlyPureOffline';
     const P_ONLY_MODULE_OFFLINE = 'onlyModuleOffline';
     const P_POSITION            = 'position';
+    const P_TYPE                = 'type';
 
     /**
      * Name of the field which is used for default sorting (ordering)
@@ -209,6 +210,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
             static::P_ONLY_PURE_OFFLINE,
             static::P_ONLY_MODULE_OFFLINE,
             static::P_POSITION,
+            static::P_TYPE,
         );
     }
 
@@ -255,9 +257,11 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
      */
     protected function prepareCndAdded(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
     {
-        $queryBuilder
-            ->andWhere($this->getMainAlias($queryBuilder) . '.added = :added_value')
-            ->setParameter('added_value', $value);
+        if (isset($value)) {
+            $queryBuilder
+                ->andWhere($this->getMainAlias($queryBuilder) . '.added = :added_value')
+                ->setParameter('added_value', $value);
+        }
     }
 
     /**
@@ -315,6 +319,29 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
             list($sort, $order) = $value;
 
             $queryBuilder->addOrderBy($this->getMainAlias($queryBuilder) . '.' . $sort, $order);
+        }
+    }
+
+    /**
+     * Prepare certain search condition for position
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndType(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        if ($value) {
+            $alias = $this->getMainAlias($queryBuilder);
+            if (is_array($value)) {
+                $queryBuilder->andWhere($alias . '.type IN (' . $queryBuilder->getInCondition($value, 'type') . ')');
+
+            } else {
+                $queryBuilder->andWhere($alias . '.type = :type')
+                    ->setParameter('type', $value);
+            }
         }
     }
 
@@ -419,6 +446,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     protected function defineHasActivePaymentModulesQuery()
     {
         return $this->createPureQueryBuilder()
+            ->select('COUNT(m.method_id) cns')
             ->andWhere('m.type != :offline')
             ->setParameter('offline', \XLite\Model\Payment\Method::TYPE_OFFLINE)
             ->setMaxResults(1);

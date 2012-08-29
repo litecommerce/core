@@ -9,10 +9,15 @@
  * @link      http://www.litecommerce.com/
  */
 
+.payment-conf {
+  position: relative;
+}
+
 .payment-conf .box {
   border: 1px solid #dfe5e8;
   width: 698px;
   background-color: #f2f2f2;
+  margin: 0px;
   margin-bottom: 50px;
 }
 
@@ -44,6 +49,50 @@
   margin-bottom: 0px;
 }
 
+/* Subboxes */
+.payment-conf .subbox {
+  position: absolute;
+  left: 739px;
+  top: 0px;
+  width: 365px;
+}
+
+.payment-conf .subbox h2 {
+  margin-top: 2px;
+  margin-bottom: 6px;
+  font-size: 17px;
+  color: #333;
+}
+
+.payment-conf .subbox p {
+  line-height: 18px;
+  color: #555;
+  margin-bottom: 3px;
+}
+
+.payment-conf .subbox button {
+  height: 30px;
+  padding-top: 6px;
+}
+
+.payment-conf .subbox button span {
+  font-size: 14px;
+  padding-left: 7px;
+  padding-right: 6px;
+}
+
+/* Watch video subbox */
+.payment-conf .subbox.watch-video button.watch-video span {
+  background: transparent url(../../images/watch_video.png) no-repeat 5px top;
+  padding-left: 36px;
+  padding-right: 7px;
+}
+
+/* Marketplace subbox */
+.payment-conf .subbox.marketplace {
+  top: 167px;
+}
+
 /* Offline box  */
 .payment-conf .box.offline-methods .content {
   padding-bottom: 19px;
@@ -61,12 +110,15 @@
 }
 
 .payment-conf .methods li {
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.payment-conf .methods li .row {
   width: 499px;
   background-color: #fff;
   height: 40px;
   padding: 5px;
-  margin: 0px;
-  margin-bottom: 20px;
 }
 
 .payment-conf .methods li div {
@@ -87,11 +139,11 @@
 }
 
 .payment-conf .methods li .left-action .separator {
-  margin-left: 4px;
+  margin-left: 1px;
 }
 
 .payment-conf .methods li .right-action .separator {
-  margin-right: 4px;
+  margin-right: 1px;
 }
 
 .payment-conf .methods li .switch {
@@ -110,7 +162,7 @@
   background: transparent url(../../images/switch.png) no-repeat left 16px;
   width: 16px;
   height: 16px;
-  margin: 10px;
+  margin: 9px 10px;
 }
 
 .payment-conf .methods li .switch.enabled img {
@@ -128,28 +180,54 @@
 .payment-conf .methods li .title {
   color: #333;
   font-size: 16px;
-  padding: 12px 10px;
+  padding: 11px 12px;
   vertical-align: top;
-  width: 335px;
+  width: 334px;
 }
 
 .payment-conf .methods li .remove {
-  padding: 11px 5px;
+  padding: 11px 8px;
 }
 
 .payment-conf .methods li .remove img {
   background: transparent url(../../images/icon_trash.png) no-repeat left top;
   width: 18px;
   height: 18px; 
+  cursor: pointer;
 }
 
-.payment-conf .methods li .configure {
+.payment-conf .methods li .warning {
+  padding: 7px 5px 5px 11px;
+  vertical-align: top;
+}
+
+.payment-conf .methods li .warning img {
+  background: transparent url(../../images/warn_rhombus.png) no-repeat left top;
+  width: 26px;
+  height: 26px;
+}
+
+.payment-conf .methods li button.configure {
+  vertical-align: top;
+  margin: 0px;
+  margin-top: 13px;
+  margin-left: 11px;
+}
+
+.payment-conf .methods li div.configure {
   padding: 11px 5px;
 }
 
-.payment-conf .methods li .configure img {
+.payment-conf .methods li div.configure img {
   background: transparent url(../../images/gear.png) no-repeat left top;
   width: 13px;
   height: 13px;
 }
+
+.payment-conf .methods li .subseparator {
+  background-color: #d7d7d7;
+  width: 1px;
+  height: 15px;
+}
+
 
