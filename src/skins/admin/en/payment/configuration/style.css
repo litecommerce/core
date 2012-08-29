@@ -49,6 +49,24 @@
   margin-bottom: 0px;
 }
 
+.payment-conf .counter {
+  float: right;
+  color: #8f8f8f;
+  margin-top: 24px;
+  font-size: 14px;
+  padding-right: 12px;
+}
+
+.payment-conf button.add-method {
+  margin-top: 18px;
+  margin-bottom: 0px;
+  padding-top: 4px;
+}
+
+.payment-conf button.add-method span {
+  padding-left: 3px;
+}
+
 /* Subboxes */
 .payment-conf .subbox {
   position: absolute;
@@ -98,11 +116,6 @@
   padding-bottom: 19px;
 }
 
-.payment-conf .box.offline-methods button.add-method {
-  margin-top: 18px;
-  margin-bottom: 0px;
-}
-
 /* List */
 .payment-conf .methods ul {
   border-bottom: 1px solid #d8d8d8;
@@ -119,9 +132,10 @@
   background-color: #fff;
   height: 40px;
   padding: 5px;
+  display: inline-block;
 }
 
-.payment-conf .methods li div {
+.payment-conf .methods li .row div {
   display: inline-block;
 }
 
@@ -159,7 +173,7 @@
 }
 
 .payment-conf .methods li .switch img {
-  background: transparent url(../../images/switch.png) no-repeat left 16px;
+  background: transparent url(../../images/switch.png) no-repeat left -16px;
   width: 16px;
   height: 16px;
   margin: 9px 10px;
@@ -175,6 +189,14 @@
   border-radius: 6px 6px 0px 0px;
   -moz-border-radius: 6px 6px 0 0;
   -webkit-border-radius: 6px 6px 0 0;
+  width: 119px;
+  height: 33px;
+  line-height: 33px;
+  text-align: center;
+}
+
+.payment-conf .methods li.has-icon .icon img {
+  vertical-align: middle;
 }
 
 .payment-conf .methods li .title {
@@ -215,13 +237,16 @@
 }
 
 .payment-conf .methods li div.configure {
-  padding: 11px 5px;
+  vertical-align: top;
+  padding-top: 10px;
+  padding-left: 13px;
+  padding-right: 9px;
 }
 
 .payment-conf .methods li div.configure img {
   background: transparent url(../../images/gear.png) no-repeat left top;
-  width: 13px;
-  height: 13px;
+  width: 20px;
+  height: 20px;
 }
 
 .payment-conf .methods li .subseparator {

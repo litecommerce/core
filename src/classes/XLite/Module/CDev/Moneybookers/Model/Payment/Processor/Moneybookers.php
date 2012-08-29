@@ -496,6 +496,18 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+    /**
      * Get iframe size
      *
      * @return array

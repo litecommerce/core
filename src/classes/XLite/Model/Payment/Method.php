@@ -103,7 +103,7 @@ class Method extends \XLite\Model\Base\I18n
      *
      * @Column (type="boolean")
      */
-    protected $enabled = true;
+    protected $enabled = false;
 
     /**
      * Module enabled status
@@ -123,7 +123,7 @@ class Method extends \XLite\Model\Base\I18n
      *
      * @Column (type="boolean")
      */
-    protected $added = true;
+    protected $added = false;
 
     /**
      * Type
@@ -312,23 +312,20 @@ class Method extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Get admin zone icon URL
-     *
-     * @return string
+     * Call processor methods
+     * 
+     * @param string $method    Method name
+     * @param array  $arguments Arguments
+     *  
+     * @return mixed
      */
-    public function getAdminIconURL()
+    public function __call($method, array $arguments = array())
     {
-        return $this->getProcessor()->getAdminIconURL($this);
-    }
+        array_unshift($arguments, $this);
 
-    /**
-     * Check - payment method has enabled test mode or not
-     *
-     * @return boolean
-     */
-    public function isTestMode()
-    {
-        return $this->getProcessor()->isTestMode($this);
+        return $this->getProcessor()
+            ? call_user_func_array(array($this->getProcessor(), $method), $arguments)
+            : null;
     }
 
     /**
@@ -352,62 +349,22 @@ class Method extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Check - payment method is forced enabled or not
-     *
-     * @return boolean
-     */
-    public function isForcedEnabled()
-    {
-        return $this->getProcessor()->isForcedEnabled($this);
-    }
-
-    /**
-     * Get note with explanation why payment method was forcibly enabled
+     * Get payment method admin zone icon URL
      *
      * @return string
      */
-    public function getForcedEnabledNote()
+    public function getAdminIconURL()
     {
-        return $this->getProcessor()->getForcedEnabledNote($this);
+        $url = $this->getProcessor() ? $this->getProcessor()->getAdminIconURL($this) : null;
+
+        if (true === $url) {
+            $module = $this->getProcessor()->getModule();
+            $url = $module
+                ? \XLite\Core\Layout::getInstance()->getResourceWebPath('modules/' . $module->getAuthor() . '/' . $module->getName() . '/method_icon.png')
+                : null;
+        }
+
+        return $url;
     }
 
-    /**
-     * Check - payment method can be enabled or not
-     *
-     * @return boolean
-     */
-    public function canEnable()
-    {
-        return $this->getProcessor()->canEnable($this);
-    }
-
-    /**
-     * Get note with explanation why payment method can not be enabled
-     *
-     * @return string
-     */
-    public function getForbidEnableNote()
-    {
-        return $this->getProcessor()->getForbidEnableNote($this);
-    }
-
-    /**
-     * Get links
-     *
-     * @return array
-     */
-    public function getLinks()
-    {
-        return $this->getProcessor()->getLinks($this);
-    }
-
-    /**
-     * Get URL of referral page
-     *
-     * @return string
-     */
-    public function getReferralPageURL()
-    {
-        return $this->getProcessor()->getReferralPageURL($this);
-    }
 }
