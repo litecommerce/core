@@ -93,7 +93,13 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
             : null;
 
         if ($method && !$method->isForcedEnabled()) {
-            $method->setAdded(false);
+            if (get_class($method->getProcessor()) == 'XLite\Model\Payment\Processor\Offline') {
+                \XLite\Core\Database::getEM()->remove($method);
+
+            } else {
+                $method->setAdded(false);
+            }
+
             \XLite\Core\TopMessage::addInfo('Payment method has been removed successfully');
             \XLite\Core\Database::getEM()->flush();
         }

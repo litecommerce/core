@@ -171,39 +171,15 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Check - method has warning or not
-     * 
+     * Check - display right action box or not
+     *
      * @param \XLite\Model\Payment\Method $method Payment method
-     *  
+     *
      * @return boolean
      */
-    protected function hasWarning(\XLite\Model\Payment\Method $method)
+    protected function hasRightActions(\XLite\Model\Payment\Method $method)
     {
-        return (bool)$method->getWarningNote();
-    }
-
-    /**
-     * Get method warning 
-     * 
-     * @param \XLite\Model\Payment\Method $method Payment method
-     *  
-     * @return string
-     */
-    protected function getWarning(\XLite\Model\Payment\Method $method)
-    {
-        return $method->getWarningNote();
-    }
-
-    /**
-     * Check - method is configurable or not
-     * 
-     * @param \XLite\Model\Payment\Method $method Payment method
-     *  
-     * @return boolean
-     */
-    protected function isConfigurable(\XLite\Model\Payment\Method $method)
-    {
-        return $method->getProcessor() && $method->getProcessor()->getSettingsWidget();
+        return $this->canRemoveMethod($method) || $method->getWarningNote() || $method->isConfigurable();
     }
 
     // }}}
