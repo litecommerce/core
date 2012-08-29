@@ -385,4 +385,13 @@ class Method extends \XLite\Model\Base\I18n
         return $this->getProcessor()->getLinks($this);
     }
 
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL()
+    {
+        return $this->getProcessor()->getReferralPageURL($this);
+    }
 }

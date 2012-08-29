@@ -42,6 +42,16 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Return false to use own submit button on payment method settings form
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return false;
+    }
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path

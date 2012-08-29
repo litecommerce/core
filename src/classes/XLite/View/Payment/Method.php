@@ -85,18 +85,6 @@ class Method extends \XLite\View\Dialog
 
 
     /**
-     * Return title
-     *
-     * @return string
-     */
-    protected function getHead()
-    {
-        return $this->getPaymentMethod()
-            ? static::t('{{paymentMethod}} settings', array('paymentMethod' => $this->getPaymentMethod()->getName()))
-            : 'Payment method settings';
-    }
-
-    /**
      * Return templates directory name
      *
      * @return string
