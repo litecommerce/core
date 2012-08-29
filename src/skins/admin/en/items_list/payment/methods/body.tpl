@@ -41,9 +41,9 @@
             {end:}
           {else:}
             {if:canEnable(method)}
-              <div class="not-disable"><img src="images/spacer.gif" alt="{getForbidDisableNote(method)}" /></div>
+              <div class="switch enabled"><img src="images/spacer.gif" alt="{method.getForcedEnabledNote()}" /></div>
             {else:}
-              <div class="not-enable"><img src="images/spacer.gif" alt="{getForbidEnableNote(method)}" /></div>
+              <div class="switch disabled"><img src="images/spacer.gif" alt="{method.getForbidEnableNote()}" /></div>
             {end:}
           {end:}
           <img src="images/spacer.gif" class="separator" alt="" />

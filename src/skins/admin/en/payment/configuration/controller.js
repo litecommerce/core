@@ -13,9 +13,11 @@ jQuery(document).ready(
   function () {
 
     // Tooltips
-    jQuery('.methods li .warning img,.methods li .not-enable img,.methods li .not-disable img').each(
+    jQuery('.methods li .warning img,.methods li .not-enable img,.methods li .not-disable img,.methods li.blocked-switch .switch img').each(
       function () {
-        attachTooltip(jQuery(this), this.alt);
+        if (this.alt) {
+          attachTooltip(jQuery(this), this.alt);
+        }
       }
     );
 

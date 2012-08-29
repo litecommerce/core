@@ -187,6 +187,21 @@
   background-position: left 0px;
 }
 
+.payment-conf .methods li.blocked-disable .switch {
+  background-image: url(../../images/force_enabled_method.png);
+  border: 0px none;
+  width: 40px;
+  height: 40px;
+}
+
+.payment-conf .methods li.blocked-switch .switch {
+  cursor: help;
+}
+
+.payment-conf .methods li.blocked-disable .switch img {
+  margin: 12px 13px;
+}
+
 .payment-conf .methods li.has-icon .icon {
   background-color: #fff;
   border: 0px none;

@@ -186,6 +186,27 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Get note with explanation why payment method was forcibly enabled
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getForcedEnabledNote(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::getForcedEnabledNote($method);
+
+        if (!$result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
+            $parentMethod = $this->getParentMethod();
+            if (isset($parentMethod)) {
+                $result = 'Must be enabled as you use PayPal Advanced';
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Do something when payment method is enabled 
      * 
      * @return void
