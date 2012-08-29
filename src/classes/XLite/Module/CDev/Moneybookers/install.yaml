@@ -30,7 +30,7 @@ XLite\Model\Payment\Method:
   - { service_name: 'Moneybookers.SFT', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', type: C, translations: [{ code: en, name: 'Sofortueberweisung' }] }
   - { service_name: 'Moneybookers.ENT', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', type: C, translations: [{ code: en, name: 'eNETS' }] }
   - { service_name: 'Moneybookers.EBT', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', type: C, translations: [{ code: en, name: 'Nordea Solo' }] }
-  - { service_name: 'Moneybookers.SO', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', type: C, translations: [{ code: en, name: 'Nordea Solo' }] }2
+  - { service_name: 'Moneybookers.SO', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', type: C, translations: [{ code: en, name: 'Nordea Solo' }] }
   - { service_name: 'Moneybookers.IDL', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', type: C, translations: [{ code: en, name: 'iDEAL' }] }
   - { service_name: 'Moneybookers.NPY', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', type: C, translations: [{ code: en, name: 'EPS (Netpay)' }] }
   - { service_name: 'Moneybookers.PLI', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', type: C, translations: [{ code: en, name: 'POLi' }] }
