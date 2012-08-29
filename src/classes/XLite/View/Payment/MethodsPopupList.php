@@ -89,7 +89,7 @@ class MethodsPopupList extends \XLite\View\AView
 
         foreach(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findForAdditionByType($this->getPaymentType()) as $entry) {
 
-            $result[$entry[0]->moduleName][] = $entry[0];
+            $result[$entry[0]->getModuleName()][] = $entry[0];
         }
 
         return $result;

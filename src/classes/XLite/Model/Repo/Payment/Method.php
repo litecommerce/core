@@ -422,10 +422,10 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
 
     protected function defineAdditionByTypeQuery($type)
     {
-        return $this->createQueryBuilder('m')
+        return $this->createPureQueryBuilder('m')
             ->addSelect('LOCATE(:modulePrefix, m.class) module_prefix')
             ->andWhere('m.type = :type')
-            ->addOrderBy('module_prefix', 'asc')
+            ->addOrderBy('module_prefix', 'desc')
             ->addOrderBy('m.moduleName', 'asc')
             ->setParameter('type', $type)
             ->setParameter('modulePrefix', 'Module\\CDev\\Paypal');
