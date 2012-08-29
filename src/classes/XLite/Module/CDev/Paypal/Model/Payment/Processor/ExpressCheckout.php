@@ -127,6 +127,13 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
 
         if (!empty($responseData['TOKEN'])) {
             $token = $responseData['TOKEN'];
+
+        } elseif (self::EC_TYPE_MARK == \XLite\Core\Session::getInstance()->ec_type) {
+            $this->setDetail(
+                'status',
+                isset($responseData['RESPMSG']) ? $responseData['RESPMSG'] : 'Unknown',
+                'Status'
+            );
         }
 
         return $token;
