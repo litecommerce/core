@@ -56,7 +56,7 @@
           <div IF="canRemoveMethod(method)" class="remove"><a href="{buildURL(#payment_settings#,#remove#,_ARRAY_(#id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Remove#)}" /></a></div> 
           {if:method.getWarningNote()}
             <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
-            <div class="warning"><img src="images/spacer.gif" alt="{method.getWarningNote()}" /></div>
+            <div class="warning"><a href="{method.getConfigurationURL()}"><img src="images/spacer.gif" alt="{method.getWarningNote()}" /></a></div>
           {else:}
             {if:method.isConfigurable()}
               <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
