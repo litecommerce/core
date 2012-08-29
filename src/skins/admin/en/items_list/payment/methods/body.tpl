@@ -22,7 +22,7 @@
 
         <div class="action left-action">
           {if:canSwitch(method)}
-            {if:hasWarning(method)}
+            {if:method.getWarningNote()}
 
               {if:method.getEnabled()}
                 <div class="switch enabled"><img src="images/spacer.gif" alt="{t(#Enabled#)}" /></div>
@@ -51,12 +51,12 @@
 
         <div class="title">{method.getName()}</div>
 
-        <div class="action right-action">
+        <div IF="hasRightActions(method)" class="action right-action">
           <img src="images/spacer.gif" class="separator" alt="" />
           <div IF="canRemoveMethod(method)" class="remove"><a href="{buildURL(#payment_settings#,#remove#,_ARRAY_(#id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Remove#)}" /></a></div> 
-          {if:hasWarning(method)}
+          {if:method.getWarningNote()}
             <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
-            <div class="warning"><img src="images/spacer.gif" alt="{getWarning(method)}" /></div>
+            <div class="warning"><img src="images/spacer.gif" alt="{method.getWarningNote()}" /></div>
           {else:}
             {if:method.isConfigurable()}
               <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
@@ -67,7 +67,7 @@
 
         </div>
 
-        <widget IF="hasWarning(method)&method.isConfigurable()" class="XLite\View\Button\Link" label="{t(#Configure#)}" location="{method.getConfigurationURL()}" style="configure"/>
+        <widget IF="method.getWarningNote()&method.isConfigurable()" class="XLite\View\Button\Link" label="{t(#Configure#)}" location="{method.getConfigurationURL()}" style="configure"/>
 
       </li>
 

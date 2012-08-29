@@ -144,6 +144,10 @@
   vertical-align: top;
 }
 
+.payment-conf .methods li .right-action {
+  float: right;
+}
+
 .payment-conf .methods li .action .separator {
   background: transparent url(../../items_list/model/table/images/line-separator.png) repeat-y left top;
   width: 2px;
