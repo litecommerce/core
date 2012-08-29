@@ -79,6 +79,15 @@ class Method extends \XLite\Model\Base\I18n
     protected $class;
 
     /**
+     * Specific module family name
+     *
+     * @var string
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $moduleName = '';
+
+    /**
      * Position
      *
      * @var integer
@@ -177,6 +186,13 @@ class Method extends \XLite\Model\Base\I18n
     public function setClass($class)
     {
         $this->class = preg_replace('/^\\\?(?:XLite\\\)?\\\?/Sis', '', $class);
+
+        if (preg_match('/^Module/Sis', $class) > 0) {
+
+            list($modulePrefix, $author, $name) = explode('\\', $class, 4);
+
+            $this->setModuleName($author . '_' . $name);
+        }
     }
 
     /**
