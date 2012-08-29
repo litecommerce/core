@@ -186,6 +186,62 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Do something when payment method is enabled 
+     * 
+     * @return void
+     */
+    public function enableMethod(\XLite\Model\Payment\Method $method)
+    {
+        $methods = array(
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPA,
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PFL,
+        );
+
+        if (in_array($method->getServiceName(), $methods)) {
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC,
+                )
+            );
+            if ($m) {
+                $m->setAdded(true);
+                $m->setEnabled(true);
+            }
+        }
+    }
+
+    /**
+     * Get payment method which forced enabling of Express Checkout
+     * 
+     * @return \XLite\Model\Payment\Method
+     */
+    public function getParentMethod()
+    {
+        $result = null;
+
+        $relatedMethods = array(
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPA,
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PFL,
+        );
+
+        foreach ($relatedMethods as $rm) {
+    
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => $rm,
+                )
+            );
+    
+            if ($m && $m->isEnabled()) {
+                $result = $m;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Get return type of the iframe-method: html redirect with destroying an iframe
      *
      * @return string
@@ -363,59 +419,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         return true;
     }
 
-
-    /**
-     * Replace settings for forced enabled Express Checkout by settings from parent method
-     * 
-     * @param string $name Setting name
-     *  
-     * @return string
-     */
-    protected function getSetting($name)
-    {
-        $method = $this->transaction->getPaymentMethod();
-
-        if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName() && $this->isForcedEnabled()) {
-            $parentMethod = $this->getParentMethod();
-            $result = $parentMethod->getSetting($name);
-
-        } else {
-            $result = parent::getSetting($name);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get payment method which forced enabling of Express Checkout
-     * 
-     * @return \XLite\Model\Payment\Method
-     */
-    protected function getParentMethod()
-    {
-        $result = null;
-
-        $relatedMethods = array(
-            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPA,
-            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PFL,
-        );
-
-        foreach ($relatedMethods as $rm) {
-    
-            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
-                array(
-                    'service_name' => $rm,
-                )
-            );
-    
-            if ($m && $m->isEnabled()) {
-                $result = $m;
-                break;
-            }
-        }
-
-        return $result;
-    }
 
     /**
      * Return true if Paypal response is a success transaction response 
