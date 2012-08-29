@@ -42,6 +42,16 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Return false to use own submit button on payment method settings form
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return false;
+    }
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path
@@ -188,9 +198,8 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'bn'            => 'LiteCommerce',
         );
 
-        if ('Y' === $this->getSetting('address_override')) {
-            $fields['address_override'] = 1;
-        }
+        // Always use address passed from shopping cart (prevent customer from selection of other address on Paypal side)
+        $fields['address_override'] = 1;
 
         $fields = array_merge($fields, $this->getPhone());
 

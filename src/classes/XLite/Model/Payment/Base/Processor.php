@@ -465,5 +465,26 @@ abstract class Processor extends \XLite\Base
         return array();
     }
 
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Return true if payment method settings form should use default submit button.
+     * Otherwise, settings widget must define its own button
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return true;
+    }
+
     // }}}
 }

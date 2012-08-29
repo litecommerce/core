@@ -1909,3 +1909,135 @@ form.list-form {
 .sticky-panel.has-add-buttons .additional:hover .additional-buttons {
   display: block;
 }
+
+/* Common styles for Payment settings page */
+
+.payment-settings {
+  margin: 0px;
+  padding: 0px;
+}
+
+.dialog-content .payment-settings a:link {
+  text-decoration: underline;
+}
+
+.dialog-content .payment-settings .buttons {
+  margin-left: 150px;
+  padding-bottom: 10px;
+}
+
+.payment-settings h2 {
+}
+
+.payment-settings .middle {
+}
+
+.payment-settings .middle .settings {
+  display: inline-block;
+  width: 500px;
+  vertical-align: top;
+}
+
+.payment-settings .middle .help {
+  display: inline-block;
+  padding-right: 25px;
+  vertical-align: top;
+}
+
+.payment-settings .footer {
+  margin-top: 30px;
+  padding: 10px 40px;
+  width: 700px;
+  background-color: #F7F7F7;
+}
+
+.payment-settings .options {
+  padding-top: 3px;
+}
+
+.payment-settings .options li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.payment-settings .options li span {
+  width: 150px;
+  display: inline-block;
+}
+
+.payment-settings .options label
+{
+  color: #456583;
+  vertical-align: middle;
+  font-size: 16px;
+  padding-top: 3px;
+}
+
+.payment-settings .options input[type="text"]
+{
+  border-width: 1px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 14px;
+  width: 160px;
+  vertical-align: middle;
+}
+
+.payment-settings .options .tooltip-main {
+  float: none;
+  display: inline;
+  padding-left: 2px;
+}
+
+.payment-settings .options .tooltip-main .tooltip-caption.help-icon {
+  vertical-align: middle;
+}
+
+.payment-settings .help {
+  width: 400px;
+  margin-left: 50px;
+  padding-top: 18px;
+}
+
+.payment-settings .help-title {
+  font-size: 16px;
+  color: black;
+  padding: 5px 0;
+}
+
+.payment-settings .help-text {
+  font-size: 12px;
+  color: black;
+  padding: 5px 0;
+}
+
+.payment-settings .help-link {
+  font-size: 16px;
+  color: #456583;
+  padding: 15px 0;
+}
+
+.payment-settings .footer .left-part {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.payment-settings .footer .right-part {
+  display: inline-block;
+  padding-right: 20px;
+  vertical-align: top;
+}
+
+.payment-settings .footer div {
+  padding: 5px 0;
+  font-size: 16px;
+}
+
+.payment-settings .footer li {
+  padding: 5px 0;
+}
+
+.payment-settings .footer ul {
+  padding: 20px 0;
+}
+

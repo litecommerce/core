@@ -376,7 +376,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
      */
     public function hasActivePaymentModules()
     {
-        return 0 < intval($this->defineHasActivePaymentModulesQuery()->getSingleScalarResult());
+        return 0 < $this->searchCount($this->defineHasActivePaymentModulesQuery());
     }
 
     /**
@@ -439,7 +439,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     }
 
     /**
-     * Define query for hsActivePaymentModules() method
+     * Define query for hasActivePaymentModules() method
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      */
