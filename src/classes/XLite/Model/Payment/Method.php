@@ -367,4 +367,19 @@ class Method extends \XLite\Model\Base\I18n
         return $url;
     }
 
+    /**
+     * Set enabled 
+     * 
+     * @param boolean $enabled Property value
+     *  
+     * @return \XLite\Model\Payment\Method
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+        $this->getProcessor()->enableMethod($this);
+
+        return $this;
+    }
+
 }

@@ -59,13 +59,8 @@
   <ul IF="%\XLite\Model\Payment\Method::TYPE_OFFLINE%=getPaymentType()" class="tabs-container">
     <li class="tab offline">
       <ul>
-        <li class="header">
-          <div class="main-head">{t(#Offline payment methods#)}</div>
-          <div class="small-head"></div>
-        </li>
         <li class="body">
-          <div class="description">{t(#Offline payment methods description#)}</div>
-          <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_OFFLINE%} />
+          <list name="payment.method.add.offline" />
         </li>
       </ul>
     </li>

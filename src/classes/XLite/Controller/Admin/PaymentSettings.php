@@ -93,7 +93,13 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
             : null;
 
         if ($method && !$method->isForcedEnabled()) {
-            $method->setAdded(false);
+            if (get_class($method->getProcessor()) == 'XLite\Model\Payment\Processor\Offline') {
+                \XLite\Core\Database::getEM()->remove($method);
+
+            } else {
+                $method->setAdded(false);
+            }
+
             \XLite\Core\TopMessage::addInfo('Payment method has been removed successfully');
             \XLite\Core\Database::getEM()->flush();
         }
@@ -123,4 +129,43 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
         $this->setReturnURL(\XLite\Core\Converter::buildURL('payment_method', '', array('method_id' => $id)));
     }
 
+    /**
+     * Add offline method
+     *
+     * @return void
+     */
+    protected function doActionAddOfflineMethod()
+    {
+        $name = strval(\XLite\Core\Request::getInstance()->name);
+        $description = strval(\XLite\Core\Request::getInstance()->description);
+        $instruction = strval(\XLite\Core\Request::getInstance()->instruction);
+
+        if ($name) {
+            $method = new \XLite\Model\Payment\Method;
+            $method->setName($name);
+            $method->setTitle($name);
+            $method->setClass('Model\\Payment\\Processor\\Offline');
+            $method->setAdded(true);
+            $method->setModuleEnabled(true);
+            $method->setType(\XLite\Model\Payment\Method::TYPE_OFFLINE);
+            $method->setServiceName(microtime(true));
+            if ($description) {
+                $method->setDescription($description);
+            }
+            if ($instruction) {
+                $method->setInstruction($instruction);
+            }
+            \XLite\Core\Database::getEM()->persist($method);
+
+            \XLite\Core\Database::getEM()->flush();
+
+            $method->setServiceName($method->getmethodId());
+            \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\TopMessage::addInfo('Payment method has been added successfully');
+        }
+
+        $this->setReturnURL(\XLite\Core\Converter::buildURL('payment_settings'));
+        $this->setHardRedirect(true);
+    }
 }
