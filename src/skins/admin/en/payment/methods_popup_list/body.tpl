@@ -19,27 +19,29 @@
           <li class="title">
             {payment.getAdminTitle()}
           </li>
-          <li class="separator"></li>
           <li class="button">
             <widget
               IF="!payment.getAdded()"
               class="XLite\View\Button\Link"
               label="{t(#Choose#)}"
-              location="{buildURL(#payment_settings#,#add#,_ARRAY_(#id#^payment.getMethodId()))}"
-              style="action" />
+              location="{buildURL(#payment_settings#,#add#,_ARRAY_(#id#^payment.getMethodId()))}" />
             <widget
               IF="payment.getAdded()"
               class="XLite\View\Button\Link"
               label="{t(#Added#)}"
               location="{buildURL(#payment_settings#,#add#,_ARRAY_(#id#^payment.getMethodId()))}"
-              style="action disabled" />
+              style="disabled" />
           </li>
+          <li class="separator"></li>
+        </ul>
+        <div class="clearfix"></div>
       </li>
-      <li class="title">{payment.getAdminTitle()}</li>
+      <li IF="payment.getAdminDescription()" class="description">{payment.getAdminDescription()}</li>
       <li IF="payment.getLinks()" class="links">
         <ul>
           <li FOREACH="payment.getLinks(),name,href"><a href="{href}">{t(name)}</a></li>
         </ul>
+        <div class="clearfix"></div>
       </li>
     </ul>
 

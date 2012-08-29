@@ -274,4 +274,160 @@
   height: 15px;
 }
 
+/**
+ * Popup styles
+ */
+
+.add-payment-box {
+  width: 700px;
+  position: relative;
+}
+
+.add-payment-box.payment-type-A {
+  margin-top: 25px;
+}
+
+.tabs-container .tab .body {
+  display: none;
+  padding: 89px 0px 0px 0px;
+}
+
+.tabs-container .tab .body .body-box {
+  border: solid 1px #c2cbd2;
+  padding: 20px 0px 35px 30px;
+  background-color: #f4f4f4;
+}
+
+.tabs-container .tab.selected .body {
+  display: block;
+}
+
+.tabs-container .tab .header {
+  position: absolute;
+  width: 39%;
+  top: 0px;
+  border: solid 1px #c2cbd2;
+  border-radius: 10px 10px 0px 0px;
+  padding: 20px 0px 25px 67px;
+  background: #f4f4f4 url(../../images/header-tab-background.png) 0px 0px repeat-x;
+}
+
+.tabs-container .tab .header,
+  .tabs-container .tab .header *
+{
+  cursor: pointer;
+}
+
+.tabs-container .tab.selected .header {
+  border-bottom: solid 1px #f2f2f2;
+  background: transparent url(../../images/header-tab-background-selected.png) 0px 0px repeat-x;
+}
+
+.tabs-container .tab.all-in-one-solutions .header {
+  left: 0px
+}
+
+.tabs-container .tab.payment-gateways .header {
+  right: 0px;
+}
+
+.tabs-container .tab .header .main-head {
+  font-size: 24px;
+  color: #3264a9;
+}
+
+.tabs-container .tab.selected .header .main-head {
+  color: #333333;
+}
+
+.tabs-container .tab .header .small-head {
+  color: #456583;
+  margin-left: 20px;
+}
+
+.tabs-container .tab.payment-gateways .header .small-head {
+  margin-left: -5px;
+}
+
+.everything-you-need {
+  color: #3264a9;
+  margin: 6px 0px 10px 0px;
+  font-size: 18px;
+}
+
+.payments-list .payment-method-icon {
+  margin: 45px 0px 10px 0px;
+}
+
+.payments-list .payment-method-icon img {
+  background-color: #ffffff;
+  padding: 15px 25px 10px 25px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.payments-list .payment-method-entry {
+  margin: 0px 40px 10px 0px;
+  background-color: #ffffff;
+}
+
+.payments-list .payment-method-entry .description,
+ .title-row .title
+{
+  padding: 16px 22px 10px 22px;
+}
+
+.payments-list .payment-method-entry .description {
+  color: #8f8f8f;
+  padding-top: 0px;
+  padding-bottom: 20px;
+  font-size: 14px;
+}
+
+.title-row .title {
+  float: left;
+  font-size: 18px;
+}
+
+.title-row .separator,
+  .title-row .button
+{
+  float: right;
+}
+
+.title-row .button {
+  padding: 6px 20px 6px 10px;
+  width: 60px;
+}
+
+.title-row .button button {
+  width: 70px;
+}
+
+.title-row .separator {
+  background: transparent url(../../images/payments-list-separator.png) 0px 16px no-repeat;
+  width: 2px;
+  height: 40px;
+  margin-right: 5px;
+}
+
+.payment-method-entry .links li {
+  float: left;
+  font-size: 14px;
+  margin: 5px 0px 15px 22px;
+  text-decoration: underline;
+}
+
+.payment-method-entry .links li a {
+  color: #154e9c;
+}
+
+/**
+ * Alternative payment methods popup widget
+ */
+
+.tabs-container.alternative-methods .tab .body,
+  .tabs-container.offline-methods .tab .body
+{
+  padding: 0px;
+}
 
