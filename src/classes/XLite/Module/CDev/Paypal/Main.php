@@ -31,6 +31,14 @@ namespace XLite\Module\CDev\Paypal;
  */
 abstract class Main extends \XLite\Module\AModule
 {
+    /**
+     * Paypal methods service names
+     */
+    const PP_METHOD_PPA = 'PaypalAdvanced';
+    const PP_METHOD_PFL = 'PayflowLink';
+    const PP_METHOD_EC  = 'ExpressCheckout';
+    const PP_METHOD_PPS = 'PaypalWPSUS';
+
 
     /**
      * Author name

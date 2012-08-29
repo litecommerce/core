@@ -62,6 +62,47 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Prevent enabling Paypal Standard if Express Checkout is already enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return boolean
+     */
+    public function canEnable(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::canEnable($method);
+
+        if ($result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS == $method->getServiceName()) {
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC,
+                )
+            );
+            $result = !($m && $m->isEnabled());
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return string
+     */
+    public function getForbidEnableNote(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::getForbidEnableNote($method);
+
+        if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS == $method->getServiceName()) {
+            $result = 'This payment method cannot be enabled together with Paypal Express Checkout method';
+        }
+
+        return $result;
+    }
+
+    /**
      * Process callback
      *
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
@@ -198,7 +239,8 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'bn'            => 'LiteCommerce',
         );
 
-        // Always use address passed from shopping cart (prevent customer from selection of other address on Paypal side)
+        // Always use address passed from shopping cart
+        // (prevent customer from selection of other address on Paypal side)
         $fields['address_override'] = 1;
 
         $fields = array_merge($fields, $this->getPhone());
