@@ -18,8 +18,8 @@
     <div class="content">
       {if:hasAddedGateways()}
         <widget class="XLite\View\ItemsList\Payment\Method\Admin\Gateways" />
-        <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" />
-        <div IF="countNonAddedGateways()" class="counter">{t(#X methods available#,_ARRAY_(#count#,countNonAddedGateways()))}</div>
+        <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" style="add-method" />
+        <div IF="countNonAddedGateways()" class="counter">{t(#X methods available#,_ARRAY_(#count#^countNonAddedGateways()))}</div>
       {else:}
         <p>{t(#Here comes quick explanation about this type of payment methods.#)}</p>
         <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" style="action" />
@@ -32,8 +32,8 @@
     <div class="content">
       {if:hasAddedAlternative()}
         <widget class="XLite\View\ItemsList\Payment\Method\Admin\Alternative" />
-        <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" />
-        <div IF="countNonAddedAlternative()" class="counter">{t(#X methods available#,_ARRAY_(#count#,countNonAddedAlternative()))}</div>
+        <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" style="add-method" />
+        <div IF="countNonAddedAlternative()" class="counter">{t(#X methods available#,_ARRAY_(#count#^countNonAddedAlternative()))}</div>
       {else:}
         <p>{t(#Here comes quick explanation about this type of payment methods.#)}</p>
         <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" style="action" />
@@ -70,7 +70,7 @@
   <div class="content">
     <widget class="XLite\View\ItemsList\Payment\Method\Admin\OfflineModules" />
     <widget class="XLite\View\ItemsList\Payment\Method\Admin\Offline" />
-    <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(#payment_settings#)}" style="add-method"/>
+    <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(#payment_settings#)}" style="add-method" />
   </div>
 </div>
 

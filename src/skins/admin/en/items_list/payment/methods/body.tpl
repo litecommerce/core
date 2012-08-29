@@ -16,11 +16,29 @@
     {foreach:getPageData(),method}
       <li class="{getLineClass(method)}">
 
+        <div IF="method.getAdminIconURL()" class="icon"><img src="{method.getAdminIconURL()}" alt="" /></div>
+
         <div class="row">
 
         <div class="action left-action">
           {if:canSwitch(method)}
-            <div class="switch {if:method.getEnabled()}enabled{else:}disabled{end:}"><img src="images/spacer.gif" alt="{t(#Switch#)}" /></div>
+            {if:hasWarning(method)}
+
+              {if:method.getEnabled()}
+                <div class="switch enabled"><img src="images/spacer.gif" alt="{t(#Enabled#)}" /></div>
+              {else:}
+                <div class="switch disabled"><img src="images/spacer.gif" alt="{t(#Disabled#)}" /></div>
+              {end:}
+
+            {else:}              
+
+              {if:method.getEnabled()}
+                <div class="switch enabled"><a href="{buildURL(#payment_settings#,#disable#,_ARRAY_(#id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Disable#)}" /></a></div>
+              {else:}
+                <div class="switch disabled"><a href="{buildURL(#payment_settings#,#enable#,_ARRAY_(#id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Enable#)}" /></a></div>
+              {end:}
+
+            {end:}
           {else:}
             {if:canEnable(method)}
               <div class="not-disable"><img src="images/spacer.gif" alt="{getForbidDisableNote(method)}" /></div>
@@ -31,27 +49,25 @@
           <img src="images/spacer.gif" class="separator" alt="" />
         </div>
 
-        <div IF="hasIcon(method)" class="icon"><img src="{getIconURL(method)}" alt="" /></div>
-
         <div class="title">{method.getName()}</div>
 
         <div class="action right-action">
           <img src="images/spacer.gif" class="separator" alt="" />
-          <div IF="canRemoveMethod(method)" class="remove"><img src="images/spacer.gif" alt="{t(#Remove#)}" /></div> 
+          <div IF="canRemoveMethod(method)" class="remove"><a href="{buildURL(#payment_settings#,#remove#,_ARRAY_(#id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Remove#)}" /></a></div> 
           {if:hasWarning(method)}
             <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
             <div class="warning"><img src="images/spacer.gif" alt="{getWarning(method)}" /></div>
           {else:}
-            {if:isConfigurable(method)}
+            {if:method.isConfigurable()}
               <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
-              <div class="configure"><a href="{buildURL(#payment_method#,##,_ARRAY_(#method_id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Configure#)}" /></a></div>
+              <div class="configure"><a href="{method.getConfigurationURL()}"><img src="images/spacer.gif" alt="{t(#Configure#)}" /></a></div>
             {end:}
           {end:}
         </div>
 
         </div>
 
-        <widget IF="hasWarning(method)&isConfigurable(method)" class="XLite\View\Button\Link" label="{t(#Configure#)}" location="{buildURL(#payment_method#,##,_ARRAY_(#method_id#^method.getMethodId()))}" style="configure"/>
+        <widget IF="hasWarning(method)&method.isConfigurable()" class="XLite\View\Button\Link" label="{t(#Configure#)}" location="{method.getConfigurationURL()}" style="configure"/>
 
       </li>
 

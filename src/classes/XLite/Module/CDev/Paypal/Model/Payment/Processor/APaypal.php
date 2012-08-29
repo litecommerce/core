@@ -291,6 +291,18 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         }
     }
 
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
 
     /**
      * Return true if Paypal response is a success transaction response 

@@ -41,4 +41,64 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
         return 'Payment settings';
     }
 
+    /**
+     * Enable method 
+     * 
+     * @return void
+     */
+    protected function doActionEnable()
+    {
+        $method = \XLite\Core\Request::getInstance()->id
+            ? \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->id)
+            : null;
+
+        if ($method && $method->canEnable()) {
+            $method->setEnabled(true);
+            \XLite\Core\TopMessage::addInfo('Payment method has been enabled successfully');
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        $this->setReturnURL(\XLite\Core\Converter::buildURL('payment_settings'));
+    }
+
+    /**
+     * Disable method
+     * 
+     * @return void
+     */
+    protected function doActionDisable()
+    {
+        $method = \XLite\Core\Request::getInstance()->id
+            ? \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->id)
+            : null;
+
+        if ($method && !$method->isForcedEnabled()) {
+            $method->setEnabled(false);
+            \XLite\Core\TopMessage::addInfo('Payment method has been disabled successfully');
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        $this->setReturnURL(\XLite\Core\Converter::buildURL('payment_settings'));
+    }
+
+    /**
+     * Remove method
+     *
+     * @return void
+     */
+    protected function doActionRemove()
+    {
+        $method = \XLite\Core\Request::getInstance()->id
+            ? \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->id)
+            : null;
+
+        if ($method && !$method->isForcedEnabled()) {
+            $method->setAdded(false);
+            \XLite\Core\TopMessage::addInfo('Payment method has been removed successfully');
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        $this->setReturnURL(\XLite\Core\Converter::buildURL('payment_settings'));
+    }
+
 }

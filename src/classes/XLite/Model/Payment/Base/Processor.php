@@ -168,6 +168,41 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Check - payment method is configurable or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    public function isConfigurable(\XLite\Model\Payment\Method $method)
+    {
+        return (bool)$this->getConfigurationURL($method);
+    }
+
+    /**
+     * Get payment method configuration page URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getConfigurationURL(\XLite\Model\Payment\Method $method)
+    {
+        $url = null;
+
+        if ($this->getSettingsWidget()) {
+            $url = \XLite\Core\Converter::buildURL('payment_method', '', array('method_id' => $method->getMethodId()));
+
+        } elseif ($this->hasModuleSettings() && $this->getModule() && $this->getModule()->getSettingsForm()) {
+            $url = $this->getModule()->getSettingsForm();
+            $url .= (false === strpos($url, '?') ? '?' : '&')
+                . 'return=' . urlencode(\XLite\Core\Converter::buildURL('payment_settings'));
+        }
+
+        return $url;
+    }
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path

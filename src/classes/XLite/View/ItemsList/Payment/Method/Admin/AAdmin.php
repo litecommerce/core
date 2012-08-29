@@ -102,7 +102,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     {
         $classes = array('cell');
 
-        if ($this->hasIcon($method)) {
+        if ($method->getAdminIconURL()) {
             $classes[] = 'has-icon';
         }
 
@@ -155,30 +155,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     protected function getForbidEnableNote(\XLite\Model\Payment\Method $method)
     {
         return $method->getForbidEnableNote();
-    }
-
-    /**
-     * Check - method has icon or not
-     * 
-     * @param \XLite\Model\Payment\Method $method Payment method
-     *  
-     * @return boolean
-     */
-    protected function hasIcon(\XLite\Model\Payment\Method $method)
-    {
-        return (bool)$method->getAdminIconURL();
-    }
-
-    /**
-     * Get icon URL 
-     * 
-     * @param \XLite\Model\Payment\Method $method Payment method
-     *  
-     * @return string
-     */
-    protected function getIconURL(\XLite\Model\Payment\Method $method)
-    {
-        return $method->getAdminIconURL();
     }
 
     /**
