@@ -12,6 +12,37 @@
 <ul class="payments-list">
   {foreach:getPaymentMethods(),family,entries}
   <li IF="{entries[0]->getAdminIconURL()}" class="payment-method-icon"><img src="{entries[0]->getAdminIconURL()}" alt="{entries[0]->getTitle()}" /></li>
-  <li FOREACH="entries,id,payment">{payment.getTitle()}</li>
+  <li FOREACH="entries,id,payment">
+    <ul class="payment-method-entry">
+      <li class="title-row">
+        <ul>
+          <li class="title">
+            {payment.getAdminTitle()}
+          </li>
+          <li class="separator"></li>
+          <li class="button">
+            <widget
+              IF="!payment.getAdded()"
+              class="XLite\View\Button\Link"
+              label="{t(#Choose#)}"
+              location="{buildURL(#payment_settings#,#add#,_ARRAY_(#id#^payment.getMethodId()))}"
+              style="action" />
+            <widget
+              IF="payment.getAdded()"
+              class="XLite\View\Button\Link"
+              label="{t(#Added#)}"
+              location="{buildURL(#payment_settings#,#add#,_ARRAY_(#id#^payment.getMethodId()))}"
+              style="action disabled" />
+          </li>
+      </li>
+      <li class="title">{payment.getAdminTitle()}</li>
+      <li IF="payment.getLinks()" class="links">
+        <ul>
+          <li FOREACH="payment.getLinks(),name,href"><a href="{href}">{t(name)}</a></li>
+        </ul>
+      </li>
+    </ul>
+
+  </li>
   {end:}
 </ul>

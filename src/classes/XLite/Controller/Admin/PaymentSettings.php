@@ -42,8 +42,8 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Enable method 
-     * 
+     * Enable method
+     *
      * @return void
      */
     protected function doActionEnable()
@@ -63,7 +63,7 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Disable method
-     * 
+     *
      * @return void
      */
     protected function doActionDisable()
@@ -99,6 +99,28 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
         }
 
         $this->setReturnURL(\XLite\Core\Converter::buildURL('payment_settings'));
+    }
+
+    /**
+     * Add method
+     *
+     * @return void
+     */
+    protected function doActionAdd()
+    {
+        $id = \XLite\Core\Request::getInstance()->id;
+
+        $method = $id
+            ? \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find($id)
+            : null;
+
+        if ($method) {
+            $method->setAdded(true);
+            \XLite\Core\TopMessage::addInfo('Payment method has been added successfully');
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        $this->setReturnURL(\XLite\Core\Converter::buildURL('payment_method', '', array('method_id' => $id)));
     }
 
 }

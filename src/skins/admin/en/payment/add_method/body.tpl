@@ -10,7 +10,7 @@
  *}
 
 <div class="add-payment-box">
-  
+
   <ul IF="%\XLite\Model\Payment\Method::TYPE_ALLINONE%=getPaymentType()" class="tabs-container">
 
     <li class="tab all-in-one-solutions">
@@ -20,6 +20,7 @@
           <div class="small-head">{t(#No merchant account required#)}</div>
         </li>
         <li class="body">
+          <div class="description">{t(#All-in-one solution description#)}</div>
           <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_ALLINONE%} />
         </li>
       </ul>
@@ -32,6 +33,7 @@
           <div class="small-head">{t(#Requires registered merchant account#)}</div>
         </li>
         <li class="body">
+          <div class="description">{t(#Payment gateways description#)}</div>
           <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_CC_GATEWAY%} />
         </li>
       </ul>
@@ -47,6 +49,7 @@
           <div class="small-head"></div>
         </li>
         <li class="body">
+          <div class="description">{t(#Alternative payment methods description#)}</div>
           <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_ALTERNATIVE%} />
         </li>
       </ul>
@@ -57,10 +60,11 @@
     <li class="tab offline">
       <ul>
         <li class="header">
-          <div class="main-head">{t(#Offline methods#)}</div>
+          <div class="main-head">{t(#Offline payment methods#)}</div>
           <div class="small-head"></div>
         </li>
         <li class="body">
+          <div class="description">{t(#Offline payment methods description#)}</div>
           <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_OFFLINE%} />
         </li>
       </ul>

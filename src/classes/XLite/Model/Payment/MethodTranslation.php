@@ -67,6 +67,15 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     protected $description = '';
 
     /**
+     * Admin title
+     *
+     * @var string
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $adminTitle = '';
+
+    /**
      * Admin description
      *
      * @var string
@@ -84,5 +93,27 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     public function getTitle()
     {
         return $this->title ?: $this->getName();
+    }
+
+    /**
+     * Admin title getter
+     * If no admin title is given then the "title" field must be used
+     *
+     * @return string
+     */
+    public function getAdminTitle()
+    {
+        return $this->adminTitle ?: $this->getTitle();
+    }
+
+    /**
+     * Admin description getter
+     * If no admin description is given then the "description" field must be used
+     *
+     * @return string
+     */
+    public function getAdminDescription()
+    {
+        return $this->adminDescription ?: $this->getDescription();
     }
 }
