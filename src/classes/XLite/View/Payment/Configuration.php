@@ -45,6 +45,20 @@ class Configuration extends \XLite\View\AView
     }
 
     /**
+     * Register JS files
+     *
+     * @return array
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'payment/configuration/controller.js';
+
+        return $list;
+    }
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -64,6 +78,97 @@ class Configuration extends \XLite\View\AView
     protected function hasPaymentModules()
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->hasActivePaymentModules();
+    }
+
+    /**
+     * Check - has installed all-in-one and acc gateways payment modules or not
+     * 
+     * @return boolean
+     */
+    protected function hasGateways()
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_TYPE} = array(
+            \XLite\Model\Payment\Method::TYPE_ALLINONE,
+            \XLite\Model\Payment\Method::TYPE_CC_GATEWAY
+        );
+
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, true);
+    }
+
+    /**
+     * Check - has added all-in-one and cc gateways payment modules or not
+     *
+     * @return boolean
+     */
+    protected function hasAddedGateways()
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_ADDED} = true;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_TYPE} = array(
+            \XLite\Model\Payment\Method::TYPE_ALLINONE,
+            \XLite\Model\Payment\Method::TYPE_CC_GATEWAY
+        );
+
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, true);
+    }
+
+    /**
+     * Get not added all-in-one and cc gateways payment modules count
+     *
+     * @return integer
+     */
+    protected function countNonAddedGateways()
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_ADDED} = false;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_TYPE} = array(
+            \XLite\Model\Payment\Method::TYPE_ALLINONE,
+            \XLite\Model\Payment\Method::TYPE_CC_GATEWAY
+        );
+
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, true);
+    }
+
+    /**
+     * Check - has installed alternative payment modules or not
+     *
+     * @return boolean
+     */
+    protected function hasAlternative()
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_TYPE} = \XLite\Model\Payment\Method::TYPE_ALTERNATIVE;
+
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, true);
+    }
+
+    /**
+     * Check - has added alternative payment modules or not
+     *
+     * @return boolean
+     */
+    protected function hasAddedAlternative()
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_ADDED} = true;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_TYPE} = \XLite\Model\Payment\Method::TYPE_ALTERNATIVE;
+
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, true);
+    }
+
+    /**
+     * Get not added all-in-one and cc gateways payment modules count
+     *
+     * @return integer
+     */
+    protected function countNonAddedAlternative()
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_ADDED} = false;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_TYPE} = \XLite\Model\Payment\Method::TYPE_ALTERNATIVE;
+
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, true);
     }
 
     // }}}

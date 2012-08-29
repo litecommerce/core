@@ -32,6 +32,19 @@ namespace XLite\Controller\Admin;
 class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return page title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->getPaymentMethod()
+            ? static::t('{{paymentMethod}} settings', array('paymentMethod' => $this->getPaymentMethod()->getName()))
+            : 'Payment method settings';
+    }
+
+
+    /**
      * getPaymentMethod
      *
      * @return \XLite\Model\Payment\Method

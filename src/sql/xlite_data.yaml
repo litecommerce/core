@@ -485,7 +485,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Your account email is X.', translations: [{ code: en, label: 'Your account email is {{email}}.' }] }
   - { name: 'Your account password is X.', translations: [{ code: en, label: 'Your account password is {{password}}.' }] }
   - { name: 'Payment methods appearance description', translations: [{ code: en, label: 'Here you can define how your payment methods will look in customer area.<br />Here are shown only the methods enabled on the configuration page.' }] }
-
+  - { name: 'Watch this short video and learn the basics of how online payment processing works', translations: [{ code: en, label: "Watch this short video and learn the basics of how online payment processing works. You'll also find out what to look for when selecting the best payment processing solution for your business." }] }
+  - { name: 'X methods available', translations: [{ code: en, label: '{{count}} methods available' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

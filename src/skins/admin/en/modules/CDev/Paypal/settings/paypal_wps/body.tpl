@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Paypal Website Payments Standard configuration page
+ * Paypal Payments Standard settings
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,68 +9,80 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<table cellspacing="1" cellpadding="5" class="settings-table">
 
-  <tr>
-    <td class="setting-name">
-    <label for="settings_account">{t(#Email address of your PayPal account#)}</label>
-    </td>
-    <td>
-      <input type="text" size="40" id="settings_account" name="settings[account]" value="{paymentMethod.getSetting(#account#)}" class="field-required" />
-    </td>
-  </tr>
+<div class="payment-settings {paymentMethod.getServiceName()}">
 
-  <tr>
-    <td class="setting-name">
-    <label for="settings_description">{t(#Description of the purchase that will be displayed on PayPal payment page#)}</label>
-    </td>
-    <td>
-    <input type="text" size="40" id="settings_description" name="settings[description]" value="{paymentMethod.getSetting(#description#)}" />
-    </td>
-  </tr>
+  <div class="middle">
 
-  <tr>
-    <td class="setting-name">
-    <label for="settings_prefix">{t(#Order prefix#)}</label>
-    </td>
-    <td>
-    <input type="text" size="40" id="settings_prefix" value="{paymentMethod.getSetting(#prefix#)}" name="settings[prefix]" />
-    </td>
-  </tr>
+    <div class="settings">
 
-  <tr>
-    <td class="setting-name">
-    <label for="settings_mode">{t(#Test/Live mode#)}</label>
-    </td>
-    <td>
-    <widget
-      class="\XLite\View\FormField\Select\TestLiveMode"
-      fieldId="settings_mode"
-      fieldName="settings[mode]"
-      fieldOnly=true
-      value="{paymentMethod.getSetting(#mode#)}" />
-    </td>
-  </tr>
+        <ul class="options">
 
-  <tr>
-    <td class="setting-name">
-    <label for="settings_address_override">{t(#Address override#)}*</label>
-    </td>
-    <td>
-    <widget
-      class="\XLite\View\FormField\Select\YesNo"
-      fieldId="settings_address_override"
-      fieldName="settings[address_override]"
-      fieldOnly=true
-      value="{paymentMethod.getSetting(#address_override#)}" />
-    </td>
-  </tr>
+          <li>
+            <span><label for="pp_account">{t(#Paypal ID / Email#)}:</label></span>
+            <input type="text" id="pp_account" name="settings[account]" value="{paymentMethod.getSetting(#account#)}" />
+            <widget
+              class="\XLite\View\Tooltip"
+              id="pp-account-help"
+              text="{t(#Enter the email address associated with your PayPal account.#)}"
+              caption=""
+              isImageTag="true"
+              className="help-icon" />
+          </li>
 
-  <tr>
-    <td colspan="2" class="note">
-      *{t(#The address specified with automatic fill-in variables overrides the PayPal member’s stored address.<br /> Buyers see
-the addresses that you pass in, but they cannot edit them. PayPal does not show addresses if they are invalid or omitted.#):h}
-    </td>
-  </tr>
+          <li>
+            <span><label for="pp_description">{t(#Purchase description#)}:</label></span>
+            <input type="text" id="pp_description" name="settings[description]" value="{paymentMethod.getSetting(#description#)}" />
+            <widget
+              class="\XLite\View\Tooltip"
+              id="pp-vendor-help"
+              text="{t(#Enter description of the purchase that will be displayed on PayPal payment page.#)}"
+              caption=""
+              isImageTag="true"
+              className="help-icon" />
+          </li>
 
-</table>
+          <li>
+            <span><label for="pp_test">{t(#Test/Live mode#)}:</label></span>
+            <select id="pp_test" name="settings[mode]">
+              <option value="live" selected="{isSelected(#live#,paymentMethod.getSetting(#mode#))}">{t(#Live mode#)}</option>
+              <option value="test" selected="{isSelected(#test#,paymentMethod.getSetting(#mode#))}">{t(#Test mode#)}</option>
+            </select>
+          </li>
+
+          <li>
+            <span><label for="pp_order_prefix">{t(#Order id prefix#)}:</label></span>
+            <input type="text" id="pp_order_prefix" name="settings[prefix]" value="{paymentMethod.getSetting(#prefix#)}" />
+            <widget
+              class="\XLite\View\Tooltip"
+              id="pp-vendor-help"
+              text="{t(#You can define an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a Paypal account). This options is relevant only if you share your Paypal account with other online shops#)}"
+              caption=""
+              isImageTag="true"
+              className="help-icon" />
+          </li>
+
+        </ul>
+ 
+      <div class="buttons">
+        <widget class="\XLite\View\Button\Submit" label="{t(#Save changes#)}" style="main-button" />
+      </div>
+
+    </div>
+
+    <div class="help">
+      <div class="logo-ppa"></div>
+
+      <div class="help-title">Accept PayPal and Credit Cards Securely</div>
+
+      <div class="help-text">
+        Add a PayPal payment button to your site to accept Visa, MasterCard&reg;, American Express, Discover and PayPal payments securely. When your customers check out, they are redirected to PayPal to pay, then return to your site after they are finished.
+      </div>
+
+
+      <div class="help-link">Don't have an account? <a href="{paymentMethod.getReferralPageURL()}">Sign Up Now</a></div>
+
+  </div>
+
+</div>
+

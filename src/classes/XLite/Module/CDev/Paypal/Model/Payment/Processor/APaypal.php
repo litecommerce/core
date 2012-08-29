@@ -80,6 +80,16 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Return false to use own submit button on payment method settings form
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return false;
+    }
+
+    /**
      * Get allowed backend transactions
      *
      * @return string Status code
@@ -93,6 +103,27 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         );
     }
 
+    /**
+     * Get list of payment method settings which can be created
+     * 
+     * @return array
+     */
+    public function getAvailableSettings()
+    {
+        return array(
+            'hide_instruction',
+        );
+    }
+
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return 'http://www.litecommerce.com/sell-online-with-paypal.html';
+    }
 
     /**
      * Get return type of the iframe-method: html redirect with destroying an iframe
