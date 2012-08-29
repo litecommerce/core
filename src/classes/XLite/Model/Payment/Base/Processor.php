@@ -521,5 +521,15 @@ abstract class Processor extends \XLite\Base
         return true;
     }
 
+    /**
+     * Do something when payment method is enabled 
+     * 
+     * @return void
+     */
+    public function enableMethod(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
     // }}}
 }
