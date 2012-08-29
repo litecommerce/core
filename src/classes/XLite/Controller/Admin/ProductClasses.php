@@ -26,21 +26,11 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Product classes
+ * Product classes controller
  *
  */
 class ProductClasses extends \XLite\Controller\Admin\AAdmin
 {
-    /**
-     * Field name for new 'name' value
-     */
-    const NEW_NAME = 'new_name';
-
-    /**
-     * Field name for 'name' array values
-     */
-    const NAME = 'name';
-
 
     /**
      * Check ACL permissions
@@ -53,36 +43,84 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Update action
+     * Update list
      *
      * @return void
      */
     protected function doActionUpdate()
     {
-        $data = $this->getPostedData();
+        $list = new \XLite\View\ItemsList\Model\ProductClass;
+        $list->processQuick();
+    }
 
-        if (!empty($data[static::NEW_NAME])) {
-            $this->addClass($data[static::NEW_NAME]);
-        }
+    // {{{ Search
 
-        if (isset($data[static::NEW_NAME])) {
-            unset($data[static::NEW_NAME]);
-        }
+    /**
+     * Get search condition parameter by name
+     *
+     * @param string $paramName Parameter name
+     *
+     * @return mixed
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
 
-        if (!empty($data)) {
-            \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->updateInBatchById($data);
-        }
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
     }
 
     /**
-     * Add product class entry
-     *
-     * @param string $name Name value
+     * Save search conditions
      *
      * @return void
      */
-    protected function addClass($name)
+    protected function doActionSearch()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert(array(static::NAME => strval($name)));
+        $cellName = \XLite\View\ItemsList\Model\ProductClass::getSessionCellName();
+
+        \XLite\Core\Session::getInstance()->$cellName = $this->getSearchParams();
     }
+
+    /**
+     * Return search parameters
+     *
+     * @return array
+     */
+    protected function getSearchParams()
+    {
+        $searchParams = $this->getConditions();
+
+        foreach (
+            \XLite\View\ItemsList\Model\ProductClass::getSearchParams() as $requestParam
+        ) {
+            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+                $searchParams[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
+            }
+        }
+
+        return $searchParams;
+    }
+
+    /**
+     * Get search conditions
+     *
+     * @return array
+     */
+    protected function getConditions()
+    {
+        $cellName = \XLite\View\ItemsList\Model\ProductClass::getSessionCellName();
+
+        $searchParams = \XLite\Core\Session::getInstance()->$cellName;
+
+        if (!is_array($searchParams)) {
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
+
+    // }}}
+
 }

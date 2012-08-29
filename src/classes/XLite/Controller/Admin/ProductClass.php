@@ -32,22 +32,11 @@ namespace XLite\Controller\Admin;
 class ProductClass extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Constants
-     */
-    const STATUS_ERROR   = 'error';
-    const STATUS_INAPPLY = 'inapply';
-    const STATUS_SUCCESS = 'success';
-    const STATUS_FAILED  = 'failed';
-
-    /**
-     * data
+     * Controller parameters
      *
      * @var array
      */
-    protected $data = array(
-        'status' => self::STATUS_ERROR,
-        'data'   => '',
-    );
+    protected $params = array('target', 'id');
 
     /**
      * Check ACL permissions
@@ -60,71 +49,42 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Remove product class
+     * Return the current page title (for the content area)
      *
-     * @return void
+     * @return string
      */
-    protected function doActionRemove()
+    public function getTitle()
     {
-        if (isset(\XLite\Core\Request::getInstance()->id)) {
-            \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->deleteById(
-                \XLite\Core\Request::getInstance()->id
-            );
-        }
+        $id = intval(\XLite\Core\Request::getInstance()->id);
+        $model = $id
+            ? \XLite\Core\Database::getRepo('XLite\Model\ProductClass')->find($id)
+            : null;
 
-        $this->setReturnURL($this->buildURL('product_classes'));
+        return ($model && $model->getId())
+            ? $model->getName()
+            : \XLite\Core\Translation::getInstance()->lbl('ProductClass');
     }
 
     /**
-     * AJAX product class update
+     * Update model
      *
      * @return void
      */
     protected function doActionUpdate()
     {
-        $data = array(
-            'name' => \XLite\Core\Request::getInstance()->name,
-        );
-
-        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->updateById(
-            \XLite\Core\Request::getInstance()->id,
-            $data
-        );
+        if ($this->getModelForm()->performAction('modify')) {
+            $this->setReturnUrl(\XLite\Core\Converter::buildURL('product_classes'));
+        }
     }
 
     /**
-     * AJAX product class adding
-     *
-     * @return void
+     * Get model form class
+     * 
+     * @return string
      */
-    protected function doActionAdd()
+    protected function getModelFormClass()
     {
-        $data = new \XLite\Model\ProductClass();
-        $data->setName(\XLite\Core\Request::getInstance()->name);
-
-        $data = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert($data);
-
-        $this->data['data'] = array(
-            'id'   => $data->getId(),
-            'name' => $data->getName(),
-        );
-
-        $this->data['status'] = static::STATUS_SUCCESS;
+        return 'XLite\View\Model\ProductClass';
     }
 
-    /**
-     * Send JSON data after "ADD" action
-     *
-     * @return void
-     */
-    protected function actionPostprocessAdd()
-    {
-        header('Content-type: application/json');
-        $data = json_encode($this->data);
-        header('Content-Length: ' . strlen($data));
-
-        echo ($data);
-
-        exit (0);
-    }
 }

@@ -23,32 +23,16 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View\ProductClass;
+namespace XLite\View\Form\Model;
 
 /**
- * Product classes list
+ * Product classes list search form
  *
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClassesList  extends AProductClass
+class ProductClass extends \XLite\View\Form\AForm
 {
     /**
-     * Return allowed targets
-     *
-     * @return array
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'product_classes';
-
-        return $result;
-    }
-
-    /**
-     * Return CSS files list for widget
+     * Register CSS files
      *
      * @return array
      */
@@ -56,43 +40,51 @@ class ProductClassesList  extends AProductClass
     {
         $list = parent::getCSSFiles();
 
-        $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';
+        $list[] = 'product_class/style.css';
 
         return $list;
     }
 
     /**
-     * Return JS files list for widget
-     *
-     * @return void
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = $this->getDir() . LC_DS . 'js' . LC_DS . 'script.js';
-
-        return $list;
-    }
-
-
-    /**
-     * Return templates catalog
+     * Return default value for the "target" parameter
      *
      * @return string
      */
-    protected function getDir()
+    protected function getDefaultTarget()
     {
-        return parent::getDir() . LC_DS . 'list';
+        return 'product_class';
     }
 
     /**
-     * Return data
+     * Return default value for the "action" parameter
+     *
+     * @return string
+     */
+    protected function getDefaultAction()
+    {
+        return 'update';
+    }
+
+    /**
+     * Get default class name
+     *
+     * @return string
+     */
+    protected function getDefaultClassName()
+    {
+        return trim(parent::getDefaultClassName() . ' validationEngine product-class');
+    }
+
+    /**
+     * Return list of the form default parameters
      *
      * @return array
      */
-    protected function getData()
+    protected function getDefaultParams()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findAll();
+        return array(
+            'id' => \XLite\Core\Request::getInstance()->id,
+        );
     }
+
 }
