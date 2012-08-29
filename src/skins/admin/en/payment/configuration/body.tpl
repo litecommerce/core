@@ -24,7 +24,10 @@
   <div class="content">
     <widget class="XLite\View\ItemsList\Payment\Method\Admin\OfflineModules" />
     <widget class="XLite\View\ItemsList\Payment\Method\Admin\Offline" />
-    <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(#payment_settings#)}" style="add-method"/>
+    <widget
+      class="XLite\View\Button\Payment\AddMethod"
+      label="{t(#Add payment method#)}"
+      paymentType={%\XLite\Model\Payment\Method::TYPE_OFFLINE%}/>
   </div>
 </div>
 
