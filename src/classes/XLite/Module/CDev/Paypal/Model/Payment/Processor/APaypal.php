@@ -126,6 +126,66 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Prevent enabling Express Checkout if Paypal Standard is already enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return boolean
+     */
+    public function canEnable(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::canEnable($method);
+
+        if ($result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS,
+                )
+            );
+            $result = !($m && $m->isEnabled());
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return string
+     */
+    public function getForbidEnableNote(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::getForbidEnableNote($method);
+
+        if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
+            $result = 'This payment method cannot be enabled together with Paypal Payments Standard method';
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return true if current method is EC and PPA or PFL are enabled 
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return boolean
+     */
+    public function isForcedEnabled(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::isForcedEnabled($method);
+
+        if (!$result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
+            $parentMethod = $this->getParentMethod();
+            $result = isset($parentMethod);
+        }
+
+        return $result;
+    }
+
+    /**
      * Get return type of the iframe-method: html redirect with destroying an iframe
      *
      * @return string
@@ -303,6 +363,59 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         return true;
     }
 
+
+    /**
+     * Replace settings for forced enabled Express Checkout by settings from parent method
+     * 
+     * @param string $name Setting name
+     *  
+     * @return string
+     */
+    protected function getSetting($name)
+    {
+        $method = $this->transaction->getPaymentMethod();
+
+        if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName() && $this->isForcedEnabled()) {
+            $parentMethod = $this->getParentMethod();
+            $result = $parentMethod->getSetting($name);
+
+        } else {
+            $result = parent::getSetting($name);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get payment method which forced enabling of Express Checkout
+     * 
+     * @return \XLite\Model\Payment\Method
+     */
+    protected function getParentMethod()
+    {
+        $result = null;
+
+        $relatedMethods = array(
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPA,
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PFL,
+        );
+
+        foreach ($relatedMethods as $rm) {
+    
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => $rm,
+                )
+            );
+    
+            if ($m && $m->isEnabled()) {
+                $result = $m;
+                break;
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Return true if Paypal response is a success transaction response 
@@ -707,7 +820,9 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
         if ($shippingModifier && $shippingModifier->canApply()) {
             $noShipping = '0';
-            $freightAmt = $order->getCurrency()->roundValue($order->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_SHIPPING));
+            $freightAmt = $order->getCurrency()->roundValue(
+                $order->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_SHIPPING)
+            );
 
         } else {
             $noShipping = '1';
@@ -803,7 +918,9 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             // Prepare data about discount
 
-            $discount = $obj->getCurrency()->roundValue($obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_DISCOUNT));
+            $discount = $obj->getCurrency()->roundValue(
+                $obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_DISCOUNT)
+            );
 
             if (0 != $discount) {
                 $lineItems['L_COST' . $index] = $discount;
@@ -816,7 +933,9 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             // Prepare data about summary tax cost
 
-            $taxCost = $obj->getCurrency()->roundValue($obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_TAX));
+            $taxCost = $obj->getCurrency()->roundValue(
+                $obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_TAX)
+            );
 
             if (0 < $taxCost) {
                 $lineItems['L_TAXAMT' . $index] = $taxCost;
