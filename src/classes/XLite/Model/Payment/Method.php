@@ -189,7 +189,7 @@ class Method extends \XLite\Model\Base\I18n
 
         if (preg_match('/^Module/Sis', $class) > 0) {
 
-            list($modulePrefix, $author, $name) = explode('\\', $class, 3);
+            list($modulePrefix, $author, $name) = explode('\\', $class, 4);
 
             $this->setModuleName($author . '_' . $name);
         }

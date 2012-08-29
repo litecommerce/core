@@ -18,11 +18,15 @@
     <div class="content">
       {if:hasAddedGateways()}
         <widget class="XLite\View\ItemsList\Payment\Method\Admin\Gateways" />
-        <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" />
+        <widget
+          class="XLite\View\Button\Payment\AddMethod"
+          paymentType={%\XLite\Model\Payment\Method::TYPE_ALLINONE%}/>
         <div IF="countNonAddedGateways()" class="counter">{t(#X methods available#,_ARRAY_(#count#,countNonAddedGateways()))}</div>
       {else:}
         <p>{t(#Here comes quick explanation about this type of payment methods.#)}</p>
-        <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" style="action" />
+        <widget
+          class="XLite\View\Button\Payment\AddMethod"
+          paymentType={%\XLite\Model\Payment\Method::TYPE_ALLINONE%}/>
       {end:}
     </div>
   </div>
@@ -32,10 +36,15 @@
     <div class="content">
       {if:hasAddedAlternative()}
         <widget class="XLite\View\ItemsList\Payment\Method\Admin\Alternative" />
-        <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" />
+        <widget
+          class="XLite\View\Button\Payment\AddMethod"
+          paymentType={%\XLite\Model\Payment\Method::TYPE_ALTERNATIVE%}/>
         <div IF="countNonAddedAlternative()" class="counter">{t(#X methods available#,_ARRAY_(#count#,countNonAddedAlternative()))}</div>
       {else:}
         <p>{t(#Here comes quick explanation about this type of payment methods.#)}</p>
+        <widget
+          class="XLite\View\Button\Payment\AddMethod"
+          paymentType={%\XLite\Model\Payment\Method::TYPE_ALTERNATIVE%}/>
         <widget class="XLite\View\Button\Link" label="{t(#Add payment method#)}" location="{buildURL(##)}" style="action" />
       {end:}
     </div>
@@ -49,7 +58,7 @@
 
 {else:}
 
-  <div class="box no-paument-modules">
+  <div class="box no-payment-modules">
     <h2>{t(#No payment modules installed#)}</h2>
     <div class="content">
       <p>{t(#In order to accept credit cards payments you should install the neccessary payment module from our Marketplace.#)}</p>
@@ -72,7 +81,6 @@
     <widget class="XLite\View\ItemsList\Payment\Method\Admin\Offline" />
     <widget
       class="XLite\View\Button\Payment\AddMethod"
-      label="{t(#Add payment method#)}"
       paymentType={%\XLite\Model\Payment\Method::TYPE_OFFLINE%}/>
   </div>
 </div>

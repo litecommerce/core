@@ -415,6 +415,21 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
         return $list;
     }
 
+    public function findForAdditionByType($type)
+    {
+        return $this->defineAdditionByTypeQuery($type)->getResult();
+    }
+
+    protected function defineAdditionByTypeQuery($type)
+    {
+        return $this->createQueryBuilder('m')
+            ->addSelect('LOCATE(:modulePrefix, m.class) module_prefix')
+            ->andWhere('m.type = :type')
+            ->addOrderBy('module_prefix', 'asc')
+            ->addOrderBy('m.moduleName', 'asc')
+            ->setParameter('type', $type)
+            ->setParameter('modulePrefix', 'Module\\CDev\\Paypal');
+    }
 
     /**
      * Define query for findAllMethods() method

@@ -26,11 +26,10 @@
 namespace XLite\View\Payment;
 
 /**
- * Add payment method dialog widget
+ * List of payment methods for popup widget
  *
- * @ListChild (list="admin.center", zone="admin")
  */
-class AddMethod extends \XLite\View\SimpleDialog
+class MethodsPopupList extends \XLite\View\AView
 {
     /**
      * Return list of allowed targets
@@ -46,38 +45,53 @@ class AddMethod extends \XLite\View\SimpleDialog
     }
 
     /**
-     * Return title
-     *
-     * @return string
-     */
-    protected function getHead()
-    {
-        return 'Add payment method';
-    }
-
-    /**
      * Return file name for the center part template
      *
      * @return string
      */
-    protected function getBody()
+    protected function getDefaultTemplate()
     {
-        return 'payment/add_method/body.tpl';
+        return 'payment/methods_popup_list/body.tpl';
     }
 
     /**
-     * Return payment methods type which is provided to the widget
+     * Define widget params
+     *
+     * @return void
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            \XLite\View\Button\Payment\AddMethod::PARAM_PAYMENT_METHOD_TYPE => new \XLite\Model\WidgetParam\String('Payment methods type', ''),
+        );
+    }
+
+    /**
+     * Return payment type for the payment methods list
      *
      * @return string
      */
     protected function getPaymentType()
     {
-        return \XLite\Core\Request::getInstance()->{\XLite\View\Button\Payment\AddMethod::PARAM_PAYMENT_METHOD_TYPE};
+        return $this->getParam(\XLite\View\Button\Payment\AddMethod::PARAM_PAYMENT_METHOD_TYPE);
     }
 
-    protected function getPaymentMethods($type)
+    /**
+     * Return payment methods list structure to use in the widget
+     *
+     * @return array
+     */
+    protected function getPaymentMethods()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findForAdditionByType($type);
-    }
+        $result = array();
 
+        foreach(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findForAdditionByType($this->getPaymentType()) as $entry) {
+
+            $result[$entry[0]->moduleName][] = $entry[0];
+        }
+
+        return $result;
+    }
 }
