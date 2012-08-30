@@ -76,14 +76,15 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
             $this->updateCart();
 
+            \XLite\Core\Session::getInstance()->ec_type
+                = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
+
             $token = $paymentMethod->getProcessor()->doSetExpressCheckout($paymentMethod);
 
             if (isset($token)) {
                 \XLite\Core\Session::getInstance()->ec_token = $token;
                 \XLite\Core\Session::getInstance()->ec_date = time();
                 \XLite\Core\Session::getInstance()->ec_payer_id = null;
-                \XLite\Core\Session::getInstance()->ec_type
-                    = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
 
                 $paymentMethod->getProcessor()->redirectToPaypal($token);
 
