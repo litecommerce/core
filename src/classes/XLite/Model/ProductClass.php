@@ -80,4 +80,14 @@ class ProductClass extends \XLite\Model\Base\I18n
 
         parent::__construct($data);
     }
+
+    /**
+     * Return number of products associated with this class
+     *
+     * @return integer
+     */
+    public function getProductsCount()
+    {
+        return count($this->products);
+    }
 }

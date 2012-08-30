@@ -31,3 +31,4 @@
 /src/var/.decorator.unsafe_modules.ini.php
 /src/var/.disabled.structures.php
 /nbproject
+*.swp

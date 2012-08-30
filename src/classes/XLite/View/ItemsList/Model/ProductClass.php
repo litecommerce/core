@@ -58,6 +58,10 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
                 static::COLUMN_CLASS        => 'XLite\View\FormField\Inline\Input\Text',
                 static::COLUMN_PARAMS       => array('required' => true),
             ),
+            'count' => array(
+                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('Products'),
+                static::COLUMN_TEMPLATE     => 'product_classes/parts/products_count.tpl',
+            ),
         );
     }
 
