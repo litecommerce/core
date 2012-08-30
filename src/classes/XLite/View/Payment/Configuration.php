@@ -171,5 +171,14 @@ class Configuration extends \XLite\View\AView
         return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, true);
     }
 
+    /**
+     * Get video URL 
+     * 
+     * @return string
+     */
+    protected function getVideoURL()
+    {
+        return 'http://www.paypal.com/understandingonlinepayments';
+    }
     // }}}
 }

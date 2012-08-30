@@ -82,7 +82,7 @@
 <div class="subbox watch-video">
   <h2>{t(#Understanding Online Payments#)}</h2>
   <p>{t(#Watch this short video and learn the basics of how online payment processing works#)}</p>
-  <widget class="XLite\View\Button\Link" label="{t(#Watch video#)}" location="http://www.youtube.com/watch?v=d3QG_1R3hI0" style="watch-video" />
+  <widget class="XLite\View\Button\Link" label="{t(#Watch video#)}" location="{getVideoURL()}" style="watch-video" />
 </div>
 
 <div class="box offline-methods">
