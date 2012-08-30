@@ -11,7 +11,7 @@
  * @ListChild (list="payment.method.add.offline")
  *}
 
-<widget class="XLite\View\Form\Payment\Method\Admin\AddOfflineMethod" name="add_offline_method" className="add-offline-method" />
+<widget class="XLite\View\Form\Payment\Method\Admin\AddOfflineMethod" name="add_offline_method" className="add-offline-method validationEngine" />
 
   <ul class="table">
     <li><widget class="XLite\View\FormField\Input\Text" fieldName="name" label="{t(#Name#)}" required="true" /></li>
