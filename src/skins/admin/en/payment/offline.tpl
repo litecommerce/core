@@ -12,21 +12,13 @@
 <table cellspacing="1" cellpadding="5" class="settings-table">
 
   <tr>
-    <td class="setting-name">
-    <label for="settings_name">{t(#Name#)}</label>
-    </td>
-    <td>
-    <input type="text" id="settings_name" name="properties[name]" value="{paymentMethod.getName()}" class="field-required" />
-    </td>
+    <td class="setting-name"><label for="settings_name">{t(#Name#)}</label></td>
+    <td><input type="text" id="settings_name" name="properties[name]" value="{paymentMethod.getName()}" class="field-required" /></td>
   </tr>
 
   <tr>
-    <td class="setting-instruction">
-    <label for="settings_instruction">{t(#Instruction#)}</label>
-    </td>
-    <td>
-    <textarea id="settings_instruction" name="properties[instruction]">{paymentMethod.getInstruction()}</textarea>
-    </td>
+    <td class="setting-instruction"><label for="settings_instruction">{t(#Instruction#)}</label></td>
+    <td><textarea id="settings_instruction" name="properties[instruction]" rows="10" cols="50">{paymentMethod.getInstruction()}</textarea></td>
   </tr>
 
 </table>

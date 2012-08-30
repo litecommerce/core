@@ -22,7 +22,7 @@
     <div class="warning"><a href="{method.getConfigurationURL()}"><img src="images/spacer.gif" alt="{method.getWarningNote()}" /></a></div>
   {elseif:method.isTestMode()}
     <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
-    <div class="test-mode"><a href="{method.getConfigurationURL()}" title="{t(#Test mode#)}"><img src="images/spacer.gif" alt="" /></a></div>
+    <div class="test-mode"><a href="{method.getConfigurationURL()}"><img src="images/spacer.gif" alt="{t(#This method is in test mode#)}" /></a></div>
   {elseif:method.isConfigurable()}
     <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
     <div class="configure"><a href="{method.getConfigurationURL()}" title="{t(#Configure#)}"><img src="images/spacer.gif" alt="" /></a></div>

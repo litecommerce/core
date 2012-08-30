@@ -13,7 +13,7 @@ jQuery(document).ready(
   function () {
 
     // Tooltips
-    jQuery('.methods li .warning img,.methods li .not-enable img,.methods li .not-disable img').each(
+    jQuery('.methods li .warning img,.methods li .test-mode img').each(
       function () {
         if (this.alt) {
           attachTooltip(jQuery(this), this.alt);
