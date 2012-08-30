@@ -45,6 +45,16 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $id;
 
+    /**
+     * Position
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $position = 0;
 
     /**
      * Products
@@ -88,6 +98,17 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     public function getProductsCount()
     {
-        return count($this->products);
+        return count($this->getProducts());
+    }
+
+    /**
+     * Return number of attributes associated with this class
+     *
+     * @return integer
+     */
+    public function getAttributesCount()
+    {
+        return 0;
+//        return count($this->getAttributes());
     }
 }

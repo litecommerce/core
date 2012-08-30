@@ -54,13 +54,11 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
     {
         return array(
             'name' => array(
-                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('Name'),
-                static::COLUMN_CLASS        => 'XLite\View\FormField\Inline\Input\Text',
+                static::COLUMN_CLASS        => 'XLite\View\FormField\Inline\Input\Text\ProductClass',
                 static::COLUMN_PARAMS       => array('required' => true),
             ),
-            'count' => array(
-                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('Products'),
-                static::COLUMN_TEMPLATE     => 'product_classes/parts/products_count.tpl',
+            'attributes' => array(
+                static::COLUMN_TEMPLATE     => 'product_classes/parts/edit_attributes.tpl',
             ),
         );
     }
@@ -118,6 +116,16 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
         return true;
     }
 
+    /**
+     * Mark list as sortable
+     *
+     * @return integer
+     */
+    protected function getSortableType()
+    {
+        return static::SORT_TYPE_MOVE;
+    }
+
     // }}}
 
     /**
@@ -150,7 +158,7 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
      */
     static public function getSearchParams()
     {
-        return array(        );
+        return array();
     }
 
     /**

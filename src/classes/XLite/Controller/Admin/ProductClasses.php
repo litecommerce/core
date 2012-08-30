@@ -43,6 +43,18 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        return static::t('Product classes');
+    }
+
+    /**
      * Update list
      *
      * @return void

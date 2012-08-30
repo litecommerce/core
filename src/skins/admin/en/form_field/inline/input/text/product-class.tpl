@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Products count 
+ * Product class inline view
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,4 +9,5 @@
  * @link      http://www.litecommerce.com/
  *}
 
-{entity.getProductsCount()}
+<span class="value">{getViewValue(singleField):h}</span>
+<span class="products">({entity.getProductsCount()} {t(#products#)})</span>

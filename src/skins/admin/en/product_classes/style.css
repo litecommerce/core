@@ -9,6 +9,18 @@
  * @link      http://www.litecommerce.com/
  */
 
-th.name {
+td.name {
   width: 300px;
+}
+.items-list-table table.list tbody.lines td.name div.inline-product-class span.value {
+  color: #456583;
+  font-size: 16px;
+}
+.items-list-table table.list tbody.lines td.cell span,
+.items-list-table table.list tbody.lines td.cell a
+{
+  color: #8f8f8f;
+}
+.items-list-table table.list tbody.lines td.cell a {
+  text-decoration: underline;
 }

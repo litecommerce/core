@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -82,7 +80,7 @@ class ProductClass extends \XLite\Model\Repo\Base\I18n
      */
     public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
     {
-        return $qb->getResult();
+        return $qb->addOrderBy('p.position', 'ASC')->getResult();
     }
 
     /**
