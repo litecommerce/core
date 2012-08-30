@@ -199,7 +199,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         if (!$result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
             $parentMethod = $this->getParentMethod();
             if (isset($parentMethod)) {
-                $result = 'Must be enabled as you use PayPal Advanced';
+                $result = 'Must be enabled as you use PayPal Payments Advanced or Paypal Payflow Link';
             }
         }
 
