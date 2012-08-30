@@ -706,6 +706,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     {
         $hash = array(
             'items' => array(),
+            'total' => $this->getTotal(),
         );
 
         foreach ($this->getItems() as $item) {
