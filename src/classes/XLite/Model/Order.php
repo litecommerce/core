@@ -801,8 +801,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         $list = array(self::STATUS_AUTHORIZED, self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
 
-        \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getOrderId());
-
         if (!in_array($status, $list)) {
 
             \XLite\Core\Mailer::getInstance()->sendOrderCreated($this);

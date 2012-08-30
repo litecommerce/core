@@ -112,6 +112,10 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
                 );
             }
 
+            if ($txn->isFailed()) {
+                $txn->getOrder()->setStatus(\XLite\Model\Order::STATUS_FAILED);
+            }
+
             \XLite\Core\Database::getEM()->flush();
 
             $url = $this->getShopURL(
