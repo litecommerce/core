@@ -28,6 +28,7 @@ decorate(
     jQuery('.tabs-container .tab .header').click(function () {
       jQuery('.tabs-container .tab').removeClass('selected');
       jQuery(this).closest('.tab').addClass('selected');
+      jQuery('.ui-widget-overlay').css('height', jQuery(document).height());
     });
 
   }

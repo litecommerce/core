@@ -281,6 +281,9 @@
 .add-payment-box {
   width: 700px;
   position: relative;
+}
+
+.add-payment-box.payment-type-A {
   margin-top: 25px;
 }
 
@@ -416,5 +419,15 @@
 
 .payment-method-entry .links li a {
   color: #154e9c;
+}
+
+/**
+ * Alternative payment methods popup widget
+ */
+
+.tabs-container.alternative-methods .tab .body,
+  .tabs-container.offline-methods .tab .body
+{
+  padding: 0px;
 }
 

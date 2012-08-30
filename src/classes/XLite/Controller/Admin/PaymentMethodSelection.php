@@ -38,6 +38,31 @@ class PaymentMethodSelection extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Add payment method';
+        $result = 'Add payment method';
+
+        switch ($this->getPaymentType()) {
+            case \XLite\Model\Payment\Method::TYPE_ALTERNATIVE:
+                $result = 'Add alternative payment method';
+                break;
+
+            case \XLite\Model\Payment\Method::TYPE_OFFLINE:
+                $result = 'Add offline payment method';
+                break;
+
+            default:
+                break;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return payment methods type which is provided to the widget
+     *
+     * @return string
+     */
+    protected function getPaymentType()
+    {
+        return \XLite\Core\Request::getInstance()->{\XLite\View\Button\Payment\AddMethod::PARAM_PAYMENT_METHOD_TYPE};
     }
 }

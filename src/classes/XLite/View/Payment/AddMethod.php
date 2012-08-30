@@ -75,6 +75,13 @@ class AddMethod extends \XLite\View\SimpleDialog
         return \XLite\Core\Request::getInstance()->{\XLite\View\Button\Payment\AddMethod::PARAM_PAYMENT_METHOD_TYPE};
     }
 
+    /**
+     * Return payment methods structure to display payment methods list of specific type
+     *
+     * @param string $type
+     *
+     * @return array
+     */
     protected function getPaymentMethods($type)
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findForAdditionByType($type);
