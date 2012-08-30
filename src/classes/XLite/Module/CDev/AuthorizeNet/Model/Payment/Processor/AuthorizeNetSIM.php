@@ -321,6 +321,18 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Check - payment method has enabled test mode or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isTestMode(\XLite\Model\Payment\Method $method)
+    {
+        return (bool)$method->getSetting('test');
+    }
+
+    /**
      * Get redirect form URL
      *
      * @return string

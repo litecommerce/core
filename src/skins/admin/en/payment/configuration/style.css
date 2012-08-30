@@ -223,7 +223,6 @@
   font-size: 16px;
   padding: 11px 12px;
   vertical-align: top;
-  width: 334px;
 }
 
 .payment-conf .methods li .remove {
@@ -238,14 +237,25 @@
 }
 
 .payment-conf .methods li .warning {
-  padding: 7px 5px 5px 11px;
+  padding: 6px 3px 5px 10px;
   vertical-align: top;
 }
 
 .payment-conf .methods li .warning img {
-  background: transparent url(../../images/warn_rhombus.png) no-repeat left top;
-  width: 26px;
-  height: 26px;
+  background: transparent url(../../images/warning.png) no-repeat left top;
+  width: 28px;
+  height: 28px;
+}
+
+.payment-conf .methods li .test-mode {
+  padding: 6px 3px 5px 10px;
+  vertical-align: top;
+}
+
+.payment-conf .methods li .test-mode img {
+  background: transparent url(../../images/test_mode.png) no-repeat left top;
+  width: 28px;
+  height: 28px;
 }
 
 .payment-conf .methods li button.configure {
@@ -431,3 +441,7 @@
   padding: 0px;
 }
 
+/* Add offline payment method */
+form.add-offline-method button.action {
+  margin-left: 142px;
+}

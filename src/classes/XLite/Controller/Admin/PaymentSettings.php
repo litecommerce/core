@@ -137,7 +137,6 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
     protected function doActionAddOfflineMethod()
     {
         $name = strval(\XLite\Core\Request::getInstance()->name);
-        $description = strval(\XLite\Core\Request::getInstance()->description);
         $instruction = strval(\XLite\Core\Request::getInstance()->instruction);
 
         if ($name) {
@@ -149,9 +148,6 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
             $method->setModuleEnabled(true);
             $method->setType(\XLite\Model\Payment\Method::TYPE_OFFLINE);
             $method->setServiceName(microtime(true));
-            if ($description) {
-                $method->setDescription($description);
-            }
             if ($instruction) {
                 $method->setInstruction($instruction);
             }

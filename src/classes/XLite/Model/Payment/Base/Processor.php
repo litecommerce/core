@@ -425,7 +425,7 @@ abstract class Processor extends \XLite\Base
      */
     public function isTestMode(\XLite\Model\Payment\Method $method)
     {
-        return false;
+        return \XLite\View\FormField\Select\TestLiveMode::TEST === $method->getSetting('mode');
     }
 
     /**
