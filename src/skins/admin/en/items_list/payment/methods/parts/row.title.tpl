@@ -12,4 +12,4 @@
  * @ListChild (list="payment.methods.list.row", weight=200)
  *}
 
-<div class="title">{method.getName()}</div>
+<div class="title">{method.getName()}<img src="images/spacer.gif" class="fade" alt="" /></div>

@@ -25,5 +25,5 @@
 }
 
 .items-list-table table.list tbody.lines td .view {
-  min-width: 350px;
+  width: 350px;
 }

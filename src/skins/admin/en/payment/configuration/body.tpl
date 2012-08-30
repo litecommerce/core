@@ -27,7 +27,7 @@
 
       {else:}
 
-        <p>{t(#Here comes quick explanation about this type of payment methods.#)}</p>
+        <p>{t(#Use a merchant account from your financial institution or choose a bundled payment solution to accept credit cards and other methods of payment on your website.#)}</p>
         <widget
           class="XLite\View\Button\Payment\AddMethod"
           paymentType={%\XLite\Model\Payment\Method::TYPE_ALLINONE%} style="action" />
@@ -51,7 +51,7 @@
 
       {else:}
 
-        <p>{t(#Here comes quick explanation about this type of payment methods.#)}</p>
+        <p>{t(#Give buyers a way to pay by adding an alternative payment method.#)}</p>
         <widget
           class="XLite\View\Button\Payment\AddMethod"
           paymentType={%\XLite\Model\Payment\Method::TYPE_ALTERNATIVE%} style="action"/>

@@ -230,6 +230,20 @@
   font-size: 16px;
   padding: 11px 12px;
   vertical-align: top;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 300px;
+}
+
+.payment-conf .methods li .title .fade {
+  background: transparent url(../../images/right_fade.png) repeat-y right top;
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 20px;
+  height: 100%;
 }
 
 .payment-conf .methods li .remove {
