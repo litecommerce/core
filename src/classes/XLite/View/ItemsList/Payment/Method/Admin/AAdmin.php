@@ -106,6 +106,11 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
             $classes[] = 'has-icon';
         }
 
+        if (!$this->canSwitch($method)) {
+            $classes[] = 'blocked-switch';
+            $classes[] = $this->canEnable($method) ? 'blocked-disable' : 'blocked-enable';
+        }
+
         return implode(' ', $classes);
     }
 
