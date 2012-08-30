@@ -16,6 +16,18 @@ CommonForm.elementControllers.push(
 
       var field = jQuery(this);
 
+      var inputs = jQuery('.field :input', this);
+
+      // Sanitize-and-set value into field
+      this.sanitize = function()
+      {
+        inputs.each(
+          function () {
+            this.value = this.value.replace(/^ +/, '').replace(/ +$/, '');
+          }
+        );
+      }
+
       // Save field into view
       this.saveField = function()
       {
