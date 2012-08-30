@@ -9,16 +9,7 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<table cellspacing="1" cellpadding="5" class="settings-table">
-
-  <tr>
-    <td class="setting-name"><label for="settings_name">{t(#Name#)}</label></td>
-    <td><input type="text" id="settings_name" name="properties[name]" value="{paymentMethod.getName()}" class="field-required" /></td>
-  </tr>
-
-  <tr>
-    <td class="setting-instruction"><label for="settings_instruction">{t(#Instruction#)}</label></td>
-    <td><textarea id="settings_instruction" name="properties[instruction]" rows="10" cols="50">{paymentMethod.getInstruction()}</textarea></td>
-  </tr>
-
-</table>
+<ul class="table">
+  <li><widget class="XLite\View\FormField\Input\Text" fieldName="properties[name]" label="{t(#Name#)}" required="true" value="{paymentMethod.getName()}" /></li>
+  <li><widget class="XLite\View\FormField\Textarea\Simple" fieldName="properties[instruction]" label="{t(#Instruction#)}" value="{paymentMethod.getInstruction()}" /></li>
+</ul>
