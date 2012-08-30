@@ -13,13 +13,23 @@ jQuery(document).ready(
   function () {
 
     // Tooltips
-    jQuery('.methods li .warning img,.methods li .not-enable img,.methods li .not-disable img,.methods li.blocked-switch .switch img').each(
+    jQuery('.methods li .warning img,.methods li .not-enable img,.methods li .not-disable img').each(
       function () {
         if (this.alt) {
           attachTooltip(jQuery(this), this.alt);
         }
       }
     );
+
+    jQuery('.methods li.blocked-switch .switch').each(
+      function () {
+        if (this.title) {
+          attachTooltip(jQuery(this), this.title);
+          this.title = '';
+        }
+      }
+    );
+
 
   }
 );

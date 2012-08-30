@@ -194,11 +194,18 @@
   height: 40px;
 }
 
+.payment-conf .methods li.blocked-enable .switch {
+  background-image: url(../../images/force_disabled_method.png);
+  border: 0px none;
+  width: 40px;
+  height: 40px;
+}
+
 .payment-conf .methods li.blocked-switch .switch {
   cursor: help;
 }
 
-.payment-conf .methods li.blocked-disable .switch img {
+.payment-conf .methods li.blocked-switch .switch img {
   margin: 12px 13px;
 }
 
