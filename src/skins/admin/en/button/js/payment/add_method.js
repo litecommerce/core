@@ -20,5 +20,18 @@ extend(PopupButtonAddPaymentMethod, PopupButton);
 // New pattern is defined
 PopupButtonAddPaymentMethod.prototype.pattern = '.add-payment-method-button';
 
+decorate(
+  'PopupButtonAddPaymentMethod',
+  'callback',
+  function (selector)
+  {
+    jQuery('.tabs-container .tab .header').click(function () {
+      jQuery('.tabs-container .tab').removeClass('selected');
+      jQuery(this).closest('.tab').addClass('selected');
+    });
+
+  }
+);
+
 // Autoloading new POPUP widget
 core.autoload(PopupButtonAddPaymentMethod);

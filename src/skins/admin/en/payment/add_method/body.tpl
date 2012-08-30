@@ -13,15 +13,18 @@
 
   <ul IF="%\XLite\Model\Payment\Method::TYPE_ALLINONE%=getPaymentType()" class="tabs-container">
 
-    <li class="tab all-in-one-solutions">
+    <li class="tab all-in-one-solutions selected">
       <ul>
         <li class="header">
           <div class="main-head">{t(#All-in-one solutions#)}</div>
           <div class="small-head">{t(#No merchant account required#)}</div>
         </li>
         <li class="body">
-          <div class="description">{t(#All-in-one solution description#)}</div>
-          <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_ALLINONE%} />
+          <div class="body-box">
+            <div class="everything-you-need">{t(#Everything you need#)}</div>
+            <div class="description">{t(#All-in-one solution description#)}</div>
+            <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_ALLINONE%} />
+          </div>
         </li>
       </ul>
     </li>
@@ -33,8 +36,11 @@
           <div class="small-head">{t(#Requires registered merchant account#)}</div>
         </li>
         <li class="body">
-          <div class="description">{t(#Payment gateways description#)}</div>
-          <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_CC_GATEWAY%} />
+          <div class="body-box">
+            <div class="everything-you-need">{t(#Everything you need for payment gateways#)}</div>
+            <div class="description">{t(#Payment gateways description#)}</div>
+            <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_CC_GATEWAY%} />
+          </div>
         </li>
       </ul>
     </li>
