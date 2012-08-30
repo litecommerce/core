@@ -23,54 +23,44 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View\ProductClass;
+namespace XLite\View;
 
 /**
- * Product classes main input widget
+ * Product classes page view
  *
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
-class MainInput extends \XLite\View\AView
+class ProductClasses extends \XLite\View\AView
 {
-
-    const CLASS_NAME = 'className';
-    const CLASS_ID   = 'classId';
-
     /**
-     * Return allowed targets
+     * Return list of allowed targets
      *
      * @return array
      */
     public static function getAllowedTargets()
     {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'product_classes';
-
-        return $result;
+        return array_merge(parent::getAllowedTargets(), array('product_classes'));
     }
 
     /**
-     * Define widget parameters
-     *
-     * @return void
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::CLASS_NAME => new \XLite\Model\WidgetParam\String('className', null),
-            self::CLASS_ID   => new \XLite\Model\WidgetParam\String('classId', null),
-        );
-    }
-
-    /**
-     * getDefaultTemplate()
+     * Return widget default template
      *
      * @return string
      */
     protected function getDefaultTemplate()
     {
-        return 'product_classes/list/main_input.tpl';
+        return 'product_classes/body.tpl';
     }
+
+    /**
+     * Check - search box is visible or not
+     * 
+     * @return boolean
+     */
+    protected function isSearchVisible()
+    {
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\ProductClass')->count();
+    }
+
 }

@@ -23,31 +23,31 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View\ProductClass;
+namespace XLite\View\Form\ItemsList\ProductClass;
 
 /**
- * Product class
+ * Product classes list table form
  *
  */
-abstract class AProductClass extends \XLite\View\Dialog
+class Table extends \XLite\View\Form\ItemsList\AItemsList
 {
     /**
-     * Return title
+     * Return default value for the "target" parameter
      *
      * @return string
      */
-    protected function getHead()
+    protected function getDefaultTarget()
     {
-        return 'Product classes';
+        return 'product_classes';
     }
 
     /**
-     * Return templates directory
+     * Return default value for the "action" parameter
      *
      * @return string
      */
-    protected function getDir()
+    protected function getDefaultAction()
     {
-        return 'product_classes';
+        return 'update';
     }
 }

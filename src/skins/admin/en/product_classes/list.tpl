@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product classes main input widget
+ * Product classes list table template
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,6 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<tr>
-  <list name="product_classes.main_input" className="{getParam(#className#)}" id="{getParam(#classId#)}" />
-</tr>
+<widget class="XLite\View\Form\ItemsList\ProductClass\Table" name="list" />
+  <widget class="XLite\View\ItemsList\Model\ProductClass" />
+<widget name="list" end />
