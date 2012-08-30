@@ -30,21 +30,22 @@
     </tr>
 
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;&nbsp;U.S.P.S. API server:</td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;U.S.P.S. API server URL:</td>
       <td>
-        <table cellspacing="1" cellpadding="0" border="0">
+        <table cellspacing="0" cellpadding="0" border="0">
           <tr>
-            <td>http://</td>
-            <td><input type="text" name="server_name" value="{config.CDev.USPS.server_name:r}" size="30" /></td>
-            <td>/</td>
             <td>
-              <select name="server_path">
-              {foreach:getServerPathOptions(),opkey,opval}
-                <option value="{opkey}" selected="{isSelected(config.CDev.USPS.server_path,opkey)}">{opval}</option>
-              {end:}
-              </select>
+              <input type="text" name="server_url" value="{config.CDev.USPS.server_url:r}" size="45" />
             </td>
-            <td>?API=...</td>
+            <td>
+              <widget
+                class="\XLite\View\Tooltip"
+                id="usps-server-url-help"
+                text="{t(#Enter here a URL provided to you  by U.S.P.S. in the notification about registering for the U. S. Postal Service's Web Tools Application Program Interfaces. For example: <ul><li>http://testing.shippingapis.com/ShippingAPITest.dll</li><li>http://production.shippingapis.com/ShippingAPI.dll</li></ul>#)}"
+                caption=""
+                isImageTag="true"
+                className="help-icon" />
+            </td>
           </tr>
         </table>
       </td>
