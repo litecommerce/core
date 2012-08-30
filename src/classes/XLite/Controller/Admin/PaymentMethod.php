@@ -32,6 +32,13 @@ namespace XLite\Controller\Admin;
 class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Controller parameters
+     *
+     * @var string
+     */
+    protected $params = array('target', 'method_id');
+
+    /**
      * Return page title
      *
      * @return string
@@ -65,15 +72,20 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
         $settings = \XLite\Core\Request::getInstance()->settings;
         $m = $this->getPaymentMethod();
 
-        if (!is_array($settings)) {
-            \XLite\Core\TopMessage::addError('Wrong input data!');
-
-        } elseif (!$m) {
+        if (!$m) {
             \XLite\Core\TopMessage::addError('An attempt to update settings of unknown payment method');
 
         } else {
-            foreach ($settings as $name => $value) {
-                $m->setSetting($name, $value);
+
+            if (is_array($settings)) {
+                foreach ($settings as $name => $value) {
+                    $m->setSetting($name, $value);
+                }
+            }
+
+            $properties = \XLite\Core\Request::getInstance()->properties;
+            if (is_array($properties) && !empty($properties)) {
+                $m->map($properties);
             }
 
             \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->update($m);

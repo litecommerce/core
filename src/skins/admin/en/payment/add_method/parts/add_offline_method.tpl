@@ -11,14 +11,13 @@
  * @ListChild (list="payment.method.add.offline")
  *}
 
-<widget class="XLite\View\Form\Payment\Method\Admin\AddOfflineMethod" name="add_offline_method" />
+<widget class="XLite\View\Form\Payment\Method\Admin\AddOfflineMethod" name="add_offline_method" className="add-offline-method" />
 
   <ul class="table">
-    <li><widget class="XLite\View\FormField\Input\Text" fieldName="name" label="{t(#Name#)}" /></li>
-    <li><widget class="XLite\View\FormField\Textarea\Simple" fieldName="description" label="{t(#Description#)}" /></li>
+    <li><widget class="XLite\View\FormField\Input\Text" fieldName="name" label="{t(#Name#)}" required="true" /></li>
     <li><widget class="XLite\View\FormField\Textarea\Simple" fieldName="instruction" label="{t(#Instruction#)}" /></li>
   </ul>
 
-  <widget class="XLite\View\Button\Submit" label="{t(#Add#)}" />
+  <widget class="XLite\View\Button\Submit" label="{t(#Add#)}" style="action" />
 
 <widget name="add_offline_method" end />

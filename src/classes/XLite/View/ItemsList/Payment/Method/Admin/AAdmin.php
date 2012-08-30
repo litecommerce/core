@@ -187,6 +187,18 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
         return $this->canRemoveMethod($method) || $method->getWarningNote() || $method->isConfigurable();
     }
 
+    /**
+     * Check - display separate Configure button or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    protected function isSeparateConfigureButtonVisible(\XLite\Model\Payment\Method $method)
+    {
+        return ($method->getWarningNote() || $method->isTestMode())
+            && $method->isConfigurable();
+    }
     // }}}
 
 }

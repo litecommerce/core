@@ -53,21 +53,22 @@
 
         <div IF="hasRightActions(method)" class="action right-action">
           <img src="images/spacer.gif" class="separator" alt="" />
-          <div IF="canRemoveMethod(method)" class="remove"><a href="{buildURL(#payment_settings#,#remove#,_ARRAY_(#id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Remove#)}" /></a></div> 
+          <div IF="canRemoveMethod(method)" class="remove"><a href="{buildURL(#payment_settings#,#remove#,_ARRAY_(#id#^method.getMethodId()))}" title="{t(#Remove#)}"><img src="images/spacer.gif" alt="" /></a></div> 
           {if:method.getWarningNote()}
             <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
             <div class="warning"><a href="{method.getConfigurationURL()}"><img src="images/spacer.gif" alt="{method.getWarningNote()}" /></a></div>
-          {else:}
-            {if:method.isConfigurable()}
-              <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
-              <div class="configure"><a href="{method.getConfigurationURL()}"><img src="images/spacer.gif" alt="{t(#Configure#)}" /></a></div>
-            {end:}
+          {elseif:method.isTestMode()}
+            <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
+            <div class="test-mode"><a href="{method.getConfigurationURL()}" title="{t(#Test mode#)}"><img src="images/spacer.gif" alt="" /></a></div>
+          {elseif:method.isConfigurable()}
+            <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
+            <div class="configure"><a href="{method.getConfigurationURL()}" title="{t(#Configure#)}"><img src="images/spacer.gif" alt="" /></a></div>
           {end:}
         </div>
 
         </div>
 
-        <widget IF="method.getWarningNote()&method.isConfigurable()" class="XLite\View\Button\Link" label="{t(#Configure#)}" location="{method.getConfigurationURL()}" style="configure"/>
+        <widget IF="isSeparateConfigureButtonVisible(method)" class="XLite\View\Button\Link" label="{t(#Configure#)}" location="{method.getConfigurationURL()}" style="configure"/>
 
       </li>
 
