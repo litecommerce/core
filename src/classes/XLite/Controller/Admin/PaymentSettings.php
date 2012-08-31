@@ -124,9 +124,9 @@ class PaymentSettings extends \XLite\Controller\Admin\AAdmin
             $method->setAdded(true);
             \XLite\Core\TopMessage::addInfo('Payment method has been added successfully');
             \XLite\Core\Database::getEM()->flush();
-        }
 
-        $this->setReturnURL(\XLite\Core\Converter::buildURL('payment_method', '', array('method_id' => $id)));
+            $this->setReturnURL($method->getConfigurationURL());
+        }
     }
 
     /**
