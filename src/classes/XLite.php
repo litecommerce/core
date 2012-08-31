@@ -64,6 +64,12 @@ class XLite extends \XLite\Base
     const CACHE_TIMESTAMP = 'cache_build_timestamp';
 
     /**
+     * Producer site URL
+     */
+    const PRODUCER_SITE_URL = 'http://www.litecommerce.com/';
+
+
+    /**
      * Current area flag
      *
      * @var boolean

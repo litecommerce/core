@@ -129,7 +129,7 @@
 
     <div>In order to accept payments via Paypal Payflow, you must complete the following steps.</div>
 
-    <div>Please do not change any other values, as LiteCommerce will pass these values on your behalf for the ease of configuration.</div>
+    <div>Please do not change any other values, as the system will pass these values on your behalf for the ease of configuration.</div>
 
     <div class="clear"></div>
 
