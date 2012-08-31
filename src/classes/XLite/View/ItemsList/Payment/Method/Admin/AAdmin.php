@@ -184,7 +184,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     protected function hasRightActions(\XLite\Model\Payment\Method $method)
     {
-        return $this->canRemoveMethod($method) || $method->getWarningNote() || $method->isConfigurable();
+        return !$method->isForcedEnabled() && ($this->canRemoveMethod($method) || $method->getWarningNote() || $method->isConfigurable());
     }
 
     /**
