@@ -173,6 +173,7 @@ class Method extends \XLite\Model\Base\I18n
     public function isEnabled()
     {
         return ($this->getEnabled() || $this->isForcedEnabled())
+            && $this->getAdded()
             && $this->getModuleEnabled()
             && $this->getProcessor()
             && $this->getProcessor()->isConfigured($this);

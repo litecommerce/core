@@ -16,7 +16,7 @@
   {if:canSwitch(method)}
     {if:method.getWarningNote()}
 
-      {if:method.getEnabled()}
+      {if:method.isEnabled()}
         <div class="switch enabled"><img src="images/spacer.gif" alt="{t(#Enabled#)}" /></div>
       {else:}
         <div class="switch disabled"><img src="images/spacer.gif" alt="{t(#Disabled#)}" /></div>
@@ -24,7 +24,7 @@
 
     {else:}
 
-      {if:method.getEnabled()}
+      {if:method.isEnabled()}
         <div class="switch enabled"><a href="{buildURL(#payment_settings#,#disable#,_ARRAY_(#id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Disable#)}" /></a></div>
       {else:}
         <div class="switch disabled"><a href="{buildURL(#payment_settings#,#enable#,_ARRAY_(#id#^method.getMethodId()))}"><img src="images/spacer.gif" alt="{t(#Enable#)}" /></a></div>
