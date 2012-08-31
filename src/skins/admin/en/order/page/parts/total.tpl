@@ -11,4 +11,4 @@
  * @ListChild (list="order", weight="300")
  *}
 
-<p class="total">{t(#Order Total X#,_ARRAY_(#total#^getorderTotal())):h}</p>
+<p class="total">{t(#Order Total X#,_ARRAY_(#total#^getOrderTotal())):h}</p>
