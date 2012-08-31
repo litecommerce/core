@@ -122,7 +122,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      */
     public function getReferralPageURL(\XLite\Model\Payment\Method $method)
     {
-        return 'http://www.litecommerce.com/sell-online-with-paypal.html';
+        return \XLite::PRODUCER_SITE_URL . 'partners/paypal.html';
     }
 
     /**

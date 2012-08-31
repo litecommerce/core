@@ -62,6 +62,16 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return \XLite::PRODUCER_SITE_URL . 'partners/paypal.html';
+    }
+
+    /**
      * Prevent enabling Paypal Standard if Express Checkout is already enabled
      * 
      * @param \XLite\Model\Payment\Method $method Payment method object
