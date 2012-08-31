@@ -1029,7 +1029,7 @@ abstract class AEntry
     protected function getUpgradeHelperMinorVersions($majorVersion)
     {
         $old = \Includes\Utils\Converter::composeVersion($this->getMajorVersionOld(), $this->getMinorVersionOld());
-        $old = \Includes\Utils\Converter::composeVersion($this->getMajorVersionOld(), $this->getMinorVersionOld());
+        $new = \Includes\Utils\Converter::composeVersion($this->getMajorVersionNew(), $this->getMinorVersionNew());
 
         return array_filter(
             $this->getUpgradeHelperVersions($majorVersion . LC_DS),
