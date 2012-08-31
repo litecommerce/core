@@ -24,6 +24,12 @@
   width: 300px;
 }
 
+.items-list-table table.list tbody.lines td .plain-value {
+  width: 250px;
+}
+
 .items-list-table table.list tbody.lines td .view {
   width: 350px;
 }
+
+

@@ -42,6 +42,11 @@
   white-space: nowrap;
 }
 
+.items-list-table table.list tbody.lines tr.line td .plain-value {
+  line-height: 30px;
+  white-space: nowrap;
+}
+
 .items-list-table table.list tbody.lines tr.line.last td {
   border-bottom: 1px solid #e9e9e9;
 }
@@ -51,9 +56,15 @@
 
 .items-list-table table.list tbody.lines td,
   .items-list-table table.list tbody.lines td .view,
-  .items-list-table table.list tbody.lines td .view *
+  .items-list-table table.list tbody.lines td .view *,
+  .items-list-table table.list tbody.lines td .plain-value
 {
   font-size: 14px;
+}
+
+.items-list-table table.list tbody.lines td.no-wrap .plain-value {
+  position: relative;
+  overflow: hidden;
 }
 
 .items-list-table table.list tbody.lines td {
@@ -238,4 +249,3 @@
   margin-top: 3px;
   margin-bottom: 3px;
 }
-

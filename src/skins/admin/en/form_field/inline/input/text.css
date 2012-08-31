@@ -14,14 +14,3 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
-.inline-text .view .fade {
-  background: transparent url(../../../images/right_fade.png) repeat-y right top;
-  display: block;
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  width: 20px;
-  height: 100%;
-}
-

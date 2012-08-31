@@ -43,6 +43,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     const COLUMN_PARAMS        = 'params';
     const COLUMN_SORT          = 'sort';
     const COLUMN_SEARCH_WIDGET = 'searchWidget';
+    const COLUMN_NO_WRAP       = 'noWrap';
 
     /**
      * Columns (local cache)
@@ -506,7 +507,8 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
         return 'cell '
             . $column[static::COLUMN_CODE]
             . ($this->hasColumnAttention($column, $entity) ? ' attention' : '')
-            . ($this->isMainColumn($column) ? ' main' : '');
+            . ($this->isMainColumn($column) ? ' main' : '')
+            . (empty($column[static::COLUMN_NO_WRAP]) ? '' : ' no-wrap');
     }
 
     /**

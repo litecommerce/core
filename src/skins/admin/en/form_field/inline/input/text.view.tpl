@@ -10,4 +10,4 @@
  *}
 
 <span class="value"><widget template="form_field/inline/view.tpl" /></span>
-<img src="images/spacer.gif" class="fade" alt="" />
+<img src="images/spacer.gif" class="right-fade" alt="" />

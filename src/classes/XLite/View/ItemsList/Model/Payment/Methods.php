@@ -40,17 +40,18 @@ class Methods extends \XLite\View\ItemsList\Model\Table
     {
         return array(
             'name' => array(
-                static::COLUMN_NAME         => static::t('Payment method'),
+                static::COLUMN_NAME    => static::t('Payment method'),
+                static::COLUMN_NO_WRAP => true,
             ),
             'title' => array(
-                static::COLUMN_NAME         => static::t('Title'),
-                static::COLUMN_CLASS        => 'XLite\View\FormField\Inline\Input\Text',
-                static::COLUMN_PARAMS       => array('required' => true),
+                static::COLUMN_NAME    => static::t('Title'),
+                static::COLUMN_CLASS   => 'XLite\View\FormField\Inline\Input\Text',
+                static::COLUMN_PARAMS  => array('required' => true),
             ),
             'description' => array(
-                static::COLUMN_NAME         => static::t('Description'),
-                static::COLUMN_CLASS        => 'XLite\View\FormField\Inline\Input\Text',
-                static::COLUMN_PARAMS       => array('required' => false),
+                static::COLUMN_NAME    => static::t('Description'),
+                static::COLUMN_CLASS   => 'XLite\View\FormField\Inline\Input\Text',
+                static::COLUMN_PARAMS  => array('required' => false),
             ),
         );
     }
