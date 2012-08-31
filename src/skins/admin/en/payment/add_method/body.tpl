@@ -22,7 +22,7 @@
         <li class="body">
           <div class="body-box">
             <div class="everything-you-need">{t(#Everything you need#)}</div>
-            <div class="description">{t(#All-in-one solution description#)}</div>
+            <div class="description">{t(#Choose from a variety of bundled payment solutions to accept credit cards and other methods of payment on your website#)}</div>
             <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_ALLINONE%} />
           </div>
         </li>
@@ -37,8 +37,8 @@
         </li>
         <li class="body">
           <div class="body-box">
-            <div class="everything-you-need">{t(#Everything you need for payment gateways#)}</div>
-            <div class="description">{t(#Payment gateways description#)}</div>
+            <div class="everything-you-need">{t(#Join forces with your bank#)}</div>
+            <div class="description">{t(#Use a merchant account from your financial institution to accept online payments#)}</div>
             <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_CC_GATEWAY%} />
           </div>
         </li>
@@ -52,8 +52,8 @@
       <ul>
         <li class="body">
           <div class="body-box">
-            <div class="everything-you-need">{t(#Everything you need for alternative payment methods#)}</div>
-            <div class="description">{t(#Alternative payment methods description#)}</div>
+            <div class="everything-you-need">{t(#Quick and easy setup#)}</div>
+            <div class="description">{t(#Give buyers another way to pay by adding an alternative payment method#)}</div>
             <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_ALTERNATIVE%} />
           </div>
         </li>
