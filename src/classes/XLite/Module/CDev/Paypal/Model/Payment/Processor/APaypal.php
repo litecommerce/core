@@ -142,7 +142,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
                     'service_name' => \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS,
                 )
             );
-            $result = !($m && $m->isEnabled());
+            $result = !($m && $m->isEnabled()) || $this->isForcedEnabled($method);
         }
 
         return $result;
@@ -487,17 +487,19 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getAPIURL()
     {
-        return $this->isTestModeEnabled() ? $this->apiTestURL : $this->apiLiveURL;
+        return $this->isTestMode($this->transaction->getPaymentMethod()) ? $this->apiTestURL : $this->apiLiveURL;
     }
 
     /**
      * Return true if module is in test mode
      *
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *
      * @return boolean
      */
-    protected function isTestModeEnabled()
+    public function isTestMode(\XLite\Model\Payment\Method $method)
     {
-        return 'Y' == $this->getSetting('test');
+        return 'Y' == $method->getSetting('test');
     }
 
     /**
@@ -541,7 +543,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'SECURETOKENID=' . $this->getSecureTokenId(),
         );
 
-        if ($this->isTestModeEnabled($this->transaction->getPaymentMethod())) {
+        if ($this->isTestMode($this->transaction->getPaymentMethod())) {
             $params[] = 'MODE=TEST';
         }
 

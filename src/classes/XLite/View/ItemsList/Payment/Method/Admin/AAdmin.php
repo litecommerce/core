@@ -115,7 +115,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Check - can wwitch method or not
+     * Check - can switch method or not
      * 
      * @param \XLite\Model\Payment\Method $method Payment method
      *  
@@ -123,7 +123,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     protected function canSwitch(\XLite\Model\Payment\Method $method)
     {
-        return $method->getEnabled() ? !$method->isForcedEnabled() : $method->canEnable();
+        return $method->isEnabled() ? !$method->isForcedEnabled() : $method->canEnable();
     }
 
     /**

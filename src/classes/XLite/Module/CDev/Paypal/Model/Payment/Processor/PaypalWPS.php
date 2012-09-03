@@ -80,15 +80,29 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      */
     public function canEnable(\XLite\Model\Payment\Method $method)
     {
-        $result = parent::canEnable($method);
+        return parent::canEnable($method)
+            && \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS == $method->getServiceName()
+            && !$this->isExpressCheckoutEnabled();
+    }
 
-        if ($result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS == $method->getServiceName()) {
+    /**
+     * Return true if ExpressCheckout method is enabled 
+     * 
+     * @return boolean
+     */
+    public function isExpressCheckoutEnabled()
+    {
+        static $result = null;
+
+        if (!isset($result)) {
+    
             $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
                 array(
                     'service_name' => \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC,
                 )
             );
-            $result = !($m && $m->isEnabled());
+
+            $result = $m && $m->isEnabled();
         }
 
         return $result;
@@ -192,7 +206,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormURL()
     {
-        return $this->isTestModeEnabled()
+        return $this->isTestMode($this->transaction->getPaymentMethod())
             ? 'https://www.sandbox.paypal.com/cgi-bin/webscr'
             : 'https://www.paypal.com/cgi-bin/webscr';
     }
@@ -200,11 +214,13 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     /**
      * Return TRUE if the test mode is ON
      *
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *
      * @return boolean
      */
-    protected function isTestModeEnabled()
+    public function isTestMode(\XLite\Model\Payment\Method $method)
     {
-        return \XLite\View\FormField\Select\TestLiveMode::TEST === $this->getSetting('mode');
+        return \XLite\View\FormField\Select\TestLiveMode::TEST === $method->getSetting('mode');
     }
 
 

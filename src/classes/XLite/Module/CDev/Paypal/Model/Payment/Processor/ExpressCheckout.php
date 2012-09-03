@@ -225,7 +225,7 @@ HTML;
      */
     protected function getExpressCheckoutPostURL()
     {
-        return $this->isTestModeEnabled() ? $this->testPostURL : $this->livePostURL;
+        return $this->isTestMode($this->transaction->getPaymentMethod()) ? $this->testPostURL : $this->livePostURL;
     }
 
     /**

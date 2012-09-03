@@ -92,13 +92,7 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\TopMessage::addInfo('The settings of payment method successfully updated');
 
-            $this->setReturnURL(
-                $this->buildURL(
-                    'payment_method',
-                    null,
-                    array('method_id' => \XLite\Core\Request::getInstance()->method_id)
-                )
-            );
+            $this->setReturnURL($this->buildURL('payment_settings'));
         }
     }
 }

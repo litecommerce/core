@@ -14,7 +14,9 @@ XLite\Model\Payment\Method:
     moduleName: CDev_Paypal
     translations:
       - code: en
-        name: PaypalWPS
+        name: Paypal Website Payments Standard
+        title: Paypal
+        adminTitle: Paypal Website Payments Standard
     settings:
       - name: account
       - name: description

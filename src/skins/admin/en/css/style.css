@@ -1930,6 +1930,7 @@ form.list-form {
 }
 
 .payment-settings .middle {
+  min-width: 1000px;
 }
 
 .payment-settings .middle .settings {
@@ -2038,6 +2039,5 @@ form.list-form {
 }
 
 .payment-settings .footer ul {
-  padding: 20px 0;
 }
 

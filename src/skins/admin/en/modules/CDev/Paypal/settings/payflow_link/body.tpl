@@ -22,7 +22,7 @@
 
           <li>
             <span><label for="pp_partner">{t(#Partner name#)}:</label></span>
-            <input type="text" id="pp_partner" name="settings[partner]" value="{paymentMethod.getSetting(#partner#)}" />
+            <input type="text" id="pp_partner" name="settings[partner]" value="{paymentMethod.getSetting(#partner#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
               id="pp-partner-help"
@@ -34,7 +34,7 @@
 
           <li>
             <span><label for="pp_vendor">{t(#Merchant login#)}:</label></span>
-            <input type="text" id="pp_vendor" name="settings[vendor]" value="{paymentMethod.getSetting(#vendor#)}" />
+            <input type="text" id="pp_vendor" name="settings[vendor]" value="{paymentMethod.getSetting(#vendor#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
@@ -46,7 +46,7 @@
 
           <li>
             <span><label for="pp_user">{t(#User#)}:</label></span>
-            <input type="text" id="pp_user" name="settings[user]" value="{paymentMethod.getSetting(#user#)}" />
+            <input type="text" id="pp_user" name="settings[user]" value="{paymentMethod.getSetting(#user#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
@@ -58,7 +58,7 @@
 
           <li>
             <span><label for="pp_pwd">{t(#Password#)}:</label></span>
-            <input type="text" id="pp_pwd" name="settings[pwd]" value="{paymentMethod.getSetting(#pwd#)}" />
+            <input type="text" id="pp_pwd" name="settings[pwd]" value="{paymentMethod.getSetting(#pwd#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
@@ -131,8 +131,7 @@
 
     <div>Please do not change any other values, as the system will pass these values on your behalf for the ease of configuration.</div>
 
-    <div class="clear"></div>
-
+    <h3>Enabling the Secure Token setting:</h3>
     <div class="left-part">
       <ul>
         <li>1. Log in to <a href="https://manager.paypal.com">PayPal Manager</a>.</li>
@@ -143,6 +142,27 @@
 
     <div class="right-part">
       <a href="http://youtu.be/y9IGQpJCJeE">View a tutorial</a> | <a href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_help">Paypal Help</a>
+    </div>
+
+    <div class="clear"></div>
+
+    <h3>Creating your custom PayPal payment page (for Express Checkout)</h3>
+
+    <div>Creating a custom payment page allows you to co-brand the PayPal checkout pages with your logo and colors.</div>
+
+    <div>
+      <ul>
+        <li>1. Log in to your <a href="https://www.paypal.com">PayPal account</a>.</li>
+        <li>2. Underneath the My Account tab, click Profile.</li>
+        <li>3. Click My selling tools.</li>
+        <li>4. Locate Custom payment pages, and click the Update link next to it.</li>
+        <li>5. Click Add.</li>
+        <li>6. In the Page Style Name box, give a name to your custom page style. (It doesn't matter what you put here, as long as it isn't "PayPal".)</li>
+        <li>7. In the Logo Image URL box, enter the URL of your logo image.  Your logo image should be 190x60px, and should be hosted on an SSL-secured (https://) site.  If you do not have an SSL-secured site available to you, free alternatives (such as sslpic.com) are available.</li>
+        <li>8. In the Cart Area Gradient Color box, enter an HTML hex code that represents the gradient color you want to use around the shopping cart section of the checkout page.</li>
+        <li>9. Click Save.</li>
+        <li>10. Click the radio button next to the new payment page style you just created, and click Make Primary. Your custom payment page style will now be used whenever buyers elect to pay with PayPal.</li>
+      </ul>
     </div>
 
     <div><a href="{buildURL(#payment_method#,#hide_instruction#,_ARRAY_(#method_id#^paymentMethod.getMethodId()))}">I've done this, dismiss the instruction</a></div>

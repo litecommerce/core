@@ -27,7 +27,7 @@ namespace XLite\Module\CDev\Paypal\Model\Payment;
 
 /**
  * Payment method model
- * 
+ *
  */
 class Method extends \XLite\Model\Payment\Method implements \XLite\Base\IDecorator
 {
@@ -46,6 +46,22 @@ class Method extends \XLite\Model\Payment\Method implements \XLite\Base\IDecorat
 
         } else {
             $result = parent::getSetting($name);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Additional check for PPS 
+     * 
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        $result = parent::isEnabled();
+
+        if ($result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS == $this->getServiceName()) {
+            $result = !$this->getProcessor()->isExpressCheckoutEnabled();
         }
 
         return $result;

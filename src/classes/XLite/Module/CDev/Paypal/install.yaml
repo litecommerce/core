@@ -14,6 +14,8 @@ XLite\Model\Payment\Method:
     translations:
       - code: en
         name: 'Paypal Payflow Link'
+        title: 'Credit card / Paypal'
+        adminTitle: 'Paypal Payflow Link'
     settings:
       - name: vendor
       - name: user
@@ -33,6 +35,8 @@ XLite\Model\Payment\Method:
     translations:
       - code: en
         name: 'Paypal Payments Advanced'
+        title: 'Credit card / Paypal'
+        adminTitle: 'Paypal Payments Advanced'
     settings:
       - name: vendor
       - name: user
@@ -52,6 +56,8 @@ XLite\Model\Payment\Method:
     translations:
       - code: en
         name: 'Paypal Payments Standard'
+        title: 'Paypal'
+        adminTitle: 'Paypal Payments Standard'
     settings:
       - name: account
       - name: description
@@ -64,6 +70,8 @@ XLite\Model\Payment\Method:
     translations:
       - code: en
         name: 'Paypal Express Checkout'
+        title: 'Paypal'
+        adminTitle: 'Paypal Express Checkout'
     settings:
       - name: vendor
       - name: user

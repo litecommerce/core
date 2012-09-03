@@ -57,7 +57,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'Paypal';
+        return 'Paypal US';
     }
 
     /**
@@ -88,7 +88,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Enables taking payments for your online store via Paypal services.';
+        return 'Enables taking payments for your online store via Paypal services (for US merchants).';
     }
 
     /**
@@ -152,5 +152,18 @@ abstract class Main extends \XLite\Module\AModule
         }
 
         return $result;
+    }
+
+    /**
+     * Return list of mutually exclusive modules
+     *
+     * @return array
+     */
+    public static function getMutualModulesList()
+    {
+        $list = parent::getMutualModulesList();
+        $list[] = 'CDev\PaypalWPS';
+
+        return $list;
     }
 }

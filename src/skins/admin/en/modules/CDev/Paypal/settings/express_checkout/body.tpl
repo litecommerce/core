@@ -22,7 +22,7 @@
 
           <li>
             <span><label for="pp_partner">{t(#Partner name#)}:</label></span>
-            <input type="text" id="pp_partner" name="settings[partner]" value="{paymentMethod.getSetting(#partner#)}" />
+            <input type="text" id="pp_partner" name="settings[partner]" value="{paymentMethod.getSetting(#partner#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
               id="pp-partner-help"
@@ -34,7 +34,7 @@
 
           <li>
             <span><label for="pp_vendor">{t(#Merchant login#)}:</label></span>
-            <input type="text" id="pp_vendor" name="settings[vendor]" value="{paymentMethod.getSetting(#vendor#)}" />
+            <input type="text" id="pp_vendor" name="settings[vendor]" value="{paymentMethod.getSetting(#vendor#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
@@ -46,7 +46,7 @@
 
           <li>
             <span><label for="pp_user">{t(#User#)}:</label></span>
-            <input type="text" id="pp_user" name="settings[user]" value="{paymentMethod.getSetting(#user#)}" />
+            <input type="text" id="pp_user" name="settings[user]" value="{paymentMethod.getSetting(#user#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
@@ -58,7 +58,7 @@
 
           <li>
             <span><label for="pp_pwd">{t(#Password#)}:</label></span>
-            <input type="text" id="pp_pwd" name="settings[pwd]" value="{paymentMethod.getSetting(#pwd#)}" />
+            <input type="text" id="pp_pwd" name="settings[pwd]" value="{paymentMethod.getSetting(#pwd#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
