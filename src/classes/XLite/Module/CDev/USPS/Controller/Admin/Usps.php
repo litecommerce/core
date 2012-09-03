@@ -42,19 +42,6 @@ class Usps extends \XLite\Controller\Admin\ShippingSettings
     }
 
     /**
-     * Returns options for Server path selector 
-     * 
-     * @return array
-     */
-    public function getServerPathOptions()
-    {
-        return array(
-            'ShippingAPI.dll'     => 'ShippingAPI.dll',
-            'ShippingAPITest.dll' => 'ShippingAPITest.dll',
-        );
-    }
-
-    /**
      * Returns options for PackageSize selector 
      * 
      * @return array

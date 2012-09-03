@@ -575,15 +575,11 @@ OUT;
      */
     public function getApiURL()
     {
-        $protocol = 'http://';
+        $url = \Includes\Utils\URLManager::isValidURLHost(\XLite\Core\Config::getInstance()->CDev->USPS->server_url) 
+            ? \XLite\Core\Config::getInstance()->CDev->USPS->server_url 
+            : 'http://testing.shippingapis.com/ShippingAPI.dll';
 
-        $host = \Includes\Utils\URLManager::isValidURLHost(\XLite\Core\Config::getInstance()->CDev->USPS->server_name) 
-            ? \XLite\Core\Config::getInstance()->CDev->USPS->server_name 
-            : 'testing.shippingapis.com';
-
-        $path = \XLite\Core\Config::getInstance()->CDev->USPS->server_path;
-
-        return $protocol . $host . '/' . $path;
+        return $url;
     }
 
     /**
