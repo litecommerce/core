@@ -129,4 +129,14 @@ class Methods extends \XLite\View\ItemsList\Model\Table
 
         return $result;
     }
+
+    /**
+     * Return "empty list" catalog
+     *
+     * @return string
+     */
+    protected function getEmptyListDir()
+    {
+        return parent::getEmptyListDir() . '/payment/appearance';
+    }
 }
