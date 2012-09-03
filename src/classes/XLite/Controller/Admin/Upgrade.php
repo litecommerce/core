@@ -303,8 +303,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $this->showError(__FUNCTION__, 'not all archives were unpacked');
 
                 \XLite\Core\TopMessage::addError(
-                    'Try to unpack them manually, and click <a href="' 
-                    . $this->buildURL('upgrade', 'check_integrity') 
+                    'Try to unpack them manually, and click <a href="'
+                    . $this->buildURL('upgrade', 'check_integrity')
                     . '">this link</a>'
                 );
 

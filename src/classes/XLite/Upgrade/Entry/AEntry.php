@@ -60,7 +60,7 @@ abstract class AEntry
 
     /**
      * List of post rebuild helpers
-     * 
+     *
      * @var array
      */
     protected $postRebuildHelpers;
@@ -266,8 +266,8 @@ abstract class AEntry
     }
 
     /**
-     * Perform some action after upgrade 
-     * 
+     * Perform some action after upgrade
+     *
      * @return void
      */
     public function setUpgraded()
@@ -641,7 +641,7 @@ abstract class AEntry
      *
      * @param string $path    File short path
      * @param string $baseDir Bae dir OPTIONAL
-     *  
+     *
      * @return void
      */
     protected function getFullPath($path, $baseDir = LC_DIR_ROOT)
@@ -794,14 +794,15 @@ abstract class AEntry
      * Execute some methods
      *
      * @param string $type Helper type
-     *  
+     *
      * @return void
      */
     public function runHelpers($type)
     {
         $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
 
-        if ($this->isInstalled() && $path) {
+        // Helpers must examine itself if the module has been installed previously
+        if ($path) {
             $helpers = ('post_rebuild' === $type) ? $this->postRebuildHelpers : $this->getHelpers($type);
 
             foreach ((array) $helpers as $file) {
@@ -860,11 +861,11 @@ abstract class AEntry
 
     /**
      * Get file with an upgrade helper function
-     * 
+     *
      * @param string $type         Helper type
      * @param string $majorVersion Major version to upgrade to
      * @param string $minorVersion Minor version to upgrade to
-     *  
+     *
      * @return string
      */
     protected function getUpgradeHelperFile($type, $majorVersion, $minorVersion)
@@ -886,8 +887,8 @@ abstract class AEntry
     }
 
     /**
-     * Get list of available major versions for the helpers 
-     * 
+     * Get list of available major versions for the helpers
+     *
      * @return array
      */
     protected function getUpgradeHelperMajorVersions()
@@ -907,7 +908,7 @@ abstract class AEntry
      * Get list of available minor versions for the helpers
      *
      * @param string $majorVersion Current major version
-     *  
+     *
      * @return array
      */
     protected function getUpgradeHelperMinorVersions($majorVersion)
@@ -925,9 +926,9 @@ abstract class AEntry
 
     /**
      * Get list of available versions for the helpers
-     * 
+     *
      * @param string $path Path to scan OPTIONAL
-     *  
+     *
      * @return array
      */
     protected function getUpgradeHelperVersions($path = null)
