@@ -200,7 +200,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function getFileModule($file)
     {
-        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED 
+        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED
             . '(\w+)' . LC_DS_QUOTED . '(\w+)' . LC_DS_QUOTED . '/Si';
 
         return preg_match($pattern, $file, $matches) ? ($matches[1] . '\\' . $matches[2]) : null;
@@ -484,7 +484,61 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
             // Remove from local cache
             unset(static::$activeModules[$key]);
+
+            //Set all DB tables for save/restore functionality
+            static::saveAllDBStructure($key);
         }
+    }
+
+    /**
+     * Store all DB tables to the .disabled.structures file
+     *
+     * @param string $module
+     */
+    public static function saveAllDBStructure($module)
+    {
+        $path = static::getDisabledStructuresPath();
+
+        $data = array();
+
+        $data[$module] = array(
+            'tables'  => static::getAllDBStructures(),
+            'columns' => array(),
+        );
+
+        \XLite\Core\Operator::getInstance()->saveServiceYAML($path, $data);
+    }
+
+    /**
+     * Get disabled tables list storage path
+     *
+     * @return string
+     */
+    public static function getDisabledStructuresPath()
+    {
+        return LC_DIR_VAR . '.disabled.structures.php';
+    }
+
+    /**
+     * Return all structures of DB
+     *
+     * @return array
+     */
+    public static function getAllDBStructures()
+    {
+        return array_map(array('static', 'getAllDBStructureElement'), \Includes\Utils\Database::fetchAll('SHOW TABLES LIKE \'%xlite_%\''));
+    }
+
+    /**
+     * Compute table name for disabled structures file inclusion
+     *
+     * @param array $elem
+     *
+     * @return string
+     */
+    public static function getAllDBStructureElement($elem)
+    {
+        return preg_replace('/^xlite_/Sis', '', current($elem));
     }
 
     /**

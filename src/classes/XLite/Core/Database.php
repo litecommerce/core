@@ -313,10 +313,10 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
-     * Load annotation class 
-     * 
+     * Load annotation class
+     *
      * @param string $class Short class name
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.19
@@ -1539,7 +1539,7 @@ OUT;
      */
     protected function getDisabledStructuresPath()
     {
-        return LC_DIR_VAR . '.disabled.structures.php';
+        return \Includes\Utils\ModulesManager::getDisabledStructuresPath();
     }
 
     /**
@@ -1686,10 +1686,10 @@ OUT;
     }
 
     /**
-     * Create annotation driver 
-     * 
+     * Create annotation driver
+     *
      * @param string $path Path
-     *  
+     *
      * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver
      * @see    ____func_see____
      * @since  1.0.19
@@ -1700,7 +1700,7 @@ OUT;
         $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
 
         // Register tags
-        array_walk($this->nonDoctrineTags, array($reader, 'addGlobalIgnoredName'));    
+        array_walk($this->nonDoctrineTags, array($reader, 'addGlobalIgnoredName'));
 
         return new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array($path));
     }
