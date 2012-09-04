@@ -11,5 +11,5 @@
 
 <ul class="table">
   <li><widget class="XLite\View\FormField\Input\Text" fieldName="properties[name]" label="{t(#Name#)}" required="true" value="{paymentMethod.getName()}" /></li>
-  <li><widget class="XLite\View\FormField\Textarea\Simple" fieldName="properties[instruction]" label="{t(#Instruction#)}" value="{paymentMethod.getInstruction()}" help="{t(#These instructions will appear below the order invoice on the page which customers see after they confirm their order.#)}" /></li>
+  <li><widget class="XLite\View\FormField\Textarea\Simple" fieldName="properties[instruction]" label="{t(#Payment instructions#)}" value="{paymentMethod.getInstruction()}" help="{t(#These instructions will appear below the order invoice on the page which customers see after they confirm their order.#)}" /></li>
 </ul>

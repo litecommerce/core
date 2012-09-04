@@ -199,6 +199,8 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         'PWY28' => array('POL'),
         'PWY32' => array('POL'),
         'PWY33' => array('POL'),
+        'PWY36' => array('POL'),
+        'EPY'   => array('BGR'),
     );
 
     /**
