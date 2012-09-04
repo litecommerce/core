@@ -76,6 +76,47 @@ class Address extends \XLite\Model\Base\PersonalAddress
      */
     protected $profile;
 
+    /**
+     * Address field value relation
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @OneToMany (targetEntity="XLite\Model\AddressFieldValue", mappedBy="address", cascade={"all"})
+     * @JoinColumn(name="id", referencedColumnName="id")
+     */
+    protected $fieldValue;
+
+
+    /**
+     * Universal getter
+     *
+     * @param string $property
+     *
+     * @return mixed|null Returns NULL if it is impossible to get the property
+     */
+    public function getterProperty($property)
+    {
+        $result = parent::getterProperty($property);
+
+        if (is_null($result)) {
+
+            $addressField = \XLite\Core\Database::getRepo('XLite\Model\AddressField')
+                ->findOneBy(array('serviceName' => $property));
+
+            if ($addressField) {
+
+                $addressFieldValue = \XLite\Core\Database::getRepo('XLite\Model\AddressFieldValue')
+                    ->findOneBy(array(
+                        'address'       => $this->getAddressId(),
+                        'addressField'  => $addressField->getId(),
+                    ));
+
+                $result = $addressFieldValue ? $addressFieldValue->getValue() : $result;
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Get billing address-specified required fields
