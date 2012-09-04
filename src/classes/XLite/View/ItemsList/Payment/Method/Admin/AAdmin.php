@@ -72,6 +72,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
 
         $cnd->{\XLite\Model\Repo\Payment\Method::P_MODULE_ENABLED} = true;
         $cnd->{\XLite\Model\Repo\Payment\Method::P_ADDED} = true;
+        $cnd->{\XLite\Model\Repo\Payment\Method::P_ORDERBY} = array('translations.name', 'asc');
 
         return $cnd;
     }
@@ -86,7 +87,24 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, $countOnly);
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->search($cnd, $countOnly);
+
+        if (!$countOnly) {
+            $icons = array();
+            $plain = array();
+            foreach ($result as $method) {
+                if ($method->getAdminIconURL()) {
+                    $icons[] = $method;
+
+                } else {
+                    $plain[] = $method;
+                }
+            }
+
+            $result = array_merge($icons, $plain);
+        }
+
+        return $result;
     }
 
     // {{{ Content helpers
@@ -109,6 +127,10 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
         if (!$this->canSwitch($method)) {
             $classes[] = 'blocked-switch';
             $classes[] = $this->canEnable($method) ? 'blocked-disable' : 'blocked-enable';
+
+        } elseif ($method->getWarningNote() && !$method->isEnabled()) {
+            $classes[] = 'blocked-switch';
+            $classes[] = 'blocked-enable';
         }
 
         return implode(' ', $classes);

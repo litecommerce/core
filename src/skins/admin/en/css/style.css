@@ -1756,6 +1756,12 @@ table.settings-table td input[type=checkbox] {
   float: left;
 }
 
+div.table-value .tooltip-main {
+  float: none;
+  display: inline-block;
+  vertical-align: top;
+}
+
 .tooltip-main .tooltip-caption {
   cursor: help;
 }
