@@ -31,6 +31,16 @@ namespace XLite\View\ItemsList\Payment\Method\Admin;
 class OfflineModules extends \XLite\View\ItemsList\Payment\Method\Admin\AAdmin
 {
     /**
+     * Returns a list of CSS classes (separated with a space character) to be attached to the items list
+     *
+     * @return string
+     */
+    public function getListCSSClasses()
+    {
+        return parent::getListCSSClasses() . ' offline';
+    }
+
+    /**
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell

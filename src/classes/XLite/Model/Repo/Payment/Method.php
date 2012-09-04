@@ -41,6 +41,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     const P_ONLY_MODULE_OFFLINE = 'onlyModuleOffline';
     const P_POSITION            = 'position';
     const P_TYPE                = 'type';
+    const P_ORDERBY             = 'orderBy';
 
     /**
      * Name of the field which is used for default sorting (ordering)
@@ -211,6 +212,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
             static::P_ONLY_MODULE_OFFLINE,
             static::P_POSITION,
             static::P_TYPE,
+            static::P_ORDERBY,
         );
     }
 
@@ -278,9 +280,9 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
         if ($value) {
             $alias = $this->getMainAlias($queryBuilder);
             $queryBuilder
-                ->andWhere('LOCATE(:modulePrefix, ' . $alias . '.class) = 0 AND ' . $alias . '.type = :offlineType')
-                ->setParameter('offlineType', \XLite\Model\Payment\Method::TYPE_OFFLINE)
-                ->setParameter('modulePrefix', 'Module\\');
+                ->andWhere($alias . '.class = :class AND ' . $alias . '.type = :offlineType')
+                ->setParameter('class', 'Model\Payment\Processor\Offline')
+                ->setParameter('offlineType', \XLite\Model\Payment\Method::TYPE_OFFLINE);
         }
     }
 
@@ -298,9 +300,9 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
         if ($value) {
             $alias = $this->getMainAlias($queryBuilder);
             $queryBuilder
-                ->andWhere('LOCATE(:modulePrefix, ' . $alias . '.class) > 0 AND ' . $alias . '.type = :offlineType')
-                ->setParameter('offlineType', \XLite\Model\Payment\Method::TYPE_OFFLINE)
-                ->setParameter('modulePrefix', 'Module\\');
+                ->andWhere($alias . '.class != :class AND ' . $alias . '.type = :offlineType')
+                ->setParameter('class', 'Model\Payment\Processor\Offline')
+                ->setParameter('offlineType', \XLite\Model\Payment\Method::TYPE_OFFLINE);
         }
     }
 
@@ -342,6 +344,24 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
                 $queryBuilder->andWhere($alias . '.type = :type')
                     ->setParameter('type', $value);
             }
+        }
+    }
+
+    /**
+     * Prepare certain search condition for position
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag
+     *
+     * @return void
+     */
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        if (!$countOnly && is_array($value)) {
+            list($sort, $direction) = $value;
+
+            $queryBuilder->orderBy($sort, $direction);
         }
     }
 

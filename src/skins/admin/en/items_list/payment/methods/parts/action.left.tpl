@@ -19,7 +19,7 @@
       {if:method.isEnabled()}
         <div class="switch enabled"><img src="images/spacer.gif" alt="{t(#Enabled#)}" /></div>
       {else:}
-        <div class="switch disabled"><img src="images/spacer.gif" alt="{t(#Disabled#)}" /></div>
+        <div class="switch disabled" title="{t(#This payment method cannot be enabled until you configure it#)}"><img src="images/spacer.gif" alt="{t(#Disabled#)}" /></div>
       {end:}
 
     {else:}
