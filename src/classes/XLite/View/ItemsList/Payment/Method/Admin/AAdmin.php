@@ -219,7 +219,8 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     protected function isSeparateConfigureButtonVisible(\XLite\Model\Payment\Method $method)
     {
         return ($method->getWarningNote() || $method->isTestMode())
-            && $method->isConfigurable();
+            && $method->isConfigurable()
+            && !$method->isForcedEnabled();
     }
     // }}}
 
