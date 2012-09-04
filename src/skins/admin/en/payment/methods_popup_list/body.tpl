@@ -17,7 +17,7 @@
       <li class="title-row">
         <ul>
           <li class="title">
-            {payment.getAdminTitle()}
+            {payment.getName()}
           </li>
           <li class="button">
             <widget

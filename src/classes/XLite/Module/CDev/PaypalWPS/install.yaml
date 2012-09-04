@@ -16,7 +16,6 @@ XLite\Model\Payment\Method:
       - code: en
         name: Paypal Website Payments Standard
         title: Paypal
-        adminTitle: Paypal Website Payments Standard
     settings:
       - name: account
       - name: description
