@@ -132,22 +132,32 @@ abstract class Autoloader
     }
 
     /**
+     * Register the autoload function for the custom library
+     *
+     * @param string $namespace Root library namespace
+     * @param string $path      Library path OPTIONAL
+     *
+     * @return void
+     */
+    public static function registerCustom($namespace, $path = LC_DIR_LIB)
+    {
+        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
+
+        $loader = new \Doctrine\Common\ClassLoader($namespace, rtrim($path, LC_DS));
+        $loader->register();
+    }
+
+    /**
      * Register the autoload function for the Doctrine library
      *
      * @return void
      */
     protected static function registerDoctrineAutoloader()
     {
-        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
-        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'Persistence' . LC_DS . 'Proxy.php');
+        static::registerCustom('Doctrine');
+        static::registerCustom('Symfony');
 
-        $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_DIR_LIB, LC_DS));
-        $loader->register();
-
-        $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_DIR_LIB, LC_DS));
-        $loader->register();
-
-        //Proxy classes autoloader
+        // Proxy classes autoloader
         \Doctrine\ORM\Proxy\Autoloader::register(rtrim(LC_DIR_CACHE_PROXY, LC_DS), LC_MODEL_PROXY_NS);
     }
 
