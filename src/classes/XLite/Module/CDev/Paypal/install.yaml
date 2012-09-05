@@ -10,9 +10,11 @@
 XLite\Model\Payment\Method:
   - service_name: PayflowLink
     class: 'Module\CDev\Paypal\Model\Payment\Processor\PayflowLink'
+    type: C
     translations:
       - code: en
-        name: 'Payflow Link'
+        name: 'Paypal Payflow Link'
+        title: 'Credit card / Paypal'
     settings:
       - name: vendor
       - name: user
@@ -28,9 +30,11 @@ XLite\Model\Payment\Method:
 
   - service_name: PaypalAdvanced
     class: 'Module\CDev\Paypal\Model\Payment\Processor\PaypalAdvanced'
+    type: A
     translations:
       - code: en
         name: 'Paypal Payments Advanced'
+        title: 'Credit card / Paypal'
     settings:
       - name: vendor
       - name: user
@@ -46,21 +50,24 @@ XLite\Model\Payment\Method:
 
   - service_name: PaypalWPSUS
     class: 'Module\CDev\Paypal\Model\Payment\Processor\PaypalWPS'
+    type: A
     translations:
       - code: en
-        name: 'Paypal Standard'
+        name: 'Paypal Payments Standard'
+        title: 'Paypal'
     settings:
       - name: account
       - name: description
       - name: prefix
       - name: mode
-      - name: address_override
 
   - service_name: ExpressCheckout
     class: 'Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout'
+    type: N
     translations:
       - code: en
         name: 'Paypal Express Checkout'
+        title: 'Paypal'
     settings:
       - name: vendor
       - name: user
@@ -73,5 +80,3 @@ XLite\Model\Payment\Method:
         value: S
       - name: test
         value: Y
-
-

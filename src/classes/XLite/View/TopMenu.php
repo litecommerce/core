@@ -58,8 +58,9 @@ class TopMenu extends \XLite\View\AView
             'shipping_zones',
             'shipping_rates',
         ),
-        'payment_methods' => array(
+        'payment_settings' => array(
             'payment_method',
+            'payment_appearance',
         ),
         'db_backup' => array(
             'db_restore',

@@ -1,0 +1,127 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Setting page styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.paypal-settings {
+  max-width: 1000px;
+}
+
+.pp-common-note,
+.pp-register-note,
+.pp-order-prefix-note,
+.pp-support-note
+{
+  font-size: 13px;
+  line-height: 20px;
+  margin-top: 15px;
+}
+
+.pp-register-note {
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.pp-account-section,
+.pp-operation-section {
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.pp-secret-word label,
+.pp-options label
+{
+  color: #456583;
+}
+
+.pp-options input[type="text"]
+{
+  border-width: 1px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 14px;
+}
+
+hr.pp-line,
+hr.pp-line-last {
+  height: 0px;
+  border: 0px none;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+hr.pp-line-last {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.pp-options {
+  padding-top: 3px;
+  padding-bottom: 19px;
+}
+
+.pp-options-option {
+  padding-top: 4px;
+  padding-bottom: 12px;
+}
+
+.pp-options label {
+  vertical-align: middle;
+  padding-top: 3px;
+}
+
+.pp-options li span {
+  width: 250px;
+  display: inline-block;
+}
+
+#pp_order_prefix,
+#pp_vendor,
+#pp_user,
+#pp_pwd,
+#pp_partner,
+#pp_transaction_type,
+#pp_test {
+  width: 200px;
+  vertical-align: middle;
+}
+
+#pp_transaction_type,
+#pp_test {
+  width: auto;
+}
+
+.pp-options li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+.pp-options li div {
+  color: #8f8f8f; 
+}
+
+.pp-support-note {
+  padding-top: 5px;
+  line-height: 18px;
+}
+
+.payment-settings .logo-ppa {
+  background: transparent url(../images/pwps.png) no-repeat left top;
+  width: 229px;
+  height: 65px;
+  padding-bottom: 10px;
+}
+
+.payment-settings.PaypalWPS .error.inline-error {
+  display: inline;
+  padding-left: 5px;
+  color: red;
+}

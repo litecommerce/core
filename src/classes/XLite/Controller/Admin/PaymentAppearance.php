@@ -29,7 +29,7 @@ namespace XLite\Controller\Admin;
  * Payment methods
  *
  */
-class PaymentMethods extends \XLite\Controller\Admin\AAdmin
+class PaymentAppearance extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Return the current page title (for the content area)
@@ -38,45 +38,19 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Payment methods';
+        return 'Payment settings';
     }
 
     /**
-     * Update payment methods
+     * Update list
      *
      * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
-        $data = \XLite\Core\Request::getInstance()->data;
-
-        if (!is_array($data)) {
-            // TODO - add top message
-
-        } else {
-
-            $methods = array();
-
-            foreach ($data as $id => $row) {
-                $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find($id);
-
-                if ($m) {
-                    $m->setName($row['name']);
-                    $m->setDescription($row['description']);
-                    $m->setOrderby(intval($row['orderby']));
-                    $m->setEnabled(isset($row['enabled']) && '1' == $row['enabled']);
-
-                    $methods[] = $m;
-
-                } else {
-                    // TODO - add top message
-                }
-            }
-
-            if (!empty($methods)) {
-                \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->updateInBatch($methods);
-                \XLite\Core\TopMessage::addInfo('Payment methods have been updated');
-            }
-        }
+        $list = new \XLite\View\ItemsList\Model\Payment\Methods();
+        $list->processQuick();
     }
 }
