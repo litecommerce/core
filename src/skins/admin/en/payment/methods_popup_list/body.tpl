@@ -27,9 +27,9 @@
               location="{buildURL(#payment_settings#,#add#,_ARRAY_(#id#^payment.getMethodId()))}" />
             <widget
               IF="payment.getAdded()"
-              class="XLite\View\Button\Link"
+              class="XLite\View\Button\Regular"
               label="{t(#Added#)}"
-              location="{buildURL(#payment_settings#,#add#,_ARRAY_(#id#^payment.getMethodId()))}"
+              jsCode="void(0)"
               style="disabled" />
           </li>
           <li class="separator"></li>
