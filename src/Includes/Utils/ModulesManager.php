@@ -526,7 +526,10 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function getAllDBStructures()
     {
-        return array_map(array('static', 'getAllDBStructureElement'), \Includes\Utils\Database::fetchAll('SHOW TABLES LIKE \'%xlite_%\''));
+        return array_map(
+            array('static', 'getAllDBStructureElement'),
+            \Includes\Utils\Database::fetchAll('SHOW TABLES LIKE \'%' . static::getTablesPrefix() . '%\'')
+        );
     }
 
     /**
@@ -538,7 +541,17 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function getAllDBStructureElement($elem)
     {
-        return preg_replace('/^xlite_/Sis', '', current($elem));
+        return preg_replace('/^' . static::getTablesPrefix() . '/Sis', '', current($elem));
+    }
+
+    /**
+     * Return tables prefix in the DB
+     *
+     * @return string
+     */
+    public static function getTablesPrefix()
+    {
+        return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'table_prefix'));
     }
 
     /**
