@@ -154,6 +154,18 @@ TableItemsList.prototype.listeners.createButton = function(handler)
 
         jQuery('.no-items').css('display', 'none');
 
+        if (2 == box.children('tr').length) {
+          var leftAction = jQuery('tbody.lines tr td.actions.left', handler.container).eq(0);
+          if (leftAction.length) {
+            line.find('td.actions.left').width(leftAction.width())
+          }
+
+          var rightAction = jQuery('tbody.lines tr td.actions.right', handler.container).eq(0);
+          if (rightAction.length) {
+            line.find('td.actions.right').width(rightAction.width())
+          }
+        }
+
         return false;
       }
     );

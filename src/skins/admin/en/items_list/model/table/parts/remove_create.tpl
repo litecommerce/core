@@ -9,4 +9,5 @@
  * @link      http://www.litecommerce.com/
  *}
 
+<div class="separator"></div>
 <widget class="XLite\View\Button\Remove" />
