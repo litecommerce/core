@@ -13,7 +13,7 @@
 <div IF="!isPayedCart()" class="secondary">
   {if:cart.getPaymentMethod()}
     <div class="label">{t(#Payment method#)}:</div>
-    {cart.paymentMethod.name}
+    {cart.paymentMethod.title}
 
   {else:}
     <h3>{t(#Payment methods#)}</h3>
