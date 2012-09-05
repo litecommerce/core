@@ -151,6 +151,7 @@ image_magick_path =
 ;
 [installer_details]
 auth_code = ""
+shared_secret_key = ""
 
 ;
 ; Some options to optimize the store
