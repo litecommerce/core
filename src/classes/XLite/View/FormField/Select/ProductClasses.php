@@ -39,7 +39,7 @@ class ProductClasses extends \XLite\View\FormField\Select\Multiple
     protected function getProductClassesList()
     {
         $list = array();
-        foreach (\XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findAll() as $e) {
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->search() as $e) {
             $list[$e->getId()] = $e->getName();
         }
 

@@ -65,7 +65,6 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $products;
 
-
     /**
      * Shipping methods
      *
@@ -75,6 +74,23 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $shipping_methods;
 
+    /**
+     * Attributes 
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @OneToMany (targetEntity="XLite\Model\Attribute", mappedBy="product_class", cascade={"all"})
+     */
+    protected $attributes;
+
+    /**
+     * Attribute groups 
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @OneToMany (targetEntity="XLite\Model\AttributeGroup", mappedBy="product_class", cascade={"all"})
+     */
+    protected $attribute_groups;
 
     /**
      * Constructor
@@ -87,6 +103,8 @@ class ProductClass extends \XLite\Model\Base\I18n
     {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->shipping_methods = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attribute_groups = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
@@ -108,7 +126,6 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     public function getAttributesCount()
     {
-        return 0;
-//        return count($this->getAttributes());
+        return count($this->getAttributes());
     }
 }
