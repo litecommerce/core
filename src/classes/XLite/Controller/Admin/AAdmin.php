@@ -153,6 +153,8 @@ abstract class AAdmin extends \XLite\Controller\AController
                 \XLite\Core\Session::getInstance()->no_https = true;
             }
 
+            \XLite::getInstance()->updateModuleRegistry();
+
             parent::handleRequest();
         }
     }

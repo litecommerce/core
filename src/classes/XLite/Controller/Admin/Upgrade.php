@@ -333,8 +333,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $this->showError(__FUNCTION__, 'not all archives were unpacked');
 
                 \XLite\Core\TopMessage::addError(
-                    'Try to unpack them manually, and click <a href="' 
-                    . $this->buildURL('upgrade', 'check_integrity') 
+                    'Try to unpack them manually, and click <a href="'
+                    . $this->buildURL('upgrade', 'check_integrity')
                     . '">this link</a>'
                 );
 
@@ -394,9 +394,15 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $this->runStep('upgrade', array(false, $this->getFilesToOverWrite()));
 
             // Disable selected modules
+            $modules = array();
+
             foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
-                \Includes\Utils\ModulesManager::disableModule($module->getActualName());
+
+                $module->setEnabled(false);
+                $modules[] = $module;
             }
+            
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateInBatch($modules);
 
             if ($this->isForce()) {
                 if ($this->isNextStepAvailable()) {

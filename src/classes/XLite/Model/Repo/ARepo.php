@@ -1090,7 +1090,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             }
 
             list($disabledTables, $disabledColumns) = \XLite\Core\Database::getInstance()
-                ->getDisabledStructures();
+                ->getStructuresToStore();
 
             // Do not drop disabled tables and foreign keys
             foreach ($disabledTables as $i => $t) {

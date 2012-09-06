@@ -303,10 +303,7 @@ class Operator extends \XLite\Base\Singleton
      */
     public function saveServiceYAML($path, array $data)
     {
-        return \Includes\Utils\FileManager::write(
-            $path,
-            $this->getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
-        );
+        return \Includes\Utils\Operator::saveServiceYAML($path, $data);
     }
 
     /**
@@ -320,15 +317,8 @@ class Operator extends \XLite\Base\Singleton
      */
     public function loadServiceYAML($path)
     {
-        $data = null;
-
-        if (\Includes\Utils\FileManager::isFile($path)) {
-            $data = \Symfony\Component\Yaml\Yaml::load($path);
-        }
-
-        return $data;
+        return \Includes\Utils\Operator::loadServiceYAML($path);
     }
-
 
     /**
      * Get back trace function or method arguments
@@ -422,6 +412,6 @@ class Operator extends \XLite\Base\Singleton
      */
     protected function getServiceHeader()
     {
-        return '# <' . '?php if (!defined(\'LC_DS\')) { die(); } ?' . '>' . PHP_EOL . PHP_EOL;
+        return \Includes\Utils\Operator::getServiceHeader();
     }
 }

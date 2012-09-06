@@ -298,6 +298,23 @@ class XLite extends \XLite\Base
     }
 
     /**
+     * Update module registry
+     *
+     * @return void
+     */
+    public function updateModuleRegistry()
+    {
+        $calculatedHash = \XLite\Core\Database::getRepo('XLite\Model\Module')->calculateEnabledModulesRegistryHash();
+
+        if ($calculatedHash != \Includes\Utils\ModulesManager::getEnabledStructureHash()) {
+
+            \XLite\Core\Database::getRepo('XLite\Model\Module')->addEnabledModulesToRegistry();
+
+            \Includes\Utils\ModulesManager::saveEnabledStructureHash($calculatedHash);
+        }
+    }
+
+    /**
      * Perform an action and redirect
      *
      * @return boolean

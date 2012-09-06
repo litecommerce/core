@@ -645,4 +645,36 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     // }}}
+
+    /**
+     * Add all enabled modules to ENABLED registry
+     *
+     * @return void
+     */
+    public function addEnabledModulesToRegistry()
+    {
+        foreach ($this->findBy(array('enabled' => true)) as $module) {
+
+            \XLite\Core\Database::getInstance()->registerModuleToEnabledRegistry(
+                $module->getActualName(),
+                \Includes\Utils\ModulesManager::getModuleProtectedStructures($module->getAuthor(), $module->getName())
+            );
+        }
+    }
+
+    /**
+     * Get registry HASH of enabled modules
+     *
+     * @return string
+     */
+    public function calculateEnabledModulesRegistryHash()
+    {
+        $hash = '';
+
+        foreach ($this->findBy(array('enabled' => true)) as $module) {
+            $hash .= $module->getActualName() . $module->getVersion();
+        }
+
+        return hash('md4', $hash);
+    }
 }

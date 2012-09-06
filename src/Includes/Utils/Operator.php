@@ -225,4 +225,54 @@ abstract class Operator extends \Includes\Utils\AUtils
 
         return $result;
     }
+
+    /**
+     * Save service YAML
+     *
+     * @param string $path File path
+     * @param array  $data Data
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function saveServiceYAML($path, array $data)
+    {
+        return \Includes\Utils\FileManager::write(
+            $path,
+            static::getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
+        );
+    }
+
+    /**
+     * Load service YAML
+     *
+     * @param string $path File path
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function loadServiceYAML($path)
+    {
+        $data = null;
+
+        if (\Includes\Utils\FileManager::isFile($path)) {
+            $data = \Symfony\Component\Yaml\Yaml::load($path);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get data storage service header
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getServiceHeader()
+    {
+        return '# <' . '?php if (!defined(\'LC_DS\')) { die(); } ?' . '>' . PHP_EOL . PHP_EOL;
+    }
 }

@@ -1039,15 +1039,62 @@ OUT;
     }
 
     /**
-     * Get disabled structures
+     * Get structures which must not be removed
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getDisabledStructures()
+    public function getStructuresToStore()
     {
-        $path = $this->getDisabledStructuresPath();
+        list ($disabledTables, $disabledColumns) = $this->getRegistryStructures($this->getDisabledStructuresPath());
+
+        list ($enabledTables, $enabledColumns) = $this->getRegistryStructures($this->getEnabledStructuresPath());
+
+        return array(
+            $disabledTables + $enabledTables,
+            $disabledColumns + $enabledColumns
+        );
+    }
+
+    /**
+     * Get Registry structures
+     *
+     * @param string $path Path to the registry file
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getRegistryStructures($path)
+    {
+        $tables = array();
+        $columns = array();
+
+        if (file_exists($path)) {
+            foreach (\XLite\Core\Operator::getInstance()->loadServiceYAML($path) as $module => $list) {
+                if (isset($list['tables']) && is_array($list['tables'])) {
+                    $tables = array_merge($tables, $list['tables']);
+                }
+                if (isset($list['columns']) && is_array($list['columns'])) {
+                    $columns = array_merge($columns, $list['columns']);
+                }
+            }
+        }
+
+        return array($tables, $columns);
+    }
+
+    /**
+     * Get enabled structures
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getEnabledStructures()
+    {
+        $path = $this->getEnabledStructuresPath();
         $tables = array();
         $columns = array();
 
@@ -1077,30 +1124,39 @@ OUT;
      */
     public function setDisabledStructures($module, array $structures = array())
     {
-        $path = $this->getDisabledStructuresPath();
+        if (!\Includes\Utils\ModulesManager::moveModuleToDisabledRegistry($module)) {
 
-        $data = array();
+            $path = $this->getDisabledStructuresPath();
 
-        if (file_exists($path)) {
-            $data = \XLite\Core\Operator::getInstance()->loadServiceYAML($path);
+            $data = array();
+
+            if (file_exists($path)) {
+                $data = \XLite\Core\Operator::getInstance()->loadServiceYAML($path);
+            }
+
+            if (!$structures || (!$structures['tables'] && !$structures['columns'])) {
+                unset($data[$module]);
+            } else {
+                $data[$module] = $structures;
+            }
+
+            \Includes\Utils\ModulesManager::storeModuleRegistry($path, $data);
         }
+    }
 
-        if (!$structures || (!$structures[0] && !$structures[1])) {
-            unset($data[$module]);
-
-        } else {
-            $data[$module] = array(
-                'tables'  => $structures[0],
-                'columns' => $structures[1],
-            );
-        }
-
-        if ($data) {
-            \XLite\Core\Operator::getInstance()->saveServiceYAML($path, $data);
-
-        } elseif (file_exists($path)) {
-            unlink($path);
-        }
+    /**
+     * Set disabled tables list
+     *
+     * @param string $module Module unique name
+     * @param array  $data   Registry info structures OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function registerModuleToEnabledRegistry($module, array $data = array())
+    {
+        \Includes\Utils\ModulesManager::registerModuleToEnabledRegistry($module, $data);
     }
 
     /**
@@ -1540,6 +1596,18 @@ OUT;
     protected function getDisabledStructuresPath()
     {
         return \Includes\Utils\ModulesManager::getDisabledStructuresPath();
+    }
+
+    /**
+     * Get enabled tables list storage path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getEnabledStructuresPath()
+    {
+        return \Includes\Utils\ModulesManager::getEnabledStructurePath();
     }
 
     /**
