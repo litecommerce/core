@@ -13,29 +13,30 @@
 
   <ul IF="%\XLite\Model\Payment\Method::TYPE_ALLINONE%=getPaymentType()" class="tabs-container">
 
-    <li class="tab all-in-one-solutions selected">
+    <li class="headers">
       <ul>
-        <li class="header">
+        <li class="header all-in-one-solutions selected">
           <div class="main-head">{t(#All-in-one solutions#)}</div>
           <div class="small-head">{t(#No merchant account required#)}</div>
         </li>
-        <li class="body">
+        <li class="header payment-gateways">
+          <div class="main-head">{t(#Payment gateways#)}</div>
+          <div class="small-head">{t(#Requires registered merchant account#)}</div>
+        </li>
+      </ul>
+    </li>
+
+    <li class="body">
+      <ul>
+        <li class="body-item all-in-one-solutions selected">
           <div class="body-box">
             <div class="everything-you-need">{t(#Everything you need#)}</div>
             <div class="description">{t(#Choose from a variety of bundled payment solutions to accept credit cards and other methods of payment on your website#)}</div>
             <widget class="\XLite\View\Payment\MethodsPopupList" paymentType={%\XLite\Model\Payment\Method::TYPE_ALLINONE%} />
           </div>
         </li>
-      </ul>
-    </li>
 
-    <li class="tab payment-gateways">
-      <ul>
-        <li class="header">
-          <div class="main-head">{t(#Payment gateways#)}</div>
-          <div class="small-head">{t(#Requires registered merchant account#)}</div>
-        </li>
-        <li class="body">
+        <li class="body-item payment-gateways">
           <div class="body-box">
             <div class="everything-you-need">{t(#Join forces with your bank#)}</div>
             <div class="description">{t(#Use a merchant account from your financial institution to accept online payments#)}</div>
