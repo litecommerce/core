@@ -190,6 +190,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
                 // Disable this and depended modules
                 \Includes\Utils\ModulesManager::disableModule($module->getActualName());
+                \Includes\Utils\ModulesManager::removeModuleFromDisabledStructure($module->getActualName());
 
                 // Remove from DB
                 \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);

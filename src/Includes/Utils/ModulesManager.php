@@ -498,19 +498,19 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     }
 
     /**
-     * Remove all DB tables entity from the .disabled.structures file
+     * Remove module information from the .disabled.structures file
      *
-     * @todo REMOVE!
+     * @param string $module Module actual name
      *
      * @return void
      */
-    public static function removeAllDBInfoFromDisabledStructure()
+    public static function removeModuleFromDisabledStructure($module)
     {
         $path = static::getDisabledStructuresPath();
 
         $data = \Includes\Utils\Operator::loadServiceYAML($path);
 
-        unset($data[static::ALL_DB_INFO_NAME]);
+        unset($data[$module]);
 
         static::storeModuleRegistry($path, $data);
     }
