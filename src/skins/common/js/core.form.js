@@ -1280,6 +1280,17 @@ CommonElement.prototype.handlers = [
       return this.$element.hasClass('wheel-ctrl');
     },
     handler: CommonElement.prototype.markAsWheelControlled
+  },
+  {
+    canApply: function () {
+      return this.$element.is('textarea.resizeble-txt');
+    },
+    handler: function() {
+      var min = this.$element.data('min-size-height') || this.$element.height();
+      var max = this.$element.data('max-size-height');
+
+      this.$element.TextAreaExpander(min, max);
+    }
   }
 ];
 
