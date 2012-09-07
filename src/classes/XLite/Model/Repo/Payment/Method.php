@@ -372,7 +372,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     /**
      * Find all methods
      *
-     * @return \Doctrine\Common\Collection\Colelction
+     * @return \Doctrine\Common\Collection\Collection
      */
     public function findAllMethods()
     {
@@ -435,20 +435,33 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
         return $list;
     }
 
+    /**
+     * Find payment methods by specified type for dialog 'Add payment method' 
+     * 
+     * @param string $type Payment method type
+     *  
+     * @return \Doctrine\Common\Collection\Collection
+     */
     public function findForAdditionByType($type)
     {
         return $this->defineAdditionByTypeQuery($type)->getResult();
     }
 
+    /**
+     * Define query for findAdditionByType() 
+     * 
+     * @param string $type Payment method type
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     protected function defineAdditionByTypeQuery($type)
     {
         return $this->createPureQueryBuilder('m')
-            ->addSelect('LOCATE(:modulePrefix, m.class) module_prefix')
             ->andWhere('m.type = :type')
-            ->addOrderBy('module_prefix', 'desc')
+            ->andWhere('m.moduleEnabled = :moduleEnabled')
             ->addOrderBy('m.moduleName', 'asc')
             ->setParameter('type', $type)
-            ->setParameter('modulePrefix', 'Module\\CDev\\Paypal');
+            ->setParameter('moduleEnabled', true);
     }
 
     /**
