@@ -25,9 +25,13 @@ decorate(
   'callback',
   function (selector)
   {
-    jQuery('.tabs-container .tab .header').click(function () {
-      jQuery('.tabs-container .tab').removeClass('selected');
-      jQuery(this).closest('.tab').addClass('selected');
+    jQuery('.headers .header').click(function () {
+      jQuery('.headers .header, .body .body-item').removeClass('selected');
+
+      jQuery(this).hasClass('all-in-one-solutions')
+        ? jQuery('.headers .header.all-in-one-solutions, .body .body-item.all-in-one-solutions').addClass('selected')
+        : jQuery('.headers .header.payment-gateways, .body .body-item.payment-gateways').addClass('selected');
+
       jQuery('.ui-widget-overlay').css('height', jQuery(document).height());
     });
 
