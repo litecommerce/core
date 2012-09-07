@@ -331,6 +331,7 @@
 
 .add-payment-box .body .body-box {
   border: solid 1px #c2cbd2;
+  border-top: none;
   padding: 20px 0px 35px 30px;
   background-color: #f4f4f4;
 }
@@ -340,12 +341,24 @@
 }
 
 .add-payment-box .header {
-  width: 39%;
-  border: solid 1px #c2cbd2;
-  border-bottom: solid 1px #e0edfd;
+  border-top: solid 1px #c2cbd2;
+  border-left: solid 1px #c2cbd2;
+  border-right: solid 1px #c2cbd2;
   border-radius: 10px 10px 0px 0px;
-  padding: 20px 0px 25px 67px;
+  width: 46%;
   background: #f4f4f4 url(../../images/header-tab-background.png) 0px 0px repeat-x;
+}
+
+.add-payment-box .headers {
+  height: 90px;
+  border-bottom: solid 1px #c2cbd2;
+}
+
+.add-payment-box .header .header-wrapper {
+  padding: 20px 0px 0px 0px;
+  margin: 0px 50px;
+  width: 230px;
+  height: 69px;
 }
 
 .add-payment-box .header.all-in-one-solutions {
@@ -363,9 +376,11 @@
 }
 
 .add-payment-box .headers .header.selected {
-  border-bottom: solid 1px #f2f2f2;
-  padding-bottom: 26px;
   background: transparent url(../../images/header-tab-background-selected.png) 0px 0px repeat-x;
+}
+
+.add-payment-box .headers .header.selected .header-wrapper {
+  border-bottom: solid 1px #f2f2f2;
 }
 
 .add-payment-box .headers .header .main-head {

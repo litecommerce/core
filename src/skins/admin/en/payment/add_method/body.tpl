@@ -16,12 +16,16 @@
     <li class="headers">
       <ul>
         <li class="header all-in-one-solutions selected">
-          <div class="main-head">{t(#All-in-one solutions#)}</div>
-          <div class="small-head">{t(#No merchant account required#)}</div>
+          <div class="header-wrapper">
+            <div class="main-head">{t(#All-in-one solutions#)}</div>
+            <div class="small-head">{t(#No merchant account required#)}</div>
+          </div>
         </li>
         <li class="header payment-gateways">
-          <div class="main-head">{t(#Payment gateways#)}</div>
-          <div class="small-head">{t(#Requires registered merchant account#)}</div>
+          <div class="header-wrapper">
+            <div class="main-head">{t(#Payment gateways#)}</div>
+            <div class="small-head">{t(#Requires registered merchant account#)}</div>
+          </div>
         </li>
       </ul>
     </li>
