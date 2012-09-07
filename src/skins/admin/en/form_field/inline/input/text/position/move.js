@@ -17,7 +17,9 @@ CommonForm.elementControllers.push(
 
       jQuery(this).find('.inline-move .move').disableSelection();
 
-      jQuery(this).find('td').each(
+      var tds = jQuery(this).find('td');
+
+      tds.each(
         function () {
           var td = jQuery(this);
           td.data('saved-width', td.width());
@@ -34,10 +36,10 @@ CommonForm.elementControllers.push(
               ui.item.parent().sortable('cancel');
 
             } else {
-              ui.item.find('td').each(
+              tds.each(
                 function () {
                   var td = jQuery(this);
-                  td.attr('style', 'width: ' +  td.data('saved-width') + 'px');
+                  td.width(td.data('saved-width'));
                 }
               );
             }
@@ -45,18 +47,13 @@ CommonForm.elementControllers.push(
           update: function(event, ui)
           {
             ui.item.css('width', 'auto');
-            ui.item.find('td').removeAttr('style');
+            tds.removeAttr('style');
 
             // Reassign position values
             var min = 0;
             form.find('.inline-field.inline-move input').each(
               function () {
-                if (0 == min) {
-                  min = this.value;
-
-                } else {
-                  min = Math.min(this.value, min);
-                }
+                min = 0 == min ? this.value : Math.min(this.value, min);
               }
             );
 
