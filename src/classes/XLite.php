@@ -117,7 +117,7 @@ class XLite extends \XLite\Base
 
     /**
      * Check is cache building
-     * 
+     *
      * @return boolean
      */
     public static function isCacheBuilding()
@@ -287,6 +287,22 @@ class XLite extends \XLite\Base
     public function initModules()
     {
         \Includes\Utils\ModulesManager::initModules();
+    }
+
+    /**
+     * Update module registry
+     *
+     * @return void
+     */
+    public function updateModuleRegistry()
+    {
+        $calculatedHash = \XLite\Core\Database::getRepo('XLite\Model\Module')->calculateEnabledModulesRegistryHash();
+
+        if ($calculatedHash != \Includes\Utils\ModulesManager::getEnabledStructureHash()) {
+
+            \XLite\Core\Database::getRepo('XLite\Model\Module')->addEnabledModulesToRegistry();
+            \Includes\Utils\ModulesManager::saveEnabledStructureHash($calculatedHash);
+        }
     }
 
     /**
