@@ -667,7 +667,7 @@ class Cell extends \XLite\Base\Singleton
     }
 
     /**
-     * Preload lLibraries 
+     * Preload libraries 
      * 
      * @return void
      */
@@ -678,7 +678,7 @@ class Cell extends \XLite\Base\Singleton
         $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
         foreach ($iterator as $filePath => $fileObject) {
-            if (preg_match('/\.php$/Ss', $filePath, $matches)) {
+            if (preg_match('/\.php$/Ss', $filePath)) {
                 require_once $filePath;
             }
         }
@@ -688,7 +688,7 @@ class Cell extends \XLite\Base\Singleton
         $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
         foreach ($iterator as $filePath => $fileObject) {
-            if (preg_match('/\.php$/Ss', $filePath, $matches)) {
+            if (preg_match('/\.php$/Ss', $filePath) && !preg_match('/install/Ss', $filePath)) {
                 require_once $filePath;
             }
         }
