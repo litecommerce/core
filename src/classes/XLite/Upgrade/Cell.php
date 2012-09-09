@@ -674,8 +674,8 @@ class Cell extends \XLite\Base\Singleton
     protected function preloadLibraries()
     {
         // Preload lib directory
-        $dirIterator = new RecursiveDirectoryIterator(LC_DIR_LIB);
-        $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+        $dirIterator = new \RecursiveDirectoryIterator(LC_DIR_LIB);
+        $iterator    = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
 
         foreach ($iterator as $filePath => $fileObject) {
             if (preg_match('/\.php$/Ss', $filePath)) {
@@ -684,8 +684,8 @@ class Cell extends \XLite\Base\Singleton
         }
 
         // Preload \Includes
-        $dirIterator = new RecursiveDirectoryIterator(LC_DIR_INCLUDES);
-        $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+        $dirIterator = new \RecursiveDirectoryIterator(LC_DIR_INCLUDES);
+        $iterator    = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
 
         foreach ($iterator as $filePath => $fileObject) {
             if (preg_match('/\.php$/Ss', $filePath) && !preg_match('/install/Ss', $filePath)) {
