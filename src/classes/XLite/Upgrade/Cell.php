@@ -749,32 +749,21 @@ class Cell extends \XLite\Base\Singleton
     }
 
     /**
-     * Preload lLibraries 
+     * Preload Libraries 
      * 
      * @return void
      */
     protected function preloadLibraries()
     {
-        // Preload lib directory
-        $dirIterator = new RecursiveDirectoryIterator(LC_DIR_LIB);
-        $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+        // Preload Symfony
+        $dirIterator = new \RecursiveDirectoryIterator(LC_DIR_LIB . 'Symfony');
+        $iterator    = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
 
         foreach ($iterator as $filePath => $fileObject) {
             if (preg_match('/\.php$/Ss', $filePath, $matches)) {
                 require_once $filePath;
             }
         }
-
-        // Preload \Includes
-        $dirIterator = new RecursiveDirectoryIterator(LC_DIR_INCLUDES);
-        $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
-
-        foreach ($iterator as $filePath => $fileObject) {
-            if (preg_match('/\.php$/Ss', $filePath, $matches)) {
-                require_once $filePath;
-            }
-        }
-
     }
 
     // }}}
