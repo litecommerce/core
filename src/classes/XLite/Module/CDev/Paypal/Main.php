@@ -57,7 +57,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'Paypal US';
+        return 'PayPal US';
     }
 
     /**
@@ -88,7 +88,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Enables taking payments for your online store via Paypal services (for US merchants).';
+        return 'Enables taking payments for your online store via PayPal services (for US merchants).';
     }
 
     /**

@@ -160,7 +160,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         $result = parent::getForbidEnableNote($method);
 
         if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
-            $result = 'This payment method cannot be enabled together with Paypal Payments Standard method';
+            $result = 'This payment method cannot be enabled together with PayPal Payments Standard method';
         }
 
         return $result;
@@ -199,7 +199,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         if (!$result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
             $parentMethod = $this->getParentMethod();
             if (isset($parentMethod)) {
-                $result = 'Must be enabled as you use PayPal Payments Advanced or Paypal Payflow Link';
+                $result = 'Must be enabled as you use PayPal Payments Advanced or PayPal Payflow Link';
             }
         }
 
@@ -633,7 +633,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);
@@ -669,7 +669,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);
@@ -704,7 +704,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);

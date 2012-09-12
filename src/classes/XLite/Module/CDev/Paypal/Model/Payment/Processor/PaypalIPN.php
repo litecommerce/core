@@ -231,7 +231,7 @@ class PaypalIPN extends \XLite\Base\Singleton
                     $request->payment_status
                 ),
                 $this->getRequestData(),
-                'Note: received IPN does not relate to any backend transaction registered with the order. It is possible if you update payment directly on Paypal site or if your customer or Paypal updated the payment.'
+                'Note: received IPN does not relate to any backend transaction registered with the order. It is possible if you update payment directly on PayPal site or if your customer or PayPal updated the payment.'
             );
         }
     }

@@ -363,7 +363,7 @@ HTML;
                 $this->redirectToPaypal($token);
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->addError('Failure to redirect to Paypal.');
+                \XLite\Core\TopMessage::getInstance()->addError('Failure to redirect to PayPal.');
             }
 
         } else {
@@ -429,7 +429,7 @@ HTML;
         } else {
             $this->setDetail(
                 'status',
-                'Failed: unexpected response received from Paypal',
+                'Failed: unexpected response received from PayPal',
                 'Status'
             );
         }

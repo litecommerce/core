@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Paypal Payflow Link settings
+ * PayPal Payflow Link settings
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -96,7 +96,7 @@
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
-              text="{t(#You can define an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a Paypal account). This options is relevant only if you share your Paypal account with other online shops#)}"
+              text="{t(#You can define an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a PayPal account). This options is relevant only if you share your PayPal account with other online shops#)}"
               caption=""
               isImageTag="true"
               className="help-icon" />
@@ -125,9 +125,9 @@
 
   <div IF="!{paymentMethod.getSetting(#hide_instruction#)}" class="footer">
 
-    <h2>Configure Paypal - Instructions</h2>
+    <h2>Configure PayPal - Instructions</h2>
 
-    <div>In order to accept payments via Paypal Payflow, you must complete the following steps.</div>
+    <div>In order to accept payments via PayPal Payflow, you must complete the following steps.</div>
 
     <div>Please do not change any other values, as the system will pass these values on your behalf for the ease of configuration.</div>
 
@@ -141,7 +141,7 @@
     </div>
 
     <div class="right-part">
-      <a href="http://youtu.be/y9IGQpJCJeE">View a tutorial</a> | <a href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_help">Paypal Help</a>
+      <a href="http://youtu.be/y9IGQpJCJeE">View a tutorial</a> | <a href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_help">PayPal Help</a>
     </div>
 
     <div class="clear"></div>
@@ -171,7 +171,7 @@
 
   <div IF="{paymentMethod.getSetting(#hide_instruction#)}" class="footer">
 
-    <div class="pp-token-enabled">The Paypal Secure Token is enabled</div>
+    <div class="pp-token-enabled">The PayPal Secure Token is enabled</div>
 
     <div class="pp-token-enabled-link"><a href="{buildURL(#payment_method#,#show_instruction#,_ARRAY_(#method_id#^paymentMethod.getMethodId()))}">Show the instruction</a></div>
 

@@ -120,7 +120,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         $result = parent::getForbidEnableNote($method);
 
         if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS == $method->getServiceName()) {
-            $result = 'This payment method cannot be enabled together with Paypal Express Checkout method';
+            $result = 'This payment method cannot be enabled together with PayPal Express Checkout method';
         }
 
         return $result;
