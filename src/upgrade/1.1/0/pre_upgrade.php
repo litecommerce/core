@@ -185,4 +185,33 @@ return function()
         \XLite\Core\Database::getEM()->persist($option);
         \XLite\Core\Database::getEM()->flush();
     }
+
+    // Make cleanURL's unique for categories
+    $cats = \XLite\Core\Database::getRepo('XLite\Model\Category')->findByCleanURL('');
+
+    foreach ($cats as $cat) {
+
+        $separator = '-';
+        $result    = strtolower(preg_replace('/\W+/S', $separator, $cat->getName()));
+
+        $suffix    = '';
+        $increment = 1;
+
+        $repo      = \XLite\Core\Database::getRepo('XLite\Model\Category');
+
+        while (
+            ($tmp = $repo->findOneByCleanURL($result . $suffix))
+            && $cat->getCategoryId() != $tmp->getCategoryId()
+            && $increment < 1000
+        ) {
+            $suffix = $separator . $increment++;
+        }
+
+        if (!empty($suffix)) {
+            $result .= $suffix;
+        }
+
+        $cat->setCleanURL($result);
+        $cat->update();
+    }
 };
