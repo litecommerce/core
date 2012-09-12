@@ -42,28 +42,7 @@ class Address extends \XLite\View\Model\AModel
      *
      * @var array
      */
-    protected $addressSchema = array(
-        /*
-        'country_code' => array(
-            self::SCHEMA_CLASS => '\XLite\View\FormField\Select\Country',
-            self::SCHEMA_LABEL => 'Country',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-country',
-        ),
-        'state_id' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\State',
-            self::SCHEMA_LABEL    => 'State',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-state',
-        ),
-        'custom_state' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'State',
-            self::SCHEMA_REQUIRED => false,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-customer-state',
-        ),
-         */
-    );
+    protected $addressSchema = array();
 
     /**
      * Address instance
@@ -234,10 +213,12 @@ class Address extends \XLite\View\Model\AModel
     {
         $addressId = $this->getAddressId();
 
-        $fields[$addressId . '_country_code']->setStateSelectorIds(
-            $fields[$addressId . '_state_id']->getFieldId(),
-            $fields[$addressId . '_custom_state']->getFieldId()
-        );
+        if ($fields[$addressId . '_state_id'] && $fields[$addressId . '_custom_state']) {
+            $fields[$addressId . '_country_code']->setStateSelectorIds(
+                $fields[$addressId . '_state_id']->getFieldId(),
+                $fields[$addressId . '_custom_state']->getFieldId()
+            );
+        }
     }
 
     /**

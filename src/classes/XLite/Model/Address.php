@@ -77,16 +77,6 @@ class Address extends \XLite\Model\Base\PersonalAddress
     protected $profile;
 
     /**
-     * Address field value relation. one-to-many relation with address field entities
-     *
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @OneToMany (targetEntity="XLite\Model\AddressFieldValue", mappedBy="address", cascade={"all"})
-     */
-    protected $fieldValue;
-
-
-    /**
      * Universal setter
      *
      * @param string $property

@@ -45,7 +45,7 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
      */
     protected $currentSearchCnd = null;
 
-    
+
     /**
      * Common search
      *
@@ -104,7 +104,9 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
      */
     protected function getHandlingSearchParams()
     {
-        return array();
+        return array(
+            'enabled',
+        );
     }
 
     /**
@@ -136,5 +138,21 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
         } else {
             // TODO - add logging here
         }
+    }
+
+    /**
+     * Prepare query builder for enabled status search
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param boolean                    $value
+     * @param boolean                    $countOnly
+     *
+     * @return void
+     */
+    protected function prepareCndEnabled(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        $queryBuilder
+            ->andWhere($this->getMainAlias($queryBuilder) . '.enabled = :enabled_value')
+            ->setParameter('enabled_value', $value);
     }
 }

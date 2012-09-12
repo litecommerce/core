@@ -110,14 +110,4 @@ class AddressField extends \XLite\Model\Base\I18n
      */
     protected $position = 0;
 
-    /**
-     * Address field value model relation
-     *
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @OneToMany (targetEntity="XLite\Model\AddressFieldValue", mappedBy="addressField", cascade={"all"})
-     * @JoinColumn(name="id", referencedColumnName="id")
-     */
-    protected $value;
-
 }

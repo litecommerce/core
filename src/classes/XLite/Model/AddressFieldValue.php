@@ -58,8 +58,8 @@ class AddressFieldValue extends \XLite\Model\AEntity
      *
      * @var \XLite\Model\AddressField
      *
-     * @ManyToOne (targetEntity="XLite\Model\AddressField", inversedBy="value", cascade={"all"})
-     * @JoinColumn(name="address_field_id", referencedColumnName="id")
+     * @ManyToOne (targetEntity="XLite\Model\AddressField", cascade="all")
+     * @JoinColumn(name="address_field_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $addressField;
 
@@ -68,7 +68,7 @@ class AddressFieldValue extends \XLite\Model\AEntity
      *
      * @var \XLite\Model\Address
      *
-     * @ManyToOne (targetEntity="XLite\Model\Address", inversedBy="fieldValue", cascade={"all"})
+     * @ManyToOne (targetEntity="XLite\Model\Address", cascade="all")
      * @JoinColumn(name="address_id", referencedColumnName="address_id")
      */
     protected $address;
