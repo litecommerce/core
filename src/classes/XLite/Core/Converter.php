@@ -150,10 +150,10 @@ class Converter extends \XLite\Base\Singleton
      *
      * @return string
      */
-    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
+    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null, $forceCleanURL = false)
     {
         $result = null;
-        $cuFlag = LC_USE_CLEAN_URLS && !\XLite::isAdminZone();
+        $cuFlag = LC_USE_CLEAN_URLS && (!\XLite::isAdminZone() || $forceCleanURL);
 
         if ($cuFlag) {
             $result = static::buildCleanURL($target, $action, $params);

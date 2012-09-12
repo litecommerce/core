@@ -58,7 +58,8 @@ class Page extends \XLite\View\ItemsList\Model\Table
                 static::COLUMN_LINK => 'page',
             ),
             'cleanURL' => array(
-                static::COLUMN_NAME => \XLite\Core\Translation::lbl('Page URL'),
+                static::COLUMN_NAME     => \XLite\Core\Translation::lbl('Page URL'),
+                static::COLUMN_TEMPLATE => 'modules/CDev/SimpleCMS/pages/clean_url.tpl',
             ),
         );
     }
