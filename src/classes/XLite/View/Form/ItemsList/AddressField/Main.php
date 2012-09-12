@@ -23,50 +23,21 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model\Base;
+namespace XLite\View\Form\ItemsList\AddressField;
 
 /**
- * Abstract address model
+ * Main address fields items list form
  *
- *
- * @MappedSuperclass
  */
-abstract class PersonalAddress extends \XLite\Model\Base\Address
+class Main extends \XLite\View\Form\ItemsList\AItemsList
 {
     /**
-     * Get address fields list
-     *
-     * @return array(string)
-     */
-    public static function getAddressFields()
-    {
-        return array_merge(array('firstname', 'lastname'), parent::getAddressFields());
-    }
-
-
-    /**
-     * Get full name
+     * getDefaultTarget
      *
      * @return string
      */
-    public function getName()
+    protected function getDefaultTarget()
     {
-        return trim($this->getFirstname() . ' ' . $this->getLastname());
+        return 'address_fields';
     }
-
-    /**
-     * Set full name
-     *
-     * @param string $value Full name
-     *
-     * @return string
-     */
-    public function setName($value)
-    {
-        $parts = array_map('trim', explode(' ', trim($value), 2));
-
-        $this->setFirstname($parts[0]);
-        $this->setLastname(isset($parts[1]) ? $parts[1] : '');
-    }
-
 }

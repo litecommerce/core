@@ -94,6 +94,14 @@ class AddressField extends \XLite\Model\Base\I18n
     protected $required = true;
 
     /**
+     * Flag if the field is an enabled one
+     *
+     * @var boolean
+     * @Column(type="boolean")
+     */
+    protected $enabled = true;
+
+    /**
      * Position
      *
      * @var integer
@@ -101,7 +109,6 @@ class AddressField extends \XLite\Model\Base\I18n
      * @Column (type="integer")
      */
     protected $position = 0;
-
 
     /**
      * Address field value model relation

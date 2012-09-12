@@ -23,50 +23,66 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model\Base;
+namespace XLite\View\Form;
 
 /**
- * Abstract address model
+ * Address field form
  *
- *
- * @MappedSuperclass
  */
-abstract class PersonalAddress extends \XLite\Model\Base\Address
+class AddressField extends \XLite\View\Form\AForm
 {
     /**
-     * Get address fields list
+     * Register CSS files
      *
-     * @return array(string)
+     * @return array
      */
-    public static function getAddressFields()
+    public function getCSSFiles()
     {
-        return array_merge(array('firstname', 'lastname'), parent::getAddressFields());
-    }
+        $list = parent::getCSSFiles();
 
-
-    /**
-     * Get full name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return trim($this->getFirstname() . ' ' . $this->getLastname());
+        return $list;
     }
 
     /**
-     * Set full name
-     *
-     * @param string $value Full name
+     * Return default value for the "target" parameter
      *
      * @return string
      */
-    public function setName($value)
+    protected function getDefaultTarget()
     {
-        $parts = array_map('trim', explode(' ', trim($value), 2));
-
-        $this->setFirstname($parts[0]);
-        $this->setLastname(isset($parts[1]) ? $parts[1] : '');
+        return 'address_field';
     }
 
+    /**
+     * Return default value for the "action" parameter
+     *
+     * @return string
+     */
+    protected function getDefaultAction()
+    {
+        return 'update';
+    }
+
+    /**
+     * Get default class name
+     *
+     * @return string
+     */
+    protected function getDefaultClassName()
+    {
+        return trim(parent::getDefaultClassName() . ' validationEngine role');
+    }
+
+    /**
+     * Return list of the form default parameters
+     *
+     * @return array
+     */
+    protected function getDefaultParams()
+    {
+        return array(
+            'id' => \XLite\Core\Request::getInstance()->id,
+        );
+    }
 }
+

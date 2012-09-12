@@ -56,17 +56,17 @@ class AddressFieldValue extends \XLite\Model\AEntity
     /**
      * Address field model relation
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var \XLite\Model\AddressField
      *
      * @ManyToOne (targetEntity="XLite\Model\AddressField", inversedBy="value", cascade={"all"})
-     * @JoinColumn(name="id", referencedColumnName="id")
+     * @JoinColumn(name="address_field_id", referencedColumnName="id")
      */
     protected $addressField;
 
     /**
      * Address model relation
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var \XLite\Model\Address
      *
      * @ManyToOne (targetEntity="XLite\Model\Address", inversedBy="fieldValue", cascade={"all"})
      * @JoinColumn(name="address_id", referencedColumnName="address_id")

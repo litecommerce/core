@@ -80,9 +80,9 @@ abstract class AEntity extends \XLite\Base\SuperClass
                 // $method is assembled from 'set' + getMethodName()
                 $this->$method($value);
 
-            } elseif (property_exists($this, $key)) {
+            } else {
 
-                $this->$key = $value;
+                $this->setterProperty($key, $value);
             }
         }
     }

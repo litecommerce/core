@@ -69,7 +69,7 @@ class Address extends \XLite\Model\Base\PersonalAddress
     /**
      * Profile: many-to-one relation with profile entity
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var \XLite\Model\Profile
      *
      * @ManyToOne (targetEntity="XLite\Model\Profile", inversedBy="addresses")
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
@@ -77,15 +77,61 @@ class Address extends \XLite\Model\Base\PersonalAddress
     protected $profile;
 
     /**
-     * Address field value relation
+     * Address field value relation. one-to-many relation with address field entities
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\AddressFieldValue", mappedBy="address", cascade={"all"})
-     * @JoinColumn(name="id", referencedColumnName="id")
      */
     protected $fieldValue;
 
+
+    /**
+     * Universal setter
+     *
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return true|null Returns TRUE if the setting succeeds. NULL if the setting fails
+     */
+    public function setterProperty($property, $value)
+    {
+        $result = parent::setterProperty($property, $value);
+
+        if (is_null($result)) {
+
+            $addressField = \XLite\Core\Database::getRepo('XLite\Model\AddressField')
+                ->findOneBy(array('serviceName' => $property));
+
+            if ($addressField) {
+
+                $repo = \XLite\Core\Database::getRepo('XLite\Model\AddressFieldValue');
+
+                $data = array(
+                    'address'       => $this,
+                    'addressField'  => $addressField,
+                );
+
+                $addressFieldValue = $repo->findOneBy($data);
+
+                if ($addressFieldValue) {
+                    $addressFieldValue->setValue($value);
+
+                    $repo->update($addressFieldValue);
+                } else {
+
+                    $data['value'] = $value;
+                    $addressFieldValue = new \XLite\Model\AddressFieldValue($data);
+
+                    $repo->insert($addressFieldValue);
+                }
+
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Universal getter
@@ -111,7 +157,7 @@ class Address extends \XLite\Model\Base\PersonalAddress
                         'addressField'  => $addressField->getId(),
                     ));
 
-                $result = $addressFieldValue ? $addressFieldValue->getValue() : $result;
+                $result = $addressFieldValue ? $addressFieldValue->getValue() : '';
             }
         }
 

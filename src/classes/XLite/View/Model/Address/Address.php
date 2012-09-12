@@ -43,39 +43,7 @@ class Address extends \XLite\View\Model\AModel
      * @var array
      */
     protected $addressSchema = array(
-        'title' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Title',
-            self::SCHEMA_LABEL    => 'Title',
-            self::SCHEMA_REQUIRED => false,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-title',
-        ),
-        'firstname' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'First name',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-firstname',
-            self::SCHEMA_MODEL_ATTRIBUTES => array(
-                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
-            ),
-        ),
-        'lastname' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Last name',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-lastname',
-            self::SCHEMA_MODEL_ATTRIBUTES => array(
-                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
-            ),
-        ),
-        'street' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Address',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-street',
-            self::SCHEMA_MODEL_ATTRIBUTES => array(
-                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
-            ),
-        ),
+        /*
         'country_code' => array(
             self::SCHEMA_CLASS => '\XLite\View\FormField\Select\Country',
             self::SCHEMA_LABEL => 'Country',
@@ -94,33 +62,7 @@ class Address extends \XLite\View\Model\AModel
             self::SCHEMA_REQUIRED => false,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-customer-state',
         ),
-        'city' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'City',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-city',
-            self::SCHEMA_MODEL_ATTRIBUTES => array(
-                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
-            ),
-        ),
-        'zipcode' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Zip code',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-zipcode',
-            self::SCHEMA_MODEL_ATTRIBUTES => array(
-                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
-            ),
-        ),
-        'phone' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Phone',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-phone',
-            self::SCHEMA_MODEL_ATTRIBUTES => array(
-                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
-            ),
-        ),
+         */
     );
 
     /**
@@ -143,6 +85,20 @@ class Address extends \XLite\View\Model\AModel
 
         foreach ($this->addressSchema as $key => $data) {
             $result[$addressId . '_' . $key] = $data;
+        }
+
+        foreach (
+            \XLite\Core\Database::getRepo('XLite\Model\AddressField')->search(new \XLite\Core\CommonCell(array('enabled' => true))) as $field
+        ) {
+            $result[$addressId . '_' . $field->getServiceName()] = array(
+                static::SCHEMA_CLASS    => $field->getSchemaClass(),
+                static::SCHEMA_LABEL    => $field->getName(),
+                static::SCHEMA_REQUIRED => $field->getRequired(),
+                static::SCHEMA_MODEL_ATTRIBUTES => array(
+                    \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+                ),
+                \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-' . $field->getServiceName(),
+            );
         }
 
         return $result;
@@ -239,8 +195,6 @@ class Address extends \XLite\View\Model\AModel
                         $this->address->setProfile($profile);
                     }
                 }
-
-                $this->address->setZipcode(\XLite\Core\Config::getInstance()->General->default_zipcode);
             }
         }
 

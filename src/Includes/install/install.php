@@ -1194,7 +1194,7 @@ function doUpdateMainHtaccess(&$params, $silentMode = false)
         $util = '\Includes\Utils\FileManager';
 
         $util::replace(
-            $util::getDir($util::getDir(__DIR__)) . LC_DS . '.htaccess', 
+            $util::getDir($util::getDir(__DIR__)) . LC_DS . '.htaccess',
             '\1RewriteBase ' . $params['xlite_web_dir'],
             '/^(\s*)#\s*RewriteBase\s+____WEB_DIR____\s*$/mi'
         );
@@ -1400,9 +1400,9 @@ function doCreateAdminAccount(&$params, $silentMode = false)
     $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneByName('Administrator');
 
     $profile->addRoles($role);
- 
+
     $profile->create();
- 
+
     $role->addProfiles($profile);
     \XLite\Core\Database::getEM()->persist($role);
     \XLite\Core\Database::getEM()->flush();
@@ -1545,9 +1545,9 @@ function doFinishInstallation(&$params, $silentMode = false)
 
 /**
  * Sanitize host value (remove port as some servers include it to HTTP_HOST variable)
- * 
+ *
  * @param string $host Host value
- *  
+ *
  * @return string
  */
 function x_install_get_host($host)
@@ -1883,7 +1883,7 @@ function change_config(&$params)
             '/^socket.*=.*/',
             '/^http_host.*=.*/',
             '/^https_host.*=.*/',
-            '/^web_dir.*=.*/'
+            '/^web_dir.*=.*/',
             '/^shared_secret_key.*=.*/'
         );
 
@@ -1896,7 +1896,7 @@ function change_config(&$params)
             'socket   = "' . $_params['mysqlsock'] . '"',
             'http_host = "' . $_params['xlite_http_host'] . '"',
             'https_host = "' . $_params['xlite_https_host'] . '"',
-            'web_dir = "' . $_params['xlite_web_dir'] . '"'
+            'web_dir = "' . $_params['xlite_web_dir'] . '"',
             'shared_secret_key = "' . uniqid('', true) . '"'
         );
 

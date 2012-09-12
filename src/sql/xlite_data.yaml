@@ -1163,3 +1163,17 @@ XLite\Model\Role\Permission:
   - { code: manage catalog, section: Catalog, translations: [{ code: en, name: Manage catalog }] }
   - { code: manage users, section: Users, translations: [{ code: en, name: Manage users }] }
   - { code: manage orders, section: Sales, translations: [{ code: en, name: Manage orders }] }
+
+XLite\Model\AddressField:
+  - { serviceName: title,         additional: false, required: false, translations: [{ code: en, name: Title }], schemaClass: \XLite\View\FormField\Select\Title }
+  - { serviceName: firstname,     additional: false, required: true,  translations: [{ code: en, name: First name }] }
+  - { serviceName: lastname,      additional: false, required: true,  translations: [{ code: en, name: Last name }] }
+  - { serviceName: street,        additional: false, required: true,  translations: [{ code: en, name: Address }] }
+  - { serviceName: city,          additional: false, required: true,  translations: [{ code: en, name: City }] }
+  - { serviceName: zipcode,       additional: false, required: true,  translations: [{ code: en, name: Zip code }] }
+  - { serviceName: phone,         additional: false, required: true,  translations: [{ code: en, name: Phone }] }
+  - { serviceName: country_code,  additional: false, required: true,  translations: [{ code: en, name: Country }], schemaClass: \XLite\View\FormField\Select\Country }
+  - { serviceName: state_id,      additional: false, required: true,  translations: [{ code: en, name: State }], schemaClass: \XLite\View\FormField\Select\State }
+  - { serviceName: custom_state,  additional: false, required: false, translations: [{ code: en, name: State }]}
+
+

@@ -23,50 +23,50 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model\Base;
+namespace XLite\View\Address;
 
 /**
- * Abstract address model
+ * Address Field form widget
  *
- *
- * @MappedSuperclass
+ * @ListChild (list="admin.center", zone="admin")
  */
-abstract class PersonalAddress extends \XLite\Model\Base\Address
+class Field extends \XLite\View\Dialog
 {
     /**
-     * Get address fields list
+     * Register CSS files
      *
-     * @return array(string)
+     * @return array
      */
-    public static function getAddressFields()
+    public function getCSSFiles()
     {
-        return array_merge(array('firstname', 'lastname'), parent::getAddressFields());
-    }
+        $list = parent::getCSSFiles();
 
+        $list[] = $this->getDir() . '/style.css';
 
-    /**
-     * Get full name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return trim($this->getFirstname() . ' ' . $this->getLastname());
+        return $list;
     }
 
     /**
-     * Set full name
+     * Return list of allowed targets
      *
-     * @param string $value Full name
+     * @return array
+     */
+    public static function getAllowedTargets()
+    {
+        $list = parent::getAllowedTargets();
+
+        $list[] = 'address_field';
+
+        return $list;
+    }
+
+    /**
+     * Return templates directory name
      *
      * @return string
      */
-    public function setName($value)
+    protected function getDir()
     {
-        $parts = array_map('trim', explode(' ', trim($value), 2));
-
-        $this->setFirstname($parts[0]);
-        $this->setLastname(isset($parts[1]) ? $parts[1] : '');
+        return 'address/field';
     }
-
 }

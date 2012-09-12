@@ -23,50 +23,27 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model\Base;
+namespace XLite\View\TopMenu\Node\Users;
 
 /**
- * Abstract address model
+ * Address fields management
  *
  *
- * @MappedSuperclass
+ * @ListChild (list="menu.users", weight="600", zone="admin")
  */
-abstract class PersonalAddress extends \XLite\Model\Base\Address
+class AddressFields extends \XLite\View\TopMenu\Node\Users\AUsers
 {
     /**
-     * Get address fields list
+     * Define widget parameters
      *
-     * @return array(string)
+     * @return void
      */
-    public static function getAddressFields()
+    protected function defineWidgetParams()
     {
-        return array_merge(array('firstname', 'lastname'), parent::getAddressFields());
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TITLE]->setValue(static::t('Address fields'));
+        $this->widgetParams[self::PARAM_TARGET]->setValue('address_fields');
     }
-
-
-    /**
-     * Get full name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return trim($this->getFirstname() . ' ' . $this->getLastname());
-    }
-
-    /**
-     * Set full name
-     *
-     * @param string $value Full name
-     *
-     * @return string
-     */
-    public function setName($value)
-    {
-        $parts = array_map('trim', explode(' ', trim($value), 2));
-
-        $this->setFirstname($parts[0]);
-        $this->setLastname(isset($parts[1]) ? $parts[1] : '');
-    }
-
 }
+

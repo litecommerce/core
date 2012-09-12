@@ -23,50 +23,32 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model\Base;
+namespace XLite\Controller\Admin;
 
 /**
- * Abstract address model
+ * Address fields controller
  *
- *
- * @MappedSuperclass
  */
-abstract class PersonalAddress extends \XLite\Model\Base\Address
+class AddressFields extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Get address fields list
-     *
-     * @return array(string)
-     */
-    public static function getAddressFields()
-    {
-        return array_merge(array('firstname', 'lastname'), parent::getAddressFields());
-    }
-
-
-    /**
-     * Get full name
+     * Return the current page title (for the content area)
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return trim($this->getFirstname() . ' ' . $this->getLastname());
+        return 'Address fields';
     }
 
     /**
-     * Set full name
+     * Update list
      *
-     * @param string $value Full name
-     *
-     * @return string
+     * @return void
      */
-    public function setName($value)
+    protected function doActionUpdate()
     {
-        $parts = array_map('trim', explode(' ', trim($value), 2));
-
-        $this->setFirstname($parts[0]);
-        $this->setLastname(isset($parts[1]) ? $parts[1] : '');
+        $list = new \XLite\View\ItemsList\Model\Address\Fields();
+        $list->processQuick();
     }
-
 }

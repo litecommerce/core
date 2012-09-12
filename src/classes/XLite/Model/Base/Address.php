@@ -54,33 +54,6 @@ abstract class Address extends \XLite\Model\AEntity
     protected $address_type = 'R';
 
     /**
-     * Phone
-     *
-     * @var string
-     *
-     * @Column (type="string", length=32)
-     */
-    protected $phone = '';
-
-    /**
-     * Street, number of building, apartment etc
-     *
-     * @var string
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $street = '';
-
-    /**
-     * City
-     *
-     * @var string
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $city = '';
-
-    /**
      * State
      *
      * @var \XLite\Model\State
@@ -108,15 +81,6 @@ abstract class Address extends \XLite\Model\AEntity
      * @JoinColumn (name="country_code", referencedColumnName="code")
      */
     protected $country;
-
-    /**
-     * Zip/postal code
-     *
-     * @var string
-     *
-     * @Column (type="string", length=32)
-     */
-    protected $zipcode = '';
 
     /**
      * Get address fields list

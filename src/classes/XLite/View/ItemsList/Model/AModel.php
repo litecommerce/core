@@ -791,8 +791,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     protected function buildEntityURL(\XLite\Model\AEntity $entity, array $column)
     {
         return \XLite\Core\Converter::buildURL(
-            $column[static::COLUMN_LINK], 
-            '', 
+            $column[static::COLUMN_LINK],
+            '',
             array($entity->getUniqueIdentifierName() => $entity->getUniqueIdentifier())
         );
     }
@@ -853,7 +853,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Mark list as switchyabvle (enable / disable)
+     * Mark list as switchable (enable / disable)
      *
      * @return boolean
      */

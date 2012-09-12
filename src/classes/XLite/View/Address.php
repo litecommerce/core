@@ -141,23 +141,20 @@ class Address extends \XLite\View\Dialog
 
         $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($fieldName);
 
-        if (method_exists($address, $methodName)) {
+        // $methodName assembled from 'get' + camelized $fieldName
+        $result = $address->$methodName();
 
-            // $methodName assembled from 'get' + camelized $fieldName
-            $result = $address->$methodName();
+        if ($result && false !== $processValue) {
+            switch ($fieldName) {
+                case 'state_id':
+                    $result = $address->getState()->getState();
+                    break;
 
-            if (false !== $processValue) {
-                switch($fieldName) {
-                    case 'state_id':
-                        $result = $address->getState()->getState();
-                        break;
+                case 'country_code':
+                    $result = $address->getCountry()->getCountry();
+                    break;
 
-                    case 'country_code':
-                        $result = $address->getCountry()->getCountry();
-                        break;
-
-                    default:
-                }
+                default:
             }
         }
 
