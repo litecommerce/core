@@ -866,7 +866,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'BILLTOCITY'        => $this->getProfile()->getBillingAddress()->getCity(),
             'BILLTOSTATE'       => $this->getProfile()->getBillingAddress()->getState()->getCode(),
             'BILLTOZIP'         => $this->getProfile()->getBillingAddress()->getZipcode(),
-            'BILLTOCOUNTRY'     => strtoupper($this->getProfile()->getBillingAddress()->getCountry()->getCode3()),
+            'BILLTOCOUNTRY'     => strtoupper($this->getProfile()->getBillingAddress()->getCountry()->getCode()),
             'ERRORURL'          => urldecode($this->getReturnURL(null, true)),
             'RETURNURL'         => urldecode($this->getReturnURL(null, true)),
             'CANCELURL'         => urldecode($this->getReturnURL(null, true, true)),
@@ -898,7 +898,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
                 'SHIPTOCITY'        => $this->getProfile()->getShippingAddress()->getCity(),
                 'SHIPTOSTATE'       => $this->getProfile()->getShippingAddress()->getState()->getCode(),
                 'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
-                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode3(),
+                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode(),
                 'SHIPTOEMAIL'       => $this->getProfile()->getLogin(),
             );
         }

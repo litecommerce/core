@@ -285,8 +285,6 @@ HTML;
             'ALLOWNOTE'         => 1,
             'CUSTOM'            => $cart->getOrderId(),
             'LOCALECODE'        => 'EN',
-            // 'HDRIMG', // The URL for an image to be used as the header image for the PayPal Express Checkout pages
-            'PAYFLOWCOLOR'      => 'FF0000', // The secondary gradient color for the order summary section of the PayPal Express Checkout pages
         );
 
         $postData = $postData + $this->getLineItems($cart);
@@ -298,7 +296,7 @@ HTML;
 
         } elseif (self::EC_TYPE_MARK == $type) {
             $postData += array(
-                'ADDROVERRIDE'  => 'N',
+                'ADDROVERRIDE'  => 1,
                 'PHONENUM'      => $this->getProfile()->getBillingAddress()->getPhone(),
                 'EMAIL'         => $this->getProfile()->getLogin(),
             );
