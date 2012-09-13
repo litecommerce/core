@@ -359,10 +359,15 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             // Perform upgrade
             $this->runStep('upgrade', array(false, $this->getFilesToOverWrite()));
 
+            $modules = array();
+
             // Disable selected modules
             foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
-                \Includes\Utils\ModulesManager::disableModule($module->getActualName());
+                $module->setEnabled(false);
+                $modules[] = $module;
             }
+
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateInBatch($modules);
 
             if ($this->isForce()) {
                 if ($this->isNextStepAvailable()) {
