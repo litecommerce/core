@@ -231,7 +231,7 @@ class PaypalIPN extends \XLite\Base\Singleton
                     $request->payment_status
                 ),
                 $this->getRequestData(),
-                'Note: received IPN does not relate to any backend transaction registered with the order. It is possible if you update payment directly on Paypal site or if your customer or Paypal updated the payment.'
+                'Note: received IPN does not relate to any backend transaction registered with the order. It is possible if you update payment directly on PayPal site or if your customer or PayPal updated the payment.'
             );
         }
     }
@@ -327,7 +327,7 @@ class PaypalIPN extends \XLite\Base\Singleton
      */
     protected function getFormURL()
     {
-        return $this->isTestMode()
+        return $this->isTestModeEnabled()
             ? 'https://www.sandbox.paypal.com/cgi-bin/webscr'
             : 'https://www.paypal.com/cgi-bin/webscr';
     }
@@ -337,7 +337,7 @@ class PaypalIPN extends \XLite\Base\Singleton
      *
      * @return boolean
      */
-    protected function isTestMode()
+    protected function isTestModeEnabled()
     {
         return !empty(\XLite\Core\Request::getInstance()->test_ipn);
     }

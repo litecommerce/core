@@ -1019,23 +1019,34 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 }
             }
 
+            // Do not remove TABLES AND FOREIGN KEYS
             list($disabledTables, $disabledColumns) = \XLite\Core\Database::getInstance()
-                ->getDisabledStructures();
+                ->getDisabledStructuresToStore();
+
+            // Do not remove TABLES
+            list($enabledTables, $enabledColumns) = \XLite\Core\Database::getInstance()
+                ->getEnabledStructuresToStore();
 
             // Do not drop disabled tables and foreign keys
             foreach ($disabledTables as $i => $t) {
                 $disabledTables[$i] = preg_quote($t, '/');
             }
+
+            foreach ($enabledTables as $i => $t) {
+                $enabledTables[$i] = preg_quote($t, '/');
+            }
+
             $tablePrefix = preg_quote(\XLite\Core\Database::getInstance()->getTablePrefix(), '/');
 
             if ($disabledTables) {
                 $schema = preg_grep(
-                    '/DROP TABLE IF EXISTS `' . $tablePrefix . '(?:' . implode('|', $disabledTables) . ')`/Ss',
+                    '/ALTER TABLE `' . $tablePrefix . '(?:' . implode('|', $disabledTables) . ')` DROP FOREIGN KEY /Ss',
                     $schema,
                     PREG_GREP_INVERT
                 );
+
                 $schema = preg_grep(
-                    '/ALTER TABLE `' . $tablePrefix . '(?:' . implode('|', $disabledTables) . ')` DROP FOREIGN KEY /Ss',
+                    '/DROP TABLE IF EXISTS `' . $tablePrefix . '(?:' . implode('|', $disabledTables + $enabledTables) . ')`/Ss',
                     $schema,
                     PREG_GREP_INVERT
                 );
@@ -1668,11 +1679,11 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Assign calculated field 
-     * 
+     * Assign calculated field
+     *
      * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
      * @param string                                  $name         Field name
-     *  
+     *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      */
     protected function assignCalculatedField(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $name)

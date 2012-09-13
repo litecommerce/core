@@ -13,6 +13,6 @@
 <td class="payment" IF="order.getVisiblePaymentMethods()">
   <strong>{t(#Payment method#)}:</strong>
   {foreach:order.getVisiblePaymentMethods(),m}
-    {m.getName():h}<br />
+    {m.getTitle():h}<br />
   {end:}
 </td>

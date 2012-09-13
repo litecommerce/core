@@ -872,6 +872,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $expr = $this->flexyCondition(substr($str, 4));
             return static::PHP_OPEN . " if ($expr){" . static::PHP_CLOSE;
         }
+        if (substr($str, 0, 8) == '{elseif:') {
+            $expr = $this->flexyCondition(substr($str, 8));
+            return static::PHP_OPEN . " }elseif ($expr){" . static::PHP_CLOSE;
+        }
         if ($str == '{end:}') {
             return static::PHP_OPEN . " }" . static::PHP_CLOSE;
         }

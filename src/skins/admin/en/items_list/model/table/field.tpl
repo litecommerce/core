@@ -9,8 +9,11 @@
  * @link      http://www.litecommerce.com/
  *}
 
-{if:column.link}
-  <a href="{buildEntityURL(entity,column)}" class="link">{getColumnValue(column,entity)}</a>
-{else:}
-  {getColumnValue(column,entity)}
-{end:}
+<div class="plain-value">
+  {if:column.link}
+    <a href="{buildEntityURL(entity,column)}" class="link">{getColumnValue(column,entity)}</a>
+  {else:}
+    {getColumnValue(column,entity)}
+  {end:}
+  <img IF="column.noWrap" src="images/spacer.gif" class="right-fade" alt="" />
+</div>

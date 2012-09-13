@@ -42,6 +42,16 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Return false to use own submit button on payment method settings form
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return false;
+    }
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path
@@ -49,6 +59,71 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     public function getSettingsTemplateDir()
     {
         return 'modules/CDev/Paypal/settings/paypal_wps';
+    }
+
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return \XLite::PRODUCER_SITE_URL . 'partners/paypal.html';
+    }
+
+    /**
+     * Prevent enabling Paypal Standard if Express Checkout is already enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return boolean
+     */
+    public function canEnable(\XLite\Model\Payment\Method $method)
+    {
+        return parent::canEnable($method)
+            && \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS == $method->getServiceName()
+            && !$this->isExpressCheckoutEnabled();
+    }
+
+    /**
+     * Return true if ExpressCheckout method is enabled 
+     * 
+     * @return boolean
+     */
+    public function isExpressCheckoutEnabled()
+    {
+        static $result = null;
+
+        if (!isset($result)) {
+    
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC,
+                )
+            );
+
+            $result = $m && $m->isEnabled();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return string
+     */
+    public function getForbidEnableNote(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::getForbidEnableNote($method);
+
+        if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS == $method->getServiceName()) {
+            $result = 'This payment method cannot be enabled together with PayPal Express Checkout method';
+        }
+
+        return $result;
     }
 
     /**
@@ -111,6 +186,18 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             && $method->getSetting('account');
     }
 
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
 
     /**
      * Get redirect form URL
@@ -119,7 +206,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormURL()
     {
-        return $this->isTestMode()
+        return $this->isTestMode($this->transaction->getPaymentMethod())
             ? 'https://www.sandbox.paypal.com/cgi-bin/webscr'
             : 'https://www.paypal.com/cgi-bin/webscr';
     }
@@ -127,11 +214,13 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     /**
      * Return TRUE if the test mode is ON
      *
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *
      * @return boolean
      */
-    protected function isTestMode()
+    public function isTestMode(\XLite\Model\Payment\Method $method)
     {
-        return \XLite\View\FormField\Select\TestLiveMode::TEST === $this->getSetting('mode');
+        return \XLite\View\FormField\Select\TestLiveMode::TEST === $method->getSetting('mode');
     }
 
 
@@ -188,9 +277,9 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'bn'            => 'LiteCommerce',
         );
 
-        if ('Y' === $this->getSetting('address_override')) {
-            $fields['address_override'] = 1;
-        }
+        // Always use address passed from shopping cart
+        // (prevent customer from selection of other address on Paypal side)
+        $fields['address_override'] = 1;
 
         $fields = array_merge($fields, $this->getPhone());
 

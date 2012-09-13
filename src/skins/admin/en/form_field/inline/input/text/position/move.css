@@ -13,7 +13,7 @@
   background: transparent url(../../../../../images/move_cursor.png) no-repeat left top;
   width: 19px;
   height: 13px;
-  cursor: pointer;
+  cursor: move;
   margin-left: auto;
 }
 

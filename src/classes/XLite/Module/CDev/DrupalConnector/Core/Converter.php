@@ -51,7 +51,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      *
      * @return string
      */
-    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
+    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null, $forceCleanURL = false)
     {
         if ('' === $target) {
             $target = \XLite::TARGET_DEFAULT;

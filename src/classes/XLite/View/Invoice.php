@@ -144,6 +144,24 @@ class Invoice extends \XLite\View\AView
         return 4 + count($this->getOrder()->getItemsExcludeSurcharges());
     }
 
+    /**
+     * Get payment methods with instructions 
+     * 
+     * @return array
+     */
+    protected function getPaymentInstructions()
+    {
+        $list = array();
+
+        foreach ($this->getOrder()->getVisiblePaymentMethods() as $method) {
+            if ($method->getInstruction()) {
+                $list[] = $method;
+            }
+        }
+
+        return $list;
+    }
+
     // {{{ Surcharges
 
     /**

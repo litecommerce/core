@@ -116,10 +116,10 @@ class AdminPanel extends \XLite\View\AView
                 self::ITEM_DESCRIPTION => 'Online catalog structure setup',
             ),
             array(
-                self::ITEM_TARGET      => 'orders_stats',
+                self::ITEM_TARGET      => 'payment_settings',
                 self::ITEM_ICON        => 'images/menu/icon_statistics.gif',
-                self::ITEM_TITLE       => 'Statistics',
-                self::ITEM_DESCRIPTION => 'Review statistics on various aspects of your store\'s operation',
+                self::ITEM_TITLE       => 'Payment Settings',
+                self::ITEM_DESCRIPTION => 'Choose your payment options',
             ),
             array(
                 self::ITEM_TARGET      => 'product_list',
