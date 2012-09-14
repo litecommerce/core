@@ -58,6 +58,20 @@ class AddressField extends \XLite\Model\Base\I18n
     protected $serviceName;
 
     /**
+     * Getter name for address field (for AView::getAddressSectionData)
+     * For example:
+     * country for country_code
+     * state for state_id, custom_state
+     *
+     * The field is named with this value in the address forms.
+     * Also the "service-name-{$serviceName}" CSS class is added to the field
+     *
+     * @var string
+     * @Column(type="string", length=128, nullable=false)
+     */
+    protected $viewGetterName = '';
+
+    /**
      * Schema class for "Form field widget".
      * This class will be used in form widgets
      *

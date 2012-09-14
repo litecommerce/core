@@ -1840,4 +1840,32 @@ abstract class AView extends \XLite\Core\Handler
         );
     }
 
+    /**
+     * Return specific data for address entry. Helper.
+     *
+     * @param \XLite\Model\Address $address
+     *
+     * @return array
+     */
+    protected function getAddressSectionData(\XLite\Model\Address $address)
+    {
+        $result = array();
+        $repo = \XLite\Core\Database::getRepo('XLite\Model\AddressFieldValue');
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
+
+            $addressFieldValue = $address->{'get' . \Includes\Utils\Converter::convertToCamelCase($field->getViewGetterName() ?: $field->getServiceName())}();
+
+            if ($addressFieldValue) {
+                $result[$field->getServiceName()] = array(
+                    'css_class' => 'address-' . $field->getServiceName(),
+                    'title'     => $field->getName(),
+                    'value'     => $addressFieldValue,
+                );
+            }
+        }
+
+        return $result;
+    }
+
 }

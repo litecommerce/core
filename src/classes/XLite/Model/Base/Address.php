@@ -181,6 +181,26 @@ abstract class Address extends \XLite\Model\AEntity
     }
 
     /**
+     * Get country name
+     *
+     * @return string
+     */
+    public function getCountryName()
+    {
+        return $this->getCountry() ? $this->getCountry()->getCountry() : null;
+    }
+
+    /**
+     * Get state name
+     *
+     * @return string
+     */
+    public function getStateName()
+    {
+        return $this->getState()->getState();
+    }
+
+    /**
      * Get required fields by address type
      *
      * @param string $atype Address type code
