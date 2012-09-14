@@ -12,5 +12,5 @@
  *}
 <li class="zipcode">
   <label for="billing_address_zipcode">{t(#Zip code#)}:</label>
-  <input type="text" id="billing_address_zipcode" name="billingAddress[zipcode]" value="{sameAddress.zipcode}" class="field-required field-zipcode" />
+  <input type="text" id="billing_address_zipcode" name="billingAddress[zipcode]" value="{address.zipcode}" class="field-required field-zipcode" />
 </li>

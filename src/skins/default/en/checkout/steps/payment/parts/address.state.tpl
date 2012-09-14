@@ -12,5 +12,5 @@
  *}
 <li class="state">
   <label for="billing_address_state">{t(#State#)}:</label>
-  <widget class="\XLite\View\StateSelect" field="billingAddress[state]" fieldId="billing_address_state" state="{sameAddress.state}" isLinked="1" className="field-required" />
+  <widget class="\XLite\View\StateSelect" field="billingAddress[state]" fieldId="billing_address_state" state="{address.state}" isLinked="1" className="field-required" />
 </li>

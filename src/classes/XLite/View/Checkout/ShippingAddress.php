@@ -36,7 +36,7 @@ class ShippingAddress extends \XLite\View\AView
      *
      * @return \XLite\Model\Address
      */
-    public function getAddress()
+    public function getShippingAddress()
     {
         $address = null;
 

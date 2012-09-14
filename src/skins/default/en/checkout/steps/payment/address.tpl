@@ -21,7 +21,7 @@
 
   {else:}
     <ul class="form">
-      <list name="checkout.payment.address" />
+      <list name="checkout.payment.address" address="{getSameAddress()}" />
     </ul>
 
     {if:!isAnonymous()}

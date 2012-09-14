@@ -258,6 +258,14 @@ class Profile extends \XLite\Model\AEntity
 
 
     /**
+     * Cache for address types
+     *
+     * @var array Array of \XLite\Model\Address elements
+     */
+    protected $addressCache = array();
+
+
+    /**
      * Set membership
      *
      * @param \XLite\Model\Membership $membership Membership OPTIONAL
@@ -308,7 +316,9 @@ class Profile extends \XLite\Model\AEntity
      */
     public function getBillingAddress()
     {
-        return $this->getAddressByType(\XLite\Model\Address::BILLING);
+        return isset($this->addressCache[\XLite\Model\Address::BILLING])
+            ? $this->addressCache[\XLite\Model\Address::BILLING]
+            : $this->getAddressByType(\XLite\Model\Address::BILLING);
     }
 
     /**
@@ -318,7 +328,9 @@ class Profile extends \XLite\Model\AEntity
      */
     public function getShippingAddress()
     {
-        return $this->getAddressByType(\XLite\Model\Address::SHIPPING);
+        return isset($this->addressCache[\XLite\Model\Address::SHIPPING])
+            ? $this->addressCache[\XLite\Model\Address::SHIPPING]
+            : $this->getAddressByType(\XLite\Model\Address::SHIPPING);
     }
 
     /**
@@ -578,7 +590,7 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Get password hash algorhitm
-     * 
+     *
      * @return string
      */
     public function getPasswordAlgo()
@@ -646,6 +658,8 @@ class Profile extends \XLite\Model\AEntity
                 break;
             }
         }
+
+        $this->addressCache[$atype] = $result;
 
         return $result;
     }

@@ -12,5 +12,5 @@
  *}
 <li class="phone">
   <label for="billing_address_phone">{t(#Phone#)}:</label>
-  <input type="text" id="billing_address_phone" name="billingAddress[phone]" value="{sameAddress.phone}" class="field-phone" />
+  <input type="text" id="billing_address_phone" name="billingAddress[phone]" value="{address.phone}" class="field-phone" />
 </li>

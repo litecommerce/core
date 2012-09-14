@@ -12,5 +12,5 @@
  *}
 <li class="street">
   <label for="billing_address_street">{t(#Address#)}:</label>
-  <input type="text" id="billing_address_street" name="billingAddress[street]" value="{sameAddress.street}" class="field-required" />
+  <input type="text" id="billing_address_street" name="billingAddress[street]" value="{address.street}" class="field-required" />
 </li>

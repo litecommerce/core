@@ -223,6 +223,24 @@ class Address extends \XLite\Model\Base\PersonalAddress
     {
         $entity = parent::cloneEntity();
 
+        $cnd = array('address' => $this);
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
+
+            $cnd['addressField'] = $field;
+
+            $fieldValue = \XLite\Core\Database::getRepo('XLite\Model\AddressFieldValue')->findOneBy($cnd);
+
+            if ($fieldValue) {
+
+                $newFieldValue = $fieldValue->cloneEntity();
+                $newFieldValue->setAddress($entity);
+                $newFieldValue->setAddressField($field);
+            }
+
+            \XLite\Core\Database::getEM()->persist($newFieldValue);
+        }
+
         if ($this->getProfile()) {
             $entity->setProfile($this->getProfile());
         }

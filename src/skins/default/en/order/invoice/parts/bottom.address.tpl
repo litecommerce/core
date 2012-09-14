@@ -10,4 +10,4 @@
  *
  * @ListChild (list="invoice.bottom", weight="10")
  *}
-<list name="invoice.bottom.address" />
+<list name="invoice.bottom.address" baddress="{order.profile.billing_address}" saddress="{order.profile.shipping_address}" />

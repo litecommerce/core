@@ -66,9 +66,8 @@ class Address extends \XLite\View\Model\AModel
             $result[$addressId . '_' . $key] = $data;
         }
 
-        foreach (
-            \XLite\Core\Database::getRepo('XLite\Model\AddressField')->search(new \XLite\Core\CommonCell(array('enabled' => true))) as $field
-        ) {
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
+
             $result[$addressId . '_' . $field->getServiceName()] = array(
                 static::SCHEMA_CLASS    => $field->getSchemaClass(),
                 static::SCHEMA_LABEL    => $field->getName(),

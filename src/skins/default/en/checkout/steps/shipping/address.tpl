@@ -9,5 +9,5 @@
  * @link      http://www.litecommerce.com/
  *}
 <ul class="form">
-  <list name="checkout.shipping.address" />
+  <list name="checkout.shipping.address" address="{getShippingAddress()}" />
 </ul>

@@ -10,19 +10,19 @@
  *
  * @ListChild (list="invoice.bottom.address", weight="10")
  *}
-<td class="ship" IF="order.profile&order.profile.getShippingAddress()&getShippingModifier()&shippingModifier.getMethod()">
+<td class="ship" IF="saddress&getShippingModifier()&shippingModifier.getMethod()">
   <strong>{t(#Shipping address#)}</strong>
   <p>
-    {order.profile.shipping_address.title} {order.profile.shipping_address.firstname} {order.profile.shipping_address.lastname}
+    {saddress.title} {saddress.firstname} {saddress.lastname}
   </p>
 
   <p>
-    {order.profile.shipping_address.street}<br />
-    {order.profile.shipping_address.city}, {order.profile.shipping_address.state.state}, {order.profile.shipping_address.zipcode}<br />
-    {order.profile.shipping_address.country.country}
+    {saddress.street}<br />
+    {saddress.city}, {saddress.state.state}, {saddress.zipcode}<br />
+    {saddress.country.country}
   </p>
 
-  <p IF="order.profile.shipping_address.phone" class="last">
-    {t(#Phone#)}: {order.profile.shipping_address.phone}
+  <p IF="saddress.phone" class="last">
+    {t(#Phone#)}: {saddress.phone}
   </p>
 </td>

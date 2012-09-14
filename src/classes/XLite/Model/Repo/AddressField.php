@@ -98,6 +98,16 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
+     * Get all enabled address fields
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     */
+    public function findAllEnabled()
+    {
+        return $this->search(new \XLite\Core\CommonCell(array('enabled' => true)));
+    }
+
+    /**
      * Return list of handling search params
      *
      * @return array

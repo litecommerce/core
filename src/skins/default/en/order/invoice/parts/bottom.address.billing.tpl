@@ -13,17 +13,17 @@
 <td class="bill" IF="order.profile&order.profile.getBillingAddress()">
   <strong>{t(#Billing address#)}</strong>
   <p>
-    {order.profile.billing_address.title} {order.profile.billing_address.firstname} {order.profile.billing_address.lastname}
+    {baddress.title} {baddress.firstname} {baddress.lastname}
   </p>
 
   <p>
-    {order.profile.billing_address.street}<br />
-    {order.profile.billing_address.city}, {order.profile.billing_address.state.state}, {order.profile.billing_address.zipcode}<br />
-    {order.profile.billing_address.country.country}
+    {baddress.street}<br />
+    {baddress.city}, {baddress.state.state}, {baddress.zipcode}<br />
+    {baddress.country.country}
   </p>
 
-  <p IF="order.profile.billing_address.phone">
-    {t(#Phone#)}: {order.profile.billing_address.phone}
+  <p IF="baddress.phone">
+    {t(#Phone#)}: {baddress.phone}
   </p>
 
   <p>
