@@ -20,7 +20,7 @@ XLite\Model\Payment\Method:
       - name: user
       - name: pwd
       - name: partner
-        value: Paypal
+        value: PayPal
       - name: prefix
         value: mystore_
       - name: transaction_type
@@ -40,7 +40,7 @@ XLite\Model\Payment\Method:
       - name: user
       - name: pwd
       - name: partner
-        value: Paypal
+        value: PayPal
       - name: prefix
         value: mystore_
       - name: transaction_type
@@ -73,7 +73,7 @@ XLite\Model\Payment\Method:
       - name: user
       - name: pwd
       - name: partner
-        value: Paypal
+        value: PayPal
       - name: prefix
         value: mystore_
       - name: transaction_type
