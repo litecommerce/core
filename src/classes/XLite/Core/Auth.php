@@ -320,8 +320,8 @@ class Auth extends \XLite\Base
      */
     public function getMembershipId()
     {
-        return $this->getProfile()
-            ? ($this->getProfile()->getMembership() ? $this->getProfile()->getMembership()->getMembershipId() : null)
+        return $this->getProfile() && $this->getProfile()->getMembership()
+            ? $this->getProfile()->getMembership()->getMembershipId()
             : null;
     }
 

@@ -13,18 +13,12 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: User ID
-  - name: server_name
+  - name: server_url
     category: CDev\USPS
-    value: testing.shippingapis.com
+    value: 'https://testing.shippingapis.com/ShippingAPI.dll'
     translations:
       - code: en
-        option_name: USPS server URL (host part)
-  - name: server_path
-    category: CDev\USPS
-    value: ShippingAPI.dll
-    translations:
-      - code: en
-        option_name: USPS server URL path
+        option_name: USPS server URL
   - name: length
     category: CDev\USPS
     value: 10

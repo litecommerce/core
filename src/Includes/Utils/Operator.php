@@ -208,4 +208,49 @@ abstract class Operator extends \Includes\Utils\AUtils
     {
         return 0 === strpos(\Includes\Utils\Converter::prepareClassName($name), LC_NAMESPACE);
     }
+
+    /**
+     * Save service YAML
+     *
+     * @param string $path File path
+     * @param array  $data Data
+     *
+     * @return integer
+     */
+    public static function saveServiceYAML($path, array $data)
+    {
+        return \Includes\Utils\FileManager::write(
+            $path,
+            static::getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
+        );
+    }
+
+    /**
+     * Load service YAML
+     *
+     * @param string $path File path
+     *
+     * @return void
+     */
+    public static function loadServiceYAML($path)
+    {
+        $data = null;
+
+        if (\Includes\Utils\FileManager::isFile($path)) {
+            $data = \Symfony\Component\Yaml\Yaml::parse($path);
+        }
+        
+        return $data;
+    }
+
+    /**
+     * Get data storage service header
+     *
+     * @return string
+     */
+    public static function getServiceHeader()
+    {
+        return '# <' . '?php if (!defined(\'LC_DS\')) { die(); } ?' . '>' . PHP_EOL . PHP_EOL;
+    }
+
 }

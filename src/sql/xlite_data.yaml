@@ -484,7 +484,12 @@ XLite\Model\LanguageLabel:
   - { name: 'Backend payment transaction X issued', translations: [{ code: en, label: 'Backend payment transaction [method: {{trx_method}}, type: {{trx_type}}, amount: {{trx_value}}, status: {{trx_status}}]' }] }
   - { name: 'Your account email is X.', translations: [{ code: en, label: 'Your account email is {{email}}.' }] }
   - { name: 'Your account password is X.', translations: [{ code: en, label: 'Your account password is {{password}}.' }] }
-
+  - { name: 'Payment methods appearance description', translations: [{ code: en, label: 'Here you can define how your payment methods will look in customer area.<br />Here are shown only the methods enabled on the configuration page.' }] }
+  - { name: 'Watch this short video and learn the basics of how online payment processing works', translations: [{ code: en, label: "Watch this short video and learn the basics of how online payment processing works. You'll also find out what to look for when selecting the best payment processing solution for your business." }] }
+  - { name: 'X methods available', translations: [{ code: en, label: '{{count}} methods available' }] }
+  - { name: 'Payment method has been enabled successfully', translations: [{ code: en, label: 'Payment method has been enabled successfully' }] }
+  - { name: 'Payment method has been disabled successfully', translations: [{ code: en, label: 'Payment method has been disabled successfully' }] }
+  - { name: 'Payment method has been removed successfully', translations: [{ code: en, label: 'Payment method has been removed successfully' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -675,12 +680,12 @@ XLite\Model\Language:
   - { code: zu, code3: zul, translations: [{ code: en, name: Zulu }] }
 XLite\Model\Payment\Method:
   directives: { insert: true }
-  - { service_name: PurchaseOrder, class: 'Model\Payment\Processor\PurchaseOrder', orderby: 20, translations: [{ code: en, name: 'Purchase Order' }] }
-  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
-  - { service_name: FaxOrdering, class: 'Model\Payment\Processor\Offline', orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
-  - { service_name: MoneyOrdering, class: 'Model\Payment\Processor\Offline', orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
-  - { service_name: Echeck, class: 'Model\Payment\Processor\Check', orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
-  - { service_name: COD, class: 'Model\Payment\Processor\Offline', orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
+  - { service_name: PurchaseOrder, class: 'Model\Payment\Processor\PurchaseOrder', added: true, orderby: 20, translations: [{ code: en, name: 'Purchase Order' }] }
+  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
+  - { service_name: FaxOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
+  - { service_name: MoneyOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
+  - { service_name: Echeck, class: 'Model\Payment\Processor\Check', added: true, orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
+  - { service_name: COD, class: 'Model\Payment\Processor\Offline', added: true, orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
 XLite\Model\Country:
   - { country: Afghanistan,         id: 4,   code3: AFG, code: AF, currency: { currency_id: 971 } }
   - { country: Åland Islands,       id: 248, code3: ALA, code: AX, currency: { currency_id: 978 } }

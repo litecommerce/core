@@ -706,6 +706,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     {
         $hash = array(
             'items' => array(),
+            'total' => $this->getTotal(),
         );
 
         foreach ($this->getItems() as $item) {
@@ -800,8 +801,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $status = $this->getStatus();
 
         $list = array(self::STATUS_AUTHORIZED, self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
-
-        \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getOrderId());
 
         if (!in_array($status, $list)) {
 

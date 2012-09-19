@@ -257,6 +257,8 @@ abstract class ACustomer extends \XLite\Controller\AController
     {
         $result = false;
 
+        $diff = array();
+
         $old = $this->initialCartFingerprint;
         $new = $this->getCart()->getEventFingerprint();
         $items = array();
@@ -294,7 +296,15 @@ abstract class ACustomer extends \XLite\Controller\AController
         }
 
         if ($items) {
-            \XLite\Core\Event::updateCart(array('items' => $items));
+            $diff['items'] = $items;
+        }
+
+        if ($old['total'] != $this->getCart()->getTotal()) {
+            $diff['total'] = $this->getCart()->getTotal() - $old['total'];
+        }
+
+        if ($diff) {
+            \XLite\Core\Event::updateCart($diff);
             $result = true;
         }
 

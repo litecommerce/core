@@ -76,19 +76,20 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
             $this->updateCart();
 
+            \XLite\Core\Session::getInstance()->ec_type
+                = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
+
             $token = $paymentMethod->getProcessor()->doSetExpressCheckout($paymentMethod);
 
             if (isset($token)) {
                 \XLite\Core\Session::getInstance()->ec_token = $token;
                 \XLite\Core\Session::getInstance()->ec_date = time();
                 \XLite\Core\Session::getInstance()->ec_payer_id = null;
-                \XLite\Core\Session::getInstance()->ec_type
-                    = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
 
                 $paymentMethod->getProcessor()->redirectToPaypal($token);
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->addError('Failure to redirect to Paypal.');
+                \XLite\Core\TopMessage::getInstance()->addError('Failure to redirect to PayPal.');
             }
         }
     }
@@ -119,7 +120,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
             \XLite\Core\TopMessage::getInstance()->addError('Wrong token of Express Checkout.');
 
         } elseif (!isset($request->PayerID)) {
-            \XLite\Core\TopMessage::getInstance()->addError('PayerID value was not returned by Paypal.');
+            \XLite\Core\TopMessage::getInstance()->addError('PayerID value was not returned by PayPal.');
 
         } else {
 
@@ -134,7 +135,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
             $buyerData = $paymentMethod->getProcessor()->doGetExpressCheckoutDetails($paymentMethod, $request->token);
 
             if (empty($buyerData)) {
-                \XLite\Core\TopMessage::getInstance()->addError('Your address data was not received from Paypal.');
+                \XLite\Core\TopMessage::getInstance()->addError('Your address data was not received from PayPal.');
 
             } else {
                 // Fill the cart with data received from Paypal

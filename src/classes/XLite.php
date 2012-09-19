@@ -64,6 +64,12 @@ class XLite extends \XLite\Base
     const CACHE_TIMESTAMP = 'cache_build_timestamp';
 
     /**
+     * Producer site URL
+     */
+    const PRODUCER_SITE_URL = 'http://www.litecommerce.com/';
+
+
+    /**
      * Current area flag
      *
      * @var boolean
@@ -117,7 +123,7 @@ class XLite extends \XLite\Base
 
     /**
      * Check is cache building
-     * 
+     *
      * @return boolean
      */
     public static function isCacheBuilding()
@@ -287,6 +293,22 @@ class XLite extends \XLite\Base
     public function initModules()
     {
         \Includes\Utils\ModulesManager::initModules();
+    }
+
+    /**
+     * Update module registry
+     *
+     * @return void
+     */
+    public function updateModuleRegistry()
+    {
+        $calculatedHash = \XLite\Core\Database::getRepo('XLite\Model\Module')->calculateEnabledModulesRegistryHash();
+
+        if ($calculatedHash != \Includes\Utils\ModulesManager::getEnabledStructureHash()) {
+
+            \XLite\Core\Database::getRepo('XLite\Model\Module')->addEnabledModulesToRegistry();
+            \Includes\Utils\ModulesManager::saveEnabledStructureHash($calculatedHash);
+        }
     }
 
     /**
@@ -467,7 +489,7 @@ class XLite extends \XLite\Base
      */
     final public function getMinorVersion()
     {
-        return '0-RC';
+        return '1';
     }
 
     /**

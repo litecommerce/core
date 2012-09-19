@@ -10,9 +10,12 @@
 XLite\Model\Payment\Method:
   - service_name: PaypalWPS
     class: Module\CDev\PaypalWPS\Model\Payment\Processor\PaypalWPS
+    type: A
+    moduleName: CDev_Paypal
     translations:
       - code: en
-        name: PaypalWPS
+        name: PayPal Website Payments Standard
+        title: PayPal
     settings:
       - name: account
       - name: description

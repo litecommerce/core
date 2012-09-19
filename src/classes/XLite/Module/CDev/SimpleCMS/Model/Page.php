@@ -157,7 +157,7 @@ class Page extends \XLite\Model\AEntity
     public function getFrontURL()
     {
         return $this->getId()
-            ? \XLite::getInstance()->getShopURL(\XLite\Core\Converter::buildURL('page', '', array('id' => $this->getId()), 'cart.php'))
+            ? \XLite::getInstance()->getShopURL(\XLite\Core\Converter::buildURL('page', '', array('id' => $this->getId()), 'cart.php', true))
             : null;
     }
 

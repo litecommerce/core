@@ -972,7 +972,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo($this->defineRepositoryName())->search($cnd, $countOnly);
+        return $this->getRepository()->search($cnd, $countOnly);
     }
 
     // }}}

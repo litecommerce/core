@@ -10,3 +10,5 @@
 XLite\Model\Config:
   - { name: aggregate_css, category: Performance, type: checkbox, orderby: 20, value: Y, translations: [{ code: en, option_name: 'Aggregate CSS files' }] }
   - { name: aggregate_js, category: Performance, type: checkbox, orderby: 30, value: Y, translations: [{ code: en, option_name: 'Aggregate JS files' }] }
+  - { name: terms_url, category: Company, type: text, orderby: 380, value: 'cart.php?target=terms', translations: [{ code: en, option_name: 'Terms and conditions relative URL' }] }
+  - { name: trailing_zeroes, category: General, type: '', orderby: 605, value: 0, translations: [{ code: en, option_name: 'Hide trailing zeros in fractional part' }] }

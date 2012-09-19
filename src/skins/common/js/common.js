@@ -197,10 +197,9 @@ function loadDialog(url, dialogOptions, callback, link, $this)
 
   var selector = 'tmp-dialog-' + (new Date()).getTime() + '-' + jQuery(link).attr('class').toString().replace(/ /g, '-');
 
-  jQuery.get(
+  core.get(
     url,
-    {},
-    function(data, status, ajax) {
+    function(ajax, status, data) {
       if (data) {
         var div = jQuery(document.body.appendChild(document.createElement('div')))
           .hide()
@@ -216,6 +215,12 @@ function loadDialog(url, dialogOptions, callback, link, $this)
         // Every popup window (even hidden one) has this one defined CSS class.
         // You should use this selector to manage any popup window entry.
         div.addClass('popup-window-entry');
+
+        div.find('form').each(
+          function() {
+            new CommonForm(this);
+          }
+        );
 
         openDialog('.' + selector, dialogOptions);
 

@@ -634,7 +634,7 @@
                 case "textarea":
                 case "file":
                 default:
-                    if (!field.val())
+                    if (!$.trim(field.val()))
                         return options.allrules[rules[i]].alertText;
                     break;
                 case "radio":

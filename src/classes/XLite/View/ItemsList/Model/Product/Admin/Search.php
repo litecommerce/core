@@ -289,7 +289,7 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
 
     // }}}
 
-    // {{{ Behavoirs
+    // {{{ Behaviors
 
     /**
      * Mark list as removable
@@ -302,7 +302,7 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
     }
 
     /**
-     * Mark list as switchyabvle (enable / disable)
+     * Mark list as switchable (enable / disable)
      *
      * @return boolean
      */

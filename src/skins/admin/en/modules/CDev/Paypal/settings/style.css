@@ -89,9 +89,7 @@ hr.pp-line-last {
 #pp_partner,
 #pp_transaction_type,
 #pp_test {
-  margin-left: 12px;
-  margin-right: 8px;
-  width: 103px;
+  width: 200px;
   vertical-align: middle;
 }
 
@@ -115,3 +113,42 @@ hr.pp-line-last {
   line-height: 18px;
 }
 
+.payment-settings .logo-ppa {
+  background: transparent url(../images/ppa.png) no-repeat left top;
+  width: 229px;
+  height: 65px;
+  padding-bottom: 10px;
+}
+
+.payment-settings .logo-pfl {
+  background: transparent url(../images/pfl.png) no-repeat left top;
+  width: 280px;
+  height: 126px;
+  padding-bottom: 10px;
+}
+
+.payment-settings .logo-pec {
+  background: transparent url(https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif) no-repeat left top;
+  width: 145px;
+  height: 42px;
+  padding-bottom: 10px;
+}
+
+.payment-settings .footer .pp-token-enabled {
+  background: transparent url(../images/mark.png) no-repeat left 4px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+}
+
+.payment-settings .footer .pp-token-enabled-link {
+  padding-left: 30px;
+}
+
+.payment-settings.PaypalAdvanced .error.inline-error,
+.payment-settings.PayflowLink .error.inline-error,
+.payment-settings.ExpressCheckout .error.inline-error,
+.payment-settings.PaypalWPSUS .error.inline-error {
+  display: inline;
+  padding-left: 5px;
+  color: red;
+}
