@@ -199,6 +199,8 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         'PWY28' => array('POL'),
         'PWY32' => array('POL'),
         'PWY33' => array('POL'),
+        'PWY36' => array('POL'),
+        'EPY'   => array('BGR'),
     );
 
     /**
@@ -493,6 +495,18 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
 
             $this->transaction->setStatus($status);
         }
+    }
+
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
     }
 
     /**

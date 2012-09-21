@@ -32,6 +32,34 @@ namespace XLite\View\FormField\Inline\Input;
 class Text extends \XLite\View\FormField\Inline\Base\Single
 {
     /**
+     * Register JS files
+     *
+     * @return array
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'form_field/inline/input/text.js';
+
+        return $list;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'form_field/inline/input/text.css';
+
+        return $list;
+    }
+
+    /**
      * Define form field
      *
      * @return string
@@ -49,6 +77,16 @@ class Text extends \XLite\View\FormField\Inline\Base\Single
     protected function getContainerClass()
     {
         return parent::getContainerClass() . ' inline-text';
+    }
+
+    /**
+     * Get view template
+     *
+     * @return string
+     */
+    protected function getViewTemplate()
+    {
+        return 'form_field/inline/input/text.view.tpl';
     }
 
 }

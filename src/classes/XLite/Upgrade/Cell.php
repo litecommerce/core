@@ -648,6 +648,11 @@ class Cell extends \XLite\Base\Singleton
             );
 
         } else {
+
+            if (!$isTestMode) {
+                $this->preloadLibraries();
+            }
+
             $this->runHelpers('pre_upgrade', $isTestMode);
 
             foreach ($this->getEntries() as $entry) {
@@ -659,6 +664,35 @@ class Cell extends \XLite\Base\Singleton
         }
 
         return $result;
+    }
+
+    /**
+     * Preload libraries 
+     * 
+     * @return void
+     */
+    protected function preloadLibraries()
+    {
+        // Preload lib directory
+        $dirIterator = new \RecursiveDirectoryIterator(LC_DIR_LIB);
+        $iterator    = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach ($iterator as $filePath => $fileObject) {
+            if (preg_match('/\.php$/Ss', $filePath)) {
+                require_once $filePath;
+            }
+        }
+
+        // Preload \Includes
+        $dirIterator = new \RecursiveDirectoryIterator(LC_DIR_INCLUDES);
+        $iterator    = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach ($iterator as $filePath => $fileObject) {
+            if (preg_match('/\.php$/Ss', $filePath) && !preg_match('/install/Ss', $filePath)) {
+                require_once $filePath;
+            }
+        }
+
     }
 
     // }}}

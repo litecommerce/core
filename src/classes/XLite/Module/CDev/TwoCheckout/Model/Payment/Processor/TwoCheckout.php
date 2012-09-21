@@ -154,6 +154,19 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+
+    /**
      * Get redirect form URL
      *
      * @return string

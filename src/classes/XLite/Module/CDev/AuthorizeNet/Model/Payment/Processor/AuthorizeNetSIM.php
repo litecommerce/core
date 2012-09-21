@@ -308,6 +308,29 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
         );
     }
 
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+    /**
+     * Check - payment method has enabled test mode or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isTestMode(\XLite\Model\Payment\Method $method)
+    {
+        return (bool)$method->getSetting('test');
+    }
 
     /**
      * Get redirect form URL

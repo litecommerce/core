@@ -168,6 +168,41 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Check - payment method is configurable or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    public function isConfigurable(\XLite\Model\Payment\Method $method)
+    {
+        return (bool)$this->getConfigurationURL($method);
+    }
+
+    /**
+     * Get payment method configuration page URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getConfigurationURL(\XLite\Model\Payment\Method $method)
+    {
+        $url = null;
+
+        if ($this->getSettingsWidget()) {
+            $url = \XLite\Core\Converter::buildURL('payment_method', '', array('method_id' => $method->getMethodId()));
+
+        } elseif ($this->hasModuleSettings() && $this->getModule() && $this->getModule()->getSettingsForm()) {
+            $url = $this->getModule()->getSettingsForm();
+            $url .= (false === strpos($url, '?') ? '?' : '&')
+                . 'return=' . urlencode(\XLite\Core\Converter::buildURL('payment_settings'));
+        }
+
+        return $url;
+    }
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path
@@ -366,4 +401,135 @@ abstract class Processor extends \XLite\Base
     {
         return array();
     }
+
+    // {{{ Method helpers
+
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method has enabled test mode or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isTestMode(\XLite\Model\Payment\Method $method)
+    {
+        return \XLite\View\FormField\Select\TestLiveMode::TEST === $method->getSetting('mode');
+    }
+
+    /**
+     * Get warning note by payment method
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getWarningNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method is forced enabled or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isForcedEnabled(\XLite\Model\Payment\Method $method)
+    {
+        return false;
+    }
+
+    /**
+     * Get note with explanation why payment method was forcibly enabled
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getForcedEnabledNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method can be enabled or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function canEnable(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getForbidEnableNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Get links
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return array
+     */
+    public function getLinks(\XLite\Model\Payment\Method $method)
+    {
+        return array();
+    }
+
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Return true if payment method settings form should use default submit button.
+     * Otherwise, settings widget must define its own button
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return true;
+    }
+
+    /**
+     * Do something when payment method is enabled 
+     * 
+     * @return void
+     */
+    public function enableMethod(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    // }}}
 }

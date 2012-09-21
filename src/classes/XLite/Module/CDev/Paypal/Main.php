@@ -31,6 +31,14 @@ namespace XLite\Module\CDev\Paypal;
  */
 abstract class Main extends \XLite\Module\AModule
 {
+    /**
+     * Paypal methods service names
+     */
+    const PP_METHOD_PPA = 'PaypalAdvanced';
+    const PP_METHOD_PFL = 'PayflowLink';
+    const PP_METHOD_EC  = 'ExpressCheckout';
+    const PP_METHOD_PPS = 'PaypalWPSUS';
+
 
     /**
      * Author name
@@ -49,7 +57,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'Paypal';
+        return 'PayPal US';
     }
 
     /**
@@ -80,7 +88,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Enables taking payments for your online store via Paypal services.';
+        return 'Enables taking payments for your online store via PayPal services (for US merchants).';
     }
 
     /**
@@ -144,5 +152,18 @@ abstract class Main extends \XLite\Module\AModule
         }
 
         return $result;
+    }
+
+    /**
+     * Return list of mutually exclusive modules
+     *
+     * @return array
+     */
+    public static function getMutualModulesList()
+    {
+        $list = parent::getMutualModulesList();
+        $list[] = 'CDev\PaypalWPS';
+
+        return $list;
     }
 }

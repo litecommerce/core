@@ -2,7 +2,7 @@
 /**
  * $Header$
  *
- * @version $Revision: 255603 $
+ * @version $Revision: 305290 $
  * @package Log
  */
 
@@ -36,6 +36,15 @@ class Log_display extends Log
      * @access private
      */
     var $_timeFormat = '%b %d %H:%M:%S';
+
+    /**
+     * Flag indicating whether raw message text should be passed directly to 
+     * the log system.  Otherwise, the text will be converted to an HTML-safe 
+     * representation.
+     * @var boolean
+     * @access private
+     */
+    var $_rawText = false;
 
     /**
      * Constructs a new Log_display object.
@@ -93,6 +102,11 @@ class Log_display extends Log
         if (!empty($conf['timeFormat'])) {
             $this->_timeFormat = $conf['timeFormat'];
         }
+
+        /* Message text conversion can be disabled. */
+        if (isset($conf['rawText'])) {
+            $this->_rawText = $conf['rawText'];
+        }
     }
 
     /**
@@ -146,11 +160,17 @@ class Log_display extends Log
         /* Extract the string representation of the message. */
         $message = $this->_extractMessage($message);
 
+        /* Convert the message to an HTML-friendly represention unless raw 
+         * text has been requested. */
+        if ($this->_rawText === false) {
+            $message = nl2br(htmlspecialchars($message));
+        }
+
         /* Build and output the complete log line. */
         echo $this->_format($this->_lineFormat,
                             strftime($this->_timeFormat),
                             $priority,
-                            nl2br(htmlspecialchars($message)));
+                            $message);
 
         /* Notify observers about this log message. */
         $this->_announce(array('priority' => $priority, 'message' => $message));

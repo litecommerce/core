@@ -10,6 +10,7 @@
 XLite\Model\Payment\Method:
   - service_name: AuthorizeNet SIM
     class: Module\CDev\AuthorizeNet\Model\Payment\Processor\AuthorizeNetSIM
+    type: C
     translations:
       - code: en
         name: Authorize.Net SIM

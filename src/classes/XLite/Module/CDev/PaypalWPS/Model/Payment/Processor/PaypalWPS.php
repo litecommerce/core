@@ -51,8 +51,29 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      */
     public function getSettingsWidget()
     {
-        return 'modules/CDev/PaypalWPS/config.tpl';
+        return '\XLite\Module\CDev\PaypalWPS\View\PaypalSettings';
     }
+
+    /**
+     * Return false to use own submit button on payment method settings form
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return false;
+    }
+
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return \XLite::PRODUCER_SITE_URL . 'partners/paypal.html';
+    }
+
 
     /**
      * Process callback
@@ -165,6 +186,18 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             && $method->getSetting('account');
     }
 
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
 
     /**
      * Return URL for IPN verification transaction
@@ -212,7 +245,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormURL()
     {
-        return $this->isTestMode()
+        return $this->isTestMode($this->transaction->getPaymentMethod())
             ? 'https://www.sandbox.paypal.com/cgi-bin/webscr'
             : 'https://www.paypal.com/cgi-bin/webscr';
     }
@@ -220,11 +253,13 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     /**
      * Return TRUE if the test mode is ON
      *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
      * @return boolean
      */
-    protected function isTestMode()
+    public function isTestMode(\XLite\Model\Payment\Method $method)
     {
-        return \XLite\View\FormField\Select\TestLiveMode::TEST === $this->getSetting('mode');
+        return \XLite\View\FormField\Select\TestLiveMode::TEST === $method->getSetting('mode');
     }
 
 

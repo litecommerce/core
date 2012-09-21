@@ -181,7 +181,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 $this->redirect($this->buildURL('checkout'));
 
             } else {
+                // Register 'Place order' event in the order history 
+                \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getCart()->getOrderId());
 
+                // Make order payment step
                 $this->doPayment();
             }
         }

@@ -32,6 +32,16 @@ namespace XLite\Model\Payment\Processor;
 class Offline extends \XLite\Model\Payment\Base\Processor
 {
     /**
+     * Get settings widget or template
+     *
+     * @return string Widget class name or template path
+     */
+    public function getSettingsWidget()
+    {
+        return 'payment/offline.tpl';
+    }
+
+    /**
      * Do initial payment
      *
      * @return string Status code

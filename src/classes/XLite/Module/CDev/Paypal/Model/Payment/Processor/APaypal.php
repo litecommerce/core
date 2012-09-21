@@ -80,6 +80,16 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Return false to use own submit button on payment method settings form
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return false;
+    }
+
+    /**
      * Get allowed backend transactions
      *
      * @return string Status code
@@ -93,6 +103,164 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         );
     }
 
+    /**
+     * Get list of payment method settings which can be created
+     * 
+     * @return array
+     */
+    public function getAvailableSettings()
+    {
+        return array(
+            'hide_instruction',
+        );
+    }
+
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return \XLite::PRODUCER_SITE_URL . 'partners/paypal.html';
+    }
+
+    /**
+     * Prevent enabling Express Checkout if Paypal Standard is already enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return boolean
+     */
+    public function canEnable(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::canEnable($method);
+
+        if ($result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS,
+                )
+            );
+            $result = !($m && $m->isEnabled()) || $this->isForcedEnabled($method);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return string
+     */
+    public function getForbidEnableNote(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::getForbidEnableNote($method);
+
+        if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
+            $result = 'This payment method cannot be enabled together with PayPal Payments Standard method';
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return true if current method is EC and PPA or PFL are enabled 
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return boolean
+     */
+    public function isForcedEnabled(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::isForcedEnabled($method);
+
+        if (!$result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
+            $parentMethod = $this->getParentMethod();
+            $result = isset($parentMethod);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get note with explanation why payment method was forcibly enabled
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getForcedEnabledNote(\XLite\Model\Payment\Method $method)
+    {
+        $result = parent::getForcedEnabledNote($method);
+
+        if (!$result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
+            $parentMethod = $this->getParentMethod();
+            if (isset($parentMethod)) {
+                $result = 'Must be enabled as you use PayPal Payments Advanced or PayPal Payflow Link';
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Do something when payment method is enabled 
+     * 
+     * @return void
+     */
+    public function enableMethod(\XLite\Model\Payment\Method $method)
+    {
+        $methods = array(
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPA,
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PFL,
+        );
+
+        if (in_array($method->getServiceName(), $methods)) {
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC,
+                )
+            );
+            if ($m) {
+                $m->setAdded(true);
+                $m->setEnabled(true);
+            }
+        }
+    }
+
+    /**
+     * Get payment method which forced enabling of Express Checkout
+     * 
+     * @return \XLite\Model\Payment\Method
+     */
+    public function getParentMethod()
+    {
+        $result = null;
+
+        $relatedMethods = array(
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPA,
+            \XLite\Module\CDev\Paypal\Main::PP_METHOD_PFL,
+        );
+
+        foreach ($relatedMethods as $rm) {
+    
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(
+                array(
+                    'service_name' => $rm,
+                )
+            );
+    
+            if ($m && $m->isEnabled()) {
+                $result = $m;
+                break;
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Get return type of the iframe-method: html redirect with destroying an iframe
@@ -260,6 +428,18 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         }
     }
 
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
 
     /**
      * Return true if Paypal response is a success transaction response 
@@ -307,17 +487,19 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getAPIURL()
     {
-        return $this->isTestMode() ? $this->apiTestURL : $this->apiLiveURL;
+        return $this->isTestMode($this->transaction->getPaymentMethod()) ? $this->apiTestURL : $this->apiLiveURL;
     }
 
     /**
      * Return true if module is in test mode
      *
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *
      * @return boolean
      */
-    protected function isTestMode()
+    public function isTestMode(\XLite\Model\Payment\Method $method)
     {
-        return 'Y' == $this->getSetting('test');
+        return 'Y' == $method->getSetting('test');
     }
 
     /**
@@ -451,7 +633,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);
@@ -487,7 +669,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);
@@ -522,7 +704,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);
@@ -664,7 +846,9 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
         if ($shippingModifier && $shippingModifier->canApply()) {
             $noShipping = '0';
-            $freightAmt = $order->getCurrency()->roundValue($order->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_SHIPPING));
+            $freightAmt = $order->getCurrency()->roundValue(
+                $order->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_SHIPPING)
+            );
 
         } else {
             $noShipping = '1';
@@ -682,7 +866,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'BILLTOCITY'        => $this->getProfile()->getBillingAddress()->getCity(),
             'BILLTOSTATE'       => $this->getProfile()->getBillingAddress()->getState()->getCode(),
             'BILLTOZIP'         => $this->getProfile()->getBillingAddress()->getZipcode(),
-            'BILLTOCOUNTRY'     => strtoupper($this->getProfile()->getBillingAddress()->getCountry()->getCode3()),
+            'BILLTOCOUNTRY'     => strtoupper($this->getProfile()->getBillingAddress()->getCountry()->getCode()),
             'ERRORURL'          => urldecode($this->getReturnURL(null, true)),
             'RETURNURL'         => urldecode($this->getReturnURL(null, true)),
             'CANCELURL'         => urldecode($this->getReturnURL(null, true, true)),
@@ -714,7 +898,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
                 'SHIPTOCITY'        => $this->getProfile()->getShippingAddress()->getCity(),
                 'SHIPTOSTATE'       => $this->getProfile()->getShippingAddress()->getState()->getCode(),
                 'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
-                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode3(),
+                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode(),
                 'SHIPTOEMAIL'       => $this->getProfile()->getLogin(),
             );
         }
@@ -760,7 +944,9 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             // Prepare data about discount
 
-            $discount = $obj->getCurrency()->roundValue($obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_DISCOUNT));
+            $discount = $obj->getCurrency()->roundValue(
+                $obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_DISCOUNT)
+            );
 
             if (0 != $discount) {
                 $lineItems['L_COST' . $index] = $discount;
@@ -773,7 +959,9 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             // Prepare data about summary tax cost
 
-            $taxCost = $obj->getCurrency()->roundValue($obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_TAX));
+            $taxCost = $obj->getCurrency()->roundValue(
+                $obj->getSurchargeSumByType(\XLite\Model\Base\Surcharge::TYPE_TAX)
+            );
 
             if (0 < $taxCost) {
                 $lineItems['L_TAXAMT' . $index] = $taxCost;

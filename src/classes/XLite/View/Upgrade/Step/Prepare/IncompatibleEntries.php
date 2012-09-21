@@ -122,7 +122,7 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
         $classModule = \Includes\Utils\Converter::prepareClassName($classModule);
         $classActual = \Includes\Utils\Converter::prepareClassName($reflection->getDeclaringClass()->getName());
 
-        return version_compare($versionModule, $versionCore, '<') && $classModule === $classActual;
+        return version_compare($versionModule, $versionCore, '<') || $classModule !== $classActual;
     }
 
     /**

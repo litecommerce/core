@@ -136,25 +136,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
     }
 
     /**
-     * Disable module
-     *
-     * @return void
-     */
-    protected function doActionDisable()
-    {
-        $module = $this->getModule();
-
-        if ($module) {
-
-            // Update data in DB
-            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
-
-            // Flag to rebuild cache
-            \XLite::setCleanUpCacheFlag(true);
-        }
-    }
-
-    /**
      * Uninstall module
      *
      * @return void
@@ -191,7 +172,8 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
                 // Disable this and depended modules
                 \Includes\Utils\ModulesManager::disableModule($module->getActualName());
-
+                \Includes\Utils\ModulesManager::removeModuleFromDisabledStructure($module->getActualName());
+                
                 // Remove from DB
                 \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
 

@@ -274,7 +274,7 @@ abstract class Database extends \Includes\Utils\AUtils
     public static function isInnoDBSupported()
     {
         $innodbFound = false;
-    
+
         $result = static::getHandler()->query('SHOW ENGINES');
 
         if ($result) {
@@ -380,5 +380,15 @@ abstract class Database extends \Includes\Utils\AUtils
         }
 
         return $result;
+    }
+
+    /**
+     * Return tables prefix in the DB
+     *
+     * @return string
+     */
+    public static function getTablesPrefix()
+    {
+        return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'table_prefix'));
     }
 }
