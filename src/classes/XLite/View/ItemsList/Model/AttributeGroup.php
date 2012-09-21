@@ -26,10 +26,10 @@
 namespace XLite\View\ItemsList\Model;
 
 /**
- * Product classes items list
+ * Attribute groups items list
  *
  */
-class ProductClass extends \XLite\View\ItemsList\Model\Table
+class AttributeGroup extends \XLite\View\ItemsList\Model\Table
 {
     /**
      * Get a list of CSS files required to display the widget properly
@@ -40,7 +40,7 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'product_classes/style.css';
+        $list[] = 'attribute_groups/style.css';
 
         return $list;
     }
@@ -54,12 +54,9 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
     {
         return array(
             'name' => array(
-                static::COLUMN_CLASS        => 'XLite\View\FormField\Inline\Input\Text\ProductClass',
-                static::COLUMN_PARAMS       => array('required' => true),
-                static::COLUMN_MAIN         => true,
-            ),
-            'attributes' => array(
-                static::COLUMN_TEMPLATE     => 'product_classes/parts/edit_attributes.tpl',
+                static::COLUMN_CLASS    => 'XLite\View\FormField\Inline\Input\Text',
+                static::COLUMN_MAIN     => true,
+                static::COLUMN_PARAMS   => array('required' => true),
             ),
         );
     }
@@ -71,7 +68,7 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
      */
     protected function defineRepositoryName()
     {
-        return 'XLite\Model\ProductClass';
+        return 'XLite\Model\AttributeGroup';
     }
 
     /**
@@ -81,7 +78,7 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
      */
     protected function getCreateURL()
     {
-        return \XLite\Core\Converter::buildUrl('product_class');
+        return \XLite\Core\Converter::buildUrl('attribute_group');
     }
 
     /**
@@ -91,7 +88,7 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
      */
     protected function getCreateButtonLabel()
     {
-        return 'New product class';
+        return 'New group';
     }
 
     /**
@@ -103,7 +100,6 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
     {
         return static::CREATE_INLINE_TOP;
     }
-
 
     // {{{ Behaviors
 
@@ -136,7 +132,7 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
      */
     protected function getContainerClass()
     {
-        return parent::getContainerClass() . ' product_classes';
+        return parent::getContainerClass() . ' attribute_groups';
     }
 
     /**
@@ -146,7 +142,21 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
      */
     protected function getPanelClass()
     {
-        return 'XLite\View\StickyPanel\ItemsList\ProductClass';
+        return null;
+    }
+
+    /**
+     * Create entity
+     *
+     * @return \XLite\Model\AEntity
+     */
+    protected function createEntity()
+    {
+        $entity = parent::createEntity();
+
+        $entity->setProductClass($this->getProductClass());
+
+        return $entity;
     }
 
 
@@ -164,6 +174,7 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
 
     /**
      * Return params list to use for search
+     * TODO refactor
      *
      * @return \XLite\Core\CommonCell
      */
@@ -178,6 +189,8 @@ class ProductClass extends \XLite\View\ItemsList\Model\Table
                 $result->$modelParam = $paramValue;
             }
         }
+
+        $result->productClass = $this->getProductClass();
 
         return $result;
     }

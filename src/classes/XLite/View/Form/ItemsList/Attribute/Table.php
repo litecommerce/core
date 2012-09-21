@@ -23,34 +23,44 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\View\Form\ItemsList\Attribute;
 
 /**
- * Product class page view
+ * Attributes list table form
  *
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClass extends \XLite\View\AView
+class Table extends \XLite\View\Form\ItemsList\AItemsList
 {
     /**
-     * Return list of allowed targets
-     *
-     * @return array
-     */
-    public static function getAllowedTargets()
-    {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
-    }
-
-    /**
-     * Return widget default template
+     * Return default value for the "target" parameter
      *
      * @return string
      */
-    protected function getDefaultTemplate()
+    protected function getDefaultTarget()
     {
-        return 'product_class/body.tpl';
+        return 'attributes';
+    }
+
+    /**
+     * Return default value for the "action" parameter
+     *
+     * @return string
+     */
+    protected function getDefaultAction()
+    {
+        return 'update';
+    }
+
+    /**
+     * Return list of the form default parameters
+     *
+     * @return array
+     */
+    protected function getDefaultParams()
+    {
+        return array(
+            'product_class_id' => intval(\XLite\Core\Request::getInstance()->product_class_id),
+        );
     }
 
 }

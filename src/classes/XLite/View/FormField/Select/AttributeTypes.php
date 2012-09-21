@@ -23,34 +23,21 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\View\FormField\Select;
 
 /**
- * Product class page view
+ * Attribute types selector
  *
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClass extends \XLite\View\AView
+class AttributeTypes extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * Return list of allowed targets
+     * Get default options
      *
      * @return array
      */
-    public static function getAllowedTargets()
+    protected function getDefaultOptions()
     {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
+        return \XLite\Model\Attribute::getTypes();
     }
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'product_class/body.tpl';
-    }
-
 }

@@ -26,12 +26,12 @@
 namespace XLite\View;
 
 /**
- * Product class page view
+ * Attribute page view
  *
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClass extends \XLite\View\AView
+class Attribute extends \XLite\View\AView
 {
     /**
      * Return list of allowed targets
@@ -40,7 +40,7 @@ class ProductClass extends \XLite\View\AView
      */
     public static function getAllowedTargets()
     {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
+        return array_merge(parent::getAllowedTargets(), array('attribute'));
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductClass extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'product_class/body.tpl';
+        return 'attribute/body.tpl';
     }
 
 }

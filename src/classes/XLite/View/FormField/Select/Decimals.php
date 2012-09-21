@@ -23,34 +23,32 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\View\FormField\Select;
 
 /**
- * Product class page view
+ * Decimals selector
  *
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClass extends \XLite\View\AView
+class Decimals extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * Return list of allowed targets
+     * Get default options
      *
      * @return array
      */
-    public static function getAllowedTargets()
+    protected function getDefaultOptions()
     {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
+        return array(
+            0 => 0,
+            1 => 1,
+            2 => 2,
+            3 => 3,
+            4 => 4,
+            5 => 5,
+            6 => 6,
+            7 => 7,
+            8 => 8,
+            9 => 9
+        );
     }
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'product_class/body.tpl';
-    }
-
 }

@@ -23,34 +23,41 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\View\FormField\Select;
 
 /**
- * Product class page view
+ * Attribute groups selector
  *
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClass extends \XLite\View\AView
+class AttributeGroups extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * Return list of allowed targets
+     * Get attribute groups list
      *
      * @return array
      */
-    public static function getAllowedTargets()
+    protected function getAttributeGroupsList()
     {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
+        $list = array();
+        $cnd = new \XLite\Core\CommonCell;
+        if ($this->getProductClass()) {
+            $cnd->productClass = $this->getProductClass();
+        }
+
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\AttributeGroup')->search($cnd) as $e) {
+            $list[$e->getId()] = $e->getName();
+        }
+
+        return $list;
     }
 
     /**
-     * Return widget default template
+     * Get default options
      *
-     * @return string
+     * @return array
      */
-    protected function getDefaultTemplate()
+    protected function getDefaultOptions()
     {
-        return 'product_class/body.tpl';
+        return array('0' => 'No group') + $this->getAttributeGroupsList();
     }
-
 }

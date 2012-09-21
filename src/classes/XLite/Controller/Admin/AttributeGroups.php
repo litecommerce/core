@@ -26,11 +26,24 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Product classes controller
+ * Attribute groups controller
  *
  */
-class ProductClasses extends \XLite\Controller\Admin\AAdmin
+class AttributeGroups extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Controller parameters
+     *
+     * @var array
+     */
+    protected $params = array('target', 'product_class_id');
+
+    /**
+     * Product class
+     *
+     * @var \XLite\Model\ProductClass
+     */
+    protected $productClass;
 
     /**
      * Check ACL permissions
@@ -39,17 +52,27 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      */
     public function checkACL()
     {
-        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage catalog');
+        return (parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage catalog'))
+            && $this->getProductClass()
+            && $this->isAJAX();
     }
 
     /**
-     * Return the current page title (for the content area)
+     * Get product class 
      *
-     * @return string
+     * @return \XLite\Model\ProductClass
      */
-    public function getTitle()
+    public function getProductClass()
     {
-        return static::t('Product classes');
+        if (
+            is_null($this->productClass)
+            && \XLite\Core\Request::getInstance()->product_class_id
+        ) {
+            $this->productClass = \XLite\Core\Database::getRepo('XLite\Model\ProductClass')
+                ->find(intval(\XLite\Core\Request::getInstance()->product_class_id));
+        }
+
+        return $this->productClass;
     }
 
     /**
@@ -59,8 +82,19 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $list = new \XLite\View\ItemsList\Model\ProductClass;
+        $this->setInternalRedirect();
+        $list = new \XLite\View\ItemsList\Model\AttributeGroup;
         $list->processQuick();
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return static::t('Manage attribute groups');
     }
 
     // {{{ Search
@@ -88,7 +122,7 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSearch()
     {
-        $cellName = \XLite\View\ItemsList\Model\ProductClass::getSessionCellName();
+        $cellName = \XLite\View\ItemsList\Model\AttributeGroup::getSessionCellName();
 
         \XLite\Core\Session::getInstance()->$cellName = $this->getSearchParams();
     }
@@ -103,7 +137,7 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
         $searchParams = $this->getConditions();
 
         foreach (
-            \XLite\View\ItemsList\Model\ProductClass::getSearchParams() as $requestParam
+            \XLite\View\ItemsList\Model\AttributeGroup::getSearchParams() as $requestParam
         ) {
             if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
                 $searchParams[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
@@ -120,7 +154,7 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      */
     protected function getConditions()
     {
-        $cellName = \XLite\View\ItemsList\Model\ProductClass::getSessionCellName();
+        $cellName = \XLite\View\ItemsList\Model\AttributeGroup::getSessionCellName();
 
         $searchParams = \XLite\Core\Session::getInstance()->$cellName;
 

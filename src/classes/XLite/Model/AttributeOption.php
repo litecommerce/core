@@ -23,34 +23,45 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\Model;
 
 /**
- * Product class page view
+ * Attribute option
  *
- *
- * @ListChild (list="admin.center", zone="admin")
+ * @Entity
+ * @Table  (name="attribute_options")
  */
-class ProductClass extends \XLite\View\AView
+class AttributeOption extends \XLite\Model\Base\I18n
 {
     /**
-     * Return list of allowed targets
+     * ID
      *
-     * @return array
+     * @var integer
+     *
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="uinteger")
      */
-    public static function getAllowedTargets()
-    {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
-    }
+    protected $id;
 
     /**
-     * Return widget default template
+     * Default flag 
      *
-     * @return string
+     * @var   boolean   
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="boolean")
      */
-    protected function getDefaultTemplate()
-    {
-        return 'product_class/body.tpl';
-    }
+    protected $default = false;
 
+    /**
+     * Attribute 
+     *
+     * @var \XLite\Model\AttributeGroup
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Attribute", inversedBy="attribute_options")
+     * @JoinColumn (name="attribute_id", referencedColumnName="id")
+     */
+    protected $attribute;
 }

@@ -23,34 +23,12 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\View\StickyPanel\ItemsList;
 
 /**
- * Product class page view
+ * Attributes items list's sticky panel
  *
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClass extends \XLite\View\AView
+class Attribute extends \XLite\View\StickyPanel\ItemsListForm
 {
-    /**
-     * Return list of allowed targets
-     *
-     * @return array
-     */
-    public static function getAllowedTargets()
-    {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
-    }
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'product_class/body.tpl';
-    }
-
 }

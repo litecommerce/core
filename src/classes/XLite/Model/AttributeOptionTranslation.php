@@ -23,34 +23,29 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\Model;
 
 /**
- * Product class page view
+ * Attribute option multilingual data
  *
  *
- * @ListChild (list="admin.center", zone="admin")
+ * @Entity
+ *
+ * @Table (name="attribute_option_translations",
+ *         indexes={
+ *              @Index (name="ci", columns={"code","id"}),
+ *              @Index (name="id", columns={"id"})
+ *         }
+ * )
  */
-class ProductClass extends \XLite\View\AView
+class AttributeOptionTranslation extends \XLite\Model\Base\Translation
 {
     /**
-     * Return list of allowed targets
+     * Name
      *
-     * @return array
-     */
-    public static function getAllowedTargets()
-    {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
-    }
-
-    /**
-     * Return widget default template
+     * @var string
      *
-     * @return string
+     * @Column (type="string", length=255)
      */
-    protected function getDefaultTemplate()
-    {
-        return 'product_class/body.tpl';
-    }
-
+    protected $name;
 }

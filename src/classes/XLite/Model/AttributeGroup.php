@@ -65,4 +65,36 @@ class AttributeGroup extends \XLite\Model\Base\I18n
      */
     protected $product_class;
 
+    /**
+     * Attributes
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @OneToMany (targetEntity="XLite\Model\Attribute", mappedBy="attribute_group")
+     */
+    protected $attributes;
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties OPTIONAL
+     *
+     * @return void
+     */
+    public function __construct(array $data = array())
+    {
+        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
+
+    /**
+     * Return number of attributes associated with this class
+     *
+     * @return integer
+     */
+    public function getAttributesCount()
+    {
+        return count($this->getAttributes());
+    }
 }

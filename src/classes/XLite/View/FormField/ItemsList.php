@@ -23,34 +23,61 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\View\FormField;
 
 /**
- * Product class page view
+ * Items list
  *
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClass extends \XLite\View\AView
+class ItemsList extends \XLite\View\FormField\AFormField
 {
     /**
-     * Return list of allowed targets
-     *
-     * @return array
+     * Widget parameters
      */
-    public static function getAllowedTargets()
-    {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
-    }
+    const PARAM_LIST_CLASS = 'listClass';
 
     /**
-     * Return widget default template
+     * Return field type
      *
      * @return string
      */
-    protected function getDefaultTemplate()
+    public function getFieldType()
     {
-        return 'product_class/body.tpl';
+        return self::FIELD_TYPE_ITEMS_LIST;
+    }
+
+    /**
+     * Return field template
+     *
+     * @return string
+     */
+    protected function getFieldTemplate()
+    {
+        return 'items_list.tpl';
+    }
+
+    /**
+     * Define widget params
+     *
+     * @return void
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_LIST_CLASS => new \XLite\Model\WidgetParam\String('List class', ''),
+        );
+    }
+
+    /**
+     * Get list class
+     *
+     * @return string
+     */
+    protected function getListClass()
+    {
+        return $this->getParam(self::PARAM_LIST_CLASS);
     }
 
 }

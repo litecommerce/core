@@ -64,6 +64,39 @@ class Attribute extends \XLite\Model\Base\I18n
     protected $position = 0;
 
     /**
+     * Default value 
+     *
+     * @var   text   
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="text")
+     */
+    protected $defaultValue;
+
+    /**
+     * Decimals
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer", length=1)
+     */
+    protected $decimals = 0;
+
+    /**
+     * Unit
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string")
+     */
+    protected $unit;
+
+    /**
      * Product class 
      *
      * @var \XLite\Model\ProductClass
@@ -101,7 +134,7 @@ class Attribute extends \XLite\Model\Base\I18n
      */
     public function __construct(array $data = array())
     {
-        $this->attribute_values = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->attribute_values = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
@@ -135,6 +168,70 @@ class Attribute extends \XLite\Model\Base\I18n
         return isset($type)
             ? (isset($list[$type]) ? $list[$type] : null)
             : $list;
+    }
+
+    /**
+     * Return number of values associated with this attribute
+     *
+     * @return integer
+     */
+    public function getValuesCount()
+    {
+        return 1;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type Type
+     *
+     * @return void
+     */
+    public function setType($type)
+    {
+        $types = static::getTypes();
+
+        if (isset($types[$type])) {
+            if (
+                $this->type
+                && $type != $this->type
+            ) {
+                $this->setDefaultValue($this->defaultValue);
+            }
+            $this->type = $type;
+        }
+    }
+
+    /**
+     * Set default type
+     *
+     * @param string $value Value
+     *
+     * @return void
+     */
+    public function setDefaultValue($value)
+    {
+        if (self::TYPE_NUMBER == $this->type) {
+            $value = (float)$value;
+
+        } elseif (self::TYPE_CHECKBOX == $this->type) {
+            $value = (boolean)$value;
+
+        }
+        
+        $this->defaultValue = $value;
+    }
+
+    /**
+     * Get default value
+     *
+     * @return mixed
+     */
+    public function getDefaultValue()
+    {
+        return self::TYPE_CHECKBOX == $this->type
+            ? (boolean)$this->defaultValue
+            : $this->defaultValue;
     }
 
 }

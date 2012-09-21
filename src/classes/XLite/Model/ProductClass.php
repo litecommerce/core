@@ -89,6 +89,7 @@ class ProductClass extends \XLite\Model\Base\I18n
      * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\AttributeGroup", mappedBy="product_class", cascade={"all"})
+     * @OrderBy   ({"position" = "ASC"})
      */
     protected $attribute_groups;
 

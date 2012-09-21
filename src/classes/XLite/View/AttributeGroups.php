@@ -26,12 +26,12 @@
 namespace XLite\View;
 
 /**
- * Product class page view
+ * Attribute groups page view
  *
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClass extends \XLite\View\AView
+class AttributeGroups extends \XLite\View\AView
 {
     /**
      * Return list of allowed targets
@@ -40,7 +40,7 @@ class ProductClass extends \XLite\View\AView
      */
     public static function getAllowedTargets()
     {
-        return array_merge(parent::getAllowedTargets(), array('product_class'));
+        return array_merge(parent::getAllowedTargets(), array('attribute_groups'));
     }
 
     /**
@@ -50,7 +50,17 @@ class ProductClass extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'product_class/body.tpl';
+        return 'attribute_groups/body.tpl';
+    }
+
+    /**
+     * Check - search box is visible or not
+     * 
+     * @return boolean
+     */
+    protected function isSearchVisible()
+    {
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\AttributeGroup')->count();
     }
 
 }
