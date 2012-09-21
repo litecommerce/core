@@ -14,7 +14,7 @@ XLite\Model\Payment\Method:
     translations:
       - code: en
         name: 'PayPal Payflow Link'
-        title: 'Credit card / PayPal'
+        title: 'Credit/Debit card or PayPal'
     settings:
       - name: vendor
       - name: user
@@ -34,7 +34,7 @@ XLite\Model\Payment\Method:
     translations:
       - code: en
         name: 'PayPal Payments Advanced'
-        title: 'Credit card / PayPal'
+        title: 'Credit/Debit card or PayPal'
     settings:
       - name: vendor
       - name: user
