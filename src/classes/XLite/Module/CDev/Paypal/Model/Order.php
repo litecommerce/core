@@ -73,6 +73,18 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     }
 
     /**
+     * Returns true if specified payment method is ExpressCheckout 
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return boolean
+     */
+    public function isExpressCheckout($method)
+    {
+        return 'ExpressCheckout' == $method->getServiceName();
+    } 
+
+    /**
      * Returns the associative array of transaction IDs: PPREF and/or PNREF
      * 
      * @return array
@@ -132,8 +144,8 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         $isTestMode = $transaction->getDataCell('test_mode');
 
         return isset($isTestMode)
-            ? 'https://www.paypal.com/cgi-bin/webscr?cmd=_view-a-trans&id=' . $id
-            : 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_view-a-trans&id=' . $id;
+            ? 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_view-a-trans&id=' . $id
+            : 'https://www.paypal.com/cgi-bin/webscr?cmd=_view-a-trans&id=' . $id;
     }
 
     /**
@@ -156,16 +168,4 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
                 )
             );
     }
-
-    /**
-     * Returns true if specified payment method is ExpressCheckout 
-     * 
-     * @param \XLite\Model\Payment\Method $method Payment method object
-     *  
-     * @return boolean
-     */
-    protected function isExpressCheckout($method)
-    {
-        return 'ExpressCheckout' == $method->getServiceName();
-    } 
 }
