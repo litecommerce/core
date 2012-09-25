@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Paypal Payments Standard settings
+ * PayPal Payments Standard settings
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -19,7 +19,7 @@
         <ul class="options">
 
           <li>
-            <span><label for="pp_account">{t(#Paypal ID / Email#)}:</label></span>
+            <span><label for="pp_account">{t(#PayPal ID / Email#)}:</label></span>
             <input type="text" id="pp_account" name="settings[account]" value="{paymentMethod.getSetting(#account#)}" class="field-required" />
             <widget
               class="\XLite\View\Tooltip"
@@ -56,7 +56,7 @@
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
-              text="{t(#You can define an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a Paypal account). This options is relevant only if you share your Paypal account with other online shops#)}"
+              text="{t(#You can define an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a PayPal account). This options is relevant only if you share your PayPal account with other online shops#)}"
               caption=""
               isImageTag="true"
               className="help-icon" />

@@ -49,7 +49,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'Paypal Website Payments Standard';
+        return 'PayPal (outside of the US)';
     }
 
     /**
@@ -79,7 +79,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Enables taking credit card payments for your online store via Paypal (Website Payments Standard).';
+        return 'Enables taking credit card payments for your online store via PayPal (Website Payments Standard).';
     }
 
     /**

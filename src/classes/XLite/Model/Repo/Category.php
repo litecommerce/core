@@ -506,8 +506,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function addOrderByCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         $queryBuilder
-            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.pos', 'ASC')
-            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.lpos', 'ASC');
+            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.lpos', 'ASC')
+            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.pos', 'ASC');
     }
 
     /**

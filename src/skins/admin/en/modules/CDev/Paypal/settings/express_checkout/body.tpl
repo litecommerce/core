@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Paypal Express Checkout settings
+ * PayPal Express Checkout settings
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -96,7 +96,7 @@
             <widget
               class="\XLite\View\Tooltip"
               id="pp-vendor-help"
-              text="{t(#You can define an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a Paypal account). This options is relevant only if you share your Paypal account with other online shops#)}"
+              text="{t(#You can define an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a PayPal account). This options is relevant only if you share your PayPal account with other online shops#)}"
               caption=""
               isImageTag="true"
               className="help-icon" />
@@ -126,7 +126,7 @@
 
   <div IF="!{paymentMethod.getSetting(#hide_instruction#)}" class="footer">
 
-    <h2>Configure Paypal - Instructions</h2>
+    <h2>Configure PayPal - Instructions</h2>
 
     <h3>Enabling the Secure Token setting:</h3>
 
@@ -167,7 +167,7 @@
 
   <div IF="{paymentMethod.getSetting(#hide_instruction#)}" class="footer">
 
-    <div class="pp-token-enabled">The Paypal Secure Token is enabled</div>
+    <div class="pp-token-enabled">The PayPal Secure Token is enabled</div>
 
     <div class="pp-token-enabled-link"><a href="{buildURL(#payment_method#,#show_instruction#,_ARRAY_(#method_id#^paymentMethod.getMethodId()))}">Show the instruction</a></div>
 

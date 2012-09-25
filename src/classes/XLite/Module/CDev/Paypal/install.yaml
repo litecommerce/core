@@ -13,14 +13,14 @@ XLite\Model\Payment\Method:
     type: C
     translations:
       - code: en
-        name: 'Paypal Payflow Link'
-        title: 'Credit card / Paypal'
+        name: 'PayPal Payflow Link'
+        title: 'Credit/Debit card or PayPal'
     settings:
       - name: vendor
       - name: user
       - name: pwd
       - name: partner
-        value: Paypal
+        value: PayPal
       - name: prefix
         value: mystore_
       - name: transaction_type
@@ -33,14 +33,14 @@ XLite\Model\Payment\Method:
     type: A
     translations:
       - code: en
-        name: 'Paypal Payments Advanced'
-        title: 'Credit card / Paypal'
+        name: 'PayPal Payments Advanced'
+        title: 'Credit/Debit card or PayPal'
     settings:
       - name: vendor
       - name: user
       - name: pwd
       - name: partner
-        value: Paypal
+        value: PayPal
       - name: prefix
         value: mystore_
       - name: transaction_type
@@ -53,8 +53,8 @@ XLite\Model\Payment\Method:
     type: A
     translations:
       - code: en
-        name: 'Paypal Payments Standard'
-        title: 'Paypal'
+        name: 'PayPal Payments Standard'
+        title: 'PayPal'
     settings:
       - name: account
       - name: description
@@ -66,17 +66,21 @@ XLite\Model\Payment\Method:
     type: N
     translations:
       - code: en
-        name: 'Paypal Express Checkout'
-        title: 'Paypal'
+        name: 'PayPal Express Checkout'
+        title: 'PayPal'
     settings:
       - name: vendor
       - name: user
       - name: pwd
       - name: partner
-        value: Paypal
+        value: PayPal
       - name: prefix
         value: mystore_
       - name: transaction_type
         value: S
       - name: test
         value: Y
+
+XLite\Model\LanguageLabel:
+  - { name: 'Proceed to Payment X', translations: [{ code: en, label: 'Proceed to Payment: {{total}}' }] }
+

@@ -316,7 +316,7 @@ class Method extends \XLite\Model\Base\I18n
      * Call processor methods
      * 
      * @param string $method    Method name
-     * @param array  $arguments Arguments
+     * @param array  $arguments Arguments OPTIONAL
      *  
      * @return mixed
      */
@@ -383,4 +383,21 @@ class Method extends \XLite\Model\Base\I18n
         return $this;
     }
 
+    /**
+     * Set 'added' property
+     * 
+     * @param boolean $added Property value
+     *  
+     * @return \XLite\Model\Payment\Method
+     */
+    public function setAdded($added)
+    {
+        $this->added = $added;
+
+        if (!$added) {
+            $this->setEnabled(false);
+        }
+
+        return $this;
+    }
 }

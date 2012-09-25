@@ -160,7 +160,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         $result = parent::getForbidEnableNote($method);
 
         if (\XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
-            $result = 'This payment method cannot be enabled together with Paypal Payments Standard method';
+            $result = 'This payment method cannot be enabled together with PayPal Payments Standard method';
         }
 
         return $result;
@@ -199,7 +199,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         if (!$result && \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC == $method->getServiceName()) {
             $parentMethod = $this->getParentMethod();
             if (isset($parentMethod)) {
-                $result = 'Must be enabled as you use PayPal Payments Advanced or Paypal Payflow Link';
+                $result = 'Must be enabled as you use PayPal Payments Advanced or PayPal Payflow Link';
             }
         }
 
@@ -633,7 +633,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);
@@ -669,7 +669,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);
@@ -704,7 +704,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
             } else {
                 \XLite\Core\TopMessage::getInstance()
-                    ->addError('Transaction failure. Paypal response: ' . $responseData['RESPMSG']);
+                    ->addError('Transaction failure. PayPal response: ' . $responseData['RESPMSG']);
             }
 
             $transaction->setStatus($status);
@@ -866,7 +866,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'BILLTOCITY'        => $this->getProfile()->getBillingAddress()->getCity(),
             'BILLTOSTATE'       => $this->getProfile()->getBillingAddress()->getState()->getCode(),
             'BILLTOZIP'         => $this->getProfile()->getBillingAddress()->getZipcode(),
-            'BILLTOCOUNTRY'     => strtoupper($this->getProfile()->getBillingAddress()->getCountry()->getCode3()),
+            'BILLTOCOUNTRY'     => strtoupper($this->getProfile()->getBillingAddress()->getCountry()->getCode()),
             'ERRORURL'          => urldecode($this->getReturnURL(null, true)),
             'RETURNURL'         => urldecode($this->getReturnURL(null, true)),
             'CANCELURL'         => urldecode($this->getReturnURL(null, true, true)),
@@ -898,7 +898,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
                 'SHIPTOCITY'        => $this->getProfile()->getShippingAddress()->getCity(),
                 'SHIPTOSTATE'       => $this->getProfile()->getShippingAddress()->getState()->getCode(),
                 'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
-                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode3(),
+                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode(),
                 'SHIPTOEMAIL'       => $this->getProfile()->getLogin(),
             );
         }

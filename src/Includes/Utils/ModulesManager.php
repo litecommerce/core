@@ -427,14 +427,191 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
             } else {
 
-                // Set flag in DB
+                // Set flag in DB.
+                // This operation is highly NOT recommended in the usual workflow!
+                // All info for this module must be stored before that!
                 $query = 'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE moduleID = ?';
                 \Includes\Utils\Database::execute($query, array(0, $data['moduleID']));
+
             }
+
+            // Move the registry entry info into DISABLED registry to prevent LOST information
+            static::moveModuleToDisabledRegistry($data['author'] . '\\' . $data['name']);
 
             // Remove from local cache
             unset(static::$activeModules[$key]);
         }
+    }
+
+    /**
+     * Get disabled tables list storage path
+     *
+     * @return string
+     */
+    public static function getDisabledStructuresPath()
+    {
+        return LC_DIR_VAR . '.disabled.structures.php';
+    }
+
+    /**
+     * Remove module information from the .disabled.structures file
+     *
+     * @param string $module Module actual name
+     *
+     * @return void
+     */
+    public static function removeModuleFromDisabledStructure($module)
+    {
+        $path = static::getDisabledStructuresPath();
+
+        $data = \Includes\Utils\Operator::loadServiceYAML($path);
+
+        unset($data[$module]);
+
+        static::storeModuleRegistry($path, $data);
+    }
+
+    /**
+     * Store DATA information in the YAML format to the file
+     *
+     * @param string     $path Path to the file
+     * @param array|null $data Data to store in YAML
+     *
+     * @return void
+     */
+    public static function storeModuleRegistry($path, $data)
+    {
+        if ($data) {
+            \Includes\Utils\Operator::saveServiceYAML($path, $data);
+        } elseif (\Includes\Utils\FileManager::isExists($path)) {
+
+            \Includes\Utils\FileManager::deleteFile($path);
+        }
+    }
+
+    /**
+     * Store registry entry info of module into ENABLED registry
+     *
+     * @param string $module Module actual name
+     * @param array  $data   Data to store
+     *
+     * @return void
+     */
+    public static function registerModuleToEnabledRegistry($module, $data)
+    {
+        $enabledPath = static::getEnabledStructurePath();
+
+        $enabledRegistry          = \Includes\Utils\Operator::loadServiceYAML($enabledPath);
+        $enabledRegistry[$module] = $data;
+
+        static::storeModuleRegistry($enabledPath, $enabledRegistry);
+    }
+
+    /**
+     * Move registry info entry from DISABLED registry to the ENABLED one.
+     * Module must be set as ENABLED in the DB after this operation
+     *
+     * @param string $module Module actual name
+     *
+     * @return boolean Flag if the registry entry was moved
+     */
+    public static function moveModuleToEnabledRegistry($module)
+    {
+        $enabledPath     = static::getEnabledStructurePath();
+        $enabledRegistry = \Includes\Utils\Operator::loadServiceYAML($enabledPath);
+
+        $disabledPath     = static::getDisabledStructuresPath();
+        $disabledRegistry = \Includes\Utils\Operator::loadServiceYAML($disabledPath);
+
+        $result = false;
+
+        if (isset($disabledRegistry[$module])) {
+
+            $enabledRegistry[$module] = $disabledRegistry[$module];
+            unset($disabledRegistry[$module]);
+
+            $result = true;
+        }
+
+        static::storeModuleRegistry($enabledPath, $enabledRegistry);
+        static::storeModuleRegistry($disabledPath, $disabledRegistry);
+
+        return $result;
+    }
+
+    /**
+     * Move registry info entry from ENABLED registry to the DISABLED one.
+     * Module must be set as DISABLED in the DB after this operation
+     *
+     * @param string $module Module actual name
+     *
+     * @return boolean Flag if the registry entry was moved
+     */
+    public static function moveModuleToDisabledRegistry($module)
+    {
+        $enabledPath      = static::getEnabledStructurePath();
+        $enabledRegistry  = \Includes\Utils\Operator::loadServiceYAML($enabledPath);
+
+        $disabledPath     = static::getDisabledStructuresPath();
+        $disabledRegistry = \Includes\Utils\Operator::loadServiceYAML($disabledPath);
+
+        $result           = false;
+
+        if (isset($enabledRegistry[$module])) {
+            $disabledRegistry[$module] = $enabledRegistry[$module];
+            unset($enabledRegistry[$module]);
+
+            $result = true;
+        }
+
+        static::storeModuleRegistry($enabledPath, $enabledRegistry);
+        static::storeModuleRegistry($disabledPath, $disabledRegistry);
+
+        return $result;
+    }
+
+    /**
+     * Get file with the modules DB structures registry file
+     *
+     * It has the same format as static::getDisabledStructuresPath() one
+     *
+     * @return string
+     */
+    public static function getEnabledStructurePath()
+    {
+        return LC_DIR_VAR . '.modules.structures.registry.php';
+    }
+
+    /**
+     * Get file with the HASH of modules DB structures registry file
+     *
+     * @return string
+     */
+    public static function getEnabledStructureHashPath()
+    {
+        return LC_DIR_VAR . '.modules.structures.registry.hash.php';
+    }
+
+    /**
+     * Get HASH of ENABLED registry structure
+     *
+     * @return string
+     */
+    public static function getEnabledStructureHash()
+    {
+        return \Includes\Utils\FileManager::read(static::getEnabledStructureHashPath());
+    }
+
+    /**
+     * Save HASH of ENABLED registry structure to the specific file
+     *
+     * @param string $hash
+     *
+     * @return boolean
+     */
+    public static function saveEnabledStructureHash($hash)
+    {
+        return \Includes\Utils\FileManager::write(static::getEnabledStructureHashPath(), $hash);
     }
 
     /**
@@ -472,7 +649,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
                         && !$reflectionClass->isAbstract()
                     ) {
                         $class = ltrim($class, '\\');
-                        $len   = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+                        $len   = strlen(\Includes\Utils\Database::getTablesPrefix());
 
                         // DO NOT remove leading backslash in interface name
                         if (in_array('\XLite\Base\IDecorator', $intefaces)) {
@@ -504,7 +681,10 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
             }
         }
 
-        return array($tables, $columns);
+        return array(
+            'tables' => $tables,
+            'columns' => $columns
+        );
     }
 
     /**

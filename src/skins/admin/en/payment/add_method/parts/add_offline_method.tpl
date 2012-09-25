@@ -15,7 +15,7 @@
 
   <ul class="table">
     <li><widget class="XLite\View\FormField\Input\Text" fieldName="name" label="{t(#Name#)}" required="true" /></li>
-    <li><widget class="XLite\View\FormField\Textarea\Simple" fieldName="instruction" label="{t(#Instruction#)}" /></li>
+    <li><widget class="XLite\View\FormField\Textarea\Simple" fieldName="instruction" label="{t(#Payment instructions#)}" comment="{t(#These instructions will appear below the order invoice on the page which customers see after they confirm their order.#)}" /></li>
   </ul>
 
   <widget class="XLite\View\Button\Submit" label="{t(#Add#)}" style="action" />
