@@ -49,7 +49,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'PayPal Website Payments Standard';
+        return 'PayPal (outside of the US)';
     }
 
     /**
