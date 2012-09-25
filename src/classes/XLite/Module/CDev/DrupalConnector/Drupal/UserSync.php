@@ -359,7 +359,7 @@ OUT;
                 $profile->setStatus((1 === intval($account->status) ? 'E' : 'D'));
 
                 $pass = \XLite\Core\Database::getRepo('XLite\Model\Profile')->generatePassword();
-                $profile->setPassword(md5($pass));
+                $profile->setPassword(\XLite\Core\Auth::encryptPassword($pass));
 
                 $user = user_load($account->uid);
                 if (user_access(\XLite\Module\CDev\DrupalConnector\Drupal\Profile::LC_DRUPAL_ADMIN_ROLE_NAME, $user)) {
