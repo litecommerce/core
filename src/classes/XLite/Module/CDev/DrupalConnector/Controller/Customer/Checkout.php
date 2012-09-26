@@ -147,7 +147,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
             $this->getCart()->getProfile()->setCmsName('');
             $this->getCart()->getProfile()->setCmsProfileId(0);
-            $this->getCart()->getOrigProfile()->setPassword(\XLite\Core\Auth::encryptPassword($pass));
+            $this->getCart()->getOrigProfile()->setPassword(md5($pass));
 
             \XLite\Core\Database::getRepo('XLite\Model\Profile')->linkProfiles(
                 $this->getCart()->getOrigProfile(),
