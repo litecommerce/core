@@ -59,7 +59,12 @@ abstract class Module extends \XLite\Controller\Admin\Module implements \XLite\B
     {
         $config = \XLite\Core\Config::getInstance()->CDev->AmazonS3Images;
 
-        if (
+        if (!function_exists('curl_init')) {
+            \XLite\Core\TopMessage::addError(
+                'This module uses PHP\'s cURL functions which are disabled on your web server'
+            );
+
+        } elseif (
             $config->access_key
             && $config->secret_key
             && !\XLite\Module\CDev\AmazonS3Images\Core\S3::getInstance()->isValid()
