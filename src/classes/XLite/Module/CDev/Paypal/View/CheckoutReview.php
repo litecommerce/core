@@ -32,41 +32,27 @@ namespace XLite\Module\CDev\Paypal\View;
 class CheckoutReview extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDecorator
 {
     /**
-     * Get Place button title
-     * 
-     * @return string
-     */
-    public function getPlaceTitle()
-    {
-        $label = parent::getPlaceTitle();
-
-        if ($this->isNeedReplaceLabel()) {
-
-            $label = static::t(
-                'Proceed to Payment X',
-                array(
-                    'total' => $this->formatPrice($this->getCart()->getTotal(), $this->getCart()->getCurrency()),
-                )
-            );
-        }
-
-        return $label;
-    }
-
-    /**
-     * Return true if Express Checkout shortcut is selected by customer
+     * Return false if Express Checkout shortcut is selected by customer
      * 
      * @return boolean
      */
     protected function isNeedReplaceLabel()
     {
-        $cart = $this->getCart();
+        $result = parent::isNeedReplaceLabel();
 
-        return isset($cart)
-            && 0 < $this->getCart()->getTotal()
-            && $cart->getPaymentMethod()
-            && $cart->isExpressCheckout($cart->getPaymentMethod())
-            && \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT
-                == \XLite\Core\Session::getInstance()->ec_type;
+        if ($result) {
+
+            $cart = $this->getCart();
+
+            if (
+                $cart->isExpressCheckout($cart->getPaymentMethod())
+                && \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT
+                    == \XLite\Core\Session::getInstance()->ec_type
+            ) {
+                $result = false;
+            }
+        }
+
+        return $result;
     }
 }
