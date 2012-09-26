@@ -71,6 +71,38 @@ class Auth extends \XLite\Base
      */
     public static function encryptPassword($password)
     {
+        $method = 'encryptPassword' . $algo;
+        if (!method_exists(get_called_class(), $method)) {
+            $algo = static::DEFAULT_HASH_ALGO;
+            $method = 'encryptPassword' . $algo;
+        }
+
+        return $algo . ':' . static::$method($password);
+    }
+
+    /**
+     * Encrypts password (calculates SHA512 hash)
+     *
+     * @param string $password Password string to encrypt
+     *
+     * @return string
+     */
+    protected static function encryptPasswordSHA512($password)
+    {
+        return \XLite::getInstance()->getOptions(array('installer_details', 'shared_secret_key'))
+            ? hash_hmac('sha512', $password, strval(\XLite::getInstance()->getOptions(array('installer_details', 'shared_secret_key'))))
+            : hash('sha512', $password);
+    }
+
+    /**
+     * Encrypts password (calculates SHA512 hash)
+     *
+     * @param string $password Password string to encrypt
+     *
+     * @return string
+     */
+    protected static function encryptPasswordMD5($password)
+    {
         return md5($password);
     }
 
