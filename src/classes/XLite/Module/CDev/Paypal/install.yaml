@@ -81,6 +81,3 @@ XLite\Model\Payment\Method:
       - name: test
         value: Y
 
-XLite\Model\LanguageLabel:
-  - { name: 'Proceed to Payment X', translations: [{ code: en, label: 'Proceed to Payment: {{total}}' }] }
-

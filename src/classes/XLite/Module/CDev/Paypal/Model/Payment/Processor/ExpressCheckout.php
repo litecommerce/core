@@ -411,7 +411,10 @@ HTML;
                     $transactionStatus = $transaction::STATUS_PENDING;
                     $status = self::PENDING;
                 }
-            
+
+            } elseif (preg_match('/^10486/', $responseData['RESPMSG'])) {
+                $this->retryExpressCheckout(\XLite\Core\Session::getInstance()->ec_token);
+
             } else {
                 $this->setDetail(
                     'status',
@@ -441,6 +444,18 @@ HTML;
         \XLite\Core\Session::getInstance()->ec_type = null;
 
         return $status;
+    }
+
+    /**
+     * Retry ExpressCheckout
+     * 
+     * @param string $token Express Checkout token value
+     *  
+     * @return void
+     */
+    protected function retryExpressCheckout($token)
+    {
+        $this->redirectToPaypal($token);
     }
 
     /**
