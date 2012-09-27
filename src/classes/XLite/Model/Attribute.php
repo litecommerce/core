@@ -260,7 +260,7 @@ class Attribute extends \XLite\Model\Base\I18n
                 break;
 
             case self::TYPE_SELECT:
-                $class = '\XLite\View\FormField\Select\AttributeValues';
+                $class = '\XLite\View\FormField\Input\Text\AttributeOption';
                 break;
 
         }
@@ -301,8 +301,16 @@ class Attribute extends \XLite\Model\Base\I18n
         }
 
         if (self::TYPE_SELECT == $this->getType()) {
-            $attributeOption = \XLite\Core\Database::getRepo('XLite\Model\AttributeOption')->find($value);
-            if ($attributeOption) {
+            if ($value) {
+                $attributeOption = \XLite\Core\Database::getRepo('XLite\Model\AttributeOption')
+                    ->findOneByNameAndAttribute($value, $this);
+
+                if (!$attributeOption) {
+                    $attributeOption = new \XLite\Model\AttributeOption();
+                    $attributeOption->setAttribute($this);
+                    $attributeOption->setName($value);
+                   \XLite\Core\Database::getEM()->persist($attributeOption);
+                }
                 $attributeValue->setAttributeOption($attributeOption);
             }
 
@@ -332,10 +340,11 @@ class Attribute extends \XLite\Model\Base\I18n
                     ->findOneBy(array('defaultValue' => 1, 'attribute' => $this));
             }
 
-            if ($attributeValue) {
-                $attributeValue = $asString
-                    ? $attributeValue->getName()
-                    : $attributeValue->getId();
+            if (
+                $attributeValue
+                && $asString
+            ) {
+                $attributeValue = $attributeValue->getName();
             }
 
         } elseif ($attributeValue) {

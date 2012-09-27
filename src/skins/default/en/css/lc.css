@@ -1273,9 +1273,18 @@ div.product-details .continue-button-intend
   width: 250px;
 }
 
+.product-details .extra-fields li ul li
+{
+  margin-top: 5px;
+}
+
 .product-details .extra-fields li ul
 {
   margin: 0 0 0 50px;
+}
+
+.product-details .extra-fields ul {
+  line-height: 20px;
 }
 
 table.list-body td.hproduct a.product-thumbnail

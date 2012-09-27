@@ -51,7 +51,7 @@ class Autocomplete extends \XLite\Controller\Admin\AAdmin
             $method = 'assembleDictionary' . \XLite\Core\Converter::convertToCamelCase($dictionary);
             if (method_exists($this, $method)) {
                 $this->data = $this->processData(
-                    $this->$method(strval(\XLite\Core\Request::getInstance()->erm))
+                    $this->$method(strval(\XLite\Core\Request::getInstance()->term))
                 );
             }
         }
@@ -95,4 +95,34 @@ class Autocomplete extends \XLite\Controller\Admin\AAdmin
 
         print ($content);
     }
+
+
+    /**
+     * Assemble dictionary - conversation recipient
+     *
+     * @param string $term Term
+     *
+     * @return array
+     */
+    protected function assembleDictionaryAttributeOption($term)
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        if ($term) {
+            $cnd->{\XLite\Model\Repo\AttributeOption::SEARCH_NAME} = $term;
+        }
+
+        $id = intval(\XLite\Core\Request::getInstance()->id);
+        if ($id) {
+            $cnd->{\XLite\Model\Repo\AttributeOption::SEARCH_ATTRIBUTE} = $id;
+        }
+
+        $list = array();
+
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\AttributeOption')->search($cnd) as $a) {
+            $list[$a->getName()] = $a->getName();
+        }
+
+        return $list;
+    }
+
 }
