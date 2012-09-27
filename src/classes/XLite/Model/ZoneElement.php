@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * ZoneElement model
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="zone_elements",
@@ -55,44 +51,36 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Unique zone element Id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer", length=11, nullable=false)
      */
     protected $element_id;
 
     /**
      * Zone element value, e.g. 'US', 'US_NY', 'New Y%' etc
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $element_value;
 
     /**
      * Element type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="fixedstring", length="1")
+     * @Column (type="fixedstring", length=1)
      */
     protected $element_type;
 
     /**
      * Zone (relation)
      *
-     * @var   \XLite\Model\Zone
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Zone
      *
      * @ManyToOne (targetEntity="XLite\Model\Zone", inversedBy="zone_elements")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
@@ -103,8 +91,6 @@ class ZoneElement extends \XLite\Model\AEntity
      * getElementTypesData
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getElementTypesData()
     {

@@ -4,10 +4,9 @@
  * Items list controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.15
  */
 
 /**
@@ -83,34 +82,24 @@ TableItemsList.prototype.listeners.form = function(handler)
     form.get(0).commonController.submitOnlyChanged = true;
   }
 
-  form.change(
+  form.bind(
+    'state-changed',
     function () {
-      var form = jQuery(this);
-
-      if (this.commonController.isChanged()) {
-        form.addClass('changed');
-        handler.processFormChanged(form);
-
-      } else {
-        form.removeClass('changed');
-        handler.processFormUndo(form);
-      }
+      handler.processFormChanged(jQuery(this));
     }
   );
+  form.bind(
+    'state-initial',
+    function () {
+      handler.processFormUndo(jQuery(this));
+    }
+  );
+
 }
 
 // Process form and form's elements after form changed
 TableItemsList.prototype.processFormChanged = function(form)
 {
-  var btn = this.getFormChangedButtons(form);
-  var cancel = this.getFormChangedLinks(form);
-
-  btn.each(
-    function() {
-      this.enable();
-    }
-  );
-
   this.container.find('.table-pager .input input, .table-pager .page-length').each(
     function () {
       jQuery(this).attr('disabled', 'disabled');
@@ -119,38 +108,13 @@ TableItemsList.prototype.processFormChanged = function(form)
   );
 
   this.container.find('.table-pager a').addClass('disabled').removeClass('enabled');
-
-  cancel.removeClass('disabled');
 }
 
 // Process form and form's elements after form cancel all changes
 TableItemsList.prototype.processFormUndo = function(form)
 {
-  var btn = this.getFormChangedButtons(form);
-  var cancel = this.getFormChangedLinks(form);
-
-  btn.each(
-    function() {
-      this.disable();
-    }
-  );
-
   this.container.find('.table-pager .input input, .table-pager .page-length').removeAttr('disabled');
   this.container.find('.table-pager a').removeClass('disabled').addClass('enabled');
-
-  cancel.addClass('disabled');
-}
-
-// Get a form button, which should change as the state of the form
-TableItemsList.prototype.getFormChangedButtons = function(form)
-{
-  return form.find('.sticky-panel button');
-}
-
-// Get a form links, which should change as the state of the form
-TableItemsList.prototype.getFormChangedLinks = function(form)
-{
-  return form.find('.sticky-panel .cancel');
 }
 
 // Inline creation button listener
@@ -189,6 +153,18 @@ TableItemsList.prototype.listeners.createButton = function(handler)
         }
 
         jQuery('.no-items').css('display', 'none');
+
+        if (2 == box.children('tr').length) {
+          var leftAction = jQuery('tbody.lines tr td.actions.left', handler.container).eq(0);
+          if (leftAction.length) {
+            line.find('td.actions.left').width(leftAction.width())
+          }
+
+          var rightAction = jQuery('tbody.lines tr td.actions.right', handler.container).eq(0);
+          if (rightAction.length) {
+            line.find('td.actions.right').width(rightAction.width())
+          }
+        }
 
         return false;
       }
@@ -278,9 +254,51 @@ TableItemsList.prototype.listeners.positionChanged = function(handler)
   );
 }
 
+// Head sort
+TableItemsList.prototype.listeners.headSort = function(handler)
+{
+  jQuery('thead th a.sort', handler.container).click(
+    function() {
+      return jQuery(this).hasClass('current-sort')
+        ? !handler.process('sortOrder', 'asc' == jQuery(this).data('direction') ? 'desc' : 'asc')
+        : !handler.process('sortBy', jQuery(this).data('sort'));
+    }
+  );
+}
+
+// Head search
+TableItemsList.prototype.listeners.headSearch = function(handler)
+{
+  jQuery('tbody.head-search input,tbody.head-search select', handler.container).change(
+    function() {
+      var result = false;
+      jQuery(this).parents('td').eq(0).find('input,select,textarea').each(
+        function () {
+          result = handler.setURLParam(this.name, this.value) || result;
+        }
+      );
+
+      if (result) {
+        handler.loadWidget();
+      }
+
+      return false;
+    }
+  );
+}
+
 // Reassign items list controller
 TableItemsList.prototype.reassign = function()
 {
-  new TableItemsList(this.cell, this.URLParams, this.URLAJAXParams);
+  new TableItemsList(this.params.cell, this.params.urlparams, this.params.urlajaxparams);
 }
 
+
+function TableItemsListQueue()
+{
+  jQuery('.widget.items-list').each(function(index, elem){
+    new TableItemsList(jQuery(elem));
+  });
+}
+
+core.autoload(TableItemsListQueue);

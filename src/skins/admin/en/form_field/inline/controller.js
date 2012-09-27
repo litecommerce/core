@@ -4,10 +4,9 @@
  * Inline form field common controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.15
  */
 
 CommonForm.elementControllers.push(
@@ -23,8 +22,11 @@ CommonForm.elementControllers.push(
       this.viewValuePattern = '.view';
 
       var line = field.parents('.line').eq(0);
+      var list = line.parents('.items-list').eq(0);
       var row = line.get(0);
       var inputs = jQuery('.field :input', this);
+
+      var vTab = !!list.data('vtab');
 
       // Get field position into current line
       this.getPositionIntoLine = function()
@@ -55,7 +57,8 @@ CommonForm.elementControllers.push(
       // Save field into view
       this.saveField = function()
       {
-        field.find(this.viewValuePattern).html(this.getFieldFormattedValue());
+        var value = this.getFieldFormattedValue();
+        field.find(this.viewValuePattern).html(htmlspecialchars("" == value ? " " : value, null, null, false));
       }
 
       // Get field(s) formatted value (usage as view content)
@@ -84,6 +87,12 @@ CommonForm.elementControllers.push(
       {
       }
 
+      // Check - process blur event or not
+      this.isProcessBlur = function()
+      {
+        return true;
+      }
+
       // Field input(s)
 
       inputs.bind(
@@ -96,18 +105,22 @@ CommonForm.elementControllers.push(
       // Input blur effect (initialize save fields group)
       inputs.blur(
         function () {
-          obj.sanitize();
+          var result = true;
 
-          var result = !jQuery(this.form).validationEngine('validateField', '#' + this.id);
+          if (obj.isProcessBlur()) {
+            obj.sanitize();
 
-          if (result && row) {
-            row.inlineGroupBlurTimeout = setTimeout(
-              function () {
-                row.inlineGroupBlurTimeout = false;
-                row.saveFields();
-              },
-              100
-            );
+            result = !jQuery(this.form).validationEngine('validateField', '#' + this.id);
+
+            if (result && row) {
+              row.inlineGroupBlurTimeout = setTimeout(
+                function () {
+                  row.inlineGroupBlurTimeout = false;
+                  row.saveFields();
+                },
+                100
+              );
+            }
           }
 
           return result;
@@ -171,7 +184,7 @@ CommonForm.elementControllers.push(
           var result = true;
 
           // Press 'Tab' button
-          if (9 == event.keyCode) {
+          if (!vTab && 9 == event.keyCode) {
             var found = false;
             var current = this;
 

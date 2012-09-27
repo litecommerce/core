@@ -18,65 +18,52 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
 
 /**
  * File system cache
+ * FIXME: must be completely refactored
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
-class FileCache extends \Doctrine\Common\Cache\AbstractCache
+class FileCache extends \Doctrine\Common\Cache\CacheProvider
 {
     /**
      * Cache directory path
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $path = null;
 
     /**
      * File header
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $header = '<?php die(); ?>';
 
     /**
      * File header length
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $headerLength = 15;
 
     /**
      * TTL block length
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $ttlLength = 11;
 
     /**
-     * Validation cache 
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * Validation cache
+     *
+     * @var array
      */
     protected $validationCache = array();
 
@@ -86,8 +73,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($path = null)
     {
@@ -100,8 +85,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $path Path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setPath($path)
     {
@@ -120,8 +103,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * Get cache path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPath()
     {
@@ -129,27 +110,55 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Delete by prefix 
-     * 
+     * getNamespacedId
+     *
+     * @param string $id ____param_comment____
+     *
+     * @return string
+     */
+    protected function getNamespacedId($id)
+    {
+        $namespaceCacheKey = sprintf(static::DOCTRINE_NAMESPACE_CACHEKEY, $this->getNamespace());
+        $namespaceVersion  = ($this->doContains($namespaceCacheKey)) ? $this->doFetch($namespaceCacheKey) : 1;
+
+        return sprintf('%s[%s][%s]', $this->getNamespace(), $id, $namespaceVersion);
+    }
+
+    /**
+     * getNamespacedId
+     *
+     * @param string $id ____param_comment____
+     *
+     * @return string
+     */
+    protected function getNamespacedIdToDelete($id)
+    {
+        $namespaceCacheKey = sprintf(static::DOCTRINE_NAMESPACE_CACHEKEY, $this->getNamespace());
+        $namespaceVersion  = ($this->doContains($namespaceCacheKey)) ? $this->doFetch($namespaceCacheKey) : 1;
+
+        return sprintf('%s[%s*', $this->getNamespace(), $id, $namespaceVersion);
+    }
+
+
+    /**
+     * Delete by prefix
+     *
      * @param string $prefix Prefix
-     *  
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function deleteByPrefix($prefix)
     {
         $deleted = array();
 
-        $prefix = $this->_getNamespacedId($prefix);
-
-        $list = glob($this->path . LC_DS . $prefix . '*.php');
+        $prefix = $this->getNamespacedIdToDelete($prefix);
+        $list = glob($this->path . LC_DS . $prefix);
 
         if ($list) {
             foreach ($list as $f) {
                 if ($this->isKeyValid($f)) {
                     $id = substr(basename($f), 0, -4);
-                    $this->delete($id);
+                    \Includes\Utils\FileManager::deleteFile($f);
                     $deleted[] = $id;
                 }
             }
@@ -160,12 +169,10 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
 
     /**
      * Delete by regular expression
-     * 
+     *
      * @param string $regex Regular expression
-     *  
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function deleteByRegex($regex)
     {
@@ -186,35 +193,9 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Get cache repository ids list
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getIds()
-    {
-        $keys = array();
-
-        $list = glob($this->path . LC_DS . '*.php');
-
-        if ($list) {
-            foreach ($list as $f) {
-                if ($this->isKeyValid($f)) {
-                    $keys[] = substr(basename($f), 0, -4);
-                }
-            }
-        }
-
-        return $keys;
-    }
-
-    /**
      * Delete all cache entries
      *
      * @return array Array of the deleted cache ids
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function deleteAll()
     {
@@ -234,31 +215,13 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Get id + namespace
-     * 
-     * @param string $id Cell id
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function _getNamespacedId($id)
-    {
-        return (!$this->_namespace || strpos($id, $this->_namespace) === 0)
-            ? $id
-            : $this->_namespace . $id;
-    }
-
-    /**
      * Get cache cell by id
      *
      * @param string $id CEll id
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function _doFetch($id)
+    protected function doFetch($id)
     {
         $path = $this->getPathById($id);
 
@@ -277,10 +240,8 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $id CEll id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function _doContains($id)
+    protected function doContains($id)
     {
         $path = $this->getPathById($id);
 
@@ -295,10 +256,8 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param integer $lifeTime Cell TTL OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function _doSave($id, $data, $lifeTime = 0)
+    protected function doSave($id, $data, $lifeTime = 0)
     {
         $lifeTime = strval(min(0, intval($lifeTime)));
 
@@ -314,10 +273,8 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $id Cell id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function _doDelete($id)
+    protected function doDelete($id)
     {
         $path = $this->getPathById($id);
 
@@ -331,13 +288,31 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
+     * doFlush
+     *
+     * @return boolean
+     */
+    protected function doFlush()
+    {
+        return true;
+    }
+
+    /**
+     * doGetStats
+     *
+     * @return array
+     */
+    protected function doGetStats()
+    {
+        return array();
+    }
+
+    /**
      * Get cell path by cell id
      *
      * @param string $id Cell id
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPathById($id)
     {
@@ -350,8 +325,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $path CEll file path
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isKeyValid($path)
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * View list
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\ViewList")
  * @Table  (name="view_lists",
@@ -60,22 +56,18 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * List id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11")
+     * @Column         (type="integer", length=11)
      */
     protected $list_id;
 
     /**
      * Class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string")
      */
@@ -84,9 +76,7 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * Class list name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string")
      */
@@ -95,44 +85,36 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * List interface
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="16")
+     * @Column (type="string", length=16)
      */
     protected $zone = self::INTERFACE_CUSTOMER;
 
     /**
      * Child class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="512")
+     * @Column (type="string", length=512)
      */
     protected $child = '';
 
     /**
      * Child weight
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
-     * @Column (type="integer", length="11")
+     * @Column (type="integer", length=11)
      */
     protected $weight = 0;
 
     /**
      * Template relative path
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="512")
+     * @Column (type="string", length=512)
      */
     protected $tpl = '';
 }

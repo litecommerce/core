@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Layout manager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Layout extends \XLite\Base\Singleton
 {
@@ -55,36 +51,28 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Current skin
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $skin;
 
     /**
      * Current locale
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $locale;
 
     /**
      * Current skin path
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $path;
 
     /**
      * Current interface
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $currentInterface = \XLite::CUSTOMER_INTERFACE;
 
@@ -93,47 +81,37 @@ class Layout extends \XLite\Base\Singleton
      * For example body.tpl of mail is inside MAIL interface
      * but the inner widgets and templates in this template are inside CUSTOMER or ADMIN interfaces
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $mailInterface = \XLite::CUSTOMER_INTERFACE;
 
     /**
-     * Substutional skins list
+     * Skins list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
-    protected $substutionalSkins = array();
+    protected $skins = array();
 
     /**
      * Skin paths
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $skinPaths = array();
 
     /**
      * Resources cache
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $resourcesCache = array();
 
     /**
-     * Substutional skins cache flag
+     * Skins cache flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
-    protected $substutionalSkinsCache = false;
+    protected $skinsCache = false;
 
     // {{{ Common getters
 
@@ -141,8 +119,6 @@ class Layout extends \XLite\Base\Singleton
      * Return skin name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSkin()
     {
@@ -153,8 +129,6 @@ class Layout extends \XLite\Base\Singleton
      * Returns the layout path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPath()
     {
@@ -165,8 +139,6 @@ class Layout extends \XLite\Base\Singleton
      * Return list of all skins
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSkinsAll()
     {
@@ -185,8 +157,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $skin Interface
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSkinPathRelative($skin)
     {
@@ -198,49 +168,45 @@ class Layout extends \XLite\Base\Singleton
     // {{{ Substitutional skins routines
 
     /**
-     * Add substutional skin
+     * Add skin
      *
      * @param string $name      Skin name
      * @param string $interface Interface code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function addSubstutionalSkin($name, $interface = \XLite::CUSTOMER_INTERFACE)
+    public function addSkin($name, $interface = \XLite::CUSTOMER_INTERFACE)
     {
-        if (!isset($this->substutionalSkins[$interface])) {
-            $this->substutionalSkins[$interface] = array();
+        if (!isset($this->skins[$interface])) {
+            $this->skins[$interface] = array();
         }
 
-        array_unshift($this->substutionalSkins[$interface], $name);
+        array_unshift($this->skins[$interface], $name);
     }
 
     /**
-     * Remove substutional skin
+     * Remove skin
      *
      * @param string $name      Skin name
      * @param string $interface Interface code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function removeSubstutionalSkin($name, $interface = null)
+    public function removeSkin($name, $interface = null)
     {
         if (isset($interface)) {
-            if (isset($this->substutionalSkins[$interface])) {
-                $key = array_search($name, $this->substutionalSkins[$interface]);
+            if (isset($this->skins[$interface])) {
+                $key = array_search($name, $this->skins[$interface]);
                 if (false !== $key) {
-                    unset($this->substutionalSkins[$interface][$key]);
+                    unset($this->skins[$interface][$key]);
                 }
             }
 
         } else {
-            foreach ($this->substutionalSkins as $interface => $list) {
+            foreach ($this->skins as $interface => $list) {
                 $key = array_search($name, $list);
                 if (false !== $key) {
-                    unset($this->substutionalSkins[$interface][$key]);
+                    unset($this->skins[$interface][$key]);
                 }
             }
         }
@@ -252,14 +218,12 @@ class Layout extends \XLite\Base\Singleton
      * @param string $interface Interface code OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSkins($interface = null)
     {
         $interface = $interface ?: $this->currentInterface;
 
-        $list = isset($this->substutionalSkins[$interface]) ? $this->substutionalSkins[$interface] : array();
+        $list = isset($this->skins[$interface]) ? $this->skins[$interface] : array();
 
         $list[] = $this->getBaseSkinByInterface($interface);
 
@@ -272,8 +236,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $shortPath Template short path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTemplateFullPath($shortPath)
     {
@@ -309,8 +271,6 @@ class Layout extends \XLite\Base\Singleton
      * @param boolean $doMail    Flag to change mail interface OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getResourceFullPath($shortPath, $interface = null, $doMail = true)
     {
@@ -350,8 +310,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $parentSkin Parent skin
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getResourceParentFullPath($shortPath, $parentSkin)
     {
@@ -382,8 +340,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $skin      Skin name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getResourceSkinFullPath($shortPath, $skin)
     {
@@ -410,8 +366,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $interface  Interface code OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getResourceWebPath($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT, $interface = null)
     {
@@ -440,8 +394,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $outputType Output type OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function prepareSkinURL($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT)
     {
@@ -456,10 +408,8 @@ class Layout extends \XLite\Base\Singleton
      * Save substitutonal skins data into cache
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function saveSubstitutonalSkins()
+    public function saveSkins()
     {
         \XLite\Core\Database::getCacheDriver()->save(
             get_called_class() . '.SubstitutonalSkins',
@@ -474,8 +424,6 @@ class Layout extends \XLite\Base\Singleton
      * @param boolean $reset     Local cache reset flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSkinPaths($interface = null, $reset = false)
     {
@@ -504,8 +452,6 @@ class Layout extends \XLite\Base\Singleton
      * Get current template info
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrentTemplateInfo()
     {
@@ -523,8 +469,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $interface Interface code
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocalesQuery($interface)
     {
@@ -550,8 +494,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $interface Interface code OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBaseSkinByInterface($interface = null)
     {
@@ -587,8 +529,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $outputType Output type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareResourceURL($url, $outputType)
     {
@@ -614,10 +554,8 @@ class Layout extends \XLite\Base\Singleton
      * Restore substitutonal skins data from cache
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function restoreSubstitutonalSkins()
+    protected function restoreSkins()
     {
         $data = \XLite\Core\Database::getCacheDriver()->fetch(
             get_called_class() . '.SubstitutonalSkins'
@@ -637,8 +575,6 @@ class Layout extends \XLite\Base\Singleton
      * Set current skin as the admin one
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setAdminSkin()
     {
@@ -650,8 +586,6 @@ class Layout extends \XLite\Base\Singleton
      * Set current skin as the admin one
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setConsoleSkin()
     {
@@ -665,8 +599,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $interface Interface to use after MAIL one OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setMailSkin($interface = \XLite::CUSTOMER_INTERFACE)
     {
@@ -681,8 +613,6 @@ class Layout extends \XLite\Base\Singleton
      * Set current skin as the customer one
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setCustomerSkin()
     {
@@ -700,8 +630,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $skin New skin
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setSkin($skin)
     {
@@ -713,8 +641,6 @@ class Layout extends \XLite\Base\Singleton
      * Set some class properties
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setOptions()
     {
@@ -733,8 +659,6 @@ class Layout extends \XLite\Base\Singleton
      * Set current skin path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setPath()
     {
@@ -748,8 +672,6 @@ class Layout extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -757,12 +679,12 @@ class Layout extends \XLite\Base\Singleton
 
         $this->setOptions();
 
-        $this->substutionalSkinsCache = (bool)\XLite::getInstance()
-            ->getOptions(array('performance', 'substitutional_skins_cache'));
+        $this->skinsCache = (bool)\XLite::getInstance()
+            ->getOptions(array('performance', 'skins_cache'));
 
-        if ($this->substutionalSkinsCache) {
-            $this->restoreSubstitutonalSkins();
-            register_shutdown_function(array($this, 'saveSubstitutonalSkins'));
+        if ($this->skinsCache) {
+            $this->restoreSkins();
+            register_shutdown_function(array($this, 'saveSkins'));
         }
     }
 

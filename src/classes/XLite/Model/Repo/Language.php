@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,35 +28,27 @@ namespace XLite\Model\Repo;
 /**
  * Language repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Language extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'code';
 
     /**
      * Alternative record identifiers
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $alternativeIdentifier = array(
         array('code'),
@@ -71,8 +61,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * @param string $code  Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function createQueryBuilder($alias = null, $code = null)
     {
@@ -89,8 +77,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Define cache cells
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -111,8 +97,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Find all languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAllLanguages()
     {
@@ -130,8 +114,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Define query builder for findAllLanguages()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllLanguagesQuery()
     {
@@ -147,8 +129,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * NOTE: do not cache this result in a persistent cache
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findActiveLanguages()
     {
@@ -159,8 +139,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Find all inactive languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findInactiveLanguages()
     {
@@ -173,8 +151,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * @param integer $status Status key
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineByStatusQuery($status)
     {
@@ -191,8 +167,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Find all added languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findAddedLanguages()
     {
@@ -203,8 +177,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Define query builder for findAddedLanguages()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAddedQuery()
     {

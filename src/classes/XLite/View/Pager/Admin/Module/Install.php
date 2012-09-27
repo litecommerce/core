@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Admin\Module;
@@ -30,8 +28,6 @@ namespace XLite\View\Pager\Admin\Module;
 /**
  * Pager for the orders search page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Install extends \XLite\View\Pager\Admin\Module\AModule
 {
@@ -39,8 +35,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      * Register CSS files to include
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -54,8 +48,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      * Return CSS classes to use in parent widget of pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSClasses()
     {
@@ -66,8 +58,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      * getItemsPerPageDefault
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {
@@ -80,8 +70,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      * :TODO: check if where is a more convinient way to get ItemsList dir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -92,8 +80,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      * Do not show pager on bottom
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisibleBottom()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller;
 /**
  * Abstract controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AController extends \XLite\Controller\AController implements \XLite\Base\IDecorator
 {
@@ -43,8 +39,6 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * @param array  $pageArgs LC-specific URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -58,8 +52,6 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * @param array  $args LC URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
@@ -74,8 +66,6 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * Return Viewer object
      *
      * @return \XLite\View\Controller
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getViewer()
     {

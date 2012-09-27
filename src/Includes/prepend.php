@@ -14,15 +14,13 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 // :FIXME: must be removed
@@ -59,7 +57,7 @@ set_include_path(
 require_once (LC_DIR_ROOT . 'Includes' . LC_DS . 'functions.php');
 
 // Common error reporting settings
-$path = LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
+$path = LC_DIR_LOG . 'php_errors.log.' . date('Y-m-d') . '.php';
 if (!file_exists(dirname($path)) && is_writable(LC_DIR_VAR)) {
     \Includes\Utils\FileManager::mkdirRecursive(dirname($path));
 }
@@ -74,4 +72,4 @@ ini_set('log_errors', true);
 unset($path);
 
 // Set default memory limit
-func_set_memory_limit('128M');
+func_set_memory_limit('256M');

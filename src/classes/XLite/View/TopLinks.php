@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Top-right side drop down links
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopLinks extends \XLite\View\AView
 {
@@ -39,8 +35,6 @@ class TopLinks extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -54,8 +48,6 @@ class TopLinks extends \XLite\View\AView
      * Return widget directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -66,8 +58,6 @@ class TopLinks extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -78,8 +68,6 @@ class TopLinks extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -90,8 +78,6 @@ class TopLinks extends \XLite\View\AView
      * Check if storefront menu section visible in the top links
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isStorefrontMenuVisible()
     {
@@ -102,8 +88,6 @@ class TopLinks extends \XLite\View\AView
      * Check ACL permissions for Login history link
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkLoginHistoryACL()
     {
@@ -117,8 +101,6 @@ class TopLinks extends \XLite\View\AView
      * Check ACL permissions for Common links
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkCommonACL()
     {
@@ -131,8 +113,6 @@ class TopLinks extends \XLite\View\AView
      * Check if language selector is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isLanguageSelectorVisible()
     {
@@ -143,8 +123,6 @@ class TopLinks extends \XLite\View\AView
      * Return list of all active languages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getActiveLanguages()
     {
@@ -157,8 +135,6 @@ class TopLinks extends \XLite\View\AView
      * @param \XLite\Model\Language $language Language to set
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getChangeLanguageLink(\XLite\Model\Language $language)
     {
@@ -181,8 +157,6 @@ class TopLinks extends \XLite\View\AView
      * @param \XLite\Model\Language $language Current language
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getChangeLanguageLinkClass(\XLite\Model\Language $language)
     {
@@ -195,8 +169,6 @@ class TopLinks extends \XLite\View\AView
      * @param \XLite\Model\Language $language Language to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isLanguageSelected(\XLite\Model\Language $language)
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -30,8 +28,6 @@ namespace Includes\Decorator\Utils;
 /**
  * CacheManager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 {
@@ -50,9 +46,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     /**
      * List of cache building steps
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $steps = array(
         self::STEP_FIRST,
@@ -65,32 +59,27 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     /**
      * List of cache directories
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $cacheDirs = array(
         LC_DIR_COMPILE,
         LC_DIR_LOCALE,
         LC_DIR_DATACACHE,
         LC_DIR_TMP,
+        LC_DIR_CACHE_RESOURCES,
     );
 
     /**
-     * Timestamp of the step start 
-     * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * Timestamp of the step start
+     *
+     * @var integer
      */
     protected static $stepStart;
 
     /**
      * Memory usage
-     * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     *
+     * @var integer
      */
     protected static $stepMemory;
 
@@ -98,14 +87,12 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     // {{{ Dispaly message routines
 
     /**
-     * showStepMessage 
-     * 
+     * showStepMessage
+     *
      * @param string  $text       Message text
      * @param boolean $addNewline Flag OPTIONAL
-     *  
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function showStepMessage($text, $addNewline = false)
     {
@@ -116,11 +103,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * showStepInfo 
-     * 
+     * showStepInfo
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function showStepInfo()
     {
@@ -129,7 +114,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         $memory = memory_get_usage();
         $text .= \Includes\Utils\Converter::formatFileSize($memory, '');
         $text .= ' (' . \Includes\Utils\Converter::formatFileSize(memory_get_usage() - static::$stepMemory, '') . ')';
-        
+
         \Includes\Utils\Operator::showMessage(' [' . $text . ']');
     }
 
@@ -137,8 +122,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Get decorator message
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getMessage()
     {
@@ -149,8 +132,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Get plain text notice block
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getPlainMessage()
     {
@@ -161,8 +142,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * getHTMLMessage
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getHTMLMessage()
     {
@@ -172,11 +151,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * displayCompleteMessage 
-     * 
+     * displayCompleteMessage
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function displayCompleteMessage()
     {
@@ -191,8 +168,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Clean up the cache rebuild indicator
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function cleanupRebuildIndicator()
     {
@@ -203,8 +178,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Clean up the cache validity indicators
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function cleanupCacheIndicators()
     {
@@ -224,8 +197,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Check and (if needed) remove the rebuild indicator file
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function checkRebuildIndicatorState()
     {
@@ -247,8 +218,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Current step name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function clear($step)
     {
@@ -265,8 +234,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Current step name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getCacheStateIndicatorFileName($step)
     {
@@ -277,8 +244,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Return name of the file, which indicates if the build process started
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getRebuildIndicatorFileName()
     {
@@ -289,8 +254,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Data to write into the "step completed" file indicator
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getCacheStateIndicatorFileContent()
     {
@@ -301,8 +264,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Data to write into the "step started" file indicator
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getRebuildIndicatorFileContent()
     {
@@ -313,8 +274,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Check if cache rebuild process is already started
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function checkIfRebuildStarted()
     {
@@ -327,8 +286,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Return list of cache state indicator files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getCacheStateFiles()
     {
@@ -345,8 +302,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Current step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function startStep($step)
     {
@@ -362,25 +317,21 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Check if current step is last and redirect is prohibited after that step 
-     * 
+     * Check if current step is last and redirect is prohibited after that step
+     *
      * @param integer $step Current step
-     *  
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function isSkipRedirectAfterLastStep($step)
     {
-        return self::LAST_STEP === $step && isset($_GET['doNotRedirectAfterCacheIsBuilt']);
+        return static::LAST_STEP === $step && isset($_GET['doNotRedirectAfterCacheIsBuilt']);
     }
 
     /**
      * Check if only one step must be performed
-     * 
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function isDoOneStepOnly()
     {
@@ -393,8 +344,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Current step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function completeStep($step)
     {
@@ -416,7 +365,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         static::checkRebuildIndicatorState();
 
         if (static::isSkipRedirectAfterLastStep($step)) {
-            // Do not redirect after last step 
+            // Do not redirect after last step
             // (this mode is used when cache builder was launched from LC standalone installation script)
             static::displayCompleteMessage();
             exit ();
@@ -433,8 +382,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Step name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getStepCallback($step)
     {
@@ -447,11 +394,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Step name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function runStep($step)
     {
+        // Set internal flag
+        if (!defined('XLITE_CACHE_BUILDING')) {
+            define('XLITE_CACHE_BUILDING', true);
+        }
+
         // To prevent multiple processes execution
         static::checkIfRebuildStarted();
 
@@ -477,8 +427,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Step name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function runStepConditionally($step)
     {
@@ -486,7 +434,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
         if (static::isRebuildNeeded($step)) {
             static::runStep($step);
-            $result = true; 
+            $result = true;
         }
 
         return $result;
@@ -503,13 +451,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function executeStepHandler1()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_CLEANUP);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_CLEANUP);
 
         // Delete cache folders
         static::showStepMessage('Cleaning up the cache...');
@@ -521,27 +467,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
         // Main procedure: build decorator chains
         static::showStepMessage('Building classes tree...');
-        $tree = static::getClassesTree();
+        static::getClassesTree();
         static::showStepInfo();
 
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
-
-        // Main procedure: build decorator chains
-        static::showStepMessage('Decorate classes...');
-        $tree->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
-        static::showStepInfo();
-
-        // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
-
-        // Write class files to FS
-        static::showStepMessage('Writing class files to the cache...');
-        $tree->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
-        static::showStepInfo();
-
-        // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIRST);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FIRST);
     }
 
     /**
@@ -551,13 +481,27 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function executeStepHandler2()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_SECOND);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_DECORATE);
+
+        // Main procedure: build decorator chains
+        static::showStepMessage('Decorate classes...');
+        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
+        static::showStepInfo();
+
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_WRITE);
+
+        // Write class files to FS
+        static::showStepMessage('Writing class files to the cache...');
+        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'), true);
+        static::showStepInfo();
+
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_SECOND);
     }
 
     /**
@@ -567,13 +511,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function executeStepHandler3()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_THIRD);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_THIRD);
     }
 
     /**
@@ -583,13 +525,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function executeStepHandler4()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FOURTH);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FOURTH);
     }
 
     /**
@@ -599,13 +539,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function executeStepHandler5()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIFTH);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FIFTH);
     }
 
     // }}}
@@ -614,12 +552,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Check directory permissions and try to correct them
-     * 
+     *
      * @param string $dir Path to check
-     *  
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function checkPermissions($dir)
     {
@@ -635,13 +571,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Fire the error them unable to set directory permissions 
-     * 
+     * Fire the error them unable to set directory permissions
+     *
      * @param string $dir Path to check
-     *  
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function fireDirPermissionsError($dir)
     {
@@ -650,12 +584,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Return permissions error message
-     * 
+     *
      * @param string $dir Path to check
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDirPermissionsErrorMessage($dir)
     {
@@ -664,12 +596,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Return default directory permissions
-     * 
+     *
      * @param string $dir Path to check
-     *  
+     *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDirDefaultPermissions($dir)
     {
@@ -684,30 +614,33 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Main public method: rebuild classes cache
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function rebuildCache()
     {
         static::checkPermissions(LC_DIR_VAR);
 
+        $stepStatus = false;
+
         foreach (static::$steps as $step) {
-            if (static::runStepConditionally($step) && static::isDoOneStepOnly()) {
+
+            $stepStatus = static::runStepConditionally($step);
+
+            if ($stepStatus && static::isDoOneStepOnly()) {
                 // Break after first performed step if isDoOneStepOnly() returned true
                 break;
             }
         }
 
-        // Clear classes cache
-        \Includes\Utils\FileManager::deleteFile(static::getClassesHashPath());
+        if (!$stepStatus) {
+            // Clear classes cache
+            \Includes\Utils\FileManager::deleteFile(static::getClassesHashPath());
+        }
     }
 
     /**
      * Return current step identifier
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getCurrentStep()
     {
@@ -720,8 +653,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Current step name OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isRebuildNeeded($step = null)
     {
@@ -736,8 +667,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Clean up the cache
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function cleanupCache()
     {
@@ -755,8 +684,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Set output per tick(s)
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function setFastCGITimeoutEcho()
     {

@@ -4,10 +4,9 @@
  * Modules modify page styles
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 div.addons-search-panel .clear {
@@ -51,6 +50,12 @@ div.tags div.tags-title {
   margin-bottom: 25px;
 }
 
+.top-controls .addons-search-panel div.table-value {
+  float: left;
+  width: 90%;
+  padding: 0px;
+}
+
 .top-controls.search-form .substring {
   border: 1px solid #a3a3a3;
   border-radius: 3px;
@@ -78,9 +83,12 @@ div.tags div.tags-title {
   vertical-align: middle;
   font-family: arial, helvetica, sans-serif;
   font-size: 13px;
+  width: 260px;
+}
+
+.top-controls.search-form input#substring.default-value {
   font-style: italic;
   color: #a5a5a5;
-  width: 260px;
 }
 
 .top-controls .action-buttons .activate-text {

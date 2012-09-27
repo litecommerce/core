@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Model\Address;
@@ -30,8 +28,6 @@ namespace XLite\View\Model\Address;
 /**
  * Profile model widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Address extends \XLite\View\Model\AModel
 {
@@ -44,9 +40,7 @@ class Address extends \XLite\View\Model\AModel
      *       self::SCHEMA_REQUIRED => true,
      *   ),
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $addressSchema = array(
         'title' => array(
@@ -57,21 +51,30 @@ class Address extends \XLite\View\Model\AModel
         ),
         'firstname' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Firstname',
+            self::SCHEMA_LABEL    => 'First name',
             self::SCHEMA_REQUIRED => true,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-firstname',
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
         'lastname' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Lastname',
+            self::SCHEMA_LABEL    => 'Last name',
             self::SCHEMA_REQUIRED => true,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-lastname',
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
         'street' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Address',
             self::SCHEMA_REQUIRED => true,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-street',
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
         'country_code' => array(
             self::SCHEMA_CLASS => '\XLite\View\FormField\Select\Country',
@@ -96,27 +99,34 @@ class Address extends \XLite\View\Model\AModel
             self::SCHEMA_LABEL    => 'City',
             self::SCHEMA_REQUIRED => true,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-city',
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
         'zipcode' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Zip code',
             self::SCHEMA_REQUIRED => true,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-zipcode',
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
         'phone' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Phone',
             self::SCHEMA_REQUIRED => true,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-phone',
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
     );
 
     /**
      * Address instance
      *
-     * @var   \XLite\Model\Address
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Address
      */
     protected $address = null;
 
@@ -124,8 +134,6 @@ class Address extends \XLite\View\Model\AModel
      * getAddressSchema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddressSchema()
     {
@@ -144,14 +152,12 @@ class Address extends \XLite\View\Model\AModel
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFormFieldsForSectionDefault()
     {
         $result = $this->getFieldsBySchema($this->getAddressSchema());
 
-        // For country <-> state syncronization
+        // For country <-> state synchronization
         $this->setStateSelectorIds($result);
 
         return $result;
@@ -161,8 +167,6 @@ class Address extends \XLite\View\Model\AModel
      * getRequestAddressId
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestAddressId()
     {
@@ -173,8 +177,6 @@ class Address extends \XLite\View\Model\AModel
      * Return current address ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddressId()
     {
@@ -185,8 +187,6 @@ class Address extends \XLite\View\Model\AModel
      * getRequestProfileId
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestProfileId()
     {
@@ -197,22 +197,18 @@ class Address extends \XLite\View\Model\AModel
      * Return current profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileId()
     {
-        return ($this->getRequestProfileId() && \Xlite\Core\Auth::getInstance()->isAdmin())
+        return ($this->getRequestProfileId() && \XLite\Core\Auth::getInstance()->isAdmin())
             ? $this->getRequestProfileId()
-            : \Xlite\Core\Auth::getInstance()->getProfile()->getProfileId();
+            : \XLite\Core\Auth::getInstance()->getProfile()->getProfileId();
     }
 
     /**
      * Returns widget head
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -223,8 +219,6 @@ class Address extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -254,11 +248,21 @@ class Address extends \XLite\View\Model\AModel
     }
 
     /**
+     * Return model field name for a provided form field name
+     *
+     * @param string $name Name of form field
+     *
+     * @return string
+     */
+    protected function getModelFieldName($name)
+    {
+        return preg_replace('/^([^_]*_)(.*)$/', '\2', parent::getModelFieldName($name));
+    }
+
+    /**
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -271,8 +275,6 @@ class Address extends \XLite\View\Model\AModel
      * @param array &$fields Widgets list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setStateSelectorIds(array &$fields)
     {
@@ -290,8 +292,6 @@ class Address extends \XLite\View\Model\AModel
      * @param string $name Field/property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelObjectValue($name)
     {
@@ -304,8 +304,6 @@ class Address extends \XLite\View\Model\AModel
      * Some JavaScript code to insert
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTopInlineJSCode()
     {
@@ -316,8 +314,6 @@ class Address extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSubmitButtonLabel()
     {
@@ -328,8 +324,6 @@ class Address extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -349,8 +343,6 @@ class Address extends \XLite\View\Model\AModel
      * prepareDataForMapping
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareDataForMapping()
     {
@@ -392,13 +384,12 @@ class Address extends \XLite\View\Model\AModel
     /**
      * Check if fields are valid
      *
-     * @param array $data Current section data
+     * @param array  $data    Current section data
+     * @param string $section Current section name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function validateFields(array $data)
+    protected function validateFields(array $data, $section)
     {
         $this->prepareDataToValidate($data);
 
@@ -411,8 +402,6 @@ class Address extends \XLite\View\Model\AModel
      * @param array $data Current section data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareDataToValidate($data)
     {

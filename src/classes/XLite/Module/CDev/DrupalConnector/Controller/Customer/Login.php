@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * Login page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDecorator
 {
@@ -41,8 +37,6 @@ class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDec
      * @param mixed $result Result of log in procedure
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addLoginFailedMessage($result)
     {
@@ -52,8 +46,6 @@ class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDec
      * Log out
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogoff()
     {

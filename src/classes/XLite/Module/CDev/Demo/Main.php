@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Demo;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Demo;
 /**
  * Demo module
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -39,8 +35,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -51,8 +45,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -60,23 +52,29 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
+     * Get module major version
+     *
+     * @return string
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
+    }
+
+    /**
      * Module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
-        return '1';
+        return '0';
     }
 
     /**
      * Module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -90,8 +88,6 @@ abstract class Main extends \XLite\Module\AModule
      * @param string $url     Redirect URL OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function doForbidAction($message = null, $url = null)
     {
@@ -108,8 +104,6 @@ abstract class Main extends \XLite\Module\AModule
      * @param string $message Message OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function doForbidOperation($message = null)
     {

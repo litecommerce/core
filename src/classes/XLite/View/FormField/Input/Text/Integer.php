@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input\Text;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * Integer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Integer extends \XLite\View\FormField\Input\Text\Base\Numeric
 {
@@ -39,8 +35,6 @@ class Integer extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -55,8 +49,6 @@ class Integer extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Sanitize value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function sanitize()
     {
@@ -67,8 +59,6 @@ class Integer extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Assemble validation rules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleValidationRules()
     {
@@ -85,8 +75,6 @@ class Integer extends \XLite\View\FormField\Input\Text\Base\Numeric
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {
@@ -101,8 +89,6 @@ class Integer extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Get default maximum size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultMaxSize()
     {

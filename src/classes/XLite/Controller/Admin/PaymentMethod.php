@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,17 +28,33 @@ namespace XLite\Controller\Admin;
 /**
  * Payment method
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Controller parameters
+     *
+     * @var string
+     */
+    protected $params = array('target', 'method_id');
+
+    /**
+     * Return page title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->getPaymentMethod()
+            ? static::t('{{paymentMethod}} settings', array('paymentMethod' => $this->getPaymentMethod()->getName()))
+            : 'Payment method settings';
+    }
+
+
+    /**
      * getPaymentMethod
      *
      * @return \XLite\Model\Payment\Method
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPaymentMethod()
     {
@@ -52,30 +66,33 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
      * Update payment method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
         $settings = \XLite\Core\Request::getInstance()->settings;
         $m = $this->getPaymentMethod();
 
-        if (!is_array($settings)) {
-            \XLite\Core\TopMessage::addError('Wrong input data!');
-
-        } elseif (!$m) {
+        if (!$m) {
             \XLite\Core\TopMessage::addError('An attempt to update settings of unknown payment method');
 
         } else {
-            foreach ($settings as $name => $value) {
-                $m->setSetting($name, $value);
+
+            if (is_array($settings)) {
+                foreach ($settings as $name => $value) {
+                    $m->setSetting($name, $value);
+                }
+            }
+
+            $properties = \XLite\Core\Request::getInstance()->properties;
+            if (is_array($properties) && !empty($properties)) {
+                $m->map($properties);
             }
 
             \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->update($m);
 
             \XLite\Core\TopMessage::addInfo('The settings of payment method successfully updated');
 
-            $this->setReturnURL($this->buildURL('payment_methods'));
+            $this->setReturnURL($this->buildURL('payment_settings'));
         }
     }
 }

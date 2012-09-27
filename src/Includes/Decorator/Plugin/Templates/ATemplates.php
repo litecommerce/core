@@ -14,15 +14,13 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 namespace Includes\Decorator\Plugin\Templates;
@@ -31,8 +29,6 @@ namespace Includes\Decorator\Plugin\Templates;
  * ATemplates
  *
  * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
 {
@@ -45,30 +41,21 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     /**
      * List of .tpl files
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $annotatedTemplates;
 
     /**
      * List of .tpl files with @InheritedListChild tag
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $inheritedTemplates;
 
     /**
      * List of zones
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $zones = array(
         'console' => \XLite\Model\ViewList::INTERFACE_CONSOLE,
@@ -80,9 +67,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * Return templates list
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAnnotatedTemplates()
     {
@@ -114,9 +98,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * Get iterator for template files
      *
      * @return \Includes\Utils\FileFilter
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTemplateFileIterator()
     {
@@ -133,9 +114,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * @param string $path Template file path
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addTags(array $data, $path)
     {

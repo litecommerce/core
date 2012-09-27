@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.18
  */
 
 namespace XLite\View\FormField;
@@ -30,12 +28,11 @@ namespace XLite\View\FormField;
 /**
  * Image loader
  * 
- * @see   ____class_see____
- * @since 1.0.18
  */
 class Image extends \XLite\View\FormField\AFormField
 {
     const PARAM_BUTTON_LABEL   = 'buttonLabel';
+    const PARAM_REMOVE_BUTTON  = 'removeButton';
     const PARAM_OBJECT         = \XLite\View\Button\FileSelector::PARAM_OBJECT;
     const PARAM_OBJECT_ID      = \XLite\View\Button\FileSelector::PARAM_OBJECT_ID;
     const PARAM_FILE_OBJECT    = \XLite\View\Button\FileSelector::PARAM_FILE_OBJECT;
@@ -45,8 +42,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -57,8 +52,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -69,8 +62,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -80,6 +71,7 @@ class Image extends \XLite\View\FormField\AFormField
 
         $this->widgetParams += array(
             self::PARAM_BUTTON_LABEL    => new \XLite\Model\WidgetParam\String('Button label', 'Add image'),
+            self::PARAM_REMOVE_BUTTON   => new \XLite\Model\WidgetParam\Bool('Remove button', false),
             self::PARAM_OBJECT          => new \XLite\Model\WidgetParam\String('Object', ''),
             self::PARAM_OBJECT_ID       => new \XLite\Model\WidgetParam\Int('Object ID', 0),
             self::PARAM_FILE_OBJECT     => new \XLite\Model\WidgetParam\String('File object', 'image'),
@@ -91,8 +83,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -100,11 +90,29 @@ class Image extends \XLite\View\FormField\AFormField
     }
 
     /**
+     * Check - remove button is visible or not
+     * 
+     * @return boolean
+     */
+    protected function isRemoveButtonVisible()
+    {
+        return $this->getParam(static::PARAM_REMOVE_BUTTON);
+    }
+
+    /**
+     * Get remove button label 
+     * 
+     * @return string
+     */
+    protected function getRemoveButtonLabel()
+    {
+        return 'Remove image';
+    }
+
+    /**
      * Get default wrapper class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultWrapperClass()
     {
@@ -115,8 +123,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get button label 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getButtonLabel()
     {
@@ -127,8 +133,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get object
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getObject()
     {
@@ -139,8 +143,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get object id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getObjectId()
     {
@@ -151,8 +153,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get file object
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getFileObject()
     {
@@ -163,8 +163,6 @@ class Image extends \XLite\View\FormField\AFormField
      * Get file object id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.18
      */
     protected function getFileObjectId()
     {

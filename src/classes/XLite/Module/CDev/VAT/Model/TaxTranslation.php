@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\VAT\Model;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Model;
 /**
  * Tax multilingual data
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="vat_tax_translations",
@@ -46,11 +42,9 @@ class TaxTranslation extends \XLite\Model\Base\Translation
     /**
      * Name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $name;
 }

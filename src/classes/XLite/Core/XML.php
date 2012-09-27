@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * XML parser
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class XML extends \XLite\Base
 {
@@ -41,8 +37,6 @@ class XML extends \XLite\Base
      * @param string $xml XML
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getFormattedXML($xml)
     {
@@ -104,8 +98,6 @@ class XML extends \XLite\Base
      * @param array  $options Array of XML parser options OPTIONAL
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function parse($data, &$error, $options = array())
     {
@@ -163,8 +155,6 @@ class XML extends \XLite\Base
      * @param boolean $strict  Flag: true if tag_path should be strictly compliant OPTIONAL
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getArrayByPath(&$array, $tagPath, $strict = false)
     {
@@ -219,8 +209,6 @@ class XML extends \XLite\Base
      * @param integer &$i   Level
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function makeTree($vals, &$i)
     {

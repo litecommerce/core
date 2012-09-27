@@ -3,23 +3,56 @@
  * @version $Id: 98ff7a2a4b235f32754655a011cb32edbd79035d $
  */
 
+/**
+ * XLite_NameSniff 
+ *
+ * @see   ____class_see____
+ * @since 1.0.24
+ */
 class XLite_NameSniff extends XLite_ReqCodesSniff
 {
-
+    /**
+     * abbrs
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
 	protected $abbrs = array(
 		'HTML', 'XML', 'XHTML', 'CSS', 'SQL', 'PDO', 'URL', 'GET', 'POST', 'DOM',
 		'AES', 'RSA', 'PGP', 'XSLT', 'IV', 'DN', 'URL', 'IP', 'MIME', 'CRC', 'CRC32', 'MD4', 'MD5', 'API',
 		'NVP', 'PHP', 'CURL', 'VS', 'PC', 'UTF8', 'TTL', 'SMTP', 'IP4', 'CC', 'CVV2', 'UK', 'FMF', 'CSSURL',
 		'HMACMD5', 'HMAC', 'URI', 'ID', 'JS', 'SSL', 'AVS', 'CVV', 'DB', 'HSBC', 'SOAP', 'GMT', 'HTTPS', 'CLI',
 		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD', 'PM', 'XPC', 'DSN', 'EM', 'QB', 'SKU', 'REST', 'FS', 'IREST',
-        'YAML', 'GZ', 'HTTP', 'SPL', 'PHAR', 'JSON', 'LC', 'VAT',
+        'YAML', 'GZ', 'HTTP', 'SPL', 'PHAR', 'JSON', 'LC', 'APC', 'VAT', 'IPN', 'ACL',
 	);
 
+    /**
+     * twoWordsAbbrs
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
 	protected $twoWordsAbbrs = array('ECard', 'ECards');
 
+    /**
+     * nouns
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
 	protected $nouns = array(
 	);
 
+    /**
+     * verbs
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
 	protected $verbs = array(
 		'do', 'get', 'set', 'insert', 'append', 'detect', 'assign', 'register', 'unregister', 'unset',
 		'is', 'are', 'isset', 'remove', 'move', 'add', 'handle', 'display', 'view', 'prepare', 'check',
@@ -52,22 +85,53 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
         'seek',
 	);
 
+    /**
+     * cssPseudoClasses
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
 	protected $cssPseudoClasses = array(
 		'link', 'active', 'hover', 'visited', 'first-line', 'first-letter', 'first-child', 'last-child', 'last-line', 'last-letter',
 		'disabled'
 	);
 
+    /**
+     * reservedMethodNames
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
 	protected $reservedMethodNames = array(
 		'postUpdate', 'postRemove', 'postPersist', 't', 'trigger',
 		'_doFetch', '_doContains', '_doSave', '_doDelete', // for classes/XLite/Core/FileCache.php
 		'lbl', 'repo', 'em',
 	);
 
+    /**
+     * register
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
     public function register()
     {
 		return array();
     }
 
+    /**
+     * process
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile ____param_comment____
+     * @param mixed                $stackPtr  ____param_comment____
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
     }

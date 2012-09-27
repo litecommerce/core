@@ -1,0 +1,48 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Payment methods styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.payment-appearance-description {
+  color: #456583;
+  font-size: 16px;
+  padding: 0px 0px 20px 0px;
+  line-height: 24px;
+}
+
+.items-list-table table.list {
+  min-width: 850px;
+}
+
+.items-list-table table.list tbody.lines .inline-field .field input {
+  width: 300px;
+}
+
+.items-list-table table.list tbody.lines td .plain-value {
+  width: 250px;
+}
+
+.items-list-table table.list tbody.lines td .view {
+  width: 350px;
+}
+
+.no-payment-methods-appearance {
+  border: solid #EDEDED 1px;
+  width: 450px;
+  margin: 10px 0px 0px 0px;
+}
+
+.no-payment-methods-appearance .box {
+  font-size: 16px;
+  color: #333;
+  letter-spacing: 0px;
+  word-spacing: 1px;
+  padding: 27px 0px 25px 33px;
+  border: solid 6px #F9F9F9;
+}

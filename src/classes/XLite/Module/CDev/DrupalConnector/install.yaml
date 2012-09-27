@@ -7,7 +7,6 @@
 # @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
 # @link      http://www.litecommerce.com/
-# @since     1.0.0
 
 XLite\Model\Config:
   - name: drupal_root_url
@@ -25,3 +24,12 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Minify JS and CSS resources in Drupa 6.x style
+  - name: terms_url
+    category: Company
+    type: text
+    orderby: 380
+    value: 'terms-and-conditions.html'
+    translations:
+      - code: en
+        option_name: Terms and conditions relative URL
+

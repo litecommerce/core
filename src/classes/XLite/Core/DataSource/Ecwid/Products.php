@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.17
  */
 
 namespace XLite\Core\DataSource\Ecwid;
@@ -30,8 +28,6 @@ namespace XLite\Core\DataSource\Ecwid;
 /**
  * Ecwid products collection
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Products extends \XLite\Core\DataSource\Base\Products
 {
@@ -39,27 +35,21 @@ class Products extends \XLite\Core\DataSource\Base\Products
     /**
      * Stores current iterator position
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      */
     protected $position;
 
     /**
      * Contains all products (though information for each is restrained)
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var array
      */
     protected $allProducts;
 
     /**
      * An array with cached products (full info)
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var array
      */
     protected $products = array();
 
@@ -69,8 +59,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * @param \XLite\Core\DataSource\Ecwid $dataSource Ecwid data source
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function __construct(\XLite\Core\DataSource\Ecwid $dataSource)
     {
@@ -87,8 +75,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Countable::count 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function count()
     {
@@ -100,8 +86,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Returns current product index
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function key()
     {
@@ -113,8 +97,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Sets position to the start
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function rewind()
     {
@@ -126,8 +108,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Advances position one step forward
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function next()
     {
@@ -139,8 +119,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * Checks if current position is valid
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function valid()
     {
@@ -155,8 +133,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      *  
      * @return void
      * @throws OutOfBoundException
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function seek($position)
     {
@@ -173,8 +149,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * 
      * @return void
      * @throws OutOfBoundException
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function current()
     {
@@ -212,8 +186,6 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * @param array $data Raw data
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function normalizeProduct(array $data)
     {
@@ -226,7 +198,7 @@ class Products extends \XLite\Core\DataSource\Base\Products
             'name'         => $data['name'],
             'description'  => empty($data['description']) ? '' : $data['description'],
             'sku'          => empty($data['sku']) ? '' : $data['sku'],
-            'quantity'     => empty($data['quantity']) ? 0 : intval($data['quantity']),
+            'quantity'     => empty($data['quantity']) ? \XLite\Model\Inventory::AMOUNT_DEFAULT_INV_TRACK : intval($data['quantity']),
             'optionGroups' => array(),
         );
 

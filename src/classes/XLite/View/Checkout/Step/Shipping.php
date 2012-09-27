@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Checkout\Step;
@@ -30,17 +28,13 @@ namespace XLite\View\Checkout\Step;
 /**
  * Shipping step
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Shipping extends \XLite\View\Checkout\Step\AStep
 {
     /**
      * Modifier (cache)
      *
-     * @var   \XLite\Model\Order\Modifier
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order\Modifier
      */
     protected $modifier;
 
@@ -48,8 +42,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Get step name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStepName()
     {
@@ -60,8 +52,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Get step title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -72,12 +62,10 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Check - step is complete or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCompleted()
     {
-        return $this->isDisabled()
+        return !$this->isEnabled()
             || (
                 $this->getCart()->getProfile()
                 && $this->getCart()->getProfile()->getShippingAddress()
@@ -90,8 +78,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Check - shipping address is completed or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAddressCompleted()
     {
@@ -106,8 +92,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Check - shipping system is enabled or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isShippingEnabled()
     {
@@ -118,8 +102,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Check - shipping rates is available or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isShippingAvailable()
     {
@@ -132,8 +114,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTotalRate(\XLite\Model\Shipping\Rate $rate)
     {
@@ -144,8 +124,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Check - display Address book button or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDisplayAddressButton()
     {
@@ -155,23 +133,19 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
     }
 
     /**
-     * Check - step is disabled or not
+     * Check - step is enabled (true) or skipped (false)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function isDisabled()
+    public function isEnabled()
     {
-        return parent::isDisabled() || !$this->isShippingEnabled();
+        return parent::isEnabled() && $this->isShippingEnabled();
     }
 
     /**
      * Get modifier
      *
      * @return \XLite\Model\Order\Modifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModifier()
     {

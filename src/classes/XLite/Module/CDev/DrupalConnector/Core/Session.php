@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Core;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 /**
  * Session
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      * Get session TTL (seconds)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getTTL()
     {
@@ -55,8 +49,6 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      * @param boolean $secure Secure protocol or not OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCookiePath($secure = false)
     {
@@ -71,8 +63,6 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      * @param boolean $secure Secure protocol or not OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCookieURL($secure = false)
     {
@@ -92,8 +82,6 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      * Get current language
      *
      * @return string Language code
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrentLanguage()
     {

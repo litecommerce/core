@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\ProductClass;
@@ -30,8 +28,6 @@ namespace XLite\View\ProductClass;
 /**
  * Product classes list
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -41,8 +37,6 @@ class ProductClassesList  extends AProductClass
      * Return allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -57,8 +51,6 @@ class ProductClassesList  extends AProductClass
      * Return CSS files list for widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -73,8 +65,6 @@ class ProductClassesList  extends AProductClass
      * Return JS files list for widget
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -90,8 +80,6 @@ class ProductClassesList  extends AProductClass
      * Return templates catalog
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -102,8 +90,6 @@ class ProductClassesList  extends AProductClass
      * Return data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData()
     {

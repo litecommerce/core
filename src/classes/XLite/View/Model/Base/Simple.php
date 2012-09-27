@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.20
  */
 
 namespace XLite\View\Model\Base;
@@ -30,35 +28,27 @@ namespace XLite\View\Model\Base;
 /**
  * Simple CRUD 
  * 
- * @see   ____class_see____
- * @since 1.0.20
  */
 abstract class Simple extends \XLite\View\Model\AModel
 {
     /**
      * Update message 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.20
+     * @var string
      */
     protected $updateMessage = null;
 
     /**
      * Create message 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.20
+     * @var string
      */
     protected $createMessage = null;
 
     /**
      * Entity class 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.20
+     * @var string
      */
     protected $entityClass = null;
 
@@ -66,8 +56,6 @@ abstract class Simple extends \XLite\View\Model\AModel
      * Return current model ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModelId()
     {
@@ -78,8 +66,6 @@ abstract class Simple extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Module\CDev\Suppliers\Model\Supplier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -94,8 +80,6 @@ abstract class Simple extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -117,8 +101,6 @@ abstract class Simple extends \XLite\View\Model\AModel
      * Add top message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addDataSavedTopMessage()
     {

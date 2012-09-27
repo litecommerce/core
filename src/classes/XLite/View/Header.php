@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,17 +28,13 @@ namespace XLite\View;
 /**
  * Page header
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
-class Header extends \XLite\View\Container
+class Header extends \XLite\View\AResourcesContainer
 {
     /**
-     * Get head prefixes 
-     * 
+     * Get head prefixes
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public static function defineHeadPrefixes()
     {
@@ -51,13 +45,11 @@ class Header extends \XLite\View\Container
      * Get meta description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMetaDescription()
     {
-        return ($result = \XLite::getController()->getMetaDescription()) 
-            ? trim(strip_tags($result)) 
+        return ($result = \XLite::getController()->getMetaDescription())
+            ? trim(strip_tags($result))
             : $this->getDefaultMetaDescription();
     }
 
@@ -65,8 +57,6 @@ class Header extends \XLite\View\Container
      * Get default meta description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getDefaultMetaDescription()
     {
@@ -79,8 +69,6 @@ class Header extends \XLite\View\Container
      * Get title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTitle()
     {
@@ -91,8 +79,6 @@ class Header extends \XLite\View\Container
      * Get default title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getDefaultTitle()
     {
@@ -103,8 +89,6 @@ class Header extends \XLite\View\Container
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -112,35 +96,9 @@ class Header extends \XLite\View\Container
     }
 
     /**
-     * Get collected javascript resources
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getJSResources()
-    {
-        return static::getRegisteredResources(static::RESOURCE_JS);
-    }
-
-    /**
-     * Get collected CSS resources
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCSSResources()
-    {
-        return static::getRegisteredResources(static::RESOURCE_CSS);
-    }
-
-    /**
      * Get collected meta tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMetaResources()
     {
@@ -151,8 +109,6 @@ class Header extends \XLite\View\Container
      * Get script
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getScript()
     {
@@ -160,11 +116,9 @@ class Header extends \XLite\View\Container
     }
 
     /**
-     * Get head tag attributes 
-     * 
+     * Get head tag attributes
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getHeadAttributes()
     {
@@ -186,17 +140,5 @@ class Header extends \XLite\View\Container
         }
 
         return $list;
-    }
-
-    /**
-     * Return default template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'header/body.tpl';
     }
 }

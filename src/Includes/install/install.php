@@ -14,15 +14,13 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 
@@ -30,8 +28,6 @@
  * LiteCommerce installation procedures
  *
  * @package LiteCommerce
- * @see     ____class_see____
- * @since   1.0.0
  */
 
 if (!defined('XLITE_INSTALL_MODE')) {
@@ -54,8 +50,6 @@ class InstallTestDockblocks { }
  * @param $substitute array Array for substitution parameters in the text found by label
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.0
  */
 function xtr($label, array $substitute = array())
 {
@@ -76,8 +70,6 @@ function xtr($label, array $substitute = array())
  * @param $label string Label value
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.0
  */
 function getTextByLabel($label)
 {
@@ -131,9 +123,6 @@ function getTextByLabel($label)
  * @param $message string The log message
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 
 function x_install_log($message = null)
@@ -197,9 +186,6 @@ OUT;
  * @param $param array An array $_POST or $_GET
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function x_install_log_mask_params($params)
 {
@@ -234,9 +220,6 @@ function x_install_log_mask_params($params)
  * Perform the requirements checking
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function doCheckRequirements()
 {
@@ -259,7 +242,7 @@ function doCheckRequirements()
 
     $checkRequirements['lc_php_disable_functions'] = array(
         'title'    => xtr('Disabled functions'),
-        'critical' => true,
+        'critical' => false,
     );
 
     $checkRequirements['lc_php_magic_quotes_runtime'] = array(
@@ -400,9 +383,6 @@ function doCheckRequirements()
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkDocblocksSupport(&$errorMsg, $value = null)
 {
@@ -430,9 +410,6 @@ function checkDocblocksSupport(&$errorMsg, $value = null)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkInstallScript(&$errorMsg, $value = null)
 {
@@ -452,8 +429,6 @@ function checkInstallScript(&$errorMsg, $value = null)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkConfigFile(&$errorMsg, $value = null)
 {
@@ -488,9 +463,6 @@ function checkConfigFile(&$errorMsg, $value = null)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpVersion(&$errorMsg, &$value)
 {
@@ -539,9 +511,6 @@ function checkPhpVersion(&$errorMsg, &$value)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpDisableFunctions(&$errorMsg, &$value)
 {
@@ -552,7 +521,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
     if (!empty($list)) {
         $result = false;
         $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
-        $errorMsg = xtr('Disabled functions discovered (:funclist) that must be enabled', array(':funclist' => implode(', ', $list)));
+        $errorMsg = xtr('There are disabled functions (:funclist) that may be used by software in some cases and should be enabled', array(':funclist' => implode(', ', $list)));
 
     } else {
         $value = 'none';
@@ -568,9 +537,6 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpMagicQuotesRuntime(&$errorMsg, &$value)
 {
@@ -589,8 +555,6 @@ function checkPhpMagicQuotesRuntime(&$errorMsg, &$value)
  * Get allowed value 'disable_functions' PHP option
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.0
  */
 function getAllowedDisableFunctionsValue()
 {
@@ -603,8 +567,6 @@ function getAllowedDisableFunctionsValue()
  * Get disabled functions lists
  *
  * @return array (unallowed & allowed)
- * @see    ____func_see____
- * @since  1.0.0
  */
 function getDisabledFunctions()
 {
@@ -716,9 +678,6 @@ function getDisabledFunctions()
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpMemoryLimit(&$errorMsg, &$value)
 {
@@ -748,9 +707,6 @@ function checkPhpMemoryLimit(&$errorMsg, &$value)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpFileUploads(&$errorMsg, &$value)
 {
@@ -773,9 +729,6 @@ function checkPhpFileUploads(&$errorMsg, &$value)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpMysqlSupport(&$errorMsg, &$value)
 {
@@ -800,9 +753,6 @@ function checkPhpMysqlSupport(&$errorMsg, &$value)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpPdoMysql(&$errorMsg, &$value)
 {
@@ -827,9 +777,6 @@ function checkPhpPdoMysql(&$errorMsg, &$value)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
 {
@@ -852,9 +799,6 @@ function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
  * @param string $value    Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkFilePermissions(&$errorMsg, &$value)
 {
@@ -922,9 +866,6 @@ function checkFilePermissions(&$errorMsg, &$value)
  * @param resource $connection MySQL connection link
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 {
@@ -993,9 +934,6 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
  * @param string   $value      Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpGdlib(&$errorMsg, &$value)
 {
@@ -1021,9 +959,6 @@ function checkPhpGdlib(&$errorMsg, &$value)
  * @param string   $value      Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPhpPhar(&$errorMsg, &$value)
 {
@@ -1058,9 +993,6 @@ function checkPhpPhar(&$errorMsg, &$value)
  * @param string   $value      Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkHttpsBouncer(&$errorMsg, &$value)
 {
@@ -1105,9 +1037,6 @@ function checkHttpsBouncer(&$errorMsg, &$value)
  * @param string   $value      Actual value of the checked parameter
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkXmlSupport(&$errorMsg, &$value)
 {
@@ -1148,9 +1077,6 @@ function checkXmlSupport(&$errorMsg, &$value)
  * @param bool   $silentMode Do not display any output during installing
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function doPrepareFixtures(&$params, $silentMode = false)
 {
@@ -1163,36 +1089,32 @@ function doPrepareFixtures(&$params, $silentMode = false)
     }
 
     $enabledModules = array();
-
-    foreach ($lcSettings['enable_modules'] as $moduleAuthor => $modules) {
-
-        $enabledModules[$moduleAuthor] = array();
-
-        foreach ($modules as $moduleName) {
-            $enabledModules[$moduleAuthor][$moduleName] = 1;
-        }
-    }
-
-    \Includes\Utils\ModulesManager::saveModulesToFile($enabledModules);
-
-    // Generate fixtures list
-    $yamlFiles = $lcSettings['yaml_files']['base'];
-
     $moduleYamlFiles = array();
 
-    foreach ($lcSettings['enable_modules'] as $author => $modules) {
+    foreach ((array) glob(LC_DIR_MODULES . '*', GLOB_ONLYDIR) as $authorDir) {
 
-        foreach ($modules as $moduleName) {
+        $author = basename($authorDir);
+
+        foreach ((array) glob(LC_DIR_MODULES . $author . '/*/Main.php') as $f) {
+
+            $moduleName = basename(dirname($f));
+
+            $enabledModules[$author][$moduleName] = 1;
 
             $moduleFile = sprintf('classes/XLite/Module/%s/%s/install.yaml', $author, $moduleName);
 
-            if (file_exists(constant('LC_DIR_ROOT') . $moduleFile)) {
+            if (file_exists(LC_DIR_ROOT . $moduleFile)) {
                 $moduleYamlFiles[] = $moduleFile;
             }
         }
     }
 
     sort($moduleYamlFiles, SORT_STRING);
+
+    \Includes\Utils\ModulesManager::saveModulesToFile($enabledModules);
+
+    // Generate fixtures list
+    $yamlFiles = $lcSettings['yaml_files']['base'];
 
     foreach ($moduleYamlFiles as $f) {
         // Add module fixtures
@@ -1254,14 +1176,39 @@ function doUpdateConfig(&$params, $silentMode = false)
 }
 
 /**
+ * Modify main .htaccess file
+ *
+ * @param array   &$params    Database access data and other parameters
+ * @param boolean $silentMode Flag OPTIONAL
+ *
+ * @return boolean
+ */
+function doUpdateMainHtaccess(&$params, $silentMode = false)
+{
+    if (!empty($params['xlite_web_dir'])) {
+
+        if (!$silentMode) {
+            echo '<br /><b>' . xtr('Updating .htaccess...') . '</b><br>';
+        }
+
+        $util = '\Includes\Utils\FileManager';
+
+        $util::replace(
+            $util::getDir($util::getDir(__DIR__)) . LC_DS . '.htaccess', 
+            '\1RewriteBase ' . $params['xlite_web_dir'],
+            '/^(\s*)#\s*RewriteBase\s+____WEB_DIR____\s*$/mi'
+        );
+    }
+
+    return true;
+}
+
+/**
  * Prepare to remove a cache of classes
  *
  * @param array $params Database access data and other parameters
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function doRemoveCache($params)
 {
@@ -1320,9 +1267,6 @@ function doRemoveCache($params)
  * Generate a cache of classes
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function doBuildCache()
 {
@@ -1357,9 +1301,6 @@ function doBuildCache()
  * @param bool   $silentMode Do not display any output during installing
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function doInstallDirs($silentMode = false)
 {
@@ -1415,9 +1356,6 @@ function doInstallDirs($silentMode = false)
  * @param bool   $silentMode Do not display any output during installing
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function doCreateAdminAccount(&$params, $silentMode = false)
 {
@@ -1483,9 +1421,6 @@ function doCreateAdminAccount(&$params, $silentMode = false)
  * @param bool   $silentMode Do not display any output during installing
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function doFinishInstallation(&$params, $silentMode = false)
 {
@@ -1614,13 +1549,14 @@ function doFinishInstallation(&$params, $silentMode = false)
  * @param string $host Host value
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.6
  */
 function x_install_get_host($host)
 {
     if (false !== strstr($host, ':')) {
-        list($result) = explode(':', $host);
+        list($result, $port) = explode(':', $host);
+        if (!$port || (80 != $port && 443 != $port)) {
+            $result = $host;
+        }
 
     } else {
         $result = $host;
@@ -1635,9 +1571,6 @@ function x_install_get_host($host)
  * @param array $dirs Array of directory names
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function create_dirs($dirs)
 {
@@ -1685,9 +1618,6 @@ function create_dirs($dirs)
  * @param array $dirs Array of directory names
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function chmod_others_directories($dirs)
 {
@@ -1712,9 +1642,6 @@ function chmod_others_directories($dirs)
  * @param array $files_to_create Array of file names
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function create_htaccess_files($files_to_create)
 {
@@ -1758,9 +1685,6 @@ function create_htaccess_files($files_to_create)
  * @param string Object path
  *
  * @return array
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function checkPermissionsRecursive($object)
 {
@@ -1815,9 +1739,6 @@ function checkPermissionsRecursive($object)
  * @param string $destination_dir Destination directory name
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
 {
@@ -1908,9 +1829,6 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
  * @param array $params
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function change_config(&$params)
 {
@@ -1965,7 +1883,8 @@ function change_config(&$params)
             '/^socket.*=.*/',
             '/^http_host.*=.*/',
             '/^https_host.*=.*/',
-            '/^web_dir.*=.*/'
+            '/^web_dir.*=.*/',
+            '/^shared_secret_key.*=.*/'
         );
 
         $replacements = array(
@@ -1977,7 +1896,8 @@ function change_config(&$params)
             'socket   = "' . $_params['mysqlsock'] . '"',
             'http_host = "' . $_params['xlite_http_host'] . '"',
             'https_host = "' . $_params['xlite_https_host'] . '"',
-            'web_dir = "' . $_params['xlite_web_dir'] . '"'
+            'web_dir = "' . $_params['xlite_web_dir'] . '"',
+            'shared_secret_key = "' . uniqid('', true) . '"'
         );
 
         // check whether skin param is specified: not used at present
@@ -1999,9 +1919,6 @@ function change_config(&$params)
  * @param string $content
  *
  * @return mixed
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function save_config($content)
 {
@@ -2015,9 +1932,6 @@ function save_config($content)
  * Returns some information from phpinfo()
  *
  * @return array
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function get_info()
 {
@@ -2092,9 +2006,6 @@ function get_info()
  * @param string $action_str
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function inst_http_request_install($action_str, $url = null)
 {
@@ -2111,9 +2022,6 @@ function inst_http_request_install($action_str, $url = null)
  * Returns LiteCommerce URL
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function getLiteCommerceURL()
 {
@@ -2134,9 +2042,6 @@ function getLiteCommerceURL()
  * @param string $url_request
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function inst_http_request($url_request)
 {
@@ -2176,9 +2081,6 @@ function inst_http_request($url_request)
  * Check if memory_limit is disabled
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function is_disabled_memory_limit()
 {
@@ -2201,9 +2103,6 @@ function is_disabled_memory_limit()
  * @param string $required_limit
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function check_memory_limit($current_limit, $required_limit)
 {
@@ -2230,9 +2129,6 @@ function check_memory_limit($current_limit, $required_limit)
  * Check if current PHP version is 5 or higher
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function is_php5()
 {
@@ -2245,9 +2141,6 @@ function is_php5()
  * @param string $string
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function convert_ini_str_to_int($string)
 {
@@ -2278,9 +2171,6 @@ function convert_ini_str_to_int($string)
  * @param array $requirements
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function make_check_report($requirements)
 {
@@ -2351,9 +2241,6 @@ function make_check_report($requirements)
  * @param string $code   Code of section with status details (<div id='$code'>)
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function status($status, $code = null)
 {
@@ -2385,9 +2272,6 @@ function status($status, $code = null)
  * Return status 'skipped' message
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function status_skipped()
 {
@@ -2400,9 +2284,6 @@ function status_skipped()
  * @param string $txt
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function fatal_error($txt) {
 
@@ -2419,9 +2300,6 @@ function fatal_error($txt) {
  * @param string $txt
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function warning_error($txt) {
 
@@ -2442,9 +2320,6 @@ function warning_error($txt) {
  * @param string $txt
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function message($txt) {
 ?>
@@ -2456,9 +2331,6 @@ function message($txt) {
  * Replace install.php script to random filename
  *
  * @return mixed
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function rename_install_script()
 {
@@ -2482,9 +2354,6 @@ function rename_install_script()
  * Check if current protocol is HTTPS
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function isHTTPS()
 {
@@ -2499,9 +2368,6 @@ function isHTTPS()
  * Get number for StepBack button
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function getStepBackNumber()
 {
@@ -2534,9 +2400,6 @@ function getStepBackNumber()
  * Default navigation button handler: default_js_back
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function default_js_back()
 {
@@ -2553,9 +2416,6 @@ function default_js_back()
  * Default navigation button handler: default_js_next
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function default_js_next()
 {
@@ -2570,9 +2430,6 @@ function default_js_next()
  * Generate Auth code
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function generate_authcode()
 {
@@ -2586,9 +2443,6 @@ function generate_authcode()
  * @param array $params
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function check_authcode(&$params)
 {
@@ -2610,9 +2464,6 @@ function check_authcode(&$params)
  * Read config file and get Auth code
  *
  * @return mixed
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function get_authcode()
 {
@@ -2627,8 +2478,6 @@ function get_authcode()
  * Read config files and returns array of options
  *
  * @return array
- * @see    ____func_see____
- * @since  1.0.0
  */
 function parse_config()
 {
@@ -2660,8 +2509,6 @@ function parse_config()
  * @param array $params Database access data and other parameters
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function update_config_settings($params)
 {
@@ -2679,6 +2526,7 @@ function update_config_settings($params)
         'Shipping::anonymous_country' => $defaultCountry,
         'General::time_zone'          => $defaultTimezone,
         'Company::start_year'         => date('Y'),
+        'Version::timestamp'          => time(),
     );
 
     foreach ($options as $key => $value) {
@@ -2690,6 +2538,15 @@ function update_config_settings($params)
         if (isset($configOption)) {
             $configOption->setValue($value);
             \XLite\Core\Database::getRepo('XLite\Model\Config')->update($configOption);
+
+        } else {
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                array(
+                    'category' => $cat,
+                    'name'     => $name,
+                    'value'    => $value,
+                )
+            );
         }
     }
 }
@@ -2700,9 +2557,6 @@ function update_config_settings($params)
  * @param array $params
  *
  * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function save_authcode(&$params) {
 
@@ -2739,9 +2593,6 @@ function save_authcode(&$params) {
  * @param string $name
  *
  * @return int
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function get_step($name)
 {
@@ -2768,9 +2619,6 @@ function get_step($name)
  * @param int    $clrNumber
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function displayFormElement($fieldName, $fieldData, $clrNumber)
 {
@@ -2858,9 +2706,6 @@ OUT;
  * @param array $params
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_default(&$params)
 {
@@ -2875,9 +2720,6 @@ function module_default(&$params)
  * 'Next' button handler. Checking if an 'Agree' checkbox was ticked
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_default_js_next()
 {
@@ -2898,9 +2740,6 @@ function module_default_js_next()
  * Configuration checking module
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_check_cfg()
 {
@@ -2931,7 +2770,6 @@ function module_check_cfg()
             'section'      => 'B',
             'requirements' => array(
                 'lc_php_version',
-                'lc_php_disable_functions',
                 'lc_php_magic_quotes_runtime',
                 'lc_php_memory_limit',
                 'lc_docblocks_support',
@@ -2946,6 +2784,7 @@ function module_check_cfg()
             'error_msg'    => xtr('Non-critical dependency failed'),
             'section'      => 'B',
             'requirements' => array(
+                'lc_php_disable_functions',
                 'lc_php_file_uploads',
                 'lc_php_upload_max_filesize',
                 'lc_php_gdlib',
@@ -2970,9 +2809,6 @@ function module_check_cfg()
  * @param array $params
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_cfg_install_db(&$params)
 {
@@ -3206,9 +3042,6 @@ function module_cfg_install_db(&$params)
  * Output Javascript handler: module_cfg_install_db_js_back
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_cfg_install_db_js_back()
 {
@@ -3231,9 +3064,6 @@ function module_cfg_install_db_js_back()
  * Output Javascript handler: module_cfg_install_db_js_next
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_cfg_install_db_js_next()
 {
@@ -3281,9 +3111,6 @@ function module_cfg_install_db_js_next()
  * @param array $params
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_install_cache(&$params)
 {
@@ -3338,15 +3165,12 @@ function module_install_cache(&$params)
  * @param array $params
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_install_dirs(&$params)
 {
     global $error, $lcSettings;
 
-    $result = doUpdateConfig($params, true);
+    $result = doUpdateConfig($params, true) && doUpdateMainHtaccess($params);
 
     if ($result) {
 
@@ -3402,9 +3226,6 @@ function module_install_dirs(&$params)
  * @param array $params
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_cfg_create_admin(&$params)
 {
@@ -3492,9 +3313,6 @@ function module_cfg_create_admin(&$params)
  * cfg_create_admin module "Next" button validator
  *
  * @return string
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_cfg_create_admin_js_next()
 {
@@ -3548,9 +3366,6 @@ function module_cfg_create_admin_js_next()
  * @param array $params
  *
  * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
  */
 function module_install_done(&$params)
 {

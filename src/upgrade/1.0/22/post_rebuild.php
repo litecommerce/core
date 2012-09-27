@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.22
  */
 
 return function()
@@ -38,7 +36,7 @@ return function()
     $yamlFile = __DIR__ . LC_DS . 'currencies.yaml';
 
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
-        $data = \Symfony\Component\Yaml\Yaml::load($yamlFile);
+        $data = \Symfony\Component\Yaml\Yaml::parse($path);
 
         // Import new and update old currencies
         $repo = \XLite\Core\Database::getRepo('XLite\Model\Currency');

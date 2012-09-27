@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Doctrine-based connection
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Connection extends \Doctrine\DBAL\Connection
 {
@@ -41,8 +37,6 @@ class Connection extends \Doctrine\DBAL\Connection
      * @param string $statement The SQL statement to prepare
      *
      * @return \Doctrine\DBAL\Driver\Statement
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function prepare($statement)
     {
@@ -57,22 +51,25 @@ class Connection extends \Doctrine\DBAL\Connection
      * If the query is parameterized, a prepared statement is used.
      * If an SQLLogger is configured, the execution is logged.
      *
-     * @param string $query  The SQL query to execute
-     * @param array  $params The parameters to bind to the query, if any OPTIONAL
-     * @param array  $types  The parameters types to bind to the query, if any OPTIONAL
+     * @param string                                 $query  The SQL query to execute
+     * @param array                                  $params The parameters to bind to the query, if any OPTIONAL
+     * @param array                                  $types  The parameters types to bind to the query, if any OPTIONAL
+     * @param \Doctrine\DBAL\Cache\QueryCacheProfile $qcp    Cache profile OPTIONAL
      *
      * @return \Doctrine\DBAL\Driver\Statement
      * @throws \XLite\Core\PDOException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function executeQuery($query, array $params = array(), $types = array())
-    {
+    public function executeQuery(
+        $query,
+        array $params = array(),
+        $types = array(),
+        \Doctrine\DBAL\Cache\QueryCacheProfile $qcp = null
+    ) {
         try {
-            $result = parent::executeQuery($query, $params, $types);
+            $result = parent::executeQuery($query, $params, $types, $qcp);
 
-        } catch (\PDOException $e) {
-            throw new \XLite\Core\PDOException($e, $query, $params);
+        } catch (\PDOException $exception) {
+            throw new \XLite\Core\PDOException($exception, $query, $params);
         }
 
         return $result;
@@ -90,8 +87,6 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return integer The number of affected rows
      * @throws \XLite\Core\PDOException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function executeUpdate($query, array $params = array(), array $types = array())
     {
@@ -112,8 +107,6 @@ class Connection extends \Doctrine\DBAL\Connection
      * @param array  $data      Data
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function replace($tableName, array $data)
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -36,8 +34,6 @@ define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
 /**
  * ModulesManager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ModulesManager extends \Includes\Utils\AUtils
 {
@@ -54,18 +50,14 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     /**
      * List of active modules
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $activeModules;
 
     /**
      * Data for class tree walker
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $quotedPaths;
 
@@ -77,8 +69,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $moduleName Module actual name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getClassNameByModuleName($moduleName)
     {
@@ -91,8 +81,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $className Class name to parse
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleNameByClassName($className)
     {
@@ -106,8 +94,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getActualName($author, $name)
     {
@@ -121,8 +107,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getClassNameByAuthorAndName($author, $name)
     {
@@ -136,8 +120,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getRelativeDir($author, $name)
     {
@@ -151,8 +133,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAbsoluteDir($author, $name)
     {
@@ -166,8 +146,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleIconFile($author, $name)
     {
@@ -181,8 +159,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleYAMLFile($author, $name)
     {
@@ -195,12 +171,10 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $file File name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     public static function getFileModule($file)
     {
-        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED 
+        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED
             . '(\w+)' . LC_DS_QUOTED . '(\w+)' . LC_DS_QUOTED . '/Si';
 
         return preg_match($pattern, $file, $matches) ? ($matches[1] . '\\' . $matches[2]) : null;
@@ -214,8 +188,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Initialize active modules
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function initModules()
     {
@@ -230,8 +202,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $module Module actual name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isModuleInstalled($module)
     {
@@ -246,8 +216,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param array  $args   Call arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function callModuleMethod($module, $method, array $args = array())
     {
@@ -268,8 +236,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param array  $additionalData Data to add to result OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModuleDataFromClass($author, $name, array $additionalData = array())
     {
@@ -311,8 +277,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return list of active modules (or check a single module)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getActiveModules()
     {
@@ -344,8 +308,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string|null $moduleName Module name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isActiveModule($moduleName)
     {
@@ -358,8 +320,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param array $moduleNames Module names
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function areActiveModules(array $moduleNames)
     {
@@ -370,8 +330,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Disable modules with non-correct versions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function checkVersions()
     {
@@ -386,8 +344,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Disable some (or all) modules in SafeMode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function performSafeModeProtection()
     {
@@ -408,8 +364,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Disable modules with incorrect dependencies
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function correctDependencies()
     {
@@ -433,8 +387,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Disable so called "mutual exclusive" modules
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
      */
     protected static function excludeMutualModules()
     {
@@ -457,8 +409,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $key Module actual name (key)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function disableModule($key)
     {
@@ -477,14 +427,191 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
             } else {
 
-                // Set flag in DB
+                // Set flag in DB.
+                // This operation is highly NOT recommended in the usual workflow!
+                // All info for this module must be stored before that!
                 $query = 'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE moduleID = ?';
                 \Includes\Utils\Database::execute($query, array(0, $data['moduleID']));
+
             }
+
+            // Move the registry entry info into DISABLED registry to prevent LOST information
+            static::moveModuleToDisabledRegistry($data['author'] . '\\' . $data['name']);
 
             // Remove from local cache
             unset(static::$activeModules[$key]);
         }
+    }
+
+    /**
+     * Get disabled tables list storage path
+     *
+     * @return string
+     */
+    public static function getDisabledStructuresPath()
+    {
+        return LC_DIR_VAR . '.disabled.structures.php';
+    }
+
+    /**
+     * Remove module information from the .disabled.structures file
+     *
+     * @param string $module Module actual name
+     *
+     * @return void
+     */
+    public static function removeModuleFromDisabledStructure($module)
+    {
+        $path = static::getDisabledStructuresPath();
+
+        $data = \Includes\Utils\Operator::loadServiceYAML($path);
+
+        unset($data[$module]);
+
+        static::storeModuleRegistry($path, $data);
+    }
+
+    /**
+     * Store DATA information in the YAML format to the file
+     *
+     * @param string     $path Path to the file
+     * @param array|null $data Data to store in YAML
+     *
+     * @return void
+     */
+    public static function storeModuleRegistry($path, $data)
+    {
+        if ($data) {
+            \Includes\Utils\Operator::saveServiceYAML($path, $data);
+        } elseif (\Includes\Utils\FileManager::isExists($path)) {
+
+            \Includes\Utils\FileManager::deleteFile($path);
+        }
+    }
+
+    /**
+     * Store registry entry info of module into ENABLED registry
+     *
+     * @param string $module Module actual name
+     * @param array  $data   Data to store
+     *
+     * @return void
+     */
+    public static function registerModuleToEnabledRegistry($module, $data)
+    {
+        $enabledPath = static::getEnabledStructurePath();
+
+        $enabledRegistry          = \Includes\Utils\Operator::loadServiceYAML($enabledPath);
+        $enabledRegistry[$module] = $data;
+
+        static::storeModuleRegistry($enabledPath, $enabledRegistry);
+    }
+
+    /**
+     * Move registry info entry from DISABLED registry to the ENABLED one.
+     * Module must be set as ENABLED in the DB after this operation
+     *
+     * @param string $module Module actual name
+     *
+     * @return boolean Flag if the registry entry was moved
+     */
+    public static function moveModuleToEnabledRegistry($module)
+    {
+        $enabledPath     = static::getEnabledStructurePath();
+        $enabledRegistry = \Includes\Utils\Operator::loadServiceYAML($enabledPath);
+
+        $disabledPath     = static::getDisabledStructuresPath();
+        $disabledRegistry = \Includes\Utils\Operator::loadServiceYAML($disabledPath);
+
+        $result = false;
+
+        if (isset($disabledRegistry[$module])) {
+
+            $enabledRegistry[$module] = $disabledRegistry[$module];
+            unset($disabledRegistry[$module]);
+
+            $result = true;
+        }
+
+        static::storeModuleRegistry($enabledPath, $enabledRegistry);
+        static::storeModuleRegistry($disabledPath, $disabledRegistry);
+
+        return $result;
+    }
+
+    /**
+     * Move registry info entry from ENABLED registry to the DISABLED one.
+     * Module must be set as DISABLED in the DB after this operation
+     *
+     * @param string $module Module actual name
+     *
+     * @return boolean Flag if the registry entry was moved
+     */
+    public static function moveModuleToDisabledRegistry($module)
+    {
+        $enabledPath      = static::getEnabledStructurePath();
+        $enabledRegistry  = \Includes\Utils\Operator::loadServiceYAML($enabledPath);
+
+        $disabledPath     = static::getDisabledStructuresPath();
+        $disabledRegistry = \Includes\Utils\Operator::loadServiceYAML($disabledPath);
+
+        $result           = false;
+
+        if (isset($enabledRegistry[$module])) {
+            $disabledRegistry[$module] = $enabledRegistry[$module];
+            unset($enabledRegistry[$module]);
+
+            $result = true;
+        }
+
+        static::storeModuleRegistry($enabledPath, $enabledRegistry);
+        static::storeModuleRegistry($disabledPath, $disabledRegistry);
+
+        return $result;
+    }
+
+    /**
+     * Get file with the modules DB structures registry file
+     *
+     * It has the same format as static::getDisabledStructuresPath() one
+     *
+     * @return string
+     */
+    public static function getEnabledStructurePath()
+    {
+        return LC_DIR_VAR . '.modules.structures.registry.php';
+    }
+
+    /**
+     * Get file with the HASH of modules DB structures registry file
+     *
+     * @return string
+     */
+    public static function getEnabledStructureHashPath()
+    {
+        return LC_DIR_VAR . '.modules.structures.registry.hash.php';
+    }
+
+    /**
+     * Get HASH of ENABLED registry structure
+     *
+     * @return string
+     */
+    public static function getEnabledStructureHash()
+    {
+        return \Includes\Utils\FileManager::read(static::getEnabledStructureHashPath());
+    }
+
+    /**
+     * Save HASH of ENABLED registry structure to the specific file
+     *
+     * @param string $hash
+     *
+     * @return boolean
+     */
+    public static function saveEnabledStructureHash($hash)
+    {
+        return \Includes\Utils\FileManager::write(static::getEnabledStructureHashPath(), $hash);
     }
 
     /**
@@ -494,8 +621,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public static function getModuleProtectedStructures($author, $name)
     {
@@ -514,52 +639,58 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
                 $intefaces = \Includes\Decorator\Utils\Tokenizer::getInterfaces($path);
                 $class     = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
 
-                $reflectionClass = new \ReflectionClass($class);
+                if (class_exists($class)) {
 
-                if ($class && is_subclass_of($class, '\XLite\Model\AEntity') && !$reflectionClass->isAbstract()) {
-                    $class = ltrim($class, '\\');
-                    $len   = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+                    $reflectionClass = new \ReflectionClass($class);
 
-                    // DO NOT remove leading backslash in interface name
-                    if (in_array('\XLite\Base\IDecorator', $intefaces)) {
-                        $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
-                        $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
-                        $table    = substr($metadata->getTableName(), $len);
+                    if (
+                        $class
+                        && is_subclass_of($class, '\XLite\Model\AEntity')
+                        && !$reflectionClass->isAbstract()
+                    ) {
+                        $class = ltrim($class, '\\');
+                        $len   = strlen(\Includes\Utils\Database::getTablesPrefix());
 
-                        $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
-                        $schema = $tool->getCreateSchemaSql(array($metadata));
+                        // DO NOT remove leading backslash in interface name
+                        if (in_array('\XLite\Base\IDecorator', $intefaces)) {
+                            $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
+                            $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
+                            $table    = substr($metadata->getTableName(), $len);
 
-                        foreach ((array) $metadata->reflFields as $field => $reflection) {
-                            $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
+                            $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
+                            $schema = $tool->getCreateSchemaSql(array($metadata));
 
-                            if (
-                                $reflection->class === $class
-                                && !empty($metadata->fieldMappings[$field])
-                                && preg_match($pattern, $schema[0], $matches)
-                            ) {
-                                $columns[$table][$field] = $matches[1];
+                            foreach ((array) $metadata->reflFields as $field => $reflection) {
+                                $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
+
+                                if (
+                                    $reflection->class === $class
+                                    && !empty($metadata->fieldMappings[$field])
+                                    && preg_match($pattern, $schema[0], $matches)
+                                ) {
+                                    $columns[$table][$field] = $matches[1];
+                                }
                             }
+                        } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
+                            $tables[] = substr(
+                                \XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len
+                            );
                         }
-
-                    } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
-                        $tables[] = substr(
-                            \XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(),
-                            $len
-                        );
                     }
                 }
             }
         }
 
-        return array($tables, $columns);
+        return array(
+            'tables' => $tables,
+            'columns' => $columns
+        );
     }
 
     /**
      * Get modules list file path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModulesFilePath()
     {
@@ -574,8 +705,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Fetch modules list from the database
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function fetchModulesListFromDB()
     {
@@ -593,8 +722,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return name of the table where the module info is stored
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getTableName()
     {
@@ -605,8 +732,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Part of SQL query to fetch composed module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModuleNameField()
     {
@@ -619,8 +744,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Fetch list of active modules from DB
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModulesList()
     {
@@ -658,8 +781,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Remove file with active modules list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function removeFile()
     {
@@ -672,8 +793,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param array $modules Modules array
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function saveModulesToFile(array $modules)
     {
@@ -701,8 +820,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $name   Module name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function switchModule($author, $name)
     {
@@ -749,8 +866,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return pattern to check PHP file paths
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPathPatternForPHP()
     {
@@ -770,8 +885,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return pattern to check .tpl file paths
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPathPatternForTemplates()
     {
@@ -786,8 +899,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Modules $node Current module node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleQuotedPathsCallback(\Includes\Decorator\DataStructure\Graph\Modules $node)
     {
@@ -798,8 +909,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * Return list of relative module paths
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModuleQuotedPaths()
     {
@@ -821,8 +930,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      * @param string $extension File extension
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getPathPattern($rootPath, $dir, $extension)
     {

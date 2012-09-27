@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Base;
@@ -30,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Translation-owner abstract class
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -40,9 +36,7 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Current entity language
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.20
+     * @var string
      */
     protected $editLanguage;
 
@@ -52,8 +46,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -68,8 +60,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Code to set
      *
      * @return self
-     * @see    ____func_see____
-     * @since  1.0.20
      */
     public function setEditLanguage($code)
     {
@@ -82,8 +72,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * Return all translations
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslations()
     {
@@ -96,8 +84,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param \XLite\Model\Base\Translation $translation Translation to add
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addTranslations(\XLite\Model\Base\Translation $translation)
     {
@@ -111,8 +97,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param boolean $allowEmptyResult Flag OPTIONAL
      *
      * @return \XLite\Model\Base\Translation
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslation($code = null, $allowEmptyResult = false)
     {
@@ -136,8 +120,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Language code OPTIONAL
      *
      * @return \XLite\Model\Base\Translation
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function getHardTranslation($code = null)
     {
@@ -154,24 +136,28 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Language code OPTIONAL
      *
      * @return \XLite\Model\Base\Translation
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSoftTranslation($code = null)
     {
-        $result = $this->getTranslation($code, true);
+        $result = null;
 
-        if (!isset($result)) {
-            $result = $this->getTranslation(static::getDefaultLanguage());
-
-            if (!$this->hasTranslation($result->getCode())) {
-                $tmp = $this->getTranslations()->first();
-
-                // DO NOT use isset() here
-                if (!empty($tmp)) {
-                    $result = $tmp;
-                }
+        // Select by languages query (current languge -> default language -> hardcoded default language)
+        $query = \XLite\Core\Translation::getLanguageQuery($this->getTranslationCode($code));
+        foreach ($query as $code) {
+            $result = $this->getTranslation($code, true);
+            if (isset($result)) {
+                break;
             }
+        }
+
+        // Get first translation
+        if (!isset($result)) {
+            $result = $this->getTranslations()->first() ?: null;
+        }
+
+        // Get empty dump translation with specified code
+        if (!isset($result)) {
+            $result = $this->getTranslation(array_shift($query));
         }
 
         return $result;
@@ -183,8 +169,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Language code OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasTranslation($code = null)
     {
@@ -195,8 +179,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * Get translation codes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslationCodes()
     {
@@ -207,8 +189,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * Detach self
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function detach()
     {
@@ -225,8 +205,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * @param string $code Language code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     protected function getTranslationCode($code = null)
     {
@@ -241,8 +219,6 @@ abstract class I18n extends \XLite\Model\AEntity
      * Get default language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSessionLanguageCode()
     {

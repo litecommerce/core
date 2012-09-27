@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\View\ItemsList\Model\Product\Admin;
@@ -30,15 +28,12 @@ namespace XLite\View\ItemsList\Model\Product\Admin;
 /**
  * Search product
  *
- * @see   ____class_see____
- * @since 1.0.15
  */
 class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
 {
     /**
      * Allowed sort criterions
      */
-
     const SORT_BY_MODE_PRICE  = 'p.price';
     const SORT_BY_MODE_NAME   = 'translations.name';
     const SORT_BY_MODE_SKU    = 'p.sku';
@@ -55,23 +50,20 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
     const PARAM_BY_DESCR          = 'by_descr';
     const PARAM_INVENTORY         = 'inventory';
 
-
     /**
      * Define and set widget attributes; initialize widget
      *
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
         $this->sortByModes += array(
-            self::SORT_BY_MODE_PRICE  => 'Price',
-            self::SORT_BY_MODE_NAME   => 'Name',
-            self::SORT_BY_MODE_SKU    => 'SKU',
-            self::SORT_BY_MODE_AMOUNT => 'Amount',
+            static::SORT_BY_MODE_PRICE  => 'Price',
+            static::SORT_BY_MODE_NAME   => 'Name',
+            static::SORT_BY_MODE_SKU    => 'SKU',
+            static::SORT_BY_MODE_AMOUNT => 'Amount',
         );
 
         parent::__construct($params);
@@ -81,13 +73,10 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Get a list of CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/product/style.css';
 
         return $list;
@@ -97,25 +86,22 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Define columns structure
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineColumns()
     {
         return array(
             'sku' => array(
-                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('SKU'),
-                static::COLUMN_CREATE_CLASS => 'XLite\View\FormField\Inline\Input\Text\Product\SKU',
+                static::COLUMN_NAME   => \XLite\Core\Translation::lbl('SKU'),
             ),
             'name' => array(
-                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('Product Name'),
-                static::COLUMN_LINK         => 'product',
-                static::COLUMN_CREATE_CLASS => 'XLite\View\FormField\Inline\Input\Text\Product\Name',
-                static::COLUMN_MAIN         => true,
+                static::COLUMN_NAME   => \XLite\Core\Translation::lbl('Product Name'),
+                static::COLUMN_LINK   => 'product',
+                static::COLUMN_MAIN   => true,
             ),
             'price' => array(
-                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Price'),
-                static::COLUMN_CLASS => 'XLite\View\FormField\Inline\Input\Text\Price\Product',
+                static::COLUMN_NAME   => \XLite\Core\Translation::lbl('Price'),
+                static::COLUMN_CLASS  => 'XLite\View\FormField\Inline\Input\Text\Price',
+                static::COLUMN_PARAMS => array('min' => 0),
             ),
             'qty' => array(
                 static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Qty'),
@@ -128,8 +114,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Get list name suffixes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getListNameSuffixes()
     {
@@ -140,8 +124,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Get panel class
      *
      * @return \XLite\View\Base\FormStickyPanel
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getPanelClass()
     {
@@ -154,19 +136,17 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Return search parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getSearchParams()
     {
         return array(
-            \XLite\Model\Repo\Product::P_SUBSTRING         => self::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Product::P_CATEGORY_ID       => self::PARAM_CATEGORY_ID,
-            \XLite\Model\Repo\Product::P_SKU               => self::PARAM_SKU,
-            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => self::PARAM_SEARCH_IN_SUBCATS,
-            \XLite\Model\Repo\Product::P_BY_TITLE          => self::PARAM_BY_TITLE,
-            \XLite\Model\Repo\Product::P_BY_DESCR          => self::PARAM_BY_DESCR,
-            \XLite\Model\Repo\Product::P_INVENTORY         => self::PARAM_INVENTORY,
+            \XLite\Model\Repo\Product::P_SUBSTRING         => static::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Product::P_CATEGORY_ID       => static::PARAM_CATEGORY_ID,
+            \XLite\Model\Repo\Product::P_SKU               => static::PARAM_SKU,
+            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => static::PARAM_SEARCH_IN_SUBCATS,
+            \XLite\Model\Repo\Product::P_BY_TITLE          => static::PARAM_BY_TITLE,
+            \XLite\Model\Repo\Product::P_BY_DESCR          => static::PARAM_BY_DESCR,
+            \XLite\Model\Repo\Product::P_INVENTORY         => static::PARAM_INVENTORY,
         );
     }
 
@@ -174,35 +154,19 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SUBSTRING => new \XLite\Model\WidgetParam\String(
-                'Substring', ''
-            ),
-            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\Int(
-                'Category ID', 0
-            ),
-            self::PARAM_SKU => new \XLite\Model\WidgetParam\String(
-                'SKU', ''
-            ),
-            self::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Checkbox(
-                'Search in subcategories', 0
-            ),
-            self::PARAM_BY_TITLE => new \XLite\Model\WidgetParam\Checkbox(
-                'Search in title', 0
-            ),
-            self::PARAM_BY_DESCR => new \XLite\Model\WidgetParam\Checkbox(
-                'Search in description', 0
-            ),
-            self::PARAM_INVENTORY => new \XLite\Model\WidgetParam\String(
-                'Inventory', 'all'
-            ),
+            static::PARAM_SUBSTRING         => new \XLite\Model\WidgetParam\String('Substring', ''),
+            static::PARAM_CATEGORY_ID       => new \XLite\Model\WidgetParam\Int('Category ID', 0),
+            static::PARAM_SKU               => new \XLite\Model\WidgetParam\String('SKU', ''),
+            static::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Checkbox('Search in subcategories', 0),
+            static::PARAM_BY_TITLE          => new \XLite\Model\WidgetParam\Checkbox('Search in title', 0),
+            static::PARAM_BY_DESCR          => new \XLite\Model\WidgetParam\Checkbox('Search in description', 0),
+            static::PARAM_INVENTORY         => new \XLite\Model\WidgetParam\String('Inventory', 'all'),
         );
     }
 
@@ -210,25 +174,18 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
         parent::defineRequestParams();
 
-        $this->requestParams = array_merge(
-            $this->requestParams,
-            static::getSearchParams()
-        );
+        $this->requestParams = array_merge($this->requestParams, static::getSearchParams());
     }
 
     /**
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -241,9 +198,9 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
             $result->$modelParam = $this->getParam($requestParam);
         }
 
-        if (empty($result->{self::PARAM_CATEGORY_ID})) {
-            unset($result->{self::PARAM_CATEGORY_ID});
-            unset($result->{self::PARAM_SEARCH_IN_SUBCATS});
+        if (empty($result->{static::PARAM_CATEGORY_ID})) {
+            unset($result->{static::PARAM_CATEGORY_ID});
+            unset($result->{static::PARAM_SEARCH_IN_SUBCATS});
         }
 
         return $result;
@@ -256,8 +213,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -269,8 +224,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * array(<Field to order>, <Sort direction>)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.6
      */
     protected function getOrderBy()
     {
@@ -281,12 +234,10 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * getSortByModeDefault
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
-        return self::SORT_BY_MODE_NAME;
+        return static::SORT_BY_MODE_NAME;
     }
 
     // }}}
@@ -297,8 +248,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -312,8 +261,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getColumnClass(array $column, \XLite\Model\AEntity $entity = null)
     {
@@ -333,8 +280,6 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasColumnAttention(array $column, \XLite\Model\AEntity $entity = null)
     {
@@ -344,14 +289,12 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
 
     // }}}
 
-    // {{{ Behavoirs
+    // {{{ Behaviors
 
     /**
      * Mark list as removable
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isRemoved()
     {
@@ -359,11 +302,9 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
     }
 
     /**
-     * Mark list as switchyabvle (enable / disable)
+     * Mark list as switchable (enable / disable)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isSwitchable()
     {

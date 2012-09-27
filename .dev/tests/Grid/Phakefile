@@ -114,8 +114,8 @@ group("server", function()
     {
         print PHP_EOL . "Starting a new EC2 Instance...";
         $server = LcServer::boot_and_acquire_dns($app['lc_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['server_instance_type']));
-        print PHP_EOL . "Started new lc server at " . $app['cloud']->server->public_dns;
         $app['cloud']->server = $server;
+        print PHP_EOL . "Started new lc server at " . $app['cloud']->server->public_dns;
         $app['cloud']->save();
         $server->setup($app);
 

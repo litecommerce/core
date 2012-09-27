@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Order;
@@ -30,8 +28,6 @@ namespace XLite\View\ItemsList\Order;
 /**
  * Abstract orders list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AOrder extends \XLite\View\ItemsList\AItemsList
 {
@@ -50,8 +46,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -67,8 +61,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -86,8 +78,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -103,8 +93,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -116,8 +104,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * NOTE: do not use "$this" pointer here (see "get[CSS/JS]Files()")
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -128,8 +114,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * Return dir which contains the page body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -140,8 +124,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * getSortByModeDefault
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -152,8 +134,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -167,8 +147,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      * getJSHandlerClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSHandlerClassName()
     {

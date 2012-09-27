@@ -183,15 +183,12 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     public function testDelete()
     {
         $order = $this->getTestOrder();
-
         $id = $order->getOrderId();
-
-        \XLite\Core\Database::getEM()->remove($order);
-        \XLite\Core\Database::getEM()->flush();
         $this->order = null;
 
-        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')
-            ->find($id);
+        \XLite\Core\Database::getRepo('XLite\Model\Order')->delete($order);
+        \XLite\Core\Database::getRepo('XLite\Model\Order')->clear();
+        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($id);
 
         $this->assertTrue(is_null($order), 'check removed order');
     }
@@ -204,6 +201,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
             $order::STATUS_TEMPORARY  => 'Cart',
             $order::STATUS_INPROGRESS => 'Incompleted',
             $order::STATUS_QUEUED     => 'Queued',
+            $order::STATUS_AUTHORIZED => 'Authorized',
             $order::STATUS_PROCESSED  => 'Processed',
             $order::STATUS_COMPLETED  => 'Completed',
             $order::STATUS_FAILED     => 'Failed',
@@ -673,6 +671,11 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $list = $order->getActivePaymentTransactions();
 
+        $this->assertEquals(0, count($list), 'check length (empty)');
+
+        $order->getPaymentTransactions()->first()->setStatus(\XLite\Model\Payment\Transaction::STATUS_SUCCESS);
+
+        $list = $order->getActivePaymentTransactions();
         $this->assertEquals(1, count($list), 'check length');
         $this->assertEquals(
             'Purchase Order',

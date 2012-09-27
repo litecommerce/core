@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField;
 /**
  * Abstract form field
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AFormField extends \XLite\View\AView
 {
@@ -66,36 +62,28 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $name = null;
 
     /**
      * validityFlag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $validityFlag = null;
 
     /**
      * Determines if this field is visible for customers or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isAllowedForCustomer = true;
 
     /**
      * Error message 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var string
      */
     protected $errorMessage;
 
@@ -103,8 +91,6 @@ abstract class AFormField extends \XLite\View\AView
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getFieldType();
 
@@ -112,8 +98,6 @@ abstract class AFormField extends \XLite\View\AView
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getFieldTemplate();
 
@@ -121,8 +105,6 @@ abstract class AFormField extends \XLite\View\AView
      * Return field name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -133,8 +115,6 @@ abstract class AFormField extends \XLite\View\AView
      * Return field value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getValue()
     {
@@ -147,8 +127,6 @@ abstract class AFormField extends \XLite\View\AView
      * @param mixed $value Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setValue($value)
     {
@@ -159,8 +137,6 @@ abstract class AFormField extends \XLite\View\AView
      * getLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLabel()
     {
@@ -171,8 +147,6 @@ abstract class AFormField extends \XLite\View\AView
      * Return a value for the "id" attribute of the field input tag
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldId()
     {
@@ -183,8 +157,6 @@ abstract class AFormField extends \XLite\View\AView
      * Validate field value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate()
     {
@@ -200,8 +172,6 @@ abstract class AFormField extends \XLite\View\AView
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -217,8 +187,6 @@ abstract class AFormField extends \XLite\View\AView
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -234,12 +202,26 @@ abstract class AFormField extends \XLite\View\AView
      * It is usable to make unique changes of the field.
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public function getWrapperClass()
     {
         return $this->getParam(self::PARAM_WRAPPER_CLASS);
+    }
+
+    /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        if (isset($params['value'])) {
+            $this->setValue($params['value']);
+        }
     }
 
 
@@ -247,8 +229,6 @@ abstract class AFormField extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -259,8 +239,6 @@ abstract class AFormField extends \XLite\View\AView
      * Return name of the folder with templates
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -271,8 +249,6 @@ abstract class AFormField extends \XLite\View\AView
      * checkSavedValue
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkSavedValue()
     {
@@ -283,8 +259,6 @@ abstract class AFormField extends \XLite\View\AView
      * Get validity flag (and run field validation procedire)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidityFlag()
     {
@@ -299,8 +273,6 @@ abstract class AFormField extends \XLite\View\AView
      * Sanitize value
      * 
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function sanitize()
     {
@@ -311,8 +283,6 @@ abstract class AFormField extends \XLite\View\AView
      * getCommonAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {
@@ -327,9 +297,7 @@ abstract class AFormField extends \XLite\View\AView
      *
      * @param array $attrs Field attributes to prepare
      *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return array
      */
     protected function setCommonAttributes(array $attrs)
     {
@@ -355,8 +323,6 @@ abstract class AFormField extends \XLite\View\AView
      * @param array $classes Classes
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {
@@ -372,8 +338,6 @@ abstract class AFormField extends \XLite\View\AView
      * Assemble validation rules 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleValidationRules()
     {
@@ -386,8 +350,6 @@ abstract class AFormField extends \XLite\View\AView
      * @param array $attrs Field attributes to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareAttributes(array $attrs)
     {
@@ -402,8 +364,6 @@ abstract class AFormField extends \XLite\View\AView
      * Check if field is required
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isRequired()
     {
@@ -414,8 +374,6 @@ abstract class AFormField extends \XLite\View\AView
      * getAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAttributes()
     {
@@ -426,8 +384,6 @@ abstract class AFormField extends \XLite\View\AView
      * Return HTML representation for widget attributes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAttributesCode()
     {
@@ -444,8 +400,6 @@ abstract class AFormField extends \XLite\View\AView
      * Some JavaScript code to insert
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInlineJSCode()
     {
@@ -456,8 +410,6 @@ abstract class AFormField extends \XLite\View\AView
      * getDefaultName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultName()
     {
@@ -468,8 +420,6 @@ abstract class AFormField extends \XLite\View\AView
      * getDefaultValue
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultValue()
     {
@@ -480,8 +430,6 @@ abstract class AFormField extends \XLite\View\AView
      * getDefaultLabel
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -492,8 +440,6 @@ abstract class AFormField extends \XLite\View\AView
      * Get default attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAttributes()
     {
@@ -504,8 +450,6 @@ abstract class AFormField extends \XLite\View\AView
      * Getter for Field-only flag
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParamFieldOnly()
     {
@@ -516,8 +460,6 @@ abstract class AFormField extends \XLite\View\AView
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -549,8 +491,6 @@ abstract class AFormField extends \XLite\View\AView
      * Check field value validity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkFieldValue()
     {
@@ -561,8 +501,6 @@ abstract class AFormField extends \XLite\View\AView
      * Check field validity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkFieldValidity()
     {
@@ -581,8 +519,6 @@ abstract class AFormField extends \XLite\View\AView
      * Get required field error message
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRequiredFieldErrorMessage()
     {
@@ -593,8 +529,6 @@ abstract class AFormField extends \XLite\View\AView
      * checkFieldAccessability
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkFieldAccessability()
     {
@@ -608,8 +542,6 @@ abstract class AFormField extends \XLite\View\AView
      * @param array  $args   Call arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callFormMethod($method, array $args = array())
     {
@@ -624,8 +556,6 @@ abstract class AFormField extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -636,8 +566,6 @@ abstract class AFormField extends \XLite\View\AView
      * Get default wrapper class 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultWrapperClass()
     {
@@ -645,5 +573,25 @@ abstract class AFormField extends \XLite\View\AView
         $suffix = str_replace('\\', '-', strtolower($suffix));
 
         return 'input ' . $suffix;
+    }
+
+    /**
+     * Get label container class 
+     * 
+     * @return string
+     */
+    protected function getLabelContainerClass()
+    {
+        return 'table-label ' . $this->getFieldId() . '-label';
+    }
+
+    /**
+     * Get value container class 
+     * 
+     * @return string
+     */
+    protected function getValueContainerClass()
+    {
+        return 'table-value ' . $this->getFieldId() . '-value';
     }
 }

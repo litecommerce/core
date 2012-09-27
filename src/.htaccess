@@ -1,0 +1,54 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Apache/PHP settings
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @see        ____file_see____
+# @since     1.0.21
+
+Options -Indexes
+DirectoryIndex cart.php
+FileETag none
+
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+
+  RewriteRule (^|/)\. - [F]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  RewriteRule ^((([/_a-z0-9-]+)/)?([_a-z0-9-]+)/)?([_a-z0-9-]+)(\.(htm)(l)?)?$ cart.php?url=$5&last=$4&rest=$3&ext=$7 [NC] [L]
+
+  #RewriteBase ____WEB_DIR____
+</IfModule>
+
+# Deflating several main types of content
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/xml application/x-javascript application/xhtml+xml application/rss+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+
+  # Expire images/js/css header
+  ExpiresActive On
+  ExpiresDefault A0
+
+  # Images expires in 2 weeks
+  ExpiresByType image/png A1209600
+  ExpiresByType image/gif A1209600
+  ExpiresByType image/jpg A1209600
+  ExpiresByType image/jpeg A1209600
+  ExpiresByType image/ico A1209600
+  ExpiresByType image/x-icon A1209600
+
+  # CSS/JS now work with dynamic unique query string. 1 year expires
+  ExpiresByType text/css A31104000
+  ExpiresByType text/javascript A31104000
+  ExpiresByType application/javascript A31104000
+
+</IfModule>
+

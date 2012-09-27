@@ -6,10 +6,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the GNU General Pubic License (GPL 2.0)
+ * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://www.gnu.org/licenses/gpl-2.0.html
+ * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\GoogleAnalytics\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\GoogleAnalytics\View;
 /**
  * Additional bloc for Checkout success page
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -41,8 +37,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -57,8 +51,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -69,8 +61,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Get account id from Drupal module
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAccount()
     {
@@ -81,8 +71,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Get commands for _gat
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getGatCommands()
     {
@@ -154,8 +142,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -167,8 +153,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * Display widget as Drupal-specific
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisplayDrupal()
     {
@@ -184,8 +168,6 @@ class CheckoutSuccess extends \XLite\View\AView
      * @param string $string String
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function escapeJavascript($string)
     {

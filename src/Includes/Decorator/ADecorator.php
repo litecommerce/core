@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Decorator;
@@ -30,8 +28,6 @@ namespace Includes\Decorator;
 /**
  * ADecorator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ADecorator
 {
@@ -49,27 +45,21 @@ abstract class ADecorator
     /**
      * Current step
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected static $step;
 
     /**
      * Classes tree
      *
-     * @var   \Includes\Decorator\DataStructure\Graph\Classes
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Includes\Decorator\DataStructure\Graph\Classes
      */
     protected static $classesTree;
 
     /**
      * Modules graph
      *
-     * @var   \Includes\Decorator\DataStructure\Graph\Modules
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Includes\Decorator\DataStructure\Graph\Modules
      */
     protected static $modulesGraph;
 
@@ -79,8 +69,6 @@ abstract class ADecorator
      * @param boolean $create Flag OPTIONAL
      *  
      * @return \Includes\Decorator\DataStructure\Graph\Classes
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getClassesTree($create = true)
     {
@@ -101,8 +89,6 @@ abstract class ADecorator
      * Return modules graph
      *
      * @return \Includes\Decorator\DataStructure\Graph\Modules
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModulesGraph()
     {
@@ -117,20 +103,16 @@ abstract class ADecorator
      * Return classes repository path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getClassesDir()
     {
-        return (static::STEP_FIRST == static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
+        return (self::STEP_FIRST == static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
     }
 
     /**
      * Return name of the file with the classes hash 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getClassesHashPath()
     {

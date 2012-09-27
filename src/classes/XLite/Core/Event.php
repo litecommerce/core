@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,17 +28,13 @@ namespace XLite\Core;
 /**
  * Events subsystem
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Event extends \XLite\Base\Singleton
 {
     /**
      * Events list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $events = array();
 
@@ -51,8 +45,6 @@ class Event extends \XLite\Base\Singleton
      * @param string $message Error message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function invalidElement($name, $message)
     {
@@ -66,8 +58,6 @@ class Event extends \XLite\Base\Singleton
      * @param array  $arguments Event arguments
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function __callStatic($name, array $arguments)
     {
@@ -84,8 +74,6 @@ class Event extends \XLite\Base\Singleton
      * @param array  $arguments Event arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function trigger($name, array $arguments = array())
     {
@@ -99,8 +87,6 @@ class Event extends \XLite\Base\Singleton
      * Display events
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function display()
     {
@@ -113,8 +99,6 @@ class Event extends \XLite\Base\Singleton
      * Clear list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clear()
     {

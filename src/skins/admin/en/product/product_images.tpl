@@ -4,21 +4,12 @@
  * Product images management template
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 {* TODO: refactor into lists*}
 <p class="error-message" IF="!product.getImages()">{t(#There are no images loaded for this product#)}</p>
-
-<widget
-  class="\XLite\View\Button\FileSelector"
-  style="main-button"
-  label="Add image"
-  object="product"
-  objectId="{product.getProductId()}"
-  fileObject="images" />
 
 <br /><br />
 

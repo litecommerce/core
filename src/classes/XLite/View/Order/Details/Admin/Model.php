@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Order\Details\Admin;
@@ -30,17 +28,13 @@ namespace XLite\View\Order\Details\Admin;
 /**
  * Model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Model extends \XLite\View\Order\Details\Base\AModel
 {
     /**
      * Main order info
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $schemaMain = array(
         'order_id' => array(
@@ -65,8 +59,6 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * @param array $sections Sections list OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -79,8 +71,6 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -96,8 +86,6 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * Alias
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrder()
     {
@@ -110,8 +98,6 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * @param array &$data Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareFieldParamsDate(array &$data)
     {

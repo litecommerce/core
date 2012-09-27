@@ -4,14 +4,13 @@
  * Table model list
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
-<div class="{getContainerClass()}">
-
+<div {getContainerAttributesAsString():h}>
+  {displayCommentedData(getItemsListParams())}
   <div IF="isHeaderVisible()" class="list-header">
     <div FOREACH="getTopActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>
     <list name="header" type="inherited" />
@@ -30,13 +29,3 @@
 </div>
 
 <widget IF="isPanelVisible()" class="{getPanelClass()}" />
-
-<script type="text/javascript">
-//<![CDATA[
-jQuery().ready(
-  function() {
-    new TableItemsList('{getSessionCell()}', {getURLParamsJS():h}, {getURLAJAXParamsJS():h});
-  }
-);
-//]]>
-</script>

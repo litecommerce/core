@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Log getter controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Log extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class Log extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -48,11 +42,9 @@ class Log extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get log path 
-     * 
+     * Get log path
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getLogPath()
     {
@@ -60,7 +52,7 @@ class Log extends \XLite\Controller\Admin\AAdmin
         if ($path && !preg_match(\XLite\Logger::LOG_FILE_NAME_PATTERN, $path)) {
             $path = null;
         }
-        $path = $path ? (LC_DIR_VAR . 'log' . LC_DS . $path) : null;
+        $path = $path ? (LC_DIR_LOG . $path) : null;
 
         return (!$path || !file_exists($path) || !is_readable($path)) ? null : $path;
     }
@@ -69,8 +61,6 @@ class Log extends \XLite\Controller\Admin\AAdmin
      * Preprocessor for no-action ren
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {

@@ -4,10 +4,9 @@
  * Drupal connector functions
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 // FIXME - must be improved and synchronized with the "default" skin
@@ -206,7 +205,6 @@ jQuery(document).ready(
  * @param HTMLFormElement $form current form
  *
  * @return void
- * @since  1.0.0
  */
 function drupalOnSubmitGetForm(form)
 {

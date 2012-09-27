@@ -44,10 +44,10 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     protected $testData = array(
         'currency_id' => 999,
-        'code' => 'XXX',
-        'symbol' => 'x',
-        'e' => 3,
-        'name' => 'Test',
+        'code'        => 'XXX',
+        'symbol'      => 'x',
+        'e'           => 3,
+        'name'        => 'Test',
     );
 
     /**

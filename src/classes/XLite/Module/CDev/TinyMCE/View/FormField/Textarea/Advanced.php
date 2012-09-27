@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\TinyMCE\View\FormField\Textarea;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\TinyMCE\View\FormField\Textarea;
 /**
  * TinyMCE textarea widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * getJSFiles
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -57,8 +51,6 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * Return CSS files for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -74,8 +66,6 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * getFieldTemplate
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -87,11 +77,27 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
      * getDir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
         return 'modules/CDev/TinyMCE';
+    }
+
+    /**
+     * Return structure of configuration for JS TinyMCE library
+     *
+     * @return array
+     */
+    protected function getTinyMCEConfiguration()
+    {
+        // Base is the web path to the tinymce library directory
+        return array(
+            'shopURL' => \XLite::getInstance()->getShopURL(),
+            'shopURLRoot' => \XLite\Model\Category::WEB_LC_ROOT,
+            'base' => dirname(\XLite\Singletons::$handler->layout->getResourceWebPath(
+                $this->getDir() . '/js/tinymce/tiny_mce.js',
+                \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
+            )) . '/',
+        );
     }
 }

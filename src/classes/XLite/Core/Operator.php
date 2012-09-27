@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,17 +28,13 @@ namespace XLite\Core;
 /**
  * Common operations repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Operator extends \XLite\Base\Singleton
 {
     /**
      * Files repositories paths
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $filesRepositories = array(
         LC_DIR_COMPILE => 'compiled classes repository',
@@ -56,8 +50,6 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $code     Operation code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function redirect($location, $force = false, $code = 302)
     {
@@ -73,8 +65,6 @@ class Operator extends \XLite\Base\Singleton
      * @param string $name Name of class to check
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isClassExists($name)
     {
@@ -88,8 +78,6 @@ class Operator extends \XLite\Base\Singleton
      * @param string $url URL
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getURLContent($url)
     {
@@ -118,8 +106,6 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $limit Page length limit OPTIONAL
      *
      * @return array (pages count + current page number)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function calculatePagination($count, $page = 1, $limit = 20)
     {
@@ -143,8 +129,6 @@ class Operator extends \XLite\Base\Singleton
      * Check if we need to perform a redirect or not
      *
      * @return boolean
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected static function checkRedirectStatus()
     {
@@ -159,8 +143,6 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $code     Operation code OPTIONAL
      *
      * @return void
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected static function setHeaderLocation($location, $code = 302)
     {
@@ -194,8 +176,6 @@ class Operator extends \XLite\Base\Singleton
      * finish
      *
      * @return void
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     protected static function finish()
     {
@@ -207,8 +187,6 @@ class Operator extends \XLite\Base\Singleton
      * Display 404 page
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function display404()
     {
@@ -228,8 +206,6 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $slice Trace slice count OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getBackTrace($slice = 0)
     {
@@ -243,8 +219,6 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $slice     Trace slice count OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function prepareBackTrace(array $backTrace, $slice = 0)
     {
@@ -298,15 +272,10 @@ class Operator extends \XLite\Base\Singleton
      * @param array  $data Data
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function saveServiceYAML($path, array $data)
     {
-        return \Includes\Utils\FileManager::write(
-            $path,
-            $this->getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
-        );
+        return \Includes\Utils\Operator::saveServiceYAML($path, $data);
     }
 
     /**
@@ -315,20 +284,11 @@ class Operator extends \XLite\Base\Singleton
      * @param string $path File path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loadServiceYAML($path)
     {
-        $data = null;
-
-        if (\Includes\Utils\FileManager::isFile($path)) {
-            $data = \Symfony\Component\Yaml\Yaml::load($path);
-        }
-
-        return $data;
+        return \Includes\Utils\Operator::loadServiceYAML($path);
     }
-
 
     /**
      * Get back trace function or method arguments
@@ -337,8 +297,6 @@ class Operator extends \XLite\Base\Singleton
      * @param array $l Back trace record
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBackTraceArgs(array $l)
     {
@@ -405,8 +363,6 @@ class Operator extends \XLite\Base\Singleton
      * @param mixed $class ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function detectClassName($class)
     {
@@ -417,11 +373,9 @@ class Operator extends \XLite\Base\Singleton
      * Get data storage service header
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getServiceHeader()
     {
-        return '# <' . '?php if (!defined(\'LC_DS\')) { die(); } ?' . '>' . PHP_EOL . PHP_EOL;
+        return \Includes\Utils\Operator::getServiceHeader();
     }
 }

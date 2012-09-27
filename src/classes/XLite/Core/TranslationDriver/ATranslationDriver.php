@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\TranslationDriver;
@@ -30,8 +28,6 @@ namespace XLite\Core\TranslationDriver;
 /**
  * Abstract translation driver
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ATranslationDriver extends \XLite\Base
 {
@@ -42,8 +38,6 @@ abstract class ATranslationDriver extends \XLite\Base
      * @param string $code Language code
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function translate($name, $code);
 
@@ -51,8 +45,6 @@ abstract class ATranslationDriver extends \XLite\Base
      * Check - valid driver or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function isValid();
 
@@ -60,8 +52,6 @@ abstract class ATranslationDriver extends \XLite\Base
      * Reset language driver
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function reset();
 
@@ -69,8 +59,6 @@ abstract class ATranslationDriver extends \XLite\Base
      * Alias
      *
      * @return \XLite\Model\Repo\LanguageLabel
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getRepo()
     {

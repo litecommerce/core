@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.7
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Select File controller
  *
- * @see   ____class_see____
- * @since 1.0.7
  */
 class SelectFile extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -51,8 +45,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -64,8 +56,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * getModelFormClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -76,8 +66,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * Return target for redirect URL. Object string should contain the target name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function getObjectTarget()
     {
@@ -88,8 +76,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * Return array with parameters for redirect URL. Inner method.
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function getParamsObject()
     {
@@ -104,8 +90,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * Return parameters array for "Product" target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function getParamsObjectProduct()
     {
@@ -119,8 +103,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * Return parameters array for "Category" target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function getParamsObjectCategory()
     {
@@ -134,8 +116,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * Return parameters array for "Import" target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function getParamsObjectImportExport()
     {
@@ -151,8 +131,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      *  - set return URL which is set by "getParamsObject<object>()" getter
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelect()
     {
@@ -178,8 +156,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * Get redirect target 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function getRedirectTarget()
     {
@@ -195,8 +171,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @param array  $paramsToLoad Parameters to use in image getter method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectCategoryImage($methodToLoad, array $paramsToLoad)
     {
@@ -234,8 +208,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "Upload" handler for category images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUploadCategoryImage()
     {
@@ -246,8 +218,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "URL" handler for category images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUrlCategoryImage()
     {
@@ -264,8 +234,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "Local file" handler for category images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectLocalCategoryImage()
     {
@@ -288,8 +256,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @param array  $paramsToLoad Parameters to use in image getter method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectProductImages($methodToLoad, array $paramsToLoad)
     {
@@ -322,8 +288,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "Upload" handler for product images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUploadProductImages()
     {
@@ -334,8 +298,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "URL" handler for product images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUrlProductImages()
     {
@@ -352,8 +314,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "Local file" handler for product images.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectLocalProductImages()
     {
@@ -376,8 +336,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @param array  $paramsToLoad Parameters to use in getter method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectImport($methodToLoad, array $paramsToLoad)
     {
@@ -407,8 +365,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "Upload" handler for import
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUploadImportExport()
     {
@@ -419,8 +375,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "URL" handler for import
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectUrlImportExport()
     {
@@ -436,8 +390,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * "Local file" handler for import
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     protected function doActionSelectLocalImportExport()
     {
@@ -455,8 +407,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @param string $key Request key
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function loadFromRequestImport($key)
     {
@@ -517,8 +467,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @param string $path Local path
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function loadFromLocalFileImport($path)
     {
@@ -538,8 +486,6 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @param string $url URL
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function loadFromURLImport($url)
     {

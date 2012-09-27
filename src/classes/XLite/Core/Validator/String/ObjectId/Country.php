@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\String\ObjectId;
@@ -30,17 +28,13 @@ namespace XLite\Core\Validator\String\ObjectId;
 /**
  * Country code
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Country extends \XLite\Core\Validator\String
 {
     /**
      * Only-enabled country validation flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $onlyEnabled = false;
 
@@ -51,8 +45,6 @@ class Country extends \XLite\Core\Validator\String
      * @param boolean $onlyEnabled Only enabled flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($nonEmpty = false, $onlyEnabled = false)
     {
@@ -68,8 +60,6 @@ class Country extends \XLite\Core\Validator\String
      *
      * @return void
      * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -81,7 +71,6 @@ class Country extends \XLite\Core\Validator\String
                 throw $this->throwError('Not a country code');
 
             } else {
-                $country->detach();
                 if ($this->onlyEnabled && !$country->getEnabled()) {
                     throw $this->throwError('Country is not enabled');
                 }
@@ -95,8 +84,6 @@ class Country extends \XLite\Core\Validator\String
      * @param mixed $data Daa
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sanitize($data)
     {

@@ -4,10 +4,9 @@
  * Authentication page
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 .login-page {
   width: 600px !important;
@@ -19,7 +18,7 @@
 }
 
 .login #header .logo {
-  background-image: url("../images/logo_admin.png");
+  background-image: url(../images/logo_admin.png);
   height: 81px;
   width: 92px;
 }
@@ -49,6 +48,7 @@
 
 .login-page #main {
   margin-left: 0px;
+  min-width: 640px;
 }
 
 .login h1 {
@@ -69,7 +69,7 @@
 }
 
 .login-box {
-  background: url("../images/keyhole_icon.png") no-repeat 90% 20px transparent;
+  background: url(../images/keyhole_icon.png) no-repeat 90% 20px transparent;
   padding-right: 110px;
   min-height: 200px;
 }

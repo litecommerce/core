@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Tooltip widget
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 class Tooltip extends \XLite\View\AView
 {
@@ -53,12 +49,11 @@ class Tooltip extends \XLite\View\AView
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
-        $list = parent::getJSFiles();
+        $list = parent::getCommonFiles();
+
         $list[static::RESOURCE_JS][] = 'js/tooltip.js';
 
         return $list;
@@ -68,8 +63,6 @@ class Tooltip extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getDefaultTemplate()
     {
@@ -80,8 +73,6 @@ class Tooltip extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function defineWidgetParams()
     {
@@ -100,8 +91,6 @@ class Tooltip extends \XLite\View\AView
      * Checks if image must be shown
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function isImageTag()
     {
@@ -112,8 +101,6 @@ class Tooltip extends \XLite\View\AView
      * Define array of attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getAttributes()
     {
@@ -133,8 +120,6 @@ class Tooltip extends \XLite\View\AView
      * TODO - REWORK with AFormField class - same method using
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getAttributesCode()
     {
@@ -152,8 +137,6 @@ class Tooltip extends \XLite\View\AView
      * Define CSS class of caption text
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     protected function getClass()
     {

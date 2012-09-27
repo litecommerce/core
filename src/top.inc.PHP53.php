@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 // It's the feature of PHP 5. We need to explicitly define current time zone.
@@ -39,30 +37,31 @@ define('LC_MODEL_NS',           LC_NAMESPACE . '\Model');
 define('LC_MODEL_PROXY_NS',     LC_MODEL_NS . '\Proxy');
 
 // Paths
-define('LC_DIR',               realpath(__DIR__));
-define('LC_DIR_ROOT',          rtrim(LC_DIR, LC_DS) . LC_DS);
-define('LC_DIR_CLASSES',       LC_DIR_ROOT . 'classes' . LC_DS);
-define('LC_DIR_VAR',           LC_DIR_ROOT . 'var' . LC_DS);
-define('LC_DIR_LIB',           LC_DIR_ROOT . 'lib' . LC_DS);
-define('LC_DIR_SKINS',         LC_DIR_ROOT . 'skins' . LC_DS);
-define('LC_DIR_IMAGES',        LC_DIR_ROOT . 'images' . LC_DS);
-define('LC_DIR_FILES',         LC_DIR_ROOT . 'files' . LC_DS);
-define('LC_DIR_CONFIG',        LC_DIR_ROOT . 'etc' . LC_DS);
-define('LC_DIR_INCLUDES',      LC_DIR_ROOT . LC_NAMESPACE_INCLUDES . LC_DS);
-define('LC_DIR_MODULES',       LC_DIR_CLASSES . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);
-define('LC_DIR_COMPILE',       LC_DIR_VAR . 'run' . LC_DS);
-define('LC_DIR_CACHE_CLASSES', LC_DIR_COMPILE . 'classes' . LC_DS);
-define('LC_DIR_CACHE_SKINS',   LC_DIR_COMPILE . 'skins' . LC_DS);
-define('LC_DIR_CACHE_MODULES', LC_DIR_CACHE_CLASSES . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);
-define('LC_DIR_CACHE_MODEL',   LC_DIR_CACHE_CLASSES . LC_NAMESPACE . LC_DS . 'Model' . LC_DS);
-define('LC_DIR_CACHE_PROXY',   LC_DIR_CACHE_MODEL . 'Proxy' . LC_DS);
-define('LC_DIR_BACKUP',        LC_DIR_VAR . 'backup' . LC_DS);
-define('LC_DIR_DATA',          LC_DIR_VAR . 'data' . LC_DS);
-define('LC_DIR_TMP',           LC_DIR_VAR . 'tmp' . LC_DS);
-define('LC_DIR_LOCALE',        LC_DIR_VAR . 'locale');
-define('LC_DIR_DATACACHE',     LC_DIR_VAR . 'datacache');
-define('LC_DIR_LOG',           LC_DIR_VAR . 'log' . LC_DS);
-define('LC_DIR_CACHE_IMAGES',  LC_DIR_VAR . 'images' . LC_DS);
+define('LC_DIR',                 realpath(__DIR__));
+define('LC_DIR_ROOT',            rtrim(LC_DIR, LC_DS) . LC_DS);
+define('LC_DIR_CLASSES',         LC_DIR_ROOT . 'classes' . LC_DS);
+define('LC_DIR_VAR',             LC_DIR_ROOT . 'var' . LC_DS);
+define('LC_DIR_LIB',             LC_DIR_ROOT . 'lib' . LC_DS);
+define('LC_DIR_SKINS',           LC_DIR_ROOT . 'skins' . LC_DS);
+define('LC_DIR_IMAGES',          LC_DIR_ROOT . 'images' . LC_DS);
+define('LC_DIR_FILES',           LC_DIR_ROOT . 'files' . LC_DS);
+define('LC_DIR_CONFIG',          LC_DIR_ROOT . 'etc' . LC_DS);
+define('LC_DIR_INCLUDES',        LC_DIR_ROOT . LC_NAMESPACE_INCLUDES . LC_DS);
+define('LC_DIR_MODULES',         LC_DIR_CLASSES . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);
+define('LC_DIR_COMPILE',         LC_DIR_VAR . 'run' . LC_DS);
+define('LC_DIR_CACHE_CLASSES',   LC_DIR_COMPILE . 'classes' . LC_DS);
+define('LC_DIR_CACHE_SKINS',     LC_DIR_COMPILE . 'skins' . LC_DS);
+define('LC_DIR_CACHE_MODULES',   LC_DIR_CACHE_CLASSES . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);
+define('LC_DIR_CACHE_MODEL',     LC_DIR_CACHE_CLASSES . LC_NAMESPACE . LC_DS . 'Model' . LC_DS);
+define('LC_DIR_CACHE_PROXY',     LC_DIR_CACHE_MODEL . 'Proxy' . LC_DS);
+define('LC_DIR_CACHE_RESOURCES', LC_DIR_VAR . 'resources' . LC_DS);
+define('LC_DIR_BACKUP',          LC_DIR_VAR . 'backup' . LC_DS);
+define('LC_DIR_DATA',            LC_DIR_VAR . 'data' . LC_DS);
+define('LC_DIR_TMP',             LC_DIR_VAR . 'tmp' . LC_DS);
+define('LC_DIR_LOCALE',          LC_DIR_VAR . 'locale');
+define('LC_DIR_DATACACHE',       LC_DIR_VAR . 'datacache');
+define('LC_DIR_LOG',             LC_DIR_VAR . 'log' . LC_DS);
+define('LC_DIR_CACHE_IMAGES',    LC_DIR_VAR . 'images' . LC_DS);
 
 define('LC_OS_WINDOWS', 'WIN' === strtoupper(substr(PHP_OS, 0, 3)));
 
@@ -82,6 +81,9 @@ if (!defined('XLITE_INSTALL_MODE')) {
 
 // So called "developer" mode. Set it to "false" in production mode!
 define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(array('performance', 'developer_mode')));
+
+// Clean URLs support
+define('LC_USE_CLEAN_URLS', (bool) \Includes\Utils\ConfigParser::getOptions(array('clean_urls', 'enabled')));
 
 // Correct error handling mode
 ini_set('display_errors', LC_DEVELOPER_MODE);

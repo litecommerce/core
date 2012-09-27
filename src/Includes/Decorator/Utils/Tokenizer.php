@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -30,44 +28,41 @@ namespace Includes\Decorator\Utils;
 /**
  * Tokenizer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
 {
     /**
      * Current (working) path
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected static $path;
 
     /**
      * List of tokens (hash)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $tokens;
 
     /**
+     * Tokens count
+     *
+     * @var integer
+     */
+    protected static $count = 0;
+
+    /**
      * decoratorFlag 
      * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $decoratorFlag;
 
     /**
      * List of "public" methods
      * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $publicMethods = array(
         'getFullClassName',
@@ -83,6 +78,12 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
         'addCodeToClassBody',
     );
 
+    /**
+     * Flag
+     *
+     * @var boolean
+     */
+    protected static $isPrepared = false;
 
     // {{{ Common access method
 
@@ -93,8 +94,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param array  $args   Call arguments OPTIONAL
      *  
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function __callStatic($method, array $args = array())
     {
@@ -107,7 +106,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
         }
 
         // Prepare tokens
-        static::reset($path, static::getDecoratorFlag() || !LC_DEVELOPER_MODE || 'getFullClassName' !== $method);
+        static::reset($path, !LC_DEVELOPER_MODE || 'getFullClassName' !== $method);
 
         return call_user_func_array(array('static', $method), $args);
     }
@@ -116,8 +115,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * getDecoratorFlag 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDecoratorFlag()
     {
@@ -136,8 +133,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * Search for class declaration and return full class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getFullClassName()
     {
@@ -154,8 +149,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * Get parent class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getParentClassName()
     {
@@ -166,8 +159,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * Return list of implemented interfaces
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getInterfaces()
     {
@@ -179,7 +170,9 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
         if (isset($start)) {
             $tokens = array_filter(
                 array_slice(static::$tokens, $start, $end - $start),
-                function ($token) { return T_WHITESPACE !== $token[0]; }
+                function ($token) {
+                    return T_WHITESPACE !== $token[0];
+                }
             );
             $tokens = explode(',', static::composeTokens($tokens));
         }
@@ -188,17 +181,15 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Check for a certain token
+     * Check for certain class type
      *
      * @param integer $token Token index
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getFlag($token)
     {
-        list(, $start, ) = static::findTokensByIndexFromOffset(array(T_CLASS), $token);
+        list(, $start, ) = static::findTokensByIndexFromOffset(array($token), T_CLASS, false);
 
         return isset($start);
     }
@@ -207,12 +198,12 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * Return class DocBlock
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDockBlock()
     {
-        return ($index = static::getDocBlockIndex()) ? static::$tokens[$index][1] : null;
+        list($tokens, ,) = static::findTokensByIndexFromOffset(array(T_DOC_COMMENT), T_CLASS, false);
+
+        return empty($tokens) ? null : static::composeTokens($tokens);
     }
 
     /**
@@ -221,8 +212,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param string $method Method to search
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function hasMethod($method)
     {
@@ -247,8 +236,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * Get class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getClassName()
     {
@@ -259,8 +246,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * Get inteface name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getInterfaceName()
     {
@@ -271,8 +256,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * Get namespace
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getNamespace()
     {
@@ -280,51 +263,16 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Search for the DocBlock
-     * 
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getDocBlockIndex()
-    {
-        $result = null;
-
-        // Search for class or interface definition
-        foreach (array(T_CLASS, T_INTERFACE) as $index) {
-            list(, $start, ) = static::getClassRelatedTokens($index);
-            if ($start) {
-                break;
-            }
-        }
-
-        // If class declaration found
-        if (isset($start)) {
-
-            // Search backward for class docblock
-            for (; $start >= 0; $start--) {
-                if (T_DOC_COMMENT === static::$tokens[$start][0]) {
-                    $result = $start;
-                    break;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Common method to search class-related tokens
      *
      * @param integer $token Token index
+     * @param boolean $isInc Flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected static function getClassRelatedValue($token)
+    protected static function getClassRelatedValue($token, $isInc = true)
     {
-        list($tokens, , ) = static::getClassRelatedTokens($token);
+        list($tokens, , ) = static::getClassRelatedTokens($token, $isInc);
 
         return static::prepareClassRelatedValue(static::composeTokens($tokens));
     }
@@ -335,8 +283,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param string $value Value to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function prepareClassRelatedValue($value)
     {
@@ -354,12 +300,11 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param string $class     New class name
      * @param string $parent    New parent class
      * @param string $dockblock New dockblock OPTIONAL
+     * @param string $prefix    New prefix {abstract|final} OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected static function getSourceCode($namespace, $class, $parent, $dockblock = null)
+    protected static function getSourceCode($namespace, $class, $parent, $dockblock = null, $prefix = null)
     {
         // Class has been moved to a new location
         if (isset($namespace)) {
@@ -381,6 +326,11 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
             static::replaceDockblock($dockblock);
         }
 
+        // To make abstract base classes in Decorator chains
+        if (isset($prefix)) {
+            static::replaceClassType($prefix);
+        }
+
         return static::composeTokens(static::$tokens);
     }
 
@@ -390,8 +340,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param string $token Namespace to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function replaceNamespace($token)
     {
@@ -404,8 +352,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param string $token Class name to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function replaceClassName($token)
     {
@@ -418,8 +364,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param string $token Class name to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function replaceParentClassName($token)
     {
@@ -432,13 +376,33 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param string $token Dockblock to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function replaceDockblock($token)
     {
-        if ($index = static::getDocBlockIndex()) {
-            static::$tokens[$index][1] = $token;
+        list(, $start, $end) = static::findTokensByIndexFromOffset(array(T_DOC_COMMENT), T_CLASS, false);
+
+        if (isset($start)) {
+            static::replaceTokens($start, $end, static::prepareTokens(array($token)));
+        }
+    }
+
+    /**
+     * Replace class type
+     *
+     * @param string $token Class type to set
+     *
+     * @return void
+     */
+    protected static function replaceClassType($token)
+    {
+        list(, $start, ) = static::findTokensByIndexFromOffset(array(T_ABSTRACT, T_FINAL), T_CLASS, false);
+
+        if (!isset($start)) {
+            list(, , $start) = static::findTokensByIndexFromOffset(array(T_WHITESPACE), T_CLASS, false);
+
+            if (isset($start)) {
+                static::replaceTokens($start, $start, static::prepareTokens(array($token, ' ')));
+            }
         }
     }
 
@@ -447,15 +411,14 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      *
      * @param integer $type  Token to search
      * @param string  $token Replacement
+     * @param boolean $isInc Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected static function replaceClassRelatedToken($type, $token)
+    protected static function replaceClassRelatedToken($type, $token, $isInc = true)
     {
         // Search for a class-related token
-        list(, $start, $end) = static::getClassRelatedTokens($type);
+        list(, $start, $end) = static::getClassRelatedTokens($type, $isInc);
 
         // Replace part of the tokens list
         if (isset($start, $end) && $end > $start) {
@@ -480,8 +443,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param string $code Code to add
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function addCodeToClassBody($code)
     {
@@ -504,8 +465,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param integer $type Token to search
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getBodyTokenData($type)
     {
@@ -534,19 +493,23 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param boolean $prepare Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function reset($path, $prepare = true)
     {
         if ($path !== static::$path) {
-            static::$path   = $path;
             static::$tokens = token_get_all(\Includes\Utils\FileManager::read($path, LC_DEVELOPER_MODE));
+            static::$count  = count(static::$tokens);
 
-            if ($prepare) {
-                static::$tokens = static::prepareTokens(static::$tokens);
-            }
+            static::$isPrepared = false;
         }
+
+        if ($prepare && !static::$isPrepared) {
+            static::$tokens = static::prepareTokens(static::$tokens);
+
+            static::$isPrepared = true;
+        }
+
+        static::$path = $path;
     }
 
     /**
@@ -556,8 +519,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param array $index  Default token index
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function prepareTokens(array $tokens, $index = null)
     {
@@ -576,8 +537,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param array &$tokens List of tokens to use
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function composeTokens(array &$tokens)
     {
@@ -598,8 +557,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @param array   $tokens Replacement
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function replaceTokens($start, $end, array $tokens)
     {
@@ -610,14 +567,13 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * Common method to search class-related tokens
      *
      * @param integer $token Token index
+     * @param boolean $isInc Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected static function getClassRelatedTokens($token)
+    protected static function getClassRelatedTokens($token, $isInc = true)
     {
-        return static::findTokensByIndexFromOffset(array(T_STRING, T_NS_SEPARATOR), $token);
+        return static::findTokensByIndexFromOffset(array(T_STRING, T_NS_SEPARATOR), $token, $isInc);
     }
 
     /**
@@ -625,14 +581,13 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      *
      * @param array   $index  List of token indexes to search
      * @param integer $offset Index of the "offset" token
+     * @param boolean $isInc  Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected static function findTokensByIndexFromOffset(array $index, $offset)
+    protected static function findTokensByIndexFromOffset(array $index, $offset, $isInc = true)
     {
-        return static::findTokensFromOffset($index, $offset, 0);
+        return static::findTokensFromOffset($index, $offset, 0, $isInc);
     }
 
     /**
@@ -640,48 +595,50 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      *
      * @param array   $values List of token values to search
      * @param integer $offset Index of the "offset" token
+     * @param boolean $isInc  Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected static function findTokensByValueFromOffset(array $values, $offset)
+    protected static function findTokensByValueFromOffset(array $values, $offset, $isInc = true)
     {
-        return static::findTokensFromOffset($values, $offset, 1);
+        return static::findTokensFromOffset($values, $offset, 1, $isInc);
     }
 
     /**
      * Search for certain tokens from position of some other one
      *
-     * :WARNING: do not modify this method until you really know what you're doing
+     * DO NOT modify this method until you really know what you're doing
      *
      * @param array   $data   List of token indexes/values to search
      * @param integer $offset Index of the "offset" token
      * @param integer $index  Field index in the "token" array
+     * @param boolean $isInc  Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected static function findTokensFromOffset(array $data, $offset, $index)
+    protected static function findTokensFromOffset(array $data, $offset, $index, $isInc = true)
     {
         $tokens = array();
         $start  = $end = null;
 
-        foreach (static::$tokens as &$token) {
+        foreach (static::$tokens as $pos => &$token) {
 
             if ($token[0] == $offset) {
 
-                while (empty($found) && (list($key, $result) = each(static::$tokens))) {
-                    $found = in_array($result[$index], $data);
+                for ( ; $pos < static::$count && 0 <= $pos; $isInc ? ++$pos : --$pos) {
+
+                    if (in_array(static::$tokens[$pos][$index], $data)) {
+                        $tokens[] = static::$tokens[$pos];
+                        break;
+                    }
                 }
 
-                if (!empty($found)) {
-                    $start = $key;
+                if (!empty($tokens)) {
+                    $start = $pos;
 
-                    do {
-                        $tokens[] = $result;
-                    } while ((list($end, $result) = each(static::$tokens)) && in_array($result[$index], $data));
+                    for ($end = ++$pos; $end < static::$count && in_array(static::$tokens[$end][$index], $data); $end++) {
+                        $tokens[] = static::$tokens[$end];
+                    }
                 }
 
                 break;

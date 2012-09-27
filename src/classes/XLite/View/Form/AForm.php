@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Form;
@@ -30,8 +28,6 @@ namespace XLite\View\Form;
 /**
  * Abstract form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AForm extends \XLite\View\AView
 {
@@ -52,18 +48,14 @@ abstract class AForm extends \XLite\View\AView
     /**
      * Form arguments plain list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $plainList = null;
 
     /**
-     * Validation message 
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * Validation message
+     *
+     * @var string
      */
     protected $validationMessage;
 
@@ -71,8 +63,6 @@ abstract class AForm extends \XLite\View\AView
      * Get request data
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestData()
     {
@@ -93,7 +83,7 @@ abstract class AForm extends \XLite\View\AView
                 \XLite\Core\Event::invalidElement($exception->getPath(), $message);
             }
 
-            $this->validationMessage 
+            $this->validationMessage
                 = ($exception->getPublicName() ? static::t($exception->getPublicName()) . ': ' : '') . $message;
         }
 
@@ -101,11 +91,9 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
-     * Get validation message 
-     * 
+     * Get validation message
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getValidationMessage()
     {
@@ -116,8 +104,6 @@ abstract class AForm extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -128,8 +114,6 @@ abstract class AForm extends \XLite\View\AView
      * Open and close form tags
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -137,11 +121,9 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
-     * Get end form template 
-     * 
+     * Get end form template
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getEndTemplate()
     {
@@ -152,8 +134,6 @@ abstract class AForm extends \XLite\View\AView
      * Required form parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonFormParams()
     {
@@ -167,8 +147,6 @@ abstract class AForm extends \XLite\View\AView
      * Return value for the <form action="..." ...> attribute
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormAction()
     {
@@ -179,8 +157,6 @@ abstract class AForm extends \XLite\View\AView
      * Return list of additional params
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormParams()
     {
@@ -199,8 +175,6 @@ abstract class AForm extends \XLite\View\AView
      * @param array &$params Form params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setReturnURLParam(array &$params)
     {
@@ -216,8 +190,6 @@ abstract class AForm extends \XLite\View\AView
      * NOTE - this function designed for AJAX easy switch on/off
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {
@@ -228,8 +200,6 @@ abstract class AForm extends \XLite\View\AView
      * JavaScript: default action performed on form submit
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSOnSubmitCode()
     {
@@ -240,8 +210,6 @@ abstract class AForm extends \XLite\View\AView
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -252,8 +220,6 @@ abstract class AForm extends \XLite\View\AView
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -264,8 +230,6 @@ abstract class AForm extends \XLite\View\AView
      * Return list of the form default parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {
@@ -276,8 +240,6 @@ abstract class AForm extends \XLite\View\AView
      * getDefaultFormMethod
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultFormMethod()
     {
@@ -288,8 +250,6 @@ abstract class AForm extends \XLite\View\AView
      * getDefaultClassName
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultClassName()
     {
@@ -300,8 +260,6 @@ abstract class AForm extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -339,8 +297,6 @@ abstract class AForm extends \XLite\View\AView
      * Ability to add the 'enctype="multipart/form-data"' form attribute
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isMultipart()
     {
@@ -351,8 +307,6 @@ abstract class AForm extends \XLite\View\AView
      * Get class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClassName()
     {
@@ -371,8 +325,6 @@ abstract class AForm extends \XLite\View\AView
      * Get validator
      *
      * @return \XLite\Core\Validator\HashArray
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getValidator()
     {
@@ -383,8 +335,6 @@ abstract class AForm extends \XLite\View\AView
      * Return current form reference
      *
      * @return \XLite\View\Model\AModel
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrentForm()
     {
@@ -395,8 +345,6 @@ abstract class AForm extends \XLite\View\AView
      * Apply/disable jQuery validation engine for the form fields
      *
      * @return \XLite\View\Model\AModel
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isValidationEngineApplied()
     {

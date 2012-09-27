@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Console;
@@ -30,53 +28,41 @@ namespace XLite\Controller\Console;
 /**
  * Cron controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cron extends \XLite\Controller\Console\AConsole
 {
     /**
      * Time limit (seconds)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $timeLimit = 600;
 
     /**
      * Memory limit (bytes)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $memoryLimit = 4000000;
 
     /**
      * Memory limit from memory_limit PHP setting (bytes)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $memoryLimitIni;
 
     /**
      * Sleep time
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $sleepTime = 3;
 
     /**
      * Start time 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.19
+     * @var integer
      */
     protected $startTime;
 
@@ -84,14 +70,12 @@ class Cron extends \XLite\Controller\Console\AConsole
      * Preprocessor for no-action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
         $this->startTime = time();
         $this->startMemory = memory_get_usage(true);
-        $this->memoryLimitIni = \XLite\Core\COnverter::convertShortSize(ini_get('memory_limit') ?: '16M');
+        $this->memoryLimitIni = \XLite\Core\Converter::convertShortSize(ini_get('memory_limit') ?: '16M');
 
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Task')->getCurrentQuery() as $task) {
             $task = $task[0];
@@ -116,8 +100,6 @@ class Cron extends \XLite\Controller\Console\AConsole
      * Check thread resource 
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function checkThreadResource()
     {
@@ -131,8 +113,6 @@ class Cron extends \XLite\Controller\Console\AConsole
      * @param \XLite\Core\Task\ATask $runner Runner
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function runRunner(\XLite\Core\Task\ATask $runner)
     {

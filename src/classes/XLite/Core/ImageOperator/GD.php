@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\ImageOperator;
@@ -30,17 +28,13 @@ namespace XLite\Core\ImageOperator;
 /**
  * GD
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class GD extends \XLite\Core\ImageOperator\AImageOperator
 {
     /**
      * MIME types
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $types = array(
         'image/jpeg' => 'jpeg',
@@ -57,9 +51,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
     /**
      * Image resource
      *
-     * @var   resource
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var resource
      */
     protected $image;
 
@@ -67,8 +59,6 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      * Check - enabled engine or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isEnabled()
     {
@@ -82,8 +72,6 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      * @param \XLite\Model\Base\Image $image Image
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setImage(\XLite\Model\Base\Image $image)
     {
@@ -117,8 +105,6 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      * Get image content
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getImage()
     {
@@ -145,8 +131,6 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      * @param integer $height Height
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function resize($width, $height)
     {
@@ -219,8 +203,6 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      * Get image GD-based type
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getImageType()
     {

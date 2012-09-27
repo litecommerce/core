@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Model;
@@ -33,44 +31,34 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
  * TODO: if there will be more properties,
  * derive this class from the \Includes\DataStructure\Cell one
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Portal extends \XLite\Base\SuperClass
 {
     /**
      * Drupal URL where the controller will be displayed
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $url;
 
     /**
      * Controller class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $controller;
 
     /**
      * Portal title
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $title = '';
 
     /**
      * Portal type for Drupal
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $type;
 
@@ -84,8 +72,6 @@ class Portal extends \XLite\Base\SuperClass
      * @param integer $type       Node type OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($url, $controller, $title = '', $type = null)
     {
@@ -104,8 +90,6 @@ class Portal extends \XLite\Base\SuperClass
      * Getter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURL()
     {
@@ -116,8 +100,6 @@ class Portal extends \XLite\Base\SuperClass
      * Getter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getController()
     {
@@ -128,8 +110,6 @@ class Portal extends \XLite\Base\SuperClass
      * Return portal default title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -140,8 +120,6 @@ class Portal extends \XLite\Base\SuperClass
      * Getter
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getType()
     {
@@ -152,8 +130,6 @@ class Portal extends \XLite\Base\SuperClass
      * Return menu node description in Drupal-specific form
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDrupalMenuDescription()
     {
@@ -173,8 +149,6 @@ class Portal extends \XLite\Base\SuperClass
      * @param array  $pageArgs LC-specific URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -192,8 +166,6 @@ class Portal extends \XLite\Base\SuperClass
      * @param array  $args   LC URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDrupalArgs($target, $action, array $args = array())
     {
@@ -208,8 +180,6 @@ class Portal extends \XLite\Base\SuperClass
      * Return portal default page content callback
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getContentCallback()
     {
@@ -220,8 +190,6 @@ class Portal extends \XLite\Base\SuperClass
      * Return portal default page access callback
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAccessCallback()
     {
@@ -232,8 +200,6 @@ class Portal extends \XLite\Base\SuperClass
      * Get default portal type
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultType()
     {

@@ -51,7 +51,7 @@ class XLite_Tests_Model_DataSource_Parameter extends XLite_Tests_TestCase
 
         $this->assertTrue(0 < $p->getId(), 'check parameter id');
         $em->remove($p);
-        $em->flush($p);
+        $em->flush();
     }
 
 }

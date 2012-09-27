@@ -42,8 +42,10 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
     protected function getTestOrder($new_order = false)
     {
         xdebug_stop_code_coverage(false);
-        if ($this->order && !$new_order)
+        if ($this->order && !$new_order) {
             return $this->order;
+        }
+
         \XLite\Core\Auth::getInstance()->logoff();
 
         $this->testOrder['date'] = time();
@@ -72,10 +74,6 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
             $order->addItem($item);
         }
 
-        $order->calculate();
-
-        \XLite\Core\Database::getRepo('XLite\Model\Order')->update($order);
-
         $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
         $found = false;
         foreach ($list as $p) {
@@ -91,10 +89,15 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
         $order->calculate();
 
         \XLite\Core\Database::getRepo('XLite\Model\Order')->update($order);
-        if (!$this->order || $new_order)
+
+        if (!$this->order || $new_order) {
             $this->orders[] = $order;
+        }
+
         $this->order = $order;
+
         xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
+
         return $order;
     }
 

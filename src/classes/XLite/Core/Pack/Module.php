@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\Pack;
@@ -30,8 +28,6 @@ namespace XLite\Core\Pack;
 /**
  * Module
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Module extends \XLite\Core\Pack\APack
 {
@@ -50,9 +46,7 @@ class Module extends \XLite\Core\Pack\APack
     /**
      * Current module
      *
-     * @var   \XLite\Model\Module
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Module
      */
     protected $module;
 
@@ -64,8 +58,6 @@ class Module extends \XLite\Core\Pack\APack
      * @param \XLite\Model\Module $module Current module
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(\XLite\Model\Module $module)
     {
@@ -76,8 +68,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return pack name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -90,8 +80,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return iterator to walk through directories
      *
      * @return \AppendIterator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDirectoryIterator()
     {
@@ -110,8 +98,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return pack metadata
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMetadata()
     {
@@ -135,8 +121,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return list of module directories
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDirs()
     {
@@ -147,8 +131,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return list of module directories which contain class files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClassDirs()
     {
@@ -161,8 +143,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return list of module directories which contain templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSkinDirs()
     {
@@ -193,8 +173,6 @@ class Module extends \XLite\Core\Pack\APack
      * @param string $dir Full directory path
      *
      * @return \RecursiveIteratorIterator
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDirectorySPLIterator($dir)
     {

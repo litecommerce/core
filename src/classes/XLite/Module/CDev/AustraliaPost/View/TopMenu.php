@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\AustraliaPost\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\AustraliaPost\View;
 /**
  * Top menu widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopMenu extends \XLite\View\TopMenu implements \XLite\Base\IDecorator
 {
@@ -41,8 +37,6 @@ class TopMenu extends \XLite\View\TopMenu implements \XLite\Base\IDecorator
      * @param string $target Target name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRelatedTargets($target)
     {

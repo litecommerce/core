@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Common cell class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
 {
@@ -39,8 +35,6 @@ class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
      * Return the current element
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function current()
     {
@@ -51,8 +45,6 @@ class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
      * Return the key of the current element
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function key()
     {
@@ -63,8 +55,6 @@ class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
      * Move forward to next element
      *
      * @return mixed (ignored)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function next()
     {
@@ -75,8 +65,6 @@ class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
      * Rewind the Iterator to the first element
      *
      * @return mixed (ignored)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function rewind()
     {
@@ -87,8 +75,6 @@ class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
      * Checks if current position is valid
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function valid()
     {

@@ -14,15 +14,13 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 namespace XLite\Module\CDev\Moneybookers;
@@ -30,19 +28,13 @@ namespace XLite\Module\CDev\Moneybookers;
 /**
  * Moneybookers payment gateway integration (iframe)
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
     /**
      * Author name
      *
-     * @var    string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return string
      */
     public static function getAuthorName()
     {
@@ -52,10 +44,7 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Module name
      *
-     * @var    string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return string
      */
     public static function getModuleName()
     {
@@ -63,35 +52,40 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Module version
+     * Get module major version
      *
      * @return string
-     * @access public
-     * @since  1.0.0
      */
-    public static function getMinorVersion()
+    public static function getMajorVersion()
     {
-        return '5';
+        return '1.1';
     }
 
     /**
-     * Module description
+     * Module version
      *
      * @return string
-     * @access public
-     * @since  1.0.0
+     */
+    public static function getMinorVersion()
+    {
+        return '0';
+    }
+
+    /**
+     * Fet description 
+     * 
+     * @return string
      */
     public static function getDescription()
     {
-        return 'Enables taking payments for your online shop via Moneybookers payment gateway (iframe integration method)';
+        return 'Enables taking payments for your online shop via Moneybookers payment gateway'
+            . ' (iframe integration method)';
     }
 
     /**
      * Return link to settings form
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getSettingsForm()
     {
@@ -100,10 +94,8 @@ abstract class Main extends \XLite\Module\AModule
 
     /**
      * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @access public
-     * @since  1.0.0
+     * 
+     * @return mixed
      */
     public static function showSettingsForm()
     {

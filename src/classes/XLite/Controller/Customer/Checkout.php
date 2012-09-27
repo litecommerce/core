@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,26 +28,20 @@ namespace XLite\Controller\Customer;
 /**
  * Checkout
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Checkout extends \XLite\Controller\Customer\Cart
 {
     /**
      * Request data
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      */
     protected $requestData;
 
     /**
      * Payment widget data
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $paymentWidgetData = array();
 
@@ -57,8 +49,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Go to cart view if cart is empty
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -76,8 +66,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -89,8 +77,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function callSuccess()
     {
@@ -102,8 +88,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSecure()
     {
@@ -114,8 +98,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Get login URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLoginURL()
     {
@@ -126,8 +108,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check - current profile is aninymous or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAnonymous()
     {
@@ -138,8 +118,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Get payment widget data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPaymentWidgetData()
     {
@@ -152,8 +130,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionCheckout()
     {
@@ -205,7 +181,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 $this->redirect($this->buildURL('checkout'));
 
             } else {
+                // Register 'Place order' event in the order history 
+                \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getCart()->getOrderId());
 
+                // Make order payment step
                 $this->doPayment();
             }
         }
@@ -218,8 +197,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * :FIXME: decompose
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doPayment()
     {
@@ -246,6 +223,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         $result = null;
 
+        // Default order status on successful payment
+        $paymentStatus = \XLite\Model\Order::STATUS_PROCESSED;
+
         if ($transaction) {
 
             $result = $transaction->handleCheckoutAction();
@@ -256,14 +236,19 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $status = \XLite\Model\Order::STATUS_PROCESSED;
 
+            $hasIncompletePayment = (0 < $cart->getOpenTotal());
+            $hasAuthorizedPayment = false;
+
             foreach ($cart->getPaymentTransactions() as $t) {
+                $hasAuthorizedPayment = $hasAuthorizedPayment || $t->isAuthorized();
+            }
 
-                if ($t::STATUS_SUCCESS != $t->getStatus()) {
+            if ($hasIncompletePayment) {
+                $status = \XLite\Model\Order::STATUS_QUEUED;
 
-                    $status = \XLite\Model\Order::STATUS_QUEUED;
-
-                    break;
-                }
+            } elseif ($hasAuthorizedPayment) {
+                $status = \XLite\Model\Order::STATUS_AUTHORIZED;
+                $paymentStatus = \XLite\Model\Order::STATUS_AUTHORIZED;
             }
 
             $cart->setStatus($status);
@@ -315,8 +300,13 @@ class Checkout extends \XLite\Controller\Customer\Cart
         } else {
 
             $status = $cart->isPayed()
-                ? \XLite\Model\Order::STATUS_PROCESSED
+                ? $paymentStatus
                 : \XLite\Model\Order::STATUS_QUEUED;
+
+
+            if (!empty($transaction) && $transaction->isFailed()) {
+                $status = \XLite\Model\Order::STATUS_FAILED;
+            }
 
             $cart->setStatus($status);
 
@@ -326,7 +316,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL(
                 $this->buildURL(
-                    'checkoutSuccess',
+                    \XLite\Model\Order::STATUS_FAILED == $status ? 'checkoutFailed' : 'checkoutSuccess',
                     '',
                     array('order_id' => $cart->getOrderId())
                 )
@@ -345,8 +335,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * :FIXME: decompose
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionReturn()
     {
@@ -371,10 +359,17 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL($this->buildURL('cart'));
 
-        } elseif (!$cart->isPayed()) {
+        } elseif (0 < $cart->getOpenTotal() && !in_array($cart->getStatus(), array(\XLite\Model\Order::STATUS_FAILED, \XLite\Model\Order::STATUS_DECLINED))) {
 
-            \XLite\Core\TopMessage::addInfo(
-                'Payment for orders not over. Please complete payment of order.'
+            \XLite\Core\TopMessage::addWarning(
+                'Payment was not finished',
+                array(
+                    'url' => $this->buildURL(
+                        'cart',
+                        'add_order',
+                        array('order_id' => $cart->getOrderId())
+                    )
+                )
             );
 
             $this->setReturnURL(
@@ -385,9 +380,39 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         } else {
 
-            $cart->setStatus(
-                $cart->isPayed() ? \XLite\Model\Order::STATUS_PROCESSED : \XLite\Model\Order::STATUS_QUEUED
-            );
+            if ($cart->isPayed()) {
+
+                $status = \XLite\Model\Order::STATUS_PROCESSED;
+
+                $hasIncompletePayment = (0 < $cart->getOpenTotal());
+                $hasAuthorizedPayment = false;
+
+                foreach ($cart->getPaymentTransactions() as $t) {
+                    $hasAuthorizedPayment = $hasAuthorizedPayment || $t->isAuthorized();
+                }
+
+                if ($hasIncompletePayment) {
+                    $status = \XLite\Model\Order::STATUS_QUEUED;
+
+                } elseif ($hasAuthorizedPayment) {
+                    $status = \XLite\Model\Order::STATUS_AUTHORIZED;
+                }
+
+            } else {
+
+                $status = \XLite\Model\Order::STATUS_QUEUED;
+
+                $transactions = $cart->getPaymentTransactions();
+
+                if (!empty($transactions)) {
+                    $lastTransaction = $transactions[count($transactions) - 1];
+                    if ($lastTransaction->isFailed()) {
+                        $status = \XLite\Model\Order::STATUS_FAILED;
+                    }
+                }
+            }
+
+            $cart->setStatus($status);
 
             $this->processSucceed();
 
@@ -395,7 +420,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL(
                 $this->buildURL(
-                    'checkoutSuccess',
+                    \XLite\Model\Order::STATUS_FAILED == $status ? 'checkoutFailed' : 'checkoutSuccess',
                     '',
                     array('order_id' => $orderId)
                 )
@@ -410,8 +435,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * :FIXME: decompose
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processSucceed()
     {
@@ -456,8 +479,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Save anonymous profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveAnonymousProfile()
     {
@@ -466,7 +487,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         // Generate password
         $pass = \XLite\Core\Database::getRepo('XLite\Model\Profile')->generatePassword();
-        $profile->setPassword(md5($pass));
+        $profile->setPassword(\XLite\Core\Auth::encryptPassword($pass));
 
         // Set cloned profile as original profile
         $this->getCart()->setOrigProfile($profile);
@@ -479,8 +500,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Login anonymous profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function loginAnonymousProfile()
     {
@@ -493,8 +512,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * @param string $password Password
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sendCreateProfileNotifications($password)
     {
@@ -511,8 +528,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Clone profile and move profile to original profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function cloneProfile()
     {
@@ -533,8 +548,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * (CHECKOUT_MODE_REGISTER step check)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isRegistrationNeeded()
     {
@@ -545,8 +558,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check if order total is zero
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isZeroOrderTotal()
     {
@@ -557,8 +568,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check if we are ready to select payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPaymentNeeded()
     {
@@ -569,8 +578,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -581,8 +588,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check amount for all cart items
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkItemsAmount()
     {
@@ -593,8 +598,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Update profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateProfile()
     {
@@ -613,8 +616,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Update profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateProfile()
     {
@@ -665,18 +666,19 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Update shipping address
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateShippingAddress()
     {
         $data = $this->requestData['shippingAddress'];
 
+        $profile = $this->getCartProfile();
+
+        $address = $profile->getShippingAddress();
+        if ($address) {
+            \XLite\Core\Database::getEM()->refresh($address);
+        }
+
         if (is_array($data)) {
-
-            $profile = $this->getCartProfile();
-
-            $address = $profile->getShippingAddress();
 
             $noAddress = !isset($address);
 
@@ -723,8 +725,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Update profiel billing address
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateBillingAddress()
     {
@@ -774,6 +774,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
             // Save separate billing address
             $address = $profile->getBillingAddress();
 
+            if ($address) {
+                \XLite\Core\Database::getEM()->refresh($address);
+            }
+
             $andAsShipping = false;
 
             if (!$address || $data['save_as_new']) {
@@ -818,8 +822,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * @param array $data Address data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareAddressData(array $data)
     {
@@ -832,8 +834,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Set payment method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionPayment()
     {
@@ -869,8 +869,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Change shipping method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionShipping()
     {
@@ -890,8 +888,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check checkout action accessibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkCheckoutAction()
     {
@@ -912,8 +908,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check review step - complete or not
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkReviewStep()
     {

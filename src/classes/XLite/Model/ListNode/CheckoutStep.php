@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\ListNode;
@@ -30,26 +28,20 @@ namespace XLite\Model\ListNode;
 /**
  * Checkout step
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CheckoutStep extends \XLite\Model\ListNode
 {
     /**
      * Is checkout step passed or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isPassed = false;
 
     /**
      * Name of the widget class for this checkout step
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $widgetClass = null;
 
@@ -62,8 +54,6 @@ class CheckoutStep extends \XLite\Model\ListNode
      * @param boolean $isPassed    If step is passed or not
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($key, $widgetClass, $isPassed)
     {
@@ -77,8 +67,6 @@ class CheckoutStep extends \XLite\Model\ListNode
      * isPassed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPassed()
     {
@@ -91,8 +79,6 @@ class CheckoutStep extends \XLite\Model\ListNode
      * @param string $mode Current mode
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkMode($mode)
     {
@@ -103,8 +89,6 @@ class CheckoutStep extends \XLite\Model\ListNode
      * getWidgetClass
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWidgetClass()
     {
@@ -115,8 +99,6 @@ class CheckoutStep extends \XLite\Model\ListNode
      * isRegularStep
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isRegularStep()
     {
@@ -127,8 +109,6 @@ class CheckoutStep extends \XLite\Model\ListNode
      * getMode
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMode()
     {
@@ -139,8 +119,6 @@ class CheckoutStep extends \XLite\Model\ListNode
      * getTopMessage
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTopMessage()
     {

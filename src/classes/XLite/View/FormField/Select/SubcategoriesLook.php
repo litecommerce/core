@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Sibcategories look selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class SubcategoriesLook extends \XLite\View\FormField\Select\Regular
 {
@@ -39,14 +35,12 @@ class SubcategoriesLook extends \XLite\View\FormField\Select\Regular
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
         return array(
-            'list'  => 'List',
-            'icons' => 'Icons',
+            'list'  => static::t('List'),
+            'icons' => static::t('Icons'),
         );
     }
 }

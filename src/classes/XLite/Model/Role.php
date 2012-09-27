@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.17
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Role 
  * 
- * @see   ____class_see____
- * @since 1.0.17
  *
  * @Entity
  * @Table  (name="roles")
@@ -41,9 +37,7 @@ class Role extends \XLite\Model\Base\I18n
     /**
      * ID 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -54,9 +48,7 @@ class Role extends \XLite\Model\Base\I18n
     /**
      * Permissions
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ManyToMany (targetEntity="XLite\Model\Role\Permission", mappedBy="roles", cascade={"merge","detach"})
      */
@@ -65,9 +57,7 @@ class Role extends \XLite\Model\Base\I18n
     /**
      * Profiles
      *
-     * @var   \XLite\Model\Profile
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ManyToMany (targetEntity="XLite\Model\Profile", inversedBy="roles")
      * @JoinTable (
@@ -84,8 +74,6 @@ class Role extends \XLite\Model\Base\I18n
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -99,8 +87,6 @@ class Role extends \XLite\Model\Base\I18n
      * Get public name 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function getPublicName()
     {
@@ -113,8 +99,6 @@ class Role extends \XLite\Model\Base\I18n
      * @param string $code Permission code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermissionAllowed($code)
     {
@@ -128,6 +112,37 @@ class Role extends \XLite\Model\Base\I18n
         }
 
         return $allowed;
+    }
+
+    /**
+     * Check - specified permission (only one from list) is allowed
+     *
+     * @param string|array $code Permission code(s)
+     *
+     * @return boolean
+     */
+    public function isPermissionAllowedOr($code)
+    {
+        $result = false;
+
+        $list = array();
+        foreach (func_get_args() as $code) {
+            if (is_array($code)) {
+                $list = array_merge($list, $code);
+
+            } else {
+                $list[] = $code;
+            }
+        }
+
+        foreach ($list as $code) {
+            if ($this->isPermissionAllowed($code)) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
     }
 
 }

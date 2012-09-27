@@ -4,10 +4,9 @@
  * ____file_title____
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 
@@ -298,7 +297,6 @@ body
 .sw-version .current
 {
   color: #8f8f8f;
-  margin-right: 10px;
   float: left;
   font-size: 12px;
 }
@@ -309,6 +307,7 @@ ul.version-note {
 
 ul.version-note li {
   float: left;
+  margin-right: 10px;
 }
 
 ul.version-note li.current {
@@ -547,6 +546,12 @@ div.tabs2-page-tabs ul li.tab-current
 {
 }
 
+div.list-after-tabs
+{
+  float: right;
+  display: inline;
+  height: 37px;
+}
 
 /* Data table */
 
@@ -792,12 +797,11 @@ table.form input[type="text"]
 }
 
 .settings ul.table {
-  width: 100%;
+  width: 1160px;
 }
 
 .settings ul.table li
 {
-  float: none;
 }
 
 .settings ul.table li.even
@@ -810,9 +814,12 @@ table.form input[type="text"]
   background-color: transparent;
 }
 
-.settings ul.table .table-label
+.module .settings ul.table .table-label
 {
-  width: 40%;
+  width: 25%;
+}
+
+.settings ul.table .table-label {
   padding: 7px 0 7px 10px;
   color: #456583;
   white-space: normal;
@@ -827,8 +834,11 @@ table.form input[type="text"]
   margin: 30px 0 10px 0;
 }
 
+.module .settings ul.table .table-value {
+  width: 70%;
+}
+
 .settings ul.table .table-value {
-  width: 40%;
   padding: 7px 0px;
 }
 
@@ -845,6 +855,15 @@ table.form input[type="text"]
 
 .settings ul.table li .wheel-mark {
   display: none;
+}
+
+.general-settings ul.table .table-label
+{
+  width: 40%;
+}
+
+.general-settings ul.table .table-value {
+  width: 50%;
 }
 
 /* Buttons */
@@ -936,15 +955,15 @@ button.action,
 button.bright
 {
   font-size: 14px;
-  padding: 6px 20px 6px;
-  height: 36px;
+  padding: 7px 20px 5px;
+  height: 33px;
   -moz-border-radius: 19px;
   -webkit-border-radius: 19px;
   border-radius: 19px;
 }
 
 button.action span {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 button.bright span {
@@ -974,6 +993,38 @@ button.bright:active
 {
   background-position: center -72px;
 }
+
+button.link {
+  border-style: none;
+  background: transparent none;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+button.link span {
+  color: #154e9c;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+button.link[disabled="disabled"],
+button.link.disabled
+{
+  background: transparent none;
+}
+
+button.link[disabled="disabled"] span,
+button.link.disabled span
+{
+  color: #8f8f8f;
+  text-decoration: none;
+  cursor: default;
+}
+
+
+
 
 /* FIXME
 button.switch-state {
@@ -1024,6 +1075,17 @@ button.disabled {
 
 button.disabled span {
   color: #FFFFFF;
+}
+
+/* Button for payment actions */
+
+.orders button.payment-action-button {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    height: 26px;
+    padding: 3px 10px 4px;
 }
 
 /* Fade */
@@ -1180,8 +1242,6 @@ button.disabled span {
 
 .table tr td
 {
-  padding-left: 25px;
-  padding-bottom: 10px;
   font-size: 12px;
 }
 
@@ -1334,8 +1394,10 @@ td.value-attribute
   padding-bottom: 5px;
 }
 
-td.value-attribute .table-value {
+td div.table-value {
   display: inline;
+  float: left;
+  width: auto;
 }
 
 .product-modify-form .name-attribute
@@ -1567,7 +1629,7 @@ div.model-form-buttons {
 
 .model-properties ul.table {
   list-style: none;
-  min-width: 450px;
+  min-width: 1024px;
 }
 
 .model-properties ul.table > li {
@@ -1584,18 +1646,25 @@ div.table-label {
 }
 
 div.star {
-  float: left;
+  float: right;
   width: 10px;
+  padding: 12px 0px 5px 0px;
 }
 
 .table-label,
   .table-value
 {
   line-height: 24px;
+  padding: 5px 0px;
+}
+
+.settings div.table-value {
+  float: right;
 }
 
 div.table-value {
-  float: left;
+  float: right;
+  width: 80%;
 }
 
 div.table-value input[type="text"],
@@ -1687,6 +1756,12 @@ table.settings-table td input[type=checkbox] {
   float: left;
 }
 
+div.table-value .tooltip-main {
+  float: none;
+  display: inline-block;
+  vertical-align: top;
+}
+
 .tooltip-main .tooltip-caption {
   cursor: help;
 }
@@ -1776,20 +1851,199 @@ form.list-form {
   width: auto;
 }
 
-form.list-form .sticky-panel .panel-cell {
+.sticky-panel .panel-cell {
   display: inline-block;
-  padding-left: 10px;
+  padding: 0px;
 }
 
-form.list-form .sticky-panel .panel-cell.first {
-  padding-left: 0px;
+.sticky-panel .panel-cell > button {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
-form.list-form .sticky-panel a.cancel {
+.sticky-panel div.cancel,
+.sticky-panel div.additional
+{
+  display: block;
+}
+
+.sticky-panel a.cancel {
+  text-indent: -5000px;
+  display: block;
+  background: transparent url(../images/icon_cancel.png) no-repeat left top;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 3px;
+  left: 5px;
+}
+
+.sticky-panel a.cancel.disabled {
+  opacity: .5;
+  cursor: text;
+}
+
+.sticky-panel.has-add-buttons .box {
+  padding-right: 47px;
+}
+
+.sticky-panel.has-add-buttons .additional {
+  position: absolute;
+  top: 4px;
+  right: -26px;
+  width: 58px;
+  height: 68px;
+  background: transparent url(../images/button_more_arrow.png) no-repeat left top;
+  -moz-border-radius: 0px 5px 5px 0px;
+  -webkit-border-radius: 0px 5px 5px 0px;
+  border-radius: 0px 5px 5px 0px;
+  overflow: visible;
+}
+
+.sticky-panel.has-add-buttons .additional .additional-buttons {
+  position: absolute;
+  left: 43px;
+  display: none;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #cadce8;
+  background: #fff none;
+  padding: 15px;
+}
+
+.sticky-panel.has-add-buttons .additional:hover .additional-buttons {
+  display: block;
+}
+
+/* Common styles for Payment settings page */
+
+.payment-settings {
+  margin: 0px;
+  padding: 0px;
+}
+
+.dialog-content .payment-settings a:link {
   text-decoration: underline;
 }
 
-form.list-form .sticky-panel a.cancel.disabled {
-  color: #8f8f8f;
-  text-decoration: none;
+.dialog-content .payment-settings .buttons {
+  margin-left: 150px;
+  padding-bottom: 10px;
 }
+
+.payment-settings h2 {
+}
+
+.payment-settings .middle {
+  min-width: 1000px;
+}
+
+.payment-settings .middle .settings {
+  display: inline-block;
+  width: 500px;
+  vertical-align: top;
+}
+
+.payment-settings .middle .help {
+  display: inline-block;
+  padding-right: 25px;
+  vertical-align: top;
+}
+
+.payment-settings .footer {
+  margin-top: 30px;
+  padding: 10px 40px;
+  width: 700px;
+  background-color: #F7F7F7;
+}
+
+.payment-settings .options {
+  padding-top: 3px;
+}
+
+.payment-settings .options li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.payment-settings .options li span {
+  width: 150px;
+  display: inline-block;
+}
+
+.payment-settings .options label
+{
+  color: #456583;
+  vertical-align: middle;
+  font-size: 16px;
+  padding-top: 3px;
+}
+
+.payment-settings .options input[type="text"]
+{
+  border-width: 1px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 14px;
+  width: 160px;
+  vertical-align: middle;
+}
+
+.payment-settings .options .tooltip-main {
+  float: none;
+  display: inline;
+  padding-left: 2px;
+}
+
+.payment-settings .options .tooltip-main .tooltip-caption.help-icon {
+  vertical-align: middle;
+}
+
+.payment-settings .help {
+  width: 400px;
+  margin-left: 50px;
+  padding-top: 18px;
+}
+
+.payment-settings .help-title {
+  font-size: 16px;
+  color: black;
+  padding: 5px 0;
+}
+
+.payment-settings .help-text {
+  font-size: 12px;
+  color: black;
+  padding: 5px 0;
+}
+
+.payment-settings .help-link {
+  font-size: 16px;
+  color: #456583;
+  padding: 15px 0;
+}
+
+.payment-settings .footer .left-part {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.payment-settings .footer .right-part {
+  display: inline-block;
+  padding-right: 20px;
+  vertical-align: top;
+}
+
+.payment-settings .footer div {
+  padding: 5px 0;
+  font-size: 16px;
+}
+
+.payment-settings .footer li {
+  padding: 5px 0;
+}
+
+.payment-settings .footer ul {
+}
+

@@ -1,0 +1,69 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Social Login widget styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.social-login-container {
+  clear: both;
+}
+
+ul.social-login {
+  display: inline-block;
+  padding: 5px 7px 5px 4px;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.checkout-block ul.social-login {
+  margin: -10px 0 20px;
+  padding: 5px 7px 5px 4px;
+}
+
+.tab-content ul.social-login {
+  margin: 25px 0 10px;
+}
+
+ul.social-login li {
+  background: none;
+  float: left;
+  padding: 0;
+  margin: 9px 7px;
+}
+
+ul.social-login li a {
+  text-decoration: none;
+}
+
+ul.social-login img {
+  display: block;
+  float: left;
+  position: relative;
+  left: 3px;
+}
+
+ul.social-login .provider-name {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 0 4px 4px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.social-login-note {
+  font-size: 17px;
+  margin: 25px 0 10px 0;
+}
+
+ul.social-login .social-login-caption {
+  line-height: 32px;
+  margin: 9px 3px 9px 15px;
+}

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Customer\Product;
@@ -30,8 +28,6 @@ namespace XLite\View\Pager\Customer\Product;
 /**
  * Abstract pager class for the ProductsList widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProduct extends \XLite\View\Pager\Customer\ACustomer
 {
@@ -39,8 +35,6 @@ abstract class AProduct extends \XLite\View\Pager\Customer\ACustomer
      * Return number of items per page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {

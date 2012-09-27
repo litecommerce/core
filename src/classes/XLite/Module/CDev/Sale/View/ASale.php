@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Sale\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Sale products abstract widget class
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  */
 abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
@@ -46,8 +42,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return target to retrive this widget from AJAX
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getWidgetTarget()
     {
@@ -58,8 +52,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Returns CSS classes for the container element
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getListCSSClasses()
     {
@@ -72,8 +64,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param array $params Widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -86,8 +76,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Get title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -98,8 +86,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -110,8 +96,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchConditions(\XLite\Core\CommonCell $cnd)
     {
@@ -132,23 +116,17 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return $this->getOnlyEntities(
-            \XLite\Core\Database::getRepo('XLite\Model\Product')
-                ->search($this->getSearchConditions($cnd), $countOnly)
-        );
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->search($this->getSearchConditions($cnd), $countOnly);
     }
 
     /**
      * Get max number of products displayed in block
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMaxCountInBlock()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\PagerOrig;
@@ -30,8 +28,6 @@ namespace XLite\View\PagerOrig;
 /**
  * Simple pager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Simple extends \XLite\View\AView
 {
@@ -48,8 +44,6 @@ class Simple extends \XLite\View\AView
      * Check - link to previous page exists or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPrevPage()
     {
@@ -60,8 +54,6 @@ class Simple extends \XLite\View\AView
      * Get URL to previous page
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPrevURL()
     {
@@ -72,8 +64,6 @@ class Simple extends \XLite\View\AView
      * Check - link to next page is exists or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isNextPage()
     {
@@ -84,8 +74,6 @@ class Simple extends \XLite\View\AView
      * Get URL to next page
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getNextURL()
     {
@@ -96,8 +84,6 @@ class Simple extends \XLite\View\AView
      * Get URL to last page
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLastURL()
     {
@@ -108,8 +94,6 @@ class Simple extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -125,8 +109,6 @@ class Simple extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -137,8 +119,6 @@ class Simple extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -155,8 +135,6 @@ class Simple extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

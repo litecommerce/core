@@ -4,10 +4,9 @@
  * Environment footer
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.13
  *
  * @ListChild (list="crud.settings.footer", zone="admin", weight="100")
  *}
@@ -77,7 +76,7 @@ function enableHTTPS()
     jQuery('input[name="admin_security"][type="checkbox"]').attr('checked', admin_security_value);
 
     document.getElementById("httpserror-message").style.cssText = "";
-    document.getElementById("httpserror-message").innerHTML = "<span class='success-message'>Success</span>";
+    document.getElementById("httpserror-message").innerHTML = "<span class='success-message'>" + xliteConfig.success_lng + "</span>";
 }
 
 jQuery('input[name="customer_security"][type="checkbox"]').attr('checked', '');

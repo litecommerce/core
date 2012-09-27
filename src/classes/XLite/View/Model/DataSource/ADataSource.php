@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.17
  */
 
 namespace XLite\View\Model\DataSource;
@@ -30,8 +28,6 @@ namespace XLite\View\Model\DataSource;
 /**
  * Abstract data source model widget
  *
- * @see   ____class_see____
- * @since 1.0.17
  */
 abstract class ADataSource extends \XLite\View\Model\AModel
 {
@@ -41,8 +37,6 @@ abstract class ADataSource extends \XLite\View\Model\AModel
      * @param mixed $name Field/property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getModelObjectValue($name)
     {
@@ -66,8 +60,6 @@ abstract class ADataSource extends \XLite\View\Model\AModel
      * @param array $data Data to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function setModelProperties(array $data)
     {
@@ -89,8 +81,6 @@ abstract class ADataSource extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getFormButtons()
     {
@@ -109,8 +99,6 @@ abstract class ADataSource extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {

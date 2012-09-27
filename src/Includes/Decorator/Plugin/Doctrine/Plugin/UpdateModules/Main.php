@@ -14,25 +14,20 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Plugin\UpdateModules;
 
 /**
- * Routines for Doctrine library
+ * Main 
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
@@ -40,17 +35,14 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Execute certain hook handler
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function executeHookHandlerStepThird()
+    public function executeHookHandler()
     {
         // To cache data
         \Includes\Utils\ModulesManager::getActiveModules();
 
         // Walk through the "XLite/Module" directory
         foreach ($this->getModuleMainFileIterator()->getIterator() as $path => $data) {
-
             $dir    = $path;
             $name   = basename($dir = dirname($dir));
             $author = basename($dir = dirname($dir));
@@ -70,8 +62,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Get iterator for module files
      *
      * @return \Includes\Utils\FileFilter
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleMainFileIterator()
     {
@@ -82,8 +72,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Pattern to use for paths in "Module" directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModulesPathPattern()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Upgrade;
@@ -30,8 +28,6 @@ namespace XLite\View\Upgrade;
 /**
  * Download
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Download extends \XLite\View\Upgrade\AUpgrade
 {
@@ -41,8 +37,6 @@ class Download extends \XLite\View\Upgrade\AUpgrade
      * :TODO: remove if it's not needed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -55,8 +49,6 @@ class Download extends \XLite\View\Upgrade\AUpgrade
      * :TODO: remove if it's not needed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -69,8 +61,6 @@ class Download extends \XLite\View\Upgrade\AUpgrade
      * :TODO: remove if it's not needed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

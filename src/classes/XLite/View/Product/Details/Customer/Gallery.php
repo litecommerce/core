@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details\Customer;
@@ -30,8 +28,6 @@ namespace XLite\View\Product\Details\Customer;
 /**
  * Gallery
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="product.details.page.image", weight="20")
  * @ListChild (list="product.details.quicklook.image", weight="20")
@@ -42,8 +38,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -58,8 +52,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -73,8 +65,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * Return the max image width depending on whether it is a quicklook popup, or not
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWidgetMaxWidth()
     {
@@ -88,8 +78,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * @param integer                 $i     Image index
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAlt(\XLite\Model\Base\Image $image, $i)
     {
@@ -101,8 +89,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -113,8 +99,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * Get LightBox library images directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLightBoxImagesDir()
     {
@@ -128,8 +112,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * Check visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -142,8 +124,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * @param integer $i Detailed image index
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListItemClassAttribute($i)
     {
@@ -158,8 +138,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * @param integer $i Detailed image index
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListItemClass($i)
     {
@@ -174,8 +152,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * @param integer                 $height Height limit OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMiddleImageURL(\XLite\Model\Base\Image $image, $width = null, $height = null)
     {

@@ -2,24 +2,31 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * @file
- * Stub functions. They are needed since Drupal does not support full-pledged callbacks
+ * LiteCommerce
  *
- * @category  Litecommerce connector
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Pubic License (GPL 2.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 /**
  * Return LC controller title
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorGetControllerTitle()
 {
@@ -30,8 +37,6 @@ function lcConnectorGetControllerTitle()
  * Return LC controller page content
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorGetControllerContent()
 {
@@ -45,8 +50,6 @@ function lcConnectorGetControllerContent()
  * @param array &$formState Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorValidateWidgetModifyForm(array &$form, array &$formState)
 {
@@ -63,8 +66,6 @@ function lcConnectorValidateWidgetModifyForm(array &$form, array &$formState)
  * @param array &$form_state Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorSubmitWidgetModifyForm(array &$form, array &$formState)
 {
@@ -81,8 +82,6 @@ function lcConnectorSubmitWidgetModifyForm(array &$form, array &$formState)
  * @param array &$form_state Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorSubmitWidgetDeleteForm(array &$form, array &$formState)
 {
@@ -99,8 +98,6 @@ function lcConnectorSubmitWidgetDeleteForm(array &$form, array &$formState)
  * @param array &$form_state Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorUserProfileFormSubmit(array &$form, array &$formState)
 {
@@ -117,8 +114,6 @@ function lcConnectorUserProfileFormSubmit(array &$form, array &$formState)
  * @param array &$form_state Form state
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorUserPermissionsSubmit(array &$form, array &$formState)
 {
@@ -134,8 +129,6 @@ function lcConnectorUserPermissionsSubmit(array &$form, array &$formState)
  * @param array &$context Batch process context data
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorUserSync(array &$context)
 {
@@ -152,8 +145,6 @@ function lcConnectorUserSync(array &$context)
  * @param array   $operations Batch process operations array
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.0
  */
 function lcConnectorUserSyncFinishedCallback($success, array $results, array $operations)
 {

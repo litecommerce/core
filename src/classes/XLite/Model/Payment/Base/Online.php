@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Payment\Base;
@@ -30,8 +28,6 @@ namespace XLite\Model\Payment\Base;
 /**
  * Abstract online (gateway-based) processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Online extends \XLite\Model\Payment\Base\Processor
 {
@@ -46,6 +42,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      */
     const RETURN_TYPE_HTTP_REDIRECT = 'http';
     const RETURN_TYPE_HTML_REDIRECT = 'html';
+    const RETURN_TYPE_HTML_REDIRECT_WITH_IFRAME_DESTROYING = 'html_iframe';
     const RETURN_TYPE_CUSTOM        = 'custom';
 
 
@@ -55,8 +52,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -69,8 +64,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Get return type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getReturnType()
     {
@@ -83,8 +76,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processCallback(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -94,11 +85,9 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
-     * Get callback reqeust owner transaction or null
+     * Get callback request owner transaction or null
      *
      * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCallbackOwnerTransaction()
     {
@@ -106,11 +95,28 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
+     * Mark callback request as invalid
+     *
+     * @param string $message Message
+     *
+     * @return void
+     */
+    public function markCallbackRequestAsInvalid($message)
+    {
+        \XLite\Logger::getInstance()->log(
+            'Callback request is invalid: ' . $message . PHP_EOL
+            . 'Payment gateway: ' . $this->transaction->getPaymentMethod()->getServiceName() . PHP_EOL
+            . 'order #' . $this->transaction->getOrder()->getOrderId()
+            . ' / transaction #' . $this->transaction->getTransactionId() . PHP_EOL,
+            LOG_WARNING
+        );
+    }
+
+
+    /**
      * Get client IP
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClientIP()
     {
@@ -130,8 +136,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Get invoice description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInvoiceDescription()
     {
@@ -143,8 +147,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Define saved into transaction data schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSavedData()
     {
@@ -155,14 +157,25 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Save request data into transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function saveDataFromRequest()
+    protected function saveDataFromRequest($backendTransaction = null)
+    {
+        $this->saveFilteredData(\XLite\Core\Request::getInstance()->getData(), $backendTransaction);
+    }
+
+    /**
+     * Filter input array $data by keys and save in the transaction data
+     *
+     * @param array                                   $data               Array of data to save
+     * @param \XLite\Model\Payment\BackendTransaction $backendTransaction Backend transaction object OPTIONAL
+     *
+     * @return void
+     */
+    protected function saveFilteredData($data, $backendTransaction = null)
     {
         foreach ($this->defineSavedData() as $key => $name) {
-            if (isset(\XLite\Core\Request::getInstance()->$key)) {
-                $this->setDetail($key, \XLite\Core\Request::getInstance()->$key, $name);
+            if (isset($data[$key])) {
+                $this->setDetail($key, $data[$key], $name, $backendTransaction);
             }
         }
     }
@@ -174,8 +187,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param string $name CEll key
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function maskCell(array $list, $name)
     {
@@ -192,8 +203,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param array $list Request data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logReturn(array $list)
     {
@@ -210,8 +219,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param array $list Callback data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logCallback(array $list)
     {
@@ -223,34 +230,13 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
-     * Mark callback request as invalid
-     *
-     * @param string $message Message
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function markCallbackRequestAsInvalid($message)
-    {
-        \XLite\Logger::getInstance()->log(
-            'Callback request is invalid: ' . $message . PHP_EOL
-            . 'Payment gateway: ' . $this->transaction->getPaymentMethod()->getServiceName() . PHP_EOL
-            . 'order #' . $this->transaction->getOrder()->getOrderId() . ' / transaction #' . $this->transaction->getTransactionId() . PHP_EOL,
-            LOG_WARNING
-        );
-    }
-
-    /**
      * Get transactionId-based return URL
      *
      * @param string  $fieldName TransactionId field name OPTIONAL
      * @param boolean $withId    Add to URL transaction id or not OPTIONAL
-     * @param boolean $asCancel  Mark URL as cancel action
+     * @param boolean $asCancel  Mark URL as cancel action OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getReturnURL($fieldName = self::RETURN_TXN_ID, $withId = false, $asCancel = false)
     {
@@ -279,8 +265,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param boolean $withId    Add to URL transaction id or not OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCallbackURL($fieldName = self::RETURN_TXN_ID, $withId = false)
     {
@@ -304,8 +288,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param float $total Total from gateway response
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkTotal($total)
     {
@@ -332,8 +314,6 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @param string $currency Transaction response currency code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkCurrency($currency)
     {

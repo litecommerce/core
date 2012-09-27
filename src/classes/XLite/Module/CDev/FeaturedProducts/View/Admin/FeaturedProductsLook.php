@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Admin;
 /**
  * Featured products widget look selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class FeaturedProductsLook extends \XLite\View\FormField\Select\Regular
 {
@@ -39,15 +35,13 @@ class FeaturedProductsLook extends \XLite\View\FormField\Select\Regular
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
         return array(
-            'list'  => 'List',
-            'grid'  => 'Grid',
-            'table' => 'Table',
+            'list'  => static::t('List'),
+            'grid'  => static::t('Grid'),
+            'table' => static::t('Table'),
         );
     }
 }

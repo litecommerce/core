@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.12
  */
 
 namespace XLite\Module\CDev\XMLSitemap\Logic;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\XMLSitemap\Logic;
 /**
  * Sitemap links iterator 
  * 
- * @see   ____class_see____
- * @since 1.0.12
  */
 class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countable
 {
@@ -43,27 +39,21 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
     /**
      * Position 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.12
+     * @var integer
      */
     protected $position = 0;
 
     /**
      * Categories length 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.12
+     * @var integer
      */
     protected $categoriesLength;
 
     /**
      * Products length 
      * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.12
+     * @var integer
      */
     protected $productsLength;
 
@@ -71,8 +61,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Constructor
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function __construct()
     {
@@ -83,8 +71,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Get current data
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function current()
     {
@@ -100,7 +86,8 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
 
         } elseif ($this->position < $this->getCategoriesLength() + $this->getProductsLength() + 1) {
 
-            $data =  \XLite\Core\Database::getRepo('XLite\Model\Product')->findFrame($this->position - $this->getCategoriesLength() - 1, 1);
+            $data =  \XLite\Core\Database::getRepo('XLite\Model\Product')
+                ->findFrame($this->position - $this->getCategoriesLength() - 1, 1);
             $data = $this->assembleProductData($data[0]);
 
         }
@@ -112,8 +99,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Get current key 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function key()
     {
@@ -124,8 +109,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Go to next record
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function next()
     {
@@ -136,8 +119,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Rewind position
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function rewind()
     {
@@ -150,8 +131,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Check current position
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function valid()
     {
@@ -164,8 +143,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * @param integer $position New position
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function seek($position)
     {
@@ -176,8 +153,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Get length 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     public function count()
     {
@@ -188,8 +163,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Get categories length 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function getCategoriesLength()
     {
@@ -205,8 +178,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Get products length
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function getProductsLength()
     {
@@ -221,8 +192,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * Assemble welcome page data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function assembleWelcomeData()
     {
@@ -240,8 +209,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * @param \XLite\Model\Category $category Category
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function assembleCategoryData(\XLite\Model\Category $category)
     {
@@ -259,8 +226,6 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * @param \XLite\Model\Product $product Product
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function assembleProductData(\XLite\Model\Product $product)
     {
@@ -278,13 +243,11 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      * @param mixed $priority Link priority
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function processPriority($priority)
     {
         $priority = is_numeric($priority) ? round(doubleval($priority), 1) : self::DEFAULT_PRIORITY;
-        if ($priority > 1 || $priority < 0) {
+        if (1 < $priority || 0 > $priority) {
             $priority = self::DEFAULT_PRIORITY;
         }
 

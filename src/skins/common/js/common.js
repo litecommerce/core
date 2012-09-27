@@ -4,10 +4,9 @@
  * Common functions
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 var URLHandler = {
 
@@ -198,10 +197,9 @@ function loadDialog(url, dialogOptions, callback, link, $this)
 
   var selector = 'tmp-dialog-' + (new Date()).getTime() + '-' + jQuery(link).attr('class').toString().replace(/ /g, '-');
 
-  jQuery.get(
+  core.get(
     url,
-    {},
-    function(data, status, ajax) {
+    function(ajax, status, data) {
       if (data) {
         var div = jQuery(document.body.appendChild(document.createElement('div')))
           .hide()
@@ -217,6 +215,12 @@ function loadDialog(url, dialogOptions, callback, link, $this)
         // Every popup window (even hidden one) has this one defined CSS class.
         // You should use this selector to manage any popup window entry.
         div.addClass('popup-window-entry');
+
+        div.find('form').each(
+          function() {
+            new CommonForm(this);
+          }
+        );
 
         openDialog('.' + selector, dialogOptions);
 

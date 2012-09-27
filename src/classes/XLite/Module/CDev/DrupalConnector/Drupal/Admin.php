@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Admin
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -45,9 +41,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Translation tables for (<litecommerce> => <drupal>) field types
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $fieldTypesTranslationTable = array(
         'string'   => 'textfield',
@@ -63,8 +57,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Return list of available block types
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBlockTypes()
     {
@@ -81,8 +73,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $field Field in data array to retrieve field OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isLCBlock(array $data, $field = 'values')
     {
@@ -95,8 +85,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $form Form description
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isNewBlock(array $form)
     {
@@ -110,8 +98,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string  $info  Block description
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCustomBlock($delta, $info)
     {
@@ -132,8 +118,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param integer $delta Block ID
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBlock($delta)
     {
@@ -146,8 +130,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $form Form description
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormBlock(array $form)
     {
@@ -166,8 +148,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $form Form description
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultBlockType(array $form)
     {
@@ -180,8 +160,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $form Form description
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultWidgetClass(array $form)
     {
@@ -200,8 +178,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array  $formInput Form input OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addSettingsFieldset(array &$form, $class, $label, array $block = array(), array $formInput = array())
     {
@@ -227,7 +203,10 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 '#attributes' => array('id' => $key),
             );
 
-            $extendedItemsList = is_subclass_of($widget->getProtectedWidget(), 'XLite\View\ItemsList\Product\Customer\ACustomer');
+            $extendedItemsList = is_subclass_of(
+                $widget->getProtectedWidget(),
+                'XLite\View\ItemsList\Product\Customer\ACustomer'
+            );
 
             // Translate native LC options into Drupal format
             foreach ($settings as $name => $param) {
@@ -238,22 +217,15 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     '#default_value' => isset($block['options'][$name]) ? $block['options'][$name] : $param->value,
                 );
 
+                $extendedAttributes = array(
+                    \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_WIDTH,
+                    \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_HEIGHT,
+                );
                 if ('select' === $form[$key][$name]['#type']) {
                     $form[$key][$name]['#options'] = $param->options;
 
-                } else {
-                    if (
-                        $extendedItemsList
-                        && in_array(
-                            $name,
-                            array(
-                                \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_WIDTH,
-                                \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_HEIGHT
-                            )
-                        )
-                    ) {
-                        $form[$key][$name]['#description'] = t('recommended: !size', array('!size' => 110));
-                    }
+                } elseif ($extendedItemsList && in_array($name, $extendedAttributes)) {
+                    $form[$key][$name]['#description'] = t('recommended: !size', array('!size' => 110));
                 }
             }
 
@@ -299,8 +271,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array  $data  Form data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function extractWidgetSettings($class, array $data)
     {
@@ -316,8 +286,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array   $settings Settings list OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateWidgetSettings($blockId, array $settings = array())
     {
@@ -340,8 +308,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $class Class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBlockName($class)
     {
@@ -359,8 +325,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function alterWidgetModifyForm(array &$form, array &$formState)
     {
@@ -432,8 +396,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function alterWidgetDeleteForm(array &$form, array &$formState)
     {
@@ -447,8 +409,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function validateWidgetModifyForm(array &$form, array &$formState)
     {
@@ -492,8 +452,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function submitWidgetModifyForm(array &$form, array &$formState)
     {
@@ -533,8 +491,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function submitWidgetDeleteForm(array &$form, array &$formState)
     {
@@ -548,8 +504,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function alterUserProfileForm(array &$form, array &$formState)
     {
@@ -563,8 +517,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function alterUserRegisterForm(array &$form, array &$formState)
     {
@@ -578,8 +530,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function submitUserProfileForm(array &$form, array &$formState)
     {
@@ -595,8 +545,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function alterUserPermissionsForm(array &$form, array &$formState)
     {
@@ -610,8 +558,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function submitUserPermissionsForm(array &$form, array &$formState)
     {
@@ -621,13 +567,11 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Change block definition before saving to the database
      * 
-     * @param array  $blocks     A multidimensional array of blocks keyed by the defining module and delta
+     * @param array  &$blocks    A multidimensional array of blocks keyed by the defining module and delta
      * @param string $theme      The theme these blocks belong to
      * @param array  $codeBlocks The blocks as defined in hook_block_info()
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.4
      */
     public function alterBlockInfo(array &$blocks, $theme, array $codeBlocks)
     {

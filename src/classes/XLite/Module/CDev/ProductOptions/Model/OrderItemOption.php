@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 /**
  * Order item options
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="XLite\Module\CDev\ProductOptions\Model\Repo\OrderItemOption")
  * @Table  (name="order_item_options",
@@ -45,22 +41,18 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Primary key
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="integer", length=11, nullable=false)
      */
     protected $id;
 
     /**
      * Option id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer", nullable=true)
      */
@@ -69,9 +61,7 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Group option id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer", nullable=true)
      */
@@ -80,20 +70,16 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Saved option name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length=255, nullable=false)
      */
     protected $name;
 
     /**
      * Saved option value
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -102,9 +88,7 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Group option sort position (from XLite\Module\CDev\ProductOptions\Model\OptionGroup)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -113,9 +97,7 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Option group (relation)
      *
-     * @var   \XLite\Module\CDev\ProductOptions\Model\OptionGroup
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\ProductOptions\Model\OptionGroup
      *
      * @ManyToOne  (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionGroup")
      * @JoinColumn (name="group_id", referencedColumnName="group_id")
@@ -125,9 +107,7 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Option (relation)
      *
-     * @var   \XLite\Module\CDev\ProductOptions\Model\Option
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Module\CDev\ProductOptions\Model\Option
      *
      * @ManyToOne  (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")
@@ -137,9 +117,7 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Order item (relation)
      *
-     * @var   \XLite\Model\OrderItem
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\OrderItem
      *
      * @ManyToOne  (targetEntity="XLite\Model\OrderItem", inversedBy="options")
      * @JoinColumn (name="item_id", referencedColumnName="item_id")
@@ -151,8 +129,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      * Clone order item option object
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -173,8 +149,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      * Get actual selected option name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -185,8 +159,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      * Get actual selected option value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualValue()
     {

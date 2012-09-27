@@ -4,10 +4,10 @@
  * Orders list items block
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
+ *
  * @ListChild (list="orders.children", weight="20")
  *}
 <ul IF="getPageData()" class="list">
@@ -41,7 +41,7 @@
 
         <ul class="order-body-item-spec2">
           <li class="orderid">{t(#Order ID#)}: <span class="orderid">#{order.order_id}</span></li>
-          <li class="total">{t(#Grand total#)}: <span class="sum">{formatPrice(order.getTotal(),order.getCurrency()):h}</span></li>
+          <li class="total">{t(#Grand total#)}: <span class="sum">{formatPrice(order.getTotal(),order.getCurrency())}</span></li>
           {**
             *TODO divide main status into payment/shipping separated statuses
 

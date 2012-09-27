@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\VAT\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Controller\Admin;
 /**
  * Taxes controller
  * 
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Base\IDecorator
 {
@@ -40,17 +36,17 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      */
     const PAGE_VAT_TAX = 'vatTax';
 
+    // {{{ Pages
+
     /**
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
         $list = parent::getPages();
-        $list[self::PAGE_VAT_TAX] = 'VAT';
+        $list[static::PAGE_VAT_TAX] = 'VAT';
 
         return $list;
     }
@@ -59,16 +55,16 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
         $list = parent::getPageTemplates();
-        $list[self::PAGE_VAT_TAX] = 'modules/CDev/VAT/edit.tpl';
+        $list[static::PAGE_VAT_TAX] = 'modules/CDev/VAT/edit.tpl';
 
         return $list;
     }
+
+    // }}}
 
     // {{{ Widget-specific getters
 
@@ -76,14 +72,12 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Get tax 
      * 
      * @return object
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTax()
     {
         $tax = parent::getTax();
 
-        if (!$tax && $this->getPage() == self::PAGE_VAT_TAX) {
+        if (!$tax && static::PAGE_VAT_TAX === $this->getPage()) {
              $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
         }
 
@@ -98,8 +92,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * Update tax rate
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionVATTaxUpdate()
     {
@@ -212,15 +204,13 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
         }
 
         \XLite\Core\TopMessage::addInfo('Tax rates have been updated successfully');
-        \Xlite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
      * Remove tax rate 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionVATTaxRemoveRate()
     {
@@ -245,15 +235,13 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
             \XLite\Core\TopMessage::addError('Tax rate has not been deleted successfully');
         }
 
-        \Xlite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
      * Switch tax state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionVATTaxSwitch()
     {

@@ -4,10 +4,9 @@
  * Common layout
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
   "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
@@ -24,6 +23,6 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
   <widget class="\XLite\View\Header" />
 <body {if:getBodyClasses()}class="{getBodyClasses()}"{end:}>
-  <widget class="\XLite\View\Content" />
+<list name="body" />
 </body>
 </html>

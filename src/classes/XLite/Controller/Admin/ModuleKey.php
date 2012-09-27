@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * ModuleKey
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ModuleKey extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,8 +37,6 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
      * Return page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -57,8 +51,6 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
      * Action of license key registration
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRegisterKey()
     {

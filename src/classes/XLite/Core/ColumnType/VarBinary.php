@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\ColumnType;
@@ -30,8 +28,6 @@ namespace XLite\Core\ColumnType;
 /**
  * Binary (varbinary) type with variable length
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class VarBinary extends \Doctrine\DBAL\Types\StringType
 {
@@ -47,8 +43,6 @@ class VarBinary extends \Doctrine\DBAL\Types\StringType
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform         Platform
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSQLDeclaration(array $fieldDeclaration, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {
@@ -59,8 +53,6 @@ class VarBinary extends \Doctrine\DBAL\Types\StringType
      * Get type name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {

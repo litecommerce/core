@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\Module\CDev\GoSocial\Model;
@@ -30,17 +28,13 @@ namespace XLite\Module\CDev\GoSocial\Model;
 /**
  * Product 
  * 
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Custom Open grasph meta tags
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -49,9 +43,7 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
     /**
      * USer Open graph meta tags generator flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -63,8 +55,6 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
      * @param boolean $preprocessed Preprocessed OPTIONAL
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getOpenGraphMetaTags($preprocessed = true)
     {
@@ -79,8 +69,6 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
      * Define Open Graph meta tags
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function defineOpenGraphMetaTags()
     {
@@ -113,8 +101,6 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
      * Get generated Open Graph meta tags 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function generateOpenGraphMetaTags()
     {
@@ -134,8 +120,6 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
      * @param string $tags Tags content
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function preprocessOpenGraphMetaTags($tags)
     {

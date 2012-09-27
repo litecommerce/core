@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Upgrade;
@@ -30,8 +28,6 @@ namespace XLite\Upgrade;
 /**
  * Cell
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cell extends \XLite\Base\Singleton
 {
@@ -53,54 +49,42 @@ class Cell extends \XLite\Base\Singleton
     /**
      * List of cell entries
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $entries = array();
 
     /**
      * Core version to upgrade to
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $coreVersion;
 
     /**
      * List of cores received from marketplace (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $coreVersions;
 
     /**
      * List of incompatible modules
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $incompatibleModules = array();
 
     /**
      * List of error messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $errorMessages;
 
     /**
      * Flag to determine if upgrade is already performed
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isUpgraded = false;
 
@@ -111,8 +95,6 @@ class Cell extends \XLite\Base\Singleton
      * Check if cell is valid
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isValid()
     {
@@ -123,8 +105,6 @@ class Cell extends \XLite\Base\Singleton
      * Getter
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getEntries()
     {
@@ -137,8 +117,6 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $onlySelected Flag to return only the modules selected by admin OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIncompatibleModules($onlySelected = false)
     {
@@ -161,8 +139,6 @@ class Cell extends \XLite\Base\Singleton
      * @param array $statuses List of statuses (<moduleID,status>)
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setIncompatibleModuleStatuses(array $statuses)
     {
@@ -174,8 +150,6 @@ class Cell extends \XLite\Base\Singleton
      * Return list of custom files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCustomFiles()
     {
@@ -192,8 +166,6 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $collectEntries   Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clear($clearCoreVersion = true, $clearEntries = true, $collectEntries = true)
     {
@@ -223,8 +195,6 @@ class Cell extends \XLite\Base\Singleton
      * @param string $version Version to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setCoreVersion($version)
     {
@@ -237,8 +207,6 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $value Flag
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setUpgraded($value)
     {
@@ -258,8 +226,6 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean             $force  Flag to install modules OPTIONAL
      *
      * @return \XLite\Upgrade\Entry\Module\Marketplace
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addMarketplaceModule(\XLite\Model\Module $module, $force = false)
     {
@@ -292,8 +258,6 @@ class Cell extends \XLite\Base\Singleton
      * @param string $path Path to uploaded module pack
      *
      * @return \XLite\Upgrade\Entry\Module\Uploaded
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addUploadedModule($path)
     {
@@ -308,8 +272,6 @@ class Cell extends \XLite\Base\Singleton
      * Quick access to the "Core" entry
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCoreMajorVersion()
     {
@@ -320,8 +282,6 @@ class Cell extends \XLite\Base\Singleton
      * Quick access to the "Core" entry
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCoreMinorVersion()
     {
@@ -332,8 +292,6 @@ class Cell extends \XLite\Base\Singleton
      * Quick access to the "Core" entry
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCoreVersion()
     {
@@ -344,8 +302,6 @@ class Cell extends \XLite\Base\Singleton
      * Get list of available kernel versions from the marketplace
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCoreVersions()
     {
@@ -360,8 +316,6 @@ class Cell extends \XLite\Base\Singleton
      * Check if we upgrade core major version
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isUpgrade()
     {
@@ -374,8 +328,6 @@ class Cell extends \XLite\Base\Singleton
      * @param string $method Name of method to call
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callCoreEntryMethod($method)
     {
@@ -393,8 +345,6 @@ class Cell extends \XLite\Base\Singleton
      * Save data in DB
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __destruct()
     {
@@ -409,8 +359,6 @@ class Cell extends \XLite\Base\Singleton
      * Protected constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -435,8 +383,6 @@ class Cell extends \XLite\Base\Singleton
      * Return so called "short" TTL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCacheTTL()
     {
@@ -451,8 +397,6 @@ class Cell extends \XLite\Base\Singleton
      * Check and add (if needed) upgrade entries
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function collectEntries()
     {
@@ -468,8 +412,6 @@ class Cell extends \XLite\Base\Singleton
      * Check and add (if needed) core upgrade entry
      *
      * @return \XLite\Upgrade\Entry\Core
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkForCoreUpgrade()
     {
@@ -485,8 +427,6 @@ class Cell extends \XLite\Base\Singleton
      * Check and add (if needed) upgrade entries
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkForModulesUpgrade()
     {
@@ -506,8 +446,6 @@ class Cell extends \XLite\Base\Singleton
      * @param array  $args  Constructor arguments OPTIONAL
      *
      * @return \XLite\Upgrade\Entry\AEntry
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addEntry($index, $class, array $args = array())
     {
@@ -534,8 +472,6 @@ class Cell extends \XLite\Base\Singleton
      * Return list of error messages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getErrorMessages()
     {
@@ -558,12 +494,10 @@ class Cell extends \XLite\Base\Singleton
     }
 
     /**
-     * Check if there is enpugh disk free space.
+     * Check if there is enough disk free space.
      * Return message on error
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkDiskFreeSpace()
     {
@@ -594,8 +528,6 @@ class Cell extends \XLite\Base\Singleton
      * Check if all entry packages were downloaded
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDownloaded()
     {
@@ -606,8 +538,6 @@ class Cell extends \XLite\Base\Singleton
      * Check if all entry packages were unpacked
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isUnpacked()
     {
@@ -618,8 +548,6 @@ class Cell extends \XLite\Base\Singleton
      * Check if upgrade is already performed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isUpgraded()
     {
@@ -632,8 +560,6 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $isUnpacked Check type
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkCellPackages($isUnpacked)
     {
@@ -659,8 +585,6 @@ class Cell extends \XLite\Base\Singleton
      * Download all update packs
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function downloadUpgradePacks()
     {
@@ -671,8 +595,6 @@ class Cell extends \XLite\Base\Singleton
      * Unpack all archives
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function unpackAll()
     {
@@ -694,8 +616,6 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $isUnpack Operation type
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function manageEntryPackages($isUnpack)
     {
@@ -717,8 +637,6 @@ class Cell extends \XLite\Base\Singleton
      * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function upgrade($isTestMode = true, array $filesToOverwrite = array())
     {
@@ -730,6 +648,11 @@ class Cell extends \XLite\Base\Singleton
             );
 
         } else {
+
+            if (!$isTestMode) {
+                $this->preloadLibraries();
+            }
+
             $this->runHelpers('pre_upgrade', $isTestMode);
 
             foreach ($this->getEntries() as $entry) {
@@ -743,6 +666,35 @@ class Cell extends \XLite\Base\Singleton
         return $result;
     }
 
+    /**
+     * Preload libraries 
+     * 
+     * @return void
+     */
+    protected function preloadLibraries()
+    {
+        // Preload lib directory
+        $dirIterator = new \RecursiveDirectoryIterator(LC_DIR_LIB);
+        $iterator    = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach ($iterator as $filePath => $fileObject) {
+            if (preg_match('/\.php$/Ss', $filePath)) {
+                require_once $filePath;
+            }
+        }
+
+        // Preload \Includes
+        $dirIterator = new \RecursiveDirectoryIterator(LC_DIR_INCLUDES);
+        $iterator    = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach ($iterator as $filePath => $fileObject) {
+            if (preg_match('/\.php$/Ss', $filePath) && !preg_match('/install/Ss', $filePath)) {
+                require_once $filePath;
+            }
+        }
+
+    }
+
     // }}}
 
     // {{{ So called upgrade helpers
@@ -754,8 +706,6 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $isTestMode Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function runHelpers($type, $isTestMode = false)
     {

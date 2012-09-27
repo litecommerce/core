@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Country
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Country")
  * @Table  (name="countries",
@@ -46,32 +42,26 @@ class Country extends \XLite\Model\AEntity
     /**
      * Country name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="50")
+     * @Column (type="string", length=50)
      */
     protected $country;
 
     /**
      * Country code (ISO 3166-1 alpha-2)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Id
-     * @Column (type="fixedstring", length="2", unique=true)
+     * @Column (type="fixedstring", length=2, unique=true)
      */
     protected $code;
 
     /**
      * Country code (ISO 3166-1 numeric)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -80,20 +70,16 @@ class Country extends \XLite\Model\AEntity
     /**
      * Country code (ISO 3166-1 alpha-3)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="fixedstring", length="3")
+     * @Column (type="fixedstring", length=3)
      */
     protected $code3 = '';
 
     /**
      * Enabled falg
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -102,9 +88,7 @@ class Country extends \XLite\Model\AEntity
     /**
      * States (relation)
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\State", mappedBy="country", cascade={"all"})
      * @OrderBy   ({"state" = "ASC"})
@@ -114,9 +98,7 @@ class Country extends \XLite\Model\AEntity
     /**
      * Currency
      *
-     * @var   \XLite\Model\Currency
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Currency
      *
      * @ManyToOne (targetEntity="XLite\Model\Currency", inversedBy="countries")
      * @JoinColumn (name="currency_id", referencedColumnName="currency_id")
@@ -130,8 +112,6 @@ class Country extends \XLite\Model\AEntity
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -144,8 +124,6 @@ class Country extends \XLite\Model\AEntity
      * Check if country has states
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasStates()
     {

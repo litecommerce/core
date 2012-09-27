@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -30,8 +28,6 @@ namespace XLite\View\Model\Profile;
 /**
  * Profile model widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProfile extends \XLite\View\Model\AModel
 {
@@ -39,8 +35,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return model object to use
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModelObject()
     {
@@ -58,8 +52,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * getRequestProfileId
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestProfileId()
     {
@@ -70,8 +62,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return current profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileId()
     {
@@ -83,8 +73,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -101,8 +89,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -113,8 +99,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSubmitButtonLabel()
     {
@@ -125,8 +109,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {

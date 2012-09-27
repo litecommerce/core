@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Upgrade\Step\ReadyToInstall;
@@ -30,8 +28,6 @@ namespace XLite\View\Upgrade\Step\ReadyToInstall;
 /**
  * AReadyToInstall
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
 {
@@ -40,8 +36,6 @@ abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -55,8 +49,6 @@ abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -67,8 +59,6 @@ abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -79,8 +69,6 @@ abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

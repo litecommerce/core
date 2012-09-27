@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Main page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Main extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class Main extends \XLite\Controller\Admin\AAdmin
      * Returns the page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -48,23 +42,19 @@ class Main extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Check if current page is accessible
+     * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function checkAccess()
+    public function checkACL()
     {
-        return parent::checkAccess() || $this->isClearRequest();
+        return true;
     }
 
     /**
      * doActionUpdateInventoryProducts
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateInventoryProducts()
     {
@@ -79,17 +69,5 @@ class Main extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\TopMessage::addInfo(
             'Inventory has been successfully updated'
         );
-    }
-
-    /**
-     * Check - is clear request without action or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    protected function isClearRequest()
-    {
-        return !\XLite\Core\Request::getInstance()->action && \XLite\Core\Request::getInstance()->isGet();
     }
 }

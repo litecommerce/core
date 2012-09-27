@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,8 +29,6 @@ namespace XLite\Controller\Admin;
  * Controller for Database backup page
  * :TODO: must be completly refactored
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
 {
@@ -40,8 +36,6 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
      * doActionBackup
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionBackup()
     {
@@ -78,8 +72,6 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
      *
      * @return void
      * @throws
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -95,8 +87,6 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
      * getPageReturnURL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageReturnURL()
     {

@@ -1,0 +1,20 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Roles list styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.items-list-table.roles table.list tbody td.name {
+  width: 400px;
+}
+
+.roles table.list tbody .permanent .input-field-wrapper.switcher .widget {
+  background-position: 0px -32px;
+  cursor: auto;
+}
+

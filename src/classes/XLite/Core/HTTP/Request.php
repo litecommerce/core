@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\HTTP;
@@ -30,8 +28,6 @@ namespace XLite\Core\HTTP;
 /**
  * Request
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Request extends \PEAR2\HTTP\Request
 {
@@ -42,8 +38,6 @@ class Request extends \PEAR2\HTTP\Request
      * @param \PEAR2\HTTP\Request\Adapter $instance The adapter to use OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($url = null, $instance = null)
     {
@@ -59,8 +53,6 @@ class Request extends \PEAR2\HTTP\Request
      * Asks for a response class from the adapter
      *
      * @return \PEAR2\HTTP\Request\Response
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sendRequest()
     {
@@ -81,8 +73,6 @@ class Request extends \PEAR2\HTTP\Request
      * @param string $file File to store to
      *
      * @return \PEAR2\HTTP\Request\Response
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function requestToFile($file)
     {
@@ -103,8 +93,6 @@ class Request extends \PEAR2\HTTP\Request
      * @param \Exception $exception Thrown exception
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logBouncerError(\Exception $exception)
     {
@@ -115,8 +103,6 @@ class Request extends \PEAR2\HTTP\Request
      * Return type of log messages
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLogLevel()
     {

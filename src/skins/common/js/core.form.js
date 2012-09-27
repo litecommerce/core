@@ -4,10 +4,9 @@
  * Common form / element controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 /**
@@ -104,6 +103,21 @@ function CommonForm(form)
     }
   );
 
+  // Process form changed
+  form.change(
+    function () {
+      var form = jQuery(this);
+
+      if (this.commonController.isChanged()) {
+        form.addClass('changed');
+        form.trigger('state-changed');
+
+      } else {
+        form.removeClass('changed');
+        form.trigger('state-initial');
+      }
+    }
+  );
 }
 
 extend(CommonForm, Base);
@@ -381,7 +395,7 @@ CommonForm.prototype.isChanged = function(onlyVisible)
 {
   return 0 < this.getElements().filter(
     function() {
-      return this.isChanged(onlyVisible);
+      return this.commonController ? this.commonController.isChanged(onlyVisible) : false;
     }
   ).length;
 }
@@ -850,11 +864,11 @@ CommonElement.prototype.isChanged = function(onlyVisible)
       || isElement(this.element, 'select')
       || isElement(this.element, 'textarea')
     ) {
-      return !this.isEqualValues(this.element.initialValue, this.element.value, jQuery(this.element));
+      return !this.isEqualValues(this.element.initialValue, this.element.value, this.$element);
     }
 
     if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
-      return !this.isEqualValues(this.element.initialValue, this.element.checked, jQuery(this.element));
+      return !this.isEqualValues(this.element.initialValue, this.element.checked, this.$element);
     }
   }
 
@@ -1078,23 +1092,19 @@ CommonElement.prototype.toggleActivity = function(condition)
 // Check element activity
 CommonElement.prototype.isEnabled = function()
 {
-  return 'disabled' == this.$element.attr('disabled');
+  return !this.$element.hasClass('disabled');
 }
 
 // Disable element
 CommonElement.prototype.disable = function()
 {
-  this.$element
-    .addClass('disabled')
-    .attr('disabled', 'disabled');
+  this.$element.addClass('disabled');
 }
 
 // Enable element
 CommonElement.prototype.enable = function()
 {
-  this.$element
-    .removeClass('disabled')
-    .removeAttr('disabled');
+  this.$element.removeClass('disabled');
 }
 
 /**
@@ -1270,6 +1280,17 @@ CommonElement.prototype.handlers = [
       return this.$element.hasClass('wheel-ctrl');
     },
     handler: CommonElement.prototype.markAsWheelControlled
+  },
+  {
+    canApply: function () {
+      return this.$element.is('textarea.resizeble-txt');
+    },
+    handler: function() {
+      var min = this.$element.data('min-size-height') || this.$element.height();
+      var max = this.$element.data('max-size-height');
+
+      this.$element.TextAreaExpander(min, max);
+    }
   }
 ];
 

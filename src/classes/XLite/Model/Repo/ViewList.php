@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,26 +28,20 @@ namespace XLite\Model\Repo;
 /**
  * View list repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ViewList extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_INTERNAL;
 
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = array(
         'weight' => true,
@@ -60,9 +52,7 @@ class ViewList extends \XLite\Model\Repo\ARepo
     /**
      * Columns' character sets definitions
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $columnsCharSets = array(
         'class' => 'latin1',
@@ -80,8 +70,6 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * @param string $zone Current interface name OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findClassList($list, $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER)
     {
@@ -102,8 +90,6 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * @param string $list List name
      *
      * @return \XLite\Model\ViewList|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findOneByTplAndList($tpl, $list)
     {
@@ -115,8 +101,6 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * Define cache cells
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -136,8 +120,6 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * @param string $list List name
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineOneByTplAndListQuery($tpl, $list)
     {
@@ -154,8 +136,6 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * @param string $zone Current interface name
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineClassListQuery($list, $zone)
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -30,8 +28,6 @@ namespace Includes\Utils;
 /**
  * URLManager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class URLManager extends \Includes\Utils\AUtils
 {
@@ -47,9 +43,6 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @param string $url URL to prepare
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function trimTrailingSlashes($url)
     {
@@ -66,43 +59,48 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @param boolean $isSession Use session ID parameter OPTIONAL
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getShopURL(
         $url = '',
-        $isSecure = false,
+        $isSecure = null,
         array $params = array(),
         $output = null,
         $isSession = null
     ) {
-        $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
+        if (!preg_match('/^https?:\/\//Ss', $url)) {
 
-        $output = is_null($output) ? self::URL_OUTPUT_FULL : $output;
-
-        $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
-        if ($host) {
-
-            $proto = ($isSecure ? 'https' : 'http') . '://';
-
-            if ('/' != substr($url, 0, 1)) {
-                $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
+            if (!isset($isSecure)) {
+                $isSecure = static::isHTTPS();
             }
 
-            $isSession = is_null($isSession) ? $isSecure : $isSession;
-
-            if ($isSession) {
-                $session = \XLite\Core\Session::getInstance();
-                $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
+            if (!isset($output)) {
+                $output = static::URL_OUTPUT_FULL;
             }
 
-            foreach ($params as $name => $value) {
-                $url .= (false !== strpos($url, '?') ? '&' : '?') . $name . '=' . $value;
-            }
+            $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
+            $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
 
-            if (self::URL_OUTPUT_FULL == $output) {
-                $url = $proto . $host . $url;
+            if ($host) {
+                $proto = ($isSecure ? 'https' : 'http') . '://';
+
+                if ('/' != substr($url, 0, 1)) {
+                    $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
+                }
+
+                $isSession = is_null($isSession) ? $isSecure : $isSession;
+
+                if ($isSession) {
+                    $session = \XLite\Core\Session::getInstance();
+                    $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
+                }
+
+                foreach ($params as $name => $value) {
+                    $url .= (false !== strpos($url, '?') ? '&' : '?') . $name . '=' . $value;
+                }
+
+                if (static::URL_OUTPUT_FULL == $output) {
+                    $url = $proto . $host . $url;
+                }
             }
         }
 
@@ -110,12 +108,20 @@ abstract class URLManager extends \Includes\Utils\AUtils
     }
 
     /**
+     * Check for secure connection
+     *
+     * @return boolean
+     */
+    public static function isHTTPS()
+    {
+        return (isset($_SERVER['HTTPS']) && ('on' === strtolower($_SERVER['HTTPS']) || '1' == $_SERVER['HTTPS']))
+            || (isset($_SERVER['SERVER_PORT']) && '443' == $_SERVER['SERVER_PORT']);
+    }
+
+    /**
      * Return current URI
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getSelfURI()
     {
@@ -126,13 +132,10 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * Return current URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getCurrentURL()
     {
-        return (\XLite\Core\Request::getInstance()->isHTTPS() ? 'https' : 'http')
-            . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        return 'http' . (static::isHTTPS() ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
     /**
@@ -141,13 +144,10 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @param string $str Host string
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     public static function isValidURLHost($str)
     {
         $urlData = parse_url('http://' . $str . '/path');
-
         $host = $urlData['host'] . (isset($urlData['port']) ? ':' . $urlData['port'] : '');
 
         return ($host == $str);

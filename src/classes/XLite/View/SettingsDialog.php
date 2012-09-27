@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.6
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Settings Dialog widget
  *
- * @see   ____class_see____
- * @since 1.0.6
  */
 class SettingsDialog extends \XLite\View\SimpleDialog
 {
@@ -39,8 +35,6 @@ class SettingsDialog extends \XLite\View\SimpleDialog
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -55,8 +49,6 @@ class SettingsDialog extends \XLite\View\SimpleDialog
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -67,8 +59,6 @@ class SettingsDialog extends \XLite\View\SimpleDialog
      * Return file name for the center part template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBody()
     {

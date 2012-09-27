@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Change options widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -48,8 +44,6 @@ class ChangeOptions extends \XLite\View\AView
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -65,8 +59,6 @@ class ChangeOptions extends \XLite\View\AView
      * Get selected options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSelectedOptions()
     {
@@ -85,8 +77,6 @@ class ChangeOptions extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -102,8 +92,6 @@ class ChangeOptions extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -114,8 +102,6 @@ class ChangeOptions extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -130,8 +116,6 @@ class ChangeOptions extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

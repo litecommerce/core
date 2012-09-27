@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Form\Cart\ShippingEstimator;
@@ -30,8 +28,6 @@ namespace XLite\View\Form\Cart\ShippingEstimator;
 /**
  * Open shipping estimator form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Open extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstimator
 {
@@ -39,8 +35,6 @@ class Open extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstimator
      * Get default form action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -51,8 +45,6 @@ class Open extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstimator
      * Get default form method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultFormMethod()
     {

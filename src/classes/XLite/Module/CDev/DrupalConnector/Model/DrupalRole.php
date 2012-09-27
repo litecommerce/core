@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Model;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
 /**
  * Class represents a relation between user profile and drupal roles
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="drupal_roles",
@@ -45,9 +41,7 @@ class DrupalRole extends \XLite\Model\AEntity
     /**
      * Role unique id
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var mixed
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -58,9 +52,7 @@ class DrupalRole extends \XLite\Model\AEntity
     /**
      * Profile id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -69,9 +61,7 @@ class DrupalRole extends \XLite\Model\AEntity
     /**
      * Drupal role id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -80,9 +70,7 @@ class DrupalRole extends \XLite\Model\AEntity
     /**
      * Related profile
      *
-     * @var   \XLite\Model\Profile
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Profile
      *
      * @ManyToOne  (targetEntity="XLite\Model\Profile", inversedBy="drupalRoles")
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")

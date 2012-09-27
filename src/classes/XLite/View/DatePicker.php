@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Date picker widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class DatePicker extends \XLite\View\FormField
 {
@@ -47,18 +43,14 @@ class DatePicker extends \XLite\View\FormField
     /**
      * Date format (PHP)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $phpDateFormat = '%b %d, %Y';
 
     /**
      * Date format (javascript)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $jsDateFormat = 'M dd, yy';
 
@@ -67,8 +59,6 @@ class DatePicker extends \XLite\View\FormField
      * Get element class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getClassName()
     {
@@ -82,23 +72,9 @@ class DatePicker extends \XLite\View\FormField
     }
 
     /**
-     * Get date format (javascript)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDateFormat()
-    {
-        return $this->jsDateFormat;
-    }
-
-    /**
      * Get widget value as string
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getValueAsString()
     {
@@ -111,8 +87,6 @@ class DatePicker extends \XLite\View\FormField
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -128,8 +102,6 @@ class DatePicker extends \XLite\View\FormField
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -145,8 +117,6 @@ class DatePicker extends \XLite\View\FormField
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -157,8 +127,6 @@ class DatePicker extends \XLite\View\FormField
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -169,6 +137,20 @@ class DatePicker extends \XLite\View\FormField
             self::PARAM_VALUE     => new \XLite\Model\WidgetParam\Int('Value of date field (timestamp)', null),
             self::PARAM_HIGH_YEAR => new \XLite\Model\WidgetParam\Int('The high year', date('Y', time()) - 1),
             self::PARAM_LOW_YEAR  => new \XLite\Model\WidgetParam\Int('The low year', 2035),
+        );
+    }
+
+    /**
+     * Return specific for JS code widget options
+     *
+     * @return array
+     */
+    protected function getDatePickerOptions()
+    {
+        return array(
+            'dateFormat' => $this->jsDateFormat,
+            'highYear'   => $this->getParam(static::PARAM_HIGH_YEAR),
+            'lowYear'    => $this->getParam(static::PARAM_LOW_YEAR),
         );
     }
 }

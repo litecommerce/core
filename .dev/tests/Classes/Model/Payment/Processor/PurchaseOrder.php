@@ -43,7 +43,7 @@ class XLite_Tests_Model_Payment_Processor_PurchaseOrder extends XLite_Tests_Mode
         $t = $order->getPaymentTransactions()->get(0);
         $method = $order->getPaymentMethod();
 
-        $this->assertEquals(0, $order->getOpenTotal(), 'check open total');
+        $this->assertEquals($order->getTotal(), $order->getOpenTotal(), 'check open total');
         $this->assertFalse($order->isPayed(), 'check open status');
 
         $data = array(

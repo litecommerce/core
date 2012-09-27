@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Top sellers statistics page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TopSellers extends \XLite\Controller\Admin\Stats
 {
@@ -41,11 +37,19 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     const TOP_SELLERS_NUMBER = 10;
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
+    }
+
+    /**
      * getPageTemplate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPageTemplate()
     {
@@ -56,8 +60,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Get rows count in statistics
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRowsCount()
     {
@@ -68,8 +70,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Get columns for statistics table
      *
      * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
      */
     public function getStatsRows()
     {
@@ -80,8 +80,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Prepare statistics table
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStats()
     {
@@ -96,8 +94,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Get data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData()
     {
@@ -130,8 +126,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * @param array $data Collected data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function processData($data)
     {

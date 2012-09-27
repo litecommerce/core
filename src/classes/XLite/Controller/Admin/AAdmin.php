@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Abstract admin-zone controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\Controller\AController
 {
@@ -44,9 +40,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     /**
      * List of recently logged in administrators
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $recentAdmins = null;
 
@@ -54,8 +48,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -67,8 +59,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -79,15 +69,12 @@ abstract class AAdmin extends \XLite\Controller\AController
      * This function called after template output
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function postprocess()
     {
         parent::postprocess();
 
         if ($this->dumpStarted) {
-
             $this->displayPageFooter();
         }
     }
@@ -96,8 +83,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check form id
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkFormId()
     {
@@ -108,8 +93,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Returns 'maintenance_mode' string if frontend is closed or null otherwise
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCustomerZoneWarning()
     {
@@ -120,8 +103,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Get access level
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevel()
     {
@@ -132,8 +113,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Handles the request to admin interface
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -153,6 +132,8 @@ abstract class AAdmin extends \XLite\Controller\AController
                 \XLite\Core\Session::getInstance()->no_https = true;
             }
 
+            \XLite::getInstance()->updateModuleRegistry();
+
             parent::handleRequest();
         }
     }
@@ -161,8 +142,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Get recently logged in admins
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRecentAdmins()
     {
@@ -180,8 +159,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check if upgrade or update is available on Marketplace.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isUpgradeEntryAvailable()
     {
@@ -199,8 +176,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check if form id is valid or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isFormIdValid()
     {
@@ -209,7 +184,7 @@ abstract class AAdmin extends \XLite\Controller\AController
         $request = \XLite\Core\Request::getInstance();
         $result = true;
 
-        if (\Xlite\Core\Config::getInstance()->Security->form_id_protection) {
+        if (\XLite\Core\Config::getInstance()->Security->form_id_protection) {
 
             if (!isset($request->xlite_form_id) || !$request->xlite_form_id) {
                 $result = false;
@@ -236,8 +211,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check - is current place public or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPublicZone()
     {
@@ -248,8 +221,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Start simplified page to display progress of some process
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function startDump()
     {
@@ -264,8 +235,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Display header of simplified page
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function displayPageHeader($title = '', $scrollDown = false)
     {
@@ -298,8 +267,6 @@ OUT;
      * displayPageFooter
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function displayPageFooter()
     {
@@ -325,8 +292,6 @@ OUT;
      * getPageReturnURL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageReturnURL()
     {
@@ -337,8 +302,6 @@ OUT;
      * Check - current target and action is ignored (form id validation is disabled) or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isIgnoredTarget()
     {
@@ -384,8 +347,6 @@ OUT;
      * Define common ignored targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineIngnoredTargets()
     {
@@ -399,8 +360,6 @@ OUT;
      * Define special ignored targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSpecialIgnoredTargets()
     {
@@ -415,8 +374,6 @@ OUT;
      * @param array $rules Rules
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isRuleExists(array $rules)
     {
@@ -436,8 +393,6 @@ OUT;
      * @param string $cleanURL Clean URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sanitizeCleanURL($cleanURL)
     {
@@ -454,8 +409,6 @@ OUT;
      * @param array  $args    Arguments to subsistute OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function showError($action, $message = null, array $args = array())
     {
@@ -470,8 +423,6 @@ OUT;
      * @param array  $args    Arguments to subsistute OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function showWarning($action, $message = null, array $args = array())
     {
@@ -486,8 +437,6 @@ OUT;
      * @param array  $args    Arguments to subsistute OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function showInfo($action, $message = null, array $args = array())
     {
@@ -503,8 +452,6 @@ OUT;
      * @param array  $args    Arguments to subsistute
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function showCommon($method, $action, $message, array $args)
     {
@@ -525,8 +472,6 @@ OUT;
      * Check - need use secure protocol or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function needSecure()
     {

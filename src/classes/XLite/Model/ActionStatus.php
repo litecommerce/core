@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * \XLite\Model\ActionStatus
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ActionStatus extends \XLite\Base
 {
@@ -47,36 +43,28 @@ class ActionStatus extends \XLite\Base
     /**
      * Action status
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $status = self::STATUS_UNDEFINED;
 
     /**
      * Code
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $code = null;
 
     /**
      * Status info
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $message = null;
 
     /**
      * allowedStatuses
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $allowedStatuses = array(
         self::STATUS_ERROR,
@@ -92,8 +80,6 @@ class ActionStatus extends \XLite\Base
      * @param integer $code    Code OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($status, $message = '', $code = 0)
     {
@@ -112,8 +98,6 @@ class ActionStatus extends \XLite\Base
      * isError
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isError()
     {
@@ -124,8 +108,6 @@ class ActionStatus extends \XLite\Base
      * isSuccess
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSuccess()
     {
@@ -136,8 +118,6 @@ class ActionStatus extends \XLite\Base
      * getStatus
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStatus()
     {
@@ -148,8 +128,6 @@ class ActionStatus extends \XLite\Base
      * getCode
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCode()
     {
@@ -160,8 +138,6 @@ class ActionStatus extends \XLite\Base
      * getMessage
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMessage()
     {
@@ -175,8 +151,6 @@ class ActionStatus extends \XLite\Base
      * @param mixed $status Value to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkStatus($status)
     {

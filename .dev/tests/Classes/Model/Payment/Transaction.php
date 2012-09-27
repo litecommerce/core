@@ -104,7 +104,7 @@ class XLite_Tests_Model_Payment_Transaction extends XLite_Tests_Model_Payment_Pa
         $t = $order->getPaymentTransactions()->get(0);
         $method = $order->getPaymentMethod();
 
-        $this->assertEquals(0, $order->getOpenTotal(), 'check open total');
+        $this->assertEquals($order->getTotal(), $order->getOpenTotal(), 'check open total');
 
         $r = $t->handleCheckoutAction();
 
@@ -121,11 +121,19 @@ class XLite_Tests_Model_Payment_Transaction extends XLite_Tests_Model_Payment_Pa
         $t = $order->getPaymentTransactions()->get(0);
         $method = $order->getPaymentMethod();
 
-        $this->assertEquals($order->getTotal(), $t->getChargeValueModifier(), 'check total');
+        $this->assertEquals(0, $t->getChargeValueModifier(), 'check total');
 
         $t->setStatus($t::STATUS_FAILED);
 
-        $this->assertEquals(0, $t->getChargeValueModifier(), 'check total #2');
+        $this->assertEquals(0, $t->getChargeValueModifier(), 'check total (F)');
+
+        $t->setStatus($t::STATUS_SUCCESS);
+
+        $this->assertEquals($order->getTotal(), $t->getChargeValueModifier(), 'check total (S)');
+
+        $t->setStatus($t::STATUS_PENDING);
+
+        $this->assertEquals($order->getTotal(), $t->getChargeValueModifier(), 'check total (P)');
     }
 
     public function testIsFailed()

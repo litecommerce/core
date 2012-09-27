@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Upgrade\Entry\Module;
@@ -30,26 +28,20 @@ namespace XLite\Upgrade\Entry\Module;
 /**
  * Marketplace
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
 {
     /**
      * Identifier for installed module
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $moduleInfoInstalled;
 
     /**
      * Identifier for upgrade module
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $moduleInfoForUpgrade;
 
@@ -59,9 +51,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * :WARNING: do not remove this variable:
      * it's required for the proper upgrade process
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $majorVersionOld;
 
@@ -71,9 +61,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * :WARNING: do not remove this variable:
      * it's required for the proper upgrade process
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $minorVersionOld;
 
@@ -81,8 +69,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return module actual name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -93,8 +79,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry readable name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -105,8 +89,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return icon URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIconURL()
     {
@@ -117,8 +99,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry old major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMajorVersionOld()
     {
@@ -133,8 +113,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry old minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMinorVersionOld()
     {
@@ -149,8 +127,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry new major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMajorVersionNew()
     {
@@ -161,8 +137,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry new minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMinorVersionNew()
     {
@@ -173,8 +147,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry revision date
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRevisionDate()
     {
@@ -185,8 +157,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return module author readable name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAuthor()
     {
@@ -197,8 +167,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Check if module is enabled
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEnabled()
     {
@@ -209,8 +177,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Check if module is installed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isInstalled()
     {
@@ -221,8 +187,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Return entry pack size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPackSize()
     {
@@ -233,8 +197,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Download hashes for current version
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function loadHashesForInstalledFiles()
     {
@@ -253,8 +215,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * @param \XLite\Model\Module $moduleForUpgrade Module model object
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(\XLite\Model\Module $moduleInstalled, \XLite\Model\Module $moduleForUpgrade)
     {
@@ -281,8 +241,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Names of variables to serialize
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __sleep()
     {
@@ -297,8 +255,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Download package
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function download()
     {
@@ -339,8 +295,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * @param boolean             $fromMarketplace Flag
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.6
      */
     protected function getPreparedModuleInfo(\XLite\Model\Module $module, $fromMarketplace)
     {
@@ -355,8 +309,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * @param array $moduleInfo Info to search by
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModule(array $moduleInfo)
     {
@@ -369,8 +321,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * :WARNING: do not cache this object: identity info may be changed
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleInstalled()
     {
@@ -383,8 +333,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * :WARNING: do not cache this object: identity info may be changed
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleForUpgrade()
     {
@@ -395,8 +343,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * Update database records
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateDBRecords()
     {

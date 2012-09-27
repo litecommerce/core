@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
@@ -30,28 +28,18 @@ namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
 /**
  * Review checkout step
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDecorator
 {
     /**
-     * Terms and conditions static page
-     */
-    const TERMS_AND_CONDITIONS = 'terms-and-conditions.html';
-
-
-    /**
      * Get Terms and Conditions page URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTermsURL()
     {
         return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            ? url(static::TERMS_AND_CONDITIONS)
+            ? url(\XLite\Core\Config::getInstance()->Company->terms_url)
             : parent::getTermsURL();
     }
 }

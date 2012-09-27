@@ -14,28 +14,20 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 namespace Includes\Decorator\Utils;
 
 /**
- * Plugins manager
+ * PluginManager 
  *
- * Available hooks:
- * - run()
- *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
 {
@@ -44,17 +36,12 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     const FILE_INI = 'plugins.ini';
 
-
     /**
      * List of registered plugins
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $plugins;
-
 
     /**
      * Check and execute hook handlers
@@ -62,9 +49,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @param string $hook Hook name
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function invokeHook($hook)
     {
@@ -80,7 +64,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
             \Includes\Decorator\Utils\CacheManager::showStepMessage('Run the "' . $plugin . '" plugin...');
 
             // Execute plugin main method
-            $instance->{'executeHookHandler' . ucfirst(\Includes\Utils\Converter::convertToCamelCase($hook))}();
+            $instance->executeHookHandler();
 
             // Show memory usage
             \Includes\Decorator\Utils\CacheManager::showStepInfo();
@@ -90,12 +74,9 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     /**
      * Return list of registered plugins
      *
-     * @param string $hook hook name (optional)
+     * @param string $hook Hook name OPTIONAL
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getPlugins($hook = null)
     {
@@ -108,7 +89,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
                 foreach (parse_ini_file(static::getConfigFile(), true) as $section => $plugins) {
 
                     // Set plugins order
-                    $plugins = array_filter($plugins);
                     asort($plugins, SORT_NUMERIC);
 
                     // Save plugins list
@@ -116,7 +96,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
                 }
 
             } else {
-
                 \Includes\ErrorHandler::fireError('Unable to read config file for the Decorator plugins');
             }
         }
@@ -128,12 +107,9 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * Return configuration file
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getConfigFile()
     {
-        return LC_DIR_INCLUDES . 'Decorator' . LC_DS . self::FILE_INI;
+        return LC_DIR_INCLUDES . 'Decorator' . LC_DS . static::FILE_INI;
     }
 }

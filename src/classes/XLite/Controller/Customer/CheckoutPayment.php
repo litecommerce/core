@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Separate checkout payment page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class CheckoutPayment extends \XLite\Controller\Customer\ACustomer
 {
@@ -39,8 +35,6 @@ class CheckoutPayment extends \XLite\Controller\Customer\ACustomer
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -52,8 +46,6 @@ class CheckoutPayment extends \XLite\Controller\Customer\ACustomer
      * TODO: check if this method is used
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSecure()
     {
@@ -64,8 +56,6 @@ class CheckoutPayment extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {

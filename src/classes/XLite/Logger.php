@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite;
@@ -30,58 +28,46 @@ namespace XLite;
 /**
  * Logger
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Logger extends \XLite\Base\Singleton
 {
     /**
-     * Log file name regexp pattern 
+     * Log file name regexp pattern
      */
     const LOG_FILE_NAME_PATTERN = '/^[a-zA-Z_]+\.log\.\d{4}-\d{2}-\d{2}\.php$/Ss';
 
     /**
      * Security file header
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $securityHeader = '<?php die(1); ?>';
 
     /**
      * Hash errors
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $hashErrors = array();
 
     /**
      * Errors translate table (PHP -> PEAR)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $errorsTranslate = null;
 
     /**
      * PHP error names
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $errorTypes = null;
 
     /**
      * Options
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $options = array(
         'type'  => null,
@@ -91,20 +77,16 @@ class Logger extends \XLite\Base\Singleton
     );
 
     /**
-     * Runtime id 
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.11
+     * Runtime id
+     *
+     * @var string
      */
     protected $runtimeId;
 
     /**
      * Mark templates flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $markTemplates = false;
 
@@ -113,8 +95,6 @@ class Logger extends \XLite\Base\Singleton
      * Check - display debug templates info or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isMarkTemplates()
     {
@@ -125,8 +105,6 @@ class Logger extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -192,8 +170,6 @@ class Logger extends \XLite\Base\Singleton
      * @param array  $trace   Back trace OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function log($message, $level = LOG_DEBUG, array $trace = array())
     {
@@ -243,8 +219,6 @@ class Logger extends \XLite\Base\Singleton
      * @param integer $errline Line number
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerPHPError($errno, $errstr, $errfile, $errline)
     {
@@ -293,8 +267,6 @@ class Logger extends \XLite\Base\Singleton
      * @param \Exception $exception Exception
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function registerException(\Exception $exception)
     {
@@ -330,14 +302,12 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Log custom message
-     * 
+     *
      * @param string  $type         Message type
      * @param string  $message      Message
      * @param boolean $useBackTrace User backtrace flag OPTIONAL
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function logCustom($type, $message, $useBackTrace = false)
     {
@@ -354,19 +324,23 @@ class Logger extends \XLite\Base\Singleton
             . 'IP: ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'n/a') . PHP_EOL
             . PHP_EOL;
 
+        // Add debug backtrace
+        if ($useBackTrace) {
+            $backTrace = $this->getBackTrace();
+            $message .= PHP_EOL . 'Backtrace:' . PHP_EOL . "\t" . implode(PHP_EOL . "\t", $backTrace) . PHP_EOL;
+        }
+
         @file_put_contents($path, $message, FILE_APPEND);
 
         return $path;
     }
 
     /**
-     * Get custom log URL 
-     * 
+     * Get custom log URL
+     *
      * @param string $type Type
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getCustomLogURL($type)
     {
@@ -374,27 +348,23 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get custom log file path 
-     * 
+     * Get custom log file path
+     *
      * @param string $type Type
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getCustomLogPath($type)
     {
-        return LC_DIR_VAR . 'log' . LC_DS . $this->getCustomLogFileName($type);
+        return LC_DIR_LOG . $this->getCustomLogFileName($type);
     }
 
     /**
-     * Get custom log file name 
-     * 
+     * Get custom log file name
+     *
      * @param string $type Type
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     public function getCustomLogFileName($type)
     {
@@ -402,11 +372,9 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get log file header 
-     * 
+     * Get log file header
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getLogFileHeader()
     {
@@ -417,8 +385,6 @@ class Logger extends \XLite\Base\Singleton
      * Get runtime id
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRuntimeId()
     {
@@ -433,8 +399,6 @@ class Logger extends \XLite\Base\Singleton
      * Get log type
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getType()
     {
@@ -445,8 +409,6 @@ class Logger extends \XLite\Base\Singleton
      * Get logger name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getName()
     {
@@ -472,8 +434,6 @@ class Logger extends \XLite\Base\Singleton
      * Get logger identtificator
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getIdent()
     {
@@ -484,8 +444,6 @@ class Logger extends \XLite\Base\Singleton
      * Get back trace list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBackTrace()
     {
@@ -498,8 +456,6 @@ class Logger extends \XLite\Base\Singleton
      * @param array $trace Back trace raw data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareBackTrace(array $trace)
     {
@@ -512,8 +468,6 @@ class Logger extends \XLite\Base\Singleton
      * @param object $obj Object
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function detectClassName($obj)
     {
@@ -526,8 +480,6 @@ class Logger extends \XLite\Base\Singleton
      * @param integer $errno PHP error code
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function convertPHPErrorToLogError($errno)
     {
@@ -564,8 +516,6 @@ class Logger extends \XLite\Base\Singleton
      * @param integer $errno PHP error code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPHPErrorName($errno)
     {
@@ -599,12 +549,10 @@ class Logger extends \XLite\Base\Singleton
      * Get rrror log path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getErrorLogPath()
     {
-        return LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
+        return LC_DIR_LOG . 'php_errors.log.' . date('Y-m-d') . '.php';
     }
 
     /**
@@ -613,8 +561,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $path File path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkLogSecurityHeader($path)
     {

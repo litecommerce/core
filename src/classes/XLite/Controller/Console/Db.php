@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Console;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Console;
 /**
  * Db services controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Db extends \XLite\Controller\Console\AConsole
 {
@@ -40,8 +36,6 @@ class Db extends \XLite\Controller\Console\AConsole
      *
      * @return void
      * @throws \PDOException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLoadFixtures()
     {
@@ -79,8 +73,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Get help for loadFixtures action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHelpLoadFixtures()
     {
@@ -92,8 +84,6 @@ class Db extends \XLite\Controller\Console\AConsole
      *
      * @return void
      * @throws \PDOException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUnloadFixtures()
     {
@@ -131,8 +121,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Get help for unloadFixtures action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHelpUnloadFixtures()
     {
@@ -143,8 +131,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Export DB schema
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionExportSchema()
     {
@@ -182,8 +168,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Help for export_schema action
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHelpExportSchema()
     {
@@ -195,8 +179,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Update schema
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateSchema()
     {
@@ -208,8 +190,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Drop DB schema
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDropSchema()
     {
@@ -221,8 +201,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Recreate schema
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRecreateSchema()
     {
@@ -235,8 +213,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Truncate all data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionTruncate()
     {

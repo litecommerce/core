@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\Enum;
@@ -30,19 +28,17 @@ namespace XLite\Core\Validator\Enum;
 /**
  * Boolean enumrable (0 and 1)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
-class Boolean extends \XLite\Core\Validator\Enum
+class Boolean extends \XLite\Core\Validator\Enum\AEnum
 {
     /**
      * Constructor
      * 
+     * @param array $list List of allowe values OPTIONAL
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function __construct()
+    public function __construct(array $list = array())
     {
         parent::__construct();
 

@@ -2,7 +2,7 @@
 # Data definition for LiteCommerce release script
 #
 
-. config.sh
+. ./config.sh
 
 # Trigger to enable generation of demo version
 DEMO_VERSION="1"
@@ -29,6 +29,7 @@ CDev/AuthorizeNet
 CDev/Moneybookers
 CDev/Quantum
 CDev/PaypalWPS
+CDev/Paypal
 CDev/USPS
 "
 
@@ -63,4 +64,8 @@ DRUPAL_FILES_TODELETE=""
 LC_SEO_PHRASES=""
 
 DRUPAL_SEO_PHRASES=""
+
+REPLACE_HEADERS_SETTINGS=""
+
+CHECK_HEADERS_SETTINGS=""
 

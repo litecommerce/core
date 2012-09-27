@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.19
  */
 
 namespace Includes\Decorator\Utils;
@@ -30,8 +28,6 @@ namespace Includes\Decorator\Utils;
 /**
  * Operator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Operator extends \Includes\Decorator\Utils\AUtils
 {
@@ -40,14 +36,19 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      */
     const BASE_CLASS_SUFFIX = 'Abstract';
 
+    /**
+     * Tags to ignore
+     *
+     * @var array
+     */
+    protected static $ignoredTags = array('see', 'since');
+
     // {{ Classes tree
 
     /**
      * Parse all PHP class files and create the graph
      *
      * @return \Includes\Decorator\DataStructure\Graph\Classes
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function createClassesTree()
     {
@@ -92,8 +93,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Parse PHP files and return plain array with the class descriptors
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getClassesTreeIndex()
     {
@@ -103,18 +102,24 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         foreach (static::getClassFileIterator()->getIterator() as $path => $data) {
 
             // Use PHP Tokenizer to search class declaration
-            if ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path)) {
-
+            if (
+                ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path))
+                && \Includes\Utils\Operator::checkIfLCClass($class)
+            ) {
                 // File contains a class declaration: create node (descriptor)
-                $node = new \Includes\Decorator\DataStructure\Graph\Classes($class, $path);
+                $node = new \Includes\Decorator\DataStructure\Graph\Classes($class);
 
                 // Check parent class (so called optional dependencies for modules)
-                $dependencies = $node->getTag('lc_dependencies');
+                $dependencies = $node->getTag('lc_dependencies', true);
 
                 if (empty($dependencies) || \Includes\Utils\ModulesManager::areActiveModules($dependencies)) {
 
                     // Node is valid: add to the index
                     $index[$class] = $node;
+
+                } else {
+                    // The unused class file must be removed from the cache file structure
+                    \Includes\Utils\FileManager::deleteFile($node->getFile());
                 }
             }
         }
@@ -126,8 +131,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Get iterator for class files
      *
      * @return \Includes\Utils\FileFilter
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getClassFileIterator()
     {
@@ -145,8 +148,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Check all module dependencies and create the graph
      *
      * @return \Includes\Decorator\DataStructure\Graph\Modules
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function createModulesGraph()
     {
@@ -191,8 +192,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Get all active modules and return plain array with the module descriptors
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModulesGraphIndex()
     {
@@ -219,8 +218,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function decorateClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -245,8 +242,15 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 $parent = $child;
             }
 
+            // Save value
+            $baseClass = $node->getClass();
+
+            // Rename base class to avoid coflicts with the top-level node
+            $node->setKey($node->getClass() . static::BASE_CLASS_SUFFIX, true);
+            $node->setLowLevelNodeFlag();
+
             // Special top-level node: stub class with empty body
-            $topNode = new \Includes\Decorator\DataStructure\Graph\Classes($node->getClass(), $node->getFile());
+            $topNode = new \Includes\Decorator\DataStructure\Graph\Classes($baseClass);
             $topNode->setTopLevelNodeFlag();
 
             // Add this stub node as a child to the last decorator in the chain
@@ -256,10 +260,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             foreach ($regular as $child) {
                 $child->replant($node, $topNode);
             }
-
-            // Rename base class to avoid coflicts with the top-level node
-            $node->setKey($node->getClass() . static::BASE_CLASS_SUFFIX);
-            $node->setLowLevelNodeFlag();
         }
     }
 
@@ -269,8 +269,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function divideChildrenIntoGroups(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -300,8 +298,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node2 Node to compare (second)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function compareClassWeight(
         \Includes\Decorator\DataStructure\Graph\Classes $node1,
@@ -319,8 +315,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to get weight
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getModuleWeight(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -338,8 +332,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $parent Parent class node
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function writeClassFile(
         \Includes\Decorator\DataStructure\Graph\Classes $node,
@@ -359,15 +351,17 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array  $tags    Tags to search OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getTags($content, array $tags = array())
     {
         $result = array();
 
         if (preg_match_all(static::getTagPattern($tags), $content, $matches)) {
-            $result += static::parseTags($matches);
+            $tags = static::parseTags($matches);
+
+            if (!empty($tags)) {
+                $result += static::parseTags($matches);
+            }
         }
 
         return $result;
@@ -379,14 +373,10 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array $tags List of tags to search
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected static function getTagPattern(array $tags)
+    public static function getTagPattern(array $tags)
     {
-        $pattern = empty($tags) ? '\w+' : implode('|', $tags);
-
-        return '/@(' . $pattern . ')\s*(?:\()?(.*?)\s*(?:\)\s*)?(?=$|^.*@(?:' . $pattern . '))/Smi';
+        return '/@\s*(' . (empty($tags) ? '\w+' : implode('|', $tags)) . ')(?=\s*)([^@\n]*)?/Smi';
     }
 
     /**
@@ -395,17 +385,22 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array $matches Data from preg_match_all()
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function parseTags(array $matches)
     {
+        $result = array(array(), array());
+
+        // Sanitize data
+        array_walk($matches[2], function (&$value) { $value = trim(trim($value), ')('); });
+
         // There are so called "multiple" tags
         foreach (array_unique($matches[1]) as $tag) {
 
+            // Ignore some time to save memory and time
+            if (in_array($tag, static::$ignoredTags)) continue;
+
             // Check if tag is defined only once
             if (1 < count($keys = array_keys($matches[1], $tag))) {
-
                 $list = array();
 
                 // Convert such tag values into the single array
@@ -413,26 +408,25 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
                     // Parse list of tag attributes and their values
                     $list[] = static::parseTagValue($matches[2][$key]);
-
-                    // To prevent duplicates
-                    unset($matches[1][$key], $matches[2][$key]);
                 }
 
-                // Add tag name and its values to the enf of tags list.
+                // Add tag name and its values to the end of tags list.
                 // All existing entries for this tag was cleared by the "unset()"
-                $matches[1][] = $tag;
-                $matches[2][] = $list;
+                $result[0][] = $tag;
+                $result[1][] = $list;
 
             // If the value was parsed (the corresponded tokens were found), change its type to the "array"
-            // TODO: check if there is a more convenient approach to manage "multiple" tags
             } elseif ($matches[2][$key = array_shift($keys)] !== ($value = static::parseTagValue($matches[2][$key]))) {
 
-                $matches[2][$key] = array($value ?: $matches[2][$key]);
+                $result[0][] = $tag;
+                $result[1][] = array($value ?: $matches[2][$key]);
             }
         }
 
         // Create an associative array of tag names and their values
-        return array_combine(array_map('strtolower', $matches[1]), $matches[2]);
+        return !empty($result[0]) && !empty($result[1])
+            ? array_combine(array_map('strtolower', $result[0]), $result[1])
+            : array();
     }
 
     /**
@@ -441,8 +435,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param string $value Value to parse
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function parseTagValue($value)
     {

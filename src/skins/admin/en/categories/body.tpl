@@ -4,10 +4,9 @@
  * Category details (readonly) and subcategories list page template
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 {* TODO full refactoring *}
@@ -17,7 +16,7 @@
   <tr>
 
     <td IF="category.hasImage()">
-      <widget template="categories/parts/image.tpl" image="{category.getImage()}" />
+      <img src="{category.image.getURL()}" width="{category.image.getWidth()}" height="{category.image.getHeight()}" alt="" />
     </td>
 
     <td>
@@ -33,7 +32,7 @@
         <tr>
           <td class="table-label">{t(#Description#)}:</td>
           <td>&nbsp;</td>
-          <td class="category-description">{category.getDescription():h}</td>
+          <td class="category-description">{category.getViewDescription():h}</td>
         </tr>
 
         <tr>
@@ -88,7 +87,7 @@
   class="\XLite\View\Button\Regular"
   id="modify-root"
   label="{t(#Modify root category (the front shop page)#)}"
-  jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
+  jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId()))}'" />
 
 <br />
 <br />
@@ -98,7 +97,6 @@
   <input type="hidden" name="target" value="categories" />
   <input type="hidden" name="category_id" value="{category.getCategoryId()}" />
   <input type="hidden" name="action" value="update" />
-  <input type="hidden" name="mode" />
 
   <table class="category-data">
 
@@ -167,7 +165,7 @@
         <widget class="\XLite\View\Button\Regular" id="add" label="{t(#Add subcategory#)}" jsCode="onAddChildClick({getCategoryId()})" />
       </td>
 
-      <td IF="category&category.getSubCategoriesCount()" align="right">
+      <td IF="category&category.getSubcategoriesCount()" align="right">
         <widget class="\XLite\View\Button\DeleteCategory" id="delete_all_button" label="{t(#Delete all#)}" />
       </td>
 
@@ -183,12 +181,12 @@
 
 function onAddChildClick(category_id)
 {
-	document.location = "admin.php?target=category&category_id=" + category_id + "&mode=add_child";
+	  document.location = "admin.php?target=category&parent_id=" + category_id;
 }
 
 function onModifyClick(category_id)
 {
-    document.location = "admin.php?target=category&category_id=" + category_id + "&mode=modify";
+    document.location = "admin.php?target=category&category_id=" + category_id;
 }
 
 </script>

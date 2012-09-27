@@ -112,18 +112,18 @@ class XLite_Tests_Module_CDev_XMLSitemap_Logic_SitemapGenerator extends XLite_Te
             unlink($path);
         }
 
-        $this->assertFalse(\XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->isGenerated());
+        $this->assertFalse(\XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->isGenerated(), '#1');
 
         \XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->generate();
 
-        $this->assertTrue(\XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->isGenerated());
+        $this->assertTrue(\XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->isGenerated(), '#2');
 
         $list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findFrame(0, 1);
         $product = $list[0];
         $product->setPrice(10);
         \XLite\Core\Database::getEM()->flush();
 
-        $this->assertFalse(\XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->isGenerated());
+        $this->assertFalse(\XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->isGenerated(), '#3');
     }
 }
 

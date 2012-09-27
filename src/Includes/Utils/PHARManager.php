@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -30,8 +28,6 @@ namespace Includes\Utils;
 /**
  * PHARManager
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class PHARManager extends \Includes\Utils\AUtils
 {
@@ -44,9 +40,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     /**
      * File extensions
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $extensions = array(\Phar::GZ => 'gz', \Phar::BZ2 => 'bz2');
 
@@ -59,9 +53,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @param \XLite\Core\Pack\Distr $pack Files to pack
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function packCore(\XLite\Core\Pack\Distr $pack)
     {
@@ -74,9 +65,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @param \XLite\Core\Pack\Module $pack Files to pack
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function packModule(\XLite\Core\Pack\Module $pack)
     {
@@ -90,8 +78,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @param string $dir  Dir to extract to
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function unpack($file, $dir)
     {
@@ -120,8 +106,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @param boolean                $compress Flag OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function download(\XLite\Core\Pack\APack $pack, $compress = true)
     {
@@ -155,9 +139,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @param boolean   $compress Flag OPTIONAL
      *
      * @return \Phar
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function pack(&$name, \Iterator $iterator, array $metadata = array(), $compress = true)
     {
@@ -186,8 +167,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @param \Iterator $iterator Directory iterator
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function addPackHash(\PharData $phar, \Iterator $iterator)
     {
@@ -209,8 +188,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * Check if compression is available
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function canCompress()
     {
@@ -221,8 +198,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * Return extension for the archive file
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getExtension()
     {
@@ -236,8 +211,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @param string    &$name Archive file name
      *
      * @return \PharData
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function compress(\PharData $phar, &$name)
     {

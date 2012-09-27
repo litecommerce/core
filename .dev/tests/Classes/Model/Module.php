@@ -46,7 +46,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
     /**
      * Test modules 
      */
-    const TEST_MODULE_1 = 'DrupalConnector';
+    const TEST_MODULE_1 = 'ProductOptions';
     const TEST_MODULE_2 = 'AustraliaPost';
 
     /**
@@ -105,7 +105,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
         // Main class
         $data = array(
             'getAuthorName' => 'Creative Development LLC',
-            'getModuleName' => 'Drupal Connector',
+            'getModuleName' => 'Product Options',
         );
         foreach ($data as $method => $value) {
             foreach (array('moduleCorrect' => $value, 'moduleIncorrect' => self::SOME_WRONG_VALUE) as $module => $expected) {
@@ -298,6 +298,9 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
     public function testIsCustom()
     {
         $module = $this->getTestModule1();
+        if (\XLite\Core\Marketplace::getInstance()->saveAddonsList()) {
+            $this->markTestSkipped('LC can not update module data from marketplace');
+        }
         $this->assertFalse($module->isCustom(), 'check if module ' . self::TEST_MODULE_1 . ' is custom [1]');
     }
 
@@ -388,7 +391,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
             'iconURL'       => 'http:://www.example.com/1',
             'pageURL'       => 'http:://www.example.com/2',
             'authorPageURL' => 'http:://www.example.com/3',
-            'dependencies'  => array('CDev\DrupalConnector', 'CDev\AustraliaPost'),
+            'dependencies'  => array('CDev\ProductOptions', 'CDev\AustraliaPost'),
         );
 
         foreach ($data as $name => $value) {
@@ -449,7 +452,9 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
      */
     protected function getModuleByAuthorAndName($author, $name, $version = null, $revision = null)
     {
-        if (!($module = $this->getRepo()->findOneBy(array('author' => $author, 'name' => $name)))) {
+        $module = $this->getRepo()->findOneBy(array('author' => $author, 'name' => $name));
+
+        if (!$module) {
             $module = new \XLite\Model\Module();
 
             $module->setAuthor($author);

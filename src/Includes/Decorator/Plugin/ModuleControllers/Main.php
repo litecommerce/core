@@ -14,25 +14,20 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Decorator
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 namespace Includes\Decorator\Plugin\ModuleControllers;
 
 /**
- * Main
+ * Main 
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\APlugin
 {
@@ -41,23 +36,15 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     const PATTERN = '/^XLite\\\(Module\\\[\w]+\\\[\w]+\\\)Controller(\\\[\w\\\]*)$/Ss';
 
-
-    // ------------------------------ Hook handlers -
-
     /**
      * Execute certain hook handler
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function executeHookHandlerBeforeDecorate()
+    public function executeHookHandler()
     {
         static::getClassesTree()->walkThrough(array($this, 'changeControllerClass'));
     }
-
-    // ------------------------------ Auxiliary methods -
 
     /**
      * Change class name for "module controllers"
@@ -66,14 +53,11 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function changeControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
         if ($this->isModuleController($node)) {
-            $node->setKey($this->prepareModuleControllerClass($node));
+            $node->setKey($this->prepareModuleControllerClass($node), true);
         }
     }
 
@@ -83,13 +67,10 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to check
      *
      * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isModuleController(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        return !$node->isDecorator() && preg_match(self::PATTERN, $node->getClass());
+        return !$node->isDecorator() && preg_match(static::PATTERN, $node->getClass());
     }
 
     /**
@@ -98,12 +79,9 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to get and prepare class
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareModuleControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        return preg_replace(self::PATTERN, 'XLite\\\\Controller$2', $node->getClass());
+        return preg_replace(static::PATTERN, 'XLite\\\\Controller$2', $node->getClass());
     }
 }

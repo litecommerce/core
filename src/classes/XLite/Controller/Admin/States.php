@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * States management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class States extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -51,8 +45,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * init
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -73,8 +65,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * getStates
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStates()
     {
@@ -90,8 +80,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * doActionAdd
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -137,7 +125,7 @@ class States extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\Database::getEM()->persist($state);
                 \XLite\Core\Database::getEM()->flush();
 
-                \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
+                \XLite\Core\Database::getRepo('XLite\Model\Country')->cleanCache();
             }
         }
     }
@@ -146,8 +134,6 @@ class States extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -167,15 +153,13 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
+        \XLite\Core\Database::getRepo('XLite\Model\Country')->cleanCache();
     }
 
     /**
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -195,6 +179,6 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
+        \XLite\Core\Database::getRepo('XLite\Model\Country')->cleanCache();
     }
 }

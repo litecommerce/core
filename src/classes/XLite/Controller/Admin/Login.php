@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,8 +29,6 @@ namespace XLite\Controller\Admin;
  * Login
  * FIXME: must be completely refactored
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Login extends \XLite\Controller\Admin\AAdmin
 {
@@ -40,8 +36,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * handleRequest
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -64,8 +58,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * getAccessLevel
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevel()
     {
@@ -76,8 +68,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * init
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {
@@ -92,8 +82,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * Login
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogin()
     {
@@ -130,8 +118,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * Logoff
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogoff()
     {

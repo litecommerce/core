@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Payment;
@@ -30,8 +28,6 @@ namespace XLite\Model\Payment;
 /**
  * Payment method multilingual data
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table (name="payment_method_translations",
@@ -46,22 +42,67 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     /**
      * Name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $name;
 
     /**
+     * Title (Name of payment method which is displayed for customer on checkout)
+     *
+     * @var string
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $title = '';
+
+    /**
      * Description
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
     protected $description = '';
+
+    /**
+     * Admin description
+     *
+     * @var string
+     *
+     * @Column (type="text")
+     */
+    protected $adminDescription = '';
+
+    /**
+     * Instruction
+     *
+     * @var string
+     *
+     * @Column (type="text")
+     */
+    protected $instruction = '';
+
+    /**
+     * Title getter
+     * If no title is given then the "name" field must be used
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title ?: $this->getName();
+    }
+
+    /**
+     * Admin description getter
+     * If no admin description is given then the "description" field must be used
+     *
+     * @return string
+     */
+    public function getAdminDescription()
+    {
+        return $this->adminDescription ?: $this->getDescription();
+    }
 }

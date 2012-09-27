@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details\Customer;
@@ -30,8 +28,6 @@ namespace XLite\View\Product\Details\Customer;
 /**
  * ACustomer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\View\Product\Details\ADetails
 {
@@ -39,8 +35,6 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      * Checks whether a product was added to the cart
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isProductAdded()
     {
@@ -52,8 +46,6 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -64,8 +56,6 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      * Check - product is available for sale or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isProductAvailableForSale()
     {
