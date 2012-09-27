@@ -284,7 +284,6 @@ HTML;
             'INVNUM'            => $cart->getOrderId(),
             'ALLOWNOTE'         => 1,
             'CUSTOM'            => $cart->getOrderId(),
-            'LOCALECODE'        => 'EN',
         );
 
         $postData = $postData + $this->getLineItems($cart);

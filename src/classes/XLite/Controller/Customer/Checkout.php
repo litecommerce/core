@@ -487,7 +487,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         // Generate password
         $pass = \XLite\Core\Database::getRepo('XLite\Model\Profile')->generatePassword();
-        $profile->setPassword(md5($pass));
+        $profile->setPassword(\XLite\Core\Auth::encryptPassword($pass));
 
         // Set cloned profile as original profile
         $this->getCart()->setOrigProfile($profile);

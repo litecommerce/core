@@ -27,7 +27,7 @@ namespace XLite\Module\CDev\Paypal\Model;
 
 /**
  * Order model
- * 
+ *
  */
 class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
@@ -79,8 +79,93 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      *  
      * @return boolean
      */
-    protected function isExpressCheckout($method)
+    public function isExpressCheckout($method)
     {
         return 'ExpressCheckout' == $method->getServiceName();
     } 
+
+    /**
+     * Returns the associative array of transaction IDs: PPREF and/or PNREF
+     * 
+     * @return array
+     */
+    public function getTransactionIds()
+    {
+        $result = array();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+
+            if ($this->isPaypalMethod($t->getPaymentMethod())) {
+
+                $isTestMode = $t->getDataCell('test_mode');
+
+                if (isset($isTestMode)) {
+                    $result[] = array(
+                        'url'   => '',
+                        'name'  => 'Test mode',
+                        'value' => 'yes',
+                    );
+                }
+
+                $ppref = $t->getDataCell('PPREF');
+                if (isset($ppref)) {
+                    $result[] = array(
+                        'url'   => $this->getTransactionIdURL($t, $ppref->getValue()),
+                        'name'  => 'Unique PayPal transaction ID (PPREF)',
+                        'value' => $ppref->getValue(),
+                    );
+                }
+
+                $pnref = $t->getDataCell('PNREF');
+                if (isset($pnref)) {
+                    $result[] = array(
+                        'url'   => '',
+                        'name'  => 'Unique Payflow transaction ID (PNREF)',
+                        'value' => $pnref->getValue(),
+                    );
+                }
+            }
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Get specific transaction URL on PayPal side
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction Payment transaction object
+     * @param string                           $id          Transaction ID (PPREF)
+     *  
+     * @return string
+     */
+    protected function getTransactionIdURL($transaction, $id)
+    {
+        $isTestMode = $transaction->getDataCell('test_mode');
+
+        return isset($isTestMode)
+            ? 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_view-a-trans&id=' . $id
+            : 'https://www.paypal.com/cgi-bin/webscr?cmd=_view-a-trans&id=' . $id;
+    }
+
+    /**
+     * Return true if current payment method is PayPal
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *  
+     * @return boolean
+     */
+    protected function isPaypalMethod($method)
+    {
+        return isset($method)
+            && in_array(
+                $method->getServiceName(),
+                array(
+                    \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPA,
+                    \XLite\Module\CDev\Paypal\Main::PP_METHOD_PFL,
+                    \XLite\Module\CDev\Paypal\Main::PP_METHOD_EC,
+                    \XLite\Module\CDev\Paypal\Main::PP_METHOD_PPS,
+                )
+            );
+    }
 }

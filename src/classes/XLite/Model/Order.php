@@ -858,7 +858,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             ->findAllActive();
 
         foreach ($list as $i => $method) {
-            if (!$method->getProcessor()->isApplicable($this, $method)) {
+            if (!$method->isEnabled() || !$method->getProcessor()->isApplicable($this, $method)) {
                 unset($list[$i]);
             }
         }
@@ -1225,6 +1225,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $transaction->setStatus($transaction::STATUS_INITIALIZED);
             $transaction->setValue($value);
             $transaction->setType($method->getProcessor()->getInitialTransactionType($method));
+
+            if ($method->getProcessor()->isTestMode($method)) {
+                $transaction->setDataCell(
+                    'test_mode',
+                    true,
+                    'Test mode'
+                );
+            }
 
             \XLite\Core\Database::getEM()->persist($transaction);
         }

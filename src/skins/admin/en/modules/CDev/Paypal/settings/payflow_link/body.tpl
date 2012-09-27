@@ -165,6 +165,36 @@
       </ul>
     </div>
 
+    <h3>Setting up a test account</h3>
+
+    <div>To test Payflow Link, you will need to set up two PayPal Sandbox accounts (one to simulate you, as the merchant, and one to simulate a buyer) and a test Payflow Link account. To set up these accounts, follow these instructions:</div>
+
+    <div>
+      <ul>
+        <li>1. Go to <a href="https://developer.paypal.com/">PayPal Sandbox</a> and sign in. If you do not have an account, click "Sign Up", and follow the instructions given.</li>
+        <li>2. Click <b>Create a preconfigured account</b>.</li>
+        <li>3. Set <b>Account Type</b> to <b>Seller</b>.</li>
+        <li>4. Make a note of the password that is generated for you in the <b>Password</b> box, or replace it with a password of your choice.</li>
+        <li>5. Click <b>Create Account</b>. A new Sandbox account will be created, and will be shown on the <b>Test Accounts</b> page. Make a note of the email address generated. This will be your test merchant account.</li>
+        <li>6. Click <b>Home</b>, then repeat steps 2-5. On step 3, set <b>Account Type</b> to <b>Buyer</b>. This will be your test buyer account.</li>
+        <li>7. Create a test Payflow Link account by going to <a href="https://registration.paypal.com/welcomePage.do?producttype=C1&country=US&mode=try">the link</a> and following the registration process. When you reach the "Next Steps" page, your account is created.</li>
+        <li>8. Log in to your new account at <a href="https://manager.paypal.com">PayPal Manager</a>. Log in with the following credentials:
+          <div style="margin-left: 20px; font-size: 0.9em;">
+            <ul>
+              <li>Partner: <b>PayPal</b></li>
+              <li>Merchant Login: The Merchant Login that you chose in step 7</li>
+              <li>User: Leave blank</li>
+              <li>Password: The password that you chose in step 7</li>
+            </ul>
+          </div>
+        </li>
+        <li>9. Click <b>Service Settings</b>.</li>
+        <li>10. Under <b>Hosted Checkout Pages</b>, click <b>Set Up</b>.</li>
+        <li>11. In the <b>PayPal Sandbox email address</b> box, enter the email address of your Sandbox merchant account (from step 5).</li>
+        <li>12. Click <b>Save Changes</b>.</li>
+      </ul>
+    </div>
+
     <div><a href="{buildURL(#payment_method#,#hide_instruction#,_ARRAY_(#method_id#^paymentMethod.getMethodId()))}">I've done this, dismiss the instruction</a></div>
 
   </div>
