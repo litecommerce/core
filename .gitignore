@@ -25,8 +25,11 @@
 /src/var/images
 /src/var/tmp
 /src/var/data
+/src/var/resources
 /src/var/.decorator.fixtures.ini.php
 /src/var/.decorator.modules.ini.php
 /src/var/.decorator.unsafe_modules.ini.php
 /src/var/.disabled.structures.php
+/src/var/.modules.structures.registry.php
+/src/var/.modules.structures.registry.hash.php
 /nbproject

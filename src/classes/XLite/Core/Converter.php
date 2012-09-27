@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,25 +28,25 @@ namespace XLite\Core;
 /**
  * Miscelaneous convertion routines
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Converter extends \XLite\Base\Singleton
 {
     /**
-     * Sizes 
+     * Sizes
      */
     const GIGABYTE = 1073741824;
     const MEGABYTE = 1048576;
     const KILOBYTE = 1024;
 
+    /**
+     * Use this char as separator, if the default one is not set in the config
+     */
+    const CLEAN_URL_DEFAULT_SEPARATOR = '-';
 
     /**
      * Method name translation records
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $to = array(
         'Q', 'W', 'E', 'R', 'T',
@@ -62,9 +60,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Method name translation patterns
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $from = array(
         '_q', '_w', '_e', '_r', '_t',
@@ -78,9 +74,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Flag to avoid multiple setlocale() calls
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected static $isLocaleSet = false;
 
@@ -90,8 +84,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string String to convert
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertToCamelCase($string)
     {
@@ -104,8 +96,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string String to convert
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertFromCamelCase($string)
     {
@@ -118,8 +108,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string Underline-style string
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function prepareMethodName($string)
     {
@@ -132,8 +120,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $target Current target
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getControllerClass($target)
     {
@@ -152,6 +138,8 @@ class Converter extends \XLite\Base\Singleton
                . (empty($target) ? '' : '\\' . self::convertToCamelCase($target));
     }
 
+    // {{{ URL routines
+
     /**
      * Compose URL from target, action and additional params
      *
@@ -161,31 +149,28 @@ class Converter extends \XLite\Base\Singleton
      * @param string $interface Interface script OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
+    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null, $forceCleanURL = false)
     {
-        $url = isset($interface) ? $interface : \XLite::getInstance()->getScript();
+        $result = null;
+        $cuFlag = LC_USE_CLEAN_URLS && (!\XLite::isAdminZone() || $forceCleanURL);
 
-        $urlParams = array();
-
-        if ($target) {
-            $urlParams['target'] = $target;
+        if ($cuFlag) {
+            $result = static::buildCleanURL($target, $action, $params);
         }
 
-        if ($action) {
-            $urlParams['action'] = $action;
+        if (!isset($result)) {
+            if (!isset($interface) && !$cuFlag) {
+                $interface = \XLite::getInstance()->getScript();
+            }
+
+            $result = \Includes\Utils\Converter::buildURL($target, $action, $params, $interface);
+            if ($cuFlag && !$result) {
+                $result = \XLite::getInstance()->getShopURL($result, null, array(), \Includes\Utils\URLManager::URL_OUTPUT_SHORT);
+            }
         }
 
-        $params = $urlParams + $params;
-
-        if (!empty($params)) {
-            uksort($params, array(get_called_class(), 'sortURLParams'));
-            $url .= '?' . http_build_query($params);
-        }
-
-        return $url;
+        return $result;
     }
 
     /**
@@ -194,15 +179,188 @@ class Converter extends \XLite\Base\Singleton
      * @param string $target Page identifier OPTIONAL
      * @param string $action Action to perform OPTIONAL
      * @param array  $params Additional params OPTIONAL
+     * @param string $interface Interface script OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public static function buildFullURL($target = '', $action = '', array $params = array())
+    public static function buildFullURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        return \XLite::getInstance()->getShopURL(static::buildURL($target, $action, $params));
+        return \XLite::getInstance()->getShopURL(static::buildURL($target, $action, $params, $interface));
     }
+
+    /**
+     * Compose clean URL
+     *
+     * @param string $target Page identifier OPTIONAL
+     * @param string $action Action to perform OPTIONAL
+     * @param array  $params Additional params OPTIONAL
+     *
+     * @return string
+     */
+    public static function buildCleanURL($target = '', $action = '', array $params = array())
+    {
+        $result = null;
+        $urlParams = array();
+
+        if ('product' === $target && !empty($params['product_id'])) {
+            $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($params['product_id']);
+
+            if (isset($product) && $product->getCleanURL()) {
+                $urlParams[] = $product->getCleanURL() . '.html';
+
+                unset($params['product_id']);
+            }
+        }
+
+        if (('category' === $target || ('product' === $target && !empty($urlParams))) && !empty($params['category_id'])) {
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($params['category_id']);
+
+            if (isset($category) && $category->getCleanURL()) {
+                foreach (array_reverse($category->getPath()) as $node) {
+                    if ($node->getCleanURL()) {
+                        $urlParams[] = $node->getCleanURL();
+                    }
+                }
+            }
+
+            if (!empty($urlParams)) {
+                unset($params['category_id']);
+            }
+        }
+
+        static::buildCleanURLHook($target, $action, $params, $urlParams);
+
+        if (!empty($urlParams)) {
+            unset($params['target']);
+
+            $result  = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'web_dir_wo_slash'));
+            $result .= '/' . implode('/', array_reverse($urlParams));
+
+            if (!empty($params)) {
+                $result .= '?' . http_build_query($params);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Parse clean URL (<rest>/<last>/<url>(?:\.<ext="htm">(?:l)))
+     *
+     * @param string $url  Main part of a clean URL
+     * @param string $last First part before the "url" OPTIONAL
+     * @param string $rest Part before the "url" and "last" OPTIONAL
+     * @param string $ext  Extension OPTIONAL
+     *
+     * @return void
+     */
+    public static function parseCleanUrl($url, $last = '', $rest = '', $ext = '')
+    {
+        $target = null;
+        $params = array();
+
+        foreach (static::getCleanURLBook($url, $last, $rest, $ext) as $possibleTarget => $class) {
+            $entity = \XLite\Core\Database::getRepo($class)->findOneByCleanURL($url);
+
+            if (isset($entity)) {
+                $target = $possibleTarget;
+                $params[$entity->getUniqueIdentifierName()] = $entity->getUniqueIdentifier();
+            }
+        }
+
+        static::parseCleanURLHook($url, $last, $rest, $ext, $target, $params);
+
+        return array($target, $params);
+    }
+
+    /**
+     * Return current separator for clean URLs
+     *
+     * @return string
+     */
+    public static function getCleanURLSeparator()
+    {
+        $result = \Includes\Utils\ConfigParser::getOptions(array('clean_urls', 'default_separator'));
+
+        if (empty($result) || !preg_match('/' . static::getCleanURLAllowedCharsPattern() . '/S', $result)) {
+            $result = static::CLEAN_URL_DEFAULT_SEPARATOR;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return pattern to check clean URLs
+     *
+     * @return string
+     */
+    public static function getCleanURLAllowedCharsPattern()
+    {
+        return '[\w_\-]+';
+    }
+
+    /**
+     * Getter
+     *
+     * @param string $url  Main part of a clean URL
+     * @param string $last First part before the "url" OPTIONAL
+     * @param string $rest Part before the "url" and "last" OPTIONAL
+     * @param string $ext  Extension OPTIONAL
+     *
+     * @return array
+     */
+    protected static function getCleanURLBook($url, $last = '', $rest = '', $ext = '')
+    {
+        $list = array(
+            'product'  => '\XLite\Model\Product',
+            'category' => '\XLite\Model\Category',
+        );
+
+        if ('htm' === $ext) {
+            unset($list['category']);
+        }
+
+        return $list;
+    }
+
+    /**
+     * Hook for modules
+     *
+     * @param string $target     Page identifier
+     * @param string $action     Action to perform
+     * @param array  $params     Additional params
+     * @param array  &$urlParams Params to prepare
+     *
+     * @return void
+     */
+    protected static function buildCleanURLHook($target, $action, array $params, array &$urlParams)
+    {
+    }
+
+    /**
+     * Hook for modules
+     *
+     * @param string $url  Main part of a clean URL
+     * @param string $last First part before the "url"
+     * @param string $rest Part before the "url" and "last"
+     * @param string $ext  Extension
+     * @param string $target Target
+     * @param array  $params Additional params
+     *
+     * @return void
+     */
+    protected static function parseCleanURLHook($url, $last, $rest, $ext, &$target, array &$params)
+    {
+        if ('product' === $target && !empty($last)) {
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($last);
+
+            if (isset($category)) {
+                $params['category_id'] = $category->getCategoryId();
+            }
+        }
+    }
+
+    // }}}
 
     /**
      * Convert to one-dimensional array
@@ -211,8 +369,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $currKey Parameter for recursive calls OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertTreeToFlatArray(array $data, $currKey = '')
     {
@@ -230,8 +386,6 @@ class Converter extends \XLite\Base\Singleton
      * Generate random token (32 chars)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function generateRandomToken()
     {
@@ -242,8 +396,6 @@ class Converter extends \XLite\Base\Singleton
      * Check - is GDlib enabled or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isGDEnabled()
     {
@@ -260,8 +412,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $url URL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function isURL($url)
     {
@@ -271,13 +421,23 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
+     * Check for empty string
+     *
+     * @param string $string String to check
+     *
+     * @return boolean
+     */
+    public static function isEmptyString($string)
+    {
+        return '' === $string || false === $string;
+    }
+
+    /**
      * Return class name without backslashes
      *
      * @param \XLite_Base $obj Object to get class name from
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPlainClassName(\XLite\Base $obj)
     {
@@ -290,8 +450,6 @@ class Converter extends \XLite\Base\Singleton
      * @param mixed $price Currency unformatted value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatCurrency($price)
     {
@@ -316,8 +474,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $dstUnit Destination weight unit
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertWeightUnits($value, $srcUnit, $dstUnit)
     {
@@ -341,8 +497,6 @@ class Converter extends \XLite\Base\Singleton
      * @param boolean $convertToUserTimeZone True if time value should be converted according to the time zone OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatTime($base = null, $format = null, $convertToUserTimeZone = true)
     {
@@ -366,13 +520,33 @@ class Converter extends \XLite\Base\Singleton
      * @param boolean $convertToUserTimeZone True if time value should be converted according to the time zone OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatDate($base = null, $format = null, $convertToUserTimeZone = true)
     {
         if (!$format) {
             $format = \XLite\Core\Config::getInstance()->General->date_format;
+        }
+
+        if ($convertToUserTimeZone) {
+            $base = \XLite\Core\Converter::convertTimeToUser($base);
+        }
+
+        return static::getStrftime($format, $base);
+    }
+
+    /**
+     * Format day time
+     *
+     * @param integer $base                  UNIX time stamp OPTIONAL
+     * @param string  $format                Format string OPTIONAL
+     * @param boolean $convertToUserTimeZone True if time value should be converted according to the time zone OPTIONAL
+     *
+     * @return string
+     */
+    public static function formatDayTime($base = null, $format = null, $convertToUserTimeZone = true)
+    {
+        if (!$format) {
+            $format = \XLite\Core\Config::getInstance()->General->time_format;
         }
 
         if ($convertToUserTimeZone) {
@@ -389,8 +563,6 @@ class Converter extends \XLite\Base\Singleton
      * @param integer $base   UNIX time stamp OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getStrftime($format, $base = null)
     {
@@ -407,8 +579,6 @@ class Converter extends \XLite\Base\Singleton
      * Attempt to set locale to UTF-8
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function setLocaleToUTF8()
     {
@@ -434,28 +604,11 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Sort URL parameters (callback)
-     *
-     * @param string $a First parameter
-     * @param string $b Second parameter
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function sortURLParams($a, $b)
-    {
-        return ('target' == $b || ('action' == $b && 'target' != $a)) ? 1 : 0;
-    }
-
-    /**
      * Prepare human-readable output for file size
      *
      * @param integer $size Size in bytes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function formatFileSize($size)
     {
@@ -466,12 +619,10 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Convert short size (2M, 8K) to human readable
-     * 
+     *
      * @param string $size Shortsize
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     public static function convertShortSizeToHumanReadable($size)
     {
@@ -498,12 +649,10 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Convert short size (2M, 8K) to normal size (in bytes)
-     * 
+     *
      * @param string $size Short size
-     *  
+     *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.14
      */
     public static function convertShortSize($size)
     {
@@ -537,8 +686,6 @@ class Converter extends \XLite\Base\Singleton
      * @param integer $time User time
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertTimeToServer($time)
     {
@@ -561,8 +708,6 @@ class Converter extends \XLite\Base\Singleton
      * @param integer $time Server time
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function convertTimeToUser($time)
     {

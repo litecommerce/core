@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * Abstract controller (customer interface)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\B
      * Die if trying to access storefront and DrupalConnector module is enabled
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkStorefrontAccessability()
     {
@@ -54,20 +48,18 @@ class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\B
      * Return Drupal URL
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDrupalLink()
     {
-        return \XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url;
+        return \XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url
+            ?
+            : \XLite\Core\Converter::buildURL(null, null, array(), \XLite::CART_SELF);
     }
 
     /**
      * Perform some actions to prohibit access to storefornt
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function closeStorefront()
     {

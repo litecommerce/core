@@ -1,0 +1,114 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.s3-migrate {
+  border-top: 1px dotted #cacfd3;
+  margin-top: 23px;
+  padding-top: 17px;
+}
+
+.s3-migrate .migrate-progress h3 {
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+.s3-migrate .migrate-progress .bar,
+.s3-migrate .migrate-progress p.refresh
+{
+  width: 507px;
+}
+
+.s3-migrate .migrate-progress .bar {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  height: 28px;
+}
+
+.s3-migrate .migrate-progress p.refresh {
+  text-align: center;
+  padding-top: 11px;
+}
+
+.no-s3-box {
+  position: relative;
+}
+
+.no-s3-box form {
+  background: transparent url(images/fs_to_s3.png) no-repeat 22px 3px;
+  position: relative;
+  width: 430px;
+  height: 96px;
+  text-align: center;
+  padding-top: 14px;
+}
+
+.no-s3-box form span.fs,
+.no-s3-box form span.s3
+{
+  display: block;
+  position: absolute;
+  top: 36px;
+  color: #8f8f8f;
+}
+
+.no-s3-box form span.fs {
+  left: 4px;
+}
+
+.no-s3-box form span.s3 {
+  right: 31px;
+}
+
+.no-s3-box form button {
+  padding: 8px 18px 4px;
+}
+
+.no-s3-box form button span {
+  font-size: 16px;
+}
+
+.s3-migrate p.note {
+  color: #456583;
+  line-height: 22px;
+  font-size: 14px;
+}
+
+.s3-migrate p.note strong {
+  display: block;
+  color: #333;
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 3px;
+}
+
+.no-s3-box p.note {
+  position: absolute;
+  top: 8px;
+  left: 453px;
+  width: 510px;
+}
+
+.s3-box {
+  background: transparent url(images/s3_to_fs.png) no-repeat 6px top;
+}
+
+.s3-box form {
+  margin-left: 130px;
+}
+
+.s3-box form p.note {
+  padding-left: 2px;
+}
+
+.s3-box form button {
+  margin-top: 9px;
+}

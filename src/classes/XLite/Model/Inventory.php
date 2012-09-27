@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Product inventory
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity
  * @Table  (name="inventory",
@@ -53,9 +49,7 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Inventory unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -66,9 +60,7 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Is inventory tracking enabled or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -77,9 +69,7 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Amount
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */
@@ -88,9 +78,7 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Is low limit notification enabled or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -99,9 +87,7 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Low limit amount
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */
@@ -110,9 +96,7 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Product (association)
      *
-     * @var   \XLite\Model\Product
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Product
      *
      * @OneToOne   (targetEntity="XLite\Model\Product", inversedBy="inventory")
      * @JoinColumn (name="id", referencedColumnName="product_id")
@@ -125,8 +109,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $amount Amount to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setAmount($amount)
     {
@@ -139,8 +121,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $amount Amount to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setLowLimitAmount($amount)
     {
@@ -153,8 +133,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $delta Amount delta
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function changeAmount($delta)
     {
@@ -167,8 +145,6 @@ class Inventory extends \XLite\Model\AEntity
      * Return product amount available to add to cart
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAvailableAmount()
     {
@@ -179,8 +155,6 @@ class Inventory extends \XLite\Model\AEntity
      * Get low available amount
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLowAvailableAmount()
     {
@@ -193,8 +167,6 @@ class Inventory extends \XLite\Model\AEntity
      * Alias: is product in stock or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isOutOfStock()
     {
@@ -205,8 +177,6 @@ class Inventory extends \XLite\Model\AEntity
      * Check if product amount is less than its low limit
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLowLimitReached()
     {
@@ -217,8 +187,6 @@ class Inventory extends \XLite\Model\AEntity
      * Perform some actions before inventory saved
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PreUpdate
      */
@@ -236,8 +204,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $amount Value to check
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function correctAmount($amount)
     {
@@ -248,8 +214,6 @@ class Inventory extends \XLite\Model\AEntity
      * Get list of cart items containing current product
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLockedItems()
     {
@@ -262,8 +226,6 @@ class Inventory extends \XLite\Model\AEntity
      * Return "locked" amount: items already added to the cart
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLockedAmount()
     {
@@ -274,8 +236,6 @@ class Inventory extends \XLite\Model\AEntity
      * Get a low default amount
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLowDefaultAmount()
     {
@@ -286,8 +246,6 @@ class Inventory extends \XLite\Model\AEntity
      * Default qty value to show to customers
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAmount()
     {
@@ -298,8 +256,6 @@ class Inventory extends \XLite\Model\AEntity
      * Send notification to admin about product low limit
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sendLowLimitNotification()
     {

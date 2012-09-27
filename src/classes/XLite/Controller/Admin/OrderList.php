@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Orders list controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderList extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * Check ACL permissions
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function checkACL()
     {
@@ -51,13 +45,13 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
         return 'Search for orders';
     }
+
+    // {{{ Search
 
     /**
      * getDateValue
@@ -67,8 +61,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @param boolean $isEndDate End date flag OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDateValue($fieldName, $isEndDate = false)
     {
@@ -104,8 +96,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @param string $paramName Parameter name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCondition($paramName)
     {
@@ -122,8 +112,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @param boolean $start Start date flag, otherwise - end date  OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDateCondition($start = true)
     {
@@ -134,40 +122,66 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionUpdate
+     * Common prefix for editable elements in lists
      *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
+     * NOTE: this method is requered for the GetWidget and AAdmin classes
+     * TODO: after the multiple inheritance should be moved to the AAdmin class
+     *
+     * @return string
      */
-    protected function doActionUpdate()
+    public function getPrefixPostedData()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateInBatchById($this->getPostedData());
+        return 'data';
     }
 
     /**
-     * doActionDelete
+     * Get search conditions
+     *
+     * @return array
+     */
+    protected function getConditions()
+    {
+        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Model\Order\Admin\Search::getSessionCellName()};
+
+        if (!is_array($searchParams)) {
+
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
+
+    // }}}
+
+    // {{{ Actions
+
+    /**
+     * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function doActionDelete()
+    protected function doActionUpdate()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getSelected());
+        $changes = $this->getOrdersChanges();
+
+        $list = new \XLite\View\ItemsList\Model\Order\Admin\Search();
+        $list->processQuick();
+
+        foreach ($changes as $orderId => $change) {
+
+            \XLite\Core\OrderHistory::getInstance()->registerOrderChanges($orderId, $change);
+        }
     }
 
     /**
      * doActionSearch
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSearch()
     {
         $ordersSearch = array();
-        $searchParams   = \XLite\View\ItemsList\Order\Admin\Search::getSearchParams();
+        $searchParams   = \XLite\View\ItemsList\Model\Order\Admin\Search::getSearchParams();
 
         // Prepare dates
 
@@ -197,27 +211,37 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
-
-        $this->setReturnURL($this->buildURL('order_list', '', array('mode' => 'search')));
+        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Model\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
     }
 
     /**
-     * Get search conditions
+     * Get order changes from request
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function getConditions()
+    protected function getOrdersChanges()
     {
-        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()};
+        $changes = array();
 
-        if (!is_array($searchParams)) {
+        foreach ($this->getPostedData() as $orderId => $data) {
 
-            $searchParams = array();
+            $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
+
+            foreach ($data as $name => $value) {
+                $dataFromOrder = $order->{'get' . ucfirst($name)}();
+
+                if ($dataFromOrder !== $value) {
+
+                    $changes[$orderId][$name] = array(
+                        'old' => $dataFromOrder,
+                        'new' => $value,
+                    );
+                }
+            }
         }
 
-        return $searchParams;
+        return $changes;
     }
+
+    // }}}
 }

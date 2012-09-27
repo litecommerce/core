@@ -3,10 +3,9 @@
 # Minimum data dump
 #
 # @author    Creative Development LLC <info@cdev.ru>
-# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
-# @since     3.0.0
 
 XLite\Model\Config:
   directives: { insert: true }
@@ -20,6 +19,8 @@ XLite\Model\Config:
   - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City }] }
   - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code' }] }
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
+  - { name: aggregate_css, category: Performance, type: checkbox, orderby: 20, value: Y, translations: [{ code: en, option_name: 'Aggregate CSS files' }] }
+  - { name: aggregate_js, category: Performance, type: checkbox, orderby: 30, value: Y, translations: [{ code: en, option_name: 'Aggregate JS files' }] }
   - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts }] }
@@ -27,10 +28,11 @@ XLite\Model\Config:
   - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity }] }
   - { name: company_name, category: Company, type: text, orderby: 360, translations: [{ code: en, option_name: 'Company name' }] }
   - { name: company_website, category: Company, type: 'XLite\View\FormField\Input\Text\URL', orderby: 370, translations: [{ code: en, option_name: 'Company website' }] }
+  - { name: terms_url, category: Company, type: text, orderby: 380, value: 'cart.php?target=terms', translations: [{ code: en, option_name: 'Terms and conditions relative URL' }] }
   - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings' }] }
   - { name: customer_security, category: Security, type: checkbox, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
   - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format' }] }
-  - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator' }] }
+  - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Decimal separator for float values' }] }
   - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form' }] }
   - { name: default_language, category: General, orderby: 330, value: en }
   - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals' }] }
@@ -62,9 +64,10 @@ XLite\Model\Config:
   - { name: products_per_page_admin, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 410, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per page' }] }
   - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy' }] }
   - { name: recent_orders, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list' }] }
-  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product' }] }
-  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily' }] }
-  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
+  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to the cart page after a product is added to cart' }] }
+  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Close the shop temporarily' }] }
+  - { name: shop_currency, category: General, type: '', orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
+  - { name: trailing_zeroes, category: General, type: '', orderby: 605, value: 0, translations: [{ code: en, option_name: 'Hide trailing zeros in fractional part' }] }
   - { name: site_administrator, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail' }] }
   - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password }] }
   - { name: smtp_security, category: Email, type: 'XLite\View\FormField\Select\SMTPSecurity', orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection' }] }
@@ -75,7 +78,7 @@ XLite\Model\Config:
   - { name: start_year, category: Company, type: 'XLite\View\FormField\Input\Text\PastYear', orderby: 380, value: 2012, translations: [{ code: en, option_name: 'Year when store started its operation' }] }
   - { name: subcategories_look, category: General, type: 'XLite\View\FormField\Select\SubcategoriesLook', orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format' }] }
   - { name: support_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail' }] }
-  - { name: thousand_delim, category: General, type: 'XLite\View\FormField\Select\ThousandDelimiter', orderby: 640, translations: [{ code: en, option_name: 'Currency thousands separator' }] }
+  - { name: thousand_delim, category: General, type: 'XLite\View\FormField\Select\ThousandDelimiter', orderby: 640, translations: [{ code: en, option_name: 'Thousands separator for float values' }] }
   - { name: time_format, category: General, type: 'XLite\View\FormField\Select\TimeFormat', orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format' }] }
   - { name: time_zone, category: General, type: 'XLite\View\FormField\Select\TimeZone', orderby: 680, translations: [{ code: en, option_name: 'Time zone' }] }
   - { name: unit_presentation, category: General, type: separator, orderby: 600, translations: [{ code: en, option_name: 'Units of measurement' }] }
@@ -308,6 +311,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Add new label', translations: [{ code: en, label: 'Add new label' }] }
   - { name: 'Add language', translations: [{ code: en, label: 'Add language' }] }
   - { name: 'N items total', translations: [{ code: en, label: '{{n}} items total' }] }
+  - { name: 'N it.', translations: [{ code: en, label: '{{count}} it.' }] }
   - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
   - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
   - { name: Save, translations: [{ code: en, label: Save }] }
@@ -354,7 +358,7 @@ XLite\Model\LanguageLabel:
   - { name: '_X items_ in bag', translations: [{ code: en, label: '<a href="#">{{count}} items</a> in bag' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user name is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
-  - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms & Conditions</a>' }] }
+  - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}" target="_blank">Terms & Conditions</a>' }] }
   - { name: 'Place order X', translations: [{ code: en, label: 'Place order: {{total}}' }] }
   - { name: 'Enter a correct email', translations: [{ code: en, label: 'Enter a correct email' }] }
   - { name: 'Enter an integer', translations: [{ code: en, label: 'Enter an integer' }] }
@@ -425,8 +429,8 @@ XLite\Model\LanguageLabel:
   - { name: 'X minutes', translations: [{ code: en, label: '{{minutes}} minute(s)' }] }
   - { name: 'X seconds', translations: [{ code: en, label: '{{seconds}} second(s)' }] }
   - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
-  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: en, label: 'To get the format of the import data you can <a href="{{url}}">export your products</a> to a file and then review the format of that file.' }] }
-  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Depending on the size of your data file, importing may take some time.' }] }
+  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: en, label: 'To find out the data format for import, you can create a sample data file <a href="{{url}}">by exporting your existing products</a>. Then you can prepare the file for import using the same format.' }] }
+  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Note that data import time will strongly depend on the size of the file being imported.' }] }
   - { name: 'Occurred X add product events and Y update product events', translations: [{ code: en, label: 'Occurred {{new}} add product events and {{old}} update product events.' }] }
   - { name: 'Occurred X add product events', translations: [{ code: en, label: 'Occurred {{new}} add product events.' }] }
   - { name: 'Occurred Y update product events', translations: [{ code: en, label: 'Occurred {{old}} update product events.' }] }
@@ -465,13 +469,27 @@ XLite\Model\LanguageLabel:
   - { name: 'X entities has been removed', translations: [{ code: en, label: '{{count}} entities has been removed' }] }
   - { name: 'X entities has been created', translations: [{ code: en, label: '{{count}} entities has been created' }] }
   - { name: 'Select a country or a state from a list, specify the zone', translations: [{ code: en, label: 'Select a country or a state from a list, specify the zone where the country or state should be listed and click on the "Apply" button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.' }] }
-  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: en, label: 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.' }] }
+  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: en, label: 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back up such images you need to download them directly from the server.' }] }
   - { name: 'You can choose if to download your database data', translations: [{ code: en, label: 'You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the "Download SQL file" button or to save database data to a file on the web server ("var/backup/sqldump.sql.php") by clicking on the "Create SQL file" button#)}.<br />If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the "Delete SQL file" button.' }] }
   - { name: 'Dear X', translations: [{ code: en, label: 'Dear {{firstname}} {{lastname}}!' }] }
   - { name: 'Thank you for your order FOOTER', translations: [{ code: en, label: 'Thank you for your order made with our shopping system.<br />Please come back soon!' }] }
   - { name: 'Your order has failed', translations: [{ code: en, label: 'Your order #{{id}} has failed or been declined by the shop administration.' }] }
   - { name: 'Your order has been processed', translations: [{ code: en, label: 'Your order #{{id}} has been processed.' }] }
   - { name: 'percent X off', translations: [{ code: en, label: '{{percent}}% off' }] }
+  - { name: 'Placed on X by Y', translations: [{ code: en, label: 'Placed on <span class="date">{{date}}</span> by <span class="name">{{name}}</span>' }] }
+  - { name: 'Placed on X by Y link', translations: [{ code: en, label: 'Placed on <span class="date">{{date}}</span> by <a href="{{url}}" class="name">{{name}}</a>' }] }
+  - { name: 'Order Total X', translations: [{ code: en, label: 'Order Total: <span>{{total}}</span>' }] }
+  - { name: 'Payment was not finished', translations: [{ code: en, label: 'Oops! Our payment system have not informed us whether your last order is paid, or not. Is there a payment form that you have not completed yet? If so, please complete and submit it. Or you can quickly <a href="{{url}}">re-order products</a> from your last incomplete order.' }] }
+  - { name: 'Payment transaction X issued', translations: [{ code: en, label: 'Payment transaction [method: {{trx_method}}, type: {{trx_type}}, amount: {{trx_value}}, status: {{trx_status}}]' }] }
+  - { name: 'Backend payment transaction X issued', translations: [{ code: en, label: 'Backend payment transaction [method: {{trx_method}}, type: {{trx_type}}, amount: {{trx_value}}, status: {{trx_status}}]' }] }
+  - { name: 'Your account email is X.', translations: [{ code: en, label: 'Your account email is {{email}}.' }] }
+  - { name: 'Your account password is X.', translations: [{ code: en, label: 'Your account password is {{password}}.' }] }
+  - { name: 'Payment methods appearance description', translations: [{ code: en, label: 'Here you can define how your payment methods will look in customer area.<br />Here are shown only the methods enabled on the configuration page.' }] }
+  - { name: 'Watch this short video and learn the basics of how online payment processing works', translations: [{ code: en, label: "Watch this short video and learn the basics of how online payment processing works. You'll also find out what to look for when selecting the best payment processing solution for your business." }] }
+  - { name: 'X methods available', translations: [{ code: en, label: '{{count}} methods available' }] }
+  - { name: 'Payment method has been enabled successfully', translations: [{ code: en, label: 'Payment method has been enabled successfully' }] }
+  - { name: 'Payment method has been disabled successfully', translations: [{ code: en, label: 'Payment method has been disabled successfully' }] }
+  - { name: 'Payment method has been removed successfully', translations: [{ code: en, label: 'Payment method has been removed successfully' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -662,12 +680,12 @@ XLite\Model\Language:
   - { code: zu, code3: zul, translations: [{ code: en, name: Zulu }] }
 XLite\Model\Payment\Method:
   directives: { insert: true }
-  - { service_name: PurchaseOrder, class: 'Model\Payment\Processor\PurchaseOrder', orderby: 20, translations: [{ code: en, name: 'Purchase Order' }] }
-  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
-  - { service_name: FaxOrdering, class: 'Model\Payment\Processor\Offline', orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
-  - { service_name: MoneyOrdering, class: 'Model\Payment\Processor\Offline', orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
-  - { service_name: Echeck, class: 'Model\Payment\Processor\Check', orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
-  - { service_name: COD, class: 'Model\Payment\Processor\Offline', orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
+  - { service_name: PurchaseOrder, class: 'Model\Payment\Processor\PurchaseOrder', added: true, orderby: 20, translations: [{ code: en, name: 'Purchase Order' }] }
+  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
+  - { service_name: FaxOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
+  - { service_name: MoneyOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
+  - { service_name: Echeck, class: 'Model\Payment\Processor\Check', added: true, orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
+  - { service_name: COD, class: 'Model\Payment\Processor\Offline', added: true, orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
 XLite\Model\Country:
   - { country: Afghanistan,         id: 4,   code3: AFG, code: AF, currency: { currency_id: 971 } }
   - { country: Åland Islands,       id: 248, code3: ALA, code: AX, currency: { currency_id: 978 } }

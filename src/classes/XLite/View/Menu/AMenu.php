@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Menu;
@@ -30,17 +28,13 @@ namespace XLite\View\Menu;
 /**
  * Abstract menu
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AMenu extends \XLite\View\AView
 {
     /**
      * Items
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $items;
 
@@ -49,8 +43,6 @@ abstract class AMenu extends \XLite\View\AView
      * Define menu items
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function defineItems();
 
@@ -59,8 +51,6 @@ abstract class AMenu extends \XLite\View\AView
      * Get menu items
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItems()
     {
@@ -81,8 +71,6 @@ abstract class AMenu extends \XLite\View\AView
      * @param array $item Menu item
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isActiveItem(array $item)
     {
@@ -95,8 +83,6 @@ abstract class AMenu extends \XLite\View\AView
      * @param integer $i Item index
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function displayItemClass($i)
     {
@@ -117,8 +103,6 @@ abstract class AMenu extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

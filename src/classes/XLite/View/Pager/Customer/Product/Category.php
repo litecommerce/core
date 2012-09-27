@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Customer\Product;
@@ -30,8 +28,6 @@ namespace XLite\View\Pager\Customer\Product;
 /**
  * Pager for the category products page
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Category extends \XLite\View\Pager\Customer\Product\AProduct
 {
@@ -46,8 +42,6 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      * Return current category model object
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategory()
     {
@@ -58,8 +52,6 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -76,8 +68,6 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -93,8 +83,6 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      * @param integer $count Number of items per page
      *
      * @return array|\Doctrine\ORM\PersistentCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDataFrame($start, $count)
     {

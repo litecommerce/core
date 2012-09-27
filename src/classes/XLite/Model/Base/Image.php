@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Base;
@@ -30,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Image abstract store
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  * @HasLifecycleCallbacks
@@ -40,10 +36,8 @@ abstract class Image extends \XLite\Model\Base\Storage
 {
     /**
      * MIME type to extenstion translation table
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.10
+     *
+     * @var array
      */
     protected static $types = array(
         'image/jpeg' => 'jpeg',
@@ -60,9 +54,7 @@ abstract class Image extends \XLite\Model\Base\Storage
     /**
      * Width
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -71,9 +63,7 @@ abstract class Image extends \XLite\Model\Base\Storage
     /**
      * Height
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -82,11 +72,9 @@ abstract class Image extends \XLite\Model\Base\Storage
     /**
      * Image hash
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="fixedstring", length="32", nullable=true)
+     * @Column (type="fixedstring", length=32, nullable=true)
      */
     protected $hash;
 
@@ -94,8 +82,6 @@ abstract class Image extends \XLite\Model\Base\Storage
      * Get image URL for customer front-end
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFrontURL()
     {
@@ -103,52 +89,9 @@ abstract class Image extends \XLite\Model\Base\Storage
     }
 
     /**
-     * Get resized image URL
-     *
-     * @param integer $width  Width limit OPTIONAL
-     * @param integer $height Height limit OPTIONAL
-     *
-     * @return array (new width + new height + URL)
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getResizedURL($width = null, $height = null)
-    {
-        $size = ($width ?: 'x') . '.' . ($height ?: 'x');
-        $name = $this->getId() . '.' . $this->getExtension();
-        $path = $this->getRepository()->getFileSystemCacheRoot($size) . $name;
-
-        $url = \XLite::getInstance()->getShopURL(
-            $this->getRepository()->getWebCacheRoot($size) . '/' . $name,
-            \XLite\Core\Request::getInstance()->isHTTPS()
-        );
-
-        if (\Includes\Utils\FileManager::isFile($path) && $this->getDate() < filemtime($path)) {
-            list($newWidth, $newHeight) = \XLite\Core\ImageOperator::getCroppedDimensions(
-                $this->getWidth(),
-                $this->getHeight(),
-                $width,
-                $height
-            );
-
-        } else {
-            $operator = new \XLite\Core\ImageOperator($this);
-            list($newWidth, $newHeight, $result) = $operator->resizeDown($width, $height);
-
-            if (false === $result || !\Includes\Utils\FileManager::write($path, $operator->getImage())) {
-                $url = $this->getURL();
-            }
-        }
-
-        return array($newWidth, $newHeight, $url);
-    }
-
-    /**
      * Check - image hash is equal data from DB or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkImageHash()
     {
@@ -174,8 +117,6 @@ abstract class Image extends \XLite\Model\Base\Storage
      * TODO - remove - old method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isExists()
     {
@@ -186,8 +127,6 @@ abstract class Image extends \XLite\Model\Base\Storage
      * Update file path - change file extension taken from MIME information.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     protected function updatePathByMIME()
     {
@@ -216,8 +155,6 @@ abstract class Image extends \XLite\Model\Base\Storage
      * @param string $path Path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     protected function renewByPath($path)
     {
@@ -243,4 +180,104 @@ abstract class Image extends \XLite\Model\Base\Storage
 
         return $result;
     }
+
+    // {{{ Resized icons
+
+    /**
+     * Get resized image URL
+     *
+     * @param integer $width  Width limit OPTIONAL
+     * @param integer $height Height limit OPTIONAL
+     *
+     * @return array (new width + new height + URL)
+     */
+    public function getResizedURL($width = null, $height = null)
+    {
+        $size = ($width ?: 'x') . '.' . ($height ?: 'x');
+        $name = $this->getId() . '.' . $this->getExtension();
+        $path = $this->getResizedPath($size, $name);
+
+        $url = $this->getResizedPublicURL($size, $name);
+
+        list($newWidth, $newHeight) = \XLite\Core\ImageOperator::getCroppedDimensions(
+            $this->getWidth(),
+            $this->getHeight(),
+            $width,
+            $height
+        );
+
+        if (!$this->isResizedIconAvailable($path)) {
+
+            $result = $this->resizeIcon($newWidth, $newHeight, $path);
+
+            if (!$result) {
+
+                $url = $this->getURL();
+            }
+        }
+
+        return array($newWidth, $newHeight, $url);
+    }
+
+    /**
+     * Get resized file system path
+     *
+     * @param string $size Size prefix
+     * @param string $name File name
+     *
+     * @return string
+     */
+    protected function getResizedPath($size, $name)
+    {
+        return $this->getRepository()->getFileSystemCacheRoot($size) . $name;
+    }
+
+    /**
+     * Get resized file public URL
+     *
+     * @param string $size Size prefix
+     * @param string $name File name
+     *
+     * @return string
+     */
+    protected function getResizedPublicURL($size, $name)
+    {
+        return \XLite::getInstance()->getShopURL(
+            $this->getRepository()->getWebCacheRoot($size) . '/' . $name,
+            \XLite\Core\Request::getInstance()->isHTTPS()
+        );
+    }
+
+    /**
+     * Check - resized icon is available or not
+     *
+     * @param string $path Resized image path
+     *
+     * @return boolean
+     */
+    protected function isResizedIconAvailable($path)
+    {
+        return \Includes\Utils\FileManager::isFile($path) && $this->getDate() < filemtime($path);
+    }
+
+    /**
+     * Resize icon
+     *
+     * @param integer $width  Destination width
+     * @param integer $height Destination height
+     * @param string  $path   Write path
+     *
+     * @return array
+     */
+    protected function resizeIcon($width, $height, $path)
+    {
+        $operator = new \XLite\Core\ImageOperator($this);
+        list($newWidth, $newHeight, $result) = $operator->resizeDown($width, $height);
+
+        return false !== $result && \Includes\Utils\FileManager::write($path, $operator->getImage())
+            ? array($newWidth, $newHeight)
+            : null;
+    }
+
+    // }}}
 }

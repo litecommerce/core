@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Module;
@@ -30,8 +28,6 @@ namespace XLite\View\ItemsList\Module;
 /**
  * Addons search and installation widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Install extends \XLite\View\ItemsList\Module\AModule
 {
@@ -60,8 +56,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -77,8 +71,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param array $params Widget params OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -91,8 +83,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -111,21 +101,21 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'modules_manager/common.css';
+        $list[] = 'modules_manager/css/common.css';
+
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager/enter_key/css/style.css';
+
         // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/css/style.css';
         $list[] = 'modules_manager/installation_type/css/style.css';
+
         // TODO must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
-        $list[] = $this->getDir() . '/style.css';
 
         return $list;
     }
@@ -134,8 +124,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Register JS files. TODO REWORK with Popup button widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -156,8 +144,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -169,8 +155,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Check if marketplace is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isMarketplaceAccessible()
     {
@@ -181,8 +165,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Check if phar extension is loaded
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     protected function isPHARAvailable()
     {
@@ -193,8 +175,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Auxiliary method to check visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisplayWithEmptyList()
     {
@@ -205,8 +185,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -217,8 +195,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -229,8 +205,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return dir which contains the page body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -241,8 +215,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * isHeaderVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isHeaderVisible()
     {
@@ -253,8 +225,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -277,8 +247,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -292,8 +260,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return list of dort options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortOptions()
     {
@@ -309,8 +275,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return list of price filter options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPriceFilterOptions()
     {
@@ -324,8 +288,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * getSortByModeDefault
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -336,8 +298,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * getSortOrder
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortOrder()
     {
@@ -348,8 +308,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -367,8 +325,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return warning message. Description of Marketplace unavailability
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     protected function getWarningMessage()
     {
@@ -385,8 +341,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isInstalled(\XLite\Model\Module $module)
     {
@@ -399,8 +353,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isFree(\XLite\Model\Module $module)
     {
@@ -413,8 +365,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPurchased(\XLite\Model\Module $module)
     {
@@ -427,8 +377,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasErrors(\XLite\Model\Module $module)
     {
@@ -441,8 +389,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function canEnable(\XLite\Model\Module $module)
     {
@@ -455,8 +401,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function canInstall(\XLite\Model\Module $module)
     {
@@ -469,8 +413,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function canPurchase(\XLite\Model\Module $module)
     {
@@ -483,8 +425,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function canAccess(\XLite\Model\Module $module)
     {
@@ -501,8 +441,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
     {
@@ -523,8 +461,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * :FIXME: is it really needed?
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPurchaseURL()
     {
@@ -546,8 +482,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Get return URL for Purchase operation
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getReturnURL()
     {

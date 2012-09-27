@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.6
  */
 
 namespace XLite\Module\CDev\Sale\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\Sale\View;
 /**
  * Sale selected popup button
  *
- * @see   ____class_see____
- * @since 1.0.6
  */
 class SaleSelectedButton extends \XLite\View\Button\APopupButton
 {
@@ -39,32 +35,11 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
         $list[] = 'modules/CDev/Sale/sale_selected_button/script.js';
-        // TODO: dynamic JS inclusion
-        $list[] = 'modules/CDev/Sale/sale_selected_dialog/script.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = 'modules/CDev/Sale/sale_selected_button/style.css';
-        // TODO: dynamic CSS inclusion
-        $list[] = 'modules/CDev/Sale/sale_selected_dialog/style.css';
 
         return $list;
     }
@@ -73,8 +48,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
@@ -88,8 +61,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      * Return default button label
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -100,11 +71,9 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {
-        return parent::getClass() . ' action sale-selected-button';
+        return parent::getClass() . ' action link sale-selected-button';
     }
 }

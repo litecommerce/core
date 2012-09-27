@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\VAT\Logic\Order\Modifier;
@@ -30,26 +28,20 @@ namespace XLite\Module\CDev\VAT\Logic\Order\Modifier;
 /**
  * Tax  business logic
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Tax extends \XLite\Logic\Order\Modifier\ATax
 {
     /**
      * Modifier unique code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $code = 'CDEV.VAT';
 
     /**
      * Surcharge identification pattern
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $identificationPattern = '/^CDEV\.VAT\.(\d+)(?:\.[A-Z]+)?$/Ss';
 
@@ -58,8 +50,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Check - can apply this modifier or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function canApply()
     {
@@ -73,8 +63,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Calculate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function calculate()
     {
@@ -141,8 +129,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * @param \XLite\Model\Membership    $membership Membership OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     protected function getShippingTaxRates(\XLite\Model\Shipping\Rate $rate, array $zones, \XLite\Model\Membership $membership = null)
     {
@@ -173,8 +159,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get taxes 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTaxes()
     {
@@ -185,8 +169,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get taxable order items 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTaxableItems()
     {
@@ -206,8 +188,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get zones list 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getZonesList()
     {
@@ -226,8 +206,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get membership 
      * 
      * @return \XLite\Model\Membership
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMembership()
     {
@@ -240,8 +218,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get address for zone calculator
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAddress()
     {
@@ -281,8 +257,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * Get order-based address 
      * 
      * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrderAddress()
     {
@@ -301,8 +275,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
      *
      * @return \XLite\DataSet\Transport\Order\Surcharge
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
     {

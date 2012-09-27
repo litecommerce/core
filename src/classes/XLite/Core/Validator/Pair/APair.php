@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\Pair;
@@ -30,8 +28,6 @@ namespace XLite\Core\Validator\Pair;
 /**
  * Abstarct hash array pair validator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class APair extends \XLite\Core\Validator\AValidator
 {
@@ -44,9 +40,7 @@ abstract class APair extends \XLite\Core\Validator\AValidator
     /**
      * Validation mode
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $mode = self::STRICT;
 
@@ -56,11 +50,11 @@ abstract class APair extends \XLite\Core\Validator\AValidator
      * @param string $mode Validation mode OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct($mode = self::STRICT)
     {
+        parent::__construct();
+
         $this->mode = $mode;
     }
 }

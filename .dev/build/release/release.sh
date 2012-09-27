@@ -291,8 +291,6 @@ PHP='/usr/bin/env php -d date.timezone=Europe/Moscow'
 
 get_current_time 'START_TIME';
 
-echo -e "LiteCommerce distributives generator\n"
-
 # Read options
 while getopts "b:cd:f:lstuh" option; do
 	case $option in
@@ -329,7 +327,7 @@ if [ "x${CONFIG}" = "x" ]; then
 	CONFIG="${BASE_DIR}/config.sh"
 fi
 
-if [ -f $CONFIG ]; then
+if [ -f "$CONFIG" ]; then
 	. $CONFIG
 else
 	echo "Failed: Config file not found: ${CONFIG}";
@@ -341,15 +339,19 @@ if [ -f ${BASE_DIR}/config.local.sh ]; then
 	. ${BASE_DIR}/config.local.sh
 fi
 
+
+echo -e "$LITECOMMERCE_TITLE distributives generator\n"
+
+
 # Check parameters
 if [ "x${XLITE_VERSION}" = "x" ]; then
-	echo "Failed: LiteCommerce version is not specified";
+	echo "Failed: $LITECOMMERCE_TITLE version is not specified";
 	exit 2
 fi
 
 # Check parameters
 if [ "${GENERATE_CORE}" -a "x${CORE_VERSION}" = "x" ]; then
-	echo "Failed: LiteCommerce core version is not specified";
+	echo "Failed: $LITECOMMERCE_TITLE core version is not specified";
 	exit 2
 fi
 
@@ -357,7 +359,7 @@ fi
 if [ "x${LOCAL_REPO}" = "x" ]; then
 
 	if [ "x${XLITE_REPO}" = "x" ]; then
-		echo "Failed: LiteCommerce repository is not specified";
+		echo "Failed: $LITECOMMERCE_TITLE repository is not specified";
 		exit 2
 	fi
 
@@ -386,7 +388,7 @@ else
 fi
 
 if [ "x${XLITE_MODULES}" = "x" ]; then
-	echo "Failed: LiteCommerce modules is not specified";
+	echo "Failed: $LITECOMMERCE_TITLE modules is not specified";
 	exit 2
 fi
 
@@ -435,22 +437,34 @@ if [ "x${LOCAL_REPO}" = "x" ]; then
 	echo "*** MODE: REMOTE REPO"
 	echo "*** LC REPOSITORY: $XLITE_REPO"
 
-	if [ ! "${GENERATE_CORE}" ]; then
+	if [ ! "${GENERATE_CORE}" -a "${BUILD_DRUPAL_PACKAGE}" ]; then
 		echo "*** DRUPAL REPOSITORY: $DRUPAL_REPO"
 		echo "*** LC_CONNECTOR REPOSITORY: $LC_CONNECTOR_REPO"
 		echo "*** LC3_CLEAN REPOSITORY: $LC3_CLEAN_REPO"
 	fi
 
 else
+
 	echo "*** MODE: LOCAL REPO"
-	[ ! "${GENERATE_CORE}" ] && echo "*** DRUPAL LOCAL REPOSITORY: $DRUPAL_LOCAL_REPO"
+
+	if [ "${BUILD_DRUPAL_PACKAGE}" ]; then
+		[ ! "${GENERATE_CORE}" ] && echo "*** DRUPAL LOCAL REPOSITORY: $DRUPAL_LOCAL_REPO"
+	fi
 fi
 
-if [ ! "${GENERATE_CORE}" ]; then
+if [ ! "${GENERATE_CORE}" -a "${BUILD_DRUPAL_PACKAGE}" ]; then
 	[ "$LC_CONNECTOR_PACK" ] && echo "*** LC_CONNECTOR PACK: $LC_CONNECTOR_PACK"
 	[ "$LC_CONNECTOR_URL" ] && echo "*** LC_CONNECTOR URL: $LC_CONNECTOR_URL"
 	[ "$LC3_CLEAN_PACK" ] && echo "*** LC3_CLEAN PACK: $LC3_CLEAN_PACK"
 	[ "$LC3_CLEAN_URL" ] && echo "*** LC3_CLEAN URL: $LC3_CLEAN_URL"
+fi
+
+if [ "$REPLACE_HEADERS_SETTINGS" ]; then
+	echo "*** HEADERS REPLACE SETTINGS: $REPLACE_HEADERS_SETTINGS"
+fi
+
+if [ "$CHECK_HEADERS_SETTINGS" ]; then
+	echo "*** HEADERS CHECKING SETTINGS: $CHECK_HEADERS_SETTINGS"
 fi
 
 echo "*** OUTPUT_DIR: $OUTPUT_DIR"
@@ -485,10 +499,10 @@ if [ ! $SAFE_MODE ]; then
 	TMP_XLITE_REPO='_tmp_xlite_repo';
 
 	if [ "x${LOCAL_REPO}" = "x" ]; then
-		echo -n "Getting LiteCommerce core from GitHub...";
+		echo -n "Getting $LITECOMMERCE_TITLE core from GitHub...";
 		prepare_directory $TMP_XLITE_REPO $XLITE_REPO
 	else
-		echo -n "Getting LiteCommerce core from local git repository...";
+		echo -n "Getting $LITECOMMERCE_TITLE core from local git repository...";
 		prepare_directory $TMP_XLITE_REPO `realpath ${BASE_DIR}/../../../`
 	fi
 
@@ -500,17 +514,49 @@ if [ ! $SAFE_MODE ]; then
 	cd ..
 	echo " [ok]"
 
+	if [ "$REPLACE_HEADERS_SETTINGS" ]; then
+		echo -n "Replacing the headers..."
+		cd ${OUTPUT_DIR}/${TMP_XLITE_REPO}/.dev/build/release/
+		$PHP headers.php -s $REPLACE_HEADERS_SETTINGS > LOG.replace-headers
+		_ERR=`grep "ERROR" LOG.replace-headers`
+		if [ "${_ERR}" ]; then
+			echo "Error of replacing headers:"
+			echo
+			cat LOG.replace-headers
+			exit 2
+		fi
+		echo "OK"
+		rm -rf LOG.replace-headers
+	fi
+
+	if [ "$CHECK_HEADERS_SETTINGS" ]; then
+		echo -n "Checking the headers..."
+		cd ${OUTPUT_DIR}/${TMP_XLITE_REPO}/.dev/build/release/
+		$PHP headers.php -s $CHECK_HEADERS_SETTINGS > LOG.check-headers
+		_ERR=`grep "ERROR" LOG.check-headers`
+		if [ "${_ERR}" ]; then
+			echo "Error of checking headers:"
+			echo
+			cat LOG.check-headers
+			exit 2
+		fi
+		echo "OK"
+		rm -rf LOG.check-headers
+	fi
+
+	cd ${OUTPUT_DIR}
+
 	if [ -d ${TMP_XLITE_REPO}/src -a -d ${TMP_XLITE_REPO}/.dev ]; then
 		mv ${TMP_XLITE_REPO}/src ${LITECOMMERCE_DIRNAME}
 		mv ${TMP_XLITE_REPO}/.dev xlite_dev
 		rm -rf ${TMP_XLITE_REPO}
 	else
-		echo "Wrong LiteCommerce repository structure"
+		echo "Wrong $LITECOMMERCE_TITLE repository structure"
 		exit 2
 	fi
 
 
-	if [ ! "${GENERATE_CORE}" ]; then
+	if [ ! "${GENERATE_CORE}" -a "${BUILD_DRUPAL_PACKAGE}" ]; then
 
 		# Do Drupal checkout...
 
@@ -547,7 +593,7 @@ fi # / if [ ! $SAFE_MODE ]
 
 # Preparing distributives...
 
-[ "${GENERATE_CORE}" -o -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ] && _is_drupal_dir_exists=1
+[ "${GENERATE_CORE}" -o -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" -o !"${BUILD_DRUPAL_PACKAGE}" ] && _is_drupal_dir_exists=1
 
 if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ]; then
 
@@ -783,19 +829,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		chmod 400 .phar/.metadata.bin
 
-		# Create upgrade dir
-		if [ -d ${BASE_DIR}/../upgrades/core/$VERSION ]; then
-
-			mkdir -p .core-upgrades/$VERSION
-
-			cp ${CURRENT_DIR}/upgrades/core/$VERSION/* .core-upgrades/$VERSION/
-
-		else
-
-			echo "WARNING! Upgrades scripts not found!"
-
-		fi
-
 	fi
 
 	cd $OUTPUT_DIR
@@ -805,10 +838,10 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		# Do not create LC Standalone distributive when generate demo version
 		if [ "x${DEMO_VERSION}" = "x" ]; then
 
-			tar -czf litecommerce3-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
-			zip -rq litecommerce3-${VERSION}.zip ${LITECOMMERCE_DIRNAME}
+			tar -czf ${LITECOMMERCE_DISTR_NAME}-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
+			zip -rq ${LITECOMMERCE_DISTR_NAME}-${VERSION}.zip ${LITECOMMERCE_DIRNAME}
 
-			echo -e "\n  + LiteCommerce $VERSION distributive is completed"
+			echo -e "\n  + $LITECOMMERCE_TITLE $VERSION distributive is completed"
 
 		fi
 
@@ -816,19 +849,19 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		# Generate core package
 		cd ${LITECOMMERCE_DIRNAME}
-		tar -czf ${OUTPUT_DIR}/lc-core-${CORE_VERSION}.tar.gz * .phar
+		tar -czf ${OUTPUT_DIR}/${LITECOMMERCE_CORE_DISTR_NAME}-${CORE_VERSION}.tar.gz * .phar
 		cd $OUTPUT_DIR
 
 		rm -rf ${LITECOMMERCE_DIRNAME}
 
-		echo -e "\n  + LiteCommerce $CORE_VERSION upgrade pack is completed\n"
+		echo -e "\n  + $LITECOMMERCE_TITLE $CORE_VERSION upgrade pack is completed\n"
 	fi
 
 	#
 	# LiteCommerce+Drupal distributive generating...
 	#
 
-	if [ ! "${GENERATE_CORE}" ]; then
+	if [ ! "${GENERATE_CORE}" -a "${BUILD_DRUPAL_PACKAGE}" ]; then
 
 		cd "${OUTPUT_DIR}/${DRUPAL_DIRNAME}"
 
@@ -879,27 +912,29 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		# Do not create some distributives when generate demo version
 		if [ "x${DEMO_VERSION}" = "x" ]; then
 
-			# Pack LC Connector module distributive
-			cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
-			tar -czf ${OUTPUT_DIR}/lc_connector-${LC_CONNECTOR_VERSION}.tgz lc_connector
-			zip -rq ${OUTPUT_DIR}/lc_connector-${LC_CONNECTOR_VERSION}.zip lc_connector
+			if [ "${PACK_DRUPAL_MODULES}" ]; then
+
+				# Pack LC Connector module distributive
+				cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
+				tar -czf ${OUTPUT_DIR}/lc_connector-${LC_CONNECTOR_VERSION}.tgz lc_connector
+				zip -rq ${OUTPUT_DIR}/lc_connector-${LC_CONNECTOR_VERSION}.zip lc_connector
 
 
-			echo "  + LC Connector v.$VERSION module for Drupal is completed"
+				echo "  + LC Connector v.$VERSION module for Drupal is completed"
 
-			# Pack Bettercrumbs module distributive
-			#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
-			#tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
+				# Pack Bettercrumbs module distributive
+				#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
+				#tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
 
-			#echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
+				#echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
 
-			# Pack LCCMS theme
-			cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes
-			tar -czf ${OUTPUT_DIR}/lc3_clean_theme-${LC3_CLEAN_VERSION}.tgz lc3_clean
-			zip -rq ${OUTPUT_DIR}/lc3_clean_theme-${LC3_CLEAN_VERSION}.zip lc3_clean
+				# Pack LCCMS theme
+				cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes
+				tar -czf ${OUTPUT_DIR}/lc3_clean_theme-${LC3_CLEAN_VERSION}.tgz lc3_clean
+				zip -rq ${OUTPUT_DIR}/lc3_clean_theme-${LC3_CLEAN_VERSION}.zip lc3_clean
 
-
-			echo "  + LC3 v.$VERSION theme for Drupal is completed"
+				echo "  + LC3 v.$VERSION theme for Drupal is completed"
+			fi
 
 		else
 
@@ -930,14 +965,18 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 
 		# Move LiteCommerce into LC Connector module directory
-		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} .
+		if [ "$DEMO_VERSION" = "2" ]; then
+			LCDIRNAME_WITHIN_DRUPAL="demo"
+		else
+			LCDIRNAME_WITHIN_DRUPAL="litecommerce"
+		fi
 
-		cd ${LITECOMMERCE_DIRNAME}
+		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} $LCDIRNAME_WITHIN_DRUPAL
 
 		if [ "${TEST_MODE}" = "" -a "${DEMO_VERSION}" = "" ]; then
 			# Add DrupalConnector module
+			cd $LCDIRNAME_WITHIN_DRUPAL 
 			tar -xf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
-			rm ${OUTPUT_DIR}/_drupal-connector-tmp.tar
 		fi
 
 		cd $OUTPUT_DIR
@@ -951,19 +990,27 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 	fi # / if [ ! "${GENERATE_CORE}" ]
 
-	# Remove obsolete directories
+else # / if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ]
+
+	ERROR_OF_BUILDING='Y'
+	echo "Failed: $LITECOMMERCE_TITLE or Drupal repositories have not been checkouted yet"
+
+fi
+
+
+if [ !"${ERROR_OF_BUILDING}" ]; then
+
+	# Remove obsolete directories and files
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 	rm -rf ${OUTPUT_DIR}/tmp
 	rm -rf ${OUTPUT_DIR}/drupal_dev
 	rm -rf ${OUTPUT_DIR}/xlite_dev
 	rm -rf ${OUTPUT_DIR}/modules2remove
+	rm -rf ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}
+	rm -rf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
 
 	echo "Output directory contains (${OUTPUT_DIR}):"
 	ls -al
-
-else # / if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ]
-
-	echo "Failed: LiteCommerce or Drupal repositories have not been checkouted yet"
 
 fi
 

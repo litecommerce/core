@@ -4,10 +4,9 @@
  * Featured products management template
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 {if:featuredProductsList}
@@ -25,7 +24,7 @@
         <td align="center"><input type="checkbox" name="delete[{featuredProduct.id}]" /></td>
         <td align="center"><input type="text" size="4" name="orderbys[{featuredProduct.id}]" value="{featuredProduct.order_by}" /></td>
         <td class="table-label">
-          <a href="{buildUrl(#product#,##,_ARRAY_(#id#^featuredProduct.product.product_id))}">{featuredProduct.product.name:h}</a>
+          <a href="{buildUrl(#product#,##,_ARRAY_(#product_id#^featuredProduct.product.product_id))}">{featuredProduct.product.name:h}</a>
           <span IF="{!featuredProduct.product.enabled}" color="red">&nbsp;&nbsp;&nbsp;({t(#not available for sale#)})</span>
         </td>
       </tr>

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Controller main widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Controller extends \XLite\View\AView
 {
@@ -40,9 +36,7 @@ class Controller extends \XLite\View\AView
      * NOTE: this is a text, so it's not passed by reference; do not wrap it into a getter (or pass by reference)
      * NOTE: until it's not accessing via the function, do not change its access modifier
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     public static $bodyContent = null;
 
@@ -51,8 +45,6 @@ class Controller extends \XLite\View\AView
      * Send headers
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function sendHeaders()
     {
@@ -72,8 +64,6 @@ class Controller extends \XLite\View\AView
      * @param string $contentTemplate Central area template OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $params = array(), $contentTemplate = null)
     {
@@ -88,8 +78,6 @@ class Controller extends \XLite\View\AView
      * @param string $template Template file name OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function display($template = null)
     {
@@ -108,8 +96,6 @@ class Controller extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -120,8 +106,6 @@ class Controller extends \XLite\View\AView
      * Check - current request is AJAX background request for page center or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isAJAXCenterRequest()
     {
@@ -132,8 +116,6 @@ class Controller extends \XLite\View\AView
      * Get body classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBodyClasses()
     {
@@ -144,8 +126,6 @@ class Controller extends \XLite\View\AView
      * Define body classes list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineBodyClasses()
     {
@@ -163,7 +143,7 @@ class Controller extends \XLite\View\AView
         $second = $this->isSidebarSecondVisible();
 
         if ($first && $second) {
-            $classes[] = 'two-sidebar';
+            $classes[] = 'two-sidebars';
 
         } elseif ($first || $second) {
             $classes[] = 'one-sidebar';
@@ -187,8 +167,6 @@ class Controller extends \XLite\View\AView
      * Chewck - first sidebar is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSidebarFirstVisible()
     {
@@ -199,8 +177,6 @@ class Controller extends \XLite\View\AView
      * Check - second sidebar is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSidebarSecondVisible()
     {
@@ -211,8 +187,6 @@ class Controller extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -228,8 +202,6 @@ class Controller extends \XLite\View\AView
      * isSilent
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSilent()
     {
@@ -240,8 +212,6 @@ class Controller extends \XLite\View\AView
      * isDumpStarted
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDumpStarted()
     {
@@ -252,8 +222,6 @@ class Controller extends \XLite\View\AView
      * getContentWidget
      *
      * @return \XLite\View\AView
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getContentWidget()
     {
@@ -264,8 +232,6 @@ class Controller extends \XLite\View\AView
      * prepareContent
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareContent()
     {
@@ -277,8 +243,6 @@ class Controller extends \XLite\View\AView
      * Return FALSE if standalone display mode of LC is used.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function useDefaultDisplayMode()
     {
@@ -291,8 +255,6 @@ class Controller extends \XLite\View\AView
      * @param string $template Template file name OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function displayPage($template = null)
     {
@@ -315,8 +277,6 @@ class Controller extends \XLite\View\AView
      * refreshEnd
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function refreshEnd()
     {
@@ -327,8 +287,6 @@ class Controller extends \XLite\View\AView
      * Get body class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBodyClass()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * Stub controller to get widgets on non-LC pages
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Drupal extends \XLite\Controller\Customer\ACustomer
 {
@@ -39,8 +35,6 @@ class Drupal extends \XLite\Controller\Customer\ACustomer
      * Do not perform any action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {

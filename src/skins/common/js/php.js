@@ -406,3 +406,124 @@ function echo () {
         }*/
     }
 }
+
+function htmlspecialchars (string, quote_style, charset, double_encode) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Mirek Slugen
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   bugfixed by: Nathan
+    // +   bugfixed by: Arno
+    // +    revised by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +    bugfixed by: Brett Zamir (http://brett-zamir.me)
+    // +      input by: Ratheous
+    // +      input by: Mailfaker (http://www.weedem.fr/)
+    // +      reimplemented by: Brett Zamir (http://brett-zamir.me)
+    // +      input by: felix
+    // +    bugfixed by: Brett Zamir (http://brett-zamir.me)
+    // %        note 1: charset argument not supported
+    // *     example 1: htmlspecialchars("<a href='test'>Test</a>", 'ENT_QUOTES');
+    // *     returns 1: '&lt;a href=&#039;test&#039;&gt;Test&lt;/a&gt;'
+    // *     example 2: htmlspecialchars("ab\"c'd", ['ENT_NOQUOTES', 'ENT_QUOTES']);
+    // *     returns 2: 'ab"c&#039;d'
+    // *     example 3: htmlspecialchars("my "&entity;" is still here", null, null, false);
+    // *     returns 3: 'my &quot;&entity;&quot; is still here'
+    var optTemp = 0,
+        i = 0,
+        noquotes = false;
+    if (typeof quote_style === 'undefined' || quote_style === null) {
+        quote_style = 2;
+    }
+    string = string.toString();
+    if (double_encode !== false) { // Put this first to avoid double-encoding
+        string = string.replace(/&/g, '&amp;');
+    }
+    string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s/g, '&nbsp;');
+
+    var OPTS = {
+        'ENT_NOQUOTES': 0,
+        'ENT_HTML_QUOTE_SINGLE': 1,
+        'ENT_HTML_QUOTE_DOUBLE': 2,
+        'ENT_COMPAT': 2,
+        'ENT_QUOTES': 3,
+        'ENT_IGNORE': 4
+    };
+    if (quote_style === 0) {
+        noquotes = true;
+    }
+    if (typeof quote_style !== 'number') { // Allow for a single string or an array of string flags
+        quote_style = [].concat(quote_style);
+        for (i = 0; i < quote_style.length; i++) {
+            // Resolve string input to bitwise e.g. 'ENT_IGNORE' becomes 4
+            if (OPTS[quote_style[i]] === 0) {
+                noquotes = true;
+            }
+            else if (OPTS[quote_style[i]]) {
+                optTemp = optTemp | OPTS[quote_style[i]];
+            }
+        }
+        quote_style = optTemp;
+    }
+    if (quote_style & OPTS.ENT_HTML_QUOTE_SINGLE) {
+        string = string.replace(/'/g, '&#039;');
+    }
+    if (!noquotes) {
+        string = string.replace(/"/g, '&quot;');
+    }
+
+    return string;
+}
+
+function str_replace (search, replace, subject, count) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   improved by: Gabriel Paderni
+    // +   improved by: Philip Peterson
+    // +   improved by: Simon Willison (http://simonwillison.net)
+    // +    revised by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+    // +   bugfixed by: Anton Ongson
+    // +      input by: Onno Marsman
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +    tweaked by: Onno Marsman
+    // +      input by: Brett Zamir (http://brett-zamir.me)
+    // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   input by: Oleg Eremeev
+    // +   improved by: Brett Zamir (http://brett-zamir.me)
+    // +   bugfixed by: Oleg Eremeev
+    // %          note 1: The count parameter must be passed as a string in order
+    // %          note 1:  to find a global variable in which the result will be given
+    // *     example 1: str_replace(' ', '.', 'Kevin van Zonneveld');
+    // *     returns 1: 'Kevin.van.Zonneveld'
+    // *     example 2: str_replace(['{name}', 'l'], ['hello', 'm'], '{name}, lars');
+    // *     returns 2: 'hemmo, mars'
+    var i = 0,
+        j = 0,
+        temp = '',
+        repl = '',
+        sl = 0,
+        fl = 0,
+        f = [].concat(search),
+        r = [].concat(replace),
+        s = subject,
+        ra = Object.prototype.toString.call(r) === '[object Array]',
+        sa = Object.prototype.toString.call(s) === '[object Array]';
+    s = [].concat(s);
+    if (count) {
+        this.window[count] = 0;
+    }
+
+    for (i = 0, sl = s.length; i < sl; i++) {
+        if (s[i] === '') {
+            continue;
+        }
+        for (j = 0, fl = f.length; j < fl; j++) {
+            temp = s[i] + '';
+            repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0];
+            s[i] = (temp).split(f[j]).join(repl);
+            if (count && s[i] !== temp) {
+                this.window[count] += (temp.length - s[i].length) / f[j].length;
+            }
+        }
+    }
+    return sa ? s : s[0];
+}
+

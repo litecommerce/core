@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\QueryBuilder;
@@ -30,8 +28,6 @@ namespace XLite\Model\QueryBuilder;
 /**
  * Product query builder
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Model\QueryBuilder\AQueryBuilder
 {
@@ -39,9 +35,7 @@ class Product extends \XLite\Model\QueryBuilder\AQueryBuilder
     /**
      * Flag to define is inventory is already joined to prevent double joining (error)
      *
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var boolean
      */
     protected $hasJoinedInventory = false;
 
@@ -49,8 +43,6 @@ class Product extends \XLite\Model\QueryBuilder\AQueryBuilder
      * Join inventory procedure
      *
      * @return \XLite\Model\QueryBuilder\Product
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function innerJoinInventory()
     {
@@ -68,8 +60,6 @@ class Product extends \XLite\Model\QueryBuilder\AQueryBuilder
      * getResult
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getResult()
     {

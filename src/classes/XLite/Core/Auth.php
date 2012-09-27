@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Authorization routine
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Auth extends \XLite\Base
 {
@@ -49,11 +45,15 @@ class Auth extends \XLite\Base
     const SESSION_SECURE_HASH_CELL = 'secureHashCell';
 
     /**
+     * Default hash algorhitm
+     */
+    const DEFAULT_HASH_ALGO = 'SHA512';
+
+
+    /**
      * The list of session vars that must be cleared on logoff
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $sessionVarsToClear = array(
         'profile_id',
@@ -63,12 +63,9 @@ class Auth extends \XLite\Base
     /**
      * Profile (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var array
      */
     protected $profile;
-
 
     /**
      * Encrypts password (calculates MD5 hash)
@@ -76,10 +73,60 @@ class Auth extends \XLite\Base
      * @param string $password Password string to encrypt
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public static function encryptPassword($password)
+    public static function comparePassword($hash, $password)
+    {
+        $parts = explode(':', $hash, 2);
+        if (1 == count($parts)) {
+            $algo = 'MD5';
+
+        } else {
+            list($algo, $hash) = $parts;
+        }
+
+        return static::encryptPassword($password, $algo) == $algo . ':' . $hash;
+    }
+
+    /**
+     * Encrypts password (calculates MD5 hash)
+     *
+     * @param string $password Password string to encrypt
+     *
+     * @return string
+     */
+    public static function encryptPassword($password, $algo = self::DEFAULT_HASH_ALGO)
+    {
+        $method = 'encryptPassword' . $algo;
+        if (!method_exists(get_called_class(), $method)) {
+            $algo = static::DEFAULT_HASH_ALGO;
+            $method = 'encryptPassword' . $algo;
+        }
+
+        return $algo . ':' . static::$method($password);
+    }
+
+    /**
+     * Encrypts password (calculates SHA512 hash)
+     *
+     * @param string $password Password string to encrypt
+     *
+     * @return string
+     */
+    protected static function encryptPasswordSHA512($password)
+    {
+        return \XLite::getInstance()->getOptions(array('installer_details', 'shared_secret_key'))
+            ? hash_hmac('sha512', $password, strval(\XLite::getInstance()->getOptions(array('installer_details', 'shared_secret_key'))))
+            : hash('sha512', $password);
+    }
+
+    /**
+     * Encrypts password (calculates SHA512 hash)
+     *
+     * @param string $password Password string to encrypt
+     *
+     * @return string
+     */
+    protected static function encryptPasswordMD5($password)
     {
         return md5($password);
     }
@@ -91,8 +138,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile Profile object
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loginProfile(\XLite\Model\Profile $profile)
     {
@@ -133,8 +178,6 @@ class Auth extends \XLite\Base
      * @param string $name Session variable name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addSessionVarToClear($name)
     {
@@ -145,8 +188,6 @@ class Auth extends \XLite\Base
      * Returns the list of session vars that must be cleared on logoff
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSessionVarsToClear()
     {
@@ -161,8 +202,6 @@ class Auth extends \XLite\Base
      * @param string $secureHash Secret token OPTIONAL
      *
      * @return \XLite\Model\Profile|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function login($login, $password, $secureHash = null)
     {
@@ -171,15 +210,9 @@ class Auth extends \XLite\Base
         // Check for the valid parameters
         if (!empty($login) && !empty($password)) {
 
-            if (isset($secureHash)) {
-
-                if (!$this->checkSecureHash($secureHash)) {
-                    // TODO - potential attack; send the email to admin
-                    $this->doDie('Trying to log in using an invalid secure hash string.');
-                }
-
-            } else {
-                $password = self::encryptPassword($password);
+            if (isset($secureHash) && !$this->checkSecureHash($secureHash)) {
+                // TODO - potential attack; send the email to admin
+                $this->doDie('Trying to log in using an invalid secure hash string.');
             }
 
             // Initialize order Id
@@ -190,12 +223,21 @@ class Auth extends \XLite\Base
             // Try to get user profile
             $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword(
                 $login,
-                isset($secureHash) ? null : $password,
+                null,
                 $orderId
             );
 
+            if (isset($profile) && !isset($secureHash) && !static::comparePassword($profile->getPassword(), $password)) {
+                $profile = null;
+            }
+
             // Return profile object if it's ok
             if (isset($profile) && $this->loginProfile($profile)) {
+
+                if (!isset($secureHash) && $password && $profile->getPasswordAlgo() != static::DEFAULT_HASH_ALGO) {
+                    $profile->setPassword(static::encryptPassword($password));
+                }
+
                 $result = $profile;
 
                 $orderId = $orderId ?: \XLite\Core\Session::getInstance()->order_id;
@@ -216,8 +258,6 @@ class Auth extends \XLite\Base
      * Logs off the currently logged profile
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function logoff()
     {
@@ -234,8 +274,6 @@ class Auth extends \XLite\Base
      * Checks whether user is logged
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLogged()
     {
@@ -248,8 +286,6 @@ class Auth extends \XLite\Base
      * @param integer $profileId Profile Id OPTIONAL
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfile($profileId = null)
     {
@@ -276,13 +312,23 @@ class Auth extends \XLite\Base
     }
 
     /**
+     * Return membership of active profile
+     *
+     * @return integer|null
+     */
+    public function getMembershipId()
+    {
+        return $this->getProfile() && $this->getProfile()->getMembership()
+            ? $this->getProfile()->getMembership()->getMembershipId()
+            : null;
+    }
+
+    /**
      * Check if passed profile is currently logged in
      *
      * @param \XLite\Model\Profile $profile Profile to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkProfile(\XLite\Model\Profile $profile)
     {
@@ -295,8 +341,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile User profile OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAdmin(\XLite\Model\Profile $profile = null)
     {
@@ -313,8 +357,6 @@ class Auth extends \XLite\Base
      * @param string $type Profile type (see getUserTypes() for list of allowed values)
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevel($type)
     {
@@ -327,8 +369,6 @@ class Auth extends \XLite\Base
      * Gets the access level for administrator
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAdminAccessLevel()
     {
@@ -339,8 +379,6 @@ class Auth extends \XLite\Base
      * Gets the access level for a customer
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCustomerAccessLevel()
     {
@@ -351,8 +389,6 @@ class Auth extends \XLite\Base
      * Returns all user types configured for this system
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getUserTypes()
     {
@@ -366,8 +402,6 @@ class Auth extends \XLite\Base
      * Return list of all allowed access level values (by default - array(0, 100))
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAccessLevelsList()
     {
@@ -378,8 +412,6 @@ class Auth extends \XLite\Base
      * getUserTypesRaw
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getUserTypesRaw()
     {
@@ -393,8 +425,6 @@ class Auth extends \XLite\Base
      * @param string $hashString Hash string to save
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setSecureHash($hashString)
     {
@@ -406,8 +436,6 @@ class Auth extends \XLite\Base
      * Remind recent login from cookies
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function remindLogin()
     {
@@ -421,8 +449,6 @@ class Auth extends \XLite\Base
      * @param string $password Administrator user password
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function loginAdministrator($login, $password)
     {
@@ -451,8 +477,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Base $resource Resource
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAuthorized(\XLite\Base $resource)
     {
@@ -472,8 +496,6 @@ class Auth extends \XLite\Base
      * Reset default values for the "profile" property
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function resetProfileCache()
     {
@@ -488,8 +510,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile Profile to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkProfileAccessibility(\XLite\Model\Profile $profile)
     {
@@ -500,8 +520,6 @@ class Auth extends \XLite\Base
      * Clear some session variables on logout
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function clearSessionVars()
     {
@@ -517,8 +535,6 @@ class Auth extends \XLite\Base
      * @param string $hashString String to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkSecureHash($hashString)
     {
@@ -542,8 +558,6 @@ class Auth extends \XLite\Base
      * @param mixed $login User's login
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function rememberLogin($login)
     {
@@ -560,8 +574,6 @@ class Auth extends \XLite\Base
      * Get stored profiel id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStoredProfileId()
     {
@@ -572,8 +584,6 @@ class Auth extends \XLite\Base
      * Protected constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function __construct()
     {
@@ -586,18 +596,30 @@ class Auth extends \XLite\Base
 
     /**
      * Check - specified permission is allowed or not
-     * 
+     *
      * @param string $code Permission code
-     *  
+     *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function isPermissionAllowed($code)
     {
         $profile = $this->getProfile();
 
         return $profile && $profile->isPermissionAllowed($code);
+    }
+
+    /**
+     * Check - specified permission is allowed or not
+     *
+     * @param string|array $code Permission code(s)
+     *
+     * @return boolean
+     */
+    public function isPermissionAllowedOr($code)
+    {
+        $profile = $this->getProfile();
+
+        return $profile && call_user_func_array(array($profile, __METHOD__), func_get_args());
     }
 
     // }}}

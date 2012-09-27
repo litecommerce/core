@@ -1,0 +1,63 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+
+XLite\Model\Config:
+  - name: fb_title
+    category: CDev\SocialLogin
+    type: XLite\Module\CDev\SocialLogin\View\FormField\Instructions
+    orderby: 5
+    value: ''
+    translations:
+      - code: en
+        option_name: 'Facebook'
+        option_comment: 'To enable Facebook login on your store website, you first need to create a Facebook App for your website. To learn more about Facebook Apps, follow the link: <a href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a>.<br /> After the app has been created, complete the fields below.'
+
+  - name: fb_client_id
+    category: CDev\SocialLogin
+    type: text
+    orderby: 10
+    value: ''
+    translations:
+      - code: en
+        option_name: 'Facebook App ID/API Key'
+  - name: fb_client_secret
+    category: CDev\SocialLogin
+    type: text
+    orderby: 20
+    value: ''
+    translations:
+      - code: en
+        option_name: 'Facebook App Secret'
+
+  - name: gg_title
+    category: CDev\SocialLogin
+    type: XLite\Module\CDev\SocialLogin\View\FormField\Instructions
+    orderby: 25
+    value: ''
+    translations:
+      - code: en
+        option_name: 'Google'
+        option_comment: 'To enable Google login, you first need to create OAuth2 client ID for your site.<br /> Follow the instructions below: <br />1. Go to Google API console: <a href="https://code.google.com/apis/console#access">https://code.google.com/apis/console#access</a>. The first time you visit this address you will see a screen saying "Start using the Google APIs console to manage your API usage". Click "Create project...". <br />2. On the following screen, click "Create an OAuth2 client ID".  <br />3. Choose Web application type, enter your store URL and finish creating the Client ID.  <br />4. After the Client ID has been created, open its settings and use the "Authorized Redirect URIs" field to specify the redirect URI for your store as "{{WEB_LC_ROOT}}cart.php?target=social_login&action=login&auth_provider=google".  <br />5. The Google client ID and Google client secret can be found on the Client ID page. Enter them into the fields below.'
+
+  - name: gg_client_id
+    category: CDev\SocialLogin
+    type: text
+    orderby: 30
+    value: ''
+    translations:
+      - code: en
+        option_name: 'Google Client ID'
+  - name: gg_client_secret
+    category: CDev\SocialLogin
+    type: text
+    orderby: 40
+    value: ''
+    translations:
+      - code: en
+        option_name: 'Google Client secret'

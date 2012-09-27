@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Cart widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -41,8 +37,6 @@ class Cart extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -56,8 +50,6 @@ class Cart extends \XLite\View\Dialog
      * Get continue URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getContinueURL()
     {
@@ -78,8 +70,6 @@ class Cart extends \XLite\View\Dialog
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -93,8 +83,6 @@ class Cart extends \XLite\View\Dialog
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -108,8 +96,6 @@ class Cart extends \XLite\View\Dialog
      * Register files from common repository
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -123,8 +109,6 @@ class Cart extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -135,8 +119,6 @@ class Cart extends \XLite\View\Dialog
      * Return file name for body template
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBodyTemplate()
     {
@@ -149,8 +131,6 @@ class Cart extends \XLite\View\Dialog
      * Get surcharge totals 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getSurchargeTotals()
     {
@@ -164,8 +144,6 @@ class Cart extends \XLite\View\Dialog
      * @param array  $surcharge Surcharge
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getSurchargeClassName($type, array $surcharge)
     {
@@ -180,8 +158,6 @@ class Cart extends \XLite\View\Dialog
      * @param array $surcharge Surcharge
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function formatSurcharge(array $surcharge)
     {
@@ -194,8 +170,6 @@ class Cart extends \XLite\View\Dialog
      * @param string $type Surcharge type
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getExcludeSurchargesByType($type)
     {

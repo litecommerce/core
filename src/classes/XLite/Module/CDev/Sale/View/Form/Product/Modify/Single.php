@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Sale\View\Form\Product\Modify;
@@ -30,19 +28,15 @@ namespace XLite\Module\CDev\Sale\View\Form\Product\Modify;
 /**
  * Form class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Single extends \XLite\View\Form\Product\Modify\Single implements \XLite\Base\IDecorator
 {
     /**
      * Set validators pairs for products data
      *
-     * @param mixed $data Data
+     * @param mixed &$data Data
      *
-     * @return null
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return void
      */
     protected function setDataValidators(&$data)
     {

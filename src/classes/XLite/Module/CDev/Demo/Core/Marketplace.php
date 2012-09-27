@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Demo\Core;
@@ -30,23 +28,8 @@ namespace XLite\Module\CDev\Demo\Core;
 /**
  * Marketplace
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Marketplace extends \XLite\Core\Marketplace implements \XLite\Base\IDecorator
 {
-    /**
-     * Send request to marketplace endpoint and return the response
-     *
-     * @param string $action Name of the action
-     * @param array  $data   Custom data to send in request OPTIONAL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function sendRequestToMarketplace($action, array $data = array())
-    {
-        return null;
-    }
+    const TTL_LONG  = 604800; // 7 days
 }

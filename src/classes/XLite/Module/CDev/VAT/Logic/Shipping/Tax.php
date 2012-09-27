@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\VAT\Logic\Shipping;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\VAT\Logic\Shipping;
 /**
  * Tax business logic for shipping cost
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
 {
@@ -45,8 +41,6 @@ class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
      * @param float                      $price Price
      *  
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function calculateRateCost(\XLite\Model\Shipping\Rate $rate, $price)
     {
@@ -56,12 +50,10 @@ class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
     /**
      * Calculate shipping net price
      * 
-     * @param \XLite\Model\Product $rate  Rate
-     * @param float                $price Price
+     * @param \XLite\Model\Shipping\Rate $rate  Rate
+     * @param float                      $price Price
      *  
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function deductTaxFromPrice(\XLite\Model\Shipping\Rate $rate, $price)
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Order items list (short version)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderItemsShort extends \XLite\View\AView
 {
@@ -46,18 +42,14 @@ class OrderItemsShort extends \XLite\View\AView
     /**
      * Order items list maximunm length
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $orderItemsMax = 3;
 
     /**
      * Order (cache)
      *
-     * @var   \XLite\Model\Order
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order
      */
     protected $order = null;
 
@@ -66,8 +58,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Get order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrder()
     {
@@ -99,8 +89,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Get order id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrderId()
     {
@@ -111,8 +99,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Get order items
      *
      * @return array(\XLite\Model\OrderItem)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getItems()
     {
@@ -125,8 +111,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Check - link to full items list is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMoreLinkVisible()
     {
@@ -137,8 +121,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Get list to full items list class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMoreLinkClassName()
     {
@@ -149,8 +131,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -167,8 +147,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -179,8 +157,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -197,8 +173,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

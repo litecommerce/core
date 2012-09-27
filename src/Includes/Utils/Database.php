@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -30,28 +28,20 @@ namespace Includes\Utils;
 /**
  * Database
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Database extends \Includes\Utils\AUtils
 {
     /**
      * DB handler
      *
-     * @var    \PDO
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var \PDO
      */
     protected static $handler;
 
     /**
      * Database connection options
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected static $dbOptions;
 
@@ -59,9 +49,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Setter method for $dbOptions. Once tries to connect and return connection object
      *
      * @return \PDO
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function setDbOptions($options)
     {
@@ -74,9 +61,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Reset method for $this->dbOptions
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function resetDbOptions()
     {
@@ -89,9 +73,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * @param bool $fullList add or not the additional fields
      *
      * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getConnectionParams($fullList = false)
     {
@@ -124,9 +105,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Prepare MySQL connection string
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getConnectionString()
     {
@@ -137,9 +115,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Getter method for $this->dbOptions
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDbOptions($name = null)
     {
@@ -153,9 +128,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Return name of database user
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getUsername()
     {
@@ -166,9 +138,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Return password of database user
      *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getPassword()
     {
@@ -179,9 +148,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Return list of the \PDO connection options
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getConnectionFlags()
     {
@@ -196,9 +162,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Connect to database
      *
      * @return \PDO
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function connectToDb()
     {
@@ -214,9 +177,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Return \PDO database handler
      *
      * @return \PDO
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getHandler()
     {
@@ -234,9 +194,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * @param array  $params Query params
      *
      * @return \PDOStatement
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function executeStatement($sql, array $params = array())
     {
@@ -254,9 +211,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * @param integer $flags  \PDO fetch option
      *
      * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function fetchAll($sql, array $params = array(), $flags = \PDO::FETCH_ASSOC)
     {
@@ -270,9 +224,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * @param array  $params Query params
      *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function fetchColumn($sql, array $params = array())
     {
@@ -286,9 +237,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * @param array  $params Query params
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function execute($sql, array $params = array())
     {
@@ -302,9 +250,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * @param array  $params query params
      *
      * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function exec($sql)
     {
@@ -315,9 +260,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * Get the database version
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDbVersion()
     {
@@ -328,13 +270,11 @@ abstract class Database extends \Includes\Utils\AUtils
      * Checks InnoDB support
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function isInnoDBSupported()
     {
         $innodbFound = false;
-    
+
         $result = static::getHandler()->query('SHOW ENGINES');
 
         if ($result) {
@@ -360,8 +300,6 @@ abstract class Database extends \Includes\Utils\AUtils
      * @param boolean $verbose  Display uploading progress flag OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function uploadSQLFromFile($fileName, $verbose = false)
     {
@@ -442,5 +380,15 @@ abstract class Database extends \Includes\Utils\AUtils
         }
 
         return $result;
+    }
+
+    /**
+     * Return tables prefix in the DB
+     *
+     * @return string
+     */
+    public static function getTablesPrefix()
+    {
+        return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'table_prefix'));
     }
 }

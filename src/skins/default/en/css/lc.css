@@ -4,10 +4,9 @@
  * Litecomerce specific styles
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 /**
@@ -1427,6 +1426,24 @@ table.list-body-list td
 }
 
 /**
+ * Separator of Checkout buttons (- OR -)
+ */
+.buttons-separator {
+  padding-top: 7px;
+  padding-bottom: 10px;
+}
+
+.buttons-separator span {
+  padding-left: 35px;
+  color: #8F8F8F;
+}
+
+.button .buttons-separator span {
+  padding-left: 0px;
+}
+
+
+/**
  * Cart
  */
 body.store-cart #breadcrumbs {
@@ -2499,8 +2516,8 @@ form.estimator .main,
 }
 
 .checkout-block form.place .non-agree .terms-box {
-  background: #eff8fe none;
-  border: 1px solid #cadce8;
+  background: #ffd852 none;
+  border: 1px solid #ffd852;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -2524,10 +2541,16 @@ form.estimator .main,
 }
 
 .checkout-block form.place .terms label {
+  color: #333333;
   display: block;
   padding-left: 16px;
   text-indent: -16px;
 }
+
+.checkout-block form.place .terms label a {
+  color: inherited;
+}
+
 .checkout-block form.place .terms input {
   width: 14px;
   height: 14px;
@@ -2723,8 +2746,6 @@ ul.location-subnodes li a.current {
 }
 
 .invoice-box .header img.logo {
-  width: 160px;
-  height: 100px;
   margin-top: 22px;
 }
 
@@ -2982,6 +3003,10 @@ div.page-tabs ul li.tab-current a
   border-bottom: 1px solid #fff;
 }
 
+table.login-form {
+  margin: 10px 0 20px;
+}
+
 table.login-form,
   table.login-form tr,
   table.login-form th,
@@ -2993,7 +3018,33 @@ table.login-form,
 }
 
 table.login-form td {
-  padding: 5px 0px;
+  padding: 10px 0px;
+}
+
+table.login-form td:first-child {
+  width: 100px;
+}
+
+table.login-form input[type="text"],
+  table.login-form input[type="password"]
+{
+  width: 260px;
+  height: 26px;
+  border: solid 1px #cbcbcb;
+  padding: 2px 2px 2px 6px;
+  font-size: 17px;
+}
+
+table.login-form label {
+  font-size: 17px;
+}
+
+table.login-form .spacer-bullet {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: url(../images/spacer-bullet.png) no-repeat left top;
+  margin: 0 9px 2px 10px;
 }
 
 .recover-password-message {

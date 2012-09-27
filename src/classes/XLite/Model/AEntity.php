@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Abstract entity
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AEntity extends \XLite\Base\SuperClass
 {
@@ -45,20 +41,9 @@ abstract class AEntity extends \XLite\Base\SuperClass
     /**
      * Cache enabled flag (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected static $cacheEnabled = array();
-
-    /**
-     * Method names (cache)
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $methodNames = array();
 
     /**
      * Constructor
@@ -66,8 +51,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -84,15 +67,13 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param array $data Data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function map(array $data)
     {
         foreach ($data as $key => $value) {
 
             // Map only existing properties with setter methods or direct
-            $method = 'set' . $this->getMethodName($key);
+            $method = 'set' . \Includes\Utils\Converter::convertToPascalCase($key);
 
             if (method_exists($this, $method)) {
 
@@ -112,13 +93,11 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param string $name Property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
         // Accessor method name
-        return $this->{'get' . $this->getMethodName($name)}();
+        return $this->{'get' . \Includes\Utils\Converter::convertToPascalCase($name)}();
     }
 
     /**
@@ -128,13 +107,23 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param mixed  $value Property value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __set($name, $value)
     {
         // Mutator method name
-        return $this->{'set' . $this->getMethodName($name)}($value);
+        return $this->{'set' . \Includes\Utils\Converter::convertToPascalCase($name)}($value);
+    }
+
+    /**
+     * Common isset
+     *
+     * @param string $name Property name
+     *
+     * @return boolean
+     */
+    public function __isset($name)
+    {
+        return !is_null($this->__get($name));
     }
 
     /**
@@ -143,8 +132,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param string $name Property name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __unset($name)
     {
@@ -155,8 +142,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Get entity repository
      *
      * @return \XLite\Model\Doctrine\Repo\AbstractRepo
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRepository()
     {
@@ -167,34 +152,28 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Check cache after enity persis or remove
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkCache()
     {
-        $class = get_called_class();
+        $class = get_class($this);
 
-        if (!isset(self::$cacheEnabled[$class])) {
-
+        if (!isset(static::$cacheEnabled[$class])) {
             $repo = $this->getRepository();
 
-            self::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, '\XLite\Model\Repo\ARepo'))
+            static::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, '\XLite\Model\Repo\ARepo'))
                 ? $repo->hasCacheCells()
                 : false;
         }
 
-        if (self::$cacheEnabled[$class]) {
-
+        if (static::$cacheEnabled[$class]) {
             $this->getRepository()->deleteCacheByEntity($this);
         }
     }
 
     /**
-     * Detach self
+     * Detach static
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function detach()
     {
@@ -210,8 +189,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      *
      * @return mixed
      * @throws \BadMethodCallException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -251,34 +228,36 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Check if entity is persistent
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPersistent()
     {
-        return (bool) $this->{'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField())}();
+        return (bool) $this->getUniqueIdentifier();
+    }
+
+    /**
+     * Get entity unique identifier name
+     *
+     * @return string
+     */
+    public function getUniqueIdentifierName()
+    {
+        return $this->getRepository()->getPrimaryKeyField();
     }
 
     /**
      * Get entity unique identifier value
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getUniqueIdentifier()
     {
-        $method = 'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField());
-
-        return $this->$method();
+        return $this->{'get' . \Includes\Utils\Converter::convertToPascalCase($this->getUniqueIdentifierName())}();
     }
 
     /**
      * Update entity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function update()
     {
@@ -292,8 +271,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Create entity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function create()
     {
@@ -304,8 +281,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Delete entity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function delete()
     {
@@ -320,8 +295,6 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * Clone
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -350,58 +323,8 @@ abstract class AEntity extends \XLite\Base\SuperClass
      * @param string $type Type of current operation
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function prepareEntityBeforeCommit($type)
     {
-    }
-
-    /**
-     * Call parent method safetly
-     * 
-     * @param string $property Property name
-     * @param string $class    Current class
-     * @param string $type     Method type (get or set) OPTIONAL
-     *  
-     * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.21
-     */
-    protected function callParentMethod($property, $class, $type = 'get')
-    {
-        $parent = get_parent_class($class);
-        $method = 'get' . $this->getMethodName($property);
-
-        return method_exists($parent, $method)
-            ? $parent::$method()
-            : $this->$property;
-    }
-
-    /**
-     * Get method name
-     * FIXME - to remove
-     *
-     * @param string $name Property name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getMethodName($name)
-    {
-        $class = get_called_class();
-
-        if (!isset(self::$methodNames[$class])) {
-
-            self::$methodNames[$class] = array();
-        }
-
-        if (!isset(self::$methodNames[$class][$name])) {
-
-            self::$methodNames[$class][$name] = \XLite\Core\Converter::convertToCamelCase($name);
-        }
-
-        return self::$methodNames[$class][$name];
     }
 }

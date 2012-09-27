@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -30,35 +28,27 @@ namespace XLite\Core\Validator;
 /**
  * Validate exception
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Exception extends \XLite\Core\Exception
 {
     /**
      * Path
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $path = array();
 
     /**
      * Message label arguments
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $arguments = array();
 
     /**
      * Public name 
      * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $publicName;
 
@@ -68,8 +58,6 @@ class Exception extends \XLite\Core\Exception
      * @param mixed $item Path item key
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addPathItem($item)
     {
@@ -82,8 +70,6 @@ class Exception extends \XLite\Core\Exception
      * @param string $name Public name
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setPublicName($name)
     {
@@ -94,8 +80,6 @@ class Exception extends \XLite\Core\Exception
      * Get public name 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPublicName()
     {
@@ -106,8 +90,6 @@ class Exception extends \XLite\Core\Exception
      * Get path as string
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPath()
     {
@@ -124,8 +106,6 @@ class Exception extends \XLite\Core\Exception
      * Mark exception as internal error exception
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function markAsInternal()
     {
@@ -136,8 +116,6 @@ class Exception extends \XLite\Core\Exception
      * Check - exception is internal or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isInternal()
     {
@@ -150,8 +128,6 @@ class Exception extends \XLite\Core\Exception
      * @param array $arguments Arguments
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setLabelArguments(array $arguments)
     {
@@ -162,8 +138,6 @@ class Exception extends \XLite\Core\Exception
      * Get message arguments
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLabelArguments()
     {

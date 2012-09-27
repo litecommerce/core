@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Shipping methods management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -51,8 +45,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * Do action 'Add'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionAdd()
     {
@@ -74,8 +66,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * Do action 'Update'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionUpdate()
     {
@@ -117,8 +107,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * Do action 'Delete'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionDelete()
     {
@@ -143,8 +131,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Shipping\Method $method ____param_comment____
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClasses(\XLite\Model\Shipping\Method $method)
     {

@@ -14,25 +14,20 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 namespace Includes\Decorator\Plugin\Templates\Plugin\ViewLists;
 
 /**
- * Decorator plugin to generate widget lists
+ * Main 
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
@@ -55,10 +50,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * List of PHP classes with the "ListChild" tags
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var array
      */
     protected $annotatedPHPCLasses;
 
@@ -66,11 +58,8 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Execute certain hook handler
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function executeHookHandlerStepFifth()
+    public function executeHookHandler()
     {
         // Truncate old
         $this->clearAll();
@@ -85,13 +74,10 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkClassForListChildTag(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        if ($lists = $node->getTag(self::TAG_LIST_CHILD)) {
+        if (!$node->isLowLevelNode() && ($lists = $node->getTag(static::TAG_LIST_CHILD))) {
             $data = array('child' => $node->getTopLevelNode()->getClass());
 
             foreach ($lists as $tags) {
@@ -104,9 +90,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Remove existing lists from database
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function clearAll()
     {
@@ -118,9 +101,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Create lists
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function createLists()
     {
@@ -131,9 +111,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return all defined "ListChild" tags
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAllListChildTags()
     {
@@ -144,9 +121,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return list of PHP classes with the "ListChild" tag
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAnnotatedPHPCLasses()
     {
@@ -163,9 +137,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return all "ListChild" tags defined in PHP classes
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListChildTagsFromPHP()
     {
@@ -176,9 +147,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * Return all "ListChild" tags defined in templates
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListChildTagsFromTemplates()
     {
@@ -191,8 +159,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array $list List
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareListChildTemplates(array $list)
     {
@@ -243,10 +209,17 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
             }
 
             $index = \Includes\Utils\ArrayManager::getArraysArrayFieldValues($hash, static::PREPARED_SKIN_NAME);
-            $index = call_user_func_array('array_merge', $index);
-            $index = call_user_func_array('array_merge', $index);
+            unset($hash);
 
-            $list = \Includes\Utils\ArrayManager::filterByKeys($list, array_values($index));
+            $ids = array();
+            foreach ($index as $interface => $tpls) {
+                foreach ($tpls as $tpl => $indexes) {
+                    $ids = array_merge($ids, $indexes);
+                }
+            }
+            unset($index);
+
+            $list = \Includes\Utils\ArrayManager::filterByKeys($list, $ids);
         }
 
         return $list;
@@ -258,9 +231,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array $nodes List of nodes
      *
      * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAllListChildTagAttributes(array $nodes)
     {
@@ -273,8 +243,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array $data Tag attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareListChildTagData(array $data)
     {
@@ -293,30 +261,27 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array &$data Data to prepare
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareWeightAttrs(array &$data)
     {
         // The "weight" attribute has a high priority
-        if (!isset($data[self::PARAM_TAG_LIST_CHILD_WEIGHT])) {
+        if (!isset($data[static::PARAM_TAG_LIST_CHILD_WEIGHT])) {
 
             // "First" and "last" - the reserved keywords for the "weight" attribute values
             foreach ($this->getReservedWeightValues() as $origKey => $modelKey) {
 
                 if (isset($data[$origKey])) {
-                    $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = $modelKey;
+                    $data[static::PARAM_TAG_LIST_CHILD_WEIGHT] = $modelKey;
                 }
             }
         } else {
 
-            $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = intval($data[self::PARAM_TAG_LIST_CHILD_WEIGHT]);
+            $data[static::PARAM_TAG_LIST_CHILD_WEIGHT] = intval($data[static::PARAM_TAG_LIST_CHILD_WEIGHT]);
         }
 
         // Set default value
-        if (!isset($data[self::PARAM_TAG_LIST_CHILD_WEIGHT])) {
-            $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = \XLite\Model\ViewList::POSITION_LAST;
+        if (!isset($data[static::PARAM_TAG_LIST_CHILD_WEIGHT])) {
+            $data[static::PARAM_TAG_LIST_CHILD_WEIGHT] = \XLite\Model\ViewList::POSITION_LAST;
         }
     }
 
@@ -326,13 +291,10 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @param array &$data Data to use
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function preparePreprocessors(array &$data)
     {
-        if (isset($data[self::PARAM_TAG_LIST_CHILD_CONTROLLER])) {
+        if (isset($data[static::PARAM_TAG_LIST_CHILD_CONTROLLER])) {
             // ...
         }
     }
@@ -341,15 +303,12 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * There are some reserved words for the "weight" param of the "ListChild" tag
      *
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getReservedWeightValues()
     {
         return array(
-            self::PARAM_TAG_LIST_CHILD_FIRST => \XLite\Model\ViewList::POSITION_FIRST,
-            self::PARAM_TAG_LIST_CHILD_LAST  => \XLite\Model\ViewList::POSITION_LAST,
+            static::PARAM_TAG_LIST_CHILD_FIRST => \XLite\Model\ViewList::POSITION_FIRST,
+            static::PARAM_TAG_LIST_CHILD_LAST  => \XLite\Model\ViewList::POSITION_LAST,
         );
     }
 }

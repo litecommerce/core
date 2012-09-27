@@ -39,6 +39,19 @@ CLEAR_OUTPUT_DIR=1
 LITECOMMERCE_DIRNAME="litecommerce"
 DRUPAL_DIRNAME="drupal"
 
+# These parameters are used as as part of distributive package file name
+LITECOMMERCE_DISTR_NAME="litecommerce3"
+LITECOMMERCE_CORE_DISTR_NAME="lc-core"
+
+# Title of LiteCommerce (used only in progress messages)
+LITECOMMERCE_TITLE="LiteCommerce"
+
+# Set this to non-empty value if you need generate lc_connector module and lc3_clean theme
+PACK_DRUPAL_MODULES=""
+
+# Set this to empty value if you don't want  to generate ECMS package
+BUILD_DRUPAL_PACKAGE="Y"
+
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
 CDev/Bestsellers
@@ -49,9 +62,12 @@ CDev/ProductOptions
 
 # LiteCommerce modules which should be packed as separate distributives
 XLITE_SEPARATE_MODULES="
+CDev/AmazonS3Images
 CDev/AustraliaPost
 CDev/AuthorizeNet
 CDev/Bestsellers
+CDev/Catalog
+CDev/ContactUs
 CDev/DrupalConnector
 CDev/FeaturedProducts
 CDev/FileAttachments
@@ -59,14 +75,18 @@ CDev/GoogleAnalytics
 CDev/GoSocial
 CDev/MarketPrice
 CDev/Moneybookers
+CDev/Paypal
 CDev/PaypalWPS
 CDev/ProductOptions
 CDev/Quantum
 CDev/SalesTax
 CDev/Sale
+CDev/SocialLogin
+CDev/SimpleCMS
 CDev/TinyMCE
 CDev/TwoCheckout
 CDev/VAT
+CDev/UserPermissions
 CDev/USPS
 CDev/XMLSitemap
 CDev/XMLSitemapDrupal
@@ -133,7 +153,7 @@ Powered by LiteCommerce [shopping cart software]
 Powered by LiteCommerce [PHP shopping cart]
 Powered by LiteCommerce [PHP shopping cart system]
 Powered by LiteCommerce [eCommerce shopping cart]
-Powered by LiteCommerce [online shopping cart] 
+Powered by LiteCommerce [online shopping cart]
 Powered by LiteCommerce [eCommerce software]
 Powered by LiteCommerce [eCommerce software]
 Powered by LiteCommerce [e-commerce software]
@@ -164,4 +184,7 @@ Powered by LiteCommerce [e-commerce software] and Drupal CMS
 Powered by LiteCommerce [e-commerce solution] and Drupal CMS
 "
 
+REPLACE_HEADERS_SETTINGS=""
+
+CHECK_HEADERS_SETTINGS="./files/headers/settings.lc3.php"
 

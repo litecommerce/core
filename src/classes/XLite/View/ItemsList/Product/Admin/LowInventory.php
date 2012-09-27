@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Admin;
@@ -30,8 +28,6 @@ namespace XLite\View\ItemsList\Product\Admin;
 /**
  * LowInventory
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -51,8 +45,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -63,8 +55,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * getDisplayStyle
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDisplayStyle()
     {
@@ -75,8 +65,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Do not display 'Products with low inventory' block if low-limit-products list is empty
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -87,8 +75,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * isFooterVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -99,8 +85,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -117,8 +101,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @param string $list List name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineViewList($list)
     {
@@ -138,8 +120,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {

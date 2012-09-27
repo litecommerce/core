@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Upgrade\Step\ReadyToInstall;
@@ -30,8 +28,6 @@ namespace XLite\View\Upgrade\Step\ReadyToInstall;
 /**
  * StatusMessages
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", weight="200", zone="admin")
  */
@@ -41,8 +37,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -53,8 +47,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
      * Return internal list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -65,8 +57,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -78,8 +68,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
      * Not applicable for now. The issues go in the entries block of errors messages.
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMessages()
     {

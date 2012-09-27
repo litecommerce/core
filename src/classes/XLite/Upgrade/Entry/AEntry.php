@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Upgrade\Entry;
@@ -30,8 +28,6 @@ namespace XLite\Upgrade\Entry;
 /**
  * AEntry
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AEntry
 {
@@ -44,36 +40,28 @@ abstract class AEntry
     /**
      * Path to the unpacked entry archive
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $repositoryPath;
 
     /**
      * List of error messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $errorMessages = array();
 
     /**
      * List of custom files
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $customFiles = array();
 
     /**
      * List of post rebuild helpers
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     *
+     * @var array
      */
     protected $postRebuildHelpers;
 
@@ -81,8 +69,6 @@ abstract class AEntry
      * Return entry readable name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getName();
 
@@ -90,8 +76,6 @@ abstract class AEntry
      * Return entry icon URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getIconURL();
 
@@ -99,8 +83,6 @@ abstract class AEntry
      * Return entry old major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getMajorVersionOld();
 
@@ -108,8 +90,6 @@ abstract class AEntry
      * Return entry old minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getMinorVersionOld();
 
@@ -117,8 +97,6 @@ abstract class AEntry
      * Return entry new major version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getMajorVersionNew();
 
@@ -126,8 +104,6 @@ abstract class AEntry
      * Return entry new minor version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getMinorVersionNew();
 
@@ -135,8 +111,6 @@ abstract class AEntry
      * Return entry revision date
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getRevisionDate();
 
@@ -144,8 +118,6 @@ abstract class AEntry
      * Return module author readable name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getAuthor();
 
@@ -153,8 +125,6 @@ abstract class AEntry
      * Check if module is enabled
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function isEnabled();
 
@@ -162,8 +132,6 @@ abstract class AEntry
      * Check if module is installed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function isInstalled();
 
@@ -171,8 +139,6 @@ abstract class AEntry
      * Return entry pack size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getPackSize();
 
@@ -180,8 +146,6 @@ abstract class AEntry
      * Return entry actual name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getActualName();
 
@@ -189,8 +153,6 @@ abstract class AEntry
      * Get hashes for current version
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function loadHashesForInstalledFiles();
 
@@ -198,8 +160,6 @@ abstract class AEntry
      * Return path where the upgrade helper scripts are placed
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     abstract protected function getUpgradeHelperPath();
 
@@ -208,8 +168,6 @@ abstract class AEntry
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -222,8 +180,6 @@ abstract class AEntry
      * Compose version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getVersionOld()
     {
@@ -234,8 +190,6 @@ abstract class AEntry
      * Compose version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getVersionNew()
     {
@@ -246,8 +200,6 @@ abstract class AEntry
      * Perform cleanup
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function clear()
     {
@@ -262,8 +214,6 @@ abstract class AEntry
      * @param boolean $preventDeletion Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setRepositoryPath($path, $preventCheck = false, $preventDeletion = false)
     {
@@ -293,8 +243,6 @@ abstract class AEntry
      * Get repository path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRepositoryPath()
     {
@@ -305,8 +253,6 @@ abstract class AEntry
      * Name of the special file with hashes for installed files
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrentVersionHashesFilePath()
     {
@@ -320,11 +266,9 @@ abstract class AEntry
     }
 
     /**
-     * Perform some action after upgrade 
-     * 
+     * Perform some action after upgrade
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setUpgraded()
     {
@@ -339,8 +283,6 @@ abstract class AEntry
      * Download package
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function download()
     {
@@ -351,8 +293,6 @@ abstract class AEntry
      * Unpack archive
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function unpack()
     {
@@ -374,8 +314,6 @@ abstract class AEntry
      * Check if pack is already downloaded
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDownloaded()
     {
@@ -388,8 +326,6 @@ abstract class AEntry
      * Check if archive is already unpacked
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isUnpacked()
     {
@@ -404,8 +340,6 @@ abstract class AEntry
      * Names of variables to serialize
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __sleep()
     {
@@ -418,8 +352,6 @@ abstract class AEntry
      * Return list of error messages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getErrorMessages()
     {
@@ -430,8 +362,6 @@ abstract class AEntry
      * Return list of custom files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCustomFiles()
     {
@@ -442,8 +372,6 @@ abstract class AEntry
      * Check for errors
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isValid()
     {
@@ -461,8 +389,6 @@ abstract class AEntry
      * @param array|null $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function upgrade($isTestMode = true, $filesToOverwrite = null)
     {
@@ -533,8 +459,6 @@ abstract class AEntry
      * @param boolean $manageCustomFiles Flag for custom files
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addFile($path, $isTestMode, $manageCustomFiles)
     {
@@ -549,8 +473,6 @@ abstract class AEntry
      * @param boolean $manageCustomFiles Flag for custom files
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateFile($path, $isTestMode, $manageCustomFiles)
     {
@@ -565,8 +487,6 @@ abstract class AEntry
      * @param boolean $manageCustomFiles Flag for custom files
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function deleteFile($path, $isTestMode, $manageCustomFiles)
     {
@@ -580,8 +500,6 @@ abstract class AEntry
      * @param boolean $isTestMode If in test mode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addFileCallback($path, $isTestMode)
     {
@@ -627,8 +545,6 @@ abstract class AEntry
      * @param boolean $isTestMode If in test mode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateFileCallback($path, $isTestMode)
     {
@@ -657,8 +573,6 @@ abstract class AEntry
      * @param boolean $isTestMode If in test mode
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function deleteFileCallback($path, $isTestMode)
     {
@@ -686,8 +600,6 @@ abstract class AEntry
      * @param string  $callback          Callback to execute
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function modifyFile($path, $isTestMode, $manageCustomFiles, $callback)
     {
@@ -715,8 +627,6 @@ abstract class AEntry
      * @param array  $args   Call arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function manageFile($path, $method, array $args = array())
     {
@@ -731,10 +641,8 @@ abstract class AEntry
      *
      * @param string $path    File short path
      * @param string $baseDir Bae dir OPTIONAL
-     *  
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFullPath($path, $baseDir = LC_DIR_ROOT)
     {
@@ -748,8 +656,6 @@ abstract class AEntry
      * @param boolean $flag Status OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addToCustomFiles($path, $flag = true)
     {
@@ -762,8 +668,6 @@ abstract class AEntry
      * @param string $path File short path
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkForCustomFileRewrite($path)
     {
@@ -776,8 +680,6 @@ abstract class AEntry
      * @param boolean $isTestMode Flag
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHashes($isTestMode)
     {
@@ -823,8 +725,6 @@ abstract class AEntry
      * @param boolean $isTestMode Flag
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHashesForInstalledFiles($isTestMode)
     {
@@ -850,8 +750,6 @@ abstract class AEntry
      * Save hashes for current version
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveHashesForInstalledFiles()
     {
@@ -871,8 +769,6 @@ abstract class AEntry
      * @param string $relativePath File relative path in package
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFileSource($relativePath)
     {
@@ -898,16 +794,15 @@ abstract class AEntry
      * Execute some methods
      *
      * @param string $type Helper type
-     *  
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function runHelpers($type)
     {
         $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
 
-        if ($this->isInstalled() && $path) {
+        // Helpers must examine itself if the module has been installed previously
+        if ($path) {
             $helpers = ('post_rebuild' === $type) ? $this->postRebuildHelpers : $this->getHelpers($type);
 
             foreach ((array) $helpers as $file) {
@@ -929,8 +824,6 @@ abstract class AEntry
      * @param string $type Helper type
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHelpers($type)
     {
@@ -954,8 +847,6 @@ abstract class AEntry
      * @param mixed $getFullPath Flag OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getUpgradeHelpersDir($getFullPath = true)
     {
@@ -970,14 +861,12 @@ abstract class AEntry
 
     /**
      * Get file with an upgrade helper function
-     * 
+     *
      * @param string $type         Helper type
      * @param string $majorVersion Major version to upgrade to
      * @param string $minorVersion Minor version to upgrade to
-     *  
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUpgradeHelperFile($type, $majorVersion, $minorVersion)
     {
@@ -998,11 +887,9 @@ abstract class AEntry
     }
 
     /**
-     * Get list of available major versions for the helpers 
-     * 
+     * Get list of available major versions for the helpers
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUpgradeHelperMajorVersions()
     {
@@ -1021,32 +908,29 @@ abstract class AEntry
      * Get list of available minor versions for the helpers
      *
      * @param string $majorVersion Current major version
-     *  
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUpgradeHelperMinorVersions($majorVersion)
     {
-        $old = $this->getMinorVersionOld();
-        $new = $this->getMinorVersionNew();
+        $old = \Includes\Utils\Converter::composeVersion($this->getMajorVersionOld(), $this->getMinorVersionOld());
+        $new = \Includes\Utils\Converter::composeVersion($this->getMajorVersionNew(), $this->getMinorVersionNew());
 
         return array_filter(
             $this->getUpgradeHelperVersions($majorVersion . LC_DS),
-            function ($var) use ($old, $new) {
-                return version_compare($old, $var, '<') && version_compare($new, $var, '>=');
+            function ($var) use ($majorVersion, $old, $new) {
+                $version = \Includes\Utils\Converter::composeVersion($majorVersion, $var);
+                return version_compare($old, $version, '<') && version_compare($new, $version, '>=');
             }
         );
     }
 
     /**
      * Get list of available versions for the helpers
-     * 
+     *
      * @param string $path Path to scan OPTIONAL
-     *  
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getUpgradeHelperVersions($path = null)
     {
@@ -1080,8 +964,6 @@ abstract class AEntry
      * @param array   $args    Substitution arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addInfoMessage($message, $log, array $args = array())
     {
@@ -1096,8 +978,6 @@ abstract class AEntry
      * @param array   $args    Substitution arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addErrorMessage($message, $log, array $args = array())
     {
@@ -1116,8 +996,6 @@ abstract class AEntry
      * @param array   $args    Substitution arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addFileInfoMessage($message, $file, $log, array $args = array())
     {
@@ -1133,8 +1011,6 @@ abstract class AEntry
      * @param array   $args    Substitution arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addFileErrorMessage($message, $file, $log, array $args = array())
     {
@@ -1150,8 +1026,6 @@ abstract class AEntry
      * @param array   $args    Substitution arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addMessage($method, $message, $log, array $args = array())
     {
@@ -1174,8 +1048,6 @@ abstract class AEntry
      * @param array   $args    Substitution arguments OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addFileMessage($method, $message, $file, $log, array $args = array())
     {

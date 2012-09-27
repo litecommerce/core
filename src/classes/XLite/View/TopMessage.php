@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,23 +28,27 @@ namespace XLite\View;
 /**
  * Top message
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="layout.main", weight="100")
  */
 class TopMessage extends \XLite\View\AView
 {
     /**
+     * Messages 
+     * 
+     * @var array
+     */
+    protected $messages;
+
+    /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -56,12 +58,11 @@ class TopMessage extends \XLite\View\AView
      * Get a list of JS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
+
         $list[] = $this->getDir() . '/controller.js';
 
         return $list;
@@ -71,8 +72,6 @@ class TopMessage extends \XLite\View\AView
      * getDir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -83,8 +82,6 @@ class TopMessage extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -92,17 +89,17 @@ class TopMessage extends \XLite\View\AView
     }
 
     /**
-     * getTopMessages
+     * Get top messages
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getTopMessages()
     {
-        \XLite\Core\TopMessage::getInstance()->clear();
+        if (!isset($this->messages)) {
+            $this->messages = \XLite\Core\TopMessage::getInstance()->unloadPreviousMessages();
+        }
 
-        return \XLite\Core\TopMessage::getInstance()->getPreviousMessages();
+        return $this->messages;
     }
 
     /**
@@ -111,8 +108,6 @@ class TopMessage extends \XLite\View\AView
      * @param array $data Message
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getText(array $data)
     {
@@ -125,8 +120,6 @@ class TopMessage extends \XLite\View\AView
      * @param array $data Message
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getType(array $data)
     {
@@ -139,8 +132,6 @@ class TopMessage extends \XLite\View\AView
      * @param array $data Message
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPrefix(array $data)
     {
@@ -167,8 +158,6 @@ class TopMessage extends \XLite\View\AView
      * :TODO: check if it's really needed, or it's possible to use "isVisible()" instead
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isHidden()
     {

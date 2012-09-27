@@ -1,0 +1,53 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+
+XLite\Model\LanguageLabel:
+  directives: { insert: true }
+  - { name: 'Contact us description', translations: [{ code: en, label: 'To contact us please fill the form below' }] }
+
+XLite\Model\Config:
+  - name: enable_form
+    category: 'CDev\ContactUs'
+    type: checkbox
+    orderby: 100
+    value: true
+    translations:
+      - code: en
+        option_name: 'Enable form'
+  - name: email
+    category: 'CDev\ContactUs'
+    type: 'XLite\View\FormField\Input\Text\Email'
+    orderby: 200
+    translations:
+      - code: en
+        option_name: 'E-mail address of the message recipient'
+  - name: contact_us_sep_1
+    category: 'CDev\ContactUs'
+    type: separator
+    orderby: 1000
+    translations:
+      - code: en
+        option_name: 'reCAPTCHA'
+  - name: recaptcha_public_key
+    category: 'CDev\ContactUs'
+    type: text
+    orderby: 1100
+    value: ''
+    translations:
+      - code: en
+        option_name: 'Public key'
+        option_comment: 'To use reCAPTCHA you should get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>'
+  - name: recaptcha_private_key
+    category: 'CDev\ContactUs'
+    type: text
+    orderby: 1200
+    value: ''
+    translations:
+      - code: en
+        option_name: 'Private key'

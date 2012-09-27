@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Form;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Form;
 /**
  * Search
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -51,8 +45,6 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -63,8 +55,6 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * getDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {
@@ -79,8 +69,6 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      * JavaScript: this value will be returned on form submit
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {

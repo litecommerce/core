@@ -4,10 +4,10 @@
  * Center column
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
+ *
  * @ListChild (list="admin.main.page.content.center", weight="10")
  *}
 <widget template="noscript.tpl" />
@@ -24,8 +24,7 @@
 <widget module="CDev\FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/CDev/FeaturedProducts/featured_products.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
 
 {* Some bug in Flexy *}
-<widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" IF="getCategory()" />
-<widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" IF="!getCategory()" />
+<widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" />
 
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" />
 

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Form multiple selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Multiple extends \XLite\View\FormField\Select\ASelect
 {
@@ -41,8 +37,6 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
      * @param array $params Handler params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -59,8 +53,6 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
      * @param mixed $value Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setValue($value)
     {
@@ -81,15 +73,15 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
     }
 
     /**
-     * Get default attributes
+     * Set common attributes
+     *
+     * @param array $attrs Field attributes to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function getDefaultAttributes()
+    protected function setCommonAttributes(array $attrs)
     {
-        return parent::getDefaultAttributes() + array('multiple' => 'multiple');
+        return parent::setCommonAttributes($attrs) + array('multiple' => 'multiple');
     }
 
     /**
@@ -98,8 +90,6 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
      * @param mixed $value Value
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function isOptionSelected($value)
     {
@@ -110,8 +100,6 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
      * Get common attributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {

@@ -4,10 +4,9 @@
  * ____file_title____
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 <p align="justify">{t(#This section displays 10 top-selling products for today, this week and this month#)}</p>
@@ -24,7 +23,7 @@
     <td FOREACH="row,idx1,val">
       {if:val}
         {if:val.product.product_id}
-          <a href="{buildURL(#product#,##,_ARRAY_(#id#^val.product.product_id))}">{val.name}</a>
+          <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^val.product.product_id))}">{val.name}</a>
         {else:}
           <span>{val.name} ({t(#deleted#)})</span>
         {end:}

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Button;
@@ -30,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * Switcher button
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Switcher extends \XLite\View\Button\AButton
 {
@@ -44,8 +40,6 @@ class Switcher extends \XLite\View\Button\AButton
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -59,8 +53,6 @@ class Switcher extends \XLite\View\Button\AButton
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -71,8 +63,6 @@ class Switcher extends \XLite\View\Button\AButton
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -87,8 +77,6 @@ class Switcher extends \XLite\View\Button\AButton
      * Get formatted enabled status
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getEnabled()
     {
@@ -99,8 +87,6 @@ class Switcher extends \XLite\View\Button\AButton
      * Get style 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function  getStyle()
     {
@@ -113,8 +99,6 @@ class Switcher extends \XLite\View\Button\AButton
      * Get title 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getTitle()
     {

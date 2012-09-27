@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Checkout;
@@ -30,10 +28,8 @@ namespace XLite\View\Checkout;
 /**
  * Checkout profile block
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
- * @ListChild (list="checkout.main")
+ * @ListChild (list="checkout.main", weight="100")
  */
 class Profile extends \XLite\View\AView
 {
@@ -41,8 +37,6 @@ class Profile extends \XLite\View\AView
      * Check - separate profile will be crerate after order placing procedure or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSeparateProfile()
     {
@@ -53,8 +47,6 @@ class Profile extends \XLite\View\AView
      * Get current profile username
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileUsername()
     {
@@ -65,8 +57,6 @@ class Profile extends \XLite\View\AView
      * Get Profile page URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProfileURL()
     {
@@ -77,8 +67,6 @@ class Profile extends \XLite\View\AView
      * Get Logoff URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLogoffURL()
     {
@@ -90,8 +78,6 @@ class Profile extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

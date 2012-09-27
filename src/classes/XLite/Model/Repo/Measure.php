@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,8 +28,6 @@ namespace XLite\Model\Repo;
 /**
  * Measures repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Measure extends \XLite\Model\Repo\ARepo
 {
@@ -39,8 +35,6 @@ class Measure extends \XLite\Model\Repo\ARepo
      * Get total score
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getScore()
     {
@@ -60,8 +54,6 @@ class Measure extends \XLite\Model\Repo\ARepo
      * Get file system score
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFilesystemScore()
     {
@@ -77,8 +69,6 @@ class Measure extends \XLite\Model\Repo\ARepo
      * Get database score
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDatabaseScore()
     {
@@ -94,8 +84,6 @@ class Measure extends \XLite\Model\Repo\ARepo
      * Get computation score
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getComputationScore()
     {
@@ -111,8 +99,6 @@ class Measure extends \XLite\Model\Repo\ARepo
      * Get last date
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLastDate()
     {

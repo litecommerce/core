@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Controller\Customer;
@@ -30,17 +28,13 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Customer;
 /**
  * Cart controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
     /**
      * Options invalid flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $optionInvalid = false;
 
@@ -50,9 +44,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      *
      * @param \XLite\Model\Product $product Product class that is requested to add to cart
      *
-     * @return null|array
-     * @see    ____func_see____
-     * @since  1.0.14
+     * @return array
      */
     protected function getCurrentProductOptions(\XLite\Model\Product $product)
     {
@@ -79,8 +71,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * Change order item options from customer request.
      *
      * @return \XLite\Model\OrderItem
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrentItem()
     {
@@ -108,8 +98,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * 'add' action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {

@@ -6,10 +6,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the GNU General Pubic License (GPL 2.0)
+ * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://www.gnu.org/licenses/gpl-2.0.html
+ * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\GoogleAnalytics\View;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\GoogleAnalytics\View;
 /**
  * Abstract widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
@@ -39,8 +35,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -57,8 +51,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Display widget as Standalone-specific
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isIncludeController()
     {

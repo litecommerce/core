@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.6
  */
 
 namespace XLite\View\Button;
@@ -30,8 +28,6 @@ namespace XLite\View\Button;
 /**
  * File selector popup button
  *
- * @see   ____class_see____
- * @since 1.0.6
  */
 class FileSelector extends \XLite\View\Button\APopupButton
 {
@@ -59,8 +55,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -76,15 +70,11 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'file_selector/style.css';
-
         // TODO: dynamic CSS inclusion
         $list[] = 'browse_server/style.css';
 
@@ -95,17 +85,15 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Return URL parameters to use in AJAX popup
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareURLParams()
     {
         return array(
             'target'        => 'select_file',
-            'object'        => $this->getParam(self::PARAM_OBJECT),
-            'objectId'      => $this->getParam(self::PARAM_OBJECT_ID),
-            'fileObject'    => $this->getParam(self::PARAM_FILE_OBJECT),
-            'fileObjectId'  => $this->getParam(self::PARAM_FILE_OBJECT_ID),
+            'object'        => $this->getParam(static::PARAM_OBJECT),
+            'objectId'      => $this->getParam(static::PARAM_OBJECT_ID),
+            'fileObject'    => $this->getParam(static::PARAM_FILE_OBJECT),
+            'fileObjectId'  => $this->getParam(static::PARAM_FILE_OBJECT_ID),
             'widget'        => '\XLite\View\FileSelectorDialog',
         );
     }
@@ -114,8 +102,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Return default button label
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -126,18 +112,16 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_OBJECT          => new \XLite\Model\WidgetParam\String('Object', 'product'),
-            self::PARAM_OBJECT_ID       => new \XLite\Model\WidgetParam\Int('Object ID', 0),
-            self::PARAM_FILE_OBJECT     => new \XLite\Model\WidgetParam\String('File object', 'image'),
-            self::PARAM_FILE_OBJECT_ID  => new \XLite\Model\WidgetParam\Int('File object ID', 0),
+            static::PARAM_OBJECT          => new \XLite\Model\WidgetParam\String('Object', 'product'),
+            static::PARAM_OBJECT_ID       => new \XLite\Model\WidgetParam\Int('Object ID', 0),
+            static::PARAM_FILE_OBJECT     => new \XLite\Model\WidgetParam\String('File object', 'image'),
+            static::PARAM_FILE_OBJECT_ID  => new \XLite\Model\WidgetParam\Int('File object ID', 0),
         );
     }
 
@@ -145,11 +129,9 @@ class FileSelector extends \XLite\View\Button\APopupButton
      * Return CSS classes
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClass()
     {
-        return 'file-selector-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
+        return 'file-selector-button ' . ($this->getParam(static::PARAM_STYLE) ?: '');
     }
 }

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.2
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * \XLite\View\CurrencySelect
  *
- * @see   ____class_see____
- * @since 1.0.2
  */
 class CurrencySelect extends \XLite\View\FormField
 {
@@ -50,8 +46,6 @@ class CurrencySelect extends \XLite\View\FormField
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.2
      */
     protected function getDefaultTemplate()
     {
@@ -62,8 +56,6 @@ class CurrencySelect extends \XLite\View\FormField
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.2
      */
     protected function defineWidgetParams()
     {
@@ -82,8 +74,6 @@ class CurrencySelect extends \XLite\View\FormField
      * Check - display used only currency or all
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.2
      */
     protected function usedOnly()
     {
@@ -94,8 +84,6 @@ class CurrencySelect extends \XLite\View\FormField
      * Return currencies list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.2
      */
     protected function getCurrencies()
     {

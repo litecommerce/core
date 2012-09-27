@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Payment\Base;
@@ -30,8 +28,6 @@ namespace XLite\Model\Payment\Base;
 /**
  * Processor
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Processor extends \XLite\Base
 {
@@ -49,18 +45,14 @@ abstract class Processor extends \XLite\Base
     /**
      * Transaction (cache)
      *
-     * @var   \XLite\Model\Payment\Transaction
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Payment\Transaction
      */
     protected $transaction;
 
     /**
      * Request cell with transaction input data
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $request;
 
@@ -69,11 +61,71 @@ abstract class Processor extends \XLite\Base
      * Do initial payment
      *
      * @return string Status code
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function doInitialPayment();
 
+    /**
+     * Get allowed transactions list
+     *
+     * @return string Status code
+     */
+    public function getAllowedTransactions()
+    {
+        return array();
+    }
+
+    /**
+     * Return tru if backend transaction is allowed for current payment transaction
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction     Payment transaction object
+     * @param string                           $transactionType Backend transaction type
+     *  
+     * @return boolean
+     */
+    public function isTransactionAllowed(\XLite\Model\Payment\Transaction $transaction, $transactionType)
+    {
+        $result = false;
+
+        if (in_array($transactionType, $this->getAllowedTransactions())) {
+
+            $methodName = 'is' . ucfirst($transactionType) . 'TransactionAllowed';
+
+            if (method_exists($transaction, $methodName)) {
+                // Call transaction tyoe specific method 
+                $result = $transaction->$methodName();
+            }
+            
+            if (method_exists($this, $methodName)) {
+                $result = $this->{'is' . ucfirst($transactionType) . 'TransactionAllowed'}($transaction);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * doTransaction 
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction     Payment transaction object
+     * @param string                           $transactionType Backend transaction type
+     *  
+     * @return void
+     */
+    public function doTransaction(\XLite\Model\Payment\Transaction $transaction, $transactionType)
+    {
+        if ($this->isTransactionAllowed($transaction, $transactionType)) {
+
+            $methodName = 'do' . ucfirst($transactionType);
+
+            if (method_exists($this, $methodName)) {
+                $txn = $transaction->createBackendTransaction($transactionType);
+                // Call backend transaction type specific method
+                $this->$methodName($txn);
+
+                $txn->registerTransactionInOrderHistory();
+            }
+        }
+    }
 
     /**
      * Pay
@@ -82,8 +134,6 @@ abstract class Processor extends \XLite\Base
      * @param array                            $request     Input data request OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function pay(\XLite\Model\Payment\Transaction $transaction, array $request = array())
     {
@@ -99,8 +149,6 @@ abstract class Processor extends \XLite\Base
      * Get input template
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -113,8 +161,6 @@ abstract class Processor extends \XLite\Base
      * @param array $data Input data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInputErrors(array $data)
     {
@@ -122,11 +168,44 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Check - payment method is configurable or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     */
+    public function isConfigurable(\XLite\Model\Payment\Method $method)
+    {
+        return (bool)$this->getConfigurationURL($method);
+    }
+
+    /**
+     * Get payment method configuration page URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getConfigurationURL(\XLite\Model\Payment\Method $method)
+    {
+        $url = null;
+
+        if ($this->getSettingsWidget()) {
+            $url = \XLite\Core\Converter::buildURL('payment_method', '', array('method_id' => $method->getMethodId()));
+
+        } elseif ($this->hasModuleSettings() && $this->getModule() && $this->getModule()->getSettingsForm()) {
+            $url = $this->getModule()->getSettingsForm();
+            $url .= (false === strpos($url, '?') ? '?' : '&')
+                . 'return=' . urlencode(\XLite\Core\Converter::buildURL('payment_settings'));
+        }
+
+        return $url;
+    }
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSettingsWidget()
     {
@@ -136,9 +215,7 @@ abstract class Processor extends \XLite\Base
     /**
      * Payment method has settings into Module settings section
      *
-     * @return boolan
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return boolean
      */
     public function hasModuleSettings()
     {
@@ -151,8 +228,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -166,8 +241,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
@@ -183,8 +256,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIconPath(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
@@ -197,8 +268,6 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
     {
@@ -209,22 +278,31 @@ abstract class Processor extends \XLite\Base
      * Get processor module
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModule()
     {
         return preg_match('/XLite\\\Module\\\(\w+)\\\(\w+)\\\/Ss', get_called_class(), $match)
-            ? \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(array('author' => $match[1], 'name' => $match[2]))
+            ? \XLite\Core\Database::getRepo('XLite\Model\Module')
+                ->findOneBy(array('author' => $match[1], 'name' => $match[2]))
             : null;
+    }
+
+    /**
+     * Get initial transaction type (used when customer places order)
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method object OPTIONAL
+     *
+     * @return string
+     */
+    public function getInitialTransactionType($method = null)
+    {
+        return \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE;
     }
 
     /**
      * Get current transaction order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOrder()
     {
@@ -235,8 +313,6 @@ abstract class Processor extends \XLite\Base
      * Get current transaction order profile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -249,8 +325,6 @@ abstract class Processor extends \XLite\Base
      * @param string $name Name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSetting($name)
     {
@@ -261,10 +335,8 @@ abstract class Processor extends \XLite\Base
      * Save input data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function saveInputData()
+    protected function saveInputData($backendTransaction = null)
     {
         $labels = $this->getInputDataLabels();
         $accessLevels = $this->getInputDataAccessLevels();
@@ -274,7 +346,8 @@ abstract class Processor extends \XLite\Base
                 $this->setDetail(
                     $name,
                     $value,
-                    isset($labels[$name]) ? $labels[$name] : null
+                    isset($labels[$name]) ? $labels[$name] : null,
+                    isset($backendTransaction) ? $backendTransaction : null
                 );
             }
         }
@@ -283,25 +356,24 @@ abstract class Processor extends \XLite\Base
     /**
      * Set transaction detail record
      *
-     * @param string $name  Code
-     * @param string $value Value
-     * @param string $label Label OPTIONAL
+     * @param string                                  $name               Code
+     * @param string                                  $value              Value
+     * @param string                                  $label              Label OPTIONAL
+     * @param \XLite\Model\Payment\BackendTransaction $backendTransaction Backend transaction object OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    protected function setDetail($name, $value, $label = null)
+    protected function setDetail($name, $value, $label = null, $backendTransaction = null)
     {
-        $this->transaction->setDataCell($name, $value, $label);
+        $transaction = isset($backendTransaction) ? $backendTransaction : $this->transaction;
+
+        $transaction->setDataCell($name, $value, $label);
     }
 
     /**
      * Get input data labels list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInputDataLabels()
     {
@@ -312,8 +384,6 @@ abstract class Processor extends \XLite\Base
      * Get input data access levels list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getInputDataAccessLevels()
     {
@@ -326,11 +396,140 @@ abstract class Processor extends \XLite\Base
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {
         return array();
     }
+
+    // {{{ Method helpers
+
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method has enabled test mode or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isTestMode(\XLite\Model\Payment\Method $method)
+    {
+        return \XLite\View\FormField\Select\TestLiveMode::TEST === $method->getSetting('mode');
+    }
+
+    /**
+     * Get warning note by payment method
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getWarningNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method is forced enabled or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isForcedEnabled(\XLite\Model\Payment\Method $method)
+    {
+        return false;
+    }
+
+    /**
+     * Get note with explanation why payment method was forcibly enabled
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getForcedEnabledNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Check - payment method can be enabled or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function canEnable(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+    /**
+     * Get note with explanation why payment method can not be enabled
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getForbidEnableNote(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Get links
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return array
+     */
+    public function getLinks(\XLite\Model\Payment\Method $method)
+    {
+        return array();
+    }
+
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Return true if payment method settings form should use default submit button.
+     * Otherwise, settings widget must define its own button
+     * 
+     * @return boolean
+     */
+    public function useDefaultSettingsFormButton()
+    {
+        return true;
+    }
+
+    /**
+     * Do something when payment method is enabled 
+     * 
+     * @return void
+     */
+    public function enableMethod(\XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    // }}}
 }

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input\Text;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Input\Text;
 /**
  * Float
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
 {
@@ -44,8 +40,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -60,15 +54,13 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_E   => new \XLite\Model\WidgetParam\Int('Number of digits after the decimal separator', 2),
+            static::PARAM_E   => new \XLite\Model\WidgetParam\Int('Number of digits after the decimal separator', 2),
         );
     }
 
@@ -76,8 +68,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Sanitize value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function sanitize()
     {
@@ -88,8 +78,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Assemble validation rules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleValidationRules()
     {
@@ -106,8 +94,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * @param array $classes Classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleClasses(array $classes)
     {
@@ -122,8 +108,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Get default maximum size
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultMaxSize()
     {
@@ -134,8 +118,6 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * getCommonAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {
@@ -156,12 +138,10 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      * Get mantis
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getE()
     {
-        return null;
+        return $this->getParam(static::PARAM_E);
     }
 
 }

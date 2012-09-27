@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Measure
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Measure extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,30 +35,19 @@ class Measure extends \XLite\Controller\Admin\AAdmin
      * Measure action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionMeasure()
     {
         if (!\XLite\Core\Config::getInstance()->General->probe_key) {
-
-            $probeKey = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy(array('name' => 'probe_key'));
-
-            if (!$probeKey) {
-                $probeKey = new \XLite\Model\Config;
-
-                $probeKey->setName('probe_key');
-                $probeKey->setCategory('General');
-
-                \XLite\Core\Database::getEM()->persist($probeKey);
-            }
-
-            $probeKey->setValue(md5(strval(microtime(true) * 1000000) . uniqid(true)));
-            \XLite\Core\Config::getInstance()->General->probe_key = $probeKey->getValue();
-
-            \XLite\Core\Database::getEM()->flush();
-
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions(true);
+            $key = md5(strval(microtime(true) * 1000000) . uniqid(true));
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                array(
+                    'category' => 'General',
+                    'name'     => 'probe_key',
+                    'value'    => $key,
+                )
+            );
+            \XLite\Core\Config::getInstance()->General->probe_key = $key;
         }
 
         $this->requestProbe();
@@ -74,8 +59,6 @@ class Measure extends \XLite\Controller\Admin\AAdmin
      * Request probe script
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function requestProbe()
     {
@@ -91,6 +74,10 @@ class Measure extends \XLite\Controller\Admin\AAdmin
         set_time_limit(0);
 
         $request = new \XLite\Core\HTTP\Request($url);
-        $request->sendRequest();
+        $response = $request->sendRequest();
+
+        if (200 != $response->code) {
+            \XLite\Core\TopMessage::addError('Measuring productivity in manual mode failed.');
+        }
     }
 }

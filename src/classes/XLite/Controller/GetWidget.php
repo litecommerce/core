@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller;
@@ -30,8 +28,6 @@ namespace XLite\Controller;
 /**
  * Get widget (AJAX)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class GetWidget extends \XLite\Controller\AController
 {
@@ -39,8 +35,6 @@ abstract class GetWidget extends \XLite\Controller\AController
      * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -60,8 +54,6 @@ abstract class GetWidget extends \XLite\Controller\AController
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -74,8 +66,6 @@ abstract class GetWidget extends \XLite\Controller\AController
      * Return Viewer object
      *
      * @return \XLite\View\Controller
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getViewer($isExported = false)
     {
@@ -86,8 +76,6 @@ abstract class GetWidget extends \XLite\Controller\AController
      * Get class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getClass()
     {
@@ -99,8 +87,6 @@ abstract class GetWidget extends \XLite\Controller\AController
      * These params from AJAX request will be translated into the corresponding ones
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAJAXParamsTranslationTable()
     {
@@ -114,8 +100,6 @@ abstract class GetWidget extends \XLite\Controller\AController
      * checkRequest
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkRequest()
     {
@@ -126,8 +110,6 @@ abstract class GetWidget extends \XLite\Controller\AController
      * Select template to use
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {

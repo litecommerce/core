@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Shipping\Processor;
@@ -30,44 +28,34 @@ namespace XLite\Model\Shipping\Processor;
 /**
  * Shipping processor model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AProcessor extends \XLite\Base\SuperClass
 {
     /**
      * Unique processor Id
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $processorId = null;
 
     /**
      * Url of shipping server for rates calculation
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $apiURL = null;
 
     /**
      * Log of request/response pairs during communitation with a shipping server
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $apiCommunicationLog = null;
 
     /**
      * Error message
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $errorMsg = null;
 
@@ -76,8 +64,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns processor name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getProcessorName();
 
@@ -88,8 +74,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @param boolean                                    $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function getRates($inputData, $ignoreCache = false);
 
@@ -97,8 +81,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Define public constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct()
     {
@@ -108,8 +90,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns processor's shipping methods
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getShippingMethods()
     {
@@ -121,8 +101,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns processor Id
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProcessorId()
     {
@@ -133,8 +111,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns true if shipping methods names may be modified by admin
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMethodNamesAdjustable()
     {
@@ -145,8 +121,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns true if shipping methods can be removed by admin
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isMethodDeleteEnabled()
     {
@@ -157,8 +131,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns an API URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getApiURL()
     {
@@ -169,8 +141,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns an API communication log
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getApiCommunicationLog()
     {
@@ -181,8 +151,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns $errorMsg 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     public function getErrorMsg()
     {
@@ -193,8 +161,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Write transaction log
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     public function logTransaction()
     {
@@ -207,8 +173,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @param string $key Key of a cache cell
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDataFromCache($key)
     {
@@ -230,8 +194,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @param mixed  $data Data object for saving in the cache
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveDataInCache($key, $data)
     {
@@ -242,8 +204,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * getLogMessage
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getLogMessage()
     {

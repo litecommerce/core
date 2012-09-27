@@ -4,10 +4,9 @@
  * Popup open button
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 var lastPopupButton;
@@ -30,7 +29,7 @@ PopupButton.prototype.enableBackgroundSubmit = true;
 PopupButton.prototype.options = {'width' : 'auto'};
 
 PopupButton.prototype.afterSubmit = function (selector) {
-}
+};
 
 PopupButton.prototype.callback = function (selector, link)
 {
@@ -61,12 +60,12 @@ PopupButton.prototype.callback = function (selector, link)
       }
     );
   }
-}
+};
 
 PopupButton.prototype.getURLParams = function (button)
 {
   return core.getCommentedData(button, 'url_params');
-}
+};
 
 PopupButton.prototype.eachClick = function (elem)
 {
@@ -79,7 +78,7 @@ PopupButton.prototype.eachClick = function (elem)
     this.callback,
     this
   ) : false;
-}
+};
 
 PopupButton.prototype.eachCallback = function (elem)
 {
@@ -95,4 +94,4 @@ PopupButton.prototype.eachCallback = function (elem)
         obj.eachClick(this);
       }
     );
-}
+};

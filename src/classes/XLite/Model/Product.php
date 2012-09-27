@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,30 +28,27 @@ namespace XLite\Model;
 /**
  * The "product" model class
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="sku", columns={"sku"})
+ *      },
  *      indexes={
  *          @Index (name="price", columns={"price"}),
- *          @Index (name="sku", columns={"sku"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
- *          @Index (name="clean_url", columns={"clean_url"}),
  *          @Index (name="customerArea", columns={"enabled","arrivalDate"})
  *      }
  * )
  * @HasLifecycleCallbacks
  */
-class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrderItem
+class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOrderItem
 {
     /**
      * Product unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -64,16 +59,14 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product price
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (
      *      type="money",
      *      options={
-     *          @XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
-     *          @XLite\Core\Doctrine\Annotation\Purpose (name="net", source="clear"),
-     *          @XLite\Core\Doctrine\Annotation\Purpose (name="display", source="net")
+     *          @\XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
+     *          @\XLite\Core\Doctrine\Annotation\Purpose (name="net", source="clear"),
+     *          @\XLite\Core\Doctrine\Annotation\Purpose (name="display", source="net")
      *      }
      *  )
      */
@@ -82,20 +75,16 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product SKU
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length=32, nullable=true)
      */
     protected $sku;
 
     /**
      * Is product available or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -104,9 +93,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product weight
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -115,31 +102,16 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Is free shipping available for the product
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
     protected $free_shipping = false;
 
     /**
-     * Clean URL
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255", nullable=false)
-     */
-    protected $clean_url = '';
-
-    /**
      * Custom javascript code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -148,9 +120,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Arrival date (UNIX timestamp)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -159,9 +129,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Creation date (UNIX timestamp)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -170,9 +138,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Update date (UNIX timestamp)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="uinteger")
      */
@@ -182,9 +148,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Relation to a CategoryProducts entities
      *
-     * @var   \Doctrine\ORM\PersistentCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\ORM\PersistentCollection
      *
      * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="product", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
@@ -194,9 +158,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product order items
      *
-     * @var   \XLite\Model\OrderItem
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\OrderItem
      *
      * @OneToMany (targetEntity="XLite\Model\OrderItem", mappedBy="object")
      */
@@ -205,9 +167,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product images
      *
-     * @var   \Doctrine\Common\Collections\Collection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @OneToMany (targetEntity="XLite\Model\Image\Product\Image", mappedBy="product", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
@@ -217,9 +177,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Qty in stock
      *
-     * @var   \XLite\Model\Inventory
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Inventory
      *
      * @OneToOne (targetEntity="XLite\Model\Inventory", mappedBy="product", fetch="LAZY", cascade={"all"})
      */
@@ -228,9 +186,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product classes
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="products")
      * @JoinTable (name="product_class_links",
@@ -240,15 +196,12 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     protected $classes;
 
-
     /**
      * Constructor
      *
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -264,8 +217,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get object unique id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getId()
     {
@@ -276,8 +227,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get weight
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getWeight()
     {
@@ -288,8 +237,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get price: modules should never overwrite this method
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPrice()
     {
@@ -300,8 +247,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get clear price: this price can be overwritten by modules
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getClearPrice()
     {
@@ -312,8 +257,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getName()
     {
@@ -324,8 +267,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get SKU
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSku()
     {
@@ -336,8 +277,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get image
      *
      * @return \XLite\Model\Image\Product\Image
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getImage()
     {
@@ -348,8 +287,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get free shipping flag
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFreeShipping()
     {
@@ -360,28 +297,28 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Check if product is accessible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAvailable()
     {
-        $result = true;
+        return \XLite::isAdminZone() || $this->isPublicAvailable();
+    }
 
-        if (!\XLite::isAdminZone()) {
-            $result = $this->getEnabled()
-                && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
-                && !$this->getInventory()->isOutOfStock();
-        }
-
-        return $result;
+    /**
+     * Check prodyct availability for public usage (customer interface)
+     * 
+     * @return boolean
+     */
+    public function isPublicAvailable()
+    {
+        return $this->getEnabled()
+            && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
+            && !$this->getInventory()->isOutOfStock();
     }
 
     /**
      * Check if product has image or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasImage()
     {
@@ -392,8 +329,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Return image URL
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getImageURL()
     {
@@ -406,8 +341,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @param integer|null $categoryId Category ID OPTIONAL
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategory($categoryId = null)
     {
@@ -426,8 +359,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @param integer|null $categoryId Category ID OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoryId($categoryId = null)
     {
@@ -438,8 +369,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Return list of product categories
      *
      * @return \Doctrine\ORM\PersistentCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategories()
     {
@@ -452,8 +381,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @param double $value Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     public function setAmount($value)
     {
@@ -464,8 +391,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get product Url
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getURL()
     {
@@ -478,13 +403,13 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get front URL 
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getFrontURL()
     {
         return $this->getProductId()
-            ? \XLite::getInstance()->getShopURL(\XLite\Core\Converter::buildURL('product', '', array('product_id' => $this->getProductId()), 'cart.php'))
+            ? \XLite::getInstance()->getShopURL(
+                \XLite\Core\Converter::buildURL('product', '', array('product_id' => $this->getProductId()), \XLite::CART_SELF)
+            )
             : null;
     }
 
@@ -492,8 +417,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Minimal available amount
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMinPurchaseLimit()
     {
@@ -504,8 +427,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Maximal available amount
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMaxPurchaseLimit()
     {
@@ -516,14 +437,19 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get inventory
      *
      * @return \XLite\Model\Inventory
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInventory()
     {
-        return !isset($this->inventory)
-            ? new \XLite\Model\Inventory()
-            : $this->inventory;
+        if (isset($this->inventory)) {
+            $inventory = $this->inventory;
+
+        } else {
+            $inventory = new \XLite\Model\Inventory();
+            $inventory->setProduct($this);
+
+        }
+
+        return $inventory;
     }
 
     /**
@@ -532,8 +458,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @param integer|null $categoryId Category ID OPTIONAL
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrderBy($categoryId = null)
     {
@@ -546,8 +470,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Count product images
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function countImages()
     {
@@ -558,8 +480,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Try to fetch product description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCommonDescription()
     {
@@ -570,8 +490,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get taxable basis
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTaxableBasis()
     {
@@ -582,8 +500,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Get arrival date 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getArrivalDate()
     {
@@ -606,8 +522,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @param integer $date Arrival date
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setArrivalDate($date)
     {
@@ -620,12 +534,10 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * Prepare creation date 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PrePersist
      */
-    public function prepareDate()
+    public function prepareBeforeCreate()
     {
         if (!$this->getDate()) {
             $this->setDate(time());
@@ -635,21 +547,23 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
             $this->setArrivalDate(time());
         }
 
-        $this->prepareUpdateDate();
+        $this->prepareBeforeUpdate();
     }
 
     /**
      * Prepare update date
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      *
      * @PreUpdate
      */
-    public function prepareUpdateDate()
+    public function prepareBeforeUpdate()
     {
         $this->setUpdateDate(time());
+
+        if (\XLite\Core\Converter::isEmptyString($this->getSKU())) {
+            $this->setSKU(null);
+        }
     }
 
     /**
@@ -658,8 +572,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @param integer|null $categoryId Category ID
      *
      * @return \XLite\Model\CategoryProducts|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function findLinkByCategoryId($categoryId)
     {
@@ -680,8 +592,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @param integer|null $categoryId Category ID OPTIONAL
      *
      * @return \XLite\Model\CategoryProducts
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLink($categoryId = null)
     {

@@ -4,10 +4,9 @@
  * ____file_title____
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 <div IF="hasShippingMarkups()">
@@ -91,7 +90,7 @@ function submitForm(formName, action)
                   -
                   <input type="text" name="posted_data[{markup.getMarkupId()}][max_weight]" size="9" value="{markup.getMaxWeight()}" />
                 </td>
-                <td>{t(#Flat markup ($)#)}:</td>
+                <td>{t(#Flat markup#)} ({xlite.currency.getSymbol()}):</td>
                 <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_flat]" size="5" value="{markup.getMarkupFlat()}" /></td>
                 <td>{t(#Percent markup#)}:</td>
                 <td><input type="text" name="posted_data[{markup.getMarkupId()}][markup_percent]" size="5" value="{markup.getMarkupPercent()}" /></td>
@@ -104,9 +103,9 @@ function submitForm(formName, action)
                   -
                   <input type="text" name="posted_data[{markup.getMarkupId()}][max_total]" size="9" value="{markup.getMaxTotal()}" />
                 </td>
-                <td>{t(#Per item markup ($)#)}:</td>
+                <td>{t(#Per item markup#)} ({xlite.currency.getSymbol()}):</td>
                 <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_item]" size="5" value="{markup.getMarkupPerItem()}" /></td>
-                <td>{t(#Per weight unit markup ($)#)}:</td>
+                <td>{t(#Per weight unit markup#)}({xlite.currency.getSymbol()}):</td>
                 <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_weight]" size="5" value="{markup.getMarkupPerWeight()}" /></td>
               </tr>
 
@@ -199,7 +198,7 @@ function submitForm(formName, action)
         -
         <input type="text" name="new[max_weight]" size="9" value="9999999" />
       </td>
-      <td>{t(#Flat markup ($)#)}:</td>
+      <td>{t(#Flat markup#)} ({xlite.currency.getSymbol()}):</td>
       <td class="table-label"><input type="text" name="new[markup_flat]" size="5" value="0" /></td>
       <td>{t(#Percent markup#)}:</td>
       <td><input type="text" name="new[markup_percent]" size="5" value="0" /></td>
@@ -212,9 +211,9 @@ function submitForm(formName, action)
         -
         <input type="text" name="new[max_total]" size="9" value="9999999" />
       </td>
-      <td>{t(#Markup per item ($)#)}:</td>
+      <td>{t(#Markup per item#)} ({xlite.currency.getSymbol()}):</td>
       <td class="table-label"><input type="text" name="new[markup_per_item]" size="5" value="0" /></td>
-      <td>{t(#Markup per weight unit ($)#)}:</td>
+      <td>{t(#Markup per weight unit#)} ({xlite.currency.getSymbol()}):</td>
       <td class="table-label"><input type="text" name="new[markup_per_weight]" size="5" value="0" /></td>
     </tr>
 

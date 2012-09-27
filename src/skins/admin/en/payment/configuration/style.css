@@ -1,0 +1,494 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Configuration styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.payment-conf {
+  position: relative;
+}
+
+.payment-conf .box {
+  border: 1px solid #dfe5e8;
+  width: 698px;
+  background-color: #f2f2f2;
+  margin: 0px;
+  margin-bottom: 50px;
+}
+
+.payment-conf .box h2 {
+  color: #333;
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #fff;
+  margin: 0px;
+  padding-left: 29px;
+  padding-right: 29px;
+  line-height: 80px;
+}
+
+.payment-conf .box .content {
+  background: transparent url(../../images/payment_box_bg.png) repeat-x left top;
+  padding: 33px 29px 36px 29px;
+}
+
+.payment-conf .box .content p {
+  color: #456583;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 3px;
+  margin: 0px;
+}
+
+.payment-conf .no-payment-modules button {
+  margin-top: 17px;
+  margin-bottom: 0px;
+}
+
+.payment-conf .counter {
+  float: right;
+  color: #8f8f8f;
+  margin-top: 24px;
+  font-size: 14px;
+  padding-right: 12px;
+}
+
+.payment-conf button.add-method {
+  margin-top: 18px;
+  margin-bottom: 0px;
+  padding-top: 4px;
+}
+
+.payment-conf button.add-method span {
+  padding-left: 3px;
+}
+
+/* Subboxes */
+.payment-conf .subbox {
+  position: absolute;
+  left: 739px;
+  top: 0px;
+  width: 365px;
+}
+
+.payment-conf .subbox h2 {
+  margin-top: 2px;
+  margin-bottom: 6px;
+  font-size: 17px;
+  color: #333;
+}
+
+.payment-conf .subbox p {
+  line-height: 18px;
+  color: #555;
+  margin-bottom: 3px;
+}
+
+.payment-conf .subbox button {
+  height: 30px;
+  padding-top: 6px;
+}
+
+.payment-conf .subbox button span {
+  font-size: 14px;
+  padding-left: 7px;
+  padding-right: 6px;
+}
+
+/* Watch video subbox */
+.payment-conf .subbox.watch-video button.watch-video span {
+  background: transparent url(../../images/watch_video.png) no-repeat 5px top;
+  padding-left: 36px;
+  padding-right: 7px;
+}
+
+/* Marketplace subbox */
+.payment-conf .subbox.marketplace {
+  top: 167px;
+}
+
+/* Offline box  */
+.payment-conf .box.offline-methods .content {
+  padding-bottom: 19px;
+}
+
+/* List */
+.payment-conf .methods ul {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 10px 0px;
+}
+
+.payment-conf .methods li {
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.payment-conf .methods li .row {
+  width: 499px;
+  background-color: #fff;
+  height: 40px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.payment-conf .methods li .row div {
+  display: inline-block;
+}
+
+.payment-conf .methods li .action {
+  height: 40px;
+  vertical-align: top;
+}
+
+.payment-conf .methods li .right-action {
+  float: right;
+}
+
+.payment-conf .methods li .action .separator {
+  background: transparent url(../../items_list/model/table/images/line-separator.png) repeat-y left top;
+  width: 2px;
+  height: 17px;
+  vertical-align: top;
+  margin-top: 11px;
+}
+
+.payment-conf .methods li .left-action .separator {
+  margin-left: 1px;
+}
+
+.payment-conf .methods li .right-action .separator {
+  margin-right: 1px;
+}
+
+.payment-conf .methods li .switch {
+  width: 34px;
+  height: 34px;
+  border: 3px solid #fff;
+  background-color: transparent;
+}
+
+.payment-conf .methods li .switch.enabled {
+  background-color: #eafde2;
+  border-color: #c2edb0;
+}
+
+.payment-conf .methods li .switch img {
+  background: transparent url(../../images/switch.png) no-repeat left -16px;
+  width: 16px;
+  height: 16px;
+  margin: 9px 10px;
+}
+
+.payment-conf .methods li .switch.enabled img {
+  background-position: left 0px;
+}
+
+.payment-conf .methods li.blocked-disable .switch {
+  background-image: url(../../images/force_enabled_method.png);
+  border: 0px none;
+  width: 40px;
+  height: 40px;
+}
+
+.payment-conf .methods li.blocked-enable .switch {
+  background-image: url(../../images/force_disabled_method.png);
+  border: 0px none;
+  width: 40px;
+  height: 40px;
+}
+
+.payment-conf .methods li.blocked-switch .switch {
+  cursor: help;
+}
+
+.payment-conf .methods li.blocked-switch .switch img {
+  margin: 12px 13px;
+}
+
+.payment-conf .methods li.has-icon .icon {
+  background-color: #fff;
+  border: 0px none;
+  border-radius: 6px 6px 0px 0px;
+  -moz-border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  width: 119px;
+  height: 33px;
+  line-height: 33px;
+  text-align: center;
+}
+
+.payment-conf .methods li.has-icon .icon img {
+  vertical-align: middle;
+}
+
+.payment-conf .methods li .title {
+  color: #333;
+  font-size: 16px;
+  padding: 11px 12px;
+  vertical-align: top;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 300px;
+}
+
+.payment-conf .methods li .title .fade {
+  background: transparent url(../../images/right_fade.png) repeat-y right top;
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 20px;
+  height: 100%;
+}
+
+.payment-conf .methods li .remove {
+  padding: 11px 8px;
+}
+
+.payment-conf .methods li .remove img {
+  background: transparent url(../../images/icon_trash.png) no-repeat left top;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.payment-conf .methods li .warning {
+  padding: 6px 3px 5px 10px;
+  vertical-align: top;
+}
+
+.payment-conf .methods li .warning img {
+  background: transparent url(../../images/warning.png) no-repeat left top;
+  width: 28px;
+  height: 28px;
+}
+
+.payment-conf .methods li .test-mode {
+  padding: 6px 3px 5px 10px;
+  vertical-align: top;
+}
+
+.payment-conf .methods li .test-mode img {
+  background: transparent url(../../images/test_mode.png) no-repeat left top;
+  width: 28px;
+  height: 28px;
+}
+
+.payment-conf .methods li button.configure {
+  vertical-align: top;
+  margin: 0px;
+  margin-top: 13px;
+  margin-left: 11px;
+}
+
+.payment-conf .methods li div.configure {
+  vertical-align: top;
+  padding-top: 10px;
+  padding-left: 13px;
+  padding-right: 9px;
+}
+
+.payment-conf .methods li div.configure img {
+  background: transparent url(../../images/gear.png) no-repeat left top;
+  width: 20px;
+  height: 20px;
+}
+
+.payment-conf .methods li .subseparator {
+  background-color: #d7d7d7;
+  width: 1px;
+  height: 15px;
+}
+
+.payment-conf .methods.offline {
+  padding-bottom: 20px;
+}
+
+/**
+ * Popup styles
+ */
+
+.add-payment-box {
+  width: 700px;
+}
+
+.add-payment-box.payment-type-A {
+  margin-top: 25px;
+}
+
+.add-payment-box .body {
+  clear: both;
+}
+
+.add-payment-box .body .body-item {
+  display: none;
+}
+
+.add-payment-box .body .body-box {
+  border: solid 1px #c2cbd2;
+  border-top: none;
+  padding: 20px 0px 35px 30px;
+  background-color: #f4f4f4;
+}
+
+.add-payment-box .body .body-item.selected {
+  display: block;
+}
+
+.add-payment-box .header {
+  border-top: solid 1px #c2cbd2;
+  border-left: solid 1px #c2cbd2;
+  border-right: solid 1px #c2cbd2;
+  border-radius: 10px 10px 0px 0px;
+  width: 49%;
+  background: #f4f4f4 url(../../images/header-tab-background.png) 0px 0px repeat-x;
+}
+
+.add-payment-box .headers {
+  height: 90px;
+  border-bottom: solid 1px #c2cbd2;
+}
+
+.add-payment-box .header .header-wrapper {
+  padding: 20px 0px 0px 0px;
+  margin: 0px 50px;
+  width: 230px;
+  height: 69px;
+}
+
+.add-payment-box .header.all-in-one-solutions {
+  float: left;
+}
+
+.add-payment-box .header.payment-gateways {
+  float: right;
+}
+
+.add-payment-box .header,
+  .add-payment-box .header *
+{
+  cursor: pointer;
+}
+
+.add-payment-box .headers .header.selected {
+  background: transparent url(../../images/header-tab-background-selected.png) 0px 0px repeat-x;
+}
+
+.add-payment-box .headers .header.selected .header-wrapper {
+  border-bottom: solid 1px #f2f2f2;
+}
+
+.add-payment-box .headers .header .main-head {
+  font-size: 24px;
+  color: #3264a9;
+}
+
+.add-payment-box .headers .header.selected .main-head {
+  color: #333333;
+}
+
+.add-payment-box .headers .header .small-head {
+  color: #456583;
+  margin-left: 20px;
+}
+
+.add-payment-box .headers .header.payment-gateways .small-head {
+  margin-left: -5px;
+}
+
+.everything-you-need {
+  color: #3264a9;
+  margin: 6px 0px 10px 0px;
+  font-size: 18px;
+}
+
+.body .description {
+  margin: 0px 30px 0px 0px;
+  font-size: 14px;
+}
+
+.payments-list .payment-method-icon {
+  margin: 45px 0px 10px 0px;
+}
+
+.payments-list .payment-method-icon img {
+  background-color: #ffffff;
+  padding: 15px 25px 10px 25px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.payments-list .payment-method-entry {
+  margin: 0px 40px 10px 0px;
+  background-color: #ffffff;
+}
+
+.payments-list .payment-method-entry .description,
+ .title-row .title
+{
+  padding: 16px 22px 10px 22px;
+}
+
+.payments-list .payment-method-entry .description {
+  color: #8f8f8f;
+  padding-top: 0px;
+  padding-bottom: 20px;
+  font-size: 14px;
+}
+
+.title-row .title {
+  float: left;
+  font-size: 18px;
+}
+
+.title-row .separator,
+  .title-row .button
+{
+  float: right;
+}
+
+.title-row .button {
+  padding: 6px 20px 6px 10px;
+  width: 60px;
+}
+
+.title-row .button button {
+  width: 70px;
+}
+
+.title-row .separator {
+  background: transparent url(../../images/payments-list-separator.png) 0px 16px no-repeat;
+  width: 2px;
+  height: 40px;
+  margin-right: 5px;
+}
+
+.payment-method-entry .links li {
+  float: left;
+  font-size: 14px;
+  margin: 5px 0px 15px 22px;
+  text-decoration: underline;
+}
+
+.payment-method-entry .links li a {
+  color: #154e9c;
+}
+
+/**
+ * Alternative payment methods popup widget
+ */
+
+.tabs-container.alternative-methods .tab .body,
+  .tabs-container.offline-methods .tab .body
+{
+  padding: 0px;
+}
+
+/* Add offline payment method */
+form.add-offline-method button.action {
+  margin-left: 142px;
+}

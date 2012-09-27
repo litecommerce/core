@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * OrderList
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\Base\IDecorator
 {
@@ -43,8 +39,6 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @param array  $pageArgs LC-specific URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -64,12 +58,12 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @param array  $args LC URL arguments OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
-        $id = empty($args['profile_id']) ? \XLite\Core\Auth::getInstance()->getProfile()->getProfileId() : $args['profile_id'];
+        $id = empty($args['profile_id'])
+            ? \XLite\Core\Auth::getInstance()->getProfile()->getProfileId()
+            : $args['profile_id'];
 
         unset($args['profile_id']);
 
@@ -87,8 +81,6 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @param integer $id Drupal profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getLCProfileId($id)
     {
@@ -101,8 +93,6 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @param integer $id LC profile ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function getDrupalProfileId($id)
     {
@@ -113,8 +103,6 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * Check if current page is the "Orders" portal
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function isPortal()
     {
@@ -126,8 +114,6 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * Initialization
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function init()
     {

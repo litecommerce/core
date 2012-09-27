@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -30,44 +28,34 @@ namespace XLite\Model\Repo;
 /**
  * DB-based configuration registry
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Config extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Repository type
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Default 'order by' field name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $defaultOrderBy = 'orderby';
 
     /**
      * List of options which are not allowed
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $disabledOptions = array();
 
     /**
      * Alternative record identifiers
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $alternativeIdentifier = array(
         array('category', 'name'),
@@ -80,8 +68,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $code  Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function createQueryBuilder($alias = null, $code = null)
     {
@@ -92,8 +78,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Get the list of options of the specified category
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getByCategory($category, $force = false, $doNotProcess = false)
     {
@@ -104,7 +88,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
         }
 
         if (!isset($data)) {
-            $data = $this->defineByCategoryQuery($category)->getResult();
+
+            $data = $this->findBy(array('category' => $category), array('orderby' => 'asc'));
+
             if (!$doNotProcess) {
                 $data = $this->processOptions($data);
                 $this->saveToCache($data, 'category', array('category' => $category));
@@ -120,8 +106,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $category Category name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function findByCategoryAndVisible($category)
     {
@@ -134,8 +118,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param boolean $force Do not use cache OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAllOptions($force = false)
     {
@@ -156,18 +138,16 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Preprocess options and transform its to the hierarchy of \XLite\Core\CommonCell objects
+     * Preprocess options and transform its to the hierarchy of \XLite\Core\ConfigCell objects
      *
      * @param array $data Array of options data gathered from the database
      *
-     * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return \XLite\Core\ConfigCell
      */
     public function processOptions($data)
     {
 
-        $config = new \XLite\Core\CommonCell();
+        $config = new \XLite\Core\ConfigCell();
 
         foreach ($data as $option) {
 
@@ -185,15 +165,15 @@ class Config extends \XLite\Model\Repo\Base\I18n
                 list($author, $module) = explode('\\', $category);
 
                 if (!isset($config->$author)) {
-                    $config->$author = new \XLite\Core\CommonCell();
+                    $config->$author = new \XLite\Core\ConfigCell();
                 }
 
                 if (!isset($config->$author->$module)) {
-                    $config->$author->$module = new \XLite\Core\CommonCell();
+                    $config->$author->$module = new \XLite\Core\ConfigCell();
                 }
 
             } elseif (!isset($config->$category)) {
-                $config->$category = new \XLite\Core\CommonCell();
+                $config->$category = new \XLite\Core\ConfigCell();
             }
 
             if ('checkbox' === $type) {
@@ -245,8 +225,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      *
      * @return void
      * @throws \Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function createOption($data)
     {
@@ -301,8 +279,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Define cache cells
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -323,8 +299,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $name     Option name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function enableOption($category, $name)
     {
@@ -338,8 +312,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $name     Option name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function disableOption($category, $name)
     {
@@ -354,8 +326,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Return query (and its params) which is used to filter options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOptionsAvailabilityCondition()
     {
@@ -383,8 +353,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param \Doctrine\ORM\QueryBuilder $qb Current query builder
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareOptionsAvailabilityCondition(\Doctrine\ORM\QueryBuilder $qb)
     {
@@ -396,29 +364,11 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Define query builder for getByCategory()
-     *
-     * @param string $category Category name
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineByCategoryQuery($category)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('c.category = :category')
-            ->setParameter('category', $category);
-    }
-
-    /**
      * Define query for findByCategoryAndVisible() method
      *
      * @param string $category Category name
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineByCategoryAndVisibleQuery($category)
     {
@@ -432,8 +382,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Define query builder for getAllOptions()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineAllOptionsQuery()
     {
@@ -448,8 +396,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param mixed  &$value    Option value
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkNameAndValue(&$category, &$name, &$value)
     {
@@ -462,8 +408,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $optionType Option type
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isValidOptionType($optionType)
     {

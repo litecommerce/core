@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,27 +28,28 @@ namespace XLite\Model;
 /**
  * Category
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category")
  * @Table  (name="categories",
  *      indexes={
  *          @Index (name="lpos", columns={"lpos"}),
  *          @Index (name="rpos", columns={"rpos"}),
- *          @Index (name="enabled", columns={"enabled"}),
- *          @Index (name="cleanURL", columns={"cleanURL"})
+ *          @Index (name="enabled", columns={"enabled"})
  *      }
  * )
  */
-class Category extends \XLite\Model\Base\I18n
+class Category extends \XLite\Model\Base\Catalog
 {
+    /**
+     * WEB LC root postprocessing constant
+     */
+    const WEB_LC_ROOT = '{{WEB_LC_ROOT}}';
+
+
     /**
      * Node unique ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -61,9 +60,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Node left value
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -72,9 +69,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Node right value
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -83,31 +78,16 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Node status
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
     protected $enabled = true;
 
     /**
-     * Node clean (SEO-friendly) URL
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255")
-     */
-    protected $cleanURL = '';
-
-    /**
      * Whether to display the category title, or not
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -116,9 +96,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Category "depth" in the tree
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.6
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -127,9 +105,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Category position parameter. Sort inside the parent category
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -138,9 +114,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Some cached flags
      *
-     * @var   \XLite\Model\Category\QuickFlags
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Category\QuickFlags
      *
      * @OneToOne (targetEntity="XLite\Model\Category\QuickFlags", mappedBy="category", cascade={"all"})
      */
@@ -149,9 +123,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Many-to-one relation with memberships table
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id", onDelete="SET NULL")
@@ -161,9 +133,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * One-to-one relation with category_images table
      *
-     * @var   \XLite\Model\Image\Category\Image
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Image\Category\Image
      *
      * @OneToOne  (targetEntity="XLite\Model\Image\Category\Image", mappedBy="category", cascade={"all"})
      */
@@ -172,9 +142,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Relation to a CategoryProducts entities
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="category", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
@@ -184,21 +152,17 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Child categories
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany (targetEntity="XLite\Model\Category", mappedBy="parent", cascade={"all"})
-     * @OrderBy({"pos" = "ASC"})
+     * @OrderBy({"pos" = "ASC","lpos" = "ASC"})
      */
     protected $children;
 
     /**
      * Parent category
      *
-     * @var   \XLite\Model\Category
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Category
      *
      * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="children")
      * @JoinColumn (name="parent_id", referencedColumnName="category_id")
@@ -208,9 +172,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Caching flag to check if the category is visible in the parents branch.
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.7
+     * @var boolean
      */
     protected $flagVisible = null;
 
@@ -220,8 +182,6 @@ class Category extends \XLite\Model\Base\I18n
      * @param \XLite\Model\Category $parent Parent category OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setParent(\XLite\Model\Category $parent = null)
     {
@@ -234,8 +194,6 @@ class Category extends \XLite\Model\Base\I18n
      * @param \XLite\Model\Image\Category\Image $image Image OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setImage(\XLite\Model\Image\Category\Image $image = null)
     {
@@ -246,8 +204,6 @@ class Category extends \XLite\Model\Base\I18n
      * Check if category has image
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasImage()
     {
@@ -258,8 +214,6 @@ class Category extends \XLite\Model\Base\I18n
      * Check every parent of category to be enabled.
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
      */
     public function isVisible()
     {
@@ -286,10 +240,8 @@ class Category extends \XLite\Model\Base\I18n
      * Get the number of subcategories
      *
      * @return integer|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getSubCategoriesCount()
+    public function getSubcategoriesCount()
     {
         $result = null;
 
@@ -309,20 +261,16 @@ class Category extends \XLite\Model\Base\I18n
      * Check if category has subcategories
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasSubcategories()
     {
-        return 0 < $this->getSubCategoriesCount();
+        return 0 < $this->getSubcategoriesCount();
     }
 
     /**
      * Return subcategories list
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSubcategories()
     {
@@ -340,8 +288,6 @@ class Category extends \XLite\Model\Base\I18n
      * @param boolean $hasSelf Flag to include itself
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSiblings($hasSelf = false)
     {
@@ -349,17 +295,25 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Get category path
+     *
+     * @return array
+     */
+    public function getPath()
+    {
+        return $this->getRepository()->getCategoryPath($this->getCategoryId());
+    }
+
+    /**
      * Gets full path to the category as a string: <parent category>/.../<category name>
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStringPath()
     {
         $path = array();
 
-        foreach ($this->getRepository()->getCategoryPath($this->getCategoryId()) as $category) {
+        foreach ($this->getPath() as $category) {
             $path[] = $category->getName();
         }
 
@@ -370,8 +324,6 @@ class Category extends \XLite\Model\Base\I18n
      * Return parent category ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     public function getParentId()
     {
@@ -384,12 +336,30 @@ class Category extends \XLite\Model\Base\I18n
      * @param integer $parentID Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.5
      */
     public function setParentId($parentID)
     {
         $this->parent = $this->getRepository()->find($parentID);
+    }
+
+    /**
+     * Get membership Id
+     *
+     * @return integer
+     */
+    public function getMembershipId()
+    {
+        return $this->getMembership() ? $this->getMembership()->getMembershipId() : null;
+    }
+
+    /**
+     * Flag if the category and active profile have the same memberships. (when category is displayed or hidden)
+     *
+     * @return boolean
+     */
+    public function hasAvailableMembership()
+    {
+        return is_null($this->getMembershipId()) || $this->getMembershipId() == \XLite\Core\Auth::getInstance()->getMembershipId();
     }
 
     /**
@@ -398,8 +368,6 @@ class Category extends \XLite\Model\Base\I18n
      * TODO: check if result of "getProducts()" is cached by Doctrine
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProductsCount()
     {
@@ -413,8 +381,6 @@ class Category extends \XLite\Model\Base\I18n
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProducts(\XLite\Core\CommonCell $cnd = null, $countOnly = false)
     {
@@ -429,13 +395,25 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Return category description
+     *
+     * @return string
+     */
+    public function getViewDescription()
+    {
+        return str_replace(
+            $this->getWebPreprocessingTags(),
+            $this->getWebPreprocessingURL(),
+            $this->getDescription()
+        );
+    }
+
+    /**
      * Constructor
      *
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -443,5 +421,35 @@ class Category extends \XLite\Model\Base\I18n
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
+    }
+
+    /**
+     * Register tags to be replaced with some URLs
+     *
+     * @return array
+     */
+    protected function getWebPreprocessingTags()
+    {
+        return array(
+            static::WEB_LC_ROOT,
+        );
+    }
+
+    /**
+     * Register URLs that should be given instead of tags
+     *
+     * @return array
+     */
+    protected function getWebPreprocessingURL()
+    {
+        // Get URL of shop. If the HTTPS is used then it should be cleaned from ?xid=<xid> construction
+        $url = \XLite::getInstance()->getShopURL(null, \XLite\Core\Request::getInstance()->isHTTPS());
+
+        // We are cleaning URL from unnecessary here <xid> construction
+        $url = preg_replace('/(\?.*)/', '', $url);
+
+        return array(
+            $url,
+        );
     }
 }

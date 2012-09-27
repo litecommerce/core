@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Payment;
@@ -30,8 +28,6 @@ namespace XLite\Model\Payment;
 /**
  * Payment method
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Method")
  * @Table  (name="payment_methods",
@@ -45,11 +41,18 @@ namespace XLite\Model\Payment;
 class Method extends \XLite\Model\Base\I18n
 {
     /**
+     * Type codes
+     */
+    const TYPE_ALLINONE    = 'A';
+    const TYPE_CC_GATEWAY  = 'C';
+    const TYPE_ALTERNATIVE = 'N';
+    const TYPE_OFFLINE     = 'O';
+
+
+    /**
      * Payment method unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -60,31 +63,34 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Method service name (gateway or API name)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $service_name;
 
     /**
      * Process class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $class;
 
     /**
+     * Specific module family name
+     *
+     * @var string
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $moduleName = '';
+
+    /**
      * Position
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -93,20 +99,45 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Enabled status
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
-    protected $enabled = true;
+    protected $enabled = false;
+
+    /**
+     * Module enabled status
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $moduleEnabled = true;
+
+    /**
+     * Added status
+     *
+     * @TODO set it to FALSE by default!
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $added = false;
+
+    /**
+     * Type
+     *
+     * @var string
+     *
+     * @Column (type="fixedstring", length=1)
+     */
+    protected $type = self::TYPE_OFFLINE;
 
     /**
      * Settings
      *
-     * @var   \XLite\Model\Payment\MethodSetting
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Payment\MethodSetting
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\MethodSetting", mappedBy="payment_method", cascade={"all"})
      */
@@ -115,9 +146,7 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Transactions
      *
-     * @var   \XLite\Model\Payment\Transaction
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Payment\Transaction
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\Transaction", mappedBy="payment_method", cascade={"all"})
      */
@@ -127,8 +156,6 @@ class Method extends \XLite\Model\Base\I18n
      * Get processor
      *
      * @return \XLite\Model\Payment\Base\Processor
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProcessor()
     {
@@ -138,23 +165,16 @@ class Method extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Check - enabeld method or not
+     * Check - enabled method or not
      * FIXME - must be removed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isEnabled()
     {
-        $modules = \Includes\Utils\ModulesManager::getActiveModules();
-        $disabledModule = false;
-        if (preg_match('/^Module\\\([\w_]+\\\[\w_]+)\\\/Ss', $this->getClass(), $match)) {
-            $disabledModule = !isset($modules[$match[1]]);
-        }
-
-        return $this->getEnabled()
-            && !$disabledModule
+        return ($this->getEnabled() || $this->isForcedEnabled())
+            && $this->getAdded()
+            && $this->getModuleEnabled()
             && $this->getProcessor()
             && $this->getProcessor()->isConfigured($this);
     }
@@ -163,12 +183,17 @@ class Method extends \XLite\Model\Base\I18n
      * Set class
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setClass($class)
     {
         $this->class = preg_replace('/^\\\?(?:XLite\\\)?\\\?/Sis', '', $class);
+
+        if (preg_match('/^Module/Sis', $class) > 0) {
+
+            list($modulePrefix, $author, $name) = explode('\\', $class, 4);
+
+            $this->setModuleName($author . '_' . $name);
+        }
     }
 
     /**
@@ -177,8 +202,6 @@ class Method extends \XLite\Model\Base\I18n
      * @param string $name Name
      *
      * @return string|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSetting($name)
     {
@@ -188,13 +211,33 @@ class Method extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->getOrderby();
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position Position
+     *
+     * @return integer
+     */
+    public function setPosition($position)
+    {
+        return $this->setOrderby($position);
+    }
+
+    /**
      * Get setting by name
      *
      * @param string $name Name
      *
      * @return \XLite\Model\Payment\MethodSetting
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSettingEntity($name)
     {
@@ -217,8 +260,6 @@ class Method extends \XLite\Model\Base\I18n
      * @param string $value Value
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setSetting($name, $value)
     {
@@ -262,8 +303,6 @@ class Method extends \XLite\Model\Base\I18n
      * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -271,5 +310,94 @@ class Method extends \XLite\Model\Base\I18n
         $this->transactions = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
+    }
+
+    /**
+     * Call processor methods
+     * 
+     * @param string $method    Method name
+     * @param array  $arguments Arguments OPTIONAL
+     *  
+     * @return mixed
+     */
+    public function __call($method, array $arguments = array())
+    {
+        array_unshift($arguments, $this);
+
+        return $this->getProcessor()
+            ? call_user_func_array(array($this->getProcessor(), $method), $arguments)
+            : null;
+    }
+
+    /**
+     * Get warning note
+     *
+     * @return string
+     */
+    public function getWarningNote()
+    {
+        $message = null;
+
+        if (!$this->getProcessor()->isConfigured($this)) {
+            $message = static::t('The method is not configured and can\'t be used');
+        }
+
+        if (!$message) {
+            $message = $this->getProcessor()->getWarningNote($this);
+        }
+
+        return $message;
+    }
+
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @return string
+     */
+    public function getAdminIconURL()
+    {
+        $url = $this->getProcessor() ? $this->getProcessor()->getAdminIconURL($this) : null;
+
+        if (true === $url) {
+            $module = $this->getProcessor()->getModule();
+            $url = $module
+                ? \XLite\Core\Layout::getInstance()->getResourceWebPath('modules/' . $module->getAuthor() . '/' . $module->getName() . '/method_icon.png')
+                : null;
+        }
+
+        return $url;
+    }
+
+    /**
+     * Set enabled 
+     * 
+     * @param boolean $enabled Property value
+     *  
+     * @return \XLite\Model\Payment\Method
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+        $this->getProcessor()->enableMethod($this);
+
+        return $this;
+    }
+
+    /**
+     * Set 'added' property
+     * 
+     * @param boolean $added Property value
+     *  
+     * @return \XLite\Model\Payment\Method
+     */
+    public function setAdded($added)
+    {
+        $this->added = $added;
+
+        if (!$added) {
+            $this->setEnabled(false);
+        }
+
+        return $this;
     }
 }

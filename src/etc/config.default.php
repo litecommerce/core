@@ -83,6 +83,13 @@ http_host = ""
 https_host = ""
 web_dir = ""
 
+[clean_urls]
+enabled = off
+; String with one or more chars.
+; It will be used to autogenerate clean URLs.
+; By default, only the "-" or "_" characters are allowed.
+; Empty string is also allowed.
+default_separator = "-"
 
 ;
 ; -----------------
@@ -134,7 +141,7 @@ unsharp_mask_filter_on_resize = off
 ; image_magick_path = "/usr/local/imagemagick/" (in Unix/Linux )
 ; You should consult with your hosting provider to find where Image Magick is installed
 ; If you leave it empty then PHP GD library will be used.
-; 
+;
 image_magick_path =
 
 ;
@@ -144,19 +151,20 @@ image_magick_path =
 ;
 [installer_details]
 auth_code = ""
+shared_secret_key = ""
 
 ;
 ; Some options to optimize the store
 ;
 [performance]
 developer_mode = Off
-substitutional_skins_cache = off
+skins_cache = off
 
 ;
 ; Decorator options
 ;
 [decorator]
-time_limit = 240
+time_limit = 600
 use_tokenizer = Off
 disable_software_reset = Off
 use_output = Off

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Module
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -50,9 +46,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * List of registered portals
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $portals = array();
 
@@ -65,8 +59,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$menus List of node descriptions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addMenus(array &$menus)
     {
@@ -76,8 +68,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Return URL to redirect to
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getAdminAreaURLArgs()
     {
@@ -86,7 +76,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if (\XLite\Core\Auth::getInstance()->isAdmin()) {
             $query .= '?' . \XLite\Core\Session::getInstance()->getName();
             $query .= '=' . \XLite\Core\Session::getInstance()->getId();
-            $query .= '&' . self::PARAM_DRUPAL_RETURN_URL;
+            $query .= '&' . static::PARAM_DRUPAL_RETURN_URL;
             $query .= '=' . urlencode(\Includes\Utils\URLManager::getCurrentURL());
         }
 
@@ -101,8 +91,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Getter
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPortals()
     {
@@ -115,8 +103,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $path Druapl path to check
      *
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPortal($path)
     {
@@ -128,8 +114,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -147,8 +131,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param integer $type       Node type OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function registerPortal($url, $controller, $title = '', $type = MENU_LOCAL_TASK)
     {
@@ -159,8 +141,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Here we can register so called "portals": controllers with custom URLs
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function registerPortals()
     {
@@ -171,7 +151,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         // So called "landing link"
         $this->registerPortal(
-            self::LANDING_LINK_PATH, '\XLite\Controller\Admin\Main', 'LC admin area', MENU_NORMAL_ITEM
+            static::LANDING_LINK_PATH, '\XLite\Controller\Admin\Main', 'LC admin area', MENU_NORMAL_ITEM
         );
     }
 
@@ -179,8 +159,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Prepare portals for Drupal hook "menu"
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPortalMenus()
     {
@@ -199,8 +177,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $menus List to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareMenus(array $menus)
     {
@@ -215,21 +191,27 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Hook "init"
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function invokeHookInit()
     {
         include_once \Includes\Utils\ModulesManager::getAbsoluteDir('CDev', 'DrupalConnector')
             . 'Drupal' . LC_DS . 'Include' . LC_DS . 'Callbacks.php';
+
+        if (defined('DRUPAL_ROOT') && !\XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_path) {
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                array(
+                    'name'     => 'drupal_root_path',
+                    'category' => 'CDev\\DrupalConnector',
+                    'value'    => DRUPAL_ROOT,
+                )
+            );
+        }
     }
 
     /**
      * Hook "menu"
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function invokeHookMenu()
     {
@@ -264,8 +246,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $list Files list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function optimizeJSFiles(array $list)
     {
@@ -292,9 +272,12 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
             if (preg_match('/(jquery([^\/]+))$/isSU', $key, $match)) {
 
-                // Depending on Drupal's module 'jQuery update' status on the list will be available or jquery.js or jquery.min.js 
+                // Depending on Drupal's module 'jQuery update' status on the list
+                // will be available or jquery.js or jquery.min.js 
                 if (preg_match('/^jquery\.js$/', $match[1])) {
-                    $uniqueScripts['jquery.min.js'] = isset($uniqueScripts['jquery.min.js']) ? $uniqueScripts['jquery.min.js'] + 1 : 1;
+                    $uniqueScripts['jquery.min.js'] = isset($uniqueScripts['jquery.min.js'])
+                        ? $uniqueScripts['jquery.min.js'] + 1
+                        : 1;
                 }
 
                 $uniqueScripts[$match[1]] = isset($uniqueScripts[$match[1]]) ? $uniqueScripts[$match[1]] + 1 : 1;
@@ -319,8 +302,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $list Files list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function optimizeCSSFiles($list)
     {
@@ -349,20 +330,15 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $originalPath The original path, before being altered by any modules
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function translateOutboundURL(&$path, array &$options, $originalPath)
     {
-        if (self::LANDING_LINK_PATH === $path) {
+        if (static::LANDING_LINK_PATH === $path) {
             $path = \Includes\Utils\URLManager::getShopURL('admin.php' . $this->getAdminAreaURLArgs());
             $options['external'] = true;
 
-        } else {
-            $url = $this->getHandler()->getDrupalCleanURL($path, $options);
-            if ($url) {
-                $path = $url;
-            }
+        } elseif ($url = $this->getHandler()->getDrupalCleanURL($path, $options)) {
+            $path = $url;
         }
     }
 
@@ -374,16 +350,11 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $pathLanguage Path language
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function translateInboundURL(&$path, $originalPath, $pathLanguage)
     {
-        if ($path) {
-            $url = $this->getHandler()->getURLByCleanURL($path);
-            if ($url) {
-                $path = $url;
-            }
+        if ($path && ($url = $this->getHandler()->getURLByCleanURL($path))) {
+            $path = $url;
         }
     }
 
@@ -393,8 +364,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $url Drupal base URL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setDrupalRootURL($url)
     {
@@ -412,8 +381,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Run cron tasks
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function runCronTasks()
     {

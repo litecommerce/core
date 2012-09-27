@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -30,58 +28,20 @@ namespace XLite\Core\Validator;
 /**
  * Enumrable
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
-class Enum extends \XLite\Core\Validator\Scalar
+class Enum extends \XLite\Core\Validator\Enum\AEnum
 {
-    /**
-     * Items list 
-     * 
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $list;
-
     /**
      * Constructor
      * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __construct()
-    {
-        $this->list = new \Doctrine\Common\Collections\ArrayCollection;
-    }
-
-    /**
-     * Get list 
-     * 
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getList()
-    {
-        return $this->list;
-    }
-
-    /**
-     * Validate
-     *
-     * @param mixed $data Data
+     * @param array $list List of allowe values OPTIONAL
      *
      * @return void
-     * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function validate($data)
+    public function __construct(array $list = array())
     {
-        if (!$this->list->contains($data)) {
-            throw $this->throwError('Value is forbidden');
-        }
+        parent::__construct();
+
+        $this->list = $list;
     }
 }

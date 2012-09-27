@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Separator;
@@ -31,8 +29,6 @@ namespace XLite\View\FormField\Separator;
 /**
  * \XLite\View\FormField\Separator\ASeparator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ASeparator extends \XLite\View\FormField\AFormField
 {
@@ -40,8 +36,6 @@ abstract class ASeparator extends \XLite\View\FormField\AFormField
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -53,8 +47,6 @@ abstract class ASeparator extends \XLite\View\FormField\AFormField
      * Return name of the folder with templates
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -65,8 +57,6 @@ abstract class ASeparator extends \XLite\View\FormField\AFormField
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -77,8 +67,6 @@ abstract class ASeparator extends \XLite\View\FormField\AFormField
      * Get default wrapper class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultWrapperClass()
     {

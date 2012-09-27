@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Login page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Login extends \XLite\Controller\Customer\ACustomer
 {
@@ -40,32 +36,34 @@ class Login extends \XLite\Controller\Customer\ACustomer
      */
     const SECURE_TOKEN = 'secureToken';
 
-
     /**
      * Controlelr parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'mode');
 
     /**
      * Profile
      *
-     * @var   \XLite\Model\Profile|integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Profile|integer
      */
     protected $profile;
 
+    /**
+     * Get page title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return 'Sign in';
+    }
 
     /**
      * handleRequest 
      * 
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -83,8 +81,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Perform some actions after the "login" action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function redirectFromLogin()
     {
@@ -102,16 +98,15 @@ class Login extends \XLite\Controller\Customer\ACustomer
      *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
+     * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getShopURL($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = null, array $params = array())
     {
         $add = (strpos($url, '?') ? '&' : '?') . 'feed=' . \XLite\Core\Request::getInstance()->action;
 
-        return parent::getShopURL($url . $add, $secure);
+        return parent::getShopURL($url . $add, $secure, $params);
     }
 
 
@@ -119,20 +114,16 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
-        return 'Authentication';
+        return 'Sign in';
     }
 
     /**
      * Return URL to redirect from login
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRedirectFromLoginURL()
     {
@@ -143,8 +134,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Log in using the login and password from request
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performLogin()
     {
@@ -158,8 +147,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Login
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogin()
     {
@@ -193,8 +180,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Log out
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionLogoff()
     {
@@ -204,11 +189,17 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
         if (!$this->getCart()->isEmpty()) {
 
-            if ('Y' == \XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
+            if (\XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
+                
+                if ($this->getCart()->getProfile() && !$this->getCart()->getProfile()->getOrder()) {
+                    $this->getCart()->setProfile(null);
+                }
                 \XLite\Core\Database::getEM()->remove($this->getCart());
                 \XLite\Core\Database::getEM()->flush();
 
             } else {
+                $this->getCart()->setProfile(null);
+                $this->getCart()->setOrigProfile(null);
                 $this->updateCart();
             }
         }
@@ -218,8 +209,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Perform some actions before redirect
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function actionPostprocessLogin()
     {
@@ -232,8 +221,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * @param mixed $result Result of log in procedure
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addLoginFailedMessage($result)
     {

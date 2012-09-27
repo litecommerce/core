@@ -4,14 +4,22 @@
  * TinyMCE-based textarea controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
-$(function() {
-  setSimpleTinymce($('textarea.tinymce'));
+var configTinyMCE;
+
+jQuery(function() {
+
+  // Retrive configuration for the tinyMCE object from the PHP settings
+  configTinyMCE = core.getCommentedData(jQuery('textarea.tinymce').eq(0).parent().eq(0));
+
+  // Change baseURL of TinyMCE object for correct loading TinyMCE plugins
+  tinyMCE.baseURL = configTinyMCE.base;
+
+  jQuery('textarea.tinymce').each(function (index, elem) {setSimpleTinymce(jQuery(elem));});
 });
 
 
@@ -40,7 +48,8 @@ function setAdvancedTinymce(obj)
     theme_advanced_resizing : true,
 
     // Prevents automatic converting URLs to relative ones.
-    convert_urls : false
+    convert_urls : false,
+    setup : setupTinyMCE
   });
 }
 
@@ -66,10 +75,28 @@ function setSimpleTinymce(obj)
     theme_advanced_resizing : true,
 
     // Prevents automatic converting URLs to relative ones.
-    convert_urls : false
+    convert_urls : false,
+    setup : setupTinyMCE
   });
 }
 
+
+function setupTinyMCE(ed)
+{
+  ed.onInit.add(function(ed) {
+    var $elem = ed.dom.select('img')[0];
+    var newSrc = str_replace(configTinyMCE.shopURLRoot , configTinyMCE.shopURL, ed.dom.getAttrib($elem, 'src'));
+
+    ed.dom.setAttrib($elem, 'src', newSrc);
+  });
+
+  ed.onPreProcess.add(function(ed) {
+    var $elem = ed.dom.select('img')[0];
+    var newSrc = str_replace(configTinyMCE.shopURL, configTinyMCE.shopURLRoot, ed.dom.getAttrib($elem, 'src'));
+
+    ed.dom.setAttrib($elem, 'src', newSrc);
+  });
+}
 
 //
 // TODO refactor to class/object model

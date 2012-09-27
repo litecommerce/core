@@ -14,34 +14,27 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
  */
 
 namespace XLite\Module\CDev\Moneybookers\Model\Payment\Processor;
 
 /**
  * Moneybookers payment processor
- *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * 
  */
 class Moneybookers extends \XLite\Model\Payment\Base\Iframe
 {
     /**
      * Allowed languages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $allowedLanguages = array(
         'EN', 'DE', 'ES', 'FR', 'IT', 'PL', 'GR', 'RO', 'RU', 'TR',
@@ -51,9 +44,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Allowed currencies codes
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $allowedCurrencies = array(
         'EUR', 'TWD', 'USD', 'THB', 'GBP', 'CZK', 'HKD', 'HUF', 'SGD', 'SKK',
@@ -65,9 +56,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Statuses
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $statuses = array(
         '-2' => 'Failed',
@@ -79,9 +68,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Failed reason codes and messages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $failedReasons = array(
         '01' => 'Referred',
@@ -155,9 +142,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Payment types
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $paymentTypes = array(
         'MBD' => 'Moneybooker direct',
@@ -168,9 +153,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Payment type countries
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $paymentTypeCountries = array(
         'WLT'   => true,
@@ -216,14 +199,14 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         'PWY28' => array('POL'),
         'PWY32' => array('POL'),
         'PWY33' => array('POL'),
+        'PWY36' => array('POL'),
+        'EPY'   => array('BGR'),
     );
 
     /**
      * Payment type icons
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $paymentTypeIcons = array(
         'WLT'   => 'by_ewallet_90x45.gif',
@@ -284,8 +267,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get platform name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getPlatformName()
     {
@@ -296,8 +277,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get platform secret word
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getPlatformSecretWord()
     {
@@ -308,8 +287,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get platform email
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getPlatformEmail()
     {
@@ -320,8 +297,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get platform customer id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getPlatformCustomerID()
     {
@@ -329,11 +304,37 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Check - payment method is configured or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isConfigured(\XLite\Model\Payment\Method $method)
+    {
+        return parent::isConfigured($method)
+            && \XLite\Core\Config::getInstance()->CDev->Moneybookers->email;
+    }
+
+    /**
+     * Check - payment processor is applicable for specified order or not
+     *
+     * @param \XLite\Model\Order          $order  Order
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
+    {
+        return parent::isApplicable($order, $method)
+            && $this->isPaymentTypeAllowed($this->convertServiceNameToType($method->getServiceName()), $order)
+            && in_array(strtoupper($order->getCurrency()->getCode()), $this->allowedCurrencies);
+    }
+
+    /**
      * Payment method has settings into Module settings section
      *
-     * @return boolan
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return boolean
      */
     public function hasModuleSettings()
     {
@@ -347,8 +348,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIconPath(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
@@ -356,7 +355,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         $icon = isset($this->paymentTypeIcons[$type]) ? $this->paymentTypeIcons[$type] : null;
 
         if (is_array($icon)) {
-            $code3 = $order->getProfile() && $order->getProfile()->getBillingAddress()
+            $code3 = ($order->getProfile() && $order->getProfile()->getBillingAddress())
                 ? $order->getProfile()->getBillingAddress()->getCountry()->getCode3()
                 : null;
             $icon = $code3 && isset($icon[$code3]) ? $icon[$code3] : null;
@@ -371,130 +370,10 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
     {
         return 'modules/CDev/Moneybookers/method.tpl';
-    }
-
-    /**
-     * Get iframe size
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getIframeSize()
-    {
-        return array(600, 550);
-    }
-
-    /**
-     * Get iframe data
-     *
-     * @return string|array URL or POST data
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getIframeData()
-    {
-        $id = $this->getSessionId();
-
-        return $id ? $this->getPostURL() . '?sid=' . $id : null;
-    }
-
-    /**
-     * Get Moneybookers session id
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getSessionId()
-    {
-        $data = array(
-            'pay_to_email'          => \XLite\Core\Config::getInstance()->CDev->Moneybookers->email,
-            'language'              => $this->getLanguageCode(),
-            'recipient_description' => substr(\XLite\Core\Config::getInstance()->Company->company_name, 0, 30),
-            'transaction_id'        => \XLite\Core\Config::getInstance()->CDev->Moneybookers->prefix . $this->transaction->getTransactionId(),
-            'pay_from_email'        => $this->getProfile()->getLogin(),
-            'firstname'             => $this->getProfile()->getBillingAddress()->getFirstname(),
-            'lastname'              => $this->getProfile()->getBillingAddress()->getLastname(),
-            'address'               => $this->getProfile()->getBillingAddress()->getStreet(),
-            'postal_code'           => $this->getProfile()->getBillingAddress()->getZipcode(),
-            'city'                  => $this->getProfile()->getBillingAddress()->getCity(),
-            'country'               => $this->getCountryCode(),
-            'amount'                => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
-            'currency'              => $this->getCurrencyCode(),
-            'status_url'            => $this->getCallbackURL(null, true),
-            'return_url'            => $this->getReturnURL(null, true),
-            'cancel_url'            => $this->getReturnURL(null, true, true),
-            'hide_login'            => 1,
-            'prepare_only'          => 1,
-            'payment_methods'       => $this->convertServiceNameToType($this->transaction->getPaymentMethod()->getServiceName()),
-            'merchant_fields'       => 'platform',
-            'platform'              => '21889079',
-        );
-
-        if (\XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url) {
-            $data['logo_url'] = \XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url;
-        }
-
-        $this->transaction->setPublicId($data['transaction_id']);
-
-        $request = new \XLite\Core\HTTP\Request($this->getPostURL());
-        $request->body = $data;
-        $response = $request->sendRequest();
-
-        $id = null;
-        if (
-            200 == $response->code
-            && preg_match('/SESSION_ID=([a-z0-9]+)/iSs', $response->headers->SetCookie, $match)
-            && $response->body == $match[1]
-        ) {
-            $id = $match[1];
-
-        } elseif (200 != $response->code) {
-            $this->setDetail(
-                'moneybookers_session_error',
-                'Moneybookers payment processor did not receive session ID successfull (HTTP error: ' . $response->code . ').',
-                'Session initialization error'
-            );
-
-        } elseif (preg_match('/SESSION_ID=([a-z0-9]+)/iSs', $response->headers->SetCookie, $match)) {
-
-            $this->setDetail(
-                'moneybookers_session_error',
-                'Moneybookers payment processor did not receive session ID successfull (page body has not session ID).',
-                'Session initialization error'
-            );
-
-        } else {
-            $this->setDetail(
-                'moneybookers_session_error',
-                'Moneybookers payment processor did not receive session ID successfull.',
-                'Session initialization error'
-            );
-        }
-
-        if (
-            !$id
-            && preg_match('/<h1[^>]*>(.+)<\/h1>/USs', $response->body, $m1)
-            && preg_match('/<div class="gateway_content">(.+)<\/div>/USs', $response->body, $m2)
-        ) {
-            $m1 = trim($m1[1]);
-            $m2 = trim(strip_tags($m2[1]));
-
-            $this->setDetail(
-                'moneybookers_session_error',
-                $m1 . ': ' . $m2,
-                'Session initialization error'
-            );
-        }
-
-        return $id;
     }
 
     /**
@@ -503,9 +382,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -531,8 +407,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processCallback(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -624,44 +498,134 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
-     * Check - payment method is configured or not
+     * Get payment method admin zone icon URL
      *
      * @param \XLite\Model\Payment\Method $method Payment method
      *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return string
      */
-    public function isConfigured(\XLite\Model\Payment\Method $method)
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
     {
-        return parent::isConfigured($method)
-            && \XLite\Core\Config::getInstance()->CDev->Moneybookers->email;
+        return true;
     }
 
     /**
-     * Check - payment processor is applicable for specified order or not
+     * Get iframe size
      *
-     * @param \XLite\Model\Order          $order  Order
-     * @param \XLite\Model\Payment\Method $method Payment method
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return array
      */
-    public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
+    protected function getIframeSize()
     {
-        return parent::isApplicable($order, $method)
-            && $this->isPaymentTypeAllowed($this->convertServiceNameToType($method->getServiceName()), $order)
-            && in_array(strtoupper($order->getCurrency()->getCode()), $this->allowedCurrencies);
+        return array(600, 550);
+    }
+
+    /**
+     * Get iframe data
+     *
+     * @return string|array URL or POST data
+     */
+    protected function getIframeData()
+    {
+        $id = $this->getSessionId();
+
+        return $id ? $this->getPostURL() . '?sid=' . $id : null;
+    }
+
+    /**
+     * Get Moneybookers session id
+     *
+     * @return string
+     */
+    protected function getSessionId()
+    {
+        $data = array(
+            'pay_to_email'          => \XLite\Core\Config::getInstance()->CDev->Moneybookers->email,
+            'language'              => $this->getLanguageCode(),
+            'recipient_description' => substr(\XLite\Core\Config::getInstance()->Company->company_name, 0, 30),
+            'transaction_id'        => \XLite\Core\Config::getInstance()->CDev->Moneybookers->prefix . $this->transaction->getTransactionId(),
+            'pay_from_email'        => $this->getProfile()->getLogin(),
+            'firstname'             => $this->getProfile()->getBillingAddress()->getFirstname(),
+            'lastname'              => $this->getProfile()->getBillingAddress()->getLastname(),
+            'address'               => $this->getProfile()->getBillingAddress()->getStreet(),
+            'postal_code'           => $this->getProfile()->getBillingAddress()->getZipcode(),
+            'city'                  => $this->getProfile()->getBillingAddress()->getCity(),
+            'country'               => $this->getCountryCode(),
+            'amount'                => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
+            'currency'              => $this->getCurrencyCode(),
+            'status_url'            => $this->getCallbackURL(null, true),
+            'return_url'            => $this->getReturnURL(null, true),
+            'cancel_url'            => $this->getReturnURL(null, true, true),
+            'hide_login'            => 1,
+            'prepare_only'          => 1,
+            'payment_methods'       => $this->convertServiceNameToType($this->transaction->getPaymentMethod()->getServiceName()),
+            'merchant_fields'       => 'platform',
+            'platform'              => '21889079',
+        );
+
+        if (\XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url) {
+            $data['logo_url'] = \XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url;
+        }
+
+        $this->transaction->setPublicId($data['transaction_id']);
+
+        $request = new \XLite\Core\HTTP\Request($this->getPostURL());
+        $request->body = $data;
+        $response = $request->sendRequest();
+
+        $id = null;
+        if (
+            200 == $response->code
+            && preg_match('/SESSION_ID=([a-z0-9]+)/iSs', $response->headers->SetCookie, $match)
+            && $response->body == $match[1]
+        ) {
+            $id = $match[1];
+
+        } elseif (200 != $response->code) {
+            $this->setDetail(
+                'moneybookers_session_error',
+                'Moneybookers payment processor did not receive session ID successfull'
+                . ' (HTTP error: ' . $response->code . ').',
+                'Session initialization error'
+            );
+
+        } elseif (preg_match('/SESSION_ID=([a-z0-9]+)/iSs', $response->headers->SetCookie, $match)) {
+
+            $this->setDetail(
+                'moneybookers_session_error',
+                'Moneybookers payment processor did not receive session ID successfull (page body has not session ID).',
+                'Session initialization error'
+            );
+
+        } else {
+            $this->setDetail(
+                'moneybookers_session_error',
+                'Moneybookers payment processor did not receive session ID successfull.',
+                'Session initialization error'
+            );
+        }
+
+        if (
+            !$id
+            && preg_match('/<h1[^>]*>(.+)<\/h1>/USs', $response->body, $m1)
+            && preg_match('/<div class="gateway_content">(.+)<\/div>/USs', $response->body, $m2)
+        ) {
+            $m1 = trim($m1[1]);
+            $m2 = trim(strip_tags($m2[1]));
+
+            $this->setDetail(
+                'moneybookers_session_error',
+                $m1 . ': ' . $m2,
+                'Session initialization error'
+            );
+        }
+
+        return $id;
     }
 
     /**
      * Get language code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLanguageCode()
     {
@@ -674,8 +638,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get country code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCountryCode()
     {
@@ -687,8 +649,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get currency code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCurrencyCode()
     {
@@ -699,8 +659,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Get post URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPostURL()
     {
@@ -713,8 +671,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Define saved into transaction data schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSavedData()
     {
@@ -732,8 +688,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param string $serviceName Payment method service name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function convertServiceNameToType($serviceName)
     {
@@ -743,12 +697,10 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     /**
      * Check - payment type is allowed for specified order or not
      *
-     * @param string           $type  Payment type
+     * @param string             $type  Payment type
      * @param \XLite\Model\Order $order Order
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPaymentTypeAllowed($type, \XLite\Model\Order $order)
     {
@@ -773,8 +725,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.9
      */
     protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {

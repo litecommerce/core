@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Base;
@@ -30,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Surcharge owner
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -40,22 +36,18 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
     /**
      * Total
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $total = 0.0000;
 
     /**
      * Subtotal
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $subtotal = 0.0000;
 
@@ -65,8 +57,6 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * Get exclude surcharges (non-included)
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getExcludeSurcharges()
     {
@@ -85,8 +75,6 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * Get included surcharges
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getIncludeSurcharges()
     {
@@ -107,8 +95,6 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * @param string $type Type
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getExcludeSurchargesByType($type)
     {
@@ -127,8 +113,6 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * Get surcharge totals 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargeTotals()
     {
@@ -161,8 +145,6 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * Get surcharge sum
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargeSum()
     {
@@ -181,8 +163,6 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * @param string $type Surcharge type
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargeSumByType($type)
     {
@@ -201,8 +181,6 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * @param string $type Surcharge type
      *
      * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSurchargeTotalByType($type)
     {

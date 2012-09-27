@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Base;
@@ -30,8 +28,6 @@ namespace XLite\Model\Base;
 /**
  * Abstract address model
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -40,9 +36,7 @@ abstract class Address extends \XLite\Model\AEntity
     /**
      * Unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -53,53 +47,43 @@ abstract class Address extends \XLite\Model\AEntity
     /**
      * Address type: residential/commercial
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="fixedstring", length="1")
+     * @Column (type="fixedstring", length=1)
      */
     protected $address_type = 'R';
 
     /**
      * Phone
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $phone = '';
 
     /**
      * Street, number of building, apartment etc
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $street = '';
 
     /**
      * City
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $city = '';
 
     /**
      * State
      *
-     * @var   \XLite\Model\State
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\State
      *
      * @ManyToOne  (targetEntity="XLite\Model\State", cascade={"merge","detach"})
      * @JoinColumn (name="state_id", referencedColumnName="state_id")
@@ -109,20 +93,16 @@ abstract class Address extends \XLite\Model\AEntity
     /**
      * Custom state
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $custom_state = '';
 
     /**
      * Country
      *
-     * @var   \XLite\Model\Country
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Country
      *
      * @ManyToOne  (targetEntity="XLite\Model\Country", cascade={"merge","detach"})
      * @JoinColumn (name="country_code", referencedColumnName="code")
@@ -132,11 +112,9 @@ abstract class Address extends \XLite\Model\AEntity
     /**
      * Zip/postal code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $zipcode = '';
 
@@ -144,8 +122,6 @@ abstract class Address extends \XLite\Model\AEntity
      * Get address fields list
      *
      * @return array(string)
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAddressFields()
     {
@@ -165,8 +141,6 @@ abstract class Address extends \XLite\Model\AEntity
      * Get state
      *
      * @return \XLite\Model\State
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getState()
     {
@@ -191,8 +165,6 @@ abstract class Address extends \XLite\Model\AEntity
      * @param mixed $state State object or state id or custom state name
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setState($state)
     {
@@ -200,8 +172,10 @@ abstract class Address extends \XLite\Model\AEntity
 
             // Set by state object
             if ($state->getStateId()) {
-                $this->state = $state;
-                $this->setCustomState('');
+                if (!$this->state || $this->state->getStateId() != $state->getStateId()) {
+                    $this->state = $state;
+                    $this->setCustomState('');
+                }
 
             } else {
 
@@ -226,8 +200,6 @@ abstract class Address extends \XLite\Model\AEntity
      * Get state Id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStateId()
     {
@@ -238,8 +210,6 @@ abstract class Address extends \XLite\Model\AEntity
      * Get country code
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCountryCode()
     {
@@ -252,8 +222,6 @@ abstract class Address extends \XLite\Model\AEntity
      * @param string $atype Address type code
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequiredFieldsByType($atype)
     {
@@ -266,8 +234,6 @@ abstract class Address extends \XLite\Model\AEntity
      * @param string $atype Address type code
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequiredEmptyFields($atype)
     {
@@ -290,8 +256,6 @@ abstract class Address extends \XLite\Model\AEntity
      * @param string $atype Address type code
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCompleted($atype)
     {
@@ -302,8 +266,6 @@ abstract class Address extends \XLite\Model\AEntity
      * Clone
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -324,8 +286,6 @@ abstract class Address extends \XLite\Model\AEntity
      * Update record in database
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function update()
     {
@@ -336,8 +296,6 @@ abstract class Address extends \XLite\Model\AEntity
      * Create record in database
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function create()
     {
@@ -349,8 +307,6 @@ abstract class Address extends \XLite\Model\AEntity
      * Check if address has duplicates
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkAddress()
     {

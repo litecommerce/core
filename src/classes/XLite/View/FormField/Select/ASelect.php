@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Select;
 /**
  * Form abstract selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ASelect extends \XLite\View\FormField\AFormField
 {
@@ -46,8 +42,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * Return default options list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getDefaultOptions();
 
@@ -56,8 +50,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -70,8 +62,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @param mixed $value Value to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setValue($value)
     {
@@ -87,8 +77,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -99,8 +87,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * getOptions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOptions()
     {
@@ -111,8 +97,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * Checks if the list is empty
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isListEmpty()
     {
@@ -120,31 +104,21 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
     }
 
     /**
-     * Check - options list Has option groups or not
+     * Check - option is group or not
+     *
+     * @param mixed $option Option
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
-    protected function hasOptionGroups()
+    protected function isGroup($option)
     {
-        $cnt = 0;
-
-        foreach ($this->getOptions() as $option) {
-            if (is_array($option)) {
-                $cnt++;
-            }
-        }
-
-        return count($this->getOptions()) == $cnt;
+        return is_array($option);
     }
 
     /**
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -163,8 +137,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @param mixed $value Value
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function isOptionSelected($value)
     {
@@ -177,8 +149,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @param mixed $optionGroupIndex Option group index
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isOptionGroupDisabled($optionGroupIndex)
     {
@@ -191,8 +161,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @param mixed $value Option value
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function isOptionDisabled($value)
     {
@@ -206,8 +174,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @param array $optionGroup    Option group
      *  
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getOptionGroupAttributesCode($optionGroupIdx, array $optionGroup)
     {
@@ -227,8 +193,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @param array $optionGroup    Option group
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getOptionGroupAttributes($optionGroupIdx, array $optionGroup)
     {
@@ -249,8 +213,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @param mixed $value Value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getOptionAttributesCode($value)
     {
@@ -269,8 +231,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @param mixed $value Value
      *  
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
      */
     protected function getOptionAttributes($value)
     {

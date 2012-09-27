@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Invoice widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="order.children", weight="30")
  */
@@ -46,9 +42,7 @@ class Invoice extends \XLite\View\AView
     /**
      * Shipping modifier (cache)
      *
-     * @var   \XLite\Model\Order\Modifier
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Order\Modifier
      */
     protected $shippingModifier;
 
@@ -57,8 +51,6 @@ class Invoice extends \XLite\View\AView
      * Get order
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrder()
     {
@@ -69,8 +61,6 @@ class Invoice extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -86,8 +76,6 @@ class Invoice extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -104,8 +92,6 @@ class Invoice extends \XLite\View\AView
      * Return default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -116,8 +102,6 @@ class Invoice extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -129,8 +113,6 @@ class Invoice extends \XLite\View\AView
      * Get shipping modifier
      *
      * @return \XLite\Model\Order\Modifier
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getShippingModifier()
     {
@@ -146,8 +128,6 @@ class Invoice extends \XLite\View\AView
      * Get item fescription block columns count 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemDescriptionCount()
     {
@@ -158,12 +138,28 @@ class Invoice extends \XLite\View\AView
      * Get columns span 
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getColumnsSpan()
     {
         return 4 + count($this->getOrder()->getItemsExcludeSurcharges());
+    }
+
+    /**
+     * Get payment methods with instructions 
+     * 
+     * @return array
+     */
+    protected function getPaymentInstructions()
+    {
+        $list = array();
+
+        foreach ($this->getOrder()->getVisiblePaymentMethods() as $method) {
+            if ($method->getInstruction()) {
+                $list[] = $method;
+            }
+        }
+
+        return $list;
     }
 
     // {{{ Surcharges
@@ -172,8 +168,6 @@ class Invoice extends \XLite\View\AView
      * Get surcharge totals
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getSurchargeTotals()
     {
@@ -187,8 +181,6 @@ class Invoice extends \XLite\View\AView
      * @param array  $surcharge Surcharge
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function getSurchargeClassName($type, array $surcharge)
     {
@@ -203,8 +195,6 @@ class Invoice extends \XLite\View\AView
      * @param array $surcharge Surcharge
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function formatSurcharge(array $surcharge)
     {

@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\VAT\View\Form;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\VAT\View\Form;
 /**
  * Edit tax form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class EditTax extends \XLite\View\Form\AForm
 {
@@ -39,8 +35,6 @@ class EditTax extends \XLite\View\Form\AForm
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -51,8 +45,6 @@ class EditTax extends \XLite\View\Form\AForm
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -63,8 +55,6 @@ class EditTax extends \XLite\View\Form\AForm
      * Required form parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonFormParams()
     {

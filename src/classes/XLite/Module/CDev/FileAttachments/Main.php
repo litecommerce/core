@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FileAttachments;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\FileAttachments;
 /**
  * File atachments module main class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -39,8 +35,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function getAuthorName()
     {
@@ -48,23 +42,29 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
+     * Get module major version
+     *
+     * @return string
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
+    }
+
+    /**
      * Module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function getMinorVersion()
     {
-        return '6';
+        return '0';
     }
 
     /**
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function getModuleName()
     {
@@ -75,11 +75,10 @@ abstract class Main extends \XLite\Module\AModule
      * Module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
      */
     public static function getDescription()
     {
-        return 'Allows you to attach files to goods that can be downloaded from the detailed pages of this product by visitors.';
+        return 'Allows you to attach files to goods that can be downloaded'
+            . ' from the detailed pages of this product by visitors.';
     }
 }

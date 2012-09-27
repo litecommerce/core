@@ -25,98 +25,53 @@
  * @since     1.0.0
  */
 
-class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
+require_once __DIR__ . '/ATax.php';
+
+class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_Module_CDev_VAT_Model_ATax
 {
-    public  static function setUpBeforeClass(){
-        xlite_restore_sql_from_backup();
-    }
-    public function testGetListPrice()
+    /**
+     * testGetIncludedTaxList
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function testGetIncludedTaxList()
     {
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
-        foreach ($tax->getRates() as $rate) {
-            \XLite\Core\Database::getEM()->remove($rate);
-        }
-        $tax->getRates()->clear();
+        $product = $this->getProduct();
 
-        $tax->setEnabled(true);
+        \XLite\Core\Config::getInstance()->Shipping->anonymous_country = 'US';
+        \XLite\Core\Config::updateInstance();
 
-        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
-        $rate->setValue(10);
-        $rate->setPosition(1);
-        \XLite\Core\Database::getEM()->persist($rate);
-        $tax->addRates($rate);
-        $rate->setTax($tax);
-        \XLite\Core\Database::getEM()->flush();
+        $productTaxes = $product->getIncludedTaxList();
 
-        $products = \XLite\Core\Database::getRepo('XLite\Model\Product')->findAll();
-        $product = array_shift($products);
+        $this->assertTrue(is_array($productTaxes), 'Returned not an array');
 
-        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
-        $price = $product->getPrice();
-        $this->assertEquals(
-            $this->getVAT($price, 0.1, 0.1),
-            \XLite::getInstance()->getCurrency()->roundValue($product->getListPrice()),
-            'check tax cost 10%'
-        );
-
-        // 10%
-        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
-        $rate->setValue(20);
-        $rate->setPosition(2);
-        \XLite\Core\Database::getEM()->persist($rate);
-        $tax->addRates($rate);
-        $rate->setTax($tax);
-        \XLite\Core\Database::getEM()->flush();
-
-        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
-        $this->assertEquals(
-            $this->getVAT($price, 0.1, 0.1),
-            \XLite::getInstance()->getCurrency()->roundValue($product->getListPrice()),
-            'check tax cost 10% #2'
-        );
-
-        // 20%
-        $rate->setPosition(0);
-        $memberships = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAll();
-        $membership = array_shift($memberships);
-        $rate->setMembership($membership);
-        $tax->setVATMembership($membership);
-        \XLite\Core\Database::getEM()->flush();
-
-        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
-        $this->assertEquals(
-            $this->getVAT($price, 0.2, 0.1),
-            \XLite::getInstance()->getCurrency()->roundValue($product->getListPrice()),
-            'check tax cost 20%'
-        );
-
-        // Disabled tax
-        $tax->setEnabled(false);
-        \XLite\Core\Database::getEM()->flush();
-        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
-        $this->assertEquals($price, $product->getListPrice(), 'check no-tax cost');
-    }
-
-    protected function getVAT($value, $percent, $tax)
-    {
-        $value -= ($value - $value / ( 1 + $percent));
-
-        return \XLite::getInstance()->getCurrency()->roundValue($value);
-    }
-
-    protected function getTax($value, $percent, $tax)
-    {
-        $value -= ($value - $value / ( 1 + $percent));
-
-        return \XLite::getInstance()->getCurrency()->roundValue($value * $tax);
-    }
-
-    protected function processTaxes(array $taxes)
-    {
-        foreach ($taxes as $k => $v) {
-            $taxes[$k] = \XLite::getInstance()->getCurrency()->roundValue($v);
+        foreach ($productTaxes as $k => $v) {
+            $productTaxes[$k] = number_format(round($v, 2), 2);
         }
 
-        return $taxes;
+        $this->assertEquals(
+            array('VAT' => 4.15),
+            $productTaxes,
+            'Wrong taxes returned'
+        );
+   }
+
+
+    /**
+     * getProduct 
+     * 
+     * @return \XLite\Model\Product
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getProduct()
+    {
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(22); // Find Binary Mom
+
+        $this->assertNotNull($product, 'Product #22 (Binary Mom) not found');
+
+        return $product;
     }
 }

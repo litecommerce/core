@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Input;
 /**
  * Common checkbox
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Checkbox extends \XLite\View\FormField\Input\AInput
 {
@@ -46,8 +42,6 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * Return field type
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -59,8 +53,6 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -75,8 +67,6 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * Determines if checkbox is checked
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isChecked()
     {
@@ -89,8 +79,6 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * @param array $attrs Field attributes to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareAttributes(array $attrs)
     {
@@ -107,8 +95,6 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * Get default value
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultValue()
     {
@@ -119,8 +105,6 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * Return field template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {

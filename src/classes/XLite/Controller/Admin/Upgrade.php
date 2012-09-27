@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Upgrade
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Upgrade extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,8 +37,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Run controller
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function run()
     {
@@ -77,8 +71,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -108,8 +100,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Check if core major version is equal to the current one
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isUpdate()
     {
@@ -120,8 +110,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Check if current page is the core version selection dialog
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCoreSelection()
     {
@@ -132,8 +120,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Check if current page is the updates download dialog
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDownload()
     {
@@ -144,8 +130,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Check if next step of upgrade id available
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isNextStepAvailable()
     {
@@ -156,8 +140,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Return list of all core versions available
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCoreVersionsList()
     {
@@ -171,8 +153,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Check the flag in request
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isForce()
     {
@@ -185,8 +165,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * @param boolean $force Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getActionParamsCommon($force = null)
     {
@@ -201,8 +179,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Install add-on from marketplace
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionInstallAddon()
     {
@@ -245,8 +221,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Install uploaded add-on
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUploadAddon()
     {
@@ -288,8 +262,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Go to the upgrade third step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDownload()
     {
@@ -319,8 +291,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Go to the upgrade third step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUnpack()
     {
@@ -333,8 +303,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $this->showError(__FUNCTION__, 'not all archives were unpacked');
 
                 \XLite\Core\TopMessage::addError(
-                    'Try to unpack them manually, and click <a href="' 
-                    . $this->buildURL('upgrade', 'check_integrity') 
+                    'Try to unpack them manually, and click <a href="'
+                    . $this->buildURL('upgrade', 'check_integrity')
                     . '">this link</a>'
                 );
 
@@ -354,8 +324,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Go to the upgrade third step
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionCheckIntegrity()
     {
@@ -380,8 +348,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Third step: install downloaded upgrades
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionInstallUpgrades()
     {
@@ -393,10 +359,15 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             // Perform upgrade
             $this->runStep('upgrade', array(false, $this->getFilesToOverWrite()));
 
+            $modules = array();
+
             // Disable selected modules
             foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
-                \Includes\Utils\ModulesManager::disableModule($module->getActualName());
+                $module->setEnabled(false);
+                $modules[] = $module;
             }
+
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateInBatch($modules);
 
             if ($this->isForce()) {
                 if ($this->isNextStepAvailable()) {
@@ -433,8 +404,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Show log file content
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionViewLogFile()
     {
@@ -449,8 +418,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Install add-on from marketplace
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionInstallAddonForce()
     {
@@ -462,8 +429,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Select core version for upgrade
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSelectCoreVersion()
     {
@@ -472,6 +437,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         if ($version) {
             \XLite\Upgrade\Cell::getInstance()->setCoreVersion($version);
             \XLite\Upgrade\Cell::getInstance()->clear(false);
+            $this->setHardRedirect();
 
         } else {
             \XLite\Core\TopMessage::addError('Unexpected error: version value is not passed');
@@ -485,8 +451,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * @param array  $params Call params OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function runStep($method, array $params = array())
     {
@@ -505,8 +469,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * Retrive list of files that must be overwritten by request for install upgrades
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.4
      */
     protected function getFilesToOverWrite()
     {

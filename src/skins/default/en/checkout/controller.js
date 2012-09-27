@@ -4,10 +4,9 @@
  * Checkout controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 /**
@@ -123,6 +122,8 @@ CheckoutView.autoload.currentLoadedStep = false;
 // Postprocess widget
 CheckoutView.prototype.postprocess = function(isSuccess, initial)
 {
+  var base = this.base;
+
   CheckoutView.superclass.postprocess.apply(this, arguments);
 
   this.isLoadingStart = false;
@@ -145,7 +146,15 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       .eq(0)
       .commonController(
         'enableBackgroundSubmit',
-        null,
+        function () {
+          var f = this;
+          setTimeout(
+            function() {
+              jQuery(':input', f).attr('readonly', 'readonly');
+            },
+            100
+          );
+        },
         function(event) {
           if (jQuery('#account-links a.log-in').length) {
             jQuery('.error a.log-in', this)
@@ -159,6 +168,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
               );
           }
 
+          jQuery(':input', this).removeAttr('readonly');
+
           return o.resetAfterSubmit(event);
         }
       )
@@ -168,6 +179,13 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
     jQuery('.profile .create #create_profile_chk', this.commonBase).change(
       function() {
+        if (this.checked) {
+          jQuery(this).parent().find('p').show();
+
+        } else {
+          jQuery(this).parent().find('p').hide();
+        }
+
         if (this.form.validate(true)) {
           this.form.commonController.submitForce();
         }
@@ -255,7 +273,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
           o.currentLoadedStep = 'shipping';
 
-          return !o.load({ step: 'shipping' });
+          return !o.load({step: 'shipping'});
         }
       );
 
@@ -264,6 +282,18 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     // Payment methods list
     jQuery('.payment-step form.methods', this.base)
       .commonController('enableBackgroundSubmit')
+      .bind(
+        'beforeSubmit',
+        function() {
+          jQuery('.payment-step.current .button-row button', o.base).addClass('disabled');
+        }
+      )
+      .bind(
+        'afterSubmit',
+        function() {
+          jQuery('.payment-step.current .button-row button', o.base).removeClass('disabled');
+        }
+      )
       .find('ul input')
       .change(
         function(event) {
@@ -305,7 +335,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
           o.currentLoadedStep = 'payment';
 
-          return !o.load({ step: 'payment' });
+          return !o.load({step: 'payment'});
         }
       );
 
@@ -336,43 +366,81 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
-    jQuery('form.place .terms a', this.base).click(
-      function(event) {
-        event.stopPropagation();
-        self.location = jQuery(this).attr('href');
-        return false;
+/**
+ * There is several events:
+ * ready2checkout    - The Checkout button is ready to use
+ * agree2checkout    - The Checkout button is NOT ready to use and Agree warning box is displayed.
+ *                     Customer clicks without "Agree" checking
+ * notready2checkout - The Checkout button is NOT ready to use and Agree warning box is NOT displayed.
+ *                     Customer clicks the "ready to use" button. So the form could be submitted only once.
+ */
+    jQuery(base).bind(
+      'ready2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .removeClass('disabled');
+      }
+    ).bind(
+      'agree2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .addClass('disabled');
+      }
+    ).bind(
+      'notready2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .addClass('disabled');
       }
     );
 
-/**
- * Place order button should work only once.
- * After clicking the button is disabled and form submits only once.
- */
-    jQuery('form.place button[type="submit"].bright', this.base)
-      .click(
-        function (event) {
-          jQuery(this)
-            .addClass('disabled')
-            .attr('disabled', 'disabled')
-            .closest('form.place')
-            .submit();
+    jQuery('form.place .terms', this.base).bind(
+      'agree2checkout',
+      function (e) {
+        jQuery(this).addClass('non-agree');
+      }
+    ).bind(
+      'ready2checkout',
+      function (e) {
+        jQuery(this).removeClass('non-agree');
+      }
+    ).bind(
+      'notready2checkout',
+      function (e) {
+        jQuery(this).removeClass('non-agree');
+      }
+    );
 
-          return false;
+    jQuery('.review-step.current .button-row button', this.base).bind(
+      'click',
+      function (e) {
+        if (!jQuery(this).hasClass('disabled')) {
+          jQuery('*', base).trigger('notready2checkout');
+          jQuery(this).unbind('mouseover').unbind('mouseout');
+          // TODO: rework form controller and AForm class to remove 'onsubmit' attribute from the FORM tag
+          jQuery(this).closest('form.place').removeAttr('onsubmit').submit();
         }
-      );
 
-    jQuery('.review-step.current .button-row button', this.base)
-      .click(
-        function(event) {
-          if (1 == jQuery('form.place .terms input:checked', o.base).length) {
-            return true;
-          }
+        return false;
+      }
+    ).bind(
+      'mouseover',
+      function (e) {
+        jQuery(this).hasClass('disabled') && jQuery('*', base).trigger('agree2checkout');
+      }
+    ).bind(
+      'mouseout',
+      function (e) {
+        jQuery(this).hasClass('disabled') && jQuery('*', base).trigger('notready2checkout');
+      }
+    );
 
-          jQuery('form.place .terms', this.base).addClass('non-agree');
-
-          return false;
-        }
-      );
+    jQuery('#place_order_agree').bind(
+      'click',
+      function (e) {
+        jQuery(base).trigger(jQuery(this).attr('checked') ? 'ready2checkout' : 'notready2checkout');
+      }
+    );
 
     // Refresh state
     this.refreshState();
@@ -383,7 +451,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 CheckoutView.prototype.buildWidgetRequestURL = function(params)
 {
   if (!params) {
-    params = { step: '' };
+    params = {step: ''};
 
   } else if ('undefined' == typeof(params.step)) {
     params.step = '';
@@ -549,20 +617,22 @@ CheckoutView.prototype.refreshState = function()
 
     // Payment step
 
-    // Payment methods is selected
-    var paymentMethodIsSelected = 1 == jQuery('ul.payments input:checked', this.base).length;
+    // Payment section is ready (payment method is selected or no payment is required)
+    var paymentIsReady = (jQuery('ul.payments').length > 0) ? (1 == jQuery('ul.payments input:checked', this.base).length) : true;
 
-    // Billing address is completed
+    // Billing address is ready (completed)
     isSameAddress = 1 == jQuery('.same-address #same_address:checked', this.base).length;
-    var billingAddressIsCompleted = isSameAddress
+    var billingAddressIsReady = isSameAddress
       || (0 < jQuery('form.billing-address ul.form :input', this.base).length && jQuery('form.billing-address', this.base).get(0).validate(true));
 
-    result = result && paymentMethodIsSelected && billingAddressIsCompleted;
+    result = result && paymentIsReady && billingAddressIsReady;
 
   } else if (box.hasClass('review-step')) {
 
     // Order review step
+    var agreeIsReady = jQuery('#place_order_agree').attr('checked');
 
+    result = result && agreeIsReady;
   }
 
   // Refresh main button
@@ -647,6 +717,18 @@ ShippingMethodsView.prototype.postprocess = function(isSuccess, initial)
     // Check and save shipping methods
     this.base
       .commonController('enableBackgroundSubmit')
+      .bind(
+        'beforeSubmit',
+        function() {
+          jQuery('.shipping-step.current .button-row button', o.parentWidget.base).addClass('disabled');
+        }
+      )
+      .bind(
+        'afterSubmit',
+        function() {
+          jQuery('.shipping-step.current .button-row button', o.parentWidget.base).removeClass('disabled');
+        }
+      )
       .find('ul.shipping-rates input')
       .change(
         function(event) {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * Order controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Order extends \XLite\Controller\Customer\Base\Order
 {
@@ -39,12 +35,10 @@ class Order extends \XLite\Controller\Customer\Base\Order
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
-        if ($this->checkAccess()){
+        if ($this->checkAccess()) {
             $title = static::t(
                 'Order #X, Y',
                 array(
@@ -64,8 +58,6 @@ class Order extends \XLite\Controller\Customer\Base\Order
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {

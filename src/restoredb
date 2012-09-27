@@ -22,8 +22,6 @@
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 // No PHP warnings are allowed in LC
@@ -105,9 +103,6 @@ require_once './top.inc.php';
 set_time_limit(0);
 error_reporting(E_ALL ^ E_NOTICE);
 
-// Load classes from "classes" (do not use cache)
-\Includes\Autoloader::switchLCAutoloadDir();
-
 $config = parse_ini_file('etc/config.default.php', true);
 
 if (file_exists('etc/config.php')) {
@@ -180,6 +175,7 @@ $disabledModules = array();
 $disabledModules['CDev'] = array(
     'JoomlaConnector',
     'Taxes',
+    'Catalog'
 );
 
 if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
@@ -201,6 +197,12 @@ if (R_INSTALL_STANDALONE) {
     // Disable DrupalConnector module in a standalone mode
     $disabledModules['CDev'][] = 'DrupalConnector';
     $disabledModules['CDev'][] = 'XMLSitemapDrupal';
+} else {
+    // In non-standalone mode we must disable SimpleCMS/SocialLogin 
+    // These modules disable DrupalConnector compulsory
+    $disabledModules['CDev'][] = 'SimpleCMS';
+    $disabledModules['CDev'][] = 'SocialLogin';
+    $disabledModules['CDev'][] = 'ContactUs';
 }
 
 if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
@@ -217,6 +219,7 @@ if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
     $disabledModules['CDev'][] = 'VAT';
     $disabledModules['CDev'][] = 'Moneybookers';
     $disabledModules['CDev'][] = 'USPS';
+    $disabledModules['CDev'][] = 'Dev';
 }
 
 

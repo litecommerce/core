@@ -2,12 +2,14 @@
 
 {**
  * Payment method row
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
-<div IF="method.processor.getIconPath(order,method)" class="icon"><img src="{preparePaymentMethodIcon(method.processor.getIconPath(order,method))}" alt="" /></div>
-{if:method.getDescription()}{method.getDescription()}{else:}{method.getName()}{end:}
+<div IF="method.processor.getIconPath(order,method)" class="icon">
+  <img src="{preparePaymentMethodIcon(method.processor.getIconPath(order,method))}" alt="" />
+</div>
+<span class="payment-title">{method.getTitle()}</span>
+<div IF="{method.getDescription()}" class="payment-description">{method.getDescription()}</div>

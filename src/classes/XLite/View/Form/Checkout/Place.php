@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Form\Checkout;
@@ -30,17 +28,24 @@ namespace XLite\View\Form\Checkout;
 /**
  * Place order form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Place extends \XLite\View\Form\Checkout\ACheckout
 {
     /**
+     * JavaScript: this value will be returned on form submit
+     * NOTE - this function designed for AJAX easy switch on/off
+     *
+     * @return string
+     */
+    protected function getOnSubmitResult()
+    {
+        return 'false';
+    }
+
+    /**
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

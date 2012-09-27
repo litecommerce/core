@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Admin;
 /**
  * Search
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
 {
@@ -47,8 +43,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return search parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getSearchParams()
     {
@@ -64,8 +58,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -76,8 +68,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -90,8 +80,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @param string $list List name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineViewList($list)
     {
@@ -108,8 +96,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * isFooterVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -120,8 +106,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return list of the modes allowed by default
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModes()
     {
@@ -135,8 +119,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -147,8 +129,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Get URL common parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonParams()
     {
@@ -159,8 +139,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -178,8 +156,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -195,8 +171,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -221,8 +195,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {

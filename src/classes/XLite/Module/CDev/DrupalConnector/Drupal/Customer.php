@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Customer
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -42,8 +38,6 @@ class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function alterLoginForm(array &$form, array &$formState)
     {
@@ -59,8 +53,6 @@ class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param \stdClass $account Current user descriptor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOrderHistoryPage(\stdClass $account)
     {

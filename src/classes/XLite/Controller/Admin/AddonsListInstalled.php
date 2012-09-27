@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * AddonsListInstalled
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 {
@@ -39,8 +35,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -53,8 +47,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      * Return module identificator
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModuleId()
     {
@@ -65,8 +57,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      * Search for module
      *
      * @return \XLite\Model\Module|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModule()
     {
@@ -79,8 +69,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      * @param string $cellName Request cell name
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModules($cellName)
     {
@@ -101,8 +89,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      * Enable module
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionEnable()
     {
@@ -124,8 +110,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      * Pack module into PHAR module file
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionPack()
     {
@@ -152,32 +136,9 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
     }
 
     /**
-     * Disable module
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionDisable()
-    {
-        $module = $this->getModule();
-
-        if ($module) {
-
-            // Update data in DB
-            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
-
-            // Flag to rebuild cache
-            \XLite::setCleanUpCacheFlag(true);
-        }
-    }
-
-    /**
      * Uninstall module
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUninstall()
     {
@@ -211,7 +172,8 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
                 // Disable this and depended modules
                 \Includes\Utils\ModulesManager::disableModule($module->getActualName());
-
+                \Includes\Utils\ModulesManager::removeModuleFromDisabledStructure($module->getActualName());
+                
                 // Remove from DB
                 \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
 
@@ -245,8 +207,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      * Switch module
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSwitch()
     {
@@ -278,8 +238,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      * @param string $action Performed action
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function actionPostprocess($action)
     {

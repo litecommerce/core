@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * REST services end-point
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Rest extends \XLite\Controller\Customer\ACustomer
 {
@@ -47,36 +43,28 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     /**
      * REST actions
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $restActions = array('get', 'post', 'put', 'delete');
 
     /**
      * REST repository classes
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $restClasses;
 
     /**
      * Current REST repository
      *
-     * @var   object
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var object
      */
     protected $currentRepo;
 
     /**
      * Response data
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $data = array(
         'status' => self::STATUS_ERROR,
@@ -88,8 +76,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Parses the request variables if necessary. Attempts to call the specified action function
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -118,8 +104,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * @param string|null $action Performed action OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function actionPostprocess($action = null)
     {
@@ -138,8 +122,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Get REST repository classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRESTClasses()
     {
@@ -177,8 +159,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Define REST repository classes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRESTClasses()
     {
@@ -195,8 +175,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * @param string $type Operation type name OPTIONAL
      *
      * @return object|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRepo($name, $type = null)
     {
@@ -215,8 +193,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Get
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionGet()
     {
@@ -232,8 +208,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Post
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionPost()
     {
@@ -253,8 +227,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Put
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionPut()
     {
@@ -273,8 +245,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Delete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {

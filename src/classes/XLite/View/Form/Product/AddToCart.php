@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product;
@@ -30,8 +28,6 @@ namespace XLite\View\Form\Product;
 /**
  * Add product to cart form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class AddToCart extends \XLite\View\Form\Product\AProduct
 {
@@ -39,8 +35,6 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      * getDefaultTarget
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -51,8 +45,6 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      * getDefaultAction
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -63,8 +55,6 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      * initView
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function initView()
     {
@@ -77,8 +67,6 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      * getFormDefaultParams
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormDefaultParams()
     {

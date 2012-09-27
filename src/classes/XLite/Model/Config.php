@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * DB-based configuration registry
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Config")
  * @Table  (name="config",
@@ -49,9 +45,7 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option unique name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -62,22 +56,18 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $name;
 
     /**
      * Option category
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $category;
 
@@ -86,20 +76,16 @@ class Config extends \XLite\Model\Base\I18n
      * Allowed values:'','text','textarea','checkbox','country','state','select','serialized','separator'
      *     or forrm field class name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $type = '';
 
     /**
      * Option position within category
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -108,9 +94,7 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option value
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -119,9 +103,7 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Widget parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.13
+     * @var array
      *
      * @Column (type="array", nullable=true)
      */

@@ -6,10 +6,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the GNU General Pubic License (GPL 2.0)
+ * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://www.gnu.org/licenses/gpl-2.0.html
+ * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\GoogleAnalytics\View\FormField\Select;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\GoogleAnalytics\View\FormField\Select;
 /**
  * Tracking type selector
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TrackingType extends \XLite\View\FormField\Select\Regular
 {
@@ -39,15 +35,13 @@ class TrackingType extends \XLite\View\FormField\Select\Regular
      * Get default options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
         return array(
-            '1' => 'A single domain',
-            '2' => 'One domain with multiple subdomains',
-            '3' => 'Multiple top-level domains',
+            '1' => static::t('A single domain'),
+            '2' => static::t('One domain with multiple subdomains'),
+            '3' => static::t('Multiple top-level domains'),
         );
     }
 }

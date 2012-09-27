@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Shipping rates page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingRates extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -51,8 +45,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * Do action 'Add'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -75,8 +67,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -117,8 +107,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -148,8 +136,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * Do action 'change'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionChange()
     {
@@ -165,8 +151,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * @param boolean $isNew If true then prepares data for creating a new markup  OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareData($data, $isNew = false)
     {
@@ -248,8 +232,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * Generates redirect Url
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRedirectURL()
     {

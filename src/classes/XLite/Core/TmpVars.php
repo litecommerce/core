@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * DB-based temporary variables
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class TmpVars extends \XLite\Base\Singleton
 {
@@ -41,8 +37,6 @@ class TmpVars extends \XLite\Base\Singleton
      * @param string $name Name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -56,8 +50,6 @@ class TmpVars extends \XLite\Base\Singleton
      * @param mixed  $value Value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -84,8 +76,6 @@ class TmpVars extends \XLite\Base\Singleton
      * @param string $name Variable name to check
      *  
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __isset($name)
     {
@@ -98,8 +88,6 @@ class TmpVars extends \XLite\Base\Singleton
      * @param string $name Var name
      *
      * @return \XLite\Model\TmpVar
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getVar($name)
     {
@@ -110,8 +98,6 @@ class TmpVars extends \XLite\Base\Singleton
      * Return the Doctrine repository
      *
      * @return \XLite\Model\Repo\TmpVar
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRepo()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Pager;
@@ -30,8 +28,6 @@ namespace XLite\View\Pager;
 /**
  * Abstract pager class
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
 {
@@ -59,27 +55,21 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * FIXME: due to old-style params mapping we cannot use the "pageId" name here:
      * it will be overriden by the "PARAM_PAGE_ID" request parameter
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $currentPageId;
 
     /**
      * pagesCount
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $pagesCount;
 
     /**
      * Cached pages
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $pages = null;
 
@@ -88,8 +78,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return number of items per page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getItemsPerPageDefault();
 
@@ -97,8 +85,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return number of pages to display
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getPagesPerFrame();
 
@@ -107,8 +93,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -126,8 +110,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return CSS classes for parent block of pager (list-pager by default)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSClasses()
     {
@@ -142,8 +124,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * @param \XLite\Core\CommonCell $cnd   Search condition OPTIONAL
      *
      * @return array|\Doctrine\ORM\PersistentCollection
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLimitCondition($start = null, $count = null, \XLite\Core\CommonCell $cnd = null)
     {
@@ -173,8 +153,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return current list name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -185,8 +163,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * getDir
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -197,8 +173,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -209,8 +183,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * getList
      *
      * @return \XLite\View\ItemsList\AItemsList
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getList()
     {
@@ -221,8 +193,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * getItemsTotal
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsTotal()
     {
@@ -236,8 +206,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Get maximum number of items to display in the list
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getMaxItemsCount()
     {
@@ -248,8 +216,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Get pages count
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagesCount()
     {
@@ -264,8 +230,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return minimal possible items number per page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageMin()
     {
@@ -276,8 +240,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return maximal possible items number per page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPageMax()
     {
@@ -288,8 +250,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * getItemsPerPage
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getItemsPerPage()
     {
@@ -305,8 +265,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -341,8 +299,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -358,8 +314,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * @param integer $pageId Page ID
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function buildURLByPageId($pageId)
     {
@@ -370,8 +324,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * getFrameLength
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFrameLength()
     {
@@ -384,8 +336,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * @param boolean $shortPart Which part of frame to return OPTIONAL
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFrameHalfLength($shortPart = true)
     {
@@ -396,8 +346,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * getFrameStartPage
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFrameStartPage()
     {
@@ -413,8 +361,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return ID of the first page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFirstPageId()
     {
@@ -425,8 +371,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return ID of the previous page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPreviousPageId()
     {
@@ -437,8 +381,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return ID of the last page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLastPageId()
     {
@@ -449,8 +391,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return ID of the next page
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getNextPageId()
     {
@@ -461,8 +401,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return an array with information on the pages to be displayed
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPages()
     {
@@ -595,8 +533,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * @param integer $pageId ID of the page to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCurrentPage($pageId)
     {
@@ -607,8 +543,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return ID of the current page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageId()
     {
@@ -623,8 +557,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Return index of the first item on the current page
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getStartItem()
     {
@@ -635,8 +567,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Get page begin record number
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBeginRecordNumber()
     {
@@ -647,8 +577,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Get page end record number
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getEndRecordNumber()
     {
@@ -659,8 +587,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Check if pages list is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isPagesListVisible()
     {
@@ -671,8 +597,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * isItemsPerPageVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isItemsPerPageVisible()
     {
@@ -683,8 +607,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * isItemsPerPageSelectorVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isItemsPerPageSelectorVisible()
     {
@@ -695,8 +617,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * isVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -708,8 +628,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * isVisible bottom
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisibleBottom()
     {

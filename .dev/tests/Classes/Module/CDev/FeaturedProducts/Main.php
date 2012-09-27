@@ -69,7 +69,7 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Main extends XLite_Tests_TestCase
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.12', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.1.0', $main::getVersion(), 'Wrong version');
     }
 
     /**

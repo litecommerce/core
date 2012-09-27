@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.17
  */
 
 namespace XLite\Controller\Admin;
@@ -30,26 +28,22 @@ namespace XLite\Controller\Admin;
 /**
  * Common promotions controller
  * 
- * @see   ____class_see____
- * @since 1.0.17
  */
 class Promotions extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * FIXME- backward compatibility
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $params = array('target', 'page');
+
+    // {{{ Pages
 
     /**
      * Get pages static 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public static function getPagesStatic()
     {
@@ -60,8 +54,6 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -78,10 +70,8 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
         $list = array();
 
@@ -91,4 +81,6 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
 
         return $list;
     }
+
+    // }}}
 }

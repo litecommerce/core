@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * Module
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Module")
  * @Table  (name="modules",
@@ -52,9 +48,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Module ID
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -65,31 +59,25 @@ class Module extends \XLite\Model\AEntity
     /**
      * Name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $name;
 
     /**
      * Author
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $author;
 
     /**
      * Enabled
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -98,9 +86,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Installed status
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -109,9 +95,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Order creation timestamp
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -120,9 +104,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Rating
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -131,9 +113,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Votes
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -142,9 +122,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Downloads
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -153,9 +131,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Price
      *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var float
      *
      * @Column (type="decimal", precision=14, scale=2)
      */
@@ -164,9 +140,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Currency code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=3)
      */
@@ -175,9 +149,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Major version
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=8)
      */
@@ -186,9 +158,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Minor version
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="integer")
      */
@@ -197,9 +167,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Revision date
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="integer")
      */
@@ -208,9 +176,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Module pack size (received from marketplace)
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Column (type="bigint")
      */
@@ -219,9 +185,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Module name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -230,9 +194,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Author name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -241,9 +203,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Description
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="text")
      */
@@ -252,9 +212,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Icon URL
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -263,9 +221,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Icon URL
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -274,9 +230,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Icon URL
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
      * @Column (type="string", length=255)
      */
@@ -285,9 +239,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Module dependencies
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      *
      * @Column (type="array")
      */
@@ -296,9 +248,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Flag
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      *
      * @Column (type="boolean")
      */
@@ -307,9 +257,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Public identifier (cache)
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $marketplaceID;
 
@@ -320,8 +268,6 @@ class Module extends \XLite\Model\AEntity
      * Return main class name for current module
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMainClass()
     {
@@ -336,8 +282,6 @@ class Module extends \XLite\Model\AEntity
      * @param array  $args   Call arguments OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function callModuleMethod($method, $result = null, array $args = array())
     {
@@ -350,8 +294,6 @@ class Module extends \XLite\Model\AEntity
      * Check if we can call method from the module main class
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkModuleMainClass()
     {
@@ -366,8 +308,6 @@ class Module extends \XLite\Model\AEntity
      * Compose module actual name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -378,8 +318,6 @@ class Module extends \XLite\Model\AEntity
      * Return module full version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getVersion()
     {
@@ -390,8 +328,6 @@ class Module extends \XLite\Model\AEntity
      * Check if module has a custom icon
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function hasIcon()
     {
@@ -402,8 +338,6 @@ class Module extends \XLite\Model\AEntity
      * Return link to settings form
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSettingsForm()
     {
@@ -417,8 +351,6 @@ class Module extends \XLite\Model\AEntity
      * @param mixed $onlyDisabled Flag OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getDependencyModules($onlyDisabled = false)
     {
@@ -456,8 +388,6 @@ class Module extends \XLite\Model\AEntity
      * Get list of dependent modules as Doctrine entities
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDependentModules()
     {
@@ -479,8 +409,6 @@ class Module extends \XLite\Model\AEntity
      * Check if the module is free
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isFree()
     {
@@ -491,8 +419,6 @@ class Module extends \XLite\Model\AEntity
      * Check if module is already purchased
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPurchased()
     {
@@ -503,8 +429,6 @@ class Module extends \XLite\Model\AEntity
      * Check for custom module
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCustom()
     {
@@ -517,8 +441,6 @@ class Module extends \XLite\Model\AEntity
      * Search for license key
      *
      * @return \XLite\Model\ModuleKey
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLicenseKey()
     {
@@ -529,8 +451,6 @@ class Module extends \XLite\Model\AEntity
      * Return currency for paid modules
      *
      * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCurrency()
     {
@@ -542,8 +462,6 @@ class Module extends \XLite\Model\AEntity
      * Check if module is installed in LC
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isInstalled()
     {
@@ -554,8 +472,6 @@ class Module extends \XLite\Model\AEntity
      * Return some data to identify module
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.6
      */
     public function getIdentityData()
     {
@@ -571,8 +487,6 @@ class Module extends \XLite\Model\AEntity
      * Generate marketplace ID
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMarketplaceID()
     {
@@ -591,8 +505,6 @@ class Module extends \XLite\Model\AEntity
      * Lifecycle callback
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      *
      * @PreUpdate
      */
@@ -607,7 +519,35 @@ class Module extends \XLite\Model\AEntity
                     ? array()
                     : \Includes\Utils\ModulesManager::getModuleProtectedStructures($this->getAuthor(), $this->getName())
             );
+
+            $this->switchLinkedModels($this->getEnabled());
         }
+    }
+
+    /**
+     * Switch linked models 
+     * 
+     * @param boolean $enabled Module enabled status
+     *  
+     * @return void
+     */
+    protected function switchLinkedModels($enabled)
+    {
+        foreach ($this->getLinkedModelDefinition() as $repo) {
+            \XLite\Core\Database::getRepo($repo)->switchModuleLink($enabled, $this);
+        }
+    }
+
+    /**
+     * Get linked model definition 
+     * 
+     * @return array
+     */
+    protected function getLinkedModelDefinition()
+    {
+        return array(
+            'XLite\Model\Payment\Method',
+        );
     }
 
     // }}}

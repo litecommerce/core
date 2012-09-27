@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
@@ -33,8 +31,6 @@ namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
  * Find the latest API document here:
  * http://www.quantumgateway.com/files/QGWdbeAPI.pdf
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Quantum extends \XLite\Model\Payment\Base\WebBased
 {
@@ -42,8 +38,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSettingsWidget()
     {
@@ -56,8 +50,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -108,8 +100,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -117,13 +107,23 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
             && $method->getSetting('login');
     }
 
+    /**
+     * Get payment method admin zone icon URL
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     */
+    public function getAdminIconURL(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
 
     /**
      * Get redirect form URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormURL()
     {
@@ -134,30 +134,28 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * Get redirect form fields list
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormFields()
     {
+        $billingAddress = $this->getProfile()->getBillingAddress();
+
         $fields = array(
             'gwlogin'                  => $this->getSetting('login'),
             'post_return_url_approved' => $this->getReturnURL('ID'),
             'post_return_url_declined' => $this->getReturnURL('ID'),
             'ID'                       => $this->transaction->getTransactionId(),
             'amount'                   => $this->transaction->getValue(),
-            'BADDR1'                   => $this->getProfile()->getBillingAddress()->getStreet(),
-            'BZIP1'                    => $this->getProfile()->getBillingAddress()->getZipcode(),
+            'BADDR1'                   => $billingAddress->getStreet(),
+            'BZIP1'                    => $billingAddress->getZipcode(),
 
-            'FNAME'       => $this->getProfile()->getBillingAddress()->getFirstname(),
-            'LNAME'       => $this->getProfile()->getBillingAddress()->getLastname(),
-            'BCITY'       => $this->getProfile()->getBillingAddress()->getCity(),
-            'BSTATE'      => $this->getProfile()->getBillingAddress()->getState()->getState(),
-            'BCOUNTRY'    => $this->getProfile()->getBillingAddress()->getCountry()
-                ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()
-                : '',
+            'FNAME'       => $billingAddress->getFirstname(),
+            'LNAME'       => $billingAddress->getLastname(),
+            'BCITY'       => $billingAddress->getCity(),
+            'BSTATE'      => $billingAddress->getState()->getState(),
+            'BCOUNTRY'    => $billingAddress->getCountry() ? $billingAddress->getCountry()->getCode() : '',
             'BCUST_EMAIL' => $this->getProfile()->getLogin(),
 
-            'PHONE'               => $this->getProfile()->getBillingAddress()->getPhone(),
+            'PHONE'               => $billingAddress->getPhone(),
             'trans_method'        => 'CC',
             'ResponseMethod'      => 'POST',
             'cust_id'             => $this->getProfile()->getLogin(),
@@ -189,8 +187,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * Define saved into transaction data schema
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineSavedData()
     {
@@ -211,8 +207,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @param array $list Form fields list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logRedirect(array $list)
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -30,8 +28,6 @@ namespace XLite\Model;
 /**
  * State
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\State")
  * @Table (name="states",
@@ -48,9 +44,7 @@ class State extends \XLite\Model\AEntity
     /**
      * State unique id
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -61,33 +55,27 @@ class State extends \XLite\Model\AEntity
     /**
      * State name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $state;
 
     /**
      * State code
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $code;
 
     /**
      * Country (relation)
      *
-     * @var   \XLite\Model\Country
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Country
      *
-     * @ManyToOne (targetEntity="XLite\Model\Country", inversedBy="states")
+     * @ManyToOne (targetEntity="XLite\Model\Country", inversedBy="states", cascade={"merge","detach"})
      * @JoinColumn (name="country_code", referencedColumnName="code")
      */
     protected $country;

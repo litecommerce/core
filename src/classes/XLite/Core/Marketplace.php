@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,8 +28,6 @@ namespace XLite\Core;
 /**
  * Marketplace
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Marketplace extends \XLite\Base\Singleton
 {
@@ -98,7 +94,7 @@ class Marketplace extends \XLite\Base\Singleton
      * Some regexps
      */
     const REGEXP_VERSION  = '/\d+\.?[\w-\.]*/';
-    const REGEXP_WORD     = '/\w+/';
+    const REGEXP_WORD     = '/[\w\"\']+/';
     const REGEXP_NUMBER   = '/\d+/';
     const REGEXP_HASH     = '/\w{32}/';
     const REGEXP_CURRENCY = '/[A-Z]{1,3}/';
@@ -117,9 +113,7 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Error message
      *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.12
+     * @var mixed
      */
     protected $error = null;
 
@@ -127,8 +121,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Get last error message from bouncer
      *
      * @return mixed
-     * @see    ____var_see____
-     * @since  1.0.12
      */
     public function getError()
     {
@@ -143,8 +135,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param integer $ttl Data TTL OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkForUpdates($ttl = self::TTL_LONG)
     {
@@ -155,8 +145,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return specific data array for "Check for updates" request
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     protected function getCheckForUpdatesData()
     {
@@ -188,8 +176,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return conditions for search modules for "Check for updates" request
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.8
      */
     protected function getCheckForUpdatesDataCnd()
     {
@@ -206,8 +192,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForCheckForUpdatesAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -220,8 +204,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateResponseForCheckForUpdatesAction(array $data)
     {
@@ -232,8 +214,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return response schema for certian action
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSchemaResponseForCheckForUpdatesAction()
     {
@@ -253,8 +233,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param integer $ttl Data TTL OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCores($ttl = self::TTL_LONG)
     {
@@ -273,8 +251,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForGetCoresAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -287,8 +263,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateResponseForGetCoresAction(array $data)
     {
@@ -305,8 +279,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return response schema for certian action
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSchemaResponseForGetCoresAction()
     {
@@ -333,8 +305,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareResponseForGetCoresAction(array $data)
     {
@@ -373,8 +343,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $versionMinor Minor version of core to get
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCorePack($versionMajor, $versionMinor)
     {
@@ -393,8 +361,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForGetCorePackAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -412,8 +378,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $versionMinor Minor version of core to get
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCoreHash($versionMajor, $versionMinor)
     {
@@ -431,8 +395,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForGetCoreHashAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -445,8 +407,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateResponseForGetCoreHashAction(array $data)
     {
@@ -463,8 +423,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param integer $ttl Data TTL OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function saveAddonsList($ttl = self::TTL_LONG)
     {
@@ -484,8 +442,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForGetAddonsAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -498,8 +454,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateResponseForGetAddonsAction(array $data)
     {
@@ -520,8 +474,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Data received from marketplace
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareResponseForGetAddonsAction(array $data)
     {
@@ -590,8 +542,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $key      Module license key OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddonPack($moduleID, $key = null)
     {
@@ -612,8 +562,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForGetAddonPackAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -631,8 +579,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $key      Module license key OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddonInfo($moduleID, $key = null)
     {
@@ -651,8 +597,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForGetAddonInfoAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -665,8 +609,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateResponseForGetAddonInfoAction(array $data)
     {
@@ -677,8 +619,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return validation schema for certain action
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSchemaResponseForGetAddonInfoAction()
     {
@@ -700,13 +640,22 @@ class Marketplace extends \XLite\Base\Singleton
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'options' => array('regexp' => static::REGEXP_WORD),
             ),
-            static::FIELD_READABLE_AUTHOR => FILTER_SANITIZE_STRING,
-            static::FIELD_READABLE_NAME   => FILTER_SANITIZE_STRING,
+            static::FIELD_READABLE_AUTHOR => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => static::REGEXP_WORD),
+            ),
+            static::FIELD_READABLE_NAME   => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => static::REGEXP_WORD),
+            ),
             static::FIELD_MODULE_ID => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'options' => array('regexp' => static::REGEXP_HASH),
             ),
-            static::FIELD_DESCRIPTION => FILTER_SANITIZE_STRING,
+            static::FIELD_DESCRIPTION => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => static::REGEXP_WORD),
+            ),
             static::FIELD_PRICE => FILTER_VALIDATE_FLOAT,
             static::FIELD_CURRENCY => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
@@ -746,8 +695,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $key      Module license key OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getAddonHash($moduleID, $key = null)
     {
@@ -766,8 +713,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForGetAddonHashAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -780,8 +725,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateResponseForGetAddonHashAction(array $data)
     {
@@ -798,8 +741,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $key Module license to check
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAddonKey($key)
     {
@@ -817,8 +758,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param integer $ttl Data TTL OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAddonsKeys($ttl = self::TTL_LONG)
     {
@@ -875,8 +814,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForCheckAddonKeyAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -889,8 +826,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateResponseForCheckAddonKeyAction(array $data)
     {
@@ -914,8 +849,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return response schema for certian action
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSchemaResponseForCheckAddonKeyAction()
     {
@@ -941,8 +874,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function validateResponseForErrorAction(array $data)
     {
@@ -953,8 +884,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return response schema for errors
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function getSchemaResponseForError()
     {
@@ -982,8 +911,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param integer $ttl Data TTL OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getHostingScore($ttl = self::TTL_LONG)
     {
@@ -996,8 +923,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseResponseForGetHostingScoreAction(\PEAR2\HTTP\Request\Response $response)
     {
@@ -1012,8 +937,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data Response data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateResponseForGetHostingScoreAction(array $data)
     {
@@ -1044,8 +967,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array  $data   Custom data to send in request OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function sendRequestToMarketplace($action, array $data = array())
     {
@@ -1082,8 +1003,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array  $data   Request data OPTIONAL
      *
      * @return \XLite\Core\HTTP\Request
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRequest($action, array $data = array())
     {
@@ -1102,8 +1021,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Common data for all request types
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRequestCommonData()
     {
@@ -1124,8 +1041,6 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string  Error message
      * @return boolean False if there are no errors
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function checkForErrors(\PEAR2\HTTP\Request\Response $response, array $data)
     {
@@ -1153,8 +1068,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $data  Request data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.12
      */
     protected function doErrorAction(array $error, array $data)
     {
@@ -1180,8 +1093,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string                       $action   Current action
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareResponse(\PEAR2\HTTP\Request\Response $response, $action)
     {
@@ -1236,8 +1147,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action Marketplace action
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     public function clearActionCache($action)
     {
@@ -1253,8 +1162,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action Marketplace action
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getActionCacheVars($action)
     {
@@ -1273,8 +1180,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param boolean $saveInTmpVars Flag OPTIONAL
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performActionWithTTL($ttl, $action, array $data = array(), $saveInTmpVars = true)
     {
@@ -1309,8 +1214,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param integer $ttl  TTL value (in seconds)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkTTL($cell, $ttl)
     {
@@ -1326,8 +1229,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $cell Name of the cache cell
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setTTLStart($cell)
     {
@@ -1345,8 +1246,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $versionMinor Minor version of core to get
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getVersionField($versionMajor, $versionMinor)
     {
@@ -1363,8 +1262,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $field Name of field to get
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getField(array $data, $field)
     {
@@ -1377,8 +1274,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to get data
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function parseJSON(\PEAR2\HTTP\Request\Response $response)
     {
@@ -1391,8 +1286,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param \PEAR2\HTTP\Request\Response $response Response to get data
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function writeDataToFile(\PEAR2\HTTP\Request\Response $response)
     {
@@ -1421,8 +1314,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array $schema Validation schema
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function validateAgainstSchema(array $data, array $schema)
     {
@@ -1439,8 +1330,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return markeplace URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMarketplaceURL()
     {
@@ -1451,8 +1340,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return true if store should send its domain name to marketplace
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSendShopDomain()
     {
@@ -1465,8 +1352,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action Action name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getMarketplaceActionURL($action)
     {
@@ -1477,8 +1362,6 @@ class Marketplace extends \XLite\Base\Singleton
      * To determine what type of archives to download
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function canCompress()
     {
@@ -1489,8 +1372,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Clear saved data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function clearUpgradeCell()
     {
@@ -1510,8 +1391,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logError($action, $message, array $args = array(), array $data = array())
     {
@@ -1529,8 +1408,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logWarning($action, $message, array $args = array(), array $data = array())
     {
@@ -1546,8 +1423,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logInfo($action, $message, array $args = array(), array $data = array())
     {
@@ -1564,8 +1439,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function logCommon($method, $action, $message, array $args = array(), array $data = array())
     {

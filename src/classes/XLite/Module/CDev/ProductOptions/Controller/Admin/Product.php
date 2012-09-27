@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Controller\Admin;
@@ -30,77 +28,49 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Admin;
 /**
  * Product modify
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
-    /**
-     * Constructor
-     *
-     * @param array $params Parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __construct(array $params)
-    {
-        parent::__construct($params);
-
-        if (!in_array('language', $this->params)) {
-            $this->params[] = 'language';
-        }
-
-    }
+    // {{{ Pages
 
     /**
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
-        $pages = parent::getPages();
+        $list = parent::getPages();
 
         if (!$this->isNew()) {
-            $pages += array(
-                'product_options' => 'Product options',
-            );
+            $list['product_options'] = 'Product options';
         }
 
-        return $pages;
+        return $list;
     }
 
     /**
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
-        $tpls = parent::getPageTemplates();
+        $list = parent::getPageTemplates();
 
         if (!$this->isNew()) {
-            $tpls += array(
-                'product_options' => 'modules/CDev/ProductOptions/product_options_lander.tpl',
-            );
+            $list['product_options'] = 'modules/CDev/ProductOptions/product_options_lander.tpl';
         }
 
-        return $tpls;
+        return $list;
     }
 
+    // }}}
 
     /**
      * Update option groups list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateOptionGroups()
     {
@@ -137,8 +107,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete selected option groups
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeleteOptionGroups()
     {
@@ -170,8 +138,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update option group
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateOptionGroup()
     {
@@ -275,8 +241,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete selected options
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeleteOptions()
     {
@@ -310,8 +274,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update option groups exceptions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateOptionGroupsExceptions()
     {
@@ -357,8 +319,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete option groups exceptions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDeleteOptionGroupsExceptions()
     {
@@ -392,8 +352,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @param array                                          $data   Data
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveOption(\XLite\Module\CDev\ProductOptions\Model\Option $option, array $data)
     {
@@ -454,8 +412,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @param array   $data Exception cell data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function saveException($eid, array $data)
     {

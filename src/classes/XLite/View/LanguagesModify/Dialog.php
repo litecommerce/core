@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -30,8 +28,6 @@ namespace XLite\View\LanguagesModify;
 /**
  * Languages and language labels modification
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -40,45 +36,35 @@ class Dialog extends \XLite\View\Dialog
     /**
      * Labels limit per page
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $limit = 20;
 
     /**
      * Founded labels with pagination (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $labels = null;
 
     /**
      * Labels count
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $labelsCount = null;
 
     /**
      * Pages count
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $pagesCount = null;
 
     /**
      * Translate language
      *
-     * @var   \XLite\Model\Language or false
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Language or false
      */
     protected $translateLanguage = null;
 
@@ -86,8 +72,6 @@ class Dialog extends \XLite\View\Dialog
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -102,8 +86,6 @@ class Dialog extends \XLite\View\Dialog
      * Count labels
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function countLabels()
     {
@@ -116,8 +98,6 @@ class Dialog extends \XLite\View\Dialog
      * Get pages count
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -130,8 +110,6 @@ class Dialog extends \XLite\View\Dialog
      * Get page index
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPage()
     {
@@ -146,8 +124,6 @@ class Dialog extends \XLite\View\Dialog
      * Get URL for simple pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPagerURL()
     {
@@ -164,8 +140,6 @@ class Dialog extends \XLite\View\Dialog
      * Get search substring
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSearchSubstring()
     {
@@ -178,8 +152,6 @@ class Dialog extends \XLite\View\Dialog
      * Check - widget search all labels or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSearchAll()
     {
@@ -192,8 +164,6 @@ class Dialog extends \XLite\View\Dialog
      * Check - search is enabled or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isSearch()
     {
@@ -204,8 +174,6 @@ class Dialog extends \XLite\View\Dialog
      * Check - application has added language withount default language or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAnotherLanguagesAdded()
     {
@@ -225,8 +193,6 @@ class Dialog extends \XLite\View\Dialog
      * Get translate language
      *
      * @return \XLite\Model\Language|void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslatedLanguage()
     {
@@ -250,8 +216,6 @@ class Dialog extends \XLite\View\Dialog
      * Check - is translate language selected or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isTranslatedLanguageSelected()
     {
@@ -264,8 +228,6 @@ class Dialog extends \XLite\View\Dialog
      * @param \XLite\Model\LanguageLabel $label Label
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLabelDefaultValue(\XLite\Model\LanguageLabel $label)
     {
@@ -278,8 +240,6 @@ class Dialog extends \XLite\View\Dialog
      * @param \XLite\Model\LanguageLabel $label Label
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslation(\XLite\Model\LanguageLabel $label)
     {
@@ -292,8 +252,6 @@ class Dialog extends \XLite\View\Dialog
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -307,8 +265,6 @@ class Dialog extends \XLite\View\Dialog
      * Register JS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -323,8 +279,6 @@ class Dialog extends \XLite\View\Dialog
      * Return default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -335,8 +289,6 @@ class Dialog extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -347,8 +299,6 @@ class Dialog extends \XLite\View\Dialog
      * Get labels
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLabels()
     {
@@ -363,8 +313,6 @@ class Dialog extends \XLite\View\Dialog
      * :FIXME: simplify
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineLabels()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\PaypalWPS;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\PaypalWPS;
 /**
  * Paypal Website Payments Standard
  *
- * @see   ____class_see____
- * @since 1.0.1
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -40,8 +36,6 @@ abstract class Main extends \XLite\Module\AModule
      * Author name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
      */
     public static function getAuthorName()
     {
@@ -52,44 +46,46 @@ abstract class Main extends \XLite\Module\AModule
      * Module name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getModuleName()
     {
-        return 'Paypal Website Payments Standard';
+        return 'PayPal (outside of the US)';
+    }
+
+    /**
+     * Get module major version
+     *
+     * @return string
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
     }
 
     /**
      * Module version
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
-        return '8';
+        return '0';
     }
 
     /**
      * Module description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getDescription()
     {
-        return 'Enables taking credit card payments for your online store via Paypal (Website Payments Standard).';
+        return 'Enables taking credit card payments for your online store via PayPal (Website Payments Standard).';
     }
 
     /**
      * Determines if we need to show settings form link
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function showSettingsForm()
     {

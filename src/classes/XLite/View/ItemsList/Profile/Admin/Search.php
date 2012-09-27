@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Profile\Admin;
@@ -30,8 +28,6 @@ namespace XLite\View\ItemsList\Profile\Admin;
 /**
  * Search
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -56,9 +52,7 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     /**
      * List of search params for this widget (cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $searchParams;
 
@@ -66,8 +60,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -81,8 +73,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Return name of the base widgets list
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -93,8 +83,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Auxiliary method to check visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isDisplayWithEmptyList()
     {
@@ -105,8 +93,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -117,8 +103,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -129,8 +113,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -150,8 +132,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -162,8 +142,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -176,8 +154,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -190,8 +166,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Return list of search params for this widget
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchParams()
     {
@@ -219,8 +193,6 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
      * Return list of search params for this widget associated with the Repo params
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchParamsRepo()
     {

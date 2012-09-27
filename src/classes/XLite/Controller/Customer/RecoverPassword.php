@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,17 +29,13 @@ namespace XLite\Controller\Customer;
  * Password recovery controller
  * TODO: full refactoring is needed
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * params
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $params = array('target', 'mode', 'email', 'link_mailed');
 
@@ -49,8 +43,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * Add the base part of the location path
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -63,8 +55,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -75,15 +65,23 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * doActionRecoverPassword
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRecoverPassword()
     {
         // show recover message if email is valid
         if ($this->requestRecoverPassword($this->get('email'))) {
 
-            $this->setReturnURL($this->buildURL('recover_password', '', array('mode' => 'recoverMessage', 'link_mailed' => 1)));
+            $this->setReturnURL(
+                $this->buildURL(
+                    'recover_password',
+                    '',
+                    array(
+                        'mode'        => 'recoverMessage',
+                        'link_mailed' => 1,
+                        'email'       => $this->get('email'),
+                    )
+                )
+            );
 
         } else {
 
@@ -97,16 +95,22 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * doActionConfirm
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionConfirm()
     {
         if (!is_null($this->get('email')) && \XLite\Core\Request::getInstance()->request_id) {
 
             if ($this->doPasswordRecovery($this->get('email'), \XLite\Core\Request::getInstance()->request_id)) {
-
-                $this->setReturnURL($this->buildURL('recover_password', '', array('mode' => 'recoverMessage')));
+                $this->setReturnURL(
+                    $this->buildURL(
+                        'recover_password',
+                        '',
+                        array(
+                            'mode'  => 'recoverMessage',
+                            'email' => $this->get('email'),
+                        )
+                    )
+                );
             }
         }
     }
@@ -117,8 +121,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * @param mixed $email ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function requestRecoverPassword($email)
     {
@@ -138,8 +140,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * @param mixed $requestID ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doPasswordRecovery($email, $requestID)
     {
@@ -153,7 +153,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         } else {
 
             $pass = generate_code();
-            $profile->setPassword(md5($pass));
+            $profile->setPassword(\XLite\Core\Auth::encryptPassword($pass));
 
             $result = $profile->update();
 

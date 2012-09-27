@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,23 +28,20 @@ namespace XLite\Controller\Admin;
 /**
  * Categories page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
-class Categories extends \XLite\Controller\Admin\Base\Catalog
+class Categories extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
         $category = $this->getCategory();
 
-        return ($category && $this->getRootCategoryId() !== $category->getCategoryId()) 
+        // DO NOT use "!==" here
+        return ($category && $this->getRootCategoryId() != $category->getCategoryId()) 
             ? $category->getName() 
             : 'Manage categories';
     }
@@ -55,12 +50,36 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * Get all memberships
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMemberships()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
+    }
+
+    /**
+     * Return current category Id
+     *
+     * @return integer
+     */
+    public function getCategoryId()
+    {
+        return parent::getCategoryId() ?: $this->getRootCategoryId();
+    }
+
+    /**
+     * Return current (or default) category object
+     *
+     * @return \XLite\Model\Category
+     */
+    public function getCategory()
+    {
+        $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
+
+        if (!isset($category)) {
+            $category = new \XLite\Model\Category();
+        }
+
+        return $category;
     }
 
     /**
@@ -69,8 +88,6 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * @param integer $rootId ID of the subtree root OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     public function getCategories($categoryId)
     {
@@ -81,8 +98,6 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * doActionDelete
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -104,8 +119,6 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * Update "position" fields
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {

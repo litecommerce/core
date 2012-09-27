@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,35 +28,27 @@ namespace XLite\Controller\Customer;
 /**
  * Abstract controller for Customer interface
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\Controller\AController
 {
     /**
      * cart
      *
-     * @var   \XLite\Model\Cart
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Cart
      */
     protected $cart;
 
     /**
      * Initial cart fingerprint
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $initialCartFingerprint;
 
     /**
      * Breadcrumbs
      *
-     * @var   \XLite\View\Location
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\View\Location
      */
     protected $locationPath;
 
@@ -68,8 +58,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Return current location path
      *
      * @return \XLite\View\Location
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getLocationPath()
     {
@@ -84,8 +72,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Method to create the location line
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineLocationPath()
     {
@@ -106,8 +92,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -118,8 +102,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Add part to the location nodes list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -135,8 +117,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * @param array  $subnodes Node subnodes OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addLocationNode($name, $link = null, array $subnodes = null)
     {
@@ -146,11 +126,19 @@ abstract class ACustomer extends \XLite\Controller\AController
     // }}}
 
     /**
+     * Return current category Id
+     *
+     * @return integer
+     */
+    public function getCategoryId()
+    {
+        return parent::getCategoryId() ?: $this->getRootCategoryId();
+    }
+
+    /**
      * Return cart instance
      *
      * @return \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCart()
     {
@@ -163,22 +151,23 @@ abstract class ACustomer extends \XLite\Controller\AController
      *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
+     * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getShopURL($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = null, array $params = array())
     {
-        return parent::getShopURL($url, \XLite\Core\Config::getInstance()->Security->full_customer_security ?: $secure);
+        if (!isset($secure) && \XLite\Core\Config::getInstance()->Security->full_customer_security) {
+            $secure = true;
+        }
+
+        return parent::getShopURL($url, $secure, $params);
     }
 
     /**
      * Check if cuurrent user is logged in
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLogged()
     {
@@ -189,8 +178,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Handles the request
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -209,8 +196,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Stub for the CMS connectors
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkStorefrontAccessability()
     {
@@ -221,8 +206,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Perform some actions to prohibit access to storefornt
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function closeStorefront()
     {
@@ -234,8 +217,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Return template to use in a CMS
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCMSTemplate()
     {
@@ -246,8 +227,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Select template to use
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {
@@ -258,8 +237,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Recalculates the shopping cart
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function updateCart()
     {
@@ -275,12 +252,12 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Assemble updateCart event
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleEvent()
     {
         $result = false;
+
+        $diff = array();
 
         $old = $this->initialCartFingerprint;
         $new = $this->getCart()->getEventFingerprint();
@@ -319,7 +296,15 @@ abstract class ACustomer extends \XLite\Controller\AController
         }
 
         if ($items) {
-            \XLite\Core\Event::updateCart(array('items' => $items));
+            $diff['items'] = $items;
+        }
+
+        if ($old['total'] != $this->getCart()->getTotal()) {
+            $diff['total'] = $this->getCart()->getTotal() - $old['total'];
+        }
+
+        if ($diff) {
+            \XLite\Core\Event::updateCart($diff);
             $result = true;
         }
 
@@ -330,8 +315,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * isCartProcessed
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isCartProcessed()
     {
@@ -342,8 +325,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Get or create cart profile
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCartProfile()
     {
@@ -370,8 +351,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Check - need use secure protocol or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function needSecure()
     {
@@ -379,4 +358,53 @@ abstract class ACustomer extends \XLite\Controller\AController
             || (!\XLite\Core\Request::getInstance()->isHTTPS()) && \XLite\Core\Config::getInstance()->Security->full_customer_security;
     }
 
+    // {{{ Clean URLs related routines
+
+    /**
+     * Preprocessor for no-action run
+     *
+     * @return void
+     */
+    protected function doNoAction()
+    {
+        parent::doNoAction();
+
+        if (LC_USE_CLEAN_URLS && !$this->isAJAX() && !$this->isRedirectNeeded() && $this->isRedirectToCleanURLNeeded()) {
+            $this->performRedirectToCleanURL();
+        }
+    }
+
+    /**
+     * Check if redirect to clean URL is needed
+     *
+     * @return boolean
+     */
+    protected function isRedirectToCleanURLNeeded()
+    {
+        return preg_match(
+            '/\/cart\.php/Si',
+            \Includes\Utils\ArrayManager::getIndex(\XLite\Core\Request::getInstance()->getServerData(), 'REQUEST_URI')
+        );
+    }
+
+    /**
+     * Redirect to clean URL
+     *
+     * @return void
+     */
+    protected function performRedirectToCleanURL()
+    {
+        $data = \XLite\Core\Request::getInstance()->getGetData();
+
+        if (\XLite::TARGET_DEFAULT === ($target = $this->getTarget())) {
+            $target = '';
+
+        } else {
+            unset($data['target']);
+        }
+
+        $this->setReturnURL(\XLite\Core\Converter::buildFullURL($target, '', $data));
+    }
+
+    // }}}
 }

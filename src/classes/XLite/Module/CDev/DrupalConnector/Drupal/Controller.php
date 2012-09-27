@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -30,35 +28,27 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
     /**
      * Instance of the LC viewer
      *
-     * @var   \XLite\View\Controller
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\View\Controller
      */
     protected $viewer;
 
     /**
      * Flag to determine if some common actions are already performed
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $arePreinitialized = false;
 
     /**
      * Resources weight counter
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var integer
      */
     protected $resourcesCounter = 0;
 
@@ -66,8 +56,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Get RDF namespaces 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getRDFNamespaces()
     {
@@ -78,8 +66,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Get head prefixes 
      * 
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     public function getHeadPrefixes()
     {
@@ -92,8 +78,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Return page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -109,8 +93,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$variables Array of variables
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function updateTemplateVars(array &$variables)
     {
@@ -131,14 +113,13 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$elements Array of meta tags
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function updateMetaTags(array &$elements)
     {
         if (!defined('MAINTENANCE_MODE')) {
 
             foreach (array('description' => 'getMetaDescription', 'keywords' => 'getKeywords') as $name => $method) {
+                // $method stored into static array
                 $content = $this->getViewer()->$method();
 
                 if ($content) {
@@ -159,8 +140,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Return content for central region
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getContent()
     {
@@ -192,8 +171,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * The "access callback"
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -208,8 +185,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Return LC viewer for current controller
      *
      * @return \XLite\View\Controller
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getViewer()
     {
@@ -224,8 +199,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Check if current request is an AJAX one
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isAJAX()
     {
@@ -238,8 +211,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $content Content to display
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function displayAJAXContent($content)
     {
@@ -261,8 +232,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Set no-cache headers
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setNocacheHeaders()
     {
@@ -282,8 +251,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Set LC breadcrumbs
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setBreadcrumbs()
     {
@@ -323,8 +290,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Get page title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageTitle()
     {
@@ -335,8 +300,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Common actions for "getTitle()" and "getContent()"
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performCommonActions()
     {
@@ -362,8 +325,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Register LC widget resources
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function registerLCResources()
     {
@@ -372,6 +333,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
             if (function_exists($method)) {
                 foreach ($files as $name => $data) {
+                    // $method assembled from 'drupal_add_' + $type
                     $method($data['file'], $this->getResourceInfo($type, $data));
                 }
             }
@@ -405,8 +367,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array  $file Resource file info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getResourceInfo($type, array $file)
     {
@@ -419,8 +379,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $file Resource file info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getResourceInfoCommon(array $file)
     {
@@ -439,8 +397,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $file Resource file info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getResourceInfoJS(array $file)
     {
@@ -458,8 +414,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $file Resource file info
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getResourceInfoCSS(array $file)
     {
@@ -475,8 +429,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $file Resource file path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getJSScope($file)
     {
@@ -489,8 +441,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $file Resource file path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getResourceBasename($file)
     {
@@ -503,8 +453,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $file Resource file path
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getUniqueID($file)
     {

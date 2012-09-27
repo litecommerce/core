@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -30,28 +28,25 @@ namespace XLite\Core;
 /**
  * Request
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Request extends \XLite\Base\Singleton
 {
+    /**
+     * Current method
+     */
     const METHOD_CLI = 'cli';
 
     /**
      * Cureent request method
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var string
      */
     protected $requestMethod = null;
 
     /**
      * Request data
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $data = array();
 
@@ -62,8 +57,6 @@ class Request extends \XLite\Base\Singleton
      * @param array $data Custom data OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function mapRequest(array $data = array())
     {
@@ -75,7 +68,7 @@ class Request extends \XLite\Base\Singleton
                 }
 
             } else {
-                $data = array_merge($_GET, $_POST, $_COOKIE);
+                $data = array_merge($this->getGetData(false), $this->getPostData(false), $this->getCookieData(false));
             }
         }
 
@@ -86,8 +79,6 @@ class Request extends \XLite\Base\Singleton
      * Return all data
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getData()
     {
@@ -95,11 +86,57 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
+     * Return data from the $_GET global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     */
+    public function getGetData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_GET) : $_GET;
+    }
+
+    /**
+     * Return data from the $_POST global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     */
+    public function getPostData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_POST) : $_POST;
+    }
+
+    /**
+     * Return data from the $_COOKIE global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     */
+    public function getCookieData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_COOKIE) : $_COOKIE;
+    }
+
+    /**
+     * Return data from the $_SERVER global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     */
+    public function getServerData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_SERVER) : $_SERVER;
+    }
+
+    /**
      * Return current request method
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getRequestMethod()
     {
@@ -112,8 +149,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $method New request method
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setRequestMethod($method)
     {
@@ -124,8 +159,6 @@ class Request extends \XLite\Base\Singleton
      * Check if current request method is "GET"
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isGet()
     {
@@ -136,8 +169,6 @@ class Request extends \XLite\Base\Singleton
      * Check if current request method is "POST"
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isPost()
     {
@@ -148,8 +179,6 @@ class Request extends \XLite\Base\Singleton
      * Check if current request method is "HEAD"
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isHead()
     {
@@ -160,8 +189,6 @@ class Request extends \XLite\Base\Singleton
      * Check - is AJAX request or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isAJAX()
     {
@@ -169,28 +196,19 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
-     * Check - is secure connection or not
+     * Check for secure connection
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isHTTPS()
     {
-        return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1'))
-            || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
-            || (
-                isset($_SERVER['REMOTE_ADDR'])
-                && \XLite::getInstance()->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']
-            );
+        return \Includes\Utils\URLManager::isHTTPS();
     }
 
     /**
      * Check - is command line interface or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isCLI()
     {
@@ -203,8 +221,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $name Property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -218,8 +234,6 @@ class Request extends \XLite\Base\Singleton
      * @param mixed  $value Property value
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -232,8 +246,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $name Property name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function __isset($name)
     {
@@ -245,8 +257,6 @@ class Request extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -260,8 +270,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $value Value to sanitize
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doUnescapeSingle($value)
     {
@@ -274,8 +282,6 @@ class Request extends \XLite\Base\Singleton
      * @param mixed $data Data to sanitize
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doUnescape($data)
     {
@@ -290,8 +296,6 @@ class Request extends \XLite\Base\Singleton
      * @param mixed $request Request data
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function normalizeRequestData($request)
     {
@@ -308,8 +312,6 @@ class Request extends \XLite\Base\Singleton
      * @param mixed $data Data to sanitize
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepare($data)
     {
@@ -334,8 +336,6 @@ class Request extends \XLite\Base\Singleton
      * @param string $name  Argument name
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkControlArgument($value, $name)
     {

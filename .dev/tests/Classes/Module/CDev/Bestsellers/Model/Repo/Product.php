@@ -108,7 +108,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
 
         foreach($best as $index => $bestItem){
-            echo PHP_EOL . "Item ".$index.":".$bestItem->getSku().PHP_EOL;
+            //echo PHP_EOL . "Item ".$index.":".$bestItem->getSku().PHP_EOL;
             $this->assertContains($bestItem->getSku(), $this->test1, 'Wrong #' . $index . ' product in bestsellers (1)' . $bestItem->getSku());
         }
 
@@ -141,7 +141,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
          */
 
         foreach($best as $index => $bestItem){
-            echo PHP_EOL . "Item ".$index.":".$bestItem->getSku().PHP_EOL;
+            //echo PHP_EOL . "Item ".$index.":".$bestItem->getSku().PHP_EOL;
             $this->assertContains($bestItem->getSku(), $this->test2, 'Wrong #' . $index . ' product in bestsellers (1)' . $bestItem->getSku());
         }
 //        foreach ($this->test2 as $index => $id) {

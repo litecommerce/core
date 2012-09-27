@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\ModulesManager\Action;
@@ -30,8 +28,6 @@ namespace XLite\View\ModulesManager\Action;
 /**
  * Abstract action link for Module list (Modules manage)
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class AAction extends \XLite\View\AView
 {
@@ -45,8 +41,6 @@ abstract class AAction extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -61,8 +55,6 @@ abstract class AAction extends \XLite\View\AView
      * Get module
      *
      * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModule()
     {
@@ -73,8 +65,6 @@ abstract class AAction extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

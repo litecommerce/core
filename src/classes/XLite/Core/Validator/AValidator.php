@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -30,10 +28,8 @@ namespace XLite\Core\Validator;
 /**
  * Abstract validator
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
-abstract class AValidator
+abstract class AValidator extends \XLite\Base\SuperClass
 {
     /**
      * Validate
@@ -41,10 +37,18 @@ abstract class AValidator
      * @param mixed $data Data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract public function validate($data);
+
+    /**
+     * Constructor
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Sanitize
@@ -52,8 +56,6 @@ abstract class AValidator
      * @param mixed $data Daa
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function sanitize($data)
     {
@@ -69,13 +71,12 @@ abstract class AValidator
      * @param string $publicName Path item public name OPTIONAL
      *
      * @return \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function throwError($message, array $arguments = array(), $pathItem = null, $publicName = null)
     {
         $exception = new \XLite\Core\Validator\Exception($message);
         $exception->setLabelArguments($arguments);
+
         if (isset($pathItem)) {
             $exception->addPathItem($pathItem);
         }
@@ -94,8 +95,6 @@ abstract class AValidator
      * @param array  $arguments Language label arguments OPTIONAL
      *
      * @return \XLite\Core\ValidateException
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function throwInternalError($message, array $arguments = array())
     {

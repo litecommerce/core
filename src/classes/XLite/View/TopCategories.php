@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -30,8 +28,6 @@ namespace XLite\View;
 /**
  * Sidebar categories list
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="sidebar.first", zone="customer", weight="100")
  */
@@ -55,9 +51,7 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Display modes (template directories)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_LIST => 'List',
@@ -68,9 +62,7 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Current category path id list
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected $pathIds;
 
@@ -83,8 +75,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\Model\Category $category Current category
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function displayItemClass($index, $count, \XLite\Model\Category $category)
     {
@@ -101,8 +91,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\Model\Category $category Current category
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function displayLinkClass($i, $count, \XLite\Model\Category $category)
     {
@@ -119,8 +107,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\View\AView $widget Current category
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function displayListItemClass($i, $count, \XLite\View\AView $widget)
     {
@@ -133,8 +119,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * Get widge title
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -145,8 +129,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * Get widget templates directory
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -159,12 +141,10 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param integer $categoryId Category id OPTIONAL
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategories($categoryId = null)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getSubCategories(
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getSubcategories(
             $categoryId ?: $this->getParam(self::PARAM_ROOT_ID)
         );
     }
@@ -173,8 +153,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * ID of the default root category
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultCategoryId()
     {
@@ -185,8 +163,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -211,8 +187,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * Checks whether it is a subtree
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSubtree()
     {
@@ -225,8 +199,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\Model\Category $category Category
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isActiveTrail(\XLite\Model\Category $category)
     {
@@ -260,8 +232,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\Model\Category $category Current category
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleItemClassName($index, $count, \XLite\Model\Category $category)
     {
@@ -306,8 +276,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\Model\Category $category Current category
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleLinkClassName($i, $count, \XLite\Model\Category $category)
     {
@@ -324,8 +292,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\View\AView $widget Current category FIXME! this variable is not used
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function assembleListItemClassName($i, $count, \XLite\View\AView $widget)
     {

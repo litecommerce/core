@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,91 +13,53 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace Includes\Decorator\DataStructure\Graph;
 
 /**
- * Classes 
+ * Classes
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Classes extends \Includes\DataStructure\Graph
 {
     /**
      * Reflection object
      *
-     * @var   \ReflectionClass
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \ReflectionClass
      */
     protected $reflection;
 
     /**
-     * File path
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $file;
-
-    /**
      * Flag for so called "low-level" nodes
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isLowLevelNode;
 
     /**
      * Flag for so called "top-level" stub nodes
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
     protected $isTopLevelNode;
 
     /**
      * Flag to determine if node was changed (e.g. its key was modified)
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var boolean
      */
-    protected $isChanged;
+    protected $isChanged = false;
 
     // {{{ Constructor and common getters
-
-    /**
-     * Constructor
-     *
-     * @param string $key  Node unique key OPTIONAL
-     * @param string $file File name OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __construct($key = self::ROOT_NODE_KEY, $file = null)
-    {
-        parent::__construct($key);
-
-        $this->file = $file;
-    }
 
     /**
      * Add child node
@@ -105,8 +67,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $node Node to add
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function addChild(self $node)
     {
@@ -119,8 +79,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Alias
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getClass()
     {
@@ -131,8 +89,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Getter for the flag
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isLowLevelNode()
     {
@@ -143,8 +99,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Getter for the flag
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isTopLevelNode()
     {
@@ -155,8 +109,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return name of parent class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getParentClass()
     {
@@ -169,8 +121,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $class Class name to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     public function setParentClass($class)
     {
@@ -181,8 +131,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return list of class implementing interfaces
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getInterfaces()
     {
@@ -195,8 +143,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $interface Name of interface to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isImplements($interface)
     {
@@ -207,8 +153,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Check if class decorates another one
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isDecorator()
     {
@@ -219,8 +163,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return name of the module where the class defined
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModuleName()
     {
@@ -231,8 +173,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return top-level child
      *
      * @return self
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTopLevelNode()
     {
@@ -246,30 +186,30 @@ class Classes extends \Includes\DataStructure\Graph
     /**
      * Set node key
      *
-     * @param string $key Key to set
+     * @param string  $key     Key to set
+     * @param boolean $setFlag Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function setKey($key)
+    public function setKey($key, $setFlag = false)
     {
         foreach ($this->getChildren() as $node) {
             $node->setParentClass($key);
         }
 
+        $this->moveClassFile($key);
+
         parent::setKey($key);
 
-        // Set flag
-        $this->isChanged = true;
+        if ($setFlag) {
+            $this->isChanged = true;
+        }
     }
 
     /**
      * Mark node as "low-level"
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setLowLevelNodeFlag()
     {
@@ -280,8 +220,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Mark node as "top-level"
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function setTopLevelNodeFlag()
     {
@@ -293,27 +231,28 @@ class Classes extends \Includes\DataStructure\Graph
     // {{{ Methods to get paths and source code
 
     /**
-     * Name of the origin class file 
-     * 
+     * Name of the origin class file
+     *
+     * @param string $class Class name OPTIONAL
+     * @param string $dir   Dir to file OPTIONAL
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getFile()
+    public function getFile($class = null, $dir = LC_DIR_CACHE_CLASSES)
     {
-        return $this->file;
+        return $dir . $this->getPath($class);
     }
 
     /**
      * Transform class name into the relative path
      *
+     * @param string $class Class name OPTIONAL
+     *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getPath()
+    public function getPath($class = null)
     {
-        return \Includes\Utils\Converter::getClassFile($this->getClass());
+        return \Includes\Utils\Converter::getClassFile($class ?: $this->getClass());
     }
 
     /**
@@ -322,8 +261,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSource(self $parent = null)
     {
@@ -333,28 +270,77 @@ class Classes extends \Includes\DataStructure\Graph
     }
 
     /**
+     * Return modified DOC block
+     *
+     * @param array   $lines   Lines to add
+     * @param boolean $replace Flag OPTIONAL
+     * @param boolean $asTags  Flag OPTIONAL
+     *
+     * @return string
+     */
+    public function addLinesToDocBlock(array $lines, $replace = false, $asTags = true)
+    {
+        $separator = PHP_EOL . ' * ';
+
+        if ($asTags) {
+            $separator .= '@';
+
+            if (!$replace) {
+                foreach ($lines as $index => $line) {
+                    $line = preg_split('/\s+/Ss', $line);
+
+                    if (false !== strpos($this->getReflection()->docComment, '@' . array_shift($line))) {
+                        unset($lines[$index]);
+                    }
+                }
+            }
+        }
+
+        $result = $separator . implode($separator, array_unique($lines));
+
+        if ($replace) {
+            $result = '/**' . $result . PHP_EOL . ' */';
+
+        } else {
+            $result = preg_replace('/(\s+\*+\/)$/Ss', $result . '$1', $this->getReflection()->docComment);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return modified DOC block
+     *
+     * @param array   $lines  Lines to add
+     * @param boolean $asTags Flag OPTIONAL
+     *
+     * @return string
+     */
+    public function removeLinesFromDocBlock(array $lines, $asTags = true)
+    {
+        $pattern = $asTags
+            ? \Includes\Decorator\Utils\Operator::getTagPattern($lines)
+            : '/^(\s*\*\s*)?(' . implode('|', $lines) . ').*$/Smi';
+
+        return preg_replace($pattern, '', $this->getReflection()->docComment);
+    }
+
+    /**
      * Actualize and return source code for node
      *
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getActualSource(self $parent = null)
     {
-        // Change DOCBlock and clear tags
-        $this->getReflection()->docComment = $this->isLowLevelNode() 
-            ? '/**' . PHP_EOL . ' * MOVED' . PHP_EOL . ' */' 
-            : null;
-        $this->clearTags();
-
         return \Includes\Decorator\Utils\Tokenizer::getSourceCode(
             $this->getFile(),
             $this->getActualNamespace(),
             $this->getClassBaseName(),
             $this->getActualParentClassName($parent),
-            $this->getReflection()->docComment
+            $this->removeLinesFromDocBlock(array('ListChild')),
+            ($this->isLowLevelNode() || $this->isDecorator()) ? 'abstract' : null
         );
     }
 
@@ -364,14 +350,12 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getEmptySource(self $parent = null)
     {
         return '<?php' . PHP_EOL . PHP_EOL
             . (($namespace = $this->getActualNamespace()) ? ('namespace ' . $namespace . ';' . PHP_EOL . PHP_EOL) : '')
-            . (($comment = $this->getReflection()->docComment) ? ($comment . PHP_EOL) : '')
+            . (($comment = $this->removeLinesFromDocBlock(array('HasLifecycleCallbacks'))) ? ($comment . PHP_EOL) : '')
             . ($this->getReflection()->isFinal ? 'final '    : '')
             . ($this->getReflection()->isAbstract ? 'abstract ' : '')
             . ($this->getReflection()->isInterface ? 'interface' : 'class') . ' ' . $this->getClassBaseName()
@@ -384,8 +368,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return source code for regular node
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getRegularSource()
     {
@@ -398,8 +380,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Node to get class name OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getActualParentClassName(self $parent = null)
     {
@@ -410,8 +390,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return namespace by class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getActualNamespace()
     {
@@ -424,8 +402,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return base part of the class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClassBaseName()
     {
@@ -438,8 +414,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Parse class name into parts
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getClassNameParts()
     {
@@ -456,27 +430,41 @@ class Classes extends \Includes\DataStructure\Graph
      * Get tag info
      *
      * @param string $name Tag name
+     * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getTag($name)
+    public function getTag($name, $forceTokenizer = false)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->getTags(), strtolower($name), true);
+        return \Includes\Utils\ArrayManager::getIndex($this->getTags($forceTokenizer), strtolower($name), true);
+    }
+
+    /**
+     * Setter
+     *
+     * @param string $name  Tag name
+     * @param array  $value Value to set
+     *
+     * @return void
+     */
+    public function setTag($name, array $value)
+    {
+        $this->getTags();
+
+        $this->tags[$name] = $value;
     }
 
     /**
      * Parse and return all tags
      *
+     * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
+     *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getTags()
+    public function getTags($forceTokenizer = false)
     {
         if (!isset($this->tags)) {
-            $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection()->docComment);
+            $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection($forceTokenizer)->docComment);
 
             if (!empty($this->tags['lc_dependencies'][0])) {
                 $this->tags['lc_dependencies'] = \Includes\Utils\Converter::parseQuery(
@@ -494,8 +482,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param boolean $reversible Flag OPTIONAL
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
      */
     public function clearTags($reversible = false)
     {
@@ -509,17 +495,17 @@ class Classes extends \Includes\DataStructure\Graph
     /**
      * Return the ReflectionClass object for the current node
      *
+     * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
+     *
      * @return \ReflectionClass
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getReflection()
+    public function getReflection($forceTokenizer = false)
     {
         if (!isset($this->reflection)) {
-            $this->reflection = new \StdClass();
             $util = '\Includes\Decorator\Utils\Tokenizer';
+            $this->reflection = new \StdClass();
 
-            if ($util::getDecoratorFlag() || !\Includes\Utils\Operator::checkIfClassExists($this->getClass())) {
+            if ($forceTokenizer || $util::getDecoratorFlag()) {
                 $this->reflection->parentClass = $util::getParentClassName($this->getFile());
                 $this->reflection->interfaces  = $util::getInterfaces($this->getFile());
                 $this->reflection->docComment  = $util::getDockBlock($this->getFile());
@@ -541,7 +527,6 @@ class Classes extends \Includes\DataStructure\Graph
             $this->reflection->parentClass = $this->prepareClassName($this->reflection->parentClass);
             $this->reflection->interfaces  = array_map(array($this, 'prepareClassName'), $this->reflection->interfaces);
 
-            // KLUDGE: the "StaticRoutines" plugin support
             $this->reflection->hasStaticConstructor = $util::hasMethod(
                 $this->getFile(),
                 \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
@@ -557,8 +542,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $class Class name to prepare
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareClassName($class)
     {
@@ -571,8 +554,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $node Current node
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function drawAdditional(self $node)
     {
@@ -583,6 +564,25 @@ class Classes extends \Includes\DataStructure\Graph
         }
 
         return $result;
+    }
+
+    /**
+     * Move/copy class file
+     *
+     * @param string $class New class name
+     *
+     * @return void
+     */
+    protected function moveClassFile($class)
+    {
+        if (!$this->isRoot() && !$this->isRoot($class)) {
+            if ($this->getClass()) {
+                \Includes\Utils\FileManager::move($this->getFile(), $this->getFile($class));
+
+            } else {
+                \Includes\Utils\FileManager::copy($this->getFile($class, LC_DIR_CLASSES), $this->getFile($class));
+            }
+        }
     }
 
     // }}}

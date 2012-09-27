@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Customer;
 /**
  * ____description____
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class Catalog extends \XLite\Controller\Customer\ACustomer
 {
@@ -39,17 +35,27 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * getModelObject
      *
      * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     abstract protected function getModelObject();
+
+    /**
+     * Define and set handler attributes; initialize handler
+     *
+     * @param array $params Handler params OPTIONAL
+     *
+     * @return void
+     */
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+
+        $this->params[] = 'category_id';
+    }
 
     /**
      * Return current (or default) category object
      *
      * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategory()
     {
@@ -60,8 +66,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Returns the page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -74,8 +78,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Returns the page title (for the <title> tag)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPageTitle()
     {
@@ -88,8 +90,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * getDescription
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDescription()
     {
@@ -102,8 +102,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Get meta description
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getMetaDescription()
     {
@@ -120,8 +118,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Get meta keywords
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getKeywords()
     {
@@ -135,8 +131,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Return path for the current category
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategoryPath()
     {
@@ -144,19 +138,27 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Preprocessor for no-action ren
+     * Preprocessor for no-action run
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doNoAction()
     {
         parent::doNoAction();
 
-        if (!\XLite\Core\Request::getInstance()->isAJAX()) {
+        if (!$this->isAJAX()) {
             \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
         }
+    }
+
+    /**
+     * Check if redirect to clean URL is needed
+     *
+     * @return boolean
+     */
+    protected function isRedirectToCleanURLNeeded()
+    {
+        return parent::isRedirectToCleanURLNeeded() || (!\XLite::isCleanURL() && $this->getModelObject()->getCleanURL());
     }
 
     /**
@@ -165,8 +167,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Category $category Category model object to use
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCategoryURL(\XLite\Model\Category $category)
     {
@@ -179,8 +179,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Category $category Node category
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocationNodeSubnodes(\XLite\Model\Category $category)
     {
@@ -200,8 +198,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Add part to the location nodes list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addBaseLocation()
     {

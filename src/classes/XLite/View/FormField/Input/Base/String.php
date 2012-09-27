@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input\Base;
@@ -30,8 +28,6 @@ namespace XLite\View\FormField\Input\Base;
 /**
  * String-based
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 abstract class String extends \XLite\View\FormField\Input\AInput
 {
@@ -45,8 +41,6 @@ abstract class String extends \XLite\View\FormField\Input\AInput
      * Define widget params
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -62,8 +56,6 @@ abstract class String extends \XLite\View\FormField\Input\AInput
      * getCommonAttributes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {
@@ -80,8 +72,6 @@ abstract class String extends \XLite\View\FormField\Input\AInput
      * Get default maximum size 
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getDefaultMaxSize()
     {
@@ -92,8 +82,6 @@ abstract class String extends \XLite\View\FormField\Input\AInput
      * Check field validity
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function checkFieldValidity()
     {
@@ -117,8 +105,6 @@ abstract class String extends \XLite\View\FormField\Input\AInput
      * Assemble validation rules
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function assembleValidationRules()
     {
@@ -133,8 +119,6 @@ abstract class String extends \XLite\View\FormField\Input\AInput
      * Register some data that will be sent to template as special HTML comment
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCommentedData()
     {
@@ -147,8 +131,6 @@ abstract class String extends \XLite\View\FormField\Input\AInput
      * Sanitize value
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function sanitize()
     {

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,17 +28,13 @@ namespace XLite\Controller\Admin;
 /**
  * Storage
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Storage extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Storage 
      * 
-     * @var   \XLite\Model\Base\Storage
-     * @see   ____var_see____
-     * @since 1.0.11
+     * @var \XLite\Model\Base\Storage
      */
     protected $storage;
 
@@ -48,8 +42,6 @@ class Storage extends \XLite\Controller\Admin\AAdmin
      * Check if current page is accessible
      *
      * @return boolean
-     * @see    ____var_see____
-     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -60,8 +52,6 @@ class Storage extends \XLite\Controller\Admin\AAdmin
      * Download
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionDownload()
     {
@@ -76,8 +66,6 @@ class Storage extends \XLite\Controller\Admin\AAdmin
      * Get storage 
      * 
      * @return \XLite\Model\Base\Storage
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function getStorage()
     {
@@ -105,8 +93,6 @@ class Storage extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Base\Storage $storage Storage
      *  
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.11
      */
     protected function readStorage(\XLite\Model\Base\Storage $storage)
     {

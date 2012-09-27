@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.10
  */
 
 namespace XLite\Module\CDev\FileAttachments\Controller\Admin;
@@ -30,17 +28,15 @@ namespace XLite\Module\CDev\FileAttachments\Controller\Admin;
 /**
  * Product controller
  * 
- * @see   ____class_see____
- * @since 1.0.10
  */
 class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
+    // {{{ Pages
+
     /**
      * Get pages sections
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getPages()
     {
@@ -57,10 +53,8 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Get pages templates
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
         $list = parent::getPageTemplates();
 
@@ -71,12 +65,12 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         return $list;
     }
 
+    // }}}
+
     /**
      * Remove file
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionRemoveAttachment()
     {
@@ -101,8 +95,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update files
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdateAttachments()
     {
@@ -110,9 +102,9 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
         $data = \XLite\Core\Request::getInstance()->data;
         if ($data && is_array($data)) {
+            $repository = \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Attachment');
             foreach ($data as $id => $row) {
-                $attachment = \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Attachment')
-                    ->find($id);
+                $attachment = $repository->find($id);
 
                 if ($attachment) {
                     $attachment->map($row);

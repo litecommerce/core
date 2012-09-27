@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\Model;
@@ -30,8 +28,6 @@ namespace XLite\View\Model;
 /**
  * Settings dialog model widget
  *
- * @see   ____class_see____
- * @since 1.0.11
  */
 class Settings extends \XLite\View\Model\AModel
 {
@@ -39,8 +35,6 @@ class Settings extends \XLite\View\Model\AModel
      * Get schema fields
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSchemaFields()
     {
@@ -62,8 +56,6 @@ class Settings extends \XLite\View\Model\AModel
      * @param \XLite\Model\Config $option Option
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getFormFieldByOption(\XLite\Model\Config $option)
     {
@@ -98,8 +90,6 @@ class Settings extends \XLite\View\Model\AModel
      * @param \XLite\Model\Config $option Option
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function detectFormFieldClassByOption(\XLite\Model\Config $option)
     {
@@ -150,8 +140,6 @@ class Settings extends \XLite\View\Model\AModel
      * @param \XLite\Model\Config $option Option
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function isOptionRequired(\XLite\Model\Config $option)
     {
@@ -162,8 +150,6 @@ class Settings extends \XLite\View\Model\AModel
      * Get form fields for default section
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.13
      */
     protected function getFormFieldsForSectionDefault()
     {
@@ -174,8 +160,6 @@ class Settings extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -194,8 +178,6 @@ class Settings extends \XLite\View\Model\AModel
      * Perform certain action for the model object
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function performActionUpdate()
     {
@@ -208,8 +190,6 @@ class Settings extends \XLite\View\Model\AModel
      * @param mixed $name Field/property name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelObjectValue($name)
     {
@@ -231,8 +211,6 @@ class Settings extends \XLite\View\Model\AModel
      * @param array $data Data to set
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {
@@ -284,8 +262,6 @@ class Settings extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -296,8 +272,6 @@ class Settings extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {

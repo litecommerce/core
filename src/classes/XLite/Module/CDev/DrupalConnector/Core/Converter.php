@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Core;
@@ -30,8 +28,6 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 /**
  * Miscelaneous convertion routines
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
 {
@@ -54,30 +50,35 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $interface Interface script OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
-    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
+    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null, $forceCleanURL = false)
     {
         if ('' === $target) {
             $target = \XLite::TARGET_DEFAULT;
         }
 
-        if (!\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+        if (
+            \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            || (\XLite::CART_SELF == $interface && \XLite\Module\CDev\DrupalConnector\Core\Caller::getInstance()->isInitialized())
+        ) {
 
-            // Standalone URL
-            $result = parent::buildURL($target, $action, $params, $interface);
+            $portal = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByTarget($target);
 
-        } elseif ($portal = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByTarget($target)) {
+            if ($portal) {
 
-            // Drupal URL (portal)
-            list($path, $args) = $portal->getDrupalArgs($target, $action, $params);
-            $result = static::normalizeDrupalURL($path, $args);
+                // Drupal URL (portal)
+                list($path, $args) = $portal->getDrupalArgs($target, $action, $params);
+                $result = static::normalizeDrupalURL($path, $args);
+            } else {
+
+                // Drupal URL
+                $result = static::buildDrupalURL($target, $action, $params);
+            }
 
         } else {
 
-            // Drupal URL
-            $result = static::buildDrupalURL($target, $action, $params);
+            // Standalone URL
+            $result = parent::buildURL($target, $action, $params, $interface);
 
         }
 
@@ -93,8 +94,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $node   Node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildDrupalPath($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
@@ -120,8 +119,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $node   Node OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
@@ -135,11 +132,13 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param array  $args Additional arguments OIPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected static function normalizeDrupalURL($url, array $args = array())
     {
-        return preg_replace('/(\/)\%252F([^\/])/iSs', '\1/\2', url($url, array('query' => $args)));
+        return preg_replace(
+            '/(\/)\%252F([^\/])/iSs',
+            '\1/\2',
+            \XLite\Module\CDev\DrupalConnector\Core\Caller::getInstance()->url($url, array('query' => $args))
+        );
     }
 }

@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\View\ItemsList\Model;
@@ -30,8 +28,6 @@ namespace XLite\View\ItemsList\Model;
 /**
  * Abstract admin model-based items list (table)
  *
- * @see   ____class_see____
- * @since 1.0.15
  */
 abstract class Table extends \XLite\View\ItemsList\Model\AModel
 {
@@ -44,22 +40,22 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     const COLUMN_CREATE_CLASS  = 'createClass';
     const COLUMN_MAIN          = 'main';
     const COLUMN_SERVICE       = 'service';
+    const COLUMN_PARAMS        = 'params';
+    const COLUMN_SORT          = 'sort';
+    const COLUMN_SEARCH_WIDGET = 'searchWidget';
+    const COLUMN_NO_WRAP       = 'noWrap';
 
     /**
      * Columns (local cache)
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var array
      */
     protected $columns;
 
     /**
      * Main column index
      *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @var integer
      */
     protected $mainColumn;
 
@@ -67,8 +63,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Define columns structure
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     abstract protected function defineColumns();
 
@@ -76,8 +70,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get a list of CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -92,8 +84,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get a list of JavaScript files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -108,8 +98,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Check - pager box is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.16
      */
     protected function isPagerVisible()
     {
@@ -121,8 +109,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get preprocessed columns structire
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getColumns()
     {
@@ -144,6 +130,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
                 if (!isset($column[static::COLUMN_TEMPLATE]) && !isset($column[static::COLUMN_CLASS])) {
                     $column[static::COLUMN_TEMPLATE] = 'items_list/model/table/field.tpl';
                 }
+                $column[static::COLUMN_PARAMS] = isset($column[static::COLUMN_PARAMS]) ? $column[static::COLUMN_PARAMS] : array();
                 $this->columns[] = $column;
             }
 
@@ -164,8 +151,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Returnd columns count
      * 
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.17
      */
     protected function getColumnsCount()
     {
@@ -176,8 +161,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Check - table header is visible or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.20
      */
     protected function isTableHeaderVisible()
     {
@@ -196,8 +179,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get main column
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getMainColumn()
     {
@@ -231,8 +212,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column Column
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isMainColumn(array $column)
     {
@@ -248,8 +227,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param \XLite\Model\AEntity $entity Model
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getColumnValue(array $column, \XLite\Model\AEntity $entity)
     {
@@ -273,57 +250,122 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get field classes list (only inline-based form fields)
+     * Get field objects list (only inline-based form fields)
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
-    protected function getFieldClasses()
+    protected function getFieldObjects()
     {
         $list = array();
 
         foreach ($this->getColumns() as $column) {
+            $name = $column[static::COLUMN_CODE];
             if (
                 isset($column[static::COLUMN_CLASS])
                 && is_subclass_of($column[static::COLUMN_CLASS], 'XLite\View\FormField\Inline\AInline')
             ) {
-                $list[] = $column[static::COLUMN_CLASS];
+                $params = isset($column[static::COLUMN_PARAMS]) ? $column[static::COLUMN_PARAMS] : array();
+                $list[] = array(
+                    'class'      => $column[static::COLUMN_CLASS],
+                    'parameters' => array('fieldName' => $name, 'fieldParams' => $params),
+                );
             }
         }
 
         if ($this->isSwitchable()) {
-            $list[] = 'XLite\View\FormField\Inline\Input\Checkbox\Switcher\Enabled';
+            $cell = $this->getSwitcherField();
+            $list[] = array(
+                'class'      => $cell['class'],
+                'parameters' => array('fieldName' => $cell['name'], 'fieldParams' => $cell['params']),
+            );
         }
 
-        if (static::SORT_TYPE_INPUT == $this->getSortableType()) {
-            $list[] = 'XLite\View\FormField\Inline\Input\Text\Position\OrderBy';
+        if (static::SORT_TYPE_NONE != $this->getSortableType()) {
+            $cell = $this->getSortField();
+            $list[] = array(
+                'class'      => $cell['class'],
+                'parameters' => array('fieldName' => $cell['name'], 'fieldParams' => $cell['params']),
+            );
+        }
 
-        } elseif (static::SORT_TYPE_MOVE == $this->getSortableType()) {
-            $list[] = 'XLite\View\FormField\Inline\Input\Text\Position\Move';
+        foreach ($list as $i => $class) {
+            $list[$i] = new $class['class']($class['parameters']);
         }
 
         return $list;
     }
 
     /**
+     * Get switcher field 
+     * 
+     * @return array
+     */
+    protected function getSwitcherField()
+    {
+        return array(
+            'class'  => 'XLite\View\FormField\Inline\Input\Checkbox\Switcher\Enabled',
+            'name'   => 'enabled',
+            'params' => array(),
+        );
+    }
+
+    /**
+     * Get sort field 
+     * 
+     * @return array
+     */
+    protected function getSortField()
+    {
+        return static::SORT_TYPE_INPUT == $this->getSortableType()
+            ? array(
+                'class'  => 'XLite\View\FormField\Inline\Input\Text\Position\OrderBy',
+                'name'   => 'position',
+                'params' => array(),
+            )
+            :
+            array(
+                'class'  => 'XLite\View\FormField\Inline\Input\Text\Position\Move',
+                'name'   => 'position',
+                'params' => array(),
+            );
+    }
+
+    /**
      * Get create field classes
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getCreateFieldClasses()
     {
         $list = array();
 
         foreach ($this->getColumns() as $column) {
+            $name = $column[static::COLUMN_CODE];
+            $class = null;
             if (
                 isset($column[static::COLUMN_CREATE_CLASS])
                 && is_subclass_of($column[static::COLUMN_CREATE_CLASS], 'XLite\View\FormField\Inline\AInline')
             ) {
-                $list[] = $column[static::COLUMN_CREATE_CLASS];
+                $class = $column[static::COLUMN_CREATE_CLASS];
+
+            } elseif (
+                isset($column[static::COLUMN_CLASS])
+                && is_subclass_of($column[static::COLUMN_CLASS], 'XLite\View\FormField\Inline\AInline')
+            ) {
+                $class = $column[static::COLUMN_CLASS];
             }
+
+            if ($class) {
+                $params = isset($column[static::COLUMN_PARAMS]) ? $column[static::COLUMN_PARAMS] : array();
+                $list[] = array(
+                    'class'      => $class,
+                    'parameters' => array('fieldName' => $name, 'fieldParams' => $params),
+                );
+            }
+        }
+
+        foreach ($list as $i => $class) {
+            $list[$i] = new $class['class']($class['parameters']);
         }
 
         return $list;
@@ -333,8 +375,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get create line columns
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getCreateColumns()
     {
@@ -345,7 +385,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
                 static::COLUMN_CODE     => 'actions left',
                 static::COLUMN_NAME     => '',
                 static::COLUMN_SERVICE  => true,
-                static::COLUMN_TEMPLATE => 'items_list/model/table/parts/empty.tpl',
+                static::COLUMN_TEMPLATE => 'items_list/model/table/parts/empty_left.tpl',
             );
         }
 
@@ -376,7 +416,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
                 static::COLUMN_SERVICE  => true,
                 static::COLUMN_TEMPLATE => $this->isRemoved()
                     ? 'items_list/model/table/parts/remove_create.tpl'
-                    : 'items_list/model/table/parts/empty.tpl',
+                    : 'items_list/model/table/parts/empty_right.tpl',
             );
         }
 
@@ -387,8 +427,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * List has top creation box
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isTopInlineCreation()
     {
@@ -399,8 +437,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * List has bottom creation box
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function isBottomInlineCreation()
     {
@@ -411,8 +447,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -426,8 +460,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array  $column Column
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getCellListNamePart($type, array $column)
     {
@@ -440,8 +472,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getContainerClass()
     {
@@ -458,8 +488,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param array $column Column
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getHeadClass(array $column)
     {
@@ -473,15 +501,14 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getColumnClass(array $column, \XLite\Model\AEntity $entity = null)
     {
         return 'cell '
             . $column[static::COLUMN_CODE]
             . ($this->hasColumnAttention($column, $entity) ? ' attention' : '')
-            . ($this->isMainColumn($column) ? ' main' : '');
+            . ($this->isMainColumn($column) ? ' main' : '')
+            . (empty($column[static::COLUMN_NO_WRAP]) ? '' : ' no-wrap');
     }
 
     /**
@@ -491,8 +518,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function hasColumnAttention(array $column, \XLite\Model\AEntity $entity = null)
     {
@@ -506,8 +531,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @param string  $template Template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getActionCellClass($i, $template)
     {
@@ -522,8 +545,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get top actions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getTopActions()
     {
@@ -543,8 +564,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get bottom actions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getBottomActions()
     {
@@ -568,8 +587,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get left actions tempaltes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getLeftActions()
     {
@@ -597,8 +614,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Get right actions tempaltes
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
      */
     protected function getRightActions()
     {
@@ -611,16 +626,36 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
         return $list;
     }
 
+    /**
+     * Check - remove entity or not
+     * 
+     * @param \XLite\Model\AEntity $entity Entity
+     *  
+     * @return boolean
+     */
+    protected function isAllowEntityRemove(\XLite\Model\AEntity $entity)
+    {
+        return true;
+    }
+
     // }}}
 
     // {{{ Inherited methods
 
     /**
+     * Check - body tempalte is visible or not
+     *
+     * @return boolean
+     */
+    protected function isPageBodyVisible()
+    {
+        return parent::isPageBodyVisible() || $this->isHeadSearchVisible();
+    }
+
+    /**
      * Check - table header is visible or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isHeaderVisible()
     {
@@ -631,8 +666,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * isFooterVisible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -643,8 +676,6 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Return file name for body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getBodyTemplate()
     {
@@ -655,15 +686,127 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * Return dir which contains the page body template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
         return parent::getPageBodyDir() . '/table';
     }
 
+    /**
+     * Remove entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity
+     *
+     * @return boolean
+     */
+    protected function removeEntity(\XLite\Model\AEntity $entity)
+    {
+        return $this->isAllowEntityRemove($entity) && parent::removeEntity($entity);
+    }
+
     // }}}
 
+    // {{{ Head sort
+
+    /**
+     * Check - specified column is sorted or not
+     * 
+     * @param array $column COlumn
+     *  
+     * @return boolean
+     */
+    protected function isColumnSorted(array $column)
+    {
+        $field = $this->getSortBy();
+
+        return !empty($column[static::COLUMN_SORT]) && $field == $column[static::COLUMN_SORT];
+    }
+
+    /**
+     * Get next sort direction
+     * 
+     * @param array $column Column
+     *  
+     * @return string
+     */
+    protected function getSortDirectionNext(array $column)
+    {
+        if ($this->isColumnSorted($column)) {
+            $direction = static::SORT_ORDER_DESC == $this->getSortOrder() ? static::SORT_ORDER_ASC : static::SORT_ORDER_DESC;
+
+        } else {
+            $direction = $this->getSortOrder() ?: static::SORT_ORDER_DESC;
+        }
+
+        return $direction;
+    }
+
+    /**
+     * Get sort link class 
+     * 
+     * @param array $column Column
+     *  
+     * @return string
+     */
+    protected function getSortLinkClass(array $column)
+    {
+        $classes = 'sort';
+        if ($this->isColumnSorted($column)) {
+            $classes .= ' current-sort ' . $this->getSortOrder() . '-direction';
+        }
+
+        return $classes;
+    }
+
+    // }}}
+
+    // {{{ Head search
+
+    /**
+     * Check - search-in-head mechanism is available or not
+     * 
+     * @return boolean
+     */
+    protected function isHeadSearchVisible()
+    {
+        $found = false;
+
+        foreach ($this->getColumns() as $column) {
+            if ($this->isSearchColumn($column)) {
+                $found = true;
+                break;
+            }
+        }
+
+        return $found;
+    }
+
+    /**
+     * Check - specified column has search widget or not
+     * 
+     * @param array $column Column info
+     *  
+     * @return boolean
+     */
+    protected function isSearchColumn(array $column)
+    {
+        return !empty($column[static::COLUMN_SEARCH_WIDGET]);
+    }
+
+
+    /**
+     * Get search cell class 
+     * 
+     * @param array $column ____param_comment____
+     *  
+     * @return void
+     */
+    protected function getSearchCellClass(array $column)
+    {
+        return 'search-cell ' . $column[static::COLUMN_CODE] . ' '
+            . ($this->isSearchColumn($column) ? 'filled' : 'empty');
+    }
+
+    // }}}
 }
 

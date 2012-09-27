@@ -72,7 +72,7 @@ class LcServer extends Server
 
         $options = $app['server_options'];
 
-        $code = $this->run('mkdir /tmp/coverage-html; cd .dev; sudo ./phpunit --coverage-clover /tmp/phpunit-clover.xml --coverage-html /tmp/coverage-html --verbose --log-junit /tmp/phpunit-noweb.xml xliteAllTests tests/AllTests.php LOCAL_TESTS,NOWEB', $options);
+        $code = $this->run('mkdir /tmp/coverage-html; cd .dev; sudo TERM=dumb ./phpunit --coverage-clover /tmp/phpunit-clover.xml --coverage-html /tmp/coverage-html --verbose --log-junit /tmp/phpunit-noweb.xml xliteAllTests tests/AllTests.php LOCAL_TESTS,NOWEB', $options);
 
         $this->download('/tmp/phpunit-*.xml', $app['log_dir'], $options);
         $this->download('/tmp/coverage-html', $app['log_dir'], $options);

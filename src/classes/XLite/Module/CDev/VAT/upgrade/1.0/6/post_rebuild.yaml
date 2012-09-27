@@ -1,0 +1,29 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Taxes module install data
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+
+XLite\Model\MoneyModificator:
+  - class: XLite\Module\CDev\VAT\Logic\IncludedVAT
+    validator: isApply
+    purpose: net
+    position: 1000
+  - class: XLite\Module\CDev\VAT\Logic\ExcludedVAT
+    validator: isApply
+    purpose: display
+    position: 1000
+
+XLite\Model\Config:
+  - { name: display_prices_including_vat, category: 'CDev\VAT', type: checkbox, value: 'Y', orderby: 100, translations: [{ code: en, option_name: 'Display prices in catalog including VAT' }] }
+  - { name: display_inc_vat_label, category: 'CDev\VAT', type: text, value: 'Y', orderby: 110, translations: [{ code: en, option_name: 'Display ''inc/ex VAT'' labels next to prices', option_comment: 'If this option is ticked all prices in the catalog will be shown with ''inc VAT'' or ''ex VAT'' label depending on whether included VAT into the price or not. If you choose do not display this label, you have to place information about it somewhere on the catalog pages as it must be clear for customers.' }] }
+
+XLite\Model\LanguageLabel:
+  - { name: "After you enable this tax it will be included in product prices", translations: [{ code: en, label: "After you enable this tax it will be included in product prices. This means that it will not be shown as separate surcharge during checkout." }] }
+  - { name: 'incl.VAT', translations: [{ code: en, label: 'including.{{name}}' }] }
+  - { name: 'excl.VAT', translations: [{ code: en, label: 'excluding.{{name}}' }] }
+  - { name: "Select the membership level and area. for which product prices, including VAT, are defined by the shop administrator", translations: [{ code: en, label: "Select the membership level and area, for which product prices, including VAT, are defined by the shop administrator. The included VAT will be subtracted and then recalculated for customers from other locations or having a different membership level.<br /><br />If your prices are defined excluding VAT, select the membership level and the area with a 0% VAT rate defined below (or with no applicable rate)." }] }
+

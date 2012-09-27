@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -30,8 +28,6 @@ namespace XLite\Controller\Admin;
 /**
  * Shipping settings management page controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class ShippingSettings extends \XLite\Controller\Admin\AAdmin
 {
@@ -39,8 +35,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * Returns shipping options
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -52,8 +46,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -64,8 +56,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * Do action 'Update'
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function doActionUpdate()
     {
@@ -102,8 +92,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * @param mixed $stateId ____param_comment____
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getStateById($stateId)
     {
@@ -114,8 +102,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      * getOptionsCategory
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getOptionsCategory()
     {

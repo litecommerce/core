@@ -1,0 +1,131 @@
+#!/usr/bin/env php
+<?php
+// vim: set ts=4 sw=4 sts=4 et:
+
+/**
+ * LiteCommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+define('IMPROVEMENTS', 0);
+define('FIXES', 1);
+define('OTHER', 2);
+
+echo generateChangelog($argv[1], $argv[2]);
+
+function generateChangelog($oldVersion, $newVersion)
+{
+    $changelog = shell_exec('git log --no-merges --date=iso --pretty=format:"%cd - %s (%an, %h)" -r '.$oldVersion.'..HEAD | sed "s/^\(.\{11\}\)\(.\{15\}\)/\1/"');
+    $changelog = correctChangelog($changelog);
+
+    return showChangelog($newVersion, $changelog);
+}
+
+function correctChangelog($text)
+{
+    $changelog = array (
+        IMPROVEMENTS => array(),
+        FIXES        => array(),
+        OTHER        => array(),
+    );
+
+    $lines = explode("\n", $text);
+
+    foreach ($lines as $line) {
+        $org_line = $line;
+        // Date
+        $date = '';
+        if (preg_match('/^([\d]{4,4}-[\d]{2,2}-[\d]{2,2}) - /', $line, $m)) {
+            $date = $m[1];
+            $line = trim(substr($line, strlen($m[0])));
+        }
+
+        // Source: ticket ID
+        $source = '';
+        while (preg_match('/^([\,\s]{0,2})(E|S{1,1}):(\d+)/', $line, $m)) {
+            $source .= ($source == '' ? ' ' : ', ') . $m[2] . ':' . ($m[2] == 'E' ? sprintf('%07d', $m[3]) : $m[3]);
+            $line = trim(substr($line, strlen($m[0])));
+        }
+
+        // Author and commit id
+        $author = '';
+        if (preg_match('/ \(([a-z- ]+), ([a-z0-9]{7,7})\)$/i', $line, $m)) {
+            $author = ' (' . $m[1] . ', ' . $m[2] . ')';
+            $line = trim(substr($line, 0, strlen($line) - strlen($m[0])));
+        }
+
+        // List of changes:
+        // it is assumed, that the comment may contain [+], [-], [*] or [!] several times
+        $changes = array();
+        $ar = preg_split('/(\[[\+|-|\!|\*]{1,1}\])/', $line, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        if (count($ar) > 1) {
+            for ($i=0; $i < count($ar); $i+=2) {
+                $changes[] = $ar[$i] . $ar[$i + 1];
+            }
+        } else {
+            $changes[] = $line;
+        }
+
+        foreach ($changes as $change) {
+            $index = substr($change, 0, 3) == '[!]'
+                     ? FIXES
+                     : (
+                         in_array(substr($change, 0, 3), array('[+]', '[-]', '[*]'))
+                         ? IMPROVEMENTS
+                         : OTHER
+                     );
+            // Replace
+            // [+] -> [New]
+            // [-] -> [Removal]
+            // [*] -> [Change]
+            // [!] -> [Bug]
+            $before = array('[+]', '[-]', '[*]', '[!]');
+            $after = array('[New]', '[Removal]', '[Change]', '[Bug]');
+            $change = str_replace($before, $after, $change);
+
+            // Place into changelog
+            $changelog[$index][] = $date . ' - ' . $change . $source . $author;
+        }
+    }
+
+    unset($lines);
+
+    return $changelog;
+}
+
+function showChangelog($version, $changelog)
+{
+    echo "## Version $version\n\n";
+
+    echo "### Improvements\n\n";
+    foreach ($changelog[IMPROVEMENTS] as $line) {
+        echo "* $line\n";
+    }
+
+    echo "\n\n### Fixes\n\n";
+    foreach ($changelog[FIXES] as $line) {
+        echo "* $line\n";
+    }
+
+    echo "\n\n### !!! UNKNOWN COMMITS !!!\n\n";
+    foreach ($changelog[OTHER] as $line) {
+        echo "* $line\n";
+    }
+}

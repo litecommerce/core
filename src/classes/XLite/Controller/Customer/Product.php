@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -30,27 +28,34 @@ namespace XLite\Controller\Customer;
 /**
  * Product
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Product extends \XLite\Controller\Customer\Catalog
 {
     /**
-     * Controller parameters list
+     * Product 
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Product
      */
-    protected $params = array('target', 'product_id');
+    protected $product;
 
+    /**
+     * Define and set handler attributes; initialize handler
+     *
+     * @param array $params Handler params OPTIONAL
+     *
+     * @return void
+     */
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+        
+        $this->params[] = 'product_id';
+    }
 
     /**
      * Check whether the title is to be displayed in the content area
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function isTitleVisible()
     {
@@ -61,8 +66,6 @@ class Product extends \XLite\Controller\Customer\Catalog
      * Get product category id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCategoryId()
     {
@@ -79,8 +82,6 @@ class Product extends \XLite\Controller\Customer\Catalog
      * getDescription
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getDescription()
     {
@@ -91,8 +92,6 @@ class Product extends \XLite\Controller\Customer\Catalog
      * Return current (or default) product object
      *
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModelObject()
     {
@@ -103,21 +102,30 @@ class Product extends \XLite\Controller\Customer\Catalog
      * Alias
      *
      * @return \XLite\Model\Product
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getProduct()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+        if (!isset($this->product)) {
+            $this->product = $this->defineProduct();
+        }
+
+        return $this->product;
     }
 
+    /**
+     * Define product
+     *
+     * @return \XLite\Model\Product
+     */
+    protected function defineProduct()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+    }
 
     /**
      * Common method to determine current location
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -128,20 +136,16 @@ class Product extends \XLite\Controller\Customer\Catalog
      * Return current product Id
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getProductId()
     {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
+        return \XLite\Core\Request::getInstance()->product_id;
     }
 
     /**
      * Check controller visibility
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {

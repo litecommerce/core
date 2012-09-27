@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -30,8 +28,6 @@ namespace XLite\View\LanguagesModify;
 /**
  * Language options dialog
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class Options extends \XLite\View\AView
 {
@@ -43,9 +39,7 @@ class Options extends \XLite\View\AView
     /**
      * Language (cache)
      *
-     * @var   \XLite\Model\Language
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Language
      */
     protected $editLanguage = null;
 
@@ -53,8 +47,6 @@ class Options extends \XLite\View\AView
      * Get language
      *
      * @return \XLite\Model\Language|boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getEditLanguage()
     {
@@ -77,8 +69,6 @@ class Options extends \XLite\View\AView
      * @param \XLite\Model\Language $language Translation language
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTranslation(\XLite\Model\Language $language)
     {
@@ -89,8 +79,6 @@ class Options extends \XLite\View\AView
      * Check - can language disabled / enabled or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function canSwitch()
     {
@@ -101,8 +89,6 @@ class Options extends \XLite\View\AView
      * Check - can language deleted or not
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function canDelete()
     {
@@ -113,8 +99,6 @@ class Options extends \XLite\View\AView
      * Get wwicther block class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getSwitcherClass()
     {
@@ -138,8 +122,6 @@ class Options extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -150,8 +132,6 @@ class Options extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -168,8 +148,6 @@ class Options extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isVisible()
     {
