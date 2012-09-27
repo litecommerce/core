@@ -70,7 +70,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var string
      *
-     * @Column (type="string", length=32)
+     * @Column (type="string")
      */
     protected $password = '';
 
@@ -576,6 +576,17 @@ class Profile extends \XLite\Model\AEntity
         $this->order = $order;
     }
 
+    /**
+     * Get password hash algorhitm
+     * 
+     * @return string
+     */
+    public function getPasswordAlgo()
+    {
+        $parts = explode(':', $this->getPassword(), 2);
+
+        return 1 == count($parts) ? 'MD5' : $parts[0];
+    }
 
     /**
      * Prepare object for its creation in the database

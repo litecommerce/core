@@ -385,7 +385,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
                 static::COLUMN_CODE     => 'actions left',
                 static::COLUMN_NAME     => '',
                 static::COLUMN_SERVICE  => true,
-                static::COLUMN_TEMPLATE => 'items_list/model/table/parts/empty.tpl',
+                static::COLUMN_TEMPLATE => 'items_list/model/table/parts/empty_left.tpl',
             );
         }
 
@@ -416,7 +416,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
                 static::COLUMN_SERVICE  => true,
                 static::COLUMN_TEMPLATE => $this->isRemoved()
                     ? 'items_list/model/table/parts/remove_create.tpl'
-                    : 'items_list/model/table/parts/empty.tpl',
+                    : 'items_list/model/table/parts/empty_right.tpl',
             );
         }
 

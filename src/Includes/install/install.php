@@ -1883,7 +1883,8 @@ function change_config(&$params)
             '/^socket.*=.*/',
             '/^http_host.*=.*/',
             '/^https_host.*=.*/',
-            '/^web_dir.*=.*/'
+            '/^web_dir.*=.*/',
+            '/^shared_secret_key.*=.*/'
         );
 
         $replacements = array(
@@ -1895,7 +1896,8 @@ function change_config(&$params)
             'socket   = "' . $_params['mysqlsock'] . '"',
             'http_host = "' . $_params['xlite_http_host'] . '"',
             'https_host = "' . $_params['xlite_https_host'] . '"',
-            'web_dir = "' . $_params['xlite_web_dir'] . '"'
+            'web_dir = "' . $_params['xlite_web_dir'] . '"',
+            'shared_secret_key = "' . uniqid('', true) . '"'
         );
 
         // check whether skin param is specified: not used at present

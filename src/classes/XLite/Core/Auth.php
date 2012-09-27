@@ -45,6 +45,12 @@ class Auth extends \XLite\Base
     const SESSION_SECURE_HASH_CELL = 'secureHashCell';
 
     /**
+     * Default hash algorhitm
+     */
+    const DEFAULT_HASH_ALGO = 'SHA512';
+
+
+    /**
      * The list of session vars that must be cleared on logoff
      *
      * @var array
@@ -61,6 +67,25 @@ class Auth extends \XLite\Base
      */
     protected $profile;
 
+    /**
+     * Encrypts password (calculates MD5 hash)
+     *
+     * @param string $password Password string to encrypt
+     *
+     * @return string
+     */
+    public static function comparePassword($hash, $password)
+    {
+        $parts = explode(':', $hash, 2);
+        if (1 == count($parts)) {
+            $algo = 'MD5';
+
+        } else {
+            list($algo, $hash) = $parts;
+        }
+
+        return static::encryptPassword($password, $algo) == $algo . ':' . $hash;
+    }
 
     /**
      * Encrypts password (calculates MD5 hash)
@@ -69,7 +94,39 @@ class Auth extends \XLite\Base
      *
      * @return string
      */
-    public static function encryptPassword($password)
+    public static function encryptPassword($password, $algo = self::DEFAULT_HASH_ALGO)
+    {
+        $method = 'encryptPassword' . $algo;
+        if (!method_exists(get_called_class(), $method)) {
+            $algo = static::DEFAULT_HASH_ALGO;
+            $method = 'encryptPassword' . $algo;
+        }
+
+        return $algo . ':' . static::$method($password);
+    }
+
+    /**
+     * Encrypts password (calculates SHA512 hash)
+     *
+     * @param string $password Password string to encrypt
+     *
+     * @return string
+     */
+    protected static function encryptPasswordSHA512($password)
+    {
+        return \XLite::getInstance()->getOptions(array('installer_details', 'shared_secret_key'))
+            ? hash_hmac('sha512', $password, strval(\XLite::getInstance()->getOptions(array('installer_details', 'shared_secret_key'))))
+            : hash('sha512', $password);
+    }
+
+    /**
+     * Encrypts password (calculates SHA512 hash)
+     *
+     * @param string $password Password string to encrypt
+     *
+     * @return string
+     */
+    protected static function encryptPasswordMD5($password)
     {
         return md5($password);
     }
@@ -153,15 +210,9 @@ class Auth extends \XLite\Base
         // Check for the valid parameters
         if (!empty($login) && !empty($password)) {
 
-            if (isset($secureHash)) {
-
-                if (!$this->checkSecureHash($secureHash)) {
-                    // TODO - potential attack; send the email to admin
-                    $this->doDie('Trying to log in using an invalid secure hash string.');
-                }
-
-            } else {
-                $password = self::encryptPassword($password);
+            if (isset($secureHash) && !$this->checkSecureHash($secureHash)) {
+                // TODO - potential attack; send the email to admin
+                $this->doDie('Trying to log in using an invalid secure hash string.');
             }
 
             // Initialize order Id
@@ -172,12 +223,21 @@ class Auth extends \XLite\Base
             // Try to get user profile
             $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword(
                 $login,
-                isset($secureHash) ? null : $password,
+                null,
                 $orderId
             );
 
+            if (isset($profile) && !isset($secureHash) && !static::comparePassword($profile->getPassword(), $password)) {
+                $profile = null;
+            }
+
             // Return profile object if it's ok
             if (isset($profile) && $this->loginProfile($profile)) {
+
+                if (!isset($secureHash) && $password && $profile->getPasswordAlgo() != static::DEFAULT_HASH_ALGO) {
+                    $profile->setPassword(static::encryptPassword($password));
+                }
+
                 $result = $profile;
 
                 $orderId = $orderId ?: \XLite\Core\Session::getInstance()->order_id;

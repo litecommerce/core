@@ -343,16 +343,19 @@ class S3 extends \XLite\Base\Singleton
     {
         $valid = false;
 
-        $client = new \S3($accessKey, $secretKey);
-        \S3::setExceptions(true);
+        if (function_exists('curl_init')) {
 
-        try {
-            if (!$client->getBucketLocation($bucket)) {
-                $client->putBucket($bucket);
+            $client = new \S3($accessKey, $secretKey);
+            \S3::setExceptions(true);
+
+            try {
+                if (!$client->getBucketLocation($bucket)) {
+                    $client->putBucket($bucket);
+                }
+                $valid = true;
+
+            } catch (\Exception $e) {
             }
-            $valid = true;
-
-        } catch (\Exception $e) {
         }
 
         return $valid;
@@ -365,15 +368,14 @@ class S3 extends \XLite\Base\Singleton
      */
     protected function __construct()
     {
+        require_once LC_DIR_MODULES . 'CDev' . LC_DS . 'AmazonS3Images' . LC_DS . 'lib' . LC_DS . 'S3.php';
+
         $config = \XLite\Core\Config::getInstance()->CDev->AmazonS3Images;
 
-        if ($config->access_key && $config->secret_key) {
-            require_once LC_DIR_MODULES . 'CDev' . LC_DS . 'AmazonS3Images' . LC_DS . 'lib' . LC_DS . 'S3.php';
-
-            $this->client = new \S3($config->access_key, $config->secret_key);
-            \S3::setExceptions(true);
-
+        if ($config->access_key && $config->secret_key && function_exists('curl_init')) {
             try {
+                $this->client = new \S3($config->access_key, $config->secret_key);
+                \S3::setExceptions(true);
                 if (!$this->client->getBucketLocation($config->bucket)) {
                     $this->client->putBucket($config->bucket);
                 }
