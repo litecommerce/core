@@ -72,7 +72,7 @@ class Attribute extends \XLite\Model\Base\I18n
      *
      * @Column (type="text")
      */
-    protected $defaultValue;
+    protected $defaultValue = '';
 
     /**
      * Decimals
@@ -84,17 +84,6 @@ class Attribute extends \XLite\Model\Base\I18n
      * @Column (type="integer", length=1)
      */
     protected $decimals = 0;
-
-    /**
-     * Unit
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string")
-     */
-    protected $unit;
 
     /**
      * Product class 
@@ -109,12 +98,21 @@ class Attribute extends \XLite\Model\Base\I18n
     /**
      * Attribute group 
      *
-     * @var \XLite\Model\AttributeGroup
+     * @var selfGroup
      *
      * @ManyToOne  (targetEntity="XLite\Model\AttributeGroup", inversedBy="attributes")
      * @JoinColumn (name="attribute_group_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $attribute_group;
+
+    /**
+     * Attribute options
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @OneToMany (targetEntity="XLite\Model\AttributeOption", mappedBy="attribute")
+     */
+    protected $attribute_options;
 
     /**
      * Option type
@@ -134,7 +132,7 @@ class Attribute extends \XLite\Model\Base\I18n
      */
     public function __construct(array $data = array())
     {
-//        $this->attribute_values = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attribute_options = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
@@ -175,9 +173,13 @@ class Attribute extends \XLite\Model\Base\I18n
      *
      * @return integer
      */
-    public function getValuesCount()
+    public function getAttributeValuesCount()
     {
-        return 1;
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->attribute = $this;
+
+        return \XLite\Core\Database::getRepo($this->getAttributeValueClass())
+            ->search($cnd, true);
     }
 
     /**
@@ -197,6 +199,9 @@ class Attribute extends \XLite\Model\Base\I18n
                 && $type != $this->type
             ) {
                 $this->setDefaultValue($this->defaultValue);
+                foreach ($this->getAttributeOptions() as $option) {
+                    \XLite\Core\Database::getEM()->remove($option);
+                }
             }
             $this->type = $type;
         }
@@ -234,4 +239,125 @@ class Attribute extends \XLite\Model\Base\I18n
             : $this->defaultValue;
     }
 
+    /**
+     * Return name of widget class
+     *
+     * @return string
+     */
+    public function getWidgetClass()
+    {
+        switch ($this->getType()) {
+            case self::TYPE_NUMBER:
+                $class = '\XLite\View\FormField\Input\Text\Float';
+                break;
+
+            case self::TYPE_TEXT:
+                $class = '\XLite\View\FormField\Textarea\Simple';
+                break;
+
+            case self::TYPE_CHECKBOX:
+                $class = '\XLite\View\FormField\Input\Checkbox\Enabled';
+                break;
+
+            case self::TYPE_SELECT:
+                $class = '\XLite\View\FormField\Select\AttributeValues';
+                break;
+
+        }
+
+        return $class;
+    }
+
+    /**
+     * Return name of value class
+     *
+     * @return string
+     */
+    public function getAttributeValueClass()
+    {
+        return '\XLite\Model\AttributeValue\AttributeValue'
+            . $this->getTypes($this->getType()); 
+    }
+
+    /**
+     * Set attribute value
+     *
+     * @param \XLite\Model\Product $product Product
+     * @param mixed                $value   Value
+     *
+     * @return void
+     */
+    public function setAttributeValue(\XLite\Model\Product $product, $value)
+    {
+        $class = $this->getAttributeValueClass();
+        $attributeValue = \XLite\Core\Database::getRepo($class)
+            ->findOneBy(array('product' => $product, 'attribute' => $this));
+
+        if (!$attributeValue) {
+            !$attributeValue = new $class();
+            $attributeValue->setProduct($product);
+            $attributeValue->setAttribute($this);
+            \XLite\Core\Database::getEM()->persist($attributeValue);
+        }
+
+        if (self::TYPE_SELECT == $this->getType()) {
+            $attributeOption = \XLite\Core\Database::getRepo('XLite\Model\AttributeOption')->find($value);
+            if ($attributeOption) {
+                $attributeValue->setAttributeOption($attributeOption);
+            }
+
+        } else {
+            $attributeValue->setValue($value);    
+        }
+    }
+
+    /**
+     * Get attribute value
+     *
+     * @param \XLite\Model\Product $product  Product
+     * @param bollean              $asString As string flag OPTIONAL
+     *
+     * @return mixed
+     */
+    public function getAttributeValue(\XLite\Model\Product $product, $asString = false)
+    {
+        $attributeValue = \XLite\Core\Database::getRepo($this->getAttributeValueClass())
+            ->findOneBy(array('product' => $product, 'attribute' => $this));
+
+        if (self::TYPE_SELECT == $this->getType()) {
+            if ($attributeValue) {
+                $attributeValue = $attributeValue->getAttributeOption();
+            } else {
+                $attributeValue = \XLite\Core\Database::getRepo('XLite\Model\AttributeOption')
+                    ->findOneBy(array('defaultValue' => 1, 'attribute' => $this));
+            }
+
+            if ($attributeValue) {
+                $attributeValue = $asString
+                    ? $attributeValue->getName()
+                    : $attributeValue->getId();
+            }
+
+        } elseif ($attributeValue) {
+            $attributeValue = $attributeValue->getValue();
+        }
+
+        if (is_null($attributeValue)) {
+            $attributeValue = self::TYPE_SELECT == $this->getType()
+                ? ''
+                : $this->getDefaultValue();
+        }
+
+        if ($asString) {
+            if(self::TYPE_NUMBER == $this->getType()) {
+                $attributeValue = number_format($attributeValue, $this->getDecimals()) 
+                    . ' ' . $this->getUnit();
+
+            } elseif (self::TYPE_CHECKBOX == $this->getType()) {
+                $attributeValue = static::t($attributeValue ? 'yes' : 'no');
+            }
+        }
+
+        return $attributeValue;
+    }
 }

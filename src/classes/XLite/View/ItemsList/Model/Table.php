@@ -607,6 +607,10 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
             $list[] = 'items_list/model/table/parts/switcher.tpl';
         }
 
+        if ($this->isDefault()) {
+            $list[] = 'items_list/model/table/parts/default.tpl';
+        }
+
         return $list;
     }
 

@@ -46,6 +46,13 @@ class Attribute extends \XLite\Controller\Admin\AAdmin
     protected $productClass;
 
     /**
+     * Attribute 
+     *
+     * @var \XLite\Model\Attribute
+     */
+    protected $attribute;
+
+    /**
      * Check ACL permissions
      *
      * @return boolean
@@ -76,6 +83,24 @@ class Attribute extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get attribute
+     *
+     * @return \XLite\Model\Attribute
+     */
+    public function getAttribute()
+    {
+        if (
+            is_null($this->attribute)
+            && \XLite\Core\Request::getInstance()->id
+        ) {
+            $this->attribute = \XLite\Core\Database::getRepo('XLite\Model\Attribute')
+                ->find(intval(\XLite\Core\Request::getInstance()->id));
+        }
+
+        return $this->attribute;
+    }
+
+    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -100,6 +125,9 @@ class Attribute extends \XLite\Controller\Admin\AAdmin
     protected function doActionUpdate()
     {
         $this->setInternalRedirect();
+        $list = new \XLite\View\ItemsList\Model\AttributeOption;
+        $list->processQuick();
+
         if ($this->getModelForm()->performAction('modify')) {
             $this->setReturnUrl(
                 \XLite\Core\Converter::buildURL(

@@ -23,41 +23,31 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model;
+namespace XLite\View\FormField\Input;
 
 /**
- * Attribute multilingual data
+ * Radio 
  *
- *
- * @Entity
- *
- * @Table (name="attribute_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
  */
-class AttributeTranslation extends \XLite\Model\Base\Translation
+class Radio extends \XLite\View\FormField\Input\Checkbox
 {
     /**
-     * Name
+     * Return field type
      *
-     * @var string
-     *
-     * @Column (type="string", length=255)
+     * @return string
      */
-    protected $name;
+    public function getFieldType()
+    {
+        return self::FIELD_TYPE_RADIO;
+    }
 
     /**
-     * Unit
+     * Return field template
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length=255)
+     * @return string
      */
-    protected $unit = '';
-
+    protected function getFieldTemplate()
+    {
+        return 'radio.tpl';
+    }
 }

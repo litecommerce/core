@@ -23,41 +23,21 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model;
+namespace XLite\View\Form\Product\Modify;
 
 /**
- * Attribute multilingual data
+ * Attributes
  *
- *
- * @Entity
- *
- * @Table (name="attribute_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
  */
-class AttributeTranslation extends \XLite\Model\Base\Translation
+class Attributes extends \XLite\View\Form\Product\Modify\Base\Single
 {
     /**
-     * Name
+     * Get default action
      *
-     * @var string
-     *
-     * @Column (type="string", length=255)
+     * @return string
      */
-    protected $name;
-
-    /**
-     * Unit
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $unit = '';
-
+    protected function getDefaultAction()
+    {
+        return 'update_attributes';
+    }
 }

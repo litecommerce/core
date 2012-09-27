@@ -23,20 +23,19 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model\Repo;
+namespace XLite\Model\Repo\AttributeValue;
 
 /**
- * Attributes repository
+ * Attribute values repository
  *
  */
-class Attribute extends \XLite\Model\Repo\Base\I18n
+class AAttributeValue extends \XLite\Model\Repo\ARepo
 {
     /**
      * Allowable search params
      */
-    const SEARCH_PRODUCT          = 'product';
-    const SEARCH_PRODUCT_CLASS    = 'productClass';
-    const SEARCH_ATTRIBUTE_GROUP  = 'attributeGroup';
+    const SEARCH_PRODUCT           = 'product';
+    const SEARCH_ATTRIBUTE         = 'attribute';
 
     // {{{ Search
 
@@ -85,7 +84,7 @@ class Attribute extends \XLite\Model\Repo\Base\I18n
      */
     public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
     {
-        return $qb->addOrderBy('a.position', 'ASC')->getResult();
+        return $qb->getResult();
     }
 
     /**
@@ -126,8 +125,7 @@ class Attribute extends \XLite\Model\Repo\Base\I18n
     {
         return array(
             static::SEARCH_PRODUCT,
-            static::SEARCH_PRODUCT_CLASS,
-            static::SEARCH_ATTRIBUTE_GROUP,
+            static::SEARCH_ATTRIBUTE,
         );
     }
 
@@ -144,11 +142,8 @@ class Attribute extends \XLite\Model\Repo\Base\I18n
     protected function prepareCndProduct(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = null)
     {
         if ($value) {
-            $queryBuilder->linkInner('a.product_class')
-                ->linkInner('product_class.products')
-                ->andWhere('products.product_id = :productId')
-                ->addOrderBy('product_class.position', 'ASC')
-                ->setParameter('productId', $value->getProductId());
+            $queryBuilder->andWhere('a.product = :product')
+                ->setParameter('product', $value);
         }
     }
 
@@ -162,32 +157,11 @@ class Attribute extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndProductClass(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = null)
+    protected function prepareCndAttribute(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = null)
     {
         if ($value) {
-            $queryBuilder->andWhere('a.product_class = :productClass')
-                ->setParameter('productClass', $value);
-        }
-    }
-
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param mixed                      $value        Condition OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function prepareCndAttributeGroup(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = null)
-    {
-        if ($value) {
-            $queryBuilder->andWhere('a.attribute_group = :attributeGroup')
-                ->setParameter('attributeGroup', $value);
-
-        } else {
-            $queryBuilder->andWhere('a.attribute_group is null');
+            $queryBuilder->andWhere('a.attribute = :attribute')
+                ->setParameter('attribute', $value);
         }
     }
 

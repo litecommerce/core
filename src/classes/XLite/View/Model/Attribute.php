@@ -72,7 +72,7 @@ class Attribute extends \XLite\View\Model\AModel
     protected function getFormFieldsForSectionDefault()
     {
         if ($this->getModelObject()->getId()) {
-            if ($this->getModelObject()->getValuesCount()) {
+            if ($this->getModelObject()->getAttributeValuesCount()) {
                 $this->schemaDefault['type'][self::SCHEMA_COMMENT] = 'There are products using this attribute!';
             }
 
@@ -96,15 +96,15 @@ class Attribute extends \XLite\View\Model\AModel
 
             if (
                 \XLite\Model\Attribute::TYPE_NUMBER == $this->getModelObject()->getType()
-                || \XLite\Model\Attribute::TYPE_TEXT == $this->getModelObject()->getType()
                 || \XLite\Model\Attribute::TYPE_CHECKBOX == $this->getModelObject()->getType()
+                || \XLite\Model\Attribute::TYPE_TEXT == $this->getModelObject()->getType()
             ) {
                 $this->schemaDefault['default_value'] = array(
-                    self::SCHEMA_CLASS    => \XLite\Model\Attribute::TYPE_CHECKBOX == $this->getModelObject()->getType()
-                        ? 'XLite\View\FormField\Input\Checkbox\Enabled'
-                        : 'XLite\View\FormField\Input\Text',
+                    self::SCHEMA_CLASS    => $this->getModelObject()->getWidgetClass(),
                     self::SCHEMA_LABEL    => 'Default value',
                     self::SCHEMA_REQUIRED => false,
+                    'rows'                => 1,
+                    'maxHeight'           => 100,
                 );
             }
 
@@ -115,7 +115,7 @@ class Attribute extends \XLite\View\Model\AModel
                     self::SCHEMA_CLASS    => 'XLite\View\FormField\ItemsList',
                     self::SCHEMA_LABEL    => 'Allowed attribute values and default one',
                     self::SCHEMA_REQUIRED => false,
-                    \XLite\View\FormField\ItemsList::PARAM_LIST_CLASS => 'XLite\View\ItemsList\Model\ProductClass',
+                    \XLite\View\FormField\ItemsList::PARAM_LIST_CLASS => 'XLite\View\ItemsList\Model\AttributeOption',
                 );
             }
         }

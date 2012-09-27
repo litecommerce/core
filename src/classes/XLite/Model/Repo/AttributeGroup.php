@@ -131,7 +131,7 @@ class AttributeGroup extends \XLite\Model\Repo\Base\I18n
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param string                     $value        Condition OPTIONAL
+     * @param mixed                      $value        Condition OPTIONAL
      *
      * @return void
      * @see    ____func_see____

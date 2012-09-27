@@ -53,12 +53,12 @@ class AttributeOption extends \XLite\Model\Base\I18n
      *
      * @Column (type="boolean")
      */
-    protected $default = false;
+    protected $defaultValue = false;
 
     /**
      * Attribute 
      *
-     * @var \XLite\Model\AttributeGroup
+     * @var \XLite\Model\Attribute
      *
      * @ManyToOne  (targetEntity="XLite\Model\Attribute", inversedBy="attribute_options")
      * @JoinColumn (name="attribute_id", referencedColumnName="id")

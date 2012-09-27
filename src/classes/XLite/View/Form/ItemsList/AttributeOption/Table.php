@@ -23,41 +23,31 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model;
+namespace XLite\View\Form\ItemsList\AttributeOption;
 
 /**
- * Attribute multilingual data
+ * Attribute options list table form
  *
- *
- * @Entity
- *
- * @Table (name="attribute_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
  */
-class AttributeTranslation extends \XLite\Model\Base\Translation
+class Table extends \XLite\View\Form\ItemsList\AItemsList
 {
     /**
-     * Name
+     * Return default value for the "target" parameter
      *
-     * @var string
-     *
-     * @Column (type="string", length=255)
+     * @return string
      */
-    protected $name;
+    protected function getDefaultTarget()
+    {
+        return 'attribute_options';
+    }
 
     /**
-     * Unit
+     * Return default value for the "action" parameter
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length=255)
+     * @return string
      */
-    protected $unit = '';
-
+    protected function getDefaultAction()
+    {
+        return 'update';
+    }
 }

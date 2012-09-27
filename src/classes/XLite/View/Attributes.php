@@ -95,6 +95,7 @@ class Attributes extends \XLite\View\AView
     {
         $list = parent::getCommonFiles();
         $list['js'][] = 'js/jquery.blockUI.js';
+        $list['js'][] = 'js/jquery.textarea-expander.js';
 
         return $list;
     }

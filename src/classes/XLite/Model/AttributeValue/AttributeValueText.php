@@ -23,41 +23,27 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model;
+namespace XLite\Model\AttributeValue;
 
 /**
- * Attribute multilingual data
+ * Attribute value (text)
  *
- *
- * @Entity
- *
- * @Table (name="attribute_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
+ * @Entity (repositoryClass="\XLite\Model\Repo\AttributeValue\AttributeValueText")
+ * @Table  (name="attribute_values_text",
+ *      indexes={
+ *          @Index (name="product_id", columns={"product_id"}),        
+ *          @Index (name="attribute_id", columns={"attribute_id"})        
+ *      }
  * )
  */
-class AttributeTranslation extends \XLite\Model\Base\Translation
+class AttributeValueText extends \XLite\Model\AttributeValue\AAttributeValue
 {
     /**
-     * Name
+     * Value
      *
-     * @var string
+     * @var text
      *
-     * @Column (type="string", length=255)
+     * @Column (type="text")
      */
-    protected $name;
-
-    /**
-     * Unit
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $unit = '';
-
+    protected $value;
 }

@@ -26,10 +26,10 @@
 namespace XLite\View\ItemsList\Model;
 
 /**
- * Attribute groups items list
+ * Attribute options items list
  *
  */
-class AttributeGroup extends \XLite\View\ItemsList\Model\Table
+class AttributeOption extends \XLite\View\ItemsList\Model\Table
 {
     /**
      * Get a list of CSS files required to display the widget properly
@@ -40,7 +40,7 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'attribute_groups/style.css';
+        $list[] = 'attribute_options/style.css';
 
         return $list;
     }
@@ -68,7 +68,7 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
      */
     protected function defineRepositoryName()
     {
-        return 'XLite\Model\AttributeGroup';
+        return 'XLite\Model\AttributeOption';
     }
 
     /**
@@ -78,7 +78,7 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
      */
     protected function getCreateURL()
     {
-        return \XLite\Core\Converter::buildUrl('attribute_group');
+        return \XLite\Core\Converter::buildUrl('attribute_option');
     }
 
     /**
@@ -88,7 +88,7 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
      */
     protected function getCreateButtonLabel()
     {
-        return 'New group';
+        return 'New value';
     }
 
     /**
@@ -98,7 +98,7 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
      */
     protected function isInlineCreation()
     {
-        return static::CREATE_INLINE_TOP;
+        return static::CREATE_INLINE_BOTTOM;
     }
 
     // {{{ Behaviors
@@ -114,13 +114,13 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
     }
 
     /**
-     * Mark list as sortable
+     * Mark list iten as default
      *
-     * @return integer
+     * @return boolean
      */
-    protected function getSortableType()
+    protected function isDefault()
     {
-        return static::SORT_TYPE_MOVE;
+        return true;
     }
 
     // }}}
@@ -132,7 +132,7 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
      */
     protected function getContainerClass()
     {
-        return parent::getContainerClass() . ' attribute_groups';
+        return parent::getContainerClass() . ' attribute_options';
     }
 
     /**
@@ -154,7 +154,7 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
     {
         $entity = parent::createEntity();
 
-        $entity->setProductClass($this->getProductClass());
+        $entity->setAttribute($this->getAttribute());
 
         return $entity;
     }
@@ -189,7 +189,7 @@ class AttributeGroup extends \XLite\View\ItemsList\Model\Table
             }
         }
 
-        $result->productClass = $this->getProductClass();
+        $result->attribute = $this->getAttribute();
 
         return $result;
     }

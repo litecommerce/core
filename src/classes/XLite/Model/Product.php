@@ -193,8 +193,19 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      *      joinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")},
      *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
      * )
+     * @OrderBy   ({"position" = "ASC"})
      */
     protected $classes;
+
+    /**
+     * Show product attributes in a separate tab
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $attrSepTab = true;
+
 
     /**
      * Constructor

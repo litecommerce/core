@@ -1242,10 +1242,40 @@ div.product-details .continue-button-intend
 
 .product-details .extra-fields li strong
 {
-  width: 80px;
   font-weight: normal;
+  background-color: #fff;
+  padding-right: 3px;
+}
+
+.product-details .extra-fields li h3 
+{
+  margin: 15px 0 0 0;
+  color: #456583;
+}
+
+.product-details .extra-fields li span 
+{
+  display: inline-block;
+  color: #1f1f1f;
+}
+
+.product-details .extra-fields li div
+{
+  width: 300px;
   display: inline-block;
   color: #7e7e7e;
+  background: url(../images/dotted.png) repeat-x scroll 0 bottom transparent;
+  vertical-align: top;
+}
+
+.product-details .extra-fields li ul li div
+{
+  width: 250px;
+}
+
+.product-details .extra-fields li ul
+{
+  margin: 0 0 0 50px;
 }
 
 table.list-body td.hproduct a.product-thumbnail

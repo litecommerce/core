@@ -23,41 +23,43 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model;
+namespace XLite\Model\AttributeValue;
 
 /**
- * Attribute multilingual data
+ * Abstract attribute value
  *
- *
- * @Entity
- *
- * @Table (name="attribute_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
+ * @MappedSuperclass
  */
-class AttributeTranslation extends \XLite\Model\Base\Translation
+abstract class AAttributeValue extends \XLite\Model\AEntity
 {
     /**
-     * Name
+     * ID
      *
-     * @var string
+     * @var integer
      *
-     * @Column (type="string", length=255)
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="uinteger")
      */
-    protected $name;
+    protected $id;
 
     /**
-     * Unit
+     * Product
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var \XLite\Model\Product
      *
-     * @Column (type="string", length=255)
+     * @ManyToOne  (targetEntity="XLite\Model\Product")
+     * @JoinColumn (name="product_id", referencedColumnName="product_id")
      */
-    protected $unit = '';
+    protected $product;
 
+    /**
+     * Attribute 
+     *
+     * @var \XLite\Model\Attribute
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Attribute")
+     * @JoinColumn (name="attribute_id", referencedColumnName="id")
+     */
+    protected $attribute;
 }

@@ -23,41 +23,21 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Model;
+namespace XLite\View\Product\Details\Customer;
 
 /**
- * Attribute multilingual data
+ * Product attributes 
  *
- *
- * @Entity
- *
- * @Table (name="attribute_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
  */
-class AttributeTranslation extends \XLite\Model\Base\Translation
+class Attributes extends \XLite\View\Product\Details\AAttributes
 {
     /**
-     * Name
+     * Return widget default template
      *
-     * @var string
-     *
-     * @Column (type="string", length=255)
+     * @return string
      */
-    protected $name;
-
-    /**
-     * Unit
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $unit = '';
-
+    protected function getDefaultTemplate()
+    {
+        return 'product/details/parts/attribute.tpl';
+    }
 }
