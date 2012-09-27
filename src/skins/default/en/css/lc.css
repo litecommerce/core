@@ -2263,6 +2263,11 @@ form.estimator .main,
   color: #8a8a8a;
 }
 
+.checkout-block .steps .shipping-step .email-not-defined.red
+{
+  color: #EE0000;
+}
+
 .checkout-block .steps .previous .secondary {
   color: #333;
   padding-top: 14px;
