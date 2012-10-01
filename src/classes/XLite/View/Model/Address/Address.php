@@ -327,7 +327,7 @@ class Address extends \XLite\View\Model\AModel
     {
         $this->prepareDataToValidate($data);
 
-        parent::validateFields($data);
+        parent::validateFields($data, $section);
     }
 
     /**
