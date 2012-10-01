@@ -805,7 +805,7 @@ ShippingAddressView.prototype.postprocess = function(isSuccess, initial)
     form.getElements().each(
       function() {
         var t = jQuery(this);
-        if (t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
+        if (t.hasClass('field-street') || t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
           this.markAsWatcher(
             function(element) {
               o.parentWidget.refreshSignificantShippingFields(element);

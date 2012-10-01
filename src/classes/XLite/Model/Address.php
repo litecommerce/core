@@ -159,10 +159,11 @@ class Address extends \XLite\Model\Base\PersonalAddress
      *
      * @return array
      */
-    public function getBillingRequiredFields()
+    public static function getBillingRequiredFields()
     {
         return array(
-            'name',
+            'firstname',
+            'lastname',
             'street',
             'city',
             'zipcode',
@@ -176,10 +177,11 @@ class Address extends \XLite\Model\Base\PersonalAddress
      *
      * @return array
      */
-    public function getShippingRequiredFields()
+    public static function getShippingRequiredFields()
     {
         return array(
-            'name',
+            'firstname',
+            'lastname',
             'street',
             'city',
             'zipcode',
@@ -187,6 +189,43 @@ class Address extends \XLite\Model\Base\PersonalAddress
             'country',
         );
     }
+
+    /**
+     * Get default value for the field
+     *
+     * @param string $fieldName Field service name
+     *
+     * @return mixed
+     */
+    public static function getDefaultFieldValue($fieldName)
+    {
+        $result = null;
+
+        switch ($fieldName) {
+            case 'country':
+                $code = \XLite\Core\Config::getInstance()->Shipping->anonymous_country;
+                $result = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCode($code);
+                break;
+
+            case 'state':
+                $id = \XLite\Core\Config::getInstance()->Shipping->anonymous_state;
+                $result = \XLite\Core\Database::getRepo('XLite\Model\State')->find($id);
+                break;
+
+            case 'zipcode':
+                $result = \XLite\Core\Config::getInstance()->Shipping->anonymous_zipcode;
+                break;
+
+            case 'city':
+                $result = \XLite\Core\Config::getInstance()->Shipping->anonymous_city;
+                break;
+
+            default:
+        }
+
+        return $result;
+    }
+
 
     /**
      * Get required fields by address type
@@ -199,11 +238,11 @@ class Address extends \XLite\Model\Base\PersonalAddress
     {
         switch ($atype) {
             case self::BILLING:
-                $list = $this->getBillingRequiredFields();
+                $list = static::getBillingRequiredFields();
                 break;
 
             case self::SHIPPING:
-                $list = $this->getShippingRequiredFields();
+                $list = static::getShippingRequiredFields();
                 break;
 
             default:

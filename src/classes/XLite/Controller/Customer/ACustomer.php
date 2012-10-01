@@ -407,4 +407,64 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     // }}}
+
+    public function getAddressFields()
+    {
+        $result = array();
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
+            $result[$field->getServiceName()] = array(
+                \XLite\View\Model\Address\Address::SCHEMA_CLASS    => $field->getSchemaClass(),
+                \XLite\View\Model\Address\Address::SCHEMA_LABEL    => $field->getName(),
+                \XLite\View\Model\Address\Address::SCHEMA_REQUIRED => $field->getRequired(),
+                \XLite\View\Model\Address\Address::SCHEMA_MODEL_ATTRIBUTES => array(
+                    \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+                ),
+                \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-' . $field->getServiceName(),
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * getFieldValue
+     *
+     * @param string  $fieldName    Field name
+     * @param boolean $processValue Process value flag OPTIONAL
+     *
+     * @return string
+     **/
+    public function getFieldValue($fieldName, $address, $processValue = false)
+    {
+        $result = '';
+
+        if (isset($address)) {
+
+        $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($fieldName);
+
+        // $methodName assembled from 'get' + camelized $fieldName
+        $result = $address->$methodName();
+
+        if ($result && false !== $processValue) {
+            
+            switch ($fieldName) {
+    
+                  case 'state_id':
+                    $result = $address->getState()->getState();
+                    break;
+
+                case 'country_code':
+                    $result = $address->getCountry()->getCountry();
+                    break;
+
+                default:
+
+            }
+        }
+        }
+        
+        return $result;
+    }
+
 }

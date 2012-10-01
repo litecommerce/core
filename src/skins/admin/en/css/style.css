@@ -1639,6 +1639,7 @@ div.model-form-buttons {
 
 div.table-label {
   float: left;
+  padding-right: 35px;
 }
 
 .model-properties ul.table div.table-label label {
@@ -1646,9 +1647,9 @@ div.table-label {
 }
 
 div.star {
-  float: right;
   width: 10px;
   padding: 12px 0px 5px 0px;
+  display: inline-block;
 }
 
 .table-label,
@@ -1663,8 +1664,7 @@ div.star {
 }
 
 div.table-value {
-  float: right;
-  width: 80%;
+  display: inline-block;
 }
 
 div.table-value input[type="text"],

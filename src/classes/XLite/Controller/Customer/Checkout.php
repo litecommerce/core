@@ -707,7 +707,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 }
             }
 
-            $address->map($this->prepareAddressData($data));
+            $address->map($this->prepareAddressData($data, 'shipping'));
 
             if (!$profile->getBillingAddress()) {
 
@@ -801,7 +801,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 }
             }
 
-            $address->map($this->prepareAddressData($data));
+            $address->map($this->prepareAddressData($data, 'billing'));
 
             \XLite\Core\Event::updateCart(
                 array(
@@ -823,9 +823,19 @@ class Checkout extends \XLite\Controller\Customer\Cart
      *
      * @return array
      */
-    protected function prepareAddressData(array $data)
+    protected function prepareAddressData(array $data, $type = 'shipping')
     {
         unset($data['save_as_new']);
+
+        $requiredFields = 'shipping' == $type
+            ? \XLite\Model\Address::getShippingRequiredFields()
+            : \XLite\Model\Address::getBillingRequiredFields();
+
+        foreach ($requiredFields as $fieldName) {
+            if (!isset($data[$fieldName]) && \XLite\Model\Address::getDefaultFieldValue($fieldName)) {
+                $data[$fieldName] = \XLite\Model\Address::getDefaultFieldValue($fieldName);
+            }
+        }
 
         return $data;
     }

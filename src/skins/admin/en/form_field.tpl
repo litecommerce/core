@@ -15,6 +15,11 @@
   </div>
 {end:}
 
+{if:!getParam(#fieldOnly#)}
+  <div IF="getParam(#required#)" class="star">*</div>
+  <div IF="!getParam(#required#)" class="star">&nbsp;</div>
+{end:}
+
 <div class="{getValueContainerClass()}">
   <widget template="{getDir()}/{getFieldTemplate()}" />
   <widget IF="getParam(#help#)" class="\XLite\View\Tooltip" text="{getParam(#help#)}" isImageTag=true className="help-icon" />
@@ -23,7 +28,5 @@
 </div>
 
 {if:!getParam(#fieldOnly#)}
-  <div IF="getParam(#required#)" class="star">*</div>
-  <div IF="!getParam(#required#)" class="star">&nbsp;</div>
   <div class="clear"></div>
 {end:}

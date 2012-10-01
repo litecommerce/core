@@ -55,6 +55,8 @@ class Fields extends \XLite\View\Dialog
     {
         $list = parent::getCSSFiles();
 
+        $list[] = $this->getDir() . '/style.css';
+
         return $list;
     }
 
