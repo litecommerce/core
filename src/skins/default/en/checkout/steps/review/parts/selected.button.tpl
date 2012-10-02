@@ -35,5 +35,5 @@
     <widget class="\XLite\View\Button\Submit" label="{getPlaceTitle()}" style="bright" />
   </div>
 
-  <p class="agree-note">{t(#To place the order please accept Terms and Conditions#)}</p>
+  <p class="agree-note">{t(#Please accept the Terms and Conditions to continue#)}</p>
 <widget name="placeOrder" end />

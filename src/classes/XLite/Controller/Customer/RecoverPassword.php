@@ -153,7 +153,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         } else {
 
             $pass = generate_code();
-            $profile->setPassword(\XLite\Core\Auth::encryptPassword($pass));
+            $profile->setPassword(md5($pass));
 
             $result = $profile->update();
 
