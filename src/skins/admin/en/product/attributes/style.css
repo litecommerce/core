@@ -10,12 +10,13 @@
  */
 
 .tab-content h3 {
+  margin-top: 32px;
   color: #333;
 }
 
 .table-label label {
   color: #456583;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .table-value span.input-field-wrapper {
@@ -37,4 +38,16 @@
 .tab-content .attrSepTab-value {
   width: auto;
   float: left;
+}
+
+.tab-content li {
+  margin-bottom: 8px;
+}
+
+.table-value.checkbox label {
+  margin: 0;
+}
+
+.table-label.checkbox {
+  float: right;
 }

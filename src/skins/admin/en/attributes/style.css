@@ -206,10 +206,11 @@ div.group table.list th.actions.left {
 }
 
 .ajax-container-loadable .select-attributetypes div.table-value .form-field-comment {
-  background: url("../images/icon_warning_round.png") no-repeat scroll 10px center transparent;
-  padding-left: 45px;
+  background: url("../images/icon_warning_round.png") no-repeat scroll 20px center transparent;
+  padding: 1px 0 0 50px;
   color: #456583;
   float: left;
+  display: none;
 }
 
 .ajax-container-loadable div.table-value .form-field-comment {

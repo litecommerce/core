@@ -124,7 +124,13 @@ class Attribute extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $this->setInternalRedirect();
+        if ($this->getModelForm()->getModelObject()->getId()) {
+            $this->setSilenceClose();
+
+        } else {
+            $this->setInternalRedirect();
+        }
+
         $list = new \XLite\View\ItemsList\Model\AttributeOption;
         $list->processQuick();
 

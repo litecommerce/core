@@ -82,7 +82,7 @@ class AttributeGroups extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $this->setInternalRedirect();
+        $this->setSilenceClose();
         $list = new \XLite\View\ItemsList\Model\AttributeGroup;
         $list->processQuick();
     }

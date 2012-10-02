@@ -13,6 +13,23 @@ var ppr = popup.postprocessRequest;
 popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid) {
   ppr.call(this, XMLHttpRequest, textStatus, data, isValid);
   TableItemsListQueue();
+
+  jQuery('.select-attributetypes select').change(
+    function () {
+      if (jQuery(this).data('value') == jQuery(this).val()) {
+        jQuery('.select-attributetypes .form-field-comment').hide();
+      } else {
+        jQuery('.select-attributetypes .form-field-comment').show();
+      }
+    }
+  );
+}
+
+var pprc = popup.postprocessRequestCallback;
+popup.postprocessRequestCallback()  = function()
+{
+  pprc.postprocessRequestCallback();
+  popup.close();
 }
 
 function popup_attribute_groups(product_class_id) {
@@ -21,11 +38,7 @@ function popup_attribute_groups(product_class_id) {
       target:             'attribute_groups',
       product_class_id:   product_class_id,
       widget:             'XLite\\View\\AttributeGroups'
-    }),
-    null,
-    function () {
-      self.location.reload();
-    }
+    })
   );
 }
 

@@ -1237,7 +1237,7 @@ div.product-details .continue-button-intend
   padding: 4px 0px;
   margin: 0px;
   background-image: none;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .product-details .extra-fields li strong
@@ -1249,8 +1249,9 @@ div.product-details .continue-button-intend
 
 .product-details .extra-fields li h3 
 {
-  margin: 15px 0 0 0;
+  margin: 11px 0 0 0;
   color: #456583;
+  font-size: 16px;
 }
 
 .product-details .extra-fields li span 
@@ -1261,7 +1262,7 @@ div.product-details .continue-button-intend
 
 .product-details .extra-fields li div
 {
-  width: 300px;
+  width: 186px;
   display: inline-block;
   color: #7e7e7e;
   background: url(../images/dotted.png) repeat-x scroll 0 bottom transparent;
@@ -1270,7 +1271,7 @@ div.product-details .continue-button-intend
 
 .product-details .extra-fields li ul li div
 {
-  width: 250px;
+  width: 166px;
 }
 
 .product-details .extra-fields li ul li
@@ -1280,7 +1281,7 @@ div.product-details .continue-button-intend
 
 .product-details .extra-fields li ul
 {
-  margin: 0 0 0 50px;
+  margin: 0 0 0 20px;
 }
 
 .product-details .extra-fields ul {

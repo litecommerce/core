@@ -40,4 +40,20 @@ class AttributeTypes extends \XLite\View\FormField\Select\Regular
     {
         return \XLite\Model\Attribute::getTypes();
     }
+
+    /**
+     * Set common attributes
+     *
+     * @param array $attrs Field attributes to prepare
+     *
+     * @return array
+     */
+    protected function setCommonAttributes(array $attrs)
+    {
+        $attrs = parent::setCommonAttributes($attrs);
+
+        $attrs['data-value'] = $this->getValue();
+
+        return $attrs;
+    }
 }
