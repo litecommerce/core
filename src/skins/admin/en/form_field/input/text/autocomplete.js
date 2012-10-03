@@ -40,20 +40,12 @@ CommonForm.elementControllers.push(
             source: function(request, response) {
               input.autocompleteSource(request, response);
             },
-            minLength: jQuery(this).hasClass('combobox') ? 0 : jQuery(this).data('min-length') || 2,
+            minLength: jQuery(this).data('min-length') || 2,
           };
         }
       }
 
       jQuery(this).autocomplete(this.autocompleteAssembleOptions());
-
-      if (jQuery(this).hasClass('combobox')) {
-        jQuery(this).click(
-          function () {
-            jQuery(this).keydown();
-          }
-        );
-      }
     }
   }
 );

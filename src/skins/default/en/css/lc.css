@@ -1260,6 +1260,11 @@ div.product-details .continue-button-intend
   color: #1f1f1f;
 }
 
+.product-details .extra-fields li span.checkbox.no-checked 
+{
+  color: #7e7e7e;
+}
+
 .product-details .extra-fields li div
 {
   width: 186px;

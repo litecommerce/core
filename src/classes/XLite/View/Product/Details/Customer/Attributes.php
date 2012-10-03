@@ -32,6 +32,41 @@ namespace XLite\View\Product\Details\Customer;
 class Attributes extends \XLite\View\Product\Details\AAttributes
 {
     /**
+     * Attributes 
+     *
+     * @var array
+     */
+    protected $attributes;
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     */
+    public function getAttrList()
+    {
+        if (is_null($this->attributes)) {
+            $this->attributes = array();
+            foreach ($this->getAttributesList() as $a) {
+                $value = $a->getAttributeValue($this->getProduct(), true);
+                $class = strtolower($a->getTypes($a->getType()));
+                if (\XLite\Model\Attribute::TYPE_CHECKBOX == $a->getType()) {
+                    $class .= ' ' . (static::t('yes') == $value ? 'checked' : 'no-checked');
+                }
+                if ($value) {
+                    $this->attributes[] = array(
+                        'name'  => $a->getName(),
+                        'value' => $value,
+                        'class' => $class
+                    );
+                }
+            }
+        }
+
+        return $this->attributes;
+    }
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -39,5 +74,16 @@ class Attributes extends \XLite\View\Product\Details\AAttributes
     protected function getDefaultTemplate()
     {
         return 'product/details/parts/attribute.tpl';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getAttrList();
     }
 }

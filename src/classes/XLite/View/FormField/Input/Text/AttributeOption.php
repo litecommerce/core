@@ -29,7 +29,7 @@ namespace XLite\View\FormField\Input\Text;
  * Atutribute option 
  * 
  */
-class AttributeOption extends \XLite\View\FormField\Input\Text\Base\Autocomplete
+class AttributeOption extends \XLite\View\FormField\Input\Text\Base\Combobox
 {
     /**
      * Common params
@@ -50,22 +50,6 @@ class AttributeOption extends \XLite\View\FormField\Input\Text\Base\Autocomplete
                 'Attribute', null, false, 'XLite\Model\Attribute'
             ),
         );
-    }
-
-    /**
-     * Assemble classes
-     *
-     * @param array $classes Classes
-     *
-     * @return array
-     */
-    protected function assembleClasses(array $classes)
-    {
-        $classes = parent::assembleClasses($classes);
-
-        $classes[] = 'combobox';
-
-        return $classes;
     }
 
     /**
