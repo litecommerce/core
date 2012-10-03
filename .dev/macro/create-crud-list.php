@@ -19,11 +19,9 @@
  * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 /**
@@ -225,8 +223,6 @@ $string = macro_get_class_repo_header($targetControllerPath)
 /**
  * $targetHumanReadableName controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $targetShort extends \\XLite\\Controller\\Admin\\AAdmin
 {
@@ -240,8 +236,6 @@ if ($editableFields) {
      * Update list
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -262,8 +256,6 @@ $string .= <<<CODE
      * @param string \$paramName Parameter name
      *
      * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCondition(\$paramName)
     {
@@ -278,8 +270,6 @@ $string .= <<<CODE
      * Save search conditions
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionSearch()
     {
@@ -292,8 +282,6 @@ $string .= <<<CODE
      * Return search parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchParams()
     {
@@ -314,8 +302,6 @@ $string .= <<<CODE
      * Get search conditions
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getConditions()
     {
@@ -358,8 +344,6 @@ $string = macro_get_class_repo_header($viewListPagePath)
 /**
  * $targetHumanReadableName page view
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -369,8 +353,6 @@ class $targetShort extends \\XLite\\View\\AView
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -381,8 +363,6 @@ class $targetShort extends \\XLite\\View\\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -393,8 +373,6 @@ class $targetShort extends \\XLite\\View\\AView
      * Check - search box is visible or not
      * 
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSearchVisible()
     {
@@ -424,10 +402,9 @@ $string = <<<CODE
  * $targetHumanReadableName page template
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 
@@ -467,10 +444,9 @@ if (isset($viewListSearchTemplate)) {
  * $targetHumanReadableName list search template
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 <widget class="\\$formListSearchClass" name="search" />
@@ -498,8 +474,6 @@ $string = macro_get_class_repo_header($formListSearchPath)
 /**
  * $targetHumanReadableName list search form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $formListSearchClassShort extends \\XLite\\View\\Form\\AForm
 {
@@ -507,8 +481,6 @@ class $formListSearchClassShort extends \\XLite\\View\\Form\\AForm
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -519,8 +491,6 @@ class $formListSearchClassShort extends \\XLite\\View\\Form\\AForm
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -555,10 +525,9 @@ CODE;
  * $fieldHumanReadable condition
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *
  * @ListChild (list="$itemsListViewList.search.conditions", weight="$weight")
  *}
@@ -586,10 +555,9 @@ CODE;
  * Search button
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *
  * @ListChild (list="$itemsListViewList.search.conditions", weight="last")
  *}
@@ -621,10 +589,9 @@ $string = <<<CODE
  * $targetHumanReadableName list table template
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 <widget class="$formListTableClass" name="list" />
@@ -650,8 +617,6 @@ $string = macro_get_class_repo_header($formListTablePath)
 /**
  * $targetHumanReadableName list table form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $formListTableClassShort extends \\XLite\\View\\Form\\ItemsList\\AItemsList
 {
@@ -659,8 +624,6 @@ class $formListTableClassShort extends \\XLite\\View\\Form\\ItemsList\\AItemsLis
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -671,8 +634,6 @@ class $formListTableClassShort extends \\XLite\\View\\Form\\ItemsList\\AItemsLis
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -701,8 +662,6 @@ $string = macro_get_class_repo_header($itemsListPath)
 /**
  * $targetHumanReadableName items list
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $itemsListClassShort extends \\XLite\\View\\ItemsList\\Model\\Table
 {
@@ -745,8 +704,6 @@ $string .= <<<CODE
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -769,8 +726,6 @@ if ($itemsListParams) {
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -801,8 +756,6 @@ $string .= <<<CODE
      * Define columns structure
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineColumns()
     {
@@ -843,8 +796,6 @@ $string .= <<<CODE
      * Define repository name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRepositoryName()
     {
@@ -860,8 +811,6 @@ $string .= <<<CODE
      * Get create entity URL
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCreateURL()
     {
@@ -878,8 +827,6 @@ $string .= <<<CODE
      * Get create button label
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getCreateButtonLabel()
     {
@@ -895,8 +842,6 @@ if ($createInline) {
      * Inline creation mechanism position
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isInlineCreation()
     {
@@ -924,8 +869,6 @@ CODE;
      * Mark list as removable
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isRemoved()
     {
@@ -942,8 +885,6 @@ CODE;
      * Mark list as switchyabvle (enable / disable)
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSwitchable()
     {
@@ -960,8 +901,6 @@ CODE;
      * Mark list as sortable
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSortableType()
     {
@@ -989,8 +928,6 @@ $string .= <<<CODE
      * Get container class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getContainerClass()
     {
@@ -1008,8 +945,6 @@ if ($editableFields || $switchable || $removable) {
      * Get panel class
      *
      * @return \XLite\View\Base\FormStickyPanel
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPanelClass()
     {
@@ -1027,8 +962,6 @@ if ($pagination) {
      * Return class name for the list pager
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -1048,8 +981,6 @@ $string .= <<<CODE
      * Return search parameters.
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     static public function getSearchParams()
     {
@@ -1076,8 +1007,6 @@ if ($searchFields) {
      * Define so called "request" parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -1102,8 +1031,6 @@ $string .= <<<CODE
      * TODO refactor
      *
      * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -1142,10 +1069,9 @@ $string = <<<CODE
  * $targetHumanReadableName list styles
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 CODE;
@@ -1170,8 +1096,6 @@ if (isset($itemsListPanelClass)) {
 /**
  * $targetHumanReadableName items list's sticky panel
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $itemsListPanelClassShort extends \\XLite\\View\\StickyPanel\\ItemsListForm
 {
@@ -1206,8 +1130,6 @@ if (!\Includes\Utils\FileManager::isExists($entityRepoPath)) {
 /**
  * $targetHumanReadableName repository
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $entityRepoClassShort extends $entityRepoParentClass
 {
@@ -1257,8 +1179,6 @@ CODE;
      * @param boolean                    \$countOnly    "Count only" flag. Do not need to add "order by" clauses if only count is needed.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCnd$fieldUpper(\Doctrine\ORM\QueryBuilder \$queryBuilder, \$value, \$countOnly)
     {
@@ -1287,8 +1207,6 @@ CODE;
      * @param array                      \$value        Condition data
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder \$queryBuilder, array \$value)
     {
@@ -1316,8 +1234,6 @@ CODE;
      * @param boolean                    \$countOnly    "Count only" flag. Do not need to add "order by" clauses if only count is needed.
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder \$queryBuilder, \$value, \$countOnly)
     {
@@ -1350,8 +1266,6 @@ $consts
      * @param boolean                \$countOnly Return items list or only its size OPTIONAL
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function search(\XLite\Core\CommonCell \$cnd, \$countOnly = false)
     {
@@ -1373,8 +1287,6 @@ $consts
      * @param \Doctrine\ORM\QueryBuilder \$qb Query builder routine
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function searchCount(\Doctrine\ORM\QueryBuilder \$qb)
     {
@@ -1389,8 +1301,6 @@ $consts
      * @param \Doctrine\ORM\QueryBuilder \$qb Query builder routine
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function searchResult(\Doctrine\ORM\QueryBuilder \$qb)
     {
@@ -1406,8 +1316,6 @@ $consts
      * @param boolean                    \$countOnly    Count only flag
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function callSearchConditionHandler(\$value, \$key, \Doctrine\ORM\QueryBuilder \$queryBuilder, \$countOnly)
     {
@@ -1422,8 +1330,6 @@ $consts
      * @param string \$param Name of param to check
      *
      * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function isSearchParamHasHandler(\$param)
     {
@@ -1434,8 +1340,6 @@ $consts
      * Return list of handling search params
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getHandlingSearchParams()
     {
@@ -1473,8 +1377,6 @@ if ($menu) {
 /**
  * $targetHumanReadableName menu item
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="$menuList", weight="last", zone="admin")
  */
@@ -1484,8 +1386,6 @@ class $menuShortClass extends \\XLite\\View\\TopMenu\\Node\\$menuParent\\A$menuP
      * Define widget parameters
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -1522,17 +1422,13 @@ $string = macro_get_class_repo_header($targetOneControllerPath)
 /**
  * $targetOneHumanReadableName controller
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $targetOneShort extends \\XLite\\Controller\\Admin\\AAdmin
 {
     /**
      * Controller parameters
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected \$params = array('target', 'id');
 
@@ -1540,8 +1436,6 @@ class $targetOneShort extends \\XLite\\Controller\\Admin\\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -1559,8 +1453,6 @@ class $targetOneShort extends \\XLite\\Controller\\Admin\\AAdmin
      * Update model
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -1573,8 +1465,6 @@ class $targetOneShort extends \\XLite\\Controller\\Admin\\AAdmin
      * Get model form class
      * 
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -1603,8 +1493,6 @@ $string = macro_get_class_repo_header($viewOnePagePath)
 /**
  * $targetOneHumanReadableName page view
  *
- * @see   ____class_see____
- * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -1614,8 +1502,6 @@ class $targetOneShort extends \\XLite\\View\\AView
      * Return list of allowed targets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -1626,8 +1512,6 @@ class $targetOneShort extends \\XLite\\View\\AView
      * Return widget default template
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -1655,10 +1539,9 @@ $string = <<<CODE
  * $targetOneHumanReadableName page template
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 <widget class="$oneViewModelClass" useBodyTemplate="1" />
 CODE;
@@ -1684,17 +1567,13 @@ $string = macro_get_class_repo_header($oneViewModelPath)
 /**
  * $targetOneHumanReadableName view model
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $oneViewModelClassShort extends \\XLite\\View\\Model\\AModel
 {
     /**
      * Shema default
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var array
      */
     protected \$schemaDefault = array(
 
@@ -1733,8 +1612,6 @@ $string .= <<<CODE
      * Return current model ID
      *
      * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getModelId()
     {
@@ -1745,8 +1622,6 @@ $string .= <<<CODE
      * This object will be used if another one is not pased
      *
      * @return \\$entityClass
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -1761,8 +1636,6 @@ $string .= <<<CODE
      * Return name of web form widget class
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -1773,8 +1646,6 @@ $string .= <<<CODE
      * Return list of the "Button" widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -1796,8 +1667,6 @@ $string .= <<<CODE
      * Add top message
      *
      * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function addDataSavedTopMessage()
     {
@@ -1833,8 +1702,6 @@ $string = macro_get_class_repo_header($formOnePath)
 /**
  * $targetHumanReadableName list search form
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 class $formOneClassShort extends \\XLite\\View\\Form\\AForm
 {
@@ -1842,8 +1709,6 @@ class $formOneClassShort extends \\XLite\\View\\Form\\AForm
      * Register CSS files
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -1858,8 +1723,6 @@ class $formOneClassShort extends \\XLite\\View\\Form\\AForm
      * Return default value for the "target" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -1870,8 +1733,6 @@ class $formOneClassShort extends \\XLite\\View\\Form\\AForm
      * Return default value for the "action" parameter
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -1882,8 +1743,6 @@ class $formOneClassShort extends \\XLite\\View\\Form\\AForm
      * Get default class name
      *
      * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultClassName()
     {
@@ -1894,8 +1753,6 @@ class $formOneClassShort extends \\XLite\\View\\Form\\AForm
      * Return list of the form default parameters
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
      */
     protected function getDefaultParams()
     {
@@ -1924,10 +1781,9 @@ $string = <<<CODE
  * $targetOneHumanReadableName view model styles
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 CODE;
