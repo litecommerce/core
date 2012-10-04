@@ -722,6 +722,13 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 					module_icon=`cat $module_main_file | grep -A 2 "function getIconURL()" | grep -o -E "'.+'" | sed "s!'!!g"`
 					module_descr=`cat $module_main_file | grep -A 2 "function getDescription()" | grep -o -E "'.+'" | sed "s_'\(.*\)'_\1_g" | sed "s_'_\\\'_g"`
 					module_dependencies=`cat $module_main_file | grep -A 2 "function getDependencies()" | grep -o -E "\('.+'\)" | sed 's/(\(.*\))/\1/'`
+					module_is_system=`cat $module_main_file | grep -A 2 "function isSystem()" | grep -o -E "return true;"`
+
+					if [ "$module_is_system" ]; then
+						module_is_system='1'
+					else
+						module_is_system='0'
+					fi
 
 				else
 					die "File classes/XLite/Module/${j} not found!"
@@ -730,7 +737,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 				# Generate module meta data
 				mkdir -p .phar
 
-				_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array(${module_dependencies})));"
+				_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array(${module_dependencies}),'isSystem'=>${module_is_system}));"
 
 				$PHP -qr "$_php_code" > .phar/.metadata.bin
 

@@ -83,6 +83,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     {
         $result = parent::getSearchCondition();
         $result->{\XLite\Model\Repo\Module::P_INSTALLED} = true;
+        $result->{\XLite\Model\Repo\Module::P_ISSYSTEM} = false;
 
         return $result;
     }

@@ -168,7 +168,17 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->search($cnd, $countOnly);
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->search($cnd, $countOnly);
+        
+        if (is_array($result)) {
+            foreach ($result as $k => $module) {
+                if ($module->callModuleMethod('isSystem')) {
+                    unset($result[$k]);
+                }
+            }
+        }
+
+        return $result;
     }
 
     // {{{ Version-related checks
