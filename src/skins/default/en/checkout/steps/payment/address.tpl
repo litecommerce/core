@@ -21,6 +21,17 @@
 
   {else:}
     <ul class="form">
+      <li FOREACH="getAddressFields(),fieldName,fieldData" class="item-{fieldName}">
+        <widget
+          class="{fieldData.class}"
+          attributes="{getFieldAttributes(fieldName,fieldData)}"
+          label="{fieldData.label}"
+          fieldName="billingAddress[{fieldName}]"
+          stateSelectorId="billingaddress-state-id"
+          stateInputId="billingaddress-custom-state"
+          value="{getFieldValue(fieldName)}"
+          required="{fieldData.required}" />
+      </li>
       <list name="checkout.payment.address" address="{getSameAddress()}" />
     </ul>
 

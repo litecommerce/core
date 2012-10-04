@@ -117,11 +117,11 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
             foreach ($addressFields as $fieldName => $fieldData) {
 
                 if (!$isCountryStateAdded && in_array($fieldName, array('country', 'state'))) {
-                    $shippingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
+                    $billingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
                     $isCountryStateAdded = true;
 
                 } else {
-                    $shippingAddress->addPair(
+                    $billingAddress->addPair(
                         $fieldName,
                         new \XLite\Core\Validator\String($nonEmpty && $fieldData[\XLite\View\Model\Address\Address::SCHEMA_REQUIRED]),
                         $mode

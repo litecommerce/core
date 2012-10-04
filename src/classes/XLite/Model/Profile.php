@@ -491,13 +491,10 @@ class Profile extends \XLite\Model\AEntity
 
                     $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($name);
 
-                    if (method_exists($billingAddress, $methodName)) {
-
-                        // Compare field values of billing and shipping addresses
-                        if ($billingAddress->$methodName() != $shippingAddress->$methodName()) {
-                            $result = false;
-                            break;
-                        }
+                    // Compare field values of billing and shipping addresses
+                    if ($billingAddress->$methodName() != $shippingAddress->$methodName()) {
+                        $result = false;
+                        break;
                     }
                 }
             }
@@ -548,9 +545,11 @@ class Profile extends \XLite\Model\AEntity
             $newBillingAddress->update();
         }
 
-        if (!$this->isSameAddress() && $this->getShippingAddress()) {
+        $shippingAddress = $this->getShippingAddress();
 
-            $newShippingAddress = $this->getShippingAddress()->cloneEntity();
+        if (!$this->isSameAddress() && $shippingAddress) {
+
+            $newShippingAddress = $shippingAddress->cloneEntity();
             $newShippingAddress->setProfile($newProfile);
             $newProfile->addAddresses($newShippingAddress);
             $newShippingAddress->update();

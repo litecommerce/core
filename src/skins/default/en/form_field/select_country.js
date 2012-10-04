@@ -9,9 +9,6 @@
  * @link      http://www.litecommerce.com/
  */
 
-var statesList = [];
-var stateSelectors = [];
-
 function StateSelector(countrySelectorId, stateSelectorId, stateInputId)
 {
     this.countrySelectBox = jQuery('#' + countrySelectorId);

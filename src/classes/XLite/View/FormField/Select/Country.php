@@ -153,11 +153,11 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     protected function getInlineJSCode()
     {
-        return 'jQuery(document).ready(function() { '
-            . 'stateSelectors[\'' . $this->getFieldId() . '\'] = new StateSelector('
+        return $this->getWidget(array(), '\XLite\View\JS\StatesList')->getContent() . PHP_EOL
+            . 'jQuery(document).ready(function() { ' . PHP_EOL
+            . 'stateSelectors[\'' . $this->getFieldId() . '\'] = new StateSelector(' . PHP_EOL
             . '\'' . $this->getFieldId() . '\', '
             . '\'' . $this->getParam(self::PARAM_STATE_SELECTOR_ID) . '\', '
-            . '\'' . $this->getParam(self::PARAM_STATE_INPUT_ID) . '\'); });' . PHP_EOL
-            . $this->getWidget(array(), '\XLite\View\JS\StatesList')->getContent();
+            . '\'' . $this->getParam(self::PARAM_STATE_INPUT_ID) . '\');  });' . PHP_EOL;
     }
 }

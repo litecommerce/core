@@ -1850,7 +1850,6 @@ abstract class AView extends \XLite\Core\Handler
     protected function getAddressSectionData(\XLite\Model\Address $address)
     {
         $result = array();
-        $repo = \XLite\Core\Database::getRepo('XLite\Model\AddressFieldValue');
 
         foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
 

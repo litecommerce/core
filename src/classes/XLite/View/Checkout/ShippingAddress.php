@@ -29,7 +29,7 @@ namespace XLite\View\Checkout;
  * Shipping address block
  *
  */
-class ShippingAddress extends \XLite\View\AView
+class ShippingAddress extends \XLite\View\Checkout\AAddressBlock
 {
     /**
      * Get shipping address
@@ -70,13 +70,13 @@ class ShippingAddress extends \XLite\View\AView
 
         foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
             $result[$field->getServiceName()] = array(
-                \XLite\View\Model\Address\Address::SCHEMA_CLASS    => $field->getSchemaClass(),
-                \XLite\View\Model\Address\Address::SCHEMA_LABEL    => $field->getName(),
-                \XLite\View\Model\Address\Address::SCHEMA_REQUIRED => $field->getRequired(),
-                \XLite\View\Model\Address\Address::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\Model\Address\Address::SCHEMA_CLASS                 => $field->getSchemaClass(),
+                \XLite\View\Model\Address\Address::SCHEMA_LABEL                 => $field->getName(),
+                \XLite\View\Model\Address\Address::SCHEMA_REQUIRED              => $field->getRequired(),
+                \XLite\View\Model\Address\Address::SCHEMA_MODEL_ATTRIBUTES      => array(
                     \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
                 ),
-                \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-' . $field->getServiceName(),
+                \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS           => 'address-' . $field->getServiceName(),
             );
         }
 
@@ -84,66 +84,13 @@ class ShippingAddress extends \XLite\View\AView
     }
 
     /**
-     * Add CSS classes to the list of attributes
+     * Get address info model
      *
-     * @param string $fieldName Field service name
-     * @param array  $fieldData Array of field properties (see getAddressFields() for the details)
-     *
-     * @return array
+     * @return \XLite\Model\Address
      */
-    public function getFieldAttributes($fieldName, $fieldData)
+    protected function getAddressInfo()
     {
-        $classes = array('field-' . $fieldName);
-
-        if ($fieldData[\XLite\View\Model\Address\Address::SCHEMA_REQUIRED]) {
-            $classes[] = 'field-required';
-        }
-
-        return array(
-            'class' => implode(' ', $classes),
-        );
-    }
-
-    /**
-     * getFieldValue
-     *
-     * @param string  $fieldName    Field name
-     * @param boolean $processValue Process value flag OPTIONAL
-     *
-     * @return string
-     */
-    public function getFieldValue($fieldName, $processValue = false)
-    {
-        $result = '';
-
-        $address = $this->getShippingAddress();
-
-        if (isset($address)) {
-
-            $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($fieldName);
-
-            // $methodName assembled from 'get' + camelized $fieldName
-            $result = $address->$methodName();
-
-            if ($result && false !== $processValue) {
-            
-                switch ($fieldName) {
-    
-                      case 'state_id':
-                        $result = $address->getState()->getState();
-                        break;
-
-                    case 'country_code':
-                        $result = $address->getCountry()->getCountry();
-                        break;
-
-                    default:
-
-                }
-            }
-        }
-
-        return $result;
+        return $this->getShippingAddress();
     }
 
     /**

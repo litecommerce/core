@@ -10,8 +10,16 @@
  *}
 
 <ul class="form">
-  <li FOREACH="getAddressFields(),fieldName,fieldData">
-    <widget class="{fieldData.class}" attributes="{getFieldAttributes(fieldName,fieldData)}" label="{fieldData.label}" fieldName="shippingAddress[{fieldName}]" value="{getFieldValue(fieldName)}" required="{fieldData.required}" />
+  <li FOREACH="getAddressFields(),fieldName,fieldData" class="item-{fieldName}">
+    <widget
+      class="{fieldData.class}"
+      attributes="{getFieldAttributes(fieldName,fieldData)}"
+      label="{fieldData.label}"
+      fieldName="shippingAddress[{fieldName}]"
+      stateSelectorId="shippingaddress-state-id"
+      stateInputId="shippingaddress-custom-state"
+      value="{getFieldValue(fieldName)}"
+      required="{fieldData.required}" />
   </li>
   <list name="checkout.shipping.address" address="{getShippingAddress()}" />
 </ul>

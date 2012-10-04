@@ -502,3 +502,7 @@ function attachTooltip(elm, content) {
     }
   );
 }
+
+var statesList = [];
+var stateSelectors = [];
+
