@@ -9,10 +9,9 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<widget class="\XLite\View\Button\Regular" style="new-attribute" label="{t(#New attribute#)}" jsCode="popup_attribute({productClass.getId()})" />
-<widget class="\XLite\View\Button\Regular" style="manage-groups" label="{t(#Manage groups#)}" jsCode="popup_attribute_groups({productClass.getId()})" />
-
-<br />
-<br />
+<div class="buttons" data-class-id="{productClass.getId()}" />
+<widget class="\XLite\View\Button\Submit" style="new-attribute" label="{t(#New attribute#)}" />
+<widget class="\XLite\View\Button\Submit" style="manage-groups" label="{t(#Manage groups#)}" />
+</div>
 
 <widget template="common/dialog.tpl" body="attributes/list.tpl" />

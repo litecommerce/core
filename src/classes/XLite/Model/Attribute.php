@@ -280,6 +280,18 @@ class Attribute extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Return field comment
+     *
+     * @return string
+     */
+    public function getFieldComment()
+    {
+        return self::TYPE_NUMBER == $this->getType()
+            ? $this->getUnit()
+            : '';
+    }
+
+    /**
      * Set attribute value
      *
      * @param \XLite\Model\Product $product Product

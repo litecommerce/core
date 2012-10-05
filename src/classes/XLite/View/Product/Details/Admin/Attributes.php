@@ -85,9 +85,7 @@ class Attributes extends \XLite\View\Product\Details\AAttributes
                         'maxHeight' => 100,
                         'rows'      => 1,
                         'attribute' => $attribute,
-                        'comment'   => \XLite\Model\Attribute::TYPE_NUMBER == $attribute->getType()
-                            ? $attribute->getUnit()
-                            : '',
+                        'comment'   => $attribute->getFieldComment(),
                         'value'     => $attribute->getAttributeValue($this->getProduct())
                     ),
                     $attribute->getWidgetClass()

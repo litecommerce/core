@@ -25,34 +25,38 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid) {
   );
 }
 
-var pprc = popup.postprocessRequestCallback;
-popup.postprocessRequestCallback()  = function()
-{
-  pprc.postprocessRequestCallback();
-  popup.close();
-}
-
-function popup_attribute_groups(product_class_id) {
-  return !popup.load(
-    URLHandler.buildURL({
-      target:             'attribute_groups',
-      product_class_id:   product_class_id,
-      widget:             'XLite\\View\\AttributeGroups'
-    })
-  );
-}
-
-function popup_attribute(product_class_id, id) {
-  return !popup.load(
-    URLHandler.buildURL({
-      target:             'attribute',
-      product_class_id:   product_class_id,
-      id:                 id,
-      widget:             'XLite\\View\\Attribute'
-    }),
-    null,
-    function () {
-      self.location.reload();
-    }
-  );
-}
+jQuery().ready(
+  function () {
+    jQuery('button.manage-groups').click(
+      function () {
+        return !popup.load(
+          URLHandler.buildURL({
+            target:             'attribute_groups',
+            product_class_id:   jQuery(this).parent().data('class-id'),
+            widget:             'XLite\\View\\AttributeGroups'
+          }),
+          null,
+          function () {
+            self.location.reload();
+          }
+        );
+      }
+    );
+    jQuery('button.new-attribute, button.edit-attribute').click(
+      function () {
+        return !popup.load(
+          URLHandler.buildURL({
+            target:             'attribute',
+            product_class_id:   jQuery(this).parent().data('class-id'),
+            id:                 jQuery(this).parent().data('id'),
+            widget:             'XLite\\View\\Attribute'
+          }),
+          null,
+          function () {
+            self.location.reload();
+          }
+        );
+      }
+    );
+  }
+);
