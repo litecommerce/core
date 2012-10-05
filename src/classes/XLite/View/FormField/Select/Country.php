@@ -147,17 +147,29 @@ class Country extends \XLite\View\FormField\Select\Regular
     }
 
     /**
-     * Some JavaScript code to insert
+     * Return some data for JS external scripts if it is needed.
+     *
+     * @return null|array
+     */
+    protected function getFormFieldJSData()
+    {
+        return array(
+            'statesList' => \XLite\Core\Database::getRepo('XLite\Model\Country')->findCountriesStates(),
+            'stateSelectors' => array(
+                'fieldId'           => $this->getFieldId(),
+                'stateSelectorId'   => $this->getParam(self::PARAM_STATE_SELECTOR_ID),
+                'stateInputId'      => $this->getParam(self::PARAM_STATE_INPUT_ID),
+            ),
+        );
+    }
+
+    /**
+     * Get value container class
      *
      * @return string
      */
-    protected function getInlineJSCode()
+    protected function getValueContainerClass()
     {
-        return $this->getWidget(array(), '\XLite\View\JS\StatesList')->getContent() . PHP_EOL
-            . 'jQuery(document).ready(function() { ' . PHP_EOL
-            . 'stateSelectors[\'' . $this->getFieldId() . '\'] = new StateSelector(' . PHP_EOL
-            . '\'' . $this->getFieldId() . '\', '
-            . '\'' . $this->getParam(self::PARAM_STATE_SELECTOR_ID) . '\', '
-            . '\'' . $this->getParam(self::PARAM_STATE_INPUT_ID) . '\');  });' . PHP_EOL;
+        return parent::getValueContainerClass() . ' country-selector';
     }
 }

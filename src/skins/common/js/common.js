@@ -503,6 +503,25 @@ function attachTooltip(elm, content) {
   );
 }
 
+/**
+ * State widget specific objects and methods (used in select_country.js )
+ * @TODO : Move it to the one object after dynamic loading widgets JS implementation
+ */
 var statesList = [];
 var stateSelectors = [];
 
+function UpdateStatesList()
+{
+  var _stateSelectors;
+
+  jQuery('.country-selector').each(function (index, elem) {
+    statesList = array_merge(statesList, core.getCommentedData(elem, 'statesList'));
+    _stateSelectors = core.getCommentedData(elem, 'stateSelectors');
+
+    stateSelectors[_stateSelectors.fieldId] = new StateSelector(
+      _stateSelectors.fieldId,
+      _stateSelectors.stateSelectorId,
+      _stateSelectors.stateInputId
+    );
+  });
+}

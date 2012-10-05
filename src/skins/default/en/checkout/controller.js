@@ -442,6 +442,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
+    UpdateStatesList();
+
     // Refresh state
     this.refreshState();
   }
@@ -889,6 +891,10 @@ BillingAddressView.prototype.postprocess = function(isSuccess, initial)
 
     if (!initial) {
       this.parentWidget.refreshState();
+    }
+
+    if (this.parentWidget) {
+      UpdateStatesList();
     }
   }
 }

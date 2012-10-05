@@ -24,6 +24,7 @@
   <widget template="{getDir()}/{getFieldTemplate()}" />
   <widget IF="getParam(#help#)" class="\XLite\View\Tooltip" text="{getParam(#help#)}" isImageTag=true className="help-icon" />
   <div IF="getParam(#comment#)" class="form-field-comment {getFieldId()}-comment">{t(getParam(#comment#)):r}</div>
+  {if:getFormFieldJSData()}{displayCommentedData(getFormFieldJSData())}{end:}
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </div>
 

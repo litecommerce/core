@@ -24,6 +24,7 @@ decorate(
   function (selector)
   {
     // Some autoloading could be added
+    UpdateStatesList();
   }
 );
 
