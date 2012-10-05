@@ -46,5 +46,5 @@ class AttributeValueCheckbox extends \XLite\Model\AttributeValue\AAttributeValue
      *
      * @Column (type="boolean")
      */
-    protected $value = 0;
+    protected $value = false;
 }

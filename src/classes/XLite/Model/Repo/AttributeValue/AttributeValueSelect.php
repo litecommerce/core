@@ -43,20 +43,20 @@ class AttributeValueSelect extends \XLite\Model\Repo\AttributeValue\AAttributeVa
      */
     protected function getHandlingSearchParams()
     {
-        return parent::getHandlingSearchParams() + array(static::SEARCH_ATTRIBUTE_OPTION);
+        return array_merge(parent::getHandlingSearchParams(), array(static::SEARCH_ATTRIBUTE_OPTION));
     }
 
     /**
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param mixed                      $value        Condition OPTIONAL
+     * @param mixed                      $value        Condition
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndAttributeOption(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = null)
+    protected function prepareCndAttributeOption(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if ($value) {
             $queryBuilder->andWhere('a.attribute_option = :attributeOption')

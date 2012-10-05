@@ -495,11 +495,24 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
         foreach ($this->getPageData() as $entity) {
             $entity->getRepository()->update($entity, array(), false);
             if ($this->isDefault()) {
-                $entity->setDefaultValue(isset($this->requestData['defaultValue']) && $this->requestData['defaultValue'] == $entity->getId());
+                $entity->setDefaultValue($this->isDefaultEntity($entity));
             }
         }
 
         return $count;
+    }
+
+    /**
+     * Is default entity 
+     *
+     * @param \XLite\Model\AEntity $entity Line
+     *
+     * @return boolean
+     */
+    protected function isDefaultEntity(\XLite\Model\AEntity $entity)
+    {
+        return isset($this->requestData['defaultValue']) 
+            && $this->requestData['defaultValue'] == $entity->getId();
     }
 
     /**
