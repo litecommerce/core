@@ -42,6 +42,7 @@ class Module extends \XLite\Core\Pack\APack
     const METADATA_FIELD_ICON_LINK     = 'IconLink';
     const METADATA_FIELD_DESCRIPTION   = 'Description';
     const METADATA_FIELD_DEPENDENCIES  = 'Dependencies';
+    const METADATA_FIELD_IS_SYSTEM     = 'isSystem';
 
     /**
      * Current module
@@ -110,6 +111,7 @@ class Module extends \XLite\Core\Pack\APack
             self::METADATA_FIELD_ICON_LINK     => $this->module->callModuleMethod('getIconURL'),
             self::METADATA_FIELD_DESCRIPTION   => $this->module->callModuleMethod('getDescription'),
             self::METADATA_FIELD_DEPENDENCIES  => $this->module->callModuleMethod('getDependencies'),
+            self::METADATA_FIELD_IS_SYSTEM     => $this->module->callModuleMethod('isSystem'),
         );
     }
 

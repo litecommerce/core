@@ -40,6 +40,7 @@ class Module extends \XLite\Model\Repo\ARepo
     const P_LIMIT            = 'limit';
     const P_PRICE_FILTER     = 'priceFilter';
     const P_INSTALLED        = 'installed';
+    const P_ISSYSTEM         = 'isSystem';
     const P_INACTIVE         = 'inactive';
     const P_CORE_VERSION     = 'coreVersion';
     const P_FROM_MARKETPLACE = 'fromMarketplace';
@@ -139,6 +140,7 @@ class Module extends \XLite\Model\Repo\ARepo
             self::P_LIMIT,
             self::P_PRICE_FILTER,
             self::P_INSTALLED,
+            self::P_ISSYSTEM,
             self::P_INACTIVE,
             self::P_CORE_VERSION,
             self::P_FROM_MARKETPLACE,
@@ -292,6 +294,21 @@ class Module extends \XLite\Model\Repo\ARepo
         $queryBuilder
             ->andWhere('m.installed = :installed')
             ->setParameter('installed', $value);
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition
+     *
+     * @return void
+     */
+    protected function prepareCndIsSystem(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $queryBuilder
+            ->andWhere('m.isSystem = :isSystem')
+            ->setParameter('isSystem', $value);
     }
 
     /**
