@@ -528,7 +528,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getIframeSize()
     {
-        return array(600, 500);
+        return array(610, 512);
     }
 
     /**
