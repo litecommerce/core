@@ -9,5 +9,6 @@
  * @link      http://www.litecommerce.com/
  */
 
-
- 
+div.model-properties ul.table div.table-label label {
+  width: 180px;
+}

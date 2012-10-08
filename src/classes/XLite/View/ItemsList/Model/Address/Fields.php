@@ -47,6 +47,7 @@ class Fields extends \XLite\View\ItemsList\Model\Table
             'serviceName' => array(
                 static::COLUMN_NAME     => static::t('Service name'),
                 static::COLUMN_CLASS    => 'XLite\View\FormField\Inline\Input\Text',
+                static::COLUMN_TEMPLATE => 'items_list/model/table/field.tpl',
                 static::COLUMN_PARAMS   => array('required' => true),
             ),
             'required' => array(
@@ -172,6 +173,37 @@ class Fields extends \XLite\View\ItemsList\Model\Table
      */
     protected function isAllowEntityRemove(\XLite\Model\AEntity $entity)
     {
-        return $entity->getAdditional() && parent::isAllowEntityRemove($entity);
+        return parent::isAllowEntityRemove($entity) && $entity->getAdditional();
+    }
+
+    /**
+     * Check if the column template is used for widget displaying
+     *
+     * @param array                $column
+     * @param \XLite\Model\AEntity $entity
+     *
+     * @return boolean
+     */
+    protected function isTemplateColumnVisible(array $column, \XLite\Model\AddresField $entity)
+    {
+        return 'serviceName' !== $column[static::COLUMN_CODE]
+            ? parent::isTemplateColumnVisible($column, $entity)
+            : !$entity->getAdditional();
+    }
+
+
+    /**
+     * Check if the simple class is used for widget displaying
+     *
+     * @param array                $column
+     * @param \XLite\Model\AEntity $entity
+     *
+     * @return boolean
+     */
+    protected function isClassColumnVisible(array $column, \XLite\Model\AddresField $entity)
+    {
+        return 'serviceName' !== $column[static::COLUMN_CODE]
+            ? parent::isClassColumnVisible($column, $entity)
+            : $entity->getAdditional();
     }
 }

@@ -10,7 +10,7 @@
  *
  * @ListChild (list="shippingEstimator.address", weight="30")
  *}
-<li class="zipcode">
+<li class="zipcode" IF="hasField(#zipcode#)">
   <label for="destination_zipcode">{t(#Zip code#)}</label>
   <input name="zipcode" id="destination_zipcode" value="{getZipcode()}" class="field-required field-zipcode" />
 </li>
