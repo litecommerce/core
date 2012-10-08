@@ -79,11 +79,26 @@ class Review extends \XLite\View\Checkout\Step\AStep
     public function getPlaceTitle()
     {
         return static::t(
-            'Place order X',
+            $this->isNeedReplaceLabel() ? 'Proceed to payment X' : 'Place order X',
             array(
                 'total' => $this->formatPrice($this->getCart()->getTotal(), $this->getCart()->getCurrency()),
             )
         );
+    }
+
+    /**
+     * Return true if customer selected non-offline payment method
+     * 
+     * @return boolean
+     */
+    protected function isNeedReplaceLabel()
+    {
+        $cart = $this->getCart();
+
+        return isset($cart)
+            && 0 < $cart->getTotal()
+            && $cart->getPaymentMethod()
+            && 'O' != $cart->getPaymentMethod()->getType();
     }
 
     /**

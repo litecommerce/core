@@ -128,9 +128,7 @@ class Auth extends \XLite\Base
      */
     protected static function encryptPasswordMD5($password)
     {
-        return \XLite::getInstance()->getOptions(array('installer_details', 'shared_secret_key'))
-            ? hash_hmac('md5', $password, strval(\XLite::getInstance()->getOptions(array('installer_details', 'shared_secret_key'))))
-            : hash('md5', $password);
+        return md5($password);
     }
 
 

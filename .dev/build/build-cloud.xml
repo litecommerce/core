@@ -23,6 +23,7 @@
         <property name="buildTag" value="${label}" />
         <property name="phakeDir" value="${buildDir}/.dev/tests/Grid" />
         <property name="phake" value="${buildDir}/.dev/lib/phake/phake" />
+		<property name="instanceIP" value="107.20.104.167" />
     </target>
 
     <target name="clean">
@@ -69,7 +70,7 @@
         <chmod dir="${distrDir}" perm="a+w" type="both" />
         <echo message="Run release builder" />
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}" failonerror="on">
-            <arg line="-c -l -b ${label} -d ${distrDir} -t" />
+            <arg line="-c -l -f ${sourceDir}/.dev/build/release/config.private.sh -b ${label} -d ${distrDir} -t" />
         </exec>
     </target>
 
@@ -122,7 +123,7 @@
         <antcall target="run-phake">
             <param name="target" value="default" />
             <!--<param name="userVars" value="screenshots_url='http://xcart2-530.crtdev.local/~xcart/general/projects/xlite/build/logs/screenshots'" />-->
-            <param name="userVars" value="log_dir='${buildDir}/logs' screenshots_url='http:\/\/23.21.234.252\/screenshots'" />
+            <param name="userVars" value="log_dir='${buildDir}/logs' screenshots_url='http:\/\/${instanceIP}\/screenshots'" />
             <param name="EC2_DIR" value="${ec2Dir}" />
         </antcall>
 

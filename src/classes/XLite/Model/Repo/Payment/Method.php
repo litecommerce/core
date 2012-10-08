@@ -483,6 +483,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     {
         return $this->createQueryBuilder()
             ->andWhere('m.enabled = :true')
+            ->andWhere('m.added = :true')
             ->setParameter('true', true);
     }
 
