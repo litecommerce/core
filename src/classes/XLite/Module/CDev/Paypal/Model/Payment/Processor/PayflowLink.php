@@ -32,6 +32,14 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APaypal
 {
     /**
+     * Referral page URL 
+     * 
+     * @var string
+     */
+    protected $referralPageURL = 'https://www.paypal.com/webapps/mpp/referral/paypal-payflow-link?partner_id=';
+
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path
