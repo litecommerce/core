@@ -235,16 +235,6 @@ class Address extends \XLite\View\Model\AModel
     }
 
     /**
-     * Some JavaScript code to insert
-     *
-     * @return string
-     */
-    protected function getTopInlineJSCode()
-    {
-        return $this->getWidget(array(), '\XLite\View\JS\StatesList')->getContent();
-    }
-
-    /**
      * Return text for the "Submit" button
      *
      * @return string

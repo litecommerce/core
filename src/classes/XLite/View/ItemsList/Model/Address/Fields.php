@@ -184,7 +184,7 @@ class Fields extends \XLite\View\ItemsList\Model\Table
      *
      * @return boolean
      */
-    protected function isTemplateColumnVisible(array $column, \XLite\Model\AddresField $entity)
+    protected function isTemplateColumnVisible(array $column, \XLite\Model\AEntity $entity)
     {
         return 'serviceName' !== $column[static::COLUMN_CODE]
             ? parent::isTemplateColumnVisible($column, $entity)
@@ -200,7 +200,7 @@ class Fields extends \XLite\View\ItemsList\Model\Table
      *
      * @return boolean
      */
-    protected function isClassColumnVisible(array $column, \XLite\Model\AddresField $entity)
+    protected function isClassColumnVisible(array $column, \XLite\Model\AEntity $entity)
     {
         return 'serviceName' !== $column[static::COLUMN_CODE]
             ? parent::isClassColumnVisible($column, $entity)

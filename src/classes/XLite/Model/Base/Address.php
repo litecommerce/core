@@ -64,15 +64,6 @@ abstract class Address extends \XLite\Model\AEntity
     protected $state;
 
     /**
-     * Custom state
-     *
-     * @var string
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $custom_state = '';
-
-    /**
      * Country
      *
      * @var \XLite\Model\Country
