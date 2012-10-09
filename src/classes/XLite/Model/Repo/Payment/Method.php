@@ -456,12 +456,25 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
      */
     protected function defineAdditionByTypeQuery($type)
     {
-        return $this->createPureQueryBuilder('m')
+        $qb = $this->createPureQueryBuilder('m')
             ->andWhere('m.type = :type')
             ->andWhere('m.moduleEnabled = :moduleEnabled')
-            ->addOrderBy('m.moduleName', 'asc')
             ->setParameter('type', $type)
             ->setParameter('moduleEnabled', true);
+
+        return $this->addOrderByForAdditionByTypeQuery($qb);
+    }
+
+    /**
+     * Add ORDER BY for findAdditionByType() query
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function addOrderByForAdditionByTypeQuery($qb)
+    {
+        return $qb->addOrderBy('m.moduleName', 'asc');
     }
 
     /**

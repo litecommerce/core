@@ -54,18 +54,16 @@ class Method extends \XLite\Model\Repo\Payment\Method implements \XLite\Base\IDe
     /**
      * Define query for findAdditionByType()
      *
-     * @param string $type Payment method type
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
      * 
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function defineAdditionByTypeQuery($type)
+    protected function addOrderByForAdditionByTypeQuery($qb)
     {
-        $qb = parent::defineAdditionByTypeQuery($type);
-
         $qb->addSelect('LOCATE(:modulePrefix, m.class) module_prefix')
             ->addOrderBy('module_prefix', 'desc')
             ->setParameter('modulePrefix', 'Module\\CDev\\Paypal');
 
-        return $qb;
+        return parent::addOrderByForAdditionByTypeQuery($qb);
     }
 }
