@@ -52,7 +52,18 @@ class AttributeGroups extends \XLite\Controller\Admin\AAdmin
      */
     public function checkACL()
     {
-        return (parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage catalog'))
+        return parent::checkACL() 
+            || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage catalog');
+    }
+
+    /**
+     * Check if current page is accessible
+     *
+     * @return boolean
+     */
+    public function checkAccess()
+    {
+        return parent::checkAccess() 
             && $this->getProductClass()
             && $this->isAJAX();
     }

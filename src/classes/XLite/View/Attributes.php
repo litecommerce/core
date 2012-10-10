@@ -74,7 +74,6 @@ class Attributes extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'attributes/script.js';
         $list[] = 'form_field/inline/controller.js';
         $list[] = 'form_field/inline/input/text/position/move.js';
         $list[] = 'form_field/js/text.js';
@@ -82,6 +81,7 @@ class Attributes extends \XLite\View\AView
         $list[] = 'button/js/remove.js';
         $list[] = 'items_list/items_list.js';
         $list[] = 'items_list/model/table/controller.js';
+        $list[] = 'attributes/script.js';
 
         return $list;
     }

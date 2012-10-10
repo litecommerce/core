@@ -51,6 +51,10 @@ button.manage-groups span {
   padding: 2px 0 2px 25px;
 }
 
+div.buttons {
+  margin-bottom: 25px;
+}
+
 div.group table.list th.actions.left {
   background: url("../images/icon_folder.png") no-repeat scroll center center transparent;
 }

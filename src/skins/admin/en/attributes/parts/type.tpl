@@ -9,5 +9,7 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<widget class="\XLite\View\Button\Link" style="edit-attribute" label="{t(#Edit attribute#)}" jsCode="popup_attribute({productClass.getId()}, {entity.getId()})" />
+<div data-class-id="{productClass.getId()}" data-id="{entity.getId()}" />
+<widget class="\XLite\View\Button\Submit" style="edit-attribute" label="{t(#Edit attribute#)}" />
 {t(entity.getTypes(entity.getType()))}
+</div>

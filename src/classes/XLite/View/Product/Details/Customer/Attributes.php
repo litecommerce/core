@@ -49,21 +49,35 @@ class Attributes extends \XLite\View\Product\Details\AAttributes
             $this->attributes = array();
             foreach ($this->getAttributesList() as $a) {
                 $value = $a->getAttributeValue($this->getProduct(), true);
-                $class = strtolower($a->getTypes($a->getType()));
-                if (\XLite\Model\Attribute::TYPE_CHECKBOX == $a->getType()) {
-                    $class .= ' ' . (static::t('yes') == $value ? 'checked' : 'no-checked');
-                }
                 if ($value) {
                     $this->attributes[] = array(
                         'name'  => $a->getName(),
                         'value' => $value,
-                        'class' => $class
+                        'class' => $this->getFieldClass($a, $value)
                     );
                 }
             }
         }
 
         return $this->attributes;
+    }
+
+    /**
+     * Return field class 
+     *
+     * @param \XLite\Model\Attribute $attribute Attribute
+     * @param string                 $value     Value
+     *
+     * @return string
+     */
+    protected function getFieldClass(\XLite\Model\Attribute $attribute, $value)
+    {
+        $class = strtolower($a->getTypes($attribute->getType()));
+        if (\XLite\Model\Attribute::TYPE_CHECKBOX == $attribute->getType()) {
+            $class .= ' ' . (static::t('yes') == $value ? 'checked' : 'no-checked');
+        }
+
+        return $class;
     }
 
     /**

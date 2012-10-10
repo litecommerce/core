@@ -103,8 +103,8 @@ class Attributes extends \XLite\Controller\Admin\AAdmin
     public function getTitle()
     {
         return $this->getProductClass()
-            ? \XLite\Core\Translation::getInstance()->lbl(
-                'Attributes for "{{class}}" product class',
+            ? static::t(
+                'Attributes for X product class',
                 array(
                     'class' => $this->getProductClass()->getName()
                 )
