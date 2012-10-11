@@ -55,7 +55,7 @@ class Attribute extends \XLite\View\ItemsList\Model\Table
             'type' => array(
                 static::COLUMN_NAME     => $this->getAttributeGroup() 
                     ? static::t(
-                        '{{count}} attributes in group',
+                        'X attributes in group',
                         array(
                             'count' => $this->getAttributeGroup()->getAttributesCount() 
                         )
