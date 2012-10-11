@@ -120,6 +120,7 @@ abstract class Address extends \XLite\Model\AEntity
      * @param mixed $state State object or state id or custom state name
      *
      * @return void
+     * @todo Refactor?
      */
     public function setState($state)
     {
@@ -129,25 +130,14 @@ abstract class Address extends \XLite\Model\AEntity
             if ($state->getStateId()) {
                 if (!$this->state || $this->state->getStateId() != $state->getStateId()) {
                     $this->state = $state;
-                    $this->setCustomState('');
                 }
-
             } else {
-
                 $this->state = null;
-
-                if ($state->getState()) {
-                    $this->setCustomState($state->getState());
-                }
             }
 
-
         } elseif (is_string($state)) {
-
             // Set custom state
             $this->state = null;
-            $this->setCustomState($state);
-
         }
     }
 

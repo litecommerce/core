@@ -47,6 +47,14 @@ class Address extends \XLite\Model\Base\PersonalAddress
     const SHIPPING = 's';
 
 
+    /**
+     * Address fields collection
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @OneToMany (targetEntity="XLite\Model\AddressFieldValue", mappedBy="address", cascade={"all"})
+     */
+    protected $addressFields;
 
     /**
      * Flag: is it a billing address

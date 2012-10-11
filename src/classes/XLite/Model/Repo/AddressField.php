@@ -108,6 +108,26 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
+     * Find one by record
+     *
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
+     *
+     * @return \XLite\Model\AEntity
+     */
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
+    {
+        if (isset($data['serviceName'])) {
+            $result = $this->findOneByServiceName($data['serviceName']);
+
+        } else {
+            $result = parent::findOneByRecord($data, $parent);
+        }
+
+        return $result;
+    }
+
+    /**
      * Return list of handling search params
      *
      * @return array
