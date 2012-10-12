@@ -82,6 +82,8 @@
 
       <div class="help-link">Don't have an account? <a href="{paymentMethod.getReferralPageURL()}">Sign Up Now</a></div>
 
+      <div class="help-text"><a href="{paymentMethod.getPartnerPageURL()}">Get more information</a></div>
+
   </div>
 
 </div>

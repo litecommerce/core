@@ -69,11 +69,20 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      *
      * @return string
      */
-    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    public function getPartnerPageURL(\XLite\Model\Payment\Method $method)
     {
         return \XLite::PRODUCER_SITE_URL . 'partners/paypal.html';
     }
 
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return 'https://www.paypal.com/webapps/mpp/referral/paypal-payments-standard?partner_id=LiteCommerce';
+    }
 
     /**
      * Process callback

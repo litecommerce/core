@@ -82,7 +82,9 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
 
                     $items = $this->getTaxableItems($productClass, $previousItems);
                     if ($items) {
-                        $previousItems = array_merge($previousItems, $items);
+                        foreach ($items as $item) {
+                            $previousItems[] = $item->getProduct()->getProductId();
+                        }
                         $cost += $rate->calculate($items);
                     }
 
@@ -155,7 +157,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
 
         foreach ($this->getOrder()->getItems() as $item) {
             if (
-                !in_array($item, $previousItems)
+                !in_array($item->getProduct()->getProductId(), $previousItems)
                 && (!$class || ($class && $item->getProductClasses()->contains($class)))
             ) {
                 $list[] = $item;
