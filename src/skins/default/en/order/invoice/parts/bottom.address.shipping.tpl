@@ -12,17 +12,12 @@
  *}
 <td class="ship" IF="saddress&getShippingModifier()&shippingModifier.getMethod()">
   <strong>{t(#Shipping address#)}</strong>
-  <p>
-    {saddress.title} {saddress.firstname} {saddress.lastname}
-  </p>
 
-  <p>
-    {saddress.street}<br />
-    {saddress.city}, {saddress.state.state}, {saddress.zipcode}<br />
-    {saddress.country.country}
-  </p>
-
-  <p IF="saddress.phone" class="last">
-    {t(#Phone#)}: {saddress.phone}
-  </p>
+  <ul class="address-section shipping-address-section">
+    <li FOREACH="getAddressSectionData(saddress),idx,field" class="{field.css_class} address-field">
+      <span class="address-title">{t(field.title)}:</span>
+      <span class="address-field">{field.value}</span>
+      <span class="address-comma">,</span>
+    </li>
+  </ul>
 </td>

@@ -124,4 +124,15 @@ class AddressField extends \XLite\Model\Base\I18n
      */
     protected $position = 0;
 
+
+    /**
+     * Return CSS classes for this field name entry
+     *
+     * @return string
+     */
+    public function getCSSFieldName()
+    {
+        return 'address-' . $this->getServiceName() . ($this->getAdditional() ? ' field-additional' : '');
+    }
+
 }

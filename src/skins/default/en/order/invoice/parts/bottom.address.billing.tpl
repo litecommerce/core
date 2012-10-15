@@ -12,19 +12,13 @@
  *}
 <td class="bill" IF="order.profile&order.profile.getBillingAddress()">
   <strong>{t(#Billing address#)}</strong>
-  <p>
-    {baddress.title} {baddress.firstname} {baddress.lastname}
-  </p>
-
-  <p>
-    {baddress.street}<br />
-    {baddress.city}, {baddress.state.state}, {baddress.zipcode}<br />
-    {baddress.country.country}
-  </p>
-
-  <p IF="baddress.phone">
-    {t(#Phone#)}: {baddress.phone}
-  </p>
+  <ul class="address-section shipping-address-section">
+    <li FOREACH="getAddressSectionData(baddress),idx,field" class="{field.css_class} address-field">
+      <span class="address-title">{t(field.title)}:</span>
+      <span class="address-field">{field.value}</span>
+      <span class="address-comma">,</span>
+    </li>
+  </ul>
 
   <p>
     {t(#E-mail#)}: <a href="mailto:{order.profile.login}">{order.profile.login}</a>

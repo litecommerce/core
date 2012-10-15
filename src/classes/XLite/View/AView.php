@@ -1857,7 +1857,7 @@ abstract class AView extends \XLite\Core\Handler
 
             if ($addressFieldValue) {
                 $result[$field->getServiceName()] = array(
-                    'css_class' => 'address-' . $field->getServiceName(),
+                    'css_class' => $field->getCSSFieldName(),
                     'title'     => $field->getName(),
                     'value'     => $addressFieldValue,
                 );
