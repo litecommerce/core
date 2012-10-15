@@ -9,5 +9,5 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<span class="value">{getViewValue(singleField):h}</span>
+<span class="value">{getViewValue(singleField)}</span>
 <span class="products">({entity.getProductsCount()} {t(#products#)})</span>

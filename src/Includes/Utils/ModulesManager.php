@@ -282,12 +282,18 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     {
         if (!isset(static::$activeModules)) {
 
-            // Fetch active modules from the common list
-            static::$activeModules = \Includes\Utils\ArrayManager::searchAllInArraysArray(
+            // Fetch enabled modules from the common list
+            $enabledModules = \Includes\Utils\ArrayManager::searchAllInArraysArray(
                 static::getModulesList(),
                 'enabled',
                 true
             );
+
+            // Fetch system modules from the disabled modules list
+            $systemModules = static::getSystemModules();
+
+            // Get full list of active modules
+            static::$activeModules = $enabledModules + $systemModules;
 
             // Remove unsupported modules from list
             static::checkVersions();
@@ -324,6 +330,24 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     public static function areActiveModules(array $moduleNames)
     {
         return array_filter(array_map(array('static', 'isActiveModule'), $moduleNames)) == $moduleNames;
+    }
+
+    /**
+     * Get the list of disabled system modules
+     *
+     * @return array
+     */
+    protected static function getSystemModules()
+    {
+        $modules = array();
+
+        foreach (static::getModulesList() as $module => $data) {
+            if (static::callModuleMethod($module, 'isSystem')) {
+                $modules[$module] = $data;
+            }
+        }
+
+        return $modules;
     }
 
     /**
@@ -412,7 +436,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function disableModule($key)
     {
-        if (isset(static::$activeModules[$key])) {
+        if (isset(static::$activeModules[$key]) && !static::callModuleMethod($key, 'isSystem')) {
 
             // Short names
             $data = static::$activeModules[$key];
@@ -712,8 +736,8 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         $table = static::getTableName();
 
         return \Includes\Utils\Database::fetchAll(
-            'SELECT ' . $field . $field . $table . '.* FROM ' . $table . ' WHERE installed = ? AND enabled = ?',
-            array(1, 1),
+            'SELECT ' . $field . $field . $table . '.* FROM ' . $table . ' WHERE installed = ?',
+            array(1),
             \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
         );
     }

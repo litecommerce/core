@@ -65,6 +65,13 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      */
     protected $testPostURL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 
+    /**
+     * Referral page URL 
+     * 
+     * @var string
+     */
+    protected $referralPageURL = 'https://www.paypal.com/webapps/mpp/referral/paypal-express-checkout?partner_id=';
+
 
     /**
      * Get settings widget or template

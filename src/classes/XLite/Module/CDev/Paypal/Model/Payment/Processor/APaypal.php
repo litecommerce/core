@@ -62,6 +62,14 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     protected $apiLiveURL = 'https://payflowpro.paypal.com/';
 
     /**
+     * Partner code 
+     * 
+     * @var string
+     */
+    protected $partnerCode = 'LiteCommerce';
+
+
+    /**
      * Cache of SecureTokenID
      * 
      * @var string
@@ -120,9 +128,19 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      *
      * @return string
      */
-    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    public function getPartnerPageURL(\XLite\Model\Payment\Method $method)
     {
         return \XLite::PRODUCER_SITE_URL . 'partners/paypal.html';
+    }
+
+    /**
+     * Get URL of referral page
+     *
+     * @return string
+     */
+    public function getReferralPageURL(\XLite\Model\Payment\Method $method)
+    {
+        return $this->referralPageURL . $this->partnerCode;
     }
 
     /**
@@ -528,7 +546,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getIframeSize()
     {
-        return array(600, 500);
+        return array(610, 512);
     }
 
     /**
