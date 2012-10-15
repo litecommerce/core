@@ -83,6 +83,7 @@ class Marketplace extends \XLite\Base\Singleton
     const FIELD_SHOP_DOMAIN           = 'shopDomain';
     const FIELD_ERROR_CODE            = 'error';
     const FIELD_ERROR_MESSAGE         = 'message';
+    const FIELD_IS_SYSTEM             = 'isSystem';
 
     /**
      * Some predefined TTLs
@@ -520,6 +521,7 @@ class Marketplace extends \XLite\Base\Singleton
                     'authorPageURL'   => $this->getField($module, static::FIELD_AUTHOR_PAGE_URL),
                     'dependencies'    => (array) $this->getField($module, static::FIELD_DEPENDENCIES),
                     'packSize'        => $this->getField($module, static::FIELD_LENGTH),
+                    'isSystem'        => (bool) $this->getField($module, static::FIELD_IS_SYSTEM),
                 );
 
             } else {
