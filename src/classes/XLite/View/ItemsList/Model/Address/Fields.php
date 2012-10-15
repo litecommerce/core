@@ -186,6 +186,9 @@ class Fields extends \XLite\View\ItemsList\Model\Table
      */
     protected function isTemplateColumnVisible(array $column, \XLite\Model\AEntity $entity)
     {
+        // Right now admin cannot directly edit serviceName values for additional fields
+        // and cannot change "Not required" state of "custom_state" field
+        // TODO: refactor it
         return 'serviceName' !== $column[static::COLUMN_CODE]
             ? parent::isTemplateColumnVisible($column, $entity)
             : !$entity->getAdditional();
@@ -202,8 +205,14 @@ class Fields extends \XLite\View\ItemsList\Model\Table
      */
     protected function isClassColumnVisible(array $column, \XLite\Model\AEntity $entity)
     {
+        // Right now admin cannot directly edit serviceName values for additional fields
+        // and cannot change "Not required" state of "custom_state" field
+        // TODO: refactor it
         return 'serviceName' !== $column[static::COLUMN_CODE]
-            ? parent::isClassColumnVisible($column, $entity)
+            ? (('custom_state' === $entity->getServiceName() && 'required' === $column[static::COLUMN_CODE])
+                ? false
+                : parent::isClassColumnVisible($column, $entity)
+            )
             : $entity->getAdditional();
     }
 }
