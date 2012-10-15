@@ -45,7 +45,7 @@ class AttributeGroups extends \XLite\View\FormField\Select\Regular
         }
 
         foreach (\XLite\Core\Database::getRepo('\XLite\Model\AttributeGroup')->search($cnd) as $e) {
-            $list[$e->getId()] = $e->getName();
+            $list[$e->getId()] = htmlspecialchars($e->getName());
         }
 
         return $list;
