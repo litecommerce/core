@@ -171,6 +171,7 @@ div.group table.list th.actions.left {
   border-radius: 0;
   display: none;
   margin: 0 5px 0 0;
+  height: 26px;
 }
 .edit-mark .edit-attribute {
   display: inline;
@@ -222,6 +223,10 @@ div.group table.list th.actions.left {
   font-size: 12px;
 }
 
+.ajax-container-loadable div.table-value .input-field-wrapper {
+  float: left;
+}
+
 .ajax-container-loadable .star {
   display: none;
 }
@@ -243,6 +248,10 @@ div.group table.list th.actions.left {
 
 .ajax-container-loadable li.edit-decimals {
   float: left;
+}
+
+.ajax-container-loadable li.edit-unit {
+  left: 180px;
 }
 
 .ajax-container-loadable div.note {
