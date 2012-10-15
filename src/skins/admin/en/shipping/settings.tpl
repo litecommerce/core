@@ -35,7 +35,7 @@
         {end:}
 
         {if:option.type=#country#"}
-          <widget class="\XLite\View\CountrySelect" field="{option.name}" country="{option.value}" fieldId="{option.name}_select" />
+          <widget class="\XLite\View\CountrySelect" selectOne="false" field="{option.name}" country="{option.value}" fieldId="{option.name}_select" />
         {end:}
 
         {if:option.type=#state#"}
