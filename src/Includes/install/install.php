@@ -520,7 +520,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
 
     if (!empty($list)) {
         $result = false;
-        $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
+        $value = substr(implode(', ', $list), 0, 45) . '...';
         $errorMsg = xtr('There are disabled functions (:funclist) that may be used by software in some cases and should be enabled', array(':funclist' => implode(', ', $list)));
 
     } else {
