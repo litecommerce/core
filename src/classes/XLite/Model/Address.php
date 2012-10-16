@@ -52,7 +52,7 @@ class Address extends \XLite\Model\Base\PersonalAddress
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @OneToMany (targetEntity="XLite\Model\AddressFieldValue", mappedBy="address", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Model\AddressFieldValue", mappedBy="address", cascade={"persist"})
      */
     protected $addressFields;
 
