@@ -1,3 +1,4 @@
+
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
@@ -154,6 +155,11 @@ function openDialog(selector, additionalOptions)
             overflow: 'visible'
           }
         );
+      },
+      close: function (event) {
+        jQuery('form', jQuery('.ui-dialog ' + selector)).each(function (index, elem) {
+          jQuery(elem).validationEngine('hide');
+        });
       }
     }
 
