@@ -610,6 +610,7 @@ abstract class AView extends \XLite\Core\Handler
                 'js/jquery.mousewheel.js',
                 $this->getValidationEngineLanguageResource(),
                 'js/validationEngine/jquery.validationEngine.js',
+                'js/validationEngine/custom.validationEngine.js',
             ),
             static::RESOURCE_CSS => array(
                 'ui/jquery-ui.css',

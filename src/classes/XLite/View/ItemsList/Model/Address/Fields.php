@@ -46,7 +46,7 @@ class Fields extends \XLite\View\ItemsList\Model\Table
             ),
             'serviceName' => array(
                 static::COLUMN_NAME     => static::t('Service name'),
-                static::COLUMN_CLASS    => 'XLite\View\FormField\Inline\Input\Text',
+                static::COLUMN_CLASS    => 'XLite\View\FormField\Inline\Input\ServiceName',
                 static::COLUMN_TEMPLATE => 'items_list/model/table/field.tpl',
                 static::COLUMN_PARAMS   => array('required' => true),
             ),
