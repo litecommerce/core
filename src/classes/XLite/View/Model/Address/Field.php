@@ -43,7 +43,7 @@ class Field extends \XLite\View\Model\AModel
             self::SCHEMA_REQUIRED => true,
         ),
         'serviceName' => array(
-            self::SCHEMA_CLASS    => 'XLite\View\FormField\Input\Text',
+            self::SCHEMA_CLASS    => 'XLite\View\FormField\Input\Text\ServiceName',
             self::SCHEMA_LABEL    => 'Service name of address field',
             self::SCHEMA_REQUIRED => true,
         ),
