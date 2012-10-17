@@ -167,17 +167,9 @@ class Address extends \XLite\Model\Base\PersonalAddress
      *
      * @return array
      */
-    public static function getBillingRequiredFields()
+    public function getBillingRequiredFields()
     {
-        return array(
-            'firstname',
-            'lastname',
-            'street',
-            'city',
-            'zipcode',
-            'state',
-            'country',
-        );
+        return \XLite\Core\Database::getRepo('XLite\Model\AddressField')->findRequiredFields();
     }
 
     /**
@@ -185,17 +177,9 @@ class Address extends \XLite\Model\Base\PersonalAddress
      *
      * @return array
      */
-    public static function getShippingRequiredFields()
+    public function getShippingRequiredFields()
     {
-        return array(
-            'firstname',
-            'lastname',
-            'street',
-            'city',
-            'zipcode',
-            'state',
-            'country',
-        );
+        return \XLite\Core\Database::getRepo('XLite\Model\AddressField')->findRequiredFields();
     }
 
     /**
@@ -245,12 +229,12 @@ class Address extends \XLite\Model\Base\PersonalAddress
     public function getRequiredFieldsByType($atype)
     {
         switch ($atype) {
-            case self::BILLING:
-                $list = static::getBillingRequiredFields();
+            case static::BILLING:
+                $list = $this->getBillingRequiredFields();
                 break;
 
-            case self::SHIPPING:
-                $list = static::getShippingRequiredFields();
+            case static::SHIPPING:
+                $list = $this->getShippingRequiredFields();
                 break;
 
             default:

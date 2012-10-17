@@ -108,6 +108,33 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
+     * Return address field service name value
+     *
+     * @param \XLite\Model\AddressField $field
+     *
+     * @return string
+     */
+    public function getServiceName(\XLite\Model\AddressField $field)
+    {
+        return $field->getServiceName();
+    }
+
+    /**
+     * Get all enabled and required address fields
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     */
+    public function findRequiredFields()
+    {
+        return array_map(array($this, 'getServiceName'), $this->search(
+            new \XLite\Core\CommonCell(array(
+                'enabled' => true,
+                'required' => true,
+            )
+        )));
+    }
+
+    /**
      * Find one by record
      *
      * @param array                $data   Record
