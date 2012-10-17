@@ -32,6 +32,20 @@ namespace XLite\View\ItemsList\Model\Address;
 class Fields extends \XLite\View\ItemsList\Model\Table
 {
     /**
+     * Get a list of CSS files
+     *
+     * @return array
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/address_fields/style.css';
+
+        return $list;
+    }
+
+    /**
      * Define columns structure
      *
      * @return array
