@@ -11,7 +11,7 @@
 
 <h1 IF="head">{t(head)}</h1>
 
-<div class="tabbed-content-wrapper">
+<div class="tabbed-content-wrapper" IF="getTabberPages()">
   <div class="tabs-container">
     <div class="page-tabs">
 
