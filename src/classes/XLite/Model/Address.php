@@ -163,26 +163,6 @@ class Address extends \XLite\Model\Base\PersonalAddress
     }
 
     /**
-     * Get billing address-specified required fields
-     *
-     * @return array
-     */
-    public function getBillingRequiredFields()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\AddressField')->findRequiredFields();
-    }
-
-    /**
-     * Get shipping address-specified required fields
-     *
-     * @return array
-     */
-    public function getShippingRequiredFields()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\AddressField')->findRequiredFields();
-    }
-
-    /**
      * Get default value for the field
      *
      * @param string $fieldName Field service name
@@ -230,11 +210,11 @@ class Address extends \XLite\Model\Base\PersonalAddress
     {
         switch ($atype) {
             case static::BILLING:
-                $list = $this->getBillingRequiredFields();
+                $list = \XLite\Core\Database::getRepo('XLite\Model\AddressField')->getBillingRequiredFields();
                 break;
 
             case static::SHIPPING:
-                $list = $this->getShippingRequiredFields();
+                $list = \XLite\Core\Database::getRepo('XLite\Model\AddressField')->getShippingRequiredFields();
                 break;
 
             default:
@@ -277,25 +257,5 @@ class Address extends \XLite\Model\Base\PersonalAddress
         }
 
         return $entity;
-    }
-
-
-    /**
-     * Check if address has duplicates
-     *
-     * @return boolean
-     */
-    protected function checkAddress()
-    {
-        $result = parent::checkAddress();
-
-        $sameAddress = $this->getRepository()->findSameAddress($this);
-
-        if ($sameAddress) {
-            \XLite\Core\TopMessage::addWarning('Address was not saved as other address with specified fields is already exists.');
-            $result = false;
-        }
-
-        return $result;
     }
 }

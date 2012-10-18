@@ -34,17 +34,6 @@ namespace XLite\Model\Base;
 abstract class PersonalAddress extends \XLite\Model\Base\Address
 {
     /**
-     * Get address fields list
-     *
-     * @return array(string)
-     */
-    public static function getAddressFields()
-    {
-        return array_merge(array('firstname', 'lastname'), parent::getAddressFields());
-    }
-
-
-    /**
      * Get full name
      *
      * @return string

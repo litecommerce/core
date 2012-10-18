@@ -181,7 +181,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 $this->redirect($this->buildURL('checkout'));
 
             } else {
-                // Register 'Place order' event in the order history 
+                // Register 'Place order' event in the order history
                 \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getCart()->getOrderId());
 
                 // Make order payment step
@@ -828,8 +828,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
         unset($data['save_as_new']);
 
         $requiredFields = 'shipping' == $type
-            ? \XLite\Model\Address::getShippingRequiredFields()
-            : \XLite\Model\Address::getBillingRequiredFields();
+            ? \XLite\Core\Database::getRepo('XLite\Model\AddressField')->getShippingRequiredFields()
+            : \XLite\Core\Database::getRepo('XLite\Model\AddressField')->getBillingRequiredFields();
 
         foreach ($requiredFields as $fieldName) {
             if (!isset($data[$fieldName]) && \XLite\Model\Address::getDefaultFieldValue($fieldName)) {

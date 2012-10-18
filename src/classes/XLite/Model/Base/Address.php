@@ -78,19 +78,10 @@ abstract class Address extends \XLite\Model\AEntity
      *
      * @return array(string)
      */
-    public static function getAddressFields()
+    public function getAddressFields()
     {
-        return array(
-            'phone',
-            'street',
-            'city',
-            'zipcode',
-            'state_id',
-            'custom_state',
-            'country_code',
-        );
+        return \XLite\Core\Database::getRepo('XLite\Model\AddressField')->findEnabledFields();
     }
-
 
     /**
      * Get state
@@ -112,6 +103,32 @@ abstract class Address extends \XLite\Model\AEntity
         }
 
         return $state;
+    }
+
+    /**
+     * Set country
+     *
+     * @param integer $countryCode Country code
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->setterProperty('country_code', $countryCode);
+
+        $this->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->findOneBy(array('code' => $countryCode)));
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state State id
+     *
+     * @return void
+     */
+    public function setStateId($stateId)
+    {
+        $this->setterProperty('state_id', $stateId);
+
+        $this->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->find($stateId));
     }
 
     /**

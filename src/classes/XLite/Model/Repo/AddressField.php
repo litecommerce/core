@@ -120,9 +120,29 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
+     * Get billing address-specified required fields
+     *
+     * @return array
+     */
+    public function getBillingRequiredFields()
+    {
+        return $this->findRequiredFields();
+    }
+
+    /**
+     * Get shipping address-specified required fields
+     *
+     * @return array
+     */
+    public function getShippingRequiredFields()
+    {
+        return $this->findRequiredFields();
+    }
+
+    /**
      * Get all enabled and required address fields
      *
-     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @return array
      */
     public function findRequiredFields()
     {
@@ -130,6 +150,20 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
             new \XLite\Core\CommonCell(array(
                 'enabled' => true,
                 'required' => true,
+            )
+        )));
+    }
+
+    /**
+     * Get all enabled and required address fields
+     *
+     * @return array
+     */
+    public function findEnabledFields()
+    {
+        return array_map(array($this, 'getServiceName'), $this->search(
+            new \XLite\Core\CommonCell(array(
+                'enabled' => true,
             )
         )));
     }
@@ -163,6 +197,7 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
     {
         return array(
             'enabled',
+            'required',
         );
     }
 
@@ -211,5 +246,21 @@ class AddressField extends \XLite\Model\Repo\Base\I18n
         $queryBuilder
             ->andWhere($this->getMainAlias($queryBuilder) . '.enabled = :enabled_value')
             ->setParameter('enabled_value', $value);
+    }
+
+    /**
+     * Prepare query builder for required status search
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param boolean                    $value
+     * @param boolean                    $countOnly
+     *
+     * @return void
+     */
+    protected function prepareCndRequired(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
+    {
+        $queryBuilder
+            ->andWhere($this->getMainAlias($queryBuilder) . '.required = :required_value')
+            ->setParameter('required_value', $value);
     }
 }
