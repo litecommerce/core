@@ -325,21 +325,6 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * List of fields to use in search by substring
-     *
-     * @return array
-     */
-    protected function getAddressSubstringSearchFields()
-    {
-        return array(
-            'street',
-            'custom_state',
-            'city',
-            'zipcode',
-        );
-    }
-
-    /**
      * prepareCndCommon
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
@@ -435,13 +420,10 @@ class Profile extends \XLite\Model\Repo\ARepo
     protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if ($value) {
-
             $queryBuilder->innerJoin('p.order', 'porder')
                 ->andWhere('porder.order_id = :orderId')
                 ->setParameter('orderId', $value);
-
         } else {
-
             $queryBuilder->andWhere('p.order is null');
         }
     }
@@ -641,11 +623,12 @@ class Profile extends \XLite\Model\Repo\ARepo
     protected function prepareCndAddress(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-
-            foreach ($this->getAddressSubstringSearchFields() as $field) {
-
-                $this->prepareCommonField($queryBuilder, $value, $field, false);
-            }
+            $queryBuilder->leftJoin(
+                'addresses.addressFields',
+                'field_value_address_pattern'
+            )
+            ->andWhere('field_value_address_pattern.value LIKE :addressPattern')
+            ->setParameter('addressPattern', '%' . $value . '%');
         }
     }
 
