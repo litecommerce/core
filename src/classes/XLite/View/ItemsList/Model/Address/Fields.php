@@ -191,6 +191,19 @@ class Fields extends \XLite\View\ItemsList\Model\Table
     }
 
     /**
+     * Check - switch entity or not
+     *
+     * @param \XLite\Model\AEntity $entity Entity
+     *
+     * @return boolean
+     */
+    protected function isAllowEntitySwitch(\XLite\Model\AEntity $entity)
+    {
+        // Custom state is not allowed to switch off
+        return parent::isAllowEntitySwitch($entity) && 'custom_state' !== $entity->getServiceName();
+    }
+
+    /**
      * Check if the column template is used for widget displaying
      *
      * @param array                $column
