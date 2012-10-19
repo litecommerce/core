@@ -38,18 +38,20 @@ class ProductClass extends \XLite\Model\Repo\Base\I18n
     /**
      * Common search
      *
-     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param \XLite\Core\CommonCell $cnd       Search condition OPTIONAL
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
      */
-    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    public function search(\XLite\Core\CommonCell $cnd = null, $countOnly = false)
     {
         $queryBuilder = $this->createQueryBuilder('p');
         $this->currentSearchCnd = $cnd;
 
-        foreach ($this->currentSearchCnd as $key => $value) {
-            $this->callSearchConditionHandler($value, $key, $queryBuilder, $countOnly);
+        if ($this->currentSearchCnd) {
+            foreach ($this->currentSearchCnd as $key => $value) {
+                $this->callSearchConditionHandler($value, $key, $queryBuilder, $countOnly);
+            }
         }
 
         return $countOnly

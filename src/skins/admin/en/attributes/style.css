@@ -284,6 +284,15 @@ div.group table.list th.actions.left {
   font-size: 14px;
 }
 
-.ajax-container-loadable .main .view {
+.ajax-container-loadable .items-list-table table.list tbody td.main .attributeoption-name .view {
+  max-width: 300px;
+}
+
+.ajax-container-loadable .items-list-table table.list tbody td.main .view {
   position: relative;
+  max-width: 350px;
+}
+
+.items-list-table table.list tbody td.main .view {
+  max-width: 500px;
 }
