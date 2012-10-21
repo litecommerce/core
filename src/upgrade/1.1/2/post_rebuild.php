@@ -90,9 +90,12 @@ return function()
     // Get disabled modules
     $classes = array();
     $cnd = new \XLite\Core\CommonCell;
-    $cnd->inactive = true;
+    $cnd->{\XLite\Model\Repo\Module::P_INSTALLED} = true;
+    $cnd->{\XLite\Model\Repo\Module::P_ISSYSTEM} = false;
     foreach (\XLite\Core\Database::getRepo('XLite\Model\Module')->search($cnd) as $module) {
-        $classes[] = $module->getActualName();
+        if (!$module->getEnabled()) {
+            $classes[] = $module->getActualName();
+        }
     }
 
     // Enable/disable  all payment methods by modules
