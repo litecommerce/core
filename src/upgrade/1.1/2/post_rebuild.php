@@ -98,15 +98,20 @@ return function()
     // Enable/disable  all payment methods by modules
     foreach (\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findAll() as $method) {
         $parts = explode('\\', $method->getClass());
+
+        if ('Module' == $parts[0]) {
+            $method->setModuleName(implode('_', array_slice($parts, 1, 2)));
+        }
+
         $class = implode('\\', array_slice($parts, 1, 2));
         $method->setModuleEnabled(!in_array($class, $classes));
 
-        if (!$method->getAdded() && $method->getType() == \XLite\Model\Payment\Method::TYPE_OFFLINE) {
-            $method->setAdded(true);
-        }
-
         if (!$method->getType()) {
             $method->setType(isset($types[$method->getServiceName()]) ? $types[$method->getServiceName()] : 'C');
+        }
+
+        if (!$method->getAdded() && $method->getType() == \XLite\Model\Payment\Method::TYPE_OFFLINE) {
+            $method->setAdded(true);
         }
     }
     \XLite\Core\Database::getEM()->flush();
