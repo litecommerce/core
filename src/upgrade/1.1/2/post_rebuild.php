@@ -115,6 +115,9 @@ return function()
 
         if (!$method->getAdded() && $method->getType() == \XLite\Model\Payment\Method::TYPE_OFFLINE) {
             $method->setAdded(true);
+
+        } else {
+            $method->setAdded($method->getEnabled());
         }
     }
     \XLite\Core\Database::getEM()->flush();
