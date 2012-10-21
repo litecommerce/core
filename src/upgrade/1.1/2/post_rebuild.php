@@ -25,27 +25,21 @@
 
 return function()
 {
-    // Enable all payment methods
-    \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
-        ->getQueryBuilder()
-        ->update('XLite\Model\Payment\Method', 'e')
-        ->set('e.moduleEnabled', ':enabled')
-        ->setParameter('enabled', $enabled)
-        ->execute();
-
-    // Disable payment methods from disabled modules
-    $qb = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
-        ->getQueryBuilder()
-        ->update('XLite\Model\Payment\Method', 'e')
-        ->set('e.moduleEnabled', ':enabled')
-        ->where('LOCATE(:class, e.class) > 0')
-        ->setParameter('enabled', false);
-
+    // Get disabled modules
+    $classes = array();
     $cnd = new \XLite\Core\CommonCell;
     $cnd->inactive = true;
     foreach (\XLite\Core\Database::getRepo('XLite\Model\Module')->search($cnd) as $module) {
-        $qb->setParameter('class', $module->getActualName())->execute();
+        $classes[] = $module->getActualName();
     }
+
+    // Enable/disable  all payment methods by modules
+    foreach (\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findAll() as $method) {
+        $parts = explode('\\', $method->getClass());
+        $class = implode('\\', array_slice($parts, 1, 2));
+        $method->setModuleEnabled(!in_array($class, $classes));
+    }
+    \XLite\Core\Database::getEM()->flush();
 
     // Loading data to the database from yaml file
     $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
