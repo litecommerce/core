@@ -38,6 +38,9 @@ return function()
         $parts = explode('\\', $method->getClass());
         $class = implode('\\', array_slice($parts, 1, 2));
         $method->setModuleEnabled(!in_array($class, $classes));
+        if (!$method->getAdded() && $method->getType() == \XLite\Model\Payment\Method::TYPE_OFFLINE) {
+            $method->setAdded(true);
+        }
     }
     \XLite\Core\Database::getEM()->flush();
 
