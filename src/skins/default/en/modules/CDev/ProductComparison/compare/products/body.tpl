@@ -8,9 +8,5 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-<div class="product-comparison">
-  <div class="block block-block">
-    <h2>{t(getHead())}</h2>
-    <a href="#" class="clear-list">{t(#Clear list#)}</a>
-  </div>
-</div>
+<input id="{getCheckboxId()}" type="checkbox" class="add-to-compare" data-id="{product.product_id}" />
+<label for="{getCheckboxId()}">{t(#Compare#)}</label>

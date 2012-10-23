@@ -23,16 +23,35 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Module\CDev\ProductComparison\View;
+namespace XLite\Module\CDev\ProductComparison\View\AddToCompare;
 
 /**
- * Product comparison widget
+ * Add to compare widget
  *
  *
- * @ListChild (list="sidebar.first", zone="customer", weight="120")
  */
-class ProductComparison extends \XLite\View\SideBarBox
+abstract class AAddToCompare extends \XLite\View\Container
 {
+    /**
+     * Checkbox id 
+     *
+     * @var string
+     */
+    protected $checkboxId;
+
+    /**
+     * Get checkbox id
+     *
+     * @return string
+     */
+    public function getCheckboxId()
+    {
+        if (!isset($this->checkboxId)) {
+            $this->checkboxId = 'product' . rand();
+        };
+
+        return $this->checkboxId;
+    }
 
     /**
      * Register JS files
@@ -44,23 +63,9 @@ class ProductComparison extends \XLite\View\SideBarBox
         $list = parent::getJSFiles();
 
         $list[] = $this->getDir() . '/script.js';
+        $list[] = 'modules/CDev/ProductComparison/compare/script.js';
 
         return $list;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    protected function getHead()
-    {
-        return static::t(
-            'Compare X products',
-            array(
-                'count' => date('h:i:s', time()) 
-            )
-        );
     }
 
     /**
@@ -73,18 +78,9 @@ class ProductComparison extends \XLite\View\SideBarBox
         $list = parent::getCSSFiles();
 
         $list[] = $this->getDir() . '/style.css';
+        $list[] = 'modules/CDev/ProductComparison/compare/style.css';
 
         return $list;
-    }
-
-    /**
-     * Get widget templates directory
-     *
-     * @return string
-     */
-    protected function getDir()
-    {
-        return 'modules/CDev/ProductComparison/sidebar';
     }
 
     /**

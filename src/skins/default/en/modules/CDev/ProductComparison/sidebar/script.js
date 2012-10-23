@@ -17,7 +17,7 @@ function ProductComparisonView(base)
   this.callSupermethod('constructor', arguments);
   var o = this;
   core.bind(
-    'updateComparisonList',
+    'updateProductComparison',
     function(event, data) {
       o.load();
     }
