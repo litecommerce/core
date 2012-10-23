@@ -31,8 +31,8 @@ return function()
     $server_name = $repo->findOneBy(array('category' => 'CDev\\USPS', 'name' => 'server_name'));
     $server_path = $repo->findOneBy(array('category' => 'CDev\\USPS', 'name' => 'server_path'));
 
-    if (!empty($server_name) && !empty($server_path)) {
-        $server_url = 'http://' . $server_name . '/' . $server_path;
+    if (!empty($server_name) || !empty($server_path)) {
+        $server_url = 'http://' . $server_name->getValue() . '/' . $server_path->getValue();
 
     } else {
         $server_url = '';
