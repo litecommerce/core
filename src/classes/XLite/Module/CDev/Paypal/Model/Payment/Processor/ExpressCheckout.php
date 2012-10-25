@@ -419,7 +419,7 @@ HTML;
                     $status = self::PENDING;
                 }
 
-            } elseif (preg_match('/^10486/', $responseData['RESPMSG'])) {
+            } elseif (preg_match('/^Generic processor error: 10486/', $responseData['RESPMSG'])) {
                 $this->retryExpressCheckout(\XLite\Core\Session::getInstance()->ec_token);
 
             } else {
