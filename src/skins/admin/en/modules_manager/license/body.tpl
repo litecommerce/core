@@ -40,8 +40,10 @@
       <table class="agree">
         <tr>
           <td>
-            <input type="checkbox" id="agree" name="agree" value="Y" checked="checked" />
-            <label for="agree">{t(#Yes, I agree with License agreement#)}</label>
+            <label>
+              <input type="checkbox" name="agree" value="Y" checked="checked" />
+              {t(#Yes, I agree with License agreement#)}
+            </label>
           </td>
         </tr>
       </table>
