@@ -136,11 +136,13 @@ abstract class Main extends \XLite\Module\AModule
      * 
      * @return boolean
      */
-    public static function isExpressCheckoutEnabled()
+    public static function isExpressCheckoutEnabled($order = null)
     {
         static $result;
 
-        if (!isset($result)) {
+        $index = isset($order) ? 1 : 0;
+
+        if (!isset($result[$index])) {
             $paymentMethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
                 ->findOneBy(
                     array(
@@ -148,10 +150,14 @@ abstract class Main extends \XLite\Module\AModule
                         'enabled'      => true
                     )
                 );
-            $result = !empty($paymentMethod) && $paymentMethod->isEnabled();
+            $result[$index] = !empty($paymentMethod) && $paymentMethod->isEnabled();
+
+            if ($order) {
+                $result[$index] = $paymentMethod->getProcessor()->isApplicable($order, $paymentMethod);
+            }
         }
 
-        return $result;
+        return $result[$index];
     }
 
     /**
