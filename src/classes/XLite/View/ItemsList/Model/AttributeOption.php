@@ -159,6 +159,16 @@ class AttributeOption extends \XLite\View\ItemsList\Model\Table
         return $entity;
     }
 
+    /**
+     * Check - pager box is visible or not
+     *
+     * @return boolean
+     */
+    protected function isPagerVisible()
+    {
+        return false;
+    }
+
     // {{{ Search
 
     /**

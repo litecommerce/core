@@ -165,6 +165,16 @@ class Attribute extends \XLite\View\ItemsList\Model\Table
             || 0 < $this->getItemsCount();
     }
 
+    /**
+     * Check - pager box is visible or not
+     *
+     * @return boolean
+     */
+    protected function isPagerVisible()
+    {
+        return false;
+    }
+
     // }}}
 
     /**
