@@ -8,5 +8,15 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-<input id="{getCheckboxId()}" type="checkbox" class="add-to-compare" data-id="{product.product_id}" />
-<label for="{getCheckboxId()}">{t(#Compare#)}</label>
+<div class="add-to-compare">
+  <div class="compare-popup">
+    <div class="compare-checkbox">
+      <input id="{getCheckboxId(product.product_id)}" type="checkbox" data-id="{product.product_id}" />
+      <label for="{getCheckboxId(product.product_id)}">{t(#Compare#)}</label>
+    </div>
+    <div class="compare-button">
+      <span class="compare-products-selected">{getTitle()}</span>
+      <widget class="\XLite\View\Button\Link" location="{buildURL(#product_comparison#)}" label="Compare" style="action" />
+    </div>
+  </div>
+</div>

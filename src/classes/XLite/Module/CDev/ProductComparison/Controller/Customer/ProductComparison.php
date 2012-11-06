@@ -46,10 +46,12 @@ class ProductComparison extends \XLite\Controller\Customer\ACustomer
     protected function doActionDelete()
     {
         $id = \XLite\Core\Request::getInstance()->product_id;
+        \XLite\Module\CDev\ProductComparison\Core\Data::getInstance()->deleteProductId($id);
         \XLite\Core\Event::updateProductComparison(
             array(
                 'productId' => $id,
-                'action'    => 'delete'
+                'action'    => 'delete',
+                'title'     => $this->getTitle()
             )
         );
     }
@@ -62,11 +64,29 @@ class ProductComparison extends \XLite\Controller\Customer\ACustomer
     protected function doActionAdd()
     {
         $id = \XLite\Core\Request::getInstance()->product_id;
+        \XLite\Module\CDev\ProductComparison\Core\Data::getInstance()->addProductId($id);
         \XLite\Core\Event::updateProductComparison(
             array(
                 'productId' => $id,
-                'action'    => 'add'
+                'action'    => 'add',
+                'title'     => $this->getTitle()
             )
         );
     }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return static::t(
+            'X products selected',
+            array(
+                'count' => \XLite\Module\CDev\ProductComparison\Core\Data::getInstance()->getProductsCount()
+            )
+        );
+    }
+
 }

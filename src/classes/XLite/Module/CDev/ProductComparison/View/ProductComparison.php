@@ -58,7 +58,7 @@ class ProductComparison extends \XLite\View\SideBarBox
         return static::t(
             'Compare X products',
             array(
-                'count' => date('h:i:s', time()) 
+                'count' => \XLite\Module\CDev\ProductComparison\Core\Data::getInstance()->getProductsCount()
             )
         );
     }

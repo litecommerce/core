@@ -40,15 +40,28 @@ abstract class AAddToCompare extends \XLite\View\Container
     protected $checkboxId;
 
     /**
+     * Product id 
+     *
+     * @var string
+     */
+    protected $productId;
+
+    /**
      * Get checkbox id
+     *
+     * @param integer $productId Product id
      *
      * @return string
      */
-    public function getCheckboxId()
+    public function getCheckboxId($productId)
     {
-        if (!isset($this->checkboxId)) {
-            $this->checkboxId = 'product' . rand();
+        if (
+            !isset($this->checkboxId)
+            || $productId != $this->productId
+        ) {
+            $this->checkboxId = 'product' . rand() . $productId;
         };
+        $this->productId = $productId;
 
         return $this->checkboxId;
     }
@@ -91,5 +104,20 @@ abstract class AAddToCompare extends \XLite\View\Container
     protected function getDefaultTemplate()
     {
         return $this->getDir() . '/body.tpl';
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return static::t(
+            'X products selected',
+            array(
+                'count' => \XLite\Module\CDev\ProductComparison\Core\Data::getInstance()->getProductsCount()
+            )
+        );
     }
 }

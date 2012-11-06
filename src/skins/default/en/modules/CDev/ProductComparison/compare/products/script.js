@@ -22,8 +22,30 @@ core.bind(
         if (isSuccess) {
 
           var o = this;
+
+          jQuery('div.product').mouseover(
+            function() {
+              jQuery(this).addClass('compare');
+            }
+          ).mouseout(
+            function() {
+              jQuery(this).removeClass('compare');
+            }
+          );
     
-          jQuery('.add-to-compare').not('.binded').each(
+          jQuery('div.compare-checkbox').mouseover(
+            function() {
+              jQuery(this).parent().addClass('visible');
+            }
+          );
+
+          jQuery('div.compare-popup').mouseleave(
+            function() {
+              jQuery(this).removeClass('visible');
+            }
+          );
+    
+          jQuery('.compare-checkbox input').not('.binded').each(
             function() {
               var pr = jQuery(this);
               pr.change(
@@ -58,8 +80,9 @@ core.bind(
 
                     } else {
                       pr.removeAttr('checked');
-                    }  
+                    } 
                   }
+                  pr.parent().parent().find('.compare-products-selected').text(data.title);
                 }
               );
             }
