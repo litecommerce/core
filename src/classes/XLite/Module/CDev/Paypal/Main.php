@@ -133,7 +133,9 @@ abstract class Main extends \XLite\Module\AModule
 
     /**
      * Returns true if ExpressCheckout payment is enabled 
-     * 
+     *
+     * @param \XLite\Model\Cart $order Cart object OPTIONAL
+     *
      * @return boolean
      */
     public static function isExpressCheckoutEnabled($order = null)
@@ -152,7 +154,7 @@ abstract class Main extends \XLite\Module\AModule
                 );
             $result[$index] = !empty($paymentMethod) && $paymentMethod->isEnabled();
 
-            if ($order) {
+            if ($order && $result[$index]) {
                 $result[$index] = $paymentMethod->getProcessor()->isApplicable($order, $paymentMethod);
             }
         }
