@@ -121,7 +121,7 @@ class Attribute extends \XLite\Model\Base\I18n
      *
      * @Column (type="fixedstring", length=1)
      */
-    protected $type = self::TYPE_NUMBER;
+    protected $type = self::TYPE_TEXT;
 
     /**
      * Constructor
@@ -157,8 +157,8 @@ class Attribute extends \XLite\Model\Base\I18n
     public static function getTypes($type = null)
     {
         $list = array(
-            self::TYPE_NUMBER   => 'Number',
             self::TYPE_TEXT     => 'Text',
+            self::TYPE_NUMBER   => 'Number',
             self::TYPE_CHECKBOX => 'Checkbox',
             self::TYPE_SELECT   => 'Select',
         );
@@ -234,9 +234,16 @@ class Attribute extends \XLite\Model\Base\I18n
      */
     public function getDefaultValue()
     {
-        return self::TYPE_CHECKBOX == $this->type
-            ? (boolean)$this->defaultValue
-            : $this->defaultValue;
+        $value = $this->defaultValue;
+        if (self::TYPE_NUMBER == $this->type) {
+            $value = (float)$value;
+
+        } elseif (self::TYPE_CHECKBOX == $this->type) {
+            $value = (boolean)$value;
+
+        }
+       
+        return $value; 
     }
 
     /**

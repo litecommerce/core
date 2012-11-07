@@ -15,7 +15,7 @@ input.combobox {
 }
 
 div.combobox-select {
-  background: transparent url(../images/arrows-select.png) center center no-repeat;
+  background: transparent url(../../../images/arrows-select.png) center center no-repeat;
   width: 21px;
   height: 21px;
   float: left;
