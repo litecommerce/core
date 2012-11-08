@@ -179,7 +179,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @param array $items Items
      *  
-     * @return array
+     * @return float
      */
     public function calculate(array $items)
     {
@@ -193,6 +193,27 @@ class Rate extends \XLite\Model\AEntity
 
         return $cost;
     }
+
+    /**
+     * Calculate shipping tax cost
+     * 
+     * @param float $shippingCost Shipping cost
+     *  
+     * @return float
+     */
+    public function calculateShippingTax($shippingCost)
+    {
+        $cost = 0;
+
+        if ($shippingCost) {
+            $cost = $this->getType() == static::TYPE_PERCENT
+                ? $shippingCost * $this->getValue() / 100
+                : $this->getValue();
+        }
+
+        return $cost;
+    }
+
 
     /**
      * Get basis 
