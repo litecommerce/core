@@ -122,4 +122,15 @@ class Attributes extends \XLite\View\AView
         return 0 < \XLite\Core\Database::getRepo('XLite\Model\Attribute')->count();
     }
 
+    /**
+     * Check - list box is visible or not
+     * 
+     * @return boolean
+     */
+    protected function isListVisible()
+    {
+        return $this->getProductClass()->getAttributesCount()
+            || $this->getProductClass()->getAttributeGroups()->count();
+    }
+
 }
