@@ -52,7 +52,7 @@ class Attributes extends \XLite\View\Product\Details\AAttributes
                 if ($value) {
                     $this->attributes[] = array(
                         'name'  => $a->getName(),
-                        'value' => $value,
+                        'value' => htmlentities($value),
                         'class' => $this->getFieldClass($a, $value)
                     );
                 }

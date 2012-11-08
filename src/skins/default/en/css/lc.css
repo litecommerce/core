@@ -1258,6 +1258,7 @@ div.product-details .continue-button-intend
 {
   display: inline-block;
   color: #1f1f1f;
+  vertical-align: bottom;
 }
 
 .product-details .extra-fields li span.checkbox.no-checked 
@@ -1267,7 +1268,7 @@ div.product-details .continue-button-intend
 
 .product-details .extra-fields li div
 {
-  width: 186px;
+  width: 246px;
   display: inline-block;
   color: #7e7e7e;
   background: url(../images/dotted.png) repeat-x scroll 0 bottom transparent;
@@ -1276,7 +1277,7 @@ div.product-details .continue-button-intend
 
 .product-details .extra-fields li ul li div
 {
-  width: 166px;
+  width: 226px;
 }
 
 .product-details .extra-fields li ul li
