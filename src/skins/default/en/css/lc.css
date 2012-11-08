@@ -1259,6 +1259,7 @@ div.product-details .continue-button-intend
   display: inline-block;
   color: #1f1f1f;
   vertical-align: bottom;
+  max-width: 700px;
 }
 
 .product-details .extra-fields li span.checkbox.no-checked 

@@ -51,3 +51,7 @@
 .table-label.checkbox {
   float: right;
 }
+
+.table-value .main-button {
+  line-height: 14px;
+}
