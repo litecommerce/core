@@ -14,4 +14,8 @@
 <widget class="\XLite\View\Button\Submit" style="manage-groups" label="{t(#Manage groups#)}" />
 </div>
 
+{if:productClass.getAttributesCount()}
 <widget template="common/dialog.tpl" body="attributes/list.tpl" />
+{else:}
+{t(#No attributes are defined for the product class yet.#)}
+{end:}
