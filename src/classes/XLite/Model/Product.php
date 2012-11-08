@@ -616,4 +616,21 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
 
         return $result;
     }
+
+    /**
+     * Return number of attributes associated with this product 
+     *
+     * @return integer
+     */
+    public function getAttributesCount()
+    {
+        $count = 0;
+        if ($this->getClasses()) {
+            foreach ($this->getClasses() as $class) {
+                $count += $class->getAttributesCount();
+            }
+        }
+
+        return $count;
+    }
 }

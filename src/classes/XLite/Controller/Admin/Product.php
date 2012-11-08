@@ -99,7 +99,7 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         if (!$this->isNew()) {
             $list['images']    = 'Product images';
             $list['inventory'] = 'Inventory tracking';
-            if ($this->getProduct()->getClasses()->count()) {
+            if ($this->getProduct()->getAttributesCount()) {
                 $list['attributes'] = 'Attributes';
             }
         }
@@ -121,7 +121,7 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         if (!$this->isNew()) {
             $list['images']    = 'product/product_images.tpl';
             $list['inventory'] = 'product/inventory.tpl';
-            if ($this->getProduct()->getClasses()->count()) {
+            if ($this->getProduct()->getAttributesCount()) {
                 $list['attributes'] = 'product/attributes.tpl';
             }
         }

@@ -320,6 +320,7 @@ class Attribute extends \XLite\Model\Base\I18n
         }
 
         if (self::TYPE_SELECT == $this->getType()) {
+            $value = trim($value);
             if ($value) {
                 $attributeOption = \XLite\Core\Database::getRepo('XLite\Model\AttributeOption')
                     ->findOneByNameAndAttribute($value, $this);

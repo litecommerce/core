@@ -26,6 +26,6 @@
     <label for="attrSepTab" class="separ-tab">{t(#Show product attributes in a separate tab#)}</label>
   </div>
   <div class="table-value">
-  <widget class="\XLite\View\Button\Submit" label="{t(#Save#)}" style="action" />
+  <widget class="\XLite\View\Button\Submit" label="{t(#Save#)}" style="main-button" />
   </div>
 <widget name="update_attributes_form" end />
