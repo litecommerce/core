@@ -75,6 +75,9 @@ abstract class AAddressBlock extends \XLite\View\AView
 
                 }
             }
+        } else {
+
+            $result = \XLite\Model\Address::getDefaultFieldPlainValue($fieldName);
         }
 
         return $result;

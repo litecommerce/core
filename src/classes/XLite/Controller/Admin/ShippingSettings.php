@@ -60,8 +60,7 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
     public function doActionUpdate()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
-        $options    = \XLite\Core\Database::getRepo('\XLite\Model\Config')
-            ->findBy(array('category' => $this->getOptionsCategory()));
+        $options    = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findBy(array('category' => $this->getOptionsCategory()));
         $isUpdated  = false;
 
         foreach ($options as $key => $option) {
@@ -105,6 +104,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      */
     protected function getOptionsCategory()
     {
-        return 'Shipping';
+        return \XLite\Model\Config::SHIPPING_CATEGORY;
     }
 }

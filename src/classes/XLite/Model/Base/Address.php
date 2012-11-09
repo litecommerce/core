@@ -165,7 +165,9 @@ abstract class Address extends \XLite\Model\AEntity
      */
     public function getStateId()
     {
-        return $this->getState() ? $this->getState()->getStateId() : null;
+        return $this->getState()
+            ? ($this->getState()->getStateId() ?: static::getDefaultFieldPlainValue('state_id'))
+            : static::getDefaultFieldPlainValue('state_id');
     }
 
     /**
@@ -175,7 +177,9 @@ abstract class Address extends \XLite\Model\AEntity
      */
     public function getCountryCode()
     {
-        return $this->getCountry() ? $this->getCountry()->getCode() : null;
+        return $this->getCountry()
+            ? ($this->getCountry()->getCode() ?: static::getDefaultFieldPlainValue('country_code'))
+            : static::getDefaultFieldPlainValue('country_code');
     }
 
     /**
@@ -196,6 +200,52 @@ abstract class Address extends \XLite\Model\AEntity
     public function getStateName()
     {
         return $this->getState()->getState();
+    }
+
+    /**
+     * Return default field value
+     *
+     * @param string $fieldName Field name
+     *
+     * @return string
+     */
+    public static function getDefaultFieldPlainValue($fieldName)
+    {
+        $field = \XLite\Core\Database::getRepo('\XLite\Model\Config')
+            ->findOneBy(array(
+                'category'  => \XLite\Model\Config::SHIPPING_CATEGORY,
+                'name'      => static::getDefaultFieldName($fieldName)
+            ));
+
+        return $field ? $field->getValue() : '';
+    }
+
+    /**
+     * Return name of the address field in the default shipping category of the settings
+     *
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    protected static function getDefaultFieldName($fieldName)
+    {
+        $result = \XLite\Model\Config::SHIPPING_VALUES_PREFIX;
+
+        switch ($fieldName) {
+            case 'country_code':
+                $result .= 'country';
+                break;
+
+            case 'state_id':
+                $result .= 'state';
+                break;
+
+            default:
+                $result .= $fieldName;
+                break;
+        }
+
+        return $result;
     }
 
     /**

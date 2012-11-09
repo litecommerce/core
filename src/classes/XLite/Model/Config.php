@@ -43,6 +43,16 @@ namespace XLite\Model;
 class Config extends \XLite\Model\Base\I18n
 {
     /**
+     * Name for the Shipping category options
+     */
+    const SHIPPING_CATEGORY = 'Shipping';
+
+    /**
+     * Prefix for the shipping values
+     */
+    const SHIPPING_VALUES_PREFIX = 'anonymous_';
+
+    /**
      * Option unique name
      *
      * @var string

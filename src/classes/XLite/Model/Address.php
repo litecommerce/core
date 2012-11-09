@@ -155,7 +155,9 @@ class Address extends \XLite\Model\Base\PersonalAddress
                         'addressField'  => $addressField->getId(),
                     ));
 
-                $result = $addressFieldValue ? $addressFieldValue->getValue() : '';
+                $result = $addressFieldValue
+                    ? $addressFieldValue->getValue()
+                    : static::getDefaultFieldPlainValue($property);
             }
         }
 
