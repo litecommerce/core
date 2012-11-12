@@ -240,6 +240,10 @@ abstract class Address extends \XLite\Model\AEntity
                 $result .= 'state';
                 break;
 
+            case 'street':
+                $result .= 'address';
+                break;
+
             default:
                 $result .= $fieldName;
                 break;

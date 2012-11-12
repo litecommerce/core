@@ -63,7 +63,7 @@ abstract class AAddressBlock extends \XLite\View\AView
 
                 switch ($fieldName) {
 
-                      case 'state_id':
+                    case 'state_id':
                         $result = $address->getState()->getState();
                         break;
 
