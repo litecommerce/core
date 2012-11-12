@@ -23,6 +23,8 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid) {
       }
     }
   );
+
+  jQuery('.ajax-container-loadable form.attribute', this.base).commonController('submitOnlyChanged', false); 
 }
 
 jQuery().ready(
@@ -42,7 +44,7 @@ jQuery().ready(
         );
       }
     );
-    jQuery('button.new-attribute, button.edit-attribute').click(
+    jQuery('button.new-attribute, a.edit-attribute').click(
       function () {
         return !popup.load(
           URLHandler.buildURL({

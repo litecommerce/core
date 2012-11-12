@@ -10,6 +10,6 @@
  *}
 
 <div data-class-id="{productClass.getId()}" data-id="{entity.getId()}" />
-<widget class="\XLite\View\Button\Submit" style="edit-attribute" label="{t(#Edit attribute#)}" />
+<a href="javascript: void(0);" class="edit-attribute" label="{t(#Edit attribute#)}"><span>{t(#Edit attribute#)}</span></a>
 {t(entity.getTypes(entity.getType()))}
 </div>
