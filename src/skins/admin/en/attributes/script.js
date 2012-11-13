@@ -18,8 +18,10 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid) {
     function () {
       if (jQuery(this).data('value') == jQuery(this).val()) {
         jQuery('.select-attributetypes .form-field-comment').hide();
+        jQuery('li.custom-field').show();
       } else {
         jQuery('.select-attributetypes .form-field-comment').show();
+        jQuery('li.custom-field').hide();
       }
     }
   );
