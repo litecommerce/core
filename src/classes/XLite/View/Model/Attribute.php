@@ -172,7 +172,7 @@ class Attribute extends \XLite\View\Model\AModel
     {
         $result = parent::getFormButtons();
 
-        $label = $this->getModelObject()->getId() ? 'Save changes' : 'New attribute';
+        $label = $this->getModelObject()->getId() ? 'Save changes' : 'Next';
 
         $result['submit'] = new \XLite\View\Button\Submit(
             array(
