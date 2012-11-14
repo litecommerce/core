@@ -73,6 +73,10 @@ class Attribute extends \XLite\View\Model\AModel
     {
         if ($this->getModelObject()->getId()) {
             $this->schemaDefault['type'][self::SCHEMA_COMMENT] = 'Before editing attriubutes specific for the chosen type you should save the changes';
+    
+            if ($this->getModelObject()->getAttributeValuesCount()) {
+                $this->schemaDefault['type'][self::SCHEMA_COMMENT] .= '<br />There are products using this attribute!';
+            }
 
             if (
                 \XLite\Model\Attribute::TYPE_NUMBER == $this->getModelObject()->getType()
