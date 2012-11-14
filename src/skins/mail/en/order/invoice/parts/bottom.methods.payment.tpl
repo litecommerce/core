@@ -11,6 +11,7 @@
  * @ListChild (list="invoice.bottom.methods", weight="20")
  *}
 <td class="payment" IF="order.getVisiblePaymentMethods()">
+  <br />
   <strong>{t(#Payment method#)}:</strong>
   {foreach:order.getVisiblePaymentMethods(),m}
     {m.getName():h}<br />

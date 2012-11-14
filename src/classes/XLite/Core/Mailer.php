@@ -255,7 +255,10 @@ class Mailer extends \XLite\Base\Singleton
         static::compose(
             \XLite\Core\Config::getInstance()->Company->orders_department,
             $order->getProfile()->getLogin(),
-            'order_created'
+            'order_created',
+            array(),
+            true,
+            \XLite::MAIL_INTERFACE
         );
 
         \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
@@ -275,7 +278,10 @@ class Mailer extends \XLite\Base\Singleton
         static::compose(
             \XLite\Core\Config::getInstance()->Company->site_administrator,
             \XLite\Core\Config::getInstance()->Company->orders_department,
-            'order_created_admin'
+            'order_created_admin',
+            array(),
+            true,
+            \XLite::MAIL_INTERFACE
         );
 
         \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
@@ -315,7 +321,10 @@ class Mailer extends \XLite\Base\Singleton
         static::compose(
             \XLite\Core\Config::getInstance()->Company->site_administrator,
             \XLite\Core\Config::getInstance()->Company->orders_department,
-            'order_processed'
+            'order_processed',
+            array(),
+            true,
+            \XLite::MAIL_INTERFACE
         );
 
         \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
@@ -336,7 +345,10 @@ class Mailer extends \XLite\Base\Singleton
             static::compose(
                 \XLite\Core\Config::getInstance()->Company->site_administrator,
                 $order->getProfile()->getLogin(),
-                'order_processed'
+                'order_processed',
+                array(),
+                true,
+                \XLite::MAIL_INTERFACE
             );
 
             \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
@@ -377,7 +389,10 @@ class Mailer extends \XLite\Base\Singleton
         static::compose(
             \XLite\Core\Config::getInstance()->Company->site_administrator,
             \XLite\Core\Config::getInstance()->Company->orders_department,
-            'order_failed'
+            'order_failed',
+            array(),
+            true,
+            \XLite::MAIL_INTERFACE
         );
 
         \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
@@ -398,7 +413,10 @@ class Mailer extends \XLite\Base\Singleton
             static::compose(
                 \XLite\Core\Config::getInstance()->Company->orders_department,
                 $order->getProfile()->getLogin(),
-                'order_failed'
+                'order_failed',
+                array(),
+                true,
+                \XLite::MAIL_INTERFACE
             );
 
             \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
@@ -507,17 +525,18 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Compose and send wrapper for \XLite\View\Mailer::compose()
      *
-     * @param string  $from          ____param_comment____
-     * @param string  $to            ____param_comment____
-     * @param string  $dir           ____param_comment____
-     * @param array   $customHeaders ____param_comment____ OPTIONAL
-     * @param boolean $doSend        ____param_comment____ OPTIONAL
+     * @param string  $from          Email FROM
+     * @param string  $to            Email TO
+     * @param string  $dir           Directory where mail templates are located
+     * @param array   $customHeaders Array of custom mail headers OPTIONAL
+     * @param boolean $doSend        Flag: if true - send email immediately OPTIONAL
+     * @param string  $mailInterface Intarface to compile mail templates (skin name: customer, admin or mail) OPTIONAL
      *
      * @return void
      */
-    protected static function compose($from, $to, $dir, $customHeaders = array(), $doSend = true)
+    protected static function compose($from, $to, $dir, $customHeaders = array(), $doSend = true, $mailInterface = \XLite::CUSTOMER_INTERFACE)
     {
-        static::getMailer()->compose($from, $to, $dir, $customHeaders, static::$mailInterface);
+        static::getMailer()->compose($from, $to, $dir, $customHeaders, $mailInterface);
 
         if ($doSend) {
 
