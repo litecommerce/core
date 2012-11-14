@@ -27,7 +27,7 @@ return function()
 {
     // Store the profiles into the temporary YAML file
     \Includes\Utils\Operator::saveServiceYAML(
-        LC_DIR_TMP . 'temporary.storage.profiles.yaml',
+        LC_DIR_VAR . 'temporary.storage.profiles.yaml',
         array_map(
             function ($address) {
                 return array(

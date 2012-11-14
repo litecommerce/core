@@ -33,7 +33,7 @@ return function()
     }
 
     // Import profile addresses from the temporary YAML file storage
-    $yamlProfileStorageFile = LC_DIR_TMP . 'temporary.storage.profiles.yaml';
+    $yamlProfileStorageFile = LC_DIR_VAR . 'temporary.storage.profiles.yaml';
 
     foreach (\Includes\Utils\Operator::loadServiceYAML($yamlProfileStorageFile) as $address) {
 
