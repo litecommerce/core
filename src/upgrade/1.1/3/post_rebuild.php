@@ -37,15 +37,13 @@ return function()
 
     foreach (\Includes\Utils\Operator::loadServiceYAML($yamlProfileStorageFile) as $address) {
 
-        $_address = array();
-        $_address['profile'] = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($address['profile_id']);
-
+        $address['profile'] = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($address['profile_id']);
         $address['country'] = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCode($address['country_code']);
         $address['state']   = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state_id']);
 
         unset($address['profile_id'], $address['state_id'], $address['country_code']);
 
-        $entity = new \XLite\Model\Address($_address);
+        $entity = new \XLite\Model\Address($address);
 
         $entity->create();
 
