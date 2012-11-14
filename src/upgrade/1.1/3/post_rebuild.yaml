@@ -7,3 +7,14 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 
+XLite\Model\AddressField:
+  - { serviceName: title,         additional: false, required: false, translations: [{ code: en, name: Title }], schemaClass: \XLite\View\FormField\Select\Title }
+  - { serviceName: firstname,     additional: false, required: true,  translations: [{ code: en, name: First name }] }
+  - { serviceName: lastname,      additional: false, required: true,  translations: [{ code: en, name: Last name }] }
+  - { serviceName: street,        additional: false, required: true,  translations: [{ code: en, name: Address }] }
+  - { serviceName: city,          additional: false, required: true,  translations: [{ code: en, name: City }] }
+  - { serviceName: country_code,  additional: false, required: true,  translations: [{ code: en, name: Country }], schemaClass: \XLite\View\FormField\Select\Country, viewGetterName: country_name }
+  - { serviceName: state_id,      additional: false, required: true,  translations: [{ code: en, name: State }], schemaClass: \XLite\View\FormField\Select\State, viewGetterName: state_name }
+  - { serviceName: custom_state,  additional: false, required: false, translations: [{ code: en, name: State }], viewGetterName: state_name }
+  - { serviceName: zipcode,       additional: false, required: true,  translations: [{ code: en, name: Zip code }] }
+  - { serviceName: phone,         additional: false, required: true,  translations: [{ code: en, name: Phone }] }
