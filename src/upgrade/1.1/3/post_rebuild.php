@@ -37,18 +37,21 @@ return function()
 
     foreach (\Includes\Utils\Operator::loadServiceYAML($yamlProfileStorageFile) as $address) {
 
-        $address['profile'] = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($address['profile_id']);
-        $address['country'] = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCode($address['country_code']);
-        $address['state']   = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state_id']);
+        $entity = \XLite\Core\Database::getRepo('XLite\Model\Address')
+            ->findOneBy(array(
+                'address_id' => $address['address_id'],
+                'profile'    => $address['profile_id'],
+                )
+            );
+
+        $entity->setProfile(\XLite\Core\Database::getRepo('XLite\Model\Profile')->find($address['profile_id']));
+        $entity->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCode($address['country_code']));
+        $entity->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state_id']));
 
         unset($address['profile_id'], $address['state_id'], $address['country_code']);
-
-        $entity = new \XLite\Model\Address($address);
-
-        $entity->create();
-
         $entity->map($address);
 
+        $entity->update();
         \XLite\Core\Database::getEM()->flush($entity);
     }
 

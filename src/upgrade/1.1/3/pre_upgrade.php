@@ -31,6 +31,7 @@ return function()
         array_map(
             function ($address) {
                 return array(
+                    'address_id'    => $address->getAddressId(),
                     'profile_id'    => $address->getProfile()->getProfileId(),
                     'title'         => $address->getTitle(),
                     'firstname'     => $address->getFirstname(),
