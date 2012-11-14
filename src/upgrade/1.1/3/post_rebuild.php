@@ -26,14 +26,14 @@
 return function()
 {
     // Loading data to the database from yaml file
-    $yamlFile = LC_DIR_TMP . 'post_rebuild.yaml';
+    $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
 
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
         \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
     }
 
     // Import profile addresses from the temporary YAML file storage
-    $yamlProfileStorageFile = __DIR__ . LC_DS . 'temporary.storage.profiles.yaml';
+    $yamlProfileStorageFile = LC_DIR_TMP . 'temporary.storage.profiles.yaml';
 
     foreach (\Includes\Utils\Operator::loadServiceYAML($yamlProfileStorageFile) as $address) {
 
