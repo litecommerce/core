@@ -169,6 +169,20 @@ class Attribute extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Return values associated with this attribute
+     *
+     * @return mixed
+     */
+    public function getAttributeValues()
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->attribute = $this;
+
+        return \XLite\Core\Database::getRepo($this->getAttributeValueClass())
+            ->search($cnd);
+    }
+
+    /**
      * Return number of values associated with this attribute
      *
      * @return integer
@@ -201,6 +215,9 @@ class Attribute extends \XLite\Model\Base\I18n
                 $this->setDefaultValue($this->defaultValue);
                 foreach ($this->getAttributeOptions() as $option) {
                     \XLite\Core\Database::getEM()->remove($option);
+                }
+                foreach ($this->getAttributeValues() as $value) {
+                    \XLite\Core\Database::getEM()->remove($value);
                 }
             }
             $this->type = $type;

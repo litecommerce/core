@@ -204,6 +204,7 @@ div.group table.list th.actions.left {
   width: auto;
   margin-left: 10px;
   float: left;
+  max-width: 440px;
 }
 
 .ajax-container-loadable .model-properties div.table-value.values-value {
@@ -221,13 +222,14 @@ div.group table.list th.actions.left {
 }
 
 .ajax-container-loadable .select-attributetypes div.table-value .form-field-comment {
-  background: url("../images/icon_warning_round.png") no-repeat scroll 20px center transparent;
-  padding-left: 50px;
+  background: url("../images/icon_warning_round.png") no-repeat scroll 0px center transparent;
+  padding-left: 30px;
   color: #456583;
   float: left;
   display: none;
-  line-height: 12px;
-  max-width: 300px;
+  line-height: 14px;
+  width: 360px;
+  margin-top: 25px;
 }
 
 .ajax-container-loadable div.table-value .form-field-comment {
