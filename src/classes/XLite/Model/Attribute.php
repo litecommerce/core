@@ -211,6 +211,7 @@ class Attribute extends \XLite\Model\Base\I18n
             if (
                 $this->type
                 && $type != $this->type
+                && $this->getId()
             ) {
                 $this->setDefaultValue($this->defaultValue);
                 foreach ($this->getAttributeOptions() as $option) {
