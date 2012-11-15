@@ -50,14 +50,15 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Available field types
      */
-    const FIELD_TYPE_LABEL     = 'label';
-    const FIELD_TYPE_TEXT      = 'text';
-    const FIELD_TYPE_PASSWORD  = 'password';
-    const FIELD_TYPE_SELECT    = 'select';
-    const FIELD_TYPE_CHECKBOX  = 'checkbox';
-    const FIELD_TYPE_RADIO     = 'radio';
-    const FIELD_TYPE_TEXTAREA  = 'textarea';
-    const FIELD_TYPE_SEPARATOR = 'separator';
+    const FIELD_TYPE_LABEL      = 'label';
+    const FIELD_TYPE_TEXT       = 'text';
+    const FIELD_TYPE_PASSWORD   = 'password';
+    const FIELD_TYPE_SELECT     = 'select';
+    const FIELD_TYPE_CHECKBOX   = 'checkbox';
+    const FIELD_TYPE_RADIO      = 'radio';
+    const FIELD_TYPE_TEXTAREA   = 'textarea';
+    const FIELD_TYPE_SEPARATOR  = 'separator';
+    const FIELD_TYPE_ITEMS_LIST = 'itemsList';
 
     /**
      * name

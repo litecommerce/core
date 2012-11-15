@@ -10,4 +10,8 @@
  *
  * @ListChild (list="invoice.base", weight="60")
  *}
+
+<br />
+<br />
+
 <div class="thank-you">{t(#Thank you for your order FOOTER#):h}</div>

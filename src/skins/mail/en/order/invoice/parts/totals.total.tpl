@@ -10,7 +10,7 @@
  *
  * @ListChild (list="invoice.base.totals", weight="300")
  *}
-<tr class="total">
-  <td class="title">{t(#Grand total#)}:</td>
-  <td class="value">{formatPrice(order.getTotal(),order.getCurrency())}</td>
+<tr bgcolor="grey">
+  <td class="title"><strong>{t(#Grand total#)}:</strong></td>
+  <td align="right"><strong>{formatPrice(order.getTotal(),order.getCurrency())}</strong></td>
 </tr>

@@ -18,11 +18,9 @@
  * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.18
  */
 
 define('MACRO_START_DIR', getcwd());
@@ -52,8 +50,6 @@ if (isset($options['h']) || isset($options['help'])) {
  * @param string $msg Error message
  *  
  * @return void
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_error($msg)
 {
@@ -67,8 +63,6 @@ function macro_error($msg)
  * @param string $name Name
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_get_named_argument($name)
 {
@@ -83,8 +77,6 @@ function macro_get_named_argument($name)
  * @param integer $number Index
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_get_plain_argument($number)
 {
@@ -97,8 +89,6 @@ function macro_get_plain_argument($number)
  * @param string $path Path
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_convert_path_to_class_name($path)
 {
@@ -111,8 +101,6 @@ function macro_convert_path_to_class_name($path)
  * @param string $class Class name
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_convert_class_name_to_path($class)
 {
@@ -126,8 +114,6 @@ function macro_convert_class_name_to_path($class)
  * @param string $data File content
  *  
  * @return void
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_file_put_contents($path, $data)
 {
@@ -146,8 +132,6 @@ function macro_file_put_contents($path, $data)
  * @param string $path path
  *  
  * @return boolean
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_is_entity($path)
 {
@@ -162,8 +146,6 @@ function macro_is_entity($path)
  * @param string $moduleName   Module name OPTIONAL
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.24
  */
 function macro_assemble_class_name($suffix, $moduleAuthor = null, $moduleName = null)
 {
@@ -180,8 +162,6 @@ function macro_assemble_class_name($suffix, $moduleAuthor = null, $moduleName = 
  * @param string $moduleName   Module name OPTIONAL
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.24
  */
 function macro_assemble_tpl_name($suffix, $moduleAuthor = null, $moduleName = null)
 {
@@ -196,8 +176,6 @@ function macro_assemble_tpl_name($suffix, $moduleAuthor = null, $moduleName = nu
  * @param string $class Class full name
  *
  * @return string
- * @see    ____func_see____
- * @since  1.0.24
  */
 function macro_get_class_short_name($class)
 {
@@ -212,8 +190,6 @@ function macro_get_class_short_name($class)
  * @param string $camel Camel case string
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.24
  */
 function macro_convert_camel_to_human_readable($camel)
 {
@@ -233,8 +209,6 @@ function macro_convert_camel_to_human_readable($camel)
  * @param string &$path Path
  *  
  * @return void
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_check_file_path(&$path)
 {
@@ -255,8 +229,6 @@ function macro_check_file_path(&$path)
  * @param string $path Path
  *  
  * @return void
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_check_class_file_path($path)
 {
@@ -273,8 +245,6 @@ function macro_check_class_file_path($path)
  * @param string &$class Class
  *
  * @return void
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_check_class(&$class)
 {
@@ -290,8 +260,6 @@ function macro_check_class(&$class)
  * @param string $module Name
  *  
  * @return void
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_check_module($author, $module)
 {
@@ -315,8 +283,6 @@ function macro_check_module($author, $module)
  * @param string $path Path
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_get_file_header($path)
 {
@@ -341,11 +307,9 @@ function macro_get_file_header($path)
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 
@@ -358,8 +322,6 @@ HEAD;
  * @param string $path Path
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_get_class_repo_header($path)
 {
@@ -381,8 +343,6 @@ HEAD;
  * @param string $path Path
  *  
  * @return string
- * @see    ____func_see____
- * @since  1.0.18
  */
 function macro_get_class_header($path)
 {
@@ -396,8 +356,6 @@ function macro_get_class_header($path)
 /**
  * Abstract widget
  *
- * @see   ____class_see____
- * @since 1.0.0
  */
 HEAD;
     }

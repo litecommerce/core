@@ -45,6 +45,16 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $id;
 
+    /**
+     * Position
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $position = 0;
 
     /**
      * Products
@@ -55,7 +65,6 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $products;
 
-
     /**
      * Shipping methods
      *
@@ -65,6 +74,24 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $shipping_methods;
 
+    /**
+     * Attributes 
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @OneToMany (targetEntity="XLite\Model\Attribute", mappedBy="product_class", cascade={"all"})
+     */
+    protected $attributes;
+
+    /**
+     * Attribute groups 
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @OneToMany (targetEntity="XLite\Model\AttributeGroup", mappedBy="product_class", cascade={"all"})
+     * @OrderBy   ({"position" = "ASC"})
+     */
+    protected $attribute_groups;
 
     /**
      * Constructor
@@ -77,7 +104,29 @@ class ProductClass extends \XLite\Model\Base\I18n
     {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->shipping_methods = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attribute_groups = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
+    }
+
+    /**
+     * Return number of products associated with this class
+     *
+     * @return integer
+     */
+    public function getProductsCount()
+    {
+        return count($this->getProducts());
+    }
+
+    /**
+     * Return number of attributes associated with this class
+     *
+     * @return integer
+     */
+    public function getAttributesCount()
+    {
+        return count($this->getAttributes());
     }
 }

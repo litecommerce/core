@@ -1646,6 +1646,10 @@ div.table-label {
   width: 80px;
 }
 
+.model-properties ul.table li.itemslist div.table-value {
+  width: 100%;
+}
+
 div.star {
   width: 10px;
   padding: 12px 0px 5px 0px;

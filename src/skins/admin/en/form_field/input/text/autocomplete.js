@@ -18,7 +18,7 @@ CommonForm.elementControllers.push(
         this.autocompleteSource = function(request, response)
         {
           core.get(
-            jQuery(this).data('source-url').replace('%term%', request.term),
+            unescape(jQuery(this).data('source-url')).replace('%term%', request.term),
             null,
             {},
             {

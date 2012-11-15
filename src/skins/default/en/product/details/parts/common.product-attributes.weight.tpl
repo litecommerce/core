@@ -11,6 +11,6 @@
  * @ListChild (list="product.details.common.product-attributes", weight="100")
  *}
 <li IF="!product.weight=0">
-  <strong>{t(#Weight#)}:</strong>
+  <div><strong>{t(#Weight#)}</strong></div>
   <span>{product.weight} {config.General.weight_symbol}</span>
 </li>
