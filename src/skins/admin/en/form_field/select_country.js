@@ -68,6 +68,10 @@ StateSelector.prototype.getParentBlock = function(selector)
   var block = selector.closest('li');
 
   if (!block.length) {
+    block = selector.closest('tr.data-row');
+  }
+
+  if (!block.length) {
     block = selector.closest('div');
   }
 
@@ -120,7 +124,9 @@ StateSelector.prototype.removeOptions = function()
 StateSelector.prototype.addDefaultOptions = function()
 {
   if (this.stateSelectBox) {
-    this.stateSelectBox.get(0).options[0] = new Option('Select one...', '');
+    if (!this.stateSelectBox.hasClass('no-select-one')) {
+      this.stateSelectBox.get(0).options[0] = new Option('Select one...', '');
+    }
     // this.stateSelectBox.get(0).options[1] = new Option('Other', '-1');
   }
 }

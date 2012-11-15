@@ -32,6 +32,40 @@ namespace XLite\View\FormField\Select;
 class State extends \XLite\View\FormField\Select\Regular
 {
     /**
+     * Widget parameters name
+     */
+    const PARAM_HAS_SELECT_ONE = 'hasSelectOne';
+
+    /**
+     * "Select one"
+     *
+     * @return boolean
+     */
+    public function hasSelectOne()
+    {
+        return (bool)$this->getParam(static::PARAM_HAS_SELECT_ONE);
+    }
+
+    /**
+     * Assemble classes
+     *
+     * @param array $classes Classes
+     *
+     * @return array
+     */
+    protected function assembleClasses(array $classes)
+    {
+        $classes = parent::assembleClasses($classes);
+
+        if (!$this->hasSelectOne()) {
+
+            $classes[] = 'no-select-one';
+        }
+
+        return $classes;
+    }
+
+    /**
      * Return field template
      *
      * @return string
@@ -49,5 +83,19 @@ class State extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\State')->findAllStates();
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            static::PARAM_HAS_SELECT_ONE  => new \XLite\Model\WidgetParam\Bool('Has "Select one"', 1),
+        );
     }
 }

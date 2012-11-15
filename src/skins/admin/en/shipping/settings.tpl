@@ -18,29 +18,35 @@
 
     <tbody FOREACH="getOptions(),option">
 
-      <tr IF="option.type=#separator#">
+      <tr class="data-row data-row-separator" IF="option.type=#separator#">
         <td colspan="2" class="admin-title">{option.option_name:h}</td>
       </tr>
 
-      <tr IF="!option.type=#separator#">
+      <tr class="data-row data-row-option" IF="!option.type=#separator#">
+
         <td align="left" width="50%">{option.option_name:h}: </td>
+
         <td style="width:50%;">
 
-        {if:option.type=#checkbox#}
-          <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
-        {end:}
-
-        {if:option.type=#text#}
-          <input id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="30" />
-        {end:}
-
-        {if:option.type=#country#"}
-          <widget class="\XLite\View\CountrySelect" selectOne="false" field="{option.name}" country="{option.value}" fieldId="{option.name}_select" />
-        {end:}
-
-        {if:option.type=#state#"}
-          <widget class="\XLite\View\StateSelect" field="{option.name}" state="{getStateById(option.value)}" fieldId="{option.name}_select" isLinked=1 />
-        {end:}
+        <input IF="option.type=#checkbox#" id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
+        <input IF="option.type=#text#" id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="30" />
+        <widget
+          IF="option.type=#country#"
+          class="\XLite\View\FormField\Select\Country"
+          fieldOnly=true
+          stateSelectorId="anonymous_state_select"
+          stateInputId="anonymous_custom_state"
+          fieldName="{option.name}"
+          value="{option.value}"
+          fieldId="{option.name}_select" />
+        <widget
+          IF="option.type=#state#"
+          class="\XLite\View\FormField\Select\State"
+          fieldOnly=true
+          fieldName="{option.name}"
+          hasSelectOne=false
+          value="{getStateById(option.value)}"
+          fieldId="{option.name}_select" />
 
         </td>
       </tr>

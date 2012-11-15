@@ -134,13 +134,14 @@ class Address extends \XLite\Model\Base\PersonalAddress
     /**
      * Universal getter
      *
-     * @param string $property
+     * @param string  $property
+     * @param boolean $forceDefaultValue
      *
      * @return mixed|null Returns NULL if it is impossible to get the property
      */
-    public function getterProperty($property)
+    public function getterProperty($property, $forceDefaultValue = false)
     {
-        $result = parent::getterProperty($property);
+        $result = parent::getterProperty($property, $forceDefaultValue);
 
         if (is_null($result)) {
 
@@ -157,7 +158,7 @@ class Address extends \XLite\Model\Base\PersonalAddress
 
                 $result = $addressFieldValue
                     ? $addressFieldValue->getValue()
-                    : static::getDefaultFieldPlainValue($property);
+                    : ($forceDefaultValue ? static::getDefaultFieldPlainValue($property) : '');
             }
         }
 

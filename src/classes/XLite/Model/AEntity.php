@@ -201,7 +201,7 @@ abstract class AEntity extends \XLite\Base\SuperClass
 
         $return = 'set' === $matches[1]
             ? $this->setterProperty($property, array_shift($args))
-            : $this->getterProperty($property);
+            : $this->getterProperty($property, array_shift($args));
 
         if (is_null($return)) {
 
@@ -236,11 +236,12 @@ abstract class AEntity extends \XLite\Base\SuperClass
     /**
      * Universal getter
      *
-     * @param string $property
+     * @param string  $property
+     * @param boolean $forceDefaultValue
      *
      * @return mixed|null Returns NULL if it is impossible to get the property
      */
-    public function getterProperty($property)
+    public function getterProperty($property, $forceDefaultValue = false)
     {
         $result = property_exists($this, $property);
 
