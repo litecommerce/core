@@ -135,6 +135,15 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
             );
         }
 
+        if (
+            $this->getProduct()->getAttrSepTab()
+            && $this->getProduct()->getAttributesCount()
+        ) {
+            $list['Specification'] = array(
+                'list' => 'product.details.page.tab.attributes'
+            );
+        }
+
         return $list;
     }
 

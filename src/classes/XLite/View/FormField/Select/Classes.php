@@ -78,7 +78,7 @@ class Classes extends \XLite\View\FormField\Select\Multiple
     protected function getDefaultOptions()
     {
         $list = array();
-        foreach (\XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findAll() as $class) {
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->search() as $class) {
             $list[$class->getId()] = $class->getName();
         }
 

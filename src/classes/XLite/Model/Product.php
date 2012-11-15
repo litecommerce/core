@@ -193,8 +193,19 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      *      joinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")},
      *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
      * )
+     * @OrderBy   ({"position" = "ASC"})
      */
     protected $classes;
+
+    /**
+     * Show product attributes in a separate tab
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $attrSepTab = true;
+
 
     /**
      * Constructor
@@ -604,5 +615,22 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
         }
 
         return $result;
+    }
+
+    /**
+     * Return number of attributes associated with this product 
+     *
+     * @return integer
+     */
+    public function getAttributesCount()
+    {
+        $count = 0;
+        if ($this->getClasses()) {
+            foreach ($this->getClasses() as $class) {
+                $count += $class->getAttributesCount();
+            }
+        }
+
+        return $count;
     }
 }

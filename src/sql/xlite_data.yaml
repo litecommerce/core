@@ -491,6 +491,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Payment method has been enabled successfully', translations: [{ code: en, label: 'Payment method has been enabled successfully' }] }
   - { name: 'Payment method has been disabled successfully', translations: [{ code: en, label: 'Payment method has been disabled successfully' }] }
   - { name: 'Payment method has been removed successfully', translations: [{ code: en, label: 'Payment method has been removed successfully' }] }
+  - { name: 'Attributes for X product class', translations: [{ code: en, label: 'Attributes for "{{class}}" product class' }] }
+  - { name: 'X attributes in group', translations: [{ code: en, label: '{{count}} attributes in group' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

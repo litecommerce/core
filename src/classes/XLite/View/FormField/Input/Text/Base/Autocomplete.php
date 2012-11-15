@@ -69,7 +69,7 @@ abstract class Autocomplete extends \XLite\View\FormField\Input\Text
     }
 
     /**
-     * setCommonAttributes
+     * Set common attributes
      *
      * @param array $attrs Field attributes to prepare
      *

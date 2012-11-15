@@ -11,6 +11,6 @@
  * @ListChild (list="product.details.common.product-attributes", weight="200")
  *}
 <li IF="product.getSKU()" class="identifier product-sku">
-  <strong class="type">{t(#SKU#)}:</strong>
+  <div><strong class="type">{t(#SKU#)}</strong></div>
   <span class="value">{product.sku}</span>
 </li>
