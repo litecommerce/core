@@ -86,6 +86,14 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     protected $importCell;
 
     /**
+     * Clean URLs cache
+     *
+     * @var array
+     */
+    protected $cleanURLs = array();
+
+
+    /**
      * Check ACL permissions
      *
      * @return boolean
@@ -625,58 +633,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         if (feof($this->filePointer)) {
             \XLite\Core\Event::importFinish();
 
-            $this->importCell['old'] = \XLite\Core\Database::getRepo('XLite\Model\Product')
-                ->countLastUpdated($this->importCell['start']);
-            $this->importCell['old'] -= $this->importCell['new'];
-            $this->importCell['old'] = max(0, $this->importCell['old']);
-
-            $label = null;
-            if ($this->importCell['new'] && $this->importCell['old']) {
-                $label = 'Occurred X add product events and Y update product events';
-
-            } elseif ($this->importCell['new']) {
-                $label = 'Occurred X add product events';
-
-            } elseif ($this->importCell['old']) {
-                $label = 'Occurred Y update product events';
-
-            }
-
-            if ($label) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $label,
-                    array(
-                        'new' => $this->importCell['new'],
-                        'old' => $this->importCell['old'],
-                    ),
-                    null,
-                    \XLite\Core\TopMessage::INFO,
-                    false,
-                    false
-                );
-            }
-
-            if (0 < $this->importCell['warning_count']) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'During the import was recorded X errors. You can get them by downloading the log files.',
-                    array(
-                        'count' => $this->importCell['warning_count'],
-                        'url'   => \XLite\Logger::getInstance()->getCustomLogURL('import'),
-                    ),
-                    null,
-                    \XLite\Core\TopMessage::WARNING,
-                    false,
-                    false
-                );
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'Some products could have been imported incorrectly',
-                    array(),
-                    null,
-                    \XLite\Core\TopMessage::WARNING,
-                    false,
-                    false
-                );
-            }
+            $this->postprocessImport();
 
             $this->clearImportCell();
 
@@ -688,6 +645,72 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         }
 
         fclose($this->filePointer);
+    }
+
+    /**
+     * Add diagnostic messages after importing is finished
+     *
+     * @return void
+     */
+    protected function postprocessImport()
+    {
+        $this->importCell['old'] = \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->countLastUpdated($this->importCell['start']);
+
+        $this->importCell['old'] -= $this->importCell['new'];
+
+        $this->importCell['old'] = max(0, $this->importCell['old']);
+
+        $label = null;
+
+        if ($this->importCell['new'] && $this->importCell['old']) {
+            $label = 'Occurred X add product events and Y update product events';
+
+        } elseif ($this->importCell['new']) {
+            $label = 'Occurred X add product events';
+
+        } elseif ($this->importCell['old']) {
+            $label = 'Occurred Y update product events';
+        }
+
+        if ($label) {
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                $label,
+                array(
+                    'new' => $this->importCell['new'],
+                    'old' => $this->importCell['old'],
+                ),
+                null,
+                \XLite\Core\TopMessage::INFO,
+                false,
+                false
+            );
+        }
+
+        if (0 < $this->importCell['warning_count']) {
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                'During the import was recorded X errors. You can get them by downloading the log files.',
+                array(
+                    'count' => $this->importCell['warning_count'],
+                    'url'   => \XLite\Logger::getInstance()->getCustomLogURL('import'),
+                ),
+                null,
+                \XLite\Core\TopMessage::WARNING,
+                false,
+                false
+            );
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                'Some products could have been imported incorrectly',
+                array(),
+                null,
+                \XLite\Core\TopMessage::WARNING,
+                false,
+                false
+            );
+        }
     }
 
     /**
@@ -724,6 +747,8 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 }
             }
         }
+
+        $this->cleanURLs = \XLite\Core\Database::getRepo('XLite\Model\Product')->findAllCleanURLs();
     }
 
     /**
@@ -1013,7 +1038,27 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             $product->setCleanURL(null);
 
         } else {
-            $product->setCleanURL($data);
+
+            if (isset($this->cleanURLs[$data]) && (empty($this->cleanURLs[$data]) || intval($product->getProductId()) != $this->cleanURLs[$data])) {
+
+                // Add log message
+                $this->logImportWarning(
+                    static::t(
+                        'Duplicated clean URL: X',
+                        array('value' => $data)
+                    ),
+                    $this->importCell['position'],
+                    'cleanURL',
+                    $data,
+                    $product
+                );
+
+                $product->setCleanURL(null);
+
+            } else {
+                $product->setCleanURL($data);
+                $this->cleanURLs[$data] = 0;
+            }
         }
     }
 

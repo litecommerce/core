@@ -8,8 +8,9 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-
-<button type="button" class="{getStyle()}" title="{t(#Remove#)}">
+<div class="remove-wrapper {getStyle}">
+  <button type="button" class="{getStyle()}" title="{t(#Remove#)}">
+    <img src="images/spacer.gif" alt="" />
+  </button>
   <input type="checkbox" name="{getName()}" value="1" />
-  <img src="images/spacer.gif" alt="" />
-</button>
+</div>

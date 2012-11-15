@@ -491,6 +491,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Payment method has been enabled successfully', translations: [{ code: en, label: 'Payment method has been enabled successfully' }] }
   - { name: 'Payment method has been disabled successfully', translations: [{ code: en, label: 'Payment method has been disabled successfully' }] }
   - { name: 'Payment method has been removed successfully', translations: [{ code: en, label: 'Payment method has been removed successfully' }] }
+  - { name: 'Duplicated clean URL: X', translations: [{ code: en, label: 'Duplicated clean URL: {{value}}' }] }
+
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -682,7 +684,7 @@ XLite\Model\Language:
 XLite\Model\Payment\Method:
   directives: { insert: true }
   - { service_name: PurchaseOrder, class: 'Model\Payment\Processor\PurchaseOrder', added: true, orderby: 20, translations: [{ code: en, name: 'Purchase Order' }] }
-  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
+  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', added: true, enabled: true, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
   - { service_name: FaxOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
   - { service_name: MoneyOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
   - { service_name: Echeck, class: 'Model\Payment\Processor\Check', added: true, orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }

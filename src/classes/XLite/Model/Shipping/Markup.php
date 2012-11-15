@@ -124,7 +124,7 @@ class Markup extends \XLite\Model\AEntity
      *
      * @var float
      *
-     * @Column (type="decimal", precision=4, scale=2)
+     * @Column (type="decimal", precision=14, scale=2)
      */
     protected $markup_percent = 0;
 

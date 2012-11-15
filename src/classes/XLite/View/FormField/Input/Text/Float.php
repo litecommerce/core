@@ -51,6 +51,16 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
     }
 
     /**
+     * Get value
+     *
+     * @return float
+     */
+    public function getValue()
+    {
+        return $this->sanitizeFloat(parent::getValue());
+    }
+
+    /**
      * Define widget params
      *
      * @return void
@@ -71,7 +81,17 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      */
     protected function sanitize()
     {
-       return round(doubleval(parent::sanitize()), $this->getParam(self::PARAM_E));
+       return $this->sanitizeFloat(parent::sanitize());
+    }
+
+    /**
+     * Sanitize value
+     *
+     * @return mixed
+     */
+    protected function sanitizeFloat($value)
+    {
+       return round(doubleval($value), $this->getParam(self::PARAM_E));
     }
 
     /**

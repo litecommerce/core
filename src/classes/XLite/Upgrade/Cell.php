@@ -667,8 +667,8 @@ class Cell extends \XLite\Base\Singleton
     }
 
     /**
-     * Preload libraries 
-     * 
+     * Preload libraries
+     *
      * @return void
      */
     protected function preloadLibraries()
@@ -677,8 +677,11 @@ class Cell extends \XLite\Base\Singleton
         $dirIterator = new \RecursiveDirectoryIterator(LC_DIR_LIB);
         $iterator    = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
 
+        $logLibDir = LC_DIR_LIB . 'Log' . LC_DS;
+
         foreach ($iterator as $filePath => $fileObject) {
-            if (preg_match('/\.php$/Ss', $filePath)) {
+            if (preg_match('/\.php$/Ss', $filePath) && (false === stristr($filePath, $logLibDir))) {
+
                 require_once $filePath;
             }
         }

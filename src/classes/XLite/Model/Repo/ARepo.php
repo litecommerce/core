@@ -1046,6 +1046,12 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 );
 
                 $schema = preg_grep(
+                    '/ALTER TABLE `' . $tablePrefix . '(?:' . implode('|', $disabledTables) . ')` ADD CONSTRAINT [a-zA-Z0-9-_]+ FOREIGN KEY /Ss',
+                    $schema,
+                    PREG_GREP_INVERT
+                );
+
+                $schema = preg_grep(
                     '/DROP TABLE IF EXISTS `' . $tablePrefix . '(?:' . implode('|', $disabledTables + $enabledTables) . ')`/Ss',
                     $schema,
                     PREG_GREP_INVERT
