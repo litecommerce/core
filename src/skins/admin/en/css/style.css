@@ -1645,6 +1645,10 @@ div.table-label {
   width: 80px;
 }
 
+.model-properties ul.table li.itemslist div.table-value {
+  width: 100%;
+}
+
 div.star {
   float: right;
   width: 10px;

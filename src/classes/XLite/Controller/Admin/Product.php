@@ -99,6 +99,9 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         if (!$this->isNew()) {
             $list['images']    = 'Product images';
             $list['inventory'] = 'Inventory tracking';
+            if ($this->getProduct()->getAttributesCount()) {
+                $list['attributes'] = 'Attributes';
+            }
         }
 
         return $list;
@@ -118,6 +121,9 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         if (!$this->isNew()) {
             $list['images']    = 'product/product_images.tpl';
             $list['inventory'] = 'product/inventory.tpl';
+            if ($this->getProduct()->getAttributesCount()) {
+                $list['attributes'] = 'product/attributes.tpl';
+            }
         }
 
         return $list;
@@ -444,6 +450,35 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         }
 
         \XLite\Core\Database::getEM()->flush();
+    }
+
+    /**
+     * Update attributes
+     *
+     * @return void
+     */
+    protected function doActionUpdateAttributes()
+    {
+        $this->getProduct()->setAttrSepTab((bool) \XLite\Core\Request::getInstance()->attrSepTab);
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->product = $this->getProduct();
+        $attributes = \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->search($cnd);
+        $attributeValues = \XLite\Core\Request::getInstance()->attributeValues;
+
+        if (
+            count($attributes)
+            && $attributeValues
+            && is_array($attributeValues)
+        ) {
+            foreach ($attributes as $a) {
+                if (isset($attributeValues[$a->getId()])) {
+                    $a->setAttributeValue($this->getProduct(), $attributeValues[$a->getId()]);
+                }
+            }
+        }
+
+        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\TopMessage::addInfo('Attributes have been updated successfully');
     }
 
     // }}}

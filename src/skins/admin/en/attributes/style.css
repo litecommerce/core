@@ -1,0 +1,313 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Attributes list styles
+ *  
+ * @author  Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link    http://www.litecommerce.com/
+ */
+
+.items-list-table table.list th.name {
+  width: 500px;
+  color: #456583;
+  font-size: 16px;
+}
+
+.items-list-table table.list th.type {
+  width: 200px;
+  text-align: right;
+}
+
+.items-list-table table.list td.type {
+  text-align: right;
+  color: #8f8f8f;
+}
+
+.items-list-table table.list .edit-mark td.type {
+  color: #333333;
+}
+
+.items-list-table table.list th.actions.left {
+  width: 30px;
+}
+
+.items-list-table table.list th.actions.right {
+  width: 25px;
+}
+
+.items-list-table.group {
+  margin-top: 20px;
+}
+
+button.new-attribute span {
+  background: url("../images/icon_list.png") no-repeat scroll left top transparent;
+  padding: 2px 0 2px 25px;
+}
+
+button.manage-groups span {
+  background: url("../images/icon_folder.png") no-repeat scroll left top transparent;
+  padding: 2px 0 2px 25px;
+}
+
+div.buttons {
+  margin-bottom: 25px;
+}
+
+div.group table.list th.actions.left {
+  background: url("../images/icon_folder.png") no-repeat scroll center center transparent;
+}
+
+/*
+ * Popup box
+ */
+
+.blockMsg
+{
+  background: transparent none;
+  margin: 0px;
+  padding: 0px;
+  z-index: 1001;
+  position: absolute;
+  top: 30%;
+}
+
+.blockMsg .close-link
+{
+  display: block;
+  position: absolute;
+  background: transparent url(../../../common/ui/images/icon_window_close.png) no-repeat 10px 10px;
+  top: 0px;
+  right: 0px;
+  width: 41px;
+  height: 41px;
+  outline: none;
+  -moz-border-radius-bottomright: 11px;
+  -moz-border-radius-topright: 11px;
+  -webkit-border-bottom-right-radius: 11px;
+  -webkit-border-top-right-radius: 11px;
+  border-bottom-right-radius: 11px;
+  border-top-right-radius: 11px;
+}
+
+.blockMsg .block-container
+{
+  margin-right: 31px;
+  border-style: none;
+  -moz-border-radius: 11px;
+  -webkit-border-radius: 11px;
+  border-radius: 11px;
+  padding: 10px;
+}
+
+.blockMsg .block-subcontainer
+{
+  padding: 40px;
+  padding-top: 30px;
+  background: white;
+  overflow: auto;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.block-wait
+{
+  text-align: left;
+  vertical-align: middle;
+  font-weight: bold;
+  min-width: 200px;
+  border: 1px solid #cadce8;
+  background: #fff none;
+}
+
+.block-wait div
+{
+  background: transparent url(../images/progress.gif) repeat-x left top;
+  height: 11px;
+  margin: 10px;
+}
+
+.mini-block-wait div
+{
+  margin: 0px;
+}
+
+/* Background overlay */
+
+.blockOverlay
+{
+  background: transparent url(../../../common/ui/images/popup_overlay.png) repeat top left !important;
+}
+
+.blockMsg .close-link,
+.blockMsg .block-container
+{
+  background-color: #7a7a7a;
+}
+
+/* Common popup styles */
+
+.blockMsg h2
+{
+  margin-top: 0px;
+  font-size: 32px;
+}
+
+.blockMsg h3
+{
+  font-size: 24px;
+}
+
+.blockMsg .model-properties ul.table {
+  min-width: 450px;
+}
+
+.edit-attribute {
+  background: url("../images/tri_right_button.png") no-repeat right top transparent;
+  padding-right: 13px;
+  display: none;
+  line-height: 26px;
+}
+.edit-mark .edit-attribute {
+  display: inline-block;
+}
+.edit-attribute span {
+  -moz-top-left-border-radius: 3px;
+  -moz-bottom-left-border-radius: 3px;
+  -webkit-top-left-border-radius: 3px;
+  -webkit-bottom-left-border-radius: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding-left: 10px;
+  line-height: 24px;
+  background-color: #eff8fe;
+  color: #154e9c;
+  border: 1px solid #cadce8;
+  border-right: 0 none;
+  display: inline-block;
+}
+
+.items-list-table table.list tbody.lines td .edit-attribute,
+.items-list-table table.list tbody.lines td .edit-attribute span {
+  vertical-align: top;
+}
+
+.ajax-container-loadable .model-properties ul.table div.table-label label {
+  font-size: 16px;
+  color: #456583;
+  width: auto;
+}
+
+.ajax-container-loadable .model-properties div.table-value {
+  width: auto;
+  margin-left: 10px;
+  float: left;
+  max-width: 440px;
+}
+
+.ajax-container-loadable .model-properties div.table-value.values-value {
+  width: 400px;
+}
+
+.ajax-container-loadable div.button.submit {
+  text-align: center;
+}
+
+.ajax-container-loadable div.table-value select {
+  width: auto;
+  max-width: 200px;
+  float: left;
+}
+
+.ajax-container-loadable .select-attributetypes div.table-value .form-field-comment {
+  background: url("../images/icon_warning_round.png") no-repeat scroll 0 0 transparent;
+  padding-left: 30px;
+  color: #456583;
+  float: left;
+  display: none;
+  line-height: 14px;
+  width: 360px;
+  margin-top: 25px;
+}
+
+.ajax-container-loadable div.table-value .form-field-comment {
+  float: right;
+  font-size: 12px;
+}
+
+.ajax-container-loadable div.table-value .input-field-wrapper {
+  float: left;
+}
+
+.ajax-container-loadable .star {
+  display: none;
+}
+
+.ajax-container-loadable li.edit-unit {
+  display: inline;
+  position: absolute;
+  margin-left: 10px;
+}
+
+.ajax-container-loadable li.edit-unit div.table-value input {
+  width: 50px;
+  margin-right: 5px;
+}
+
+.ajax-container-loadable .model-properties ul.table li {
+  margin-bottom: 10px;
+}
+
+.ajax-container-loadable li.edit-decimals {
+  float: left;
+}
+
+.ajax-container-loadable li.edit-unit {
+  left: 180px;
+}
+
+.ajax-container-loadable div.note {
+  color: #456583;
+  text-align: center;
+  width: 440px;
+  margin-top: 10px;
+  padding: 0 30px;
+}
+
+.ajax-container-loadable .model-form-buttons {
+  padding: 0px;
+}
+
+.ajax-container-loadable {
+  width: 500px;
+}
+
+.ajax-container-loadable .list-footer {
+  margin: 0;
+  padding: 0;
+}
+
+.ajax-container-loadable .itemslist button {
+  border: 0;
+  background: none;
+}
+
+.ajax-container-loadable .itemslist button span {
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.ajax-container-loadable .items-list-table table.list tbody td.main .attributeoption-name .view {
+  max-width: 300px;
+}
+
+.ajax-container-loadable .items-list-table table.list tbody td.main .view {
+  position: relative;
+  max-width: 350px;
+}
+
+.items-list-table table.list tbody td.main .view {
+  max-width: 500px;
+}
