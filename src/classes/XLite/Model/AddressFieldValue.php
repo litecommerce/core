@@ -1,0 +1,76 @@
+<?php
+// vim: set ts=4 sw=4 sts=4 et:
+
+/**
+ * LiteCommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+namespace XLite\Model;
+
+/**
+ * Address field value (additional fields) model
+ *
+ *
+ * @Entity (repositoryClass="\XLite\Model\Repo\AddressFieldValue")
+ * @Table  (name="address_field_value")
+ */
+class AddressFieldValue extends \XLite\Model\AEntity
+{
+    /**
+     * Unique id
+     *
+     * @var integer
+     *
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="integer", nullable=false)
+     */
+    protected $id;
+
+    /**
+     * Additional field value
+     *
+     * @var string
+     * @Column(type="string", length=255, nullable=false)
+     */
+    protected $value = '';
+
+    /**
+     * Address field model relation
+     *
+     * @var \XLite\Model\AddressField
+     *
+     * @ManyToOne (targetEntity="XLite\Model\AddressField", cascade="all")
+     * @JoinColumn(name="address_field_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $addressField;
+
+    /**
+     * Address model relation
+     *
+     * @var \XLite\Model\Address
+     *
+     * @ManyToOne (targetEntity="XLite\Model\Address", cascade="all")
+     * @JoinColumn(name="address_id", referencedColumnName="address_id")
+     */
+    protected $address;
+
+}

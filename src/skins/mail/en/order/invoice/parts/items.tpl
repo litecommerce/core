@@ -10,16 +10,16 @@
  *
  * @ListChild (list="invoice.base", weight="30")
  *}
-<table cellspacing="0" class="items">
+<table cellspacing="1" width="100%">
 
-  <tr>
+  <tr bgcolor="grey">
     <list name="invoice.items.head" />
   </tr>
-  <tr class="last-row">
+  <tr bgcolor="grey">
     <list name="invoice.items.subhead" />
   </tr>
   <tr class="separator">
-    <td colspan="{getColumnsSpan()}"><img src="images/spacer.gif" alt="" /></td>
+    <td colspan="{getColumnsSpan()}"></td>
   </tr>
 
   {foreach:order.getItems(),index,item}
@@ -29,8 +29,8 @@
     <tr>
       <list name="invoice.subitem" item="{item}" />
     </tr>
-    <tr IF="!itemArrayPointer=itemArraySize" class="separator">
-      <td colspan="{getColumnsSpan()}"><img src="images/spacer.gif" alt="" /></td>
+    <tr IF="itemArrayPointer=itemArraySize" bgcolor="#CCCCCC" class="separator">
+      <td colspan="{getColumnsSpan()}"></td>
     </tr>
   {end:}
 

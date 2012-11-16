@@ -336,6 +336,10 @@
   background-color: #f4f4f4;
 }
 
+.add-payment-box .alternative-methods .body .body-box {
+  border: solid 1px #c2cbd2;
+}
+
 .add-payment-box .body .body-item.selected {
   display: block;
 }

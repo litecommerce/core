@@ -86,6 +86,14 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     protected $importCell;
 
     /**
+     * Clean URLs cache
+     *
+     * @var array
+     */
+    protected $cleanURLs = array();
+
+
+    /**
      * Check ACL permissions
      *
      * @return boolean
@@ -739,6 +747,8 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 }
             }
         }
+
+        $this->cleanURLs = \XLite\Core\Database::getRepo('XLite\Model\Product')->findAllCleanURLs();
     }
 
     /**
@@ -1028,7 +1038,27 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             $product->setCleanURL(null);
 
         } else {
-            $product->setCleanURL($data);
+
+            if (isset($this->cleanURLs[$data]) && (empty($this->cleanURLs[$data]) || intval($product->getProductId()) != $this->cleanURLs[$data])) {
+
+                // Add log message
+                $this->logImportWarning(
+                    static::t(
+                        'Duplicated clean URL: X',
+                        array('value' => $data)
+                    ),
+                    $this->importCell['position'],
+                    'cleanURL',
+                    $data,
+                    $product
+                );
+
+                $product->setCleanURL(null);
+
+            } else {
+                $product->setCleanURL($data);
+                $this->cleanURLs[$data] = 0;
+            }
         }
     }
 

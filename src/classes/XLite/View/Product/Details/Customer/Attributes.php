@@ -52,7 +52,7 @@ class Attributes extends \XLite\View\Product\Details\AAttributes
                 if ($value) {
                     $this->attributes[] = array(
                         'name'  => $a->getName(),
-                        'value' => $value,
+                        'value' => htmlentities($value),
                         'class' => $this->getFieldClass($a, $value)
                     );
                 }
@@ -72,7 +72,7 @@ class Attributes extends \XLite\View\Product\Details\AAttributes
      */
     protected function getFieldClass(\XLite\Model\Attribute $attribute, $value)
     {
-        $class = strtolower($a->getTypes($attribute->getType()));
+        $class = strtolower($attribute->getTypes($attribute->getType()));
         if (\XLite\Model\Attribute::TYPE_CHECKBOX == $attribute->getType()) {
             $class .= ' ' . (static::t('yes') == $value ? 'checked' : 'no-checked');
         }

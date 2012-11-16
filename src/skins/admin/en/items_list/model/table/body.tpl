@@ -31,11 +31,8 @@
     {foreach:getPageData(),idx,entity}
       <tr class="{getLineClass(idx,entity)}">
         <td FOREACH="getColumns(),column" class="{getColumnClass(column,entity)}">
-          {if:column.template}
-            <widget template="{column.template}" idx="{idx}" entity="{entity}" column="{column}" />
-          {else:}
-            <widget class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="{column.code}" fieldParams="{column.params}" />
-          {end:}
+          <widget IF="isTemplateColumnVisible(column,entity)" template="{column.template}" idx="{idx}" entity="{entity}" column="{column}" />
+          <widget IF="isClassColumnVisible(column,entity)" class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="{column.code}" fieldParams="{column.params}" />
           <list type="inherited" name="{getCellListNamePart(#cell#,column)}" column="{column}" entity="{entity}" />
         </td>
       </tr>

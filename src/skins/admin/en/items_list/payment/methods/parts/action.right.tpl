@@ -20,6 +20,9 @@
   {if:method.getWarningNote()}
     <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
     <div class="warning"><a href="{method.getConfigurationURL()}"><img src="images/spacer.gif" alt="{method.getWarningNote()}" /></a></div>
+  {elseif:!method.isCurrencyApplicable()}
+    <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
+    <div class="warning"><a href="{buildURL(#currency#)}"><img src="images/spacer.gif" alt="{t(#This method does not support the current store currency and is not available for customers#)}" /></a></div>
   {elseif:method.isTestMode()}
     <img IF="canRemoveMethod(method)" src="images/spacer.gif" class="subseparator" alt="" />
     <div class="test-mode"><a href="{method.getConfigurationURL()}"><img src="images/spacer.gif" alt="{t(#This method is in test mode#)}" /></a></div>

@@ -10,7 +10,7 @@
  *
  * @ListChild (list="shippingEstimator.address", weight="20")
  *}
-<li class="state">
+<li class="state" IF="hasField(#state_id#)">
   <label for="destination_state">{t(#State#)}:</label>
   <widget class="\XLite\View\StateSelect" field="state" fieldId="destination_state" state="{getState()}" isLinked="1" className="field-required" />
 </li>

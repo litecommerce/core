@@ -10,4 +10,4 @@
  *
  * @ListChild (list="invoice.subitem", weight="20")
  *}
-<td class="qty">{item.getAmount()}</td>
+<td align="center">{item.getAmount()}</td>

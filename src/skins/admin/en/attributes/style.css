@@ -165,27 +165,33 @@ div.group table.list th.actions.left {
 }
 
 .edit-attribute {
-  background: url("../images/tri_right_button.png") no-repeat scroll right top transparent;
-  padding: 0 11px 0 0;
-  border: none;
-  border-radius: 0;
+  background: url("../images/tri_right_button.png") no-repeat right top transparent;
+  padding-right: 13px;
   display: none;
-  margin: 0 5px 0 0;
-  height: 26px;
+  line-height: 26px;
 }
 .edit-mark .edit-attribute {
-  display: inline;
+  display: inline-block;
 }
 .edit-attribute span {
-  background-color: #eff9fe;
-  border: 1px solid #CADCE8;
-  border-bottom-left-radius: 3px;
-  border-right: 0 none;
+  -moz-top-left-border-radius: 3px;
+  -moz-bottom-left-border-radius: 3px;
+  -webkit-top-left-border-radius: 3px;
+  -webkit-bottom-left-border-radius: 3px;
   border-top-left-radius: 3px;
-  padding: 5px 0 5px 10px;
-  background-color: #EFF8FE;
-  color: #154E9C;
+  border-bottom-left-radius: 3px;
+  padding-left: 10px;
   line-height: 24px;
+  background-color: #eff8fe;
+  color: #154e9c;
+  border: 1px solid #cadce8;
+  border-right: 0 none;
+  display: inline-block;
+}
+
+.items-list-table table.list tbody.lines td .edit-attribute,
+.items-list-table table.list tbody.lines td .edit-attribute span {
+  vertical-align: top;
 }
 
 .ajax-container-loadable .model-properties ul.table div.table-label label {
@@ -198,6 +204,11 @@ div.group table.list th.actions.left {
   width: auto;
   margin-left: 10px;
   float: left;
+  max-width: 440px;
+}
+
+.ajax-container-loadable .model-properties div.table-value.values-value {
+  width: 400px;
 }
 
 .ajax-container-loadable div.button.submit {
@@ -211,11 +222,14 @@ div.group table.list th.actions.left {
 }
 
 .ajax-container-loadable .select-attributetypes div.table-value .form-field-comment {
-  background: url("../images/icon_warning_round.png") no-repeat scroll 20px center transparent;
-  padding: 1px 0 0 50px;
+  background: url("../images/icon_warning_round.png") no-repeat scroll 0 0 transparent;
+  padding-left: 30px;
   color: #456583;
   float: left;
   display: none;
+  line-height: 14px;
+  width: 360px;
+  margin-top: 25px;
 }
 
 .ajax-container-loadable div.table-value .form-field-comment {
@@ -259,6 +273,7 @@ div.group table.list th.actions.left {
   text-align: center;
   width: 440px;
   margin-top: 10px;
+  padding: 0 30px;
 }
 
 .ajax-container-loadable .model-form-buttons {

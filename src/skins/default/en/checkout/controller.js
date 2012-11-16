@@ -43,16 +43,16 @@ function CheckoutView(base)
   core.bind(
     'updateCart',
     function(event, data) {
-      if (data.billingAddress && jQuery('.payment-step .same-address #same_address').length && !o.isLoadingStart) {
+      if (data.billingAddress && jQuery('#same_address').length && !o.isLoadingStart) {
 
         // Change same-address checkbox and reload billing address after change address into address book popup
         if (
-          (data.billingAddress.same && 0 == jQuery('.payment-step .same-address #same_address:checked').length)
-          || (!data.billingAddress.same && 1 == jQuery('.payment-step .same-address #same_address:checked').length)
+          (data.billingAddress.same && 0 == jQuery('#same_address:checked').length)
+          || (!data.billingAddress.same && 1 == jQuery('#same_address:checked').length)
         ) {
 
           // Change from not-same-address to same-address or revert
-          var chk = jQuery('.payment-step .same-address #same_address').get(0);
+          var chk = jQuery('#same_address').get(0);
           if (chk) {
             chk.checked = !chk.checked;
           }
@@ -320,7 +320,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
         o.isLoadingStart = true;
 
-        return jQuery('.payment-step .same-address #same_address:checked', o.base).length
+        return jQuery('#same_address:checked').length
           ? !o.load()
           : !(jQuery('.payment-step.current .secondary form', o.base).submit() && o.shade());
       }
@@ -441,6 +441,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
         jQuery(base).trigger(jQuery(this).attr('checked') ? 'ready2checkout' : 'notready2checkout');
       }
     );
+
+    UpdateStatesList();
 
     // Refresh state
     this.refreshState();
@@ -622,7 +624,7 @@ CheckoutView.prototype.refreshState = function()
     var paymentIsReady = (jQuery('ul.payments').length > 0) ? (1 == jQuery('ul.payments input:checked', this.base).length) : true;
 
     // Billing address is ready (completed)
-    isSameAddress = 1 == jQuery('.same-address #same_address:checked', this.base).length;
+    isSameAddress = 1 == jQuery('#same_address:checked').length;
     var billingAddressIsReady = isSameAddress
       || (0 < jQuery('form.billing-address ul.form :input', this.base).length && jQuery('form.billing-address', this.base).get(0).validate(true));
 
@@ -807,7 +809,7 @@ ShippingAddressView.prototype.postprocess = function(isSuccess, initial)
     form.getElements().each(
       function() {
         var t = jQuery(this);
-        if (t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
+        if (t.hasClass('field-street') || t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
           this.markAsWatcher(
             function(element) {
               o.parentWidget.refreshSignificantShippingFields(element);
@@ -873,7 +875,7 @@ BillingAddressView.prototype.postprocess = function(isSuccess, initial)
         }
       );
 
-    jQuery('.same-address #same_address', this.base).change(
+    jQuery('#same_address').change(
       function(event) {
         o.changeSameAddress = true;
         o.parentWidget.refreshState();
@@ -891,6 +893,10 @@ BillingAddressView.prototype.postprocess = function(isSuccess, initial)
 
     if (!initial) {
       this.parentWidget.refreshState();
+    }
+
+    if (this.parentWidget) {
+      UpdateStatesList();
     }
   }
 }

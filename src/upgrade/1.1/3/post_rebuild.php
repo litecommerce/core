@@ -25,33 +25,36 @@
 
 return function()
 {
-    // Enable all payment methods
-    \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
-        ->getQueryBuilder()
-        ->update('XLite\Model\Payment\Method', 'e')
-        ->set('e.moduleEnabled', ':enabled')
-        ->setParameter('enabled', $enabled)
-        ->execute();
-
-    // Disable payment methods from disabled modules
-    $qb = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
-        ->getQueryBuilder()
-        ->update('XLite\Model\Payment\Method', 'e')
-        ->set('e.moduleEnabled', ':enabled')
-        ->where('LOCATE(:class, e.class) > 0')
-        ->setParameter('enabled', false);
-
-    $cnd = new \XLite\Core\CommonCell;
-    $cnd->inactive = true;
-    foreach (\XLite\Core\Database::getRepo('XLite\Model\Module')->search($cnd) as $module) {
-        $qb->setParameter('class', $module->getActualName())->execute();
-    }
-
     // Loading data to the database from yaml file
     $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
 
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
         \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
     }
+
+    // Import profile addresses from the temporary YAML file storage
+    $yamlProfileStorageFile = LC_DIR_VAR . 'temporary.storage.profiles.yaml';
+
+    foreach (\Includes\Utils\Operator::loadServiceYAML($yamlProfileStorageFile) as $address) {
+
+        $entity = \XLite\Core\Database::getRepo('XLite\Model\Address')
+            ->findOneBy(array(
+                'address_id' => $address['address_id'],
+                'profile'    => $address['profile_id'],
+                )
+            );
+
+        $entity->setProfile(\XLite\Core\Database::getRepo('XLite\Model\Profile')->find($address['profile_id']));
+        $entity->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCode($address['country_code']));
+        $entity->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state_id']));
+
+        unset($address['profile_id'], $address['state_id'], $address['country_code']);
+        $entity->map($address);
+
+        $entity->update();
+        \XLite\Core\Database::getEM()->flush($entity);
+    }
+
+    \Includes\Utils\FileManager::deleteFile($yamlProfileStorageFile);
 
 };

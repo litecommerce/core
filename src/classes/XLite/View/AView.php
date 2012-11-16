@@ -610,6 +610,7 @@ abstract class AView extends \XLite\Core\Handler
                 'js/jquery.mousewheel.js',
                 $this->getValidationEngineLanguageResource(),
                 'js/validationEngine/jquery.validationEngine.js',
+                'js/validationEngine/custom.validationEngine.js',
             ),
             static::RESOURCE_CSS => array(
                 'ui/jquery-ui.css',
@@ -1838,6 +1839,33 @@ abstract class AView extends \XLite\Core\Handler
             \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
             \XLite::CUSTOMER_INTERFACE
         );
+    }
+
+    /**
+     * Return specific data for address entry. Helper.
+     *
+     * @param \XLite\Model\Address $address
+     *
+     * @return array
+     */
+    protected function getAddressSectionData(\XLite\Model\Address $address)
+    {
+        $result = array();
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
+
+            $addressFieldValue = $address->{'get' . \Includes\Utils\Converter::convertToCamelCase($field->getViewGetterName() ?: $field->getServiceName())}();
+
+            if ($addressFieldValue) {
+                $result[$field->getServiceName()] = array(
+                    'css_class' => $field->getCSSFieldName(),
+                    'title'     => $field->getName(),
+                    'value'     => $addressFieldValue,
+                );
+            }
+        }
+
+        return $result;
     }
 
 }

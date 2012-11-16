@@ -11,21 +11,20 @@
 
 CommonForm.elementControllers.push(
   {
-    pattern: '.line .actions button.remove',
+    pattern: '.line .actions .remove-wrapper',
     handler: function () {
-      var inp = jQuery('input', this);
-      var btn = jQuery(this);
+      var inp = jQuery('input', this).eq(0);
+      var btn = jQuery('button.remove', this);
       var cell = btn.parents('.line').eq(0);
 
       btn.click(
         function () {
           if (inp.attr('checked')) {
             inp.removeAttr('checked');
-
           } else {
             inp.attr('checked', 'checked');
-            inp.get(0).setAttribute('checked', 'checked');
           }
+
           inp.change();
         }
       );

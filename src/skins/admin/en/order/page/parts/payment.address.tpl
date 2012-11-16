@@ -13,15 +13,12 @@
 
 <div class="address" IF="order.profile&order.profile.getBillingAddress()">
   <strong>{t(#Billing address#)}</strong>
-  <p class="name">{order.profile.billing_address.title} {order.profile.billing_address.firstname} {order.profile.billing_address.lastname}</p>
 
-  <p class="address-line">
-    {order.profile.billing_address.street}<br />
-    {order.profile.billing_address.city}, {order.profile.billing_address.state.state}, {order.profile.billing_address.zipcode}<br />
-    {order.profile.billing_address.country.country}
-  </p>
-
-  <p IF="order.profile.billing_address.phone" class="phone">
-    {t(#Phone#)}: {order.profile.billing_address.phone}
-  </p>
+  <ul class="address-section payment-address-section">
+    <li FOREACH="getAddressSectionData(order.profile.billing_address),idx,field" class="{field.css_class} address-field">
+      <span class="address-title">{field.title}:</span>
+      <span class="address-field">{field.value}</span>
+      <span class="address-comma">,</span>
+    </li>
+  </ul>
 </div>

@@ -37,6 +37,7 @@ class Country extends \XLite\View\FormField\Select\Regular
     const PARAM_ALL               = 'all';
     const PARAM_STATE_SELECTOR_ID = 'stateSelectorId';
     const PARAM_STATE_INPUT_ID    = 'stateInputId';
+    const PARAM_SELECT_ONE        = 'selectOne';
 
     /**
      * Display only enabled countries
@@ -54,7 +55,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     public function __construct(array $params = array())
     {
-        if (!empty($params[self::PARAM_ALL])) {
+        if (!empty($params[static::PARAM_ALL])) {
             $this->onlyEnabled = false;
         }
 
@@ -85,8 +86,8 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     public function setStateSelectorIds($selectorId, $inputId)
     {
-        $this->getWidgetParams(self::PARAM_STATE_SELECTOR_ID)->setValue($selectorId);
-        $this->getWidgetParams(self::PARAM_STATE_INPUT_ID)->setValue($inputId);
+        $this->getWidgetParams(static::PARAM_STATE_SELECTOR_ID)->setValue($selectorId);
+        $this->getWidgetParams(static::PARAM_STATE_INPUT_ID)->setValue($inputId);
     }
 
 
@@ -100,9 +101,10 @@ class Country extends \XLite\View\FormField\Select\Regular
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL               => new \XLite\Model\WidgetParam\Bool('All', false),
-            self::PARAM_STATE_SELECTOR_ID => new \XLite\Model\WidgetParam\String('State select ID', null),
-            self::PARAM_STATE_INPUT_ID    => new \XLite\Model\WidgetParam\String('State input ID', null),
+            static::PARAM_ALL               => new \XLite\Model\WidgetParam\Bool('All', false),
+            static::PARAM_STATE_SELECTOR_ID => new \XLite\Model\WidgetParam\String('State select ID', null),
+            static::PARAM_STATE_INPUT_ID    => new \XLite\Model\WidgetParam\String('State input ID', null),
+            static::PARAM_SELECT_ONE        => new \XLite\Model\WidgetParam\Bool('All', true),
         );
     }
 
@@ -118,6 +120,7 @@ class Country extends \XLite\View\FormField\Select\Regular
             : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
 
         $options = array();
+
         foreach ($list as $country) {
             $options[$country->getCode()] = $country->getCountry();
         }
@@ -132,8 +135,10 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     protected function getOptions()
     {
-        return array('' => 'Select one...')
-            + parent::getOptions();
+        return $this->getParam(static::PARAM_SELECT_ONE)
+            ? array('' => 'Select one...')
+              + parent::getOptions()
+            : parent::getOptions();
     }
 
     /**
@@ -147,17 +152,29 @@ class Country extends \XLite\View\FormField\Select\Regular
     }
 
     /**
-     * Some JavaScript code to insert
+     * Return some data for JS external scripts if it is needed.
+     *
+     * @return null|array
+     */
+    protected function getFormFieldJSData()
+    {
+        return array(
+            'statesList' => \XLite\Core\Database::getRepo('XLite\Model\Country')->findCountriesStates(),
+            'stateSelectors' => array(
+                'fieldId'           => $this->getFieldId(),
+                'stateSelectorId'   => $this->getParam(static::PARAM_STATE_SELECTOR_ID),
+                'stateInputId'      => $this->getParam(static::PARAM_STATE_INPUT_ID),
+            ),
+        );
+    }
+
+    /**
+     * Get value container class
      *
      * @return string
      */
-    protected function getInlineJSCode()
+    protected function getValueContainerClass()
     {
-        return 'jQuery(document).ready(function() { '
-            . 'stateSelectors[\'' . $this->getFieldId() . '\'] = new StateSelector('
-            . '\'' . $this->getFieldId() . '\', '
-            . '\'' . $this->getParam(self::PARAM_STATE_SELECTOR_ID) . '\', '
-            . '\'' . $this->getParam(self::PARAM_STATE_INPUT_ID) . '\'); });' . PHP_EOL
-            . $this->getWidget(array(), '\XLite\View\JS\StatesList')->getContent();
+        return parent::getValueContainerClass() . ' country-selector';
     }
 }

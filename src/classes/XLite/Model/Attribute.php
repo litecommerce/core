@@ -121,7 +121,7 @@ class Attribute extends \XLite\Model\Base\I18n
      *
      * @Column (type="fixedstring", length=1)
      */
-    protected $type = self::TYPE_NUMBER;
+    protected $type = self::TYPE_TEXT;
 
     /**
      * Constructor
@@ -157,8 +157,8 @@ class Attribute extends \XLite\Model\Base\I18n
     public static function getTypes($type = null)
     {
         $list = array(
-            self::TYPE_NUMBER   => 'Number',
             self::TYPE_TEXT     => 'Text',
+            self::TYPE_NUMBER   => 'Number',
             self::TYPE_CHECKBOX => 'Checkbox',
             self::TYPE_SELECT   => 'Select',
         );
@@ -166,6 +166,20 @@ class Attribute extends \XLite\Model\Base\I18n
         return isset($type)
             ? (isset($list[$type]) ? $list[$type] : null)
             : $list;
+    }
+
+    /**
+     * Return values associated with this attribute
+     *
+     * @return mixed
+     */
+    public function getAttributeValues()
+    {
+        $cnd = new \XLite\Core\CommonCell;
+        $cnd->attribute = $this;
+
+        return \XLite\Core\Database::getRepo($this->getAttributeValueClass())
+            ->search($cnd);
     }
 
     /**
@@ -197,10 +211,14 @@ class Attribute extends \XLite\Model\Base\I18n
             if (
                 $this->type
                 && $type != $this->type
+                && $this->getId()
             ) {
                 $this->setDefaultValue($this->defaultValue);
                 foreach ($this->getAttributeOptions() as $option) {
                     \XLite\Core\Database::getEM()->remove($option);
+                }
+                foreach ($this->getAttributeValues() as $value) {
+                    \XLite\Core\Database::getEM()->remove($value);
                 }
             }
             $this->type = $type;
@@ -234,9 +252,16 @@ class Attribute extends \XLite\Model\Base\I18n
      */
     public function getDefaultValue()
     {
-        return self::TYPE_CHECKBOX == $this->type
-            ? (boolean)$this->defaultValue
-            : $this->defaultValue;
+        $value = $this->defaultValue;
+        if (self::TYPE_NUMBER == $this->type) {
+            $value = (float)$value;
+
+        } elseif (self::TYPE_CHECKBOX == $this->type) {
+            $value = (boolean)$value;
+
+        }
+       
+        return $value; 
     }
 
     /**
@@ -313,6 +338,7 @@ class Attribute extends \XLite\Model\Base\I18n
         }
 
         if (self::TYPE_SELECT == $this->getType()) {
+            $value = trim($value);
             if ($value) {
                 $attributeOption = \XLite\Core\Database::getRepo('XLite\Model\AttributeOption')
                     ->findOneByNameAndAttribute($value, $this);

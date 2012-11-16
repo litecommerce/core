@@ -149,6 +149,11 @@
   color: #d91a1a;
 }
 
+.items-list-table table.list tbody tr.line.remove-mark * {
+  opacity: .7;
+  filter: alpha(opacity=70);
+}
+
 .items-list-table table.list tbody.lines tr.line.remove-mark {
   opacity: .3;
 }

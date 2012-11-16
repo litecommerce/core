@@ -8,6 +8,18 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
+
 <ul class="form">
-  <list name="checkout.shipping.address" />
+  <li FOREACH="getAddressFields(),fieldName,fieldData" class="item-{fieldName}">
+    <widget
+      class="{fieldData.class}"
+      attributes="{getFieldAttributes(fieldName,fieldData)}"
+      label="{fieldData.label}"
+      fieldName="shippingAddress[{fieldName}]"
+      stateSelectorId="shippingaddress-state-id"
+      stateInputId="shippingaddress-custom-state"
+      value="{getFieldValue(fieldName)}"
+      required="{fieldData.required}" />
+  </li>
+  <list name="checkout.shipping.address" address="{getShippingAddress()}" />
 </ul>

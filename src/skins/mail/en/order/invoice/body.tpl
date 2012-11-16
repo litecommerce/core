@@ -8,6 +8,10 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-<div class="invoice-box">
+<table width="80%">
+  <tr>
+    <td>
   <list name="invoice.base" />
-</div>
+    </td>
+  </tr>
+</table>

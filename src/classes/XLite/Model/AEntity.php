@@ -80,9 +80,9 @@ abstract class AEntity extends \XLite\Base\SuperClass
                 // $method is assembled from 'set' + getMethodName()
                 $this->$method($value);
 
-            } elseif (property_exists($this, $key)) {
+            } else {
 
-                $this->$key = $value;
+                $this->setterProperty($key, $value);
             }
         }
     }
@@ -197,28 +197,58 @@ abstract class AEntity extends \XLite\Base\SuperClass
         if ($result) {
 
             $property = \XLite\Core\Converter::convertFromCamelCase($matches[2]);
-
-            $result = property_exists($this, $property);
         }
+
+        $return = 'set' === $matches[1]
+            ? $this->setterProperty($property, array_shift($args))
+            : $this->getterProperty($property);
+
+        if (is_null($return)) {
+
+            throw new \BadMethodCallException(
+                get_class($this) . '::' . $method . '() - method not exists or invalid getter/setter'
+            );
+        }
+
+        return $return;
+    }
+
+    /**
+     * Universal setter
+     *
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return true|null Returns TRUE if the setting succeeds. NULL if the setting fails
+     */
+    public function setterProperty($property, $value)
+    {
+        $result = property_exists($this, $property);
+
+        if ($result) {
+
+            $this->$property = $value;
+        }
+
+        return $result ?: null;
+    }
+
+    /**
+     * Universal getter
+     *
+     * @param string $property
+     *
+     * @return mixed|null Returns NULL if it is impossible to get the property
+     */
+    public function getterProperty($property)
+    {
+        $result = property_exists($this, $property);
 
         $return = null;
 
         if ($result) {
 
-            if ('set' === $matches[1]) {
-
-                $this->$property = array_shift($args);
-
-            } else {
-
-                $return = $this->$property;
-            }
-
-        } else {
-
-            throw new \BadMethodCallException(
-                get_class($this) . '::' . $method . '() - method not exists or invalid getter/setter'
-            );
+            $return = $this->$property;
         }
 
         return $return;

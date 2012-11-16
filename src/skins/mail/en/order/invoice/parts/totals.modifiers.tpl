@@ -11,13 +11,13 @@
  * @ListChild (list="invoice.base.totals", weight="200")
  *}
 
-<tr FOREACH="order.getSurchargeTotals(),sType,surcharge" class="{sType}-modifier">
+<tr FOREACH="order.getSurchargeTotals(),sType,surcharge" bgcolor="#CCCCCC" class="{sType}-modifier">
   {if:surcharge.count=#1#}
     <td class="title">{surcharge.lastName}:</td>
   {else:}
     <td class="title list-owner">{surcharge.name}:</td>
   {end:}
-  <td class="value">
+  <td align="right">
     {if:surcharge.available}
       {formatPrice(surcharge.cost,order.getCurrency())}
     {else:}

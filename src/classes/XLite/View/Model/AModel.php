@@ -1205,8 +1205,6 @@ abstract class AModel extends \XLite\View\Dialog
         return $this->getModelObject()->delete();
     }
 
-
-
     /**
      * Retrieve property from the model object
      *
@@ -1216,16 +1214,10 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function getModelObjectValue($name)
     {
-        $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($name);
+        $model = $this->getModelObject();
+        $method = 'get' . \XLite\Core\Converter::convertToCamelCase($name);
 
-        $value = null;
-
-        if (method_exists($this->getModelObject(), $methodName)) {
-            // Call the corresponded method
-            $value = $this->getModelObject()->$methodName();
-        }
-
-        return $value;
+        return method_exists($model, $method) ? $model->$method() : $model->getterProperty($name);
     }
 
     /**

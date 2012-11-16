@@ -42,13 +42,23 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
+     * Get module major version
+     *
+     * @return string
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
+    }
+
+    /**
      * Module version
      *
      * @return string
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**

@@ -146,7 +146,7 @@ HTML;
         $order = $this->getTestOrder();
         $p = $order->getPaymentMethod()->getProcessor();
 
-        $this->assertEquals('modules/CDev/PaypalWPS/config.tpl', $p->getSettingsWidget(), 'check settings widget');
+        $this->assertEquals('\\XLite\\Module\\CDev\\PaypalWPS\\View\\PaypalSettings', $p->getSettingsWidget(), 'check settings widget');
     }
 
     public function testIsConfigured()

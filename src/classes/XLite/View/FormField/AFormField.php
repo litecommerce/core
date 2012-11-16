@@ -82,8 +82,8 @@ abstract class AFormField extends \XLite\View\AView
     protected $isAllowedForCustomer = true;
 
     /**
-     * Error message 
-     * 
+     * Error message
+     *
      * @var string
      */
     protected $errorMessage;
@@ -272,12 +272,12 @@ abstract class AFormField extends \XLite\View\AView
 
     /**
      * Sanitize value
-     * 
+     *
      * @return mixed
      */
     protected function sanitize()
     {
-       return $this->getValue(); 
+       return $this->getValue();
     }
 
     /**
@@ -319,10 +319,10 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * Assemble classes 
-     * 
+     * Assemble classes
+     *
      * @param array $classes Classes
-     *  
+     *
      * @return array
      */
     protected function assembleClasses(array $classes)
@@ -336,8 +336,8 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * Assemble validation rules 
-     * 
+     * Assemble validation rules
+     *
      * @return array
      */
     protected function assembleValidationRules()
@@ -400,6 +400,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Some JavaScript code to insert
      *
+     * @todo   Remove it. Use getFormFieldJSData method instead.
      * @return string
      */
     protected function getInlineJSCode()
@@ -564,8 +565,8 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * Get default wrapper class 
-     * 
+     * Get default wrapper class
+     *
      * @return string
      */
     protected function getDefaultWrapperClass()
@@ -577,8 +578,8 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * Get label container class 
-     * 
+     * Get label container class
+     *
      * @return string
      */
     protected function getLabelContainerClass()
@@ -587,12 +588,22 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * Get value container class 
-     * 
+     * Get value container class
+     *
      * @return string
      */
     protected function getValueContainerClass()
     {
         return 'table-value ' . $this->getFieldId() . '-value';
+    }
+
+    /**
+     * Return some data for JS external scripts if it is needed.
+     *
+     * @return null|array
+     */
+    protected function getFormFieldJSData()
+    {
+        return null;
     }
 }

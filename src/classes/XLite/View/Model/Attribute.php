@@ -72,8 +72,13 @@ class Attribute extends \XLite\View\Model\AModel
     protected function getFormFieldsForSectionDefault()
     {
         if ($this->getModelObject()->getId()) {
-            if ($this->getModelObject()->getAttributeValuesCount()) {
-                $this->schemaDefault['type'][self::SCHEMA_COMMENT] = 'There are products using this attribute!';
+            $this->schemaDefault['type'][self::SCHEMA_COMMENT] = 'Before editing attriubutes specific for the chosen type you should save the changes';
+    
+            if (
+                $this->getModelObject()->getAttributeValuesCount()
+                || $this->getModelObject()->getProductClass()->getProductsCount()
+            ) {
+                $this->schemaDefault['type'][self::SCHEMA_COMMENT] .= '<br /><br />Changing the type of a product attribute after having defined values for this attribute for some products will result in losing the defined attribute values';
             }
 
             if (
@@ -83,14 +88,14 @@ class Attribute extends \XLite\View\Model\AModel
                     self::SCHEMA_CLASS    => 'XLite\View\FormField\Select\Decimals',
                     self::SCHEMA_LABEL    => 'Decimals',
                     self::SCHEMA_REQUIRED => false,
-                    \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'edit-decimals',
+                    \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'edit-decimals custom-field',
                 );
                 $this->schemaDefault['unit'] = array(
                     self::SCHEMA_CLASS    => 'XLite\View\FormField\Input\Text',
                     self::SCHEMA_LABEL    => 'Unit',
                     self::SCHEMA_REQUIRED => false,
                     self::SCHEMA_COMMENT  => '(suffix)',
-                    \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'edit-unit',
+                    \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'edit-unit custom-field',
                 );
             }
 
@@ -105,6 +110,7 @@ class Attribute extends \XLite\View\Model\AModel
                     self::SCHEMA_REQUIRED => false,
                     'rows'                => 1,
                     'maxHeight'           => 100,
+                    \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'custom-field',
                 );
             }
 
@@ -116,6 +122,7 @@ class Attribute extends \XLite\View\Model\AModel
                     self::SCHEMA_LABEL    => 'Allowed attribute values and default one',
                     self::SCHEMA_REQUIRED => false,
                     \XLite\View\FormField\ItemsList::PARAM_LIST_CLASS => 'XLite\View\ItemsList\Model\AttributeOption',
+                    \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'custom-field',
                 );
             }
         }
@@ -172,7 +179,7 @@ class Attribute extends \XLite\View\Model\AModel
     {
         $result = parent::getFormButtons();
 
-        $label = $this->getModelObject()->getId() ? 'Save changes' : 'New attribute';
+        $label = $this->getModelObject()->getId() ? 'Save changes' : 'Next';
 
         $result['submit'] = new \XLite\View\Button\Submit(
             array(

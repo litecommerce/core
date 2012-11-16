@@ -61,6 +61,7 @@ class Attributes extends \XLite\View\AView
         $list[] = 'items_list/items_list.css';
         $list[] = 'items_list/model/style.css';
         $list[] = 'items_list/model/table/style.css';
+        $list[] = 'form_field/inline/input/text.css';
 
         return $list;
     }
@@ -82,6 +83,7 @@ class Attributes extends \XLite\View\AView
         $list[] = 'items_list/items_list.js';
         $list[] = 'items_list/model/table/controller.js';
         $list[] = 'attributes/script.js';
+        $list[] = 'form_field/inline/input/text.js';
 
         return $list;
     }
@@ -118,6 +120,17 @@ class Attributes extends \XLite\View\AView
     protected function isSearchVisible()
     {
         return 0 < \XLite\Core\Database::getRepo('XLite\Model\Attribute')->count();
+    }
+
+    /**
+     * Check - list box is visible or not
+     * 
+     * @return boolean
+     */
+    protected function isListVisible()
+    {
+        return $this->getProductClass()->getAttributesCount()
+            || $this->getProductClass()->getAttributeGroups()->count();
     }
 
 }

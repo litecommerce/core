@@ -58,16 +58,6 @@ class Address extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find address with same properties as specified address has
-     *
-     * @return \XLite\Model\Address
-     */
-    public function findSameAddress($address)
-    {
-        return $address ? $this->defineFindSameAddressQuery($address)->getSingleResult() : null;
-    }
-
-    /**
      * defineFindAllCities
      *
      * @return \Doctrine\ORM\QueryBuilder
@@ -78,67 +68,6 @@ class Address extends \XLite\Model\Repo\ARepo
             ->select('a.city')
             ->addGroupBy('a.city')
             ->addOrderBy('a.city');
-    }
-
-    /**
-     * defineFindSameAddressQuery
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function defineFindSameAddressQuery($address)
-    {
-        $params = array();
-
-        $qb = $this->createQueryBuilder();
-
-        $qb ->innerJoin('a.profile', 'p')
-            ->andWhere('p.profile_id = :profile_id');
-
-        $params['profile_id'] = $address->getProfile()->getProfileId();
-
-        if ($address->getAddressId()) {
-            $qb->andWhere($qb->expr()->not('a.address_id = :address_id'));
-            $params['address_id'] = $address->getAddressId();
-        }
-
-        $fields = $address->getAddressFields();
-
-        foreach ($fields as $field) {
-
-            if ('state_id' == $field) {
-
-                if ($address->getStateId()) {
-                    $qb->innerJoin('a.state', 's')
-                        ->andWhere('s.state_id = :state_id');
-                    $params[$field] = $address->getStateId();
-
-                } else {
-                    $qb->leftJoin('a.state', 's')
-                        ->andWhere('s.state_id IS NULL');
-                }
-
-            } elseif ('country_code' == $field) {
-                $qb->innerJoin('a.country', 'c')
-                    ->andWhere('c.code = :country_code');
-                $params[$field] = $address->getCountryCode();
-
-            } else {
-
-                $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
-
-                if (method_exists($address, $methodName)) {
-
-                    $qb->andWhere(sprintf('a.%s = :%s', $field, $field));
-
-                    // Assign value from address
-                    $params[$field] = $address->$methodName();
-                }
-            }
-        }
-
-        $qb->setParameters($params);
-
-        return $qb;
     }
 
     /**

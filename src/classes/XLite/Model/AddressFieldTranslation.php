@@ -23,12 +23,24 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View\JS;
+namespace XLite\Model;
 
 /**
- * \XLite\View\JS\AJS
+ * Category multilingual data
  *
+ *
+ * @Entity
+ * @Table  (name="address_field_translation")
  */
-abstract class AJS extends \XLite\View\AView
+class AddressFieldTranslation extends \XLite\Model\Base\Translation
 {
+    /**
+     * Field name
+     *
+     * @var string
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $name;
+
 }

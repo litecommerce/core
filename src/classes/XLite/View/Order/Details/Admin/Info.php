@@ -268,6 +268,6 @@ class Info extends \XLite\View\AView
     }
 
     // }}}
-
+    
 }
 

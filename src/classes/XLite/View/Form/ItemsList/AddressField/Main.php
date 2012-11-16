@@ -23,31 +23,21 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View\JS;
+namespace XLite\View\Form\ItemsList\AddressField;
 
 /**
- * \XLite\View\JS\StatesList
+ * Main address fields items list form
  *
  */
-class StatesList extends \XLite\View\JS\AJS
+class Main extends \XLite\View\Form\ItemsList\AItemsList
 {
     /**
-     * getCountriesStates
-     *
-     * @return array
-     */
-    protected function getCountriesStates()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findCountriesStates();
-    }
-
-    /**
-     * Return widget default template
+     * getDefaultTarget
      *
      * @return string
      */
-    protected function getDefaultTemplate()
+    protected function getDefaultTarget()
     {
-        return 'js/states_list.tpl';
+        return 'address_fields';
     }
 }

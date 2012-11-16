@@ -10,6 +10,10 @@
  *
  * @ListChild (list="invoice.base", weight="40")
  *}
-<table cellspacing="0" class="totals">
+
+<div style="width: 40%; float: right; display: block; padding-top: 25px; padding-bottom: 25px;">
+<b>{t(#Totals#)}</b>
+<table cellspacing="1" cellpadding="3" width="100%">
   <list name="invoice.base.totals" />
 </table>
+</div>

@@ -307,6 +307,9 @@ popup.open = function(box)
   var o = this;
   jQuery('.blockMsg a.close-link').click(
     function(event) {
+      jQuery('form', jQuery(o)).each(function (index, elem) {
+        jQuery(elem).validationEngine('hide');
+      });
       o.close();
       return false;
     }
