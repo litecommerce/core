@@ -27,7 +27,7 @@ namespace XLite\View\FormField\Input\Text;
 
 /**
  * Atutribute option 
- * 
+ *
  */
 class AttributeOption extends \XLite\View\FormField\Input\Text\Base\Combobox
 {
