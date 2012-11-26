@@ -54,33 +54,6 @@ abstract class Address extends \XLite\Model\AEntity
     protected $address_type = 'R';
 
     /**
-     * Phone
-     *
-     * @var string
-     *
-     * @Column (type="string", length=32)
-     */
-    protected $phone = '';
-
-    /**
-     * Street, number of building, apartment etc
-     *
-     * @var string
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $street = '';
-
-    /**
-     * City
-     *
-     * @var string
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $city = '';
-
-    /**
      * State
      *
      * @var \XLite\Model\State
@@ -89,15 +62,6 @@ abstract class Address extends \XLite\Model\AEntity
      * @JoinColumn (name="state_id", referencedColumnName="state_id")
      */
     protected $state;
-
-    /**
-     * Custom state
-     *
-     * @var string
-     *
-     * @Column (type="string", length=255)
-     */
-    protected $custom_state = '';
 
     /**
      * Country
@@ -110,32 +74,14 @@ abstract class Address extends \XLite\Model\AEntity
     protected $country;
 
     /**
-     * Zip/postal code
-     *
-     * @var string
-     *
-     * @Column (type="string", length=32)
-     */
-    protected $zipcode = '';
-
-    /**
      * Get address fields list
      *
      * @return array(string)
      */
-    public static function getAddressFields()
+    public function getAddressFields()
     {
-        return array(
-            'phone',
-            'street',
-            'city',
-            'zipcode',
-            'state_id',
-            'custom_state',
-            'country_code',
-        );
+        return \XLite\Core\Database::getRepo('XLite\Model\AddressField')->findEnabledFields();
     }
-
 
     /**
      * Get state
@@ -160,11 +106,38 @@ abstract class Address extends \XLite\Model\AEntity
     }
 
     /**
+     * Set country
+     *
+     * @param integer $countryCode Country code
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->setterProperty('country_code', $countryCode);
+
+        $this->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->findOneBy(array('code' => $countryCode)));
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state State id
+     *
+     * @return void
+     */
+    public function setStateId($stateId)
+    {
+        $this->setterProperty('state_id', $stateId);
+
+        $this->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->find($stateId));
+    }
+
+    /**
      * Set state
      *
      * @param mixed $state State object or state id or custom state name
      *
      * @return void
+     * @todo Refactor?
      */
     public function setState($state)
     {
@@ -174,25 +147,14 @@ abstract class Address extends \XLite\Model\AEntity
             if ($state->getStateId()) {
                 if (!$this->state || $this->state->getStateId() != $state->getStateId()) {
                     $this->state = $state;
-                    $this->setCustomState('');
                 }
-
             } else {
-
                 $this->state = null;
-
-                if ($state->getState()) {
-                    $this->setCustomState($state->getState());
-                }
             }
 
-
         } elseif (is_string($state)) {
-
             // Set custom state
             $this->state = null;
-            $this->setCustomState($state);
-
         }
     }
 
@@ -203,7 +165,9 @@ abstract class Address extends \XLite\Model\AEntity
      */
     public function getStateId()
     {
-        return $this->getState() ? $this->getState()->getStateId() : null;
+        return $this->getState()
+            ? ($this->getState()->getStateId() ?: static::getDefaultFieldPlainValue('state_id'))
+            : static::getDefaultFieldPlainValue('state_id');
     }
 
     /**
@@ -213,7 +177,79 @@ abstract class Address extends \XLite\Model\AEntity
      */
     public function getCountryCode()
     {
-        return $this->getCountry() ? $this->getCountry()->getCode() : null;
+        return $this->getCountry()
+            ? ($this->getCountry()->getCode() ?: static::getDefaultFieldPlainValue('country_code'))
+            : static::getDefaultFieldPlainValue('country_code');
+    }
+
+    /**
+     * Get country name
+     *
+     * @return string
+     */
+    public function getCountryName()
+    {
+        return $this->getCountry() ? $this->getCountry()->getCountry() : null;
+    }
+
+    /**
+     * Get state name
+     *
+     * @return string
+     */
+    public function getStateName()
+    {
+        return $this->getState()->getState();
+    }
+
+    /**
+     * Return default field value
+     *
+     * @param string $fieldName Field name
+     *
+     * @return string
+     */
+    public static function getDefaultFieldPlainValue($fieldName)
+    {
+        $field = \XLite\Core\Database::getRepo('\XLite\Model\Config')
+            ->findOneBy(array(
+                'category'  => \XLite\Model\Config::SHIPPING_CATEGORY,
+                'name'      => static::getDefaultFieldName($fieldName)
+            ));
+
+        return $field ? $field->getValue() : '';
+    }
+
+    /**
+     * Return name of the address field in the default shipping category of the settings
+     *
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    protected static function getDefaultFieldName($fieldName)
+    {
+        $result = \XLite\Model\Config::SHIPPING_VALUES_PREFIX;
+
+        switch ($fieldName) {
+            case 'country_code':
+                $result .= 'country';
+                break;
+
+            case 'state_id':
+                $result .= 'state';
+                break;
+
+            case 'street':
+                $result .= 'address';
+                break;
+
+            default:
+                $result .= $fieldName;
+                break;
+        }
+
+        return $result;
     }
 
     /**

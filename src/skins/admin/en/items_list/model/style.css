@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  */
 
-.items-list button.remove input {
+.items-list .remove-wrapper input {
   display: none;
 }
 

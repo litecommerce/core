@@ -54,6 +54,20 @@ class Steps extends \XLite\View\AView
      */
     protected $currentStep;
 
+    
+    /**
+     * Register JS files
+     *
+     * @return array
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'form_field/select_country.js';
+
+        return $list;
+    }
 
     /**
      * Get steps

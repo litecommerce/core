@@ -10,7 +10,7 @@
  *
  * @ListChild (list="invoice.base.totals", weight="100")
  *}
-<tr>
+<tr bgcolor="#CCCCCC">
   <td class="title">{t(#Subtotal#)}:</td>
-  <td class="value">{formatPrice(order.getSubtotal(),order.getCurrency())}</td>
+  <td align="right">{formatPrice(order.getSubtotal(),order.getCurrency())}</td>
 </tr>

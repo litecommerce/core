@@ -318,24 +318,9 @@ class Profile extends \XLite\Model\Repo\ARepo
     protected function getNameSubstringSearchFields()
     {
         return array(
-            'CONCAT(CONCAT(addresses.firstname, \' \'), addresses.lastname)',
-            'CONCAT(CONCAT(addresses.lastname, \' \'), addresses.firstname)',
+            'CONCAT(CONCAT(field_value_firstname.value, \' \'), field_value_lastname.value)',
+            'CONCAT(CONCAT(field_value_lastname.value, \' \'), field_value_firstname.value)',
             'p.login'
-        );
-    }
-
-    /**
-     * List of fields to use in search by substring
-     *
-     * @return array
-     */
-    protected function getAddressSubstringSearchFields()
-    {
-        return array(
-            'addresses.street',
-            'addresses.custom_state',
-            'addresses.city',
-            'addresses.zipcode',
         );
     }
 
@@ -373,6 +358,45 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Prepare field search query
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param type $fieldName
+     */
+    protected function prepareField(\Doctrine\ORM\QueryBuilder $queryBuilder, $fieldName)
+    {
+        $queryBuilder->leftJoin(
+            'addresses.addressFields',
+            'field_value_' . $fieldName
+        )->leftJoin(
+            'field_value_' . $fieldName . '.addressField',
+            'field_' . $fieldName,
+            \Doctrine\ORM\Query\Expr\Join::WITH,
+            'field_' . $fieldName . '.serviceName = :' . $fieldName
+        )->setParameter($fieldName, $fieldName);
+    }
+
+    /**
+     * Prepare field search query
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param type $value
+     * @param type $fieldName
+     */
+    protected function prepareCommonField(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $fieldName, $exactCmp = true)
+    {
+        if ($value) {
+            $this->prepareField($queryBuilder, $fieldName);
+
+            $queryBuilder->andWhere(
+                $exactCmp
+                    ? 'field_value_' . $fieldName . '.value = :field_value_' . $fieldName
+                    : 'field_value_' . $fieldName . '.value LIKE :field_value_' . $fieldName
+            )->setParameter('field_value_' . $fieldName, $exactCmp ? $value : '%' . $value . '%');
+        }
+    }
+
+    /**
      * prepareCndProfileId
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
@@ -396,13 +420,10 @@ class Profile extends \XLite\Model\Repo\ARepo
     protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if ($value) {
-
             $queryBuilder->innerJoin('p.order', 'porder')
                 ->andWhere('porder.order_id = :orderId')
                 ->setParameter('orderId', $value);
-
         } else {
-
             $queryBuilder->andWhere('p.order is null');
         }
     }
@@ -526,6 +547,9 @@ class Profile extends \XLite\Model\Repo\ARepo
         if (!empty($value)) {
             $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
+            $this->prepareField($queryBuilder, 'firstname');
+            $this->prepareField($queryBuilder, 'lastname');
+
             foreach ($this->getNameSubstringSearchFields() as $field) {
                 $cnd->add($field . ' LIKE :pattern');
             }
@@ -546,7 +570,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndPhone(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $this->prepareCndCommon($queryBuilder, $value, 'phone', false, 'addresses');
+        $this->prepareCommonField($queryBuilder, $value, 'name', false);
     }
 
     /**
@@ -585,7 +609,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndCustomState(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $this->prepareCndCommon($queryBuilder, $value, 'custom_state', true, 'addresses');
+        $this->prepareCommonField($queryBuilder, $value, 'custom_state');
     }
 
     /**
@@ -599,15 +623,12 @@ class Profile extends \XLite\Model\Repo\ARepo
     protected function prepareCndAddress(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-            $cnd = new \Doctrine\ORM\Query\Expr\Orx();
-
-            foreach ($this->getAddressSubstringSearchFields() as $field) {
-                $cnd->add($field . ' LIKE :addressPattern');
-            }
-
-            $queryBuilder
-                ->andWhere($cnd)
-                ->setParameter('addressPattern', '%' . $value . '%');
+            $queryBuilder->leftJoin(
+                'addresses.addressFields',
+                'field_value_address_pattern'
+            )
+            ->andWhere('field_value_address_pattern.value LIKE :addressPattern')
+            ->setParameter('addressPattern', '%' . $value . '%');
         }
     }
 

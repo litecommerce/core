@@ -42,6 +42,7 @@ class CountrySelect extends \XLite\View\FormField
     const PARAM_COUNTRY    = 'country';
     const PARAM_FIELD_ID   = 'fieldId';
     const PARAM_CLASS_NAME = 'className';
+    const PARAM_SELECT_ONE = 'selectOne';
     const PARAM_ALLOW_LABEL_COUNTRY = 'allowLabelCountry';
 
 
@@ -65,12 +66,13 @@ class CountrySelect extends \XLite\View\FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL        => new \XLite\Model\WidgetParam\Bool('All', false),
-            self::PARAM_FIELD_NAME => new \XLite\Model\WidgetParam\String('Field name', ''),
-            self::PARAM_FIELD_ID   => new \XLite\Model\WidgetParam\String('Field ID', ''),
-            self::PARAM_CLASS_NAME => new \XLite\Model\WidgetParam\String('Class name', ''),
-            self::PARAM_COUNTRY    => new \XLite\Model\WidgetParam\String('Value', ''),
-            self::PARAM_ALLOW_LABEL_COUNTRY => new \XLite\Model\WidgetParam\Bool('Allow label-based country selector', false),
+            static::PARAM_ALL        => new \XLite\Model\WidgetParam\Bool('All', false),
+            static::PARAM_FIELD_NAME => new \XLite\Model\WidgetParam\String('Field name', ''),
+            static::PARAM_FIELD_ID   => new \XLite\Model\WidgetParam\String('Field ID', ''),
+            static::PARAM_CLASS_NAME => new \XLite\Model\WidgetParam\String('Class name', ''),
+            static::PARAM_COUNTRY    => new \XLite\Model\WidgetParam\String('Value', ''),
+            static::PARAM_SELECT_ONE => new \XLite\Model\WidgetParam\Bool('Select one value', false),
+            static::PARAM_ALLOW_LABEL_COUNTRY => new \XLite\Model\WidgetParam\Bool('Allow label-based country selector', false),
         );
     }
 
@@ -81,17 +83,17 @@ class CountrySelect extends \XLite\View\FormField
      */
     protected function isEnabledOnly()
     {
-        return !$this->getParam(self::PARAM_ALL);
+        return !$this->getParam(static::PARAM_ALL);
     }
 
     /**
-     * Get selected value 
-     * 
+     * Get selected value
+     *
      * @return string
      */
     protected function getSelectedValue()
     {
-        return $this->getParam(self::PARAM_COUNTRY);
+        return $this->getParam(static::PARAM_COUNTRY);
     }
 
     /**
@@ -103,7 +105,7 @@ class CountrySelect extends \XLite\View\FormField
      */
     protected function isSelectedCountry($countryCode)
     {
-        $country = $this->getParam(self::PARAM_COUNTRY);
+        $country = $this->getParam(static::PARAM_COUNTRY);
 
         if ('' == $country) {
             $country = \XLite\Core\Config::getInstance()->General->default_country;
@@ -126,18 +128,18 @@ class CountrySelect extends \XLite\View\FormField
 
     /**
      * Check - country selector is label-based
-     * 
+     *
      * @return boolean
      */
     protected function isLabelBasedSelector()
     {
-        return $this->getParam(self::PARAM_ALLOW_LABEL_COUNTRY)
+        return $this->getParam(static::PARAM_ALLOW_LABEL_COUNTRY)
             && 1 == count($this->getCountries());
     }
 
     /**
-     * Get one country 
-     * 
+     * Get one country
+     *
      * @return \XLite\Model\Country
      */
     protected function getOneCountry()
@@ -145,5 +147,15 @@ class CountrySelect extends \XLite\View\FormField
         $list = $this->getCountries();
 
         return reset($list);
+    }
+
+    /**
+     * Return if the select one value is available
+     *
+     * @return boolean
+     */
+    protected function hasSelectOne()
+    {
+        return $this->getParam(static::PARAM_SELECT_ONE);
     }
 }

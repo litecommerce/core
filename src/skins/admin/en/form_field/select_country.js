@@ -9,9 +9,6 @@
  * @link      http://www.litecommerce.com/
  */
 
-var statesList = [];
-var stateSelectors = [];
-
 function StateSelector(countrySelectorId, stateSelectorId, stateInputId)
 {
   var o = this;
@@ -135,11 +132,13 @@ StateSelector.prototype.addStates = function(states)
 
     var s = this.stateSelectBox.get(0);
     var added = s.options.length;
+    var i = 0;
 
     if (states) {
-      for (var i = 0; i < states.length; i++) {
-        s.options[i + added] = new Option(states[i].state, states[i].id);
-      }
+        for (var key in states) {
+            s.options[i + added] = new Option(states[key], key);
+            i++;
+        }
     }
 
     if (this.stateSavedValue) {
@@ -147,3 +146,7 @@ StateSelector.prototype.addStates = function(states)
     }
   }
 }
+
+jQuery(document).ready(function () {
+  UpdateStatesList();
+});

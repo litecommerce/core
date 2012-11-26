@@ -56,73 +56,28 @@ class Address extends \XLite\View\Dialog
      *
      * @var array
      */
-    protected $schema = array(
-        'title' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Title',
-            self::SCHEMA_LABEL    => 'Title',
-        ),
-        'firstname' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'First name',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'lastname' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Last name',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'street' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Street',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'city' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'City',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'state_id' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\StateSelect',
-            self::SCHEMA_LABEL    => 'State',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'custom_state' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Another state',
-            self::SCHEMA_REQUIRED => false,
-        ),
-        'zipcode' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Zip code',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'country_code' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\CountrySelect',
-            self::SCHEMA_LABEL    => 'Country',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'phone' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Phone',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        /*  TODO: move to the shipping module where this field is required
-        'address_type' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AddressType',
-            self::SCHEMA_LABEL    => 'Address type',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        */
-    );
+    protected $schema = array();
 
     /**
      * getSchemaFields
      *
-     * @return void
+     * @return array
      */
     public function getSchemaFields()
     {
-        return $this->schema;
+        $result = $this->schema;
+
+        foreach (
+            \XLite\Core\Database::getRepo('XLite\Model\AddressField')->search(new \XLite\Core\CommonCell(array('enabled' => true))) as $field
+        ) {
+            $result[$field->getServiceName()] = array(
+                static::SCHEMA_CLASS    => $field->getSchemaClass(),
+                static::SCHEMA_LABEL    => $field->getName(),
+                static::SCHEMA_REQUIRED => $field->getRequired(),
+            );
+        }
+
+        return $result;
     }
 
     /**
@@ -141,23 +96,20 @@ class Address extends \XLite\View\Dialog
 
         $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($fieldName);
 
-        if (method_exists($address, $methodName)) {
+        // $methodName assembled from 'get' + camelized $fieldName
+        $result = $address->$methodName();
 
-            // $methodName assembled from 'get' + camelized $fieldName
-            $result = $address->$methodName();
+        if ($result && false !== $processValue) {
+            switch ($fieldName) {
+                case 'state_id':
+                    $result = $address->getState()->getState();
+                    break;
 
-            if (false !== $processValue) {
-                switch($fieldName) {
-                    case 'state_id':
-                        $result = $address->getState()->getState();
-                        break;
+                case 'country_code':
+                    $result = $address->getCountry()->getCountry();
+                    break;
 
-                    case 'country_code':
-                        $result = $address->getCountry()->getCountry();
-                        break;
-
-                    default:
-                }
+                default:
             }
         }
 

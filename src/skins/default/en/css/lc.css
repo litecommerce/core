@@ -1237,15 +1237,62 @@ div.product-details .continue-button-intend
   padding: 4px 0px;
   margin: 0px;
   background-image: none;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .product-details .extra-fields li strong
 {
-  width: 80px;
   font-weight: normal;
+  background-color: #fff;
+  padding-right: 3px;
+}
+
+.product-details .extra-fields li h3 
+{
+  margin: 11px 0 0 0;
+  color: #456583;
+  font-size: 16px;
+}
+
+.product-details .extra-fields li span 
+{
+  display: inline-block;
+  color: #1f1f1f;
+  vertical-align: bottom;
+  max-width: 700px;
+}
+
+.product-details .extra-fields li span.checkbox.no-checked 
+{
+  color: #7e7e7e;
+}
+
+.product-details .extra-fields li div
+{
+  width: 246px;
   display: inline-block;
   color: #7e7e7e;
+  background: url(../images/dotted.png) repeat-x scroll 0 bottom transparent;
+  vertical-align: top;
+}
+
+.product-details .extra-fields li ul li div
+{
+  width: 226px;
+}
+
+.product-details .extra-fields li ul li
+{
+  margin-top: 5px;
+}
+
+.product-details .extra-fields li ul
+{
+  margin: 0 0 0 20px;
+}
+
+.product-details .extra-fields ul {
+  line-height: 20px;
 }
 
 table.list-body td.hproduct a.product-thumbnail
@@ -2356,6 +2403,7 @@ form.estimator .main,
   margin-top: 12px;
   margin-right: 4px;
   padding: 16px 20px;
+  height: 120px;
 }
 
 /* Step: order review */
@@ -2585,6 +2633,12 @@ form.estimator .main,
 }
 
 .select-address ul.addresses li {
+  background: none;
+  margin: 0px;
+  padding-left: 2px;
+}
+
+.select-address ul.addresses > li {
   list-style: none;
   width: 278px;
   float: left;
@@ -2601,11 +2655,11 @@ form.estimator .main,
   cursor: pointer;
 }
 
-.select-address ul.addresses li.last {
+.select-address ul.addresses > li.last {
   margin-right: 0px;
 }
 
-.select-address ul.addresses li .shipping {
+.select-address ul.addresses > li .shipping {
   position: absolute;
   right: 8px;
   bottom: 15px;
@@ -2614,7 +2668,7 @@ form.estimator .main,
   height: 20px;
 }
 
-.select-address ul.addresses li .billing {
+.select-address ul.addresses > li .billing {
   position: absolute;
   right: 9px;
   bottom: 47px;

@@ -1,0 +1,57 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Attributes
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.tab-content h3 {
+  margin-top: 32px;
+  color: #333;
+}
+
+.table-label label {
+  color: #456583;
+  font-size: 14px;
+}
+
+.table-value span.input-field-wrapper {
+  float: left;
+}
+
+.tab-content .form-field-comment {
+  font-size: 16px;
+  color: #8f8f8f;
+}
+
+.tab-content label.separ-tab {
+  color: #456583;
+  font-size: 16px;
+  float: left;
+  margin: 5px;
+}
+
+.tab-content .attrSepTab-value {
+  width: auto;
+  float: left;
+}
+
+.tab-content li {
+  margin-bottom: 8px;
+}
+
+.table-value.checkbox label {
+  margin: 0;
+}
+
+.table-label.checkbox {
+  float: right;
+}
+
+.table-value .main-button {
+  line-height: 14px;
+}

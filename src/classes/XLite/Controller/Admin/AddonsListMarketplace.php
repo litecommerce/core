@@ -40,4 +40,16 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
     {
         return 'Modules Marketplace';
     }
+
+    /**
+     * Clear marketplace cache
+     *
+     * @return void
+     */
+    protected function doActionClearCache()
+    {
+        \XLite\Core\Marketplace::getInstance()->clearActionCache(\XLite\Core\Marketplace::ACTION_GET_ADDONS_LIST);
+
+        $this->setReturnURL($this->buildURL('addons_list_marketplace'));
+    }
 }

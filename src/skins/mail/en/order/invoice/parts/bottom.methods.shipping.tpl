@@ -11,6 +11,7 @@
  * @ListChild (list="invoice.bottom.methods", weight="10")
  *}
 <td class="shipping" IF="getShippingModifier()&shippingModifier.getMethod()">
+  <br />
   <strong>{t(#Shipping method#)}:</strong>
   {shippingModifier.method.getName():h}
 </td>
