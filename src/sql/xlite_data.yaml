@@ -429,7 +429,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X hours', translations: [{ code: en, label: '{{hours}} hour(s)' }] }
   - { name: 'X minutes', translations: [{ code: en, label: '{{minutes}} minute(s)' }] }
   - { name: 'X seconds', translations: [{ code: en, label: '{{seconds}} second(s)' }] }
-  - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
+  - { name: 'Importing will overwrite the existing product information. This operation cannot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation cannot be undone.' }] }
   - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: en, label: 'To find out the data format for import, you can create a sample data file <a href="{{url}}">by exporting your existing products</a>. Then you can prepare the file for import using the same format.' }] }
   - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Note that data import time will strongly depend on the size of the file being imported.' }] }
   - { name: 'Occurred X add product events and Y update product events', translations: [{ code: en, label: 'Occurred {{new}} add product events and {{old}} update product events.' }] }
