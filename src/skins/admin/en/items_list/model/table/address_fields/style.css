@@ -14,3 +14,12 @@
 {
   width: 300px;
 }
+
+.cell.required .input-field-wrapper.switcher .widget {
+  display: none;
+}
+
+.cell.required .input-field-wrapper.switcher input {
+  display: block;
+  margin: auto;
+}
