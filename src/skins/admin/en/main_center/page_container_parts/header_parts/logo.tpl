@@ -10,4 +10,4 @@
  *
  * @ListChild (list="admin.main.page.header", weight="10")
  *}
-<div class="logo"></div>
+<div class="logo"><a href="{buildURL()}"><img src="images/spacer.gif" /></a></div>

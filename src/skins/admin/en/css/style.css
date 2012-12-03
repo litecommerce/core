@@ -287,6 +287,12 @@ body
   float: left;
 }
 
+#header .logo a img
+{
+  width: 76px;
+  height: 76px;
+}
+
 #header .sw-version
 {
   position: absolute;
