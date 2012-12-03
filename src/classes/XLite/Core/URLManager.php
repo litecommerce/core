@@ -46,7 +46,7 @@ abstract class URLManager extends \XLite\Base
      */
     public static function trimTrailingSlashes($url)
     {
-        return \Includes\Utils\Converter::trimTrailingChars($url, '/');
+        return \Includes\Utils\URLManager::trimTrailingChars($url);
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class URLManager extends \XLite\Base
             }
 
             $hostDetails = \XLite::getInstance()->getOptions('host_details');
-            $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
+            $host = $hostDetails[$isSecure ? 'https_host' : 'http_host'];
 
             if ($host) {
                 $proto = ($isSecure ? 'https' : 'http') . '://';
@@ -114,8 +114,7 @@ abstract class URLManager extends \XLite\Base
      */
     public static function isHTTPS()
     {
-        return (isset($_SERVER['HTTPS']) && ('on' === strtolower($_SERVER['HTTPS']) || '1' == $_SERVER['HTTPS']))
-            || (isset($_SERVER['SERVER_PORT']) && '443' == $_SERVER['SERVER_PORT']);
+        return \Includes\Utils\URLManager::isHTTPS();
     }
 
     /**
@@ -125,7 +124,7 @@ abstract class URLManager extends \XLite\Base
      */
     public static function getSelfURI()
     {
-        return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
+        return \Includes\Utils\URLManager::getSelfURI();
     }
 
     /**
@@ -135,7 +134,7 @@ abstract class URLManager extends \XLite\Base
      */
     public static function getCurrentURL()
     {
-        return 'http' . (static::isHTTPS() ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        return \Includes\Utils\URLManager::getCurrentURL();
     }
 
     /**
@@ -147,9 +146,6 @@ abstract class URLManager extends \XLite\Base
      */
     public static function isValidURLHost($str)
     {
-        $urlData = parse_url('http://' . $str . '/path');
-        $host = $urlData['host'] . (isset($urlData['port']) ? ':' . $urlData['port'] : '');
-
-        return ($host == $str);
+        return \Includes\Utils\URLManager::isValidURLHost($str);
     }
 }

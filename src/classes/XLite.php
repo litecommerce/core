@@ -224,39 +224,7 @@ class XLite extends \XLite\Base
      */
     public function getOptions($names = null)
     {
-        $options = \Includes\Utils\ConfigParser::getOptions($names);
-
-        if (
-            (
-                is_array($names)
-                && isset($names[0])
-                && isset($names[1])
-                && 'host_details' == $names[0]
-                && (
-                    'http_host' == $names[1]
-                    || 'https_host' == $names[1]
-                )
-                && $options != $_SERVER['HTTP_HOST']
-            )
-            || (
-                !is_array($names)
-                && 'host_details' == $names
-                && $options['http_host'] != $_SERVER['HTTP_HOST'] 
-                && $options['https_host'] != $_SERVER['HTTP_HOST'] 
-            )
-        ) {
-            $domains = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'domains'));
-            $domains = explode(',', $domains);
-            if (in_array($_SERVER['HTTP_HOST'], $domains)) {
-                if (is_array($names)) {
-                    $options = $_SERVER['HTTP_HOST'];
-                } else {
-                    $options['http_host'] = $options['https_host'] = $_SERVER['HTTP_HOST'];
-                }
-            }
-        }
-
-        return $options;
+        return \XLite\Core\ConfigParser::getOptions($names);
     }
 
     /**

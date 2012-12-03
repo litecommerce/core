@@ -184,7 +184,7 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * isRedirectNeeded
+     * Is redirect needed
      *
      * @return boolean
      */
@@ -193,13 +193,18 @@ abstract class AController extends \XLite\Core\Handler
         $isRedirectNeeded = (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnURL()) && !$this->silent;
     
         if (!$isRedirectNeeded) {
-            $hostDetails = \XLite::getInstance()->getOptions('host_details');
-            $host = $hostDetails['http' . (\XLite\Core\URLManager::isHTTPS() ? 's' : '') . '_host'];
+            $host = \XLite::getInstance()->getOptions(
+                array(
+                    'host_details',
+                    \XLite\Core\URLManager::isHTTPS() ? 'https_host' : 'http_host'
+                )
+            );
             if ($host != $_SERVER['HTTP_HOST']) {
                 $isRedirectNeeded = true;
-                $this->returnURL = $this->getShopURL();
+                $this->setReturnURL($this->getShopURL());
             }
         }
+
         return $isRedirectNeeded;
     }
 
