@@ -190,7 +190,17 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function isRedirectNeeded()
     {
-        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnURL()) && !$this->silent;
+        $isRedirectNeeded = (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnURL()) && !$this->silent;
+    
+        if (!$isRedirectNeeded) {
+            $hostDetails = \XLite::getInstance()->getOptions('host_details');
+            $host = $hostDetails['http' . (\XLite\Core\URLManager::isHTTPS() ? 's' : '') . '_host'];
+            if ($host != $_SERVER['HTTP_HOST']) {
+                $isRedirectNeeded = true;
+                $this->returnURL = $this->getShopURL();
+            }
+        }
+        return $isRedirectNeeded;
     }
 
     /**
