@@ -82,6 +82,7 @@ servers=
 http_host = ""
 https_host = ""
 web_dir = ""
+domains = ""
 
 [clean_urls]
 enabled = off
