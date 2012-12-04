@@ -432,6 +432,18 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return $this->isPurchased($module) || $this->isFree($module);
     }
 
+    /**
+     * Get CSS classes for module cell
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return string
+     */
+    protected function getModuleClassesCSS(\XLite\Model\Module $module)
+    {
+        return sprintf('module-%d', $module->getModuleId());
+    }
+
     // }}}
 
     // {{{ Methods to search modules of certain types
