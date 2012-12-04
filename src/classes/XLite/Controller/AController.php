@@ -196,12 +196,12 @@ abstract class AController extends \XLite\Core\Handler
             $host = \XLite::getInstance()->getOptions(
                 array(
                     'host_details',
-                    \XLite\Core\URLManager::isHTTPS() ? 'https_host' : 'http_host'
+                    $this->isHTTPS() ? 'https_host' : 'http_host'
                 )
             );
             if ($host != $_SERVER['HTTP_HOST']) {
                 $isRedirectNeeded = true;
-                $this->setReturnURL($this->getShopURL());
+                $this->setReturnURL($this->getShopURL($this->getURL(), $this->isHTTPS()));
             }
         }
 
@@ -1160,7 +1160,7 @@ abstract class AController extends \XLite\Core\Handler
     protected function needSecure()
     {
         return $this->isSecure()
-            && !\XLite\Core\Request::getInstance()->isHTTPS()
+            && !$this->isHTTPS()
             && !\XLite\Core\Request::getInstance()->isCLI()
             && \XLite\Core\Request::getInstance()->isGet();
     }
