@@ -42,51 +42,50 @@ abstract class ConfigParser extends \XLite\Base
     {
         $options = \Includes\Utils\ConfigParser::getOptions($names);
 
-        return static::prepare($names, $options);
+        if (is_array($options)) {
+            foreach($options as $key => $value) {
+                $options[$key] = static::prepare($value, $key, $names);
+            }
+
+        } elseif (is_array($names)) {
+            $options = static::prepare($options, $names[1], $names[0]);
+
+        } else {
+            $options = static::prepare($options, $names);
+        }
+
+        return $options;
     }
 
     /**
-     * Prepare options 
+     * Prepare option value
      *
-     * @param array|string $names   Option names tree
-     * @param array|string $options Options
+     * @param string $value   Value
+     * @param string $key     Key
+     * @param string $section Section OPTIONAL
      *
-     * @return array|mixed
+     * @return string
      */
-    protected static function prepare($names, $options)
+    protected static function prepare($value, $key, $section = null)
     {
         if (
-            (
-                is_array($names)
-                && isset($_SERVER['HTTP_HOST'])
-                && isset($names[0])
-                && isset($names[1])
-                && 'host_details' == $names[0]
-                && (
-                    'http_host' == $names[1]
-                    || 'https_host' == $names[1]
-                )
-                && $options != $_SERVER['HTTP_HOST']
+            $value
+            && isset($_SERVER['HTTP_HOST'])
+            && isset($section)
+            && 'host_details' == $section
+            && (
+                'http_host' == $key
+                || 'https_host' == $key
             )
-            || (
-                !is_array($names)
-                && isset($_SERVER['HTTP_HOST'])
-                && 'host_details' == $names
-                && $options['http_host'] != $_SERVER['HTTP_HOST']
-                && $options['https_host'] != $_SERVER['HTTP_HOST']
-            )
+            && $value != $_SERVER['HTTP_HOST']
         ) {
             $domains = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'domains'));
             $domains = explode(',', $domains);
             if (in_array($_SERVER['HTTP_HOST'], $domains)) {
-                if (is_array($names)) {
-                    $options = $_SERVER['HTTP_HOST'];
-                } else {
-                    $options['http_host'] = $options['https_host'] = $_SERVER['HTTP_HOST'];
-                }
+                $value = $_SERVER['HTTP_HOST'];
             }
         }
 
-        return $options;
+        return $value;
     }
 }
