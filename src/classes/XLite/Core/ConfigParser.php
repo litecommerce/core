@@ -71,7 +71,6 @@ abstract class ConfigParser extends \XLite\Base
         if (
             $value
             && isset($_SERVER['HTTP_HOST'])
-            && isset($section)
             && 'host_details' == $section
             && (
                 'http_host' == $key
@@ -79,7 +78,7 @@ abstract class ConfigParser extends \XLite\Base
             )
             && $value != $_SERVER['HTTP_HOST']
         ) {
-            $domains = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'domains'));
+            $domains = static::getOptions(array('host_details', 'domains'));
             $domains = explode(',', $domains);
             if (in_array($_SERVER['HTTP_HOST'], $domains)) {
                 $value = $_SERVER['HTTP_HOST'];
