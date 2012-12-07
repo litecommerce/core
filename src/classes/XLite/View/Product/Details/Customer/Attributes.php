@@ -72,7 +72,7 @@ class Attributes extends \XLite\View\Product\Details\AAttributes
      */
     protected function getFieldClass(\XLite\Model\Attribute $attribute, $value)
     {
-        $class = strtolower($attribute->getTypes($attribute->getType()));
+        $class = str_replace(' ', '-', strtolower($attribute->getTypes($attribute->getType())));
         if (\XLite\Model\Attribute::TYPE_CHECKBOX == $attribute->getType()) {
             $class .= ' ' . (static::t('yes') == $value ? 'checked' : 'no-checked');
         }
