@@ -506,8 +506,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function addOrderByCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         $queryBuilder
-            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.lpos', 'ASC')
-            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.pos', 'ASC');
+        // We need POS ordering since POS and LPOS are orderings inside the same one level.
+        // LPOS is formed by the system (by adding into the level)
+        // POS  is formed manually by admin and must have priority
+            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.pos', 'ASC')
+            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.lpos', 'ASC');
     }
 
     /**
