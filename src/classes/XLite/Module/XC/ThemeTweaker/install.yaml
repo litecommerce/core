@@ -1,0 +1,28 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+
+XLite\Model\Config:
+  - name: use_css
+    category: 'XC\ThemeTweaker'
+    type: checkbox
+    orderby: 10
+    value: true
+    translations:
+      - code: en
+        option_name: 'Use custom css'
+  - name: use_js
+    category: 'XC\ThemeTweaker'
+    type: checkbox
+    orderby: 20
+    value: true
+    translations:
+      - code: en
+        option_name: 'Use custom javascript'
+XLite\Model\Role\Permission:
+  - { code: manage theme tweaker, section: Content, translations: [{ code: en, name: Manage theme tweaker }] }
