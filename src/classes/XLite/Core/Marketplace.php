@@ -787,12 +787,17 @@ class Marketplace extends \XLite\Base\Singleton
             )
         );
 
-        $result = $this->performActionWithTTL(
-            $ttl,
-            static::ACTION_CHECK_ADDON_KEY,
-            array(static::FIELD_KEY => $keys),
-            false
-        );
+        if (!empty($keys)) {
+            $result = $this->performActionWithTTL(
+                $ttl,
+                static::ACTION_CHECK_ADDON_KEY,
+                array(static::FIELD_KEY => $keys),
+                false
+            );
+
+        } else {
+            $result = null;
+        }
 
         if (static::TTL_NOT_EXPIRED !== $result) {
             $repoModule = \XLite\Core\Database::getRepo('\XLite\Model\Module');
