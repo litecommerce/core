@@ -55,7 +55,15 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
     protected function doActionRegisterKey()
     {
         $key  = \XLite\Core\Request::getInstance()->key;
-        $addonsInfo = \XLite\Core\Marketplace::getInstance()->checkAddonKey($key);
+        $key = trim($key);
+
+        if ($key) {
+            $addonsInfo = \XLite\Core\Marketplace::getInstance()->checkAddonKey($key);
+
+        } else {
+            $addonsInfo = null;
+            $emptyKey = true;
+        }
 
         if ($addonsInfo && $addonsInfo[$key]) {
 
@@ -107,7 +115,7 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                 }
             }
 
-        } else {
+        } elseif (!isset($emptyKey)) {
 
             $error = \XLite\Core\Marketplace::getInstance()->getError();
 
@@ -119,6 +127,10 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
 
                 $this->showError(__FUNCTION__, 'Response from marketplace is not received');
             }
+
+        } else {
+
+            $this->showError(__FUNCTION__, 'Please specify non-empty key');
         }
 
         $this->setReturnURL($this->buildURL('addons_list_marketplace'));

@@ -70,6 +70,16 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
     }
 
     /**
+     * Return body description
+     *
+     * @return string
+     */
+    protected function getBodyDescription()
+    {
+        return 'If you have a license key for a commercial module, you can enter it here to register the purchase of the appropriate module.';
+    }
+
+    /**
      * Return templates directory name
      *
      * @return string
