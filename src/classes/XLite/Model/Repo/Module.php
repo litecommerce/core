@@ -370,25 +370,32 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function updateMarketplaceModules(array $data)
     {
-        // Clear previously saved data
-        $this->defineDeleteNotInstalledModulesQuery()->execute();
-        $this->flushChanges();
-
-        // Save received data
-        $this->insertInBatch($data);
-    }
-
-    /**
-     * Define the Doctrine query
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function defineDeleteNotInstalledModulesQuery()
-    {
-        $queryBuilder = $this->getQueryBuilder()->delete($this->_entityName, 'm');
+        // Get the list of non-installed modules from marketplace
+        $queryBuilder = $this->createQueryBuilder();
+        $this->prepareCndFromMarketplace($queryBuilder, true);
         $this->prepareCndInstalled($queryBuilder, false);
 
-        return $queryBuilder;
+        $modules = $queryBuilder->getResult();
+
+        // Update existing modules
+        if (!empty($modules)) {
+            foreach ($modules as $module) {
+                $key = sprintf(
+                    '%s_%s_%s',
+                    $module->getAuthor(),
+                    $module->getName(),
+                    $module->getMajorVersion()
+                );
+
+                if (isset($data[$key])) {
+                    $this->update($module, $data[$key]);
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        // Add new modules
+        $this->insertInBatch($data);
     }
 
     // }}}
