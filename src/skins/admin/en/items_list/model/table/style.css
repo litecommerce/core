@@ -149,12 +149,12 @@
 }
 
 .items-list-table table.list tbody tr.line.remove-mark * {
-  opacity: .7;
-  filter: alpha(opacity=70);
+  filter: alpha(opacity=80);
+  opacity: .9;
 }
 
 .items-list-table table.list tbody.lines tr.line.remove-mark {
-  opacity: .3;
+  opacity: .6;
 }
 
 .items-list-table table.list tbody.lines .inline-field .field {

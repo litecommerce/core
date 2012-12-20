@@ -54,8 +54,16 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionRegisterKey()
     {
-        $key  = \XLite\Core\Request::getInstance()->key;
-        $addonsInfo = \XLite\Core\Marketplace::getInstance()->checkAddonKey($key);
+        $key  = $this->processKey(\XLite\Core\Request::getInstance()->key);
+        $key = trim($key);
+
+        if ($key) {
+            $addonsInfo = \XLite\Core\Marketplace::getInstance()->checkAddonKey($key);
+
+        } else {
+            $addonsInfo = null;
+            $emptyKey = true;
+        }
 
         if ($addonsInfo && $addonsInfo[$key]) {
 
@@ -107,7 +115,7 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                 }
             }
 
-        } else {
+        } elseif (!isset($emptyKey)) {
 
             $error = \XLite\Core\Marketplace::getInstance()->getError();
 
@@ -119,10 +127,57 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
 
                 $this->showError(__FUNCTION__, 'Response from marketplace is not received');
             }
+
+        } else {
+
+            $this->showError(__FUNCTION__, 'Please specify non-empty key');
         }
 
         $this->setReturnURL($this->buildURL('addons_list_marketplace'));
     }
 
     // }}}
+
+    /**
+     * Preprocess key value
+     *
+     * @param string $key Key value
+     *
+     * @return string
+     */
+    protected function processKey($key)
+    {
+        $hostDetails = \XLite::getInstance()->getOptions('host_details');
+        $host = $this->isHTTPS() ? $hostDetails['https_host'] : $hostDetails['http_host'];
+
+        return $this->decryptKey($key, $host) ?: $key;
+    }
+
+    /**
+     * Decrypt key value
+     *
+     * @param string $crypted Encrypted key string
+     * @param string $sk      Service key
+     *
+     * @return string
+     */
+    protected function decryptKey($crypted, $sk)
+    {
+        $result = '';
+        $s1 = $s2 = array();
+
+        for ($i = 0; $i < strlen($crypted); $i+=2) {
+            $s1[] = $crypted[$i];
+            $s2[] = $crypted[$i+1];
+        }
+
+        $s1 = implode('', array_reverse($s1));
+        $s2 = substr(implode($s2), 0, 32);
+
+        if (substr(md5($sk), 0, min(32, strlen($s1))) == $s2) {
+            $result = base64_decode($s1);
+        }
+
+        return $result;
+    }
 }

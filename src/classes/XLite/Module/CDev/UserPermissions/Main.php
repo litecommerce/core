@@ -38,7 +38,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC';
+        return 'X-Cart team';
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return '';
+        return 'Allows you to restrict access to backend functions to only those employees who need them. You can define administrator roles and configure which groups of back-end functions are available to users having these roles.';
     }
 
     /**

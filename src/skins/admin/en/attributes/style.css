@@ -42,12 +42,12 @@
 }
 
 button.new-attribute span {
-  background: url("../images/icon_list.png") no-repeat scroll left top transparent;
+  background: url(../images/icon_list.png) no-repeat scroll left top transparent;
   padding: 2px 0 2px 25px;
 }
 
 button.manage-groups span {
-  background: url("../images/icon_folder.png") no-repeat scroll left top transparent;
+  background: url(../images/icon_folder.png) no-repeat scroll left top transparent;
   padding: 2px 0 2px 25px;
 }
 
@@ -56,7 +56,7 @@ div.buttons {
 }
 
 div.group table.list th.actions.left {
-  background: url("../images/icon_folder.png") no-repeat scroll center center transparent;
+  background: url(../images/icon_folder.png) no-repeat scroll center center transparent;
 }
 
 /*
@@ -165,7 +165,7 @@ div.group table.list th.actions.left {
 }
 
 .edit-attribute {
-  background: url("../images/tri_right_button.png") no-repeat right top transparent;
+  background: url(../images/tri_right_button.png) no-repeat right top transparent;
   padding-right: 13px;
   display: none;
   line-height: 26px;
@@ -222,7 +222,7 @@ div.group table.list th.actions.left {
 }
 
 .ajax-container-loadable .select-attributetypes div.table-value .form-field-comment {
-  background: url("../images/icon_warning_round.png") no-repeat scroll 0 0 transparent;
+  background: url(../images/icon_warning_round.png) no-repeat scroll 0 0 transparent;
   padding-left: 30px;
   color: #456583;
   float: left;

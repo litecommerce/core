@@ -453,7 +453,8 @@ class Mailer extends \XLite\View\AView
 
             $layout = \XLite\Core\Layout::getInstance();
 
-            $skin = $layout->getSkin();
+            $old_skin = $layout->getSkin();
+            $old_interface = $layout->getInterface();
 
             $layout->setMailSkin($interface);
         }
@@ -469,7 +470,24 @@ class Mailer extends \XLite\View\AView
         // restore old skin
         if ($switchLayout) {
 
-            $layout->setSkin($skin);
+            switch ($old_interface) {
+                case \XLite::ADMIN_INTERFACE:
+                    $layout->setAdminSkin();
+                    break;
+
+                case \XLite::CUSTOMER_INTERFACE:
+                    $layout->setCustomerSkin();
+                    break;
+
+                case \XLite::CONSOLE_INTERFACE:
+                    $layout->setConsoleSkin();
+                    break;
+
+                case \XLite::MAIL_INTERFACE:
+                    $layout->setMainSkin();
+                    break;
+            }
+            $layout->setSkin($old_skin);
         }
 
         return $text;

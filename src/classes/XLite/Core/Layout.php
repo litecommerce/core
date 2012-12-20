@@ -126,6 +126,16 @@ class Layout extends \XLite\Base\Singleton
     }
 
     /**
+     * Return current interface
+     *
+     * @return string
+     */
+    public function getInterface()
+    {
+        return $this->currentInterface;
+    }
+
+    /**
      * Returns the layout path
      *
      * @return string

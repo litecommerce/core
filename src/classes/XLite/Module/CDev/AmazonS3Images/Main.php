@@ -38,7 +38,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC';
+        return 'X-Cart team';
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return '';
+        return 'Gives you the ability to move all your category and product images over to the "cloud" storage services offered by Amazon. This reduces your website\'s bandwidth and allows you to use your Amazon CloudFront CDN account to get your images loaded in customers\' browsers really fast.';
     }
 
     /**

@@ -432,6 +432,38 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return $this->isPurchased($module) || $this->isFree($module);
     }
 
+    /**
+     * Get CSS classes for module cell
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return string
+     */
+    protected function getModuleClassesCSS(\XLite\Model\Module $module)
+    {
+        return sprintf('module-%d', $module->getModuleId());
+    }
+
+    /**
+     * Check module license and return true if it's non-empty
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     */
+    protected function hasNonEmptyLicense(\XLite\Model\Module $module)
+    {
+        $license = null;
+
+        $info = \XLite\Core\Marketplace::getInstance()->getAddonInfo($module->getMarketplaceID());
+
+        if ($info) {
+            $license = $info[\XLite\Core\Marketplace::FIELD_LICENSE];
+        }
+
+        return !empty($license);
+    }
+
     // }}}
 
     // {{{ Methods to search modules of certain types
