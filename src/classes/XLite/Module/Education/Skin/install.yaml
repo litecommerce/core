@@ -7,13 +7,3 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 
-XLite\Model\Config:
-  - name: test_custom
-    category: Joy\Custom
-    type: 'XLite\View\FormField\Input\Text'
-    orderby: 500
-    value: ''
-    translations:
-      - code: en
-        option_name: TEST Custom
-
