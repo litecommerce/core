@@ -160,7 +160,7 @@ class Attribute extends \XLite\Model\Base\I18n
             self::TYPE_TEXT     => 'Text',
             self::TYPE_NUMBER   => 'Number',
             self::TYPE_CHECKBOX => 'Checkbox',
-            self::TYPE_SELECT   => 'Select',
+            self::TYPE_SELECT   => 'Combo box',
         );
 
         return isset($type)
