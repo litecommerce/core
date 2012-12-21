@@ -18,3 +18,12 @@ XLite\Model\AddressField:
   - { serviceName: custom_state,  additional: false, required: false, translations: [{ code: en, name: State }], viewGetterName: state_name }
   - { serviceName: zipcode,       additional: false, required: true,  translations: [{ code: en, name: Zip code }] }
   - { serviceName: phone,         additional: false, required: true,  translations: [{ code: en, name: Phone }] }
+
+XLite\Model\LanguageLabel:
+  - { name: 'Proceed to payment X', translations: [{ code: en, label: 'Proceed to payment: {{total}}' }] }
+  - { name: 'Payment methods appearance description', translations: [{ code: en, label: 'Here you can define how your payment methods will look in customer area.<br />Here are shown only the methods enabled on the configuration page.' }] }
+  - { name: 'Watch this short video and learn the basics of how online payment processing works', translations: [{ code: en, label: "Watch this short video and learn the basics of how online payment processing works. You'll also find out what to look for when selecting the best payment processing solution for your business." }] }
+  - { name: 'X methods available', translations: [{ code: en, label: '{{count}} methods available' }] }
+  - { name: 'Payment method has been enabled successfully', translations: [{ code: en, label: 'Payment method has been enabled successfully' }] }
+  - { name: 'Payment method has been disabled successfully', translations: [{ code: en, label: 'Payment method has been disabled successfully' }] }
+  - { name: 'Payment method has been removed successfully', translations: [{ code: en, label: 'Payment method has been removed successfully' }] }

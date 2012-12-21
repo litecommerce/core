@@ -1684,6 +1684,16 @@ div.table-value select
   width: 250px;
 }
 
+div.table-value select {
+  resize: both;
+  overflow: auto;
+}
+
+.product-list div.table-value.posteddata-category-ids-value select {
+  width: 750px;
+  height: 250px;
+}
+
 div.table-value input[type="checkbox"] {
   margin: 0px;
   vertical-align: middle;
