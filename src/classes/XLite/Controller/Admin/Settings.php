@@ -590,7 +590,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function doActionCleanViewCache()
     {
-        \XLite\Core\Database::getCacheDriver()->deleteByPrefix(\XLite\View\AView::CACHE_PREFIX);
+        \XLite\Core\WidgetCache::getInstance()->deleteAll();
 
         \XLite\Core\TopMessage::addInfo('Widgets cache has been cleaned');
 

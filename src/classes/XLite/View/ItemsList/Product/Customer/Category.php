@@ -205,4 +205,23 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         return parent::isVisible() && $this->getCategory() && $this->getCategory()->isVisible();
     }
+
+    // {{{ Cache
+
+    /**
+     * Get cache parameters
+     *
+     * @return array
+     */
+    protected function getCacheParameters()
+    {
+        $list = parent::getCacheParameters();
+
+        $list[] = $this->getCategoryId();
+
+        return $list;
+    }
+
+    // }}}
+
 }

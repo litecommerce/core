@@ -56,11 +56,6 @@ abstract class AView extends \XLite\Core\Handler
     const FAVICON = 'favicon.ico';
 
     /**
-     * Widget cache prefix
-     */
-    const CACHE_PREFIX = 'viewCache.';
-
-    /**
      * Widgets resources collector
      *
      * @var array
@@ -1906,7 +1901,7 @@ abstract class AView extends \XLite\Core\Handler
     {
         return !$this->isCloned
             && $this->isCacheAvailable()
-            && $this->isCacheEnabled();
+            && \XLite\Core\WidgetCache::getInstance()->isEnabled();
     }
 
     /**
@@ -1920,25 +1915,13 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Cache enabling
-     *
-     * @return boolean
-     */
-    protected function isCacheEnabled()
-    {
-        return \XLite\Core\Config::GetInstance()->Performance->use_view_cache;
-    }
-
-    /**
      * Get cached content
      *
      * @return string
      */
     protected function getCachedContent()
     {
-        $content = \XLite\Core\Database::getCacheDriver()->fetch($this->getCacheKey());
-
-        return is_string($content) ? $content : null;
+        return \XLite\Core\WidgetCache::getInstance()->get($this->getCacheParameters());
     }
 
     /**
@@ -1950,15 +1933,11 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function setCachedContent($content)
     {
-        \XLite\Core\Database::getCacheDriver()->save(
-            $this->getCacheKey(),
-            $content,
-            $this->getCacheTTL()
-        );
+        \XLite\Core\WidgetCache::getInstance()->set($this->getCacheParameters(), $content, $this->getCacheTTL());
     }
 
     /**
-     * Get cache oarameters
+     * Get cache parameters
      *
      * @return array
      */
@@ -1971,23 +1950,13 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Get cache key
-     *
-     * @return string
-     */
-    protected function getCacheKey()
-    {
-        return static::CACHE_PREFIX . implode('.', $this->getCacheParameters());
-    }
-
-    /**
      * Get cache TTL (seconds)
      *
      * @return integer
      */
     protected function getCacheTTL()
     {
-        return \XLite\Model\Repo\ARepo::CACHE_DEFAULT_TTL;
+        return null;
     }
 
     // }}}

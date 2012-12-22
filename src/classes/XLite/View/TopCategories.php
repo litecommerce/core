@@ -327,6 +327,11 @@ class TopCategories extends \XLite\View\SideBarBox
 
         $list[] = $this->getCategoryId();
 
+        $auth = \XLite\Core\Auth::getInstance();
+        $list[] = ($auth->isLogged() && $auth->getProfile()->getMembership())
+            ? $auth->getProfile()->getMembership()->getMembershipId()
+            : '-';
+
         return $list;
     }
 

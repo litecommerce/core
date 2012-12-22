@@ -238,7 +238,7 @@ class Subcategories extends \XLite\View\Dialog
     }
 
     /**
-     * Get cache oarameters
+     * Get cache parameters
      *
      * @return array
      */
@@ -250,7 +250,7 @@ class Subcategories extends \XLite\View\Dialog
 
         $auth = \XLite\Core\Auth::getInstance();
         $list[] = ($auth->isLogged() && $auth->getProfile()->getMembership())
-            ? $auth->getProfile()->getMembership()->getmembershipId()
+            ? $auth->getProfile()->getMembership()->getMembershipId()
             : '-';
 
         return $list;
