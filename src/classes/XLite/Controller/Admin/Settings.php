@@ -584,6 +584,20 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Clean view cache
+     *
+     * @return void
+     */
+    public function doActionCleanViewCache()
+    {
+        \XLite\Core\Database::getCacheDriver()->deleteByPrefix(\XLite\View\AView::CACHE_PREFIX);
+
+        \XLite\Core\TopMessage::addInfo('Widgets cache has been cleaned');
+
+        $this->setReturnURL($this->buildURL($this->get('target'), '', array('page' => 'Performance')));
+    }
+
+    /**
      * doActionUpdate
      *
      * @return void

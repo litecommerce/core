@@ -21,6 +21,7 @@ XLite\Model\Config:
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
   - { name: aggregate_css, category: Performance, type: checkbox, orderby: 20, value: Y, translations: [{ code: en, option_name: 'Aggregate CSS files' }] }
   - { name: aggregate_js, category: Performance, type: checkbox, orderby: 30, value: Y, translations: [{ code: en, option_name: 'Aggregate JS files' }] }
+  - { name: use_view_cache, category: Performance, type: checkbox, orderby: 40, value: '', translations: [{ code: en, option_name: 'Use widget cache' }] }
   - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts }] }
