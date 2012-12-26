@@ -8,7 +8,9 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-<p>{t(#Run benchmark to assess your server performance#)}</p>
+
+<div class="speed"></div>
+<p>{t(#Estimate your server performance#)}</p>
 <div class="buttons">
   <widget class="\XLite\View\Button\Link" location="{buildURL(#measure#,#measure#)}" label="{t(#Run benchmark#)}" style="action" />
   <widget

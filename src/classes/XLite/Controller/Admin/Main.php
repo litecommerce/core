@@ -32,16 +32,6 @@ namespace XLite\Controller\Admin;
 class Main extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Returns the page title (for the content area)
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return 'Administrator panel';
-    }
-
-    /**
      * Check ACL permissions
      *
      * @return boolean

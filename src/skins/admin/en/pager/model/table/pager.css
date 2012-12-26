@@ -13,14 +13,14 @@
   background-color: #f1f1f1;
   height: 37px;
   padding-top: 11px;
-  padding-left: 20px;
+  padding-left: 12px;
   padding-right: 12px;
+  padding-bottom: 4px;
 }
 
 .table-pager,
 .table-pager *
 {
-  vertical-align: top;
 }
 
 .table-pager .left {
@@ -37,7 +37,6 @@
 {
   color: #8f8f8f;
   font-size: 14px;
-  vertical-align: middle;
   line-height: 20px;
 }
 
@@ -46,6 +45,7 @@
   padding-top: 4px;
 }
 
+.table-pager .pages-nav,
 .table-pager .title,
 .table-pager .last,
 .table-pager .prev,
@@ -140,6 +140,7 @@ form.changed .table-pager .next span
   text-align: right;
   padding: 5px 5px 3px;
   font-size: 14px;
+  vertical-align: middle;
 }
 
 .table-pager .last {
@@ -167,4 +168,9 @@ form.changed .table-pager .next span
 
 .table-pager .right select {
   font-size: 14px;
+}
+
+.table-pager .left div.more-link-block {
+  display: inline-block;
+  margin-top: 5px;
 }

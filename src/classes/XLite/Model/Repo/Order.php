@@ -70,6 +70,27 @@ class Order extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Get orders statistics data: count and sum of orders
+     *
+     * @param integer $startDate Start date timestamp
+     * @param integer $endDate End date timestamp
+     *
+     * @return array
+     */
+    public function getOrderStats($startDate, $endDate = 0)
+    {
+        $qb = $this->createQueryBuilder()
+            ->select('COUNT(o.order_id) as orders_count')
+            ->addSelect('SUM(o.total) as orders_total');
+
+        $this->prepareCndDate($qb, array($startDate, $endDate));
+
+        $result = $qb->getSingleResult();
+
+        return $result;
+    }
+
+    /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string  $alias      Table alias OPTIONAL
