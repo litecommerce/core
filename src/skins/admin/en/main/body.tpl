@@ -17,12 +17,12 @@
 
   <div class="step-items">
     <ul>
-      <li class="item-store">{t(#Specify your store information#)}</li>
-      <li class="item-products">{t(#Add your products#)}</li>
-      <li class="item-taxes">{t(#Setup address zones and taxes#)}</li>
-      <li class="item-shipping">{t(#Configure shipping methods#)}</li>
-      <li class="item-payment">{t(#Choose payment methods#)}</li>
-      <li class="item-domain">{t(#Link your website domain name#)}</li>
+      <li class="item-store">{t(#Specify your <span>store information</span>#):h}</li>
+      <li class="item-products">{t(#Add your <span>products</span>#):h}</li>
+      <li class="item-taxes">{t(#Setup <span>address zones</span> and <span>taxes</span>#):h}</li>
+      <li class="item-shipping">{t(#Configure <span>shipping methods</span>#):h}</li>
+      <li class="item-payment">{t(#Choose <span>payment methods</span>#):h}</li>
+      <li class="item-domain">{t(#Link your website <span>domain name</span>#):h}</li>
       <li class="item-final">{t(#Start selling!#)}</li>
     </ul>
   </div>

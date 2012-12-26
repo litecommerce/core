@@ -166,6 +166,7 @@ class LowInventoryBlock extends \XLite\View\ItemsList\Model\Product\Admin\Search
         $result = parent::getSearchCondition();
 
         $result->{\XLite\Model\Repo\Product::P_INVENTORY} = \XLite\Model\Repo\Product::INV_LOW;
+        $result->{\XLite\Model\Repo\Product::P_ORDER_BY} = array('i.amount');
 
         return $result;
     }

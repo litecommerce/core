@@ -38,12 +38,17 @@
 }
 
 .admin-welcome .step-items ul li {
-  font-size: 16px;
+  font-size: 18px;
   color: #1C4973;
   margin-bottom: 20px;
   height: 40px;
   padding-left: 50px;
   vertical-align: middle;
+}
+
+.admin-welcome .step-items ul li span {
+  color: #328FDD;
+  font-size: 18px;
 }
 
 .admin-welcome .step-items ul li.item-store {
