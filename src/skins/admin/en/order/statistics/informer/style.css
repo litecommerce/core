@@ -150,10 +150,6 @@
   border-top-right-radius: 0px;
 }
 
-div.tabs .primary a, div.tabs .primary span {
-  background: #EFF8FE url(../images/bg.png) repeat-x top left;
-}
-
 .js-tabs ul.tabs li.empty span {
   color: #93B4CA;
 }

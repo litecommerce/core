@@ -13,7 +13,6 @@
 
   {foreach:getOptions(),period,name}
   <div id="period-{period:h}" class="block-container" {if:!isDefaultPeriod(period)}style="display: none;"{end:}>
-    {period}
     <widget class="\XLite\View\ItemsList\Model\Product\Admin\TopSellers" name="top-sellers-list-{period}" period="{period}" products_limit="5"/>
   </div>
   {end:}

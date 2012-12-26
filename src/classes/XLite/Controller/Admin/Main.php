@@ -60,4 +60,17 @@ class Main extends \XLite\Controller\Admin\AAdmin
             'Inventory has been successfully updated'
         );
     }
+
+    protected function doActionHideWelcomeBlock()
+    {
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            array(
+                'category' => 'Internal',
+                'name'     => 'hide_welcome_block',
+                'value'    => 1,
+            )
+        );
+
+        die('OK');
+    }
 }
