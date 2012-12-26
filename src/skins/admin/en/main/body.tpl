@@ -17,12 +17,12 @@
 
   <div class="step-items">
     <ul>
-      <li class="item-store">{t(#Specify your <span>store information</span>#):h}</li>
-      <li class="item-products">{t(#Add your <span>products</span>#):h}</li>
-      <li class="item-taxes">{t(#Setup <span>address zones</span> and <span>taxes</span>#):h}</li>
-      <li class="item-shipping">{t(#Configure <span>shipping methods</span>#):h}</li>
-      <li class="item-payment">{t(#Choose <span>payment methods</span>#):h}</li>
-      <li class="item-domain">{t(#Link your website <span>domain name</span>#):h}</li>
+      <li class="item-store">{t(#Specify your <a href="admin.php?target=settings&page=Company">store information</a>#):h}</li>
+      <li class="item-products">{t(#Add your <a href="admin.php?target=product_list">products</a>#):h}</li>
+      <li class="item-taxes">{t(#Setup <a href="admin.php?target=shipping_zones">address zones</a> and <a href="admin.php?target=taxes">taxes</a>#):h}</li>
+      <li class="item-shipping">{t(#Configure <a href="admin.php?target=shipping_methods">shipping methods</a>#):h}</li>
+      <li class="item-payment">{t(#Choose <a href="admin.php?target=payment_settings">payment methods</a>#):h}</li>
+      <li class="item-domain">{t(#Link your website <a href="">domain name</a>#):h}</li>
       <li class="item-final">{t(#Start selling!#)}</li>
     </ul>
   </div>

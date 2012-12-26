@@ -46,7 +46,7 @@
   vertical-align: middle;
 }
 
-.admin-welcome .step-items ul li span {
+.admin-welcome .step-items ul li a {
   color: #328FDD;
   font-size: 18px;
 }
