@@ -50,5 +50,35 @@ class Recent extends \XLite\View\ItemsList\Model\Order\Admin\Search
     {
         return $this->getDir() . '/' . $this->getPageBodyDir() . '/order/empty_recent_orders.tpl';
     }
+
+    /**
+     * Get allowed order statuses
+     *
+     * @return array
+     */
+    protected function getAllowedStatuses()
+    {
+        return array(
+            \XLite\Model\Order::STATUS_QUEUED,
+            \XLite\Model\Order::STATUS_AUTHORIZED,
+            \XLite\Model\Order::STATUS_PROCESSED,
+            \XLite\Model\Order::STATUS_FAILED,
+        );
+    }
+
+    /**
+     * Get search condition
+     *
+     * @return \XLite\Core\CommonCell
+     */
+    protected function getSearchCondition()
+    {
+        $cnd = new \XLite\Core\CommonCell();
+
+        $cnd->{\XLite\Model\Repo\Order::P_ORDER_BY} = array('o.date');
+        $cnd->{\XLite\Model\Repo\Order::P_STATUS} = $this->getAllowedStatuses();
+
+        return $cnd;
+    }
 }
 

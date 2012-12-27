@@ -97,7 +97,8 @@ class RecentBlock extends \XLite\View\ItemsList\Model\Order\Admin\Recent
         $result['status'] = array(
             static::COLUMN_NAME  => null,
             static::COLUMN_LINK   => 'order',
-            static::COLUMN_CLASS => null, //'XLite\View\FormField\Inline\Select\OrderStatus',
+            static::COLUMN_CLASS => null,
+            static::COLUMN_TEMPLATE => $this->getDir() . '/' . $this->getPageBodyDir() . '/order/cell.status.tpl'
         );
 
         return $result;

@@ -125,6 +125,35 @@ div.tabs .primary a, div.tabs .primary span {
   width: 102px;
 }
 
+.dashboard .items-list-table table.list .cell.status span {
+  width: 90px;
+  padding: 0 10px;
+  display: inline-block;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.dashboard .items-list-table table.list .cell.status span a {
+  color: #333;
+}
+
+.dashboard .items-list-table table.list .cell.status .status-P {
+  background-color: #D4F6D3;
+}
+
+.dashboard .items-list-table table.list .cell.status .status-A {
+  background-color: #F3BA89;
+}
+
+.dashboard .items-list-table table.list .cell.status .status-Q {
+  background-color: #E0F0FE;
+}
+
+.dashboard .items-list-table table.list .cell.status .status-F {
+  background-color: #F6D4D3;
+}
+
 .dashboard .items-list-table table.list .cell.profile div {
   display: none;
 }

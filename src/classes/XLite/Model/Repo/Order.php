@@ -267,15 +267,15 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        if (
-            !empty($value)
-            && !is_null(\XLite\Model\Order::getAllowedStatuses($value))
-        ) {
-            $queryBuilder->andWhere('o.status = :status')
-                ->setParameter('status', $value);
+        if (!empty($value)) {
 
-        } else {
-            // TODO - add throw exception
+            if (is_array($value)) {
+                $queryBuilder->andWhere($queryBuilder->expr()->in('o.status', $value));
+
+            } else {
+                $queryBuilder->andWhere('o.status = :status')
+                    ->setParameter('status', $value);
+            }
         }
     }
 
