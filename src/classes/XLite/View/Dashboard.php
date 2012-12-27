@@ -95,6 +95,7 @@ class Dashboard extends \XLite\View\Dialog
             'top_sellers' => array(
                 'name'   => '5 top selling products',
                 'widget' => '\XLite\View\Product\TopSellersBlock',
+                'style'  => 0 < $this->getTopSellersCount() ? 'non-empty' : 'empty',
             ),
         );
     }
@@ -169,5 +170,18 @@ class Dashboard extends \XLite\View\Dialog
         $cnd->{\XLite\Model\Repo\Product::P_INVENTORY} = \XLite\Model\Repo\Product::INV_LOW;
 
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->search($cnd, true);
+    }
+
+    /**
+     * Get count of products in the Top sellers list
+     *
+     * @return integer
+     */
+    protected function getTopSellersCount()
+    {
+        $cnd = new \XLite\Core\CommonCell();
+        $cnd->currency = \XLite::getCurrency()->getCurrencyId();
+
+        return \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($cnd, true);
     }
 }
