@@ -22,12 +22,16 @@ jQuery().ready(
 
         var ch = jQuery('#doNotShowAtStartup:checked').length;
 
+        var action = 'hide_welcome_block';
+
         if (ch) {
-          $.ajax({
-            url: "admin.php?target=main&action=hide_welcome_block",
-          }).done(function() { 
-          });
+          action = 'hide_welcome_block_forever';
         }
+
+        $.ajax({
+          url: "admin.php?target=main&action=" + action,
+        }).done(function() { 
+        });
 
         jQuery('.admin-welcome').hide();
       }
