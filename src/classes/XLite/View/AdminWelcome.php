@@ -85,7 +85,8 @@ class AdminWelcome extends \XLite\View\Dialog
      */
     protected function isVisible()
     {
-        return 1 != \XLite\Core\Config::getInstance()->Internal->hide_welcome_block;
+        return 1 != \XLite\Core\Session::getInstance()->hide_welcome_block
+            && 1 != \XLite\Core\Config::getInstance()->Internal->hide_welcome_block;
     }
 }
 

@@ -63,6 +63,13 @@ class Main extends \XLite\Controller\Admin\AAdmin
 
     protected function doActionHideWelcomeBlock()
     {
+        \XLite\Core\Session::getInstance()->hide_welcome_block = 1;
+
+        die('OK');
+    }
+
+    protected function doActionHideWelcomeBlockForever()
+    {
         \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Internal',

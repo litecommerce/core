@@ -49,6 +49,11 @@
 .admin-welcome .step-items ul li a {
   color: #328FDD;
   font-size: 18px;
+  text-decoration: none;
+}
+
+.admin-welcome .step-items ul li a:hover {
+  text-decoration: underline;
 }
 
 .admin-welcome .step-items ul li.item-store {
