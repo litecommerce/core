@@ -371,4 +371,14 @@ class MiniInformer extends \XLite\View\Dialog
     {
         return !$this->isEmptyStats() && self::T_LIFETIME != $tab['class'];
     }
+
+    /**
+     * Get block style
+     *
+     * @return string
+     */
+    protected function getBlockStyle()
+    {
+        return '';
+    }
 }

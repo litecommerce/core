@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<div IF="getTabs()" class="js-tabs order-stats-informer-tabs">
+<div IF="getTabs()" class="js-tabs order-stats-informer-tabs" style="{getBlockStyle()}">
 
   <div class="tabs">
     <ul class="tabs primary">
