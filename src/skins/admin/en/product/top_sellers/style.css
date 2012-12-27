@@ -25,3 +25,8 @@
   margin-right: 5px;
 }
 
+.top-sellers .block-container .items-list-table.products .empty-list {
+  text-align: center;
+  padding: 20px;
+  display: block;
+}
