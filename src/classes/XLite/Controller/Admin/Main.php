@@ -32,16 +32,6 @@ namespace XLite\Controller\Admin;
 class Main extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Returns the page title (for the content area)
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return 'Administrator panel';
-    }
-
-    /**
      * Check ACL permissions
      *
      * @return boolean
@@ -69,5 +59,18 @@ class Main extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\TopMessage::addInfo(
             'Inventory has been successfully updated'
         );
+    }
+
+    protected function doActionHideWelcomeBlock()
+    {
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            array(
+                'category' => 'Internal',
+                'name'     => 'hide_welcome_block',
+                'value'    => 1,
+            )
+        );
+
+        die('OK');
     }
 }
