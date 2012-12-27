@@ -195,57 +195,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     }
 
     /**
-     * Defines top selling products collection
-     *
-     * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Return only count of products OPTIONAL
-     *
-     * @return array
-     */
-    public function findTopSellers(\XLite\Core\CommonCell $cnd, $countOnly = false)
-    {
-        $result = $this->defineTopSellersQuery($cnd)->getResult();
-
-        return $countOnly ? count($result) : $result;
-    }
-
-    /**
-     * Prepares query builder object to get top selling products
-     *
-     * @param \XLite\Core\CommonCell $cnd   Search condition
-     *
-     * @return \Doctrine\ORM\QueryBuilder Query builder object
-     */
-    protected function defineTopSellersQuery(\XLite\Core\CommonCell $cnd)
-    {
-        list($start, $end) = $cnd->date;
-
-        $qb = $this->createQueryBuilder()
-            ->linkInner('p.order_items', 'o')
-            ->linkInner('o.order', 'ord')
-            ->addSelect('sum(o.amount) as sold')
-            ->andWhere('ord.status IN (:complete_status, :authorized_status, :processed_status)')
-            ->groupBy('o.object')
-            ->addOrderBy('sold', 'DESC')
-            ->setParameter('complete_status', \XLite\Model\Order::STATUS_COMPLETED)
-            ->setParameter('authorized_status', \XLite\Model\Order::STATUS_AUTHORIZED)
-            ->setParameter('processed_status', \XLite\Model\Order::STATUS_PROCESSED)
-            ->setMaxResults($cnd->limit);
-
-        if (0 < $start) {
-            $qb->andWhere('ord.date >= :start')
-                ->setParameter('start', $start);
-        }
-
-        if (0 < $end) {
-            $qb->andWhere('ord.date <= :end')
-                ->setParameter('end', $end);
-        }
-
-        return $qb;
-    }
-
-    /**
      * Count last updated products
      *
      * @param integer $limit Time limit

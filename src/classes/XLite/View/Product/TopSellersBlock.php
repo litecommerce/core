@@ -88,4 +88,19 @@ class TopSellersBlock extends \XLite\View\Dialog
     {
         return \XLite\View\ItemsList\Model\Product\Admin\TopSellers::P_PERIOD_WEEK == $period;
     }
+
+    /**
+     * Return true if there are no statistics for lifetime period
+     *
+     * @return boolean
+     */
+    protected function isEmptyStats()
+    {
+        $cnd = new \XLite\Core\CommonCell();
+        $cnd->currency = \XLite::getCurrency()->getCurrencyId();
+
+        $count = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($cnd, true);
+
+        return 0 == $count;
+    }
 }

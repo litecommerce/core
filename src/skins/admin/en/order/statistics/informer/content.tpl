@@ -13,14 +13,14 @@
   <div class="tab-content-title">{t(#Orders#)}</div>
   <div class="value" IF="tab.orders.value">{tab.orders.value}<span class="{getDeltaType(tab,#orders#)}"></span></div>
   <div class="value" IF="!tab.orders.value">&mdash;</div>
-  <div class="prev" IF="!isLifetimeTab(tab)">{getPrevValue(tab,#orders#)}</div>
+  <div class="prev" IF="isDisplayPrevValue(tab)">{getPrevValue(tab,#orders#)}</div>
 </div>
 
 <div class="revenue-stats">
   <div class="tab-content-title">{t(#Revenue#)}</div>
   <div class="value">{formatValue(tab.revenue.value)}<span class="{getDeltaType(tab,#revenue#)}"></span></div>
-  <div class="prev" IF="!isLifetimeTab(tab)">{getPrevValue(tab,#revenue#)}</div>
+  <div class="prev" IF="isDisplayPrevValue(tab)">{getPrevValue(tab,#revenue#)}</div>
 </div>
 
 <div class="lifetime-stats" IF="isLifetimeTab(tab)">{t(#Sale statistics from the opening of the store#)}</div>
-<div class="no-orders" IF="isEmptyStats(tab)">{t(#No order have been placed yet#)}</div>
+<div class="no-orders" IF="isEmptyStats()">{t(#No order have been placed yet#)}</div>

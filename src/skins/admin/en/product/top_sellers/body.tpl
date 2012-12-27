@@ -9,6 +9,8 @@
  * @link      http://www.litecommerce.com/
  *}
 
+{if:!isEmptyStats()}
+
 <div class="top-sellers">
 
   {foreach:getOptions(),period,name}
@@ -29,3 +31,10 @@
   </div>
 
 </div>
+
+{else:}
+
+<div class="empty-list">{t(#No products sold yet#)}</div>
+
+{end:}
+

@@ -93,7 +93,7 @@ class TopSellers extends \XLite\View\ItemsList\Model\Product\Admin\LowInventoryB
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_PERIOD         => new \XLite\Model\WidgetParam\String('Period', self::P_PERIOD_MONTH),
+            static::PARAM_PERIOD         => new \XLite\Model\WidgetParam\String('Period', self::P_PERIOD_LIFETIME),
             static::PARAM_PRODUCTS_LIMIT => new \XLite\Model\WidgetParam\Int('Number of products', 5),
         );
     }
@@ -147,7 +147,7 @@ class TopSellers extends \XLite\View\ItemsList\Model\Product\Admin\LowInventoryB
     {
         $cnd = new \XLite\Core\CommonCell();
 
-        $cnd->date = array($this->getStartTime(), 0);
+        $cnd->date = array($this->getStartDate(), 0);
 
         $cnd->currency = \XLite::getCurrency()->getCurrencyId();
 
@@ -157,11 +157,11 @@ class TopSellers extends \XLite\View\ItemsList\Model\Product\Admin\LowInventoryB
     }
 
     /**
-     * Get period start time timestamp
+     * Get period start date timestamp
      *
      * @return integer
      */
-    protected function getStartTime()
+    protected function getStartDate()
     {
         $now = time();
 
@@ -182,6 +182,8 @@ class TopSellers extends \XLite\View\ItemsList\Model\Product\Admin\LowInventoryB
             default:
                 $startDate = 0;
         }
+
+        return $startDate;
     }
 
     /**
@@ -194,13 +196,15 @@ class TopSellers extends \XLite\View\ItemsList\Model\Product\Admin\LowInventoryB
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $data = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findTopSellers($cnd, $countOnly);
+        $data = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($cnd, $countOnly);
 
         if (!$countOnly) {
 
             foreach ($data as $item) {
-                $item[0]->setSold($item['sold']);
-                $result[] = $item[0];
+                $product = $item[0]->getObject();
+                $product->setSold($item['cnt']);
+
+                $result[] = $product;
             }
 
         } else {

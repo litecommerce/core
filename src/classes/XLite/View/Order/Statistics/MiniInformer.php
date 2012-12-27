@@ -182,7 +182,7 @@ class MiniInformer extends \XLite\View\Dialog
         $result['orders']['value'] = $thisPeriod['orders_count'];
         $result['revenue']['value'] = $thisPeriod['orders_total'];
 
-        if (P_LIFETIME != $key) {
+        if (self::T_LIFETIME != $key) {
 
             $prevPeriod = \XLite\Core\Database::getRepo('XLite\Model\Order')->getOrderStats($prevStartDate, $startDate - 1);
 
@@ -357,6 +357,18 @@ class MiniInformer extends \XLite\View\Dialog
      */
     protected function isLifetimeTab(array $tab)
     {
-        return !$this->isEmptyStats($tab) && self::T_LIFETIME == $tab['class'];
+        return !$this->isEmptyStats() && self::T_LIFETIME == $tab['class'];
+    }
+
+    /**
+     * Return true if value for prev period should be displayed
+     *
+     * @param array $tab Tab data cell
+     *
+     * @return boolean
+     */
+    protected function isDisplayPrevValue(array $tab)
+    {
+        return !$this->isEmptyStats() && self::T_LIFETIME != $tab['class'];
     }
 }
