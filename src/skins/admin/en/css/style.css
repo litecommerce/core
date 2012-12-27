@@ -1620,12 +1620,13 @@ table.top-sellers th.title {
 
 .measure-help-textformError .formErrorContent {
   width: 450px;
-  white-space: pre;
+  white-space: normal;
   line-height: 18px;
 }
 
 .measure-help-textformError .formErrorContent span {
-  line-height: 30px;
+  display: block;
+  padding-top: 15px;
 }
 
 /* Upgrade core block TODO: move it to separated widget */

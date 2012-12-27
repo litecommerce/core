@@ -196,7 +196,7 @@ class TopSellers extends \XLite\View\ItemsList\Model\Product\Admin\LowInventoryB
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $data = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($cnd, $countOnly);
+        $data = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($this->getSearchCondition(), $countOnly);
 
         if (!$countOnly) {
 
