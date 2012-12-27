@@ -28,6 +28,7 @@
 .tab-container .revenue-stats {
   display: inline-block;
   vertical-align: top;
+  overflow: hidden;
 }
 
 .tab-container .orders-stats {
@@ -68,6 +69,7 @@
 .tab-container .prev {
   padding-top: 8px;
   padding-bottom: 10px;
+  white-space: normal;
 }
 
 .tab-container .prev.positive {
