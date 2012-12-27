@@ -22,7 +22,6 @@
       <li class="item-taxes">{t(#Setup <a href="admin.php?target=shipping_zones">address zones</a> and <a href="admin.php?target=taxes">taxes</a>#):h}</li>
       <li class="item-shipping">{t(#Configure <a href="admin.php?target=shipping_methods">shipping methods</a>#):h}</li>
       <li class="item-payment">{t(#Choose <a href="admin.php?target=payment_settings">payment methods</a>#):h}</li>
-      <li class="item-domain">{t(#Link your website <a href="">domain name</a>#):h}</li>
       <li class="item-final">{t(#Start selling!#)}</li>
     </ul>
   </div>
