@@ -52,21 +52,6 @@ class Recent extends \XLite\View\ItemsList\Model\Order\Admin\Search
     }
 
     /**
-     * Get allowed order statuses
-     *
-     * @return array
-     */
-    protected function getAllowedStatuses()
-    {
-        return array(
-            \XLite\Model\Order::STATUS_QUEUED,
-            \XLite\Model\Order::STATUS_AUTHORIZED,
-            \XLite\Model\Order::STATUS_PROCESSED,
-            \XLite\Model\Order::STATUS_FAILED,
-        );
-    }
-
-    /**
      * Get search condition
      *
      * @return \XLite\Core\CommonCell
@@ -76,7 +61,7 @@ class Recent extends \XLite\View\ItemsList\Model\Order\Admin\Search
         $cnd = new \XLite\Core\CommonCell();
 
         $cnd->{\XLite\Model\Repo\Order::P_ORDER_BY} = array('o.date');
-        $cnd->{\XLite\Model\Repo\Order::P_STATUS} = $this->getAllowedStatuses();
+        $cnd->{\XLite\Model\Repo\Order::P_STATUS} = \XLite\Model\Order::getOpenStatuses();
 
         return $cnd;
     }

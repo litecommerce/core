@@ -73,19 +73,13 @@ class Order extends \XLite\Model\Repo\ARepo
      * Get orders statistics data: count and sum of orders
      *
      * @param integer $startDate Start date timestamp
-     * @param integer $endDate End date timestamp
+     * @param integer $endDate   End date timestamp OPTIONAL
      *
      * @return array
      */
     public function getOrderStats($startDate, $endDate = 0)
     {
-        $qb = $this->createQueryBuilder()
-            ->select('COUNT(o.order_id) as orders_count')
-            ->addSelect('SUM(o.total) as orders_total');
-
-        $this->prepareCndDate($qb, array($startDate, $endDate));
-
-        $result = $qb->getSingleResult();
+        $result = $this->defineGetOrderStatsQuery($startDate, $endDate)->getSingleResult();
 
         return $result;
     }
@@ -159,6 +153,52 @@ class Order extends \XLite\Model\Repo\ARepo
         return $result;
     }
 
+
+    /**
+     * Create a QueryBuilder instance for getOrderStats()
+     *
+     * @param integer $startDate Start date timestamp
+     * @param integer $endDate   End date timestamp
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+
+    protected function defineGetOrderStatsQuery($startDate, $endDate)
+    {
+        $qb = $this->createQueryBuilder()
+            ->select('COUNT(o.order_id) as orders_count')
+            ->addSelect('SUM(o.total) as orders_total');
+
+        $this->prepareCndDate($qb, array($startDate, $endDate));
+        $this->prepareCndStatus($qb, $this->getStatusesForStats());
+
+        return $qb;
+    }
+
+    /**
+     * Get allowed order statuses list for getOrderStats()
+     *
+     * @return array
+     */
+    protected function getStatusesForStats()
+    {
+        $statuses = array_keys(\XLite\Model\Order::getAllowedStatuses());
+
+        $exclude = array(
+            \XLite\Model\Order::STATUS_TEMPORARY,
+            \XLite\Model\Order::STATUS_INPROGRESS,
+            \XLite\Model\Order::STATUS_FAILED,
+            \XLite\Model\Order::STATUS_DECLINED,
+        );
+
+        foreach ($statuses as $k => $v) {
+            if (in_array($v, $exclude)) {
+                unset($statuses[$k]);
+            }
+        }
+
+        return $statuses;
+    }
 
     /**
      * Return list of handling search params
