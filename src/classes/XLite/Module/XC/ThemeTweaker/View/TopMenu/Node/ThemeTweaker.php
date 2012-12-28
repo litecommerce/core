@@ -52,7 +52,7 @@ class ThemeTweaker extends \XLite\View\TopMenu\Node
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[static::PARAM_TITLE]->setValue(static::t('Theme tweaker'));
+        $this->widgetParams[static::PARAM_TITLE]->setValue(static::t('Custom CSS & JS'));
         $this->widgetParams[static::PARAM_TARGET]->setValue('custom_css');
     }
 }

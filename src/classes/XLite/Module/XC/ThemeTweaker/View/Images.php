@@ -53,6 +53,8 @@ class Images extends \XLite\View\AView
         $list = parent::getCSSFiles();
 
         $list[] = 'items_list/model/table/style.css';
+        $list[] = 'items_list/model/style.css';
+        $list[] = 'modules/XC/ThemeTweaker/images/style.css';
 
         return $list;
     }
@@ -65,17 +67,6 @@ class Images extends \XLite\View\AView
     protected function getDefaultTemplate()
     {
         return 'modules/XC/ThemeTweaker/images/body.tpl';
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getImages();
     }
 
     /**

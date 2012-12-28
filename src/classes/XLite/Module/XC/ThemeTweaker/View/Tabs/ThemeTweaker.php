@@ -47,7 +47,7 @@ class ThemeTweaker extends \XLite\View\Tabs\ATabs
             'template' => 'modules/XC/ThemeTweaker/custom_js.tpl',
         ),
         'custom_css_images' => array(
-            'title'    => 'Images',
+            'title'    => 'Custom images',
             'template' => 'modules/XC/ThemeTweaker/custom_css_images.tpl',
         ),
     );

@@ -13,12 +13,12 @@
 
   <widget class="\XLite\Module\XC\ThemeTweaker\View\Images" />
 
-  <div>
+  <div class="new-image">
     {t(#New image#)}: <input type="file" name="new_image" />
   </div>
 
   <div class="buttons">
-    <widget class="\XLite\View\Button\Submit" style="action" label="Update" />
+    <widget class="\XLite\View\Button\Submit" style="action" label="Save changes" />
   </div>
 
 <widget name="form" end />

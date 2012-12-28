@@ -38,7 +38,7 @@ class CustomCssImages extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\The
      */
     public function getTitle()
     {
-        return static::t('Images');
+        return static::t('Custom images');
     }
 
     /**

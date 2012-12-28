@@ -9,25 +9,23 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<div class="items-list-table">
-<table class="list" cellspacing="0">
-
-  <thead>
-    <tr>
-      <th class="delete">{t(#Delete#)}</th>
-      <th colspan="2" class="image">{t(#Image#)}</th>
-    </tr>
-  </thead>
-
-  <tbody class="lines">
-    <tr FOREACH="getImages(),image">
-      <th>
-        <widget class="\XLite\View\FormField\Input\Checkbox" fieldName="delete[{image}]" fieldOnly=1 />
-      </th>
-      <td><img src="{getImageUrl(image)}" alt="" /></td>
-      <td class="main">images/{image}</td>
-    </tr>
-  </tbody>
-
-</table>
+{if:getImages()}
+<div class="items-list-table items-list">
+  <table class="list" cellspacing="0">
+    <tbody class="lines">
+      <tr FOREACH="getImages(),image" class="line">
+        <td class="image"><a href="{getImageUrl(image)}" target="_blank"><img src="{getImageUrl(image)}" alt="" /></a></td>
+        <td class="main">images/{image}</td>
+        <td class="actions right">
+          <div class="separator"></div>
+          <div class="action">
+            <widget class="XLite\View\Button\Remove" buttonName="delete[{image}]" />
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+{else:}
+<div class="no-images">{t(#No images uploaded#)}</div>
+{end:}
