@@ -29,7 +29,7 @@ namespace XLite\View;
  * Benchmark summary block
  *
  *
- * @ListChild (list="main", weight="300", zone="admin")
+ * @ListChild (list="dashboard-sidebar", weight="300", zone="admin")
  */
 class BenchmarkSummary extends \XLite\View\AView
 {

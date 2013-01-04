@@ -8,3 +8,16 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  */
+
+.items-list.menus table.list {
+  width: 800px;
+}
+
+.items-list.menus table.list td.cell.main {
+  width: 300px;
+}
+
+.items-list.menus table.list td.cell.link {
+  width: 300px;
+}
+

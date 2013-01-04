@@ -8,10 +8,13 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-<p class="completed">{t(#Benchmark completed in #)} <span class="score{if:isHighScore()} score-high{end:}">{measure.total}</span> {t(#ms#)}</p>
+
+<div class="speed"></div>
 <p class="date">{formatDate(lastDate)}</p>
+<p class="completed">{t(#Benchmark completed in #)} <span class="score{if:isHighScore()} score-high{end:}">{measure.total}</span> {t(#ms#)}</p>
+<p class="info">{t(#Benchmark result under 3000ms is considered good#)}</p>
 <div class="buttons buttons-rerun">
-  <widget class="\XLite\View\Button\Link" location="{buildURL(#measure#,#measure#)}" label="{t(#Rerun benchmark#)}" />
+  <widget class="\XLite\View\Button\Link" location="{buildURL(#measure#,#measure#)}" label="{t(#Run Benchmark again#)}" style="main-button" />
   <widget
     class="\XLite\View\Tooltip"
     id="measure-help-text"

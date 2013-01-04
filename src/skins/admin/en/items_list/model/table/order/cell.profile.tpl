@@ -14,5 +14,5 @@
 {else:}
   <a href="{buildURL(#profile#,##,_ARRAY_(#profile_id#^entity.origProfile.getProfileId()))}">{getColumnValue(column,entity)}</a>
 {end:}
-<br />
-(<a href="mailto:{entity.profile.getLogin()}">{entity.profile.getLogin()}</a>)
+<div>(<a href="mailto:{entity.profile.getLogin()}">{entity.profile.getLogin()}</a>)</div>
+

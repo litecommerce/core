@@ -1,0 +1,138 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Admin 'Welcome...' block styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+.admin-welcome {
+  width: 100%;
+  height: 570px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  border: 1px solid #CFDFEA;
+  background-color: #F9FCFF;
+  padding-top: 20px;
+  overflow: hidden;
+}
+
+.admin-welcome .block-content {
+  background: url(../images/launch.png) no-repeat;
+}
+
+.admin-welcome h1 {
+  text-align: center;
+  color: #000000;
+  font-size: 30px;
+}
+
+.admin-welcome .step-items {
+  margin-left: 250px;
+  padding-top: 26px;
+  height: 422px;
+}
+
+.admin-welcome .step-items ul li {
+  font-size: 18px;
+  color: #1C4973;
+  margin-bottom: 20px;
+  height: 40px;
+  padding-left: 50px;
+  vertical-align: middle;
+}
+
+.admin-welcome .step-items ul li a {
+  color: #328FDD;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.admin-welcome .step-items ul li a:hover {
+  text-decoration: underline;
+}
+
+.admin-welcome .step-items ul li.item-store {
+  background: url(../images/get_started_icons.png) no-repeat scroll 0 -20px;
+}
+
+.admin-welcome .step-items ul li.item-products {
+  background: url(../images/get_started_icons.png) no-repeat scroll 0 -77px;
+}
+
+.admin-welcome .step-items ul li.item-taxes {
+  background: url(../images/get_started_icons.png) no-repeat scroll 0 -136px;
+}
+
+.admin-welcome .step-items ul li.item-shipping {
+  background: url(../images/get_started_icons.png) no-repeat scroll 0 -196px;
+}
+
+.admin-welcome .step-items ul li.item-payment {
+  background: url(../images/get_started_icons.png) no-repeat scroll 0 -260px;
+}
+
+.admin-welcome .step-items ul li.item-domain {
+  background: url(../images/get_started_icons.png) no-repeat scroll 0 -317px;
+}
+
+.admin-welcome .step-items ul li.item-final {
+  background: url(../images/get_started_icons.png) no-repeat scroll 0 -374px;
+  font-size: 24px;
+  color: #279B21;
+}
+
+.admin-welcome .welcome-footer-bg {
+  height: 60px;
+  background-color: white;
+  opacity: 0.4;
+  filter:alpha(opacity=40);
+  z-index: 9;
+}
+
+.admin-welcome .welcome-footer {
+  padding-left: 20px;
+  padding-top: 26px;
+  padding-right: 20px;
+  position: relative;
+  top: -64px;
+  height: 35px;
+  z-index: 10;
+}
+
+.admin-welcome .welcome-footer .do-not-show,
+.admin-welcome .welcome-footer .close-button {
+  display: inline-block;
+}
+
+.admin-welcome .welcome-footer .do-not-show label{
+  color: #93B4CA;
+  font-size: 16px;
+  vertical-align: middle;
+  padding-left: 5px;
+}
+
+.admin-welcome .welcome-footer .do-not-show input[type="checkbox"]{
+  vertical-align: middle;
+}
+
+.admin-welcome .welcome-footer .close-button {
+  float: right;
+  font-size: 16px;
+  color: #154E9C;
+  height: 22px;
+  padding-left: 26px;
+  padding-top: 2px;
+  background: url(../images/close_icon.png) no-repeat scroll 0 0;
+}
+
+.admin-welcome .welcome-footer .close-button:hover {
+  background: url(../images/close_icon.png) no-repeat scroll 0 -22px;
+  cursor: pointer;
+}
+
+
