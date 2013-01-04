@@ -69,6 +69,13 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     const FLUSH_BY_DEFAULT = true;
 
     /**
+     * Cache driver
+     *
+     * @var \XLite\Core\Cache\Registry
+     */
+    protected static $cacheDriver;
+
+    /**
      * Cache cells (local cache)
      *
      * @var array
@@ -153,21 +160,18 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $key = $this->getHashPrefix('externalCells');
 
-        $cacheCells = \XLite\Core\Database::getCacheDriver()->fetch($key);
+        $cacheCells = \XLite\Model\Repo\ARepo::getCacheDriver()->fetch($key);
         if (!is_array($cacheCells)) {
             $cacheCells = array();
         }
 
         foreach ($externalCells as $model => $cells) {
-            if (isset($cacheCells[$model])) {
-                $cacheCells[$model] = array_merge($cacheCells[$model], $cells);
-
-            } else {
-                $cacheCells[$model] = $cells;
-            }
+            $cacheCells[$model] = isset($cacheCells[$model])
+                ? array_merge($cacheCells[$model], $cells)
+                : $cells;
         }
 
-        \XLite\Core\Database::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
+        \XLite\Model\Repo\ARepo::getCacheDriver()->save($key, $cacheCells, static::CACHE_DEFAULT_TTL);
     }
 
     /**
@@ -177,7 +181,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function getRelatedCacheCells()
     {
-        $cacheCells = \XLite\Core\Database::getCacheDriver()->fetch(
+        $cacheCells = \XLite\Model\Repo\ARepo::getCacheDriver()->fetch(
             $this->getHashPrefix('externalCells')
         );
 
@@ -223,7 +227,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             }
 
             // Delete cell
-            \XLite\Core\Database::getCacheDriver()->delete(
+            \XLite\Model\Repo\ARepo::getCacheDriver()->delete(
                 $this->getCellHash($name, $cell, $params)
             );
         }
@@ -246,7 +250,12 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function deleteCache($name = '')
     {
-        \XLite\Core\Database::getCacheDriver()->deleteByPrefix($this->getHashPrefix() . '.' . $name);
+        $prefix = $this->getHashPrefix() . '.' . $name;
+        foreach (\XLite\Model\Repo\ARepo::getCacheDriver()->getIds() as $id) {
+            if (0 === strpos($id, $prefix)) {
+                \XLite\Model\Repo\ARepo::getCacheDriver()->delete();
+            }
+        }
     }
 
     /**
@@ -1122,6 +1131,17 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return true;
     }
 
+    // {{{ Cache
+
+    public static function getCacheDriver()
+    {
+        if (!isset(static::$cacheDriver)) {
+            static::$cacheDriver = new \XLite\Core\Cache\Registry('datacache');
+        }
+
+        return static::$cacheDriver;
+    }
+
     /**
      * Clean up all cache cells
      *
@@ -1169,7 +1189,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $key = $this->getHashPrefix('cells');
 
-        $cacheCells = \XLite\Core\Database::getCacheDriver()->fetch($key);
+        $cacheCells = \XLite\Model\Repo\ARepo::getCacheDriver()->fetch($key);
 
         if (!is_array($cacheCells)) {
 
@@ -1177,7 +1197,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
             list($cacheCells, $relations) = $this->postprocessCacheCells($cacheCells);
 
-            \XLite\Core\Database::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
+            \XLite\Model\Repo\ARepo::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
 
             // Save relations to current model cache cells from related models
             foreach ($relations as $model => $cells) {
@@ -1261,7 +1281,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $cell = $this->getCacheCells($name);
 
         if ($cell) {
-            $result = \XLite\Core\Database::getCacheDriver()->fetch(
+            $result = \XLite\Model\Repo\ARepo::getCacheDriver()->fetch(
                 $this->getCellHash($name, $cell, $params)
             );
 
@@ -1295,7 +1315,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 $data->detach();
             }
 
-            \XLite\Core\Database::getCacheDriver()->save(
+            \XLite\Model\Repo\ARepo::getCacheDriver()->save(
                 $this->getCellHash($name, $cell, $params),
                 $data,
                 self::CACHE_DEFAULT_TTL
@@ -1371,6 +1391,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         return 'convertRecordToParams' . \XLite\Core\Converter::convertToCamelCase($name);
     }
+
+    // }}}
 
     /**
      * Get Query builder main alias
