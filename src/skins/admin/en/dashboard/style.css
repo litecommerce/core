@@ -102,7 +102,7 @@ ul.primary li a, ul.primary li span {
 }
 
 div.tabs .primary a, div.tabs .primary span {
-  background: #EFF8FE url(../images/bg.png) repeat-x top left;
+  background: #EFF8FE repeat-x top left;
 }
 
 .dashboard .items-list-table {
