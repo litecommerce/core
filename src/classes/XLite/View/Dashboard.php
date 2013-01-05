@@ -93,7 +93,7 @@ class Dashboard extends \XLite\View\Dialog
                 'style'  => 0 < $this->getLowInventoryProductsAmount() ? 'non-empty' : 'empty',
             ),
             'top_sellers' => array(
-                'name'   => '5 top selling products',
+                'name'   => 'Top selling products',
                 'widget' => '\XLite\View\Product\TopSellersBlock',
                 'style'  => 0 < $this->getTopSellersCount() ? 'non-empty' : 'empty',
             ),
