@@ -59,7 +59,7 @@ class RecentBlock extends \XLite\View\ItemsList\Model\Order\Admin\Recent
      */
     protected function getHead()
     {
-        return $this->hasResults() ? 'Recent orders' : 'No orders has been placed yet';
+        return $this->hasResults() ? 'Recent open orders' : 'No orders has been placed yet';
     }
 
     /**
