@@ -314,7 +314,7 @@ class Session extends \XLite\Base\Singleton
      */
     public function setLanguage($language, $zone = null)
     {
-        $code = $this->__get('language');
+        $code = $this->session->language;
 
         if (!isset($zone)) {
             $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
@@ -327,7 +327,7 @@ class Session extends \XLite\Base\Singleton
         if (!isset($code[$zone]) || $code[$zone] !== $language) {
             $code[$zone] = $language;
 
-            $this->__set('language', $code);
+            $this->session->language = $code;
             $this->language = null;
         }
     }
@@ -475,7 +475,7 @@ class Session extends \XLite\Base\Singleton
 
             setcookie(
                 $arg,
-                $this->getID(),
+                $this->session->getSid(),
                 $ttl,
                 $this->getCookiePath(),
                 $httpDomain,
@@ -486,7 +486,7 @@ class Session extends \XLite\Base\Singleton
             if ($httpDomain != $httpsDomain) {
                 setcookie(
                     $arg,
-                    $this->getID(),
+                    $this->session->getSid(),
                     $ttl,
                     $this->getCookiePath(true),
                     $httpsDomain,
@@ -587,7 +587,7 @@ class Session extends \XLite\Base\Singleton
      */
     protected function getCurrentLanguage()
     {
-        $code = $this->__get('language');
+        $code = $this->session->language;
         $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
 
         if (!is_array($code)) {
@@ -604,7 +604,7 @@ class Session extends \XLite\Base\Singleton
 
         if (empty($code[$zone])) {
             $this->setLanguage($this->defineCurrentLanguage());
-            $code = $this->__get('language');
+            $code = $this->session->language;
         }
 
         return $code[$zone];
