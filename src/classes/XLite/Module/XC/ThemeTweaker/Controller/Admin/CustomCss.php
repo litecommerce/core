@@ -29,7 +29,7 @@ namespace XLite\Module\XC\ThemeTweaker\Controller\Admin;
  * Custom CSS controller
  *
  */
-class CustomCss extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\ThemeTweaker
+class CustomCss extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\Base\ThemeTweaker
 {
     /**
      * Return the current page title (for the content area)

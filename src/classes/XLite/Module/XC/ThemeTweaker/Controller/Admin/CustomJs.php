@@ -29,7 +29,7 @@ namespace XLite\Module\XC\ThemeTweaker\Controller\Admin;
  * CustomJavaScript controller
  *
  */
-class CustomJs extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\ThemeTweaker
+class CustomJs extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\Base\ThemeTweaker
 {
     /**
      * Return the current page title (for the content area)

@@ -55,26 +55,28 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 
         if (
             !\XLite::isAdminZone()
-            && \XLite\Core\Config::getInstance()->XC->ThemeTweaker->use_js
         ) {
-            $files[static::RESOURCE_JS] = array(
-                array(
-                    'file'  => 'theme/custom.js', 
-                    'media' => 'all'
-                )
-            );
-        }
+            if (
+                \XLite\Core\Config::getInstance()->XC->ThemeTweaker->use_js
+            ) {
+                $files[static::RESOURCE_JS] = array(
+                    array(
+                        'file'  => 'theme/custom.js', 
+                        'media' => 'all'
+                    )
+                );
+            }
 
-        if (
-            !\XLite::isAdminZone()
-            && \XLite\Core\Config::getInstance()->XC->ThemeTweaker->use_css
-        ) {
-            $files[static::RESOURCE_CSS] = array(
-                array(
-                    'file'  => 'theme/custom.css',
-                    'media' => 'all'
-                )
-            );
+            if (
+                \XLite\Core\Config::getInstance()->XC->ThemeTweaker->use_css
+            ) {
+                $files[static::RESOURCE_CSS] = array(
+                    array(
+                        'file'  => 'theme/custom.css',
+                        'media' => 'all'
+                    )
+                );
+            }
         }
 
         return $files;

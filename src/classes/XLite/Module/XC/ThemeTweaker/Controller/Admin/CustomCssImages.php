@@ -29,7 +29,7 @@ namespace XLite\Module\XC\ThemeTweaker\Controller\Admin;
  * Custom CSS images controller
  *
  */
-class CustomCssImages extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\ThemeTweaker
+class CustomCssImages extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\Base\ThemeTweaker
 {
     /**
      * Return the current page title (for the content area)
@@ -59,7 +59,17 @@ class CustomCssImages extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\The
                 \Includes\Utils\FileManager::mkdir($dir);
             }
 
-            \Includes\Utils\FileManager::moveUploadedFile('new_image', $dir);
+            if (\Includes\Utils\FileManager::isDirWriteable($dir)) {
+                \Includes\Utils\FileManager::moveUploadedFile('new_image', $dir);
+
+            } else {
+                \XLite\Core\TopMessage::addError(
+                    'The directory {{dir}} does not exist or is not writable.',
+                    array(
+                        'dir' => $dir
+                    )
+                );
+            }
         }
 
         $delete = \XLite\Core\Request::getInstance()->delete;

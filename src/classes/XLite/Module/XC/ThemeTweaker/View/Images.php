@@ -69,6 +69,19 @@ class Images extends \XLite\View\AView
         return 'modules/XC/ThemeTweaker/images/body.tpl';
     }
 
+
+    /**
+     * Get iterator for template files
+     *
+     * @return \Includes\Utils\FileFilter
+     */
+    protected function getImagesIterator()
+    {
+        return new \Includes\Utils\FileFilter(
+            $this->getImagesDir()
+        );
+    }
+
     /**
      * Get images 
      *
@@ -78,13 +91,9 @@ class Images extends \XLite\View\AView
     {
         if (!isset($this->images)) {
             $this->images = array();
-            $dh = @opendir($this->getImagesDir());
-
-            if ($dh) {
-                while (($file = @readdir($dh)) !== false) {
-                    if ('.' != $file && '..' != $file) {
-                        $this->images[] = $file;
-                    }
+            foreach ($this->getImagesIterator()->getIterator() as $file) {
+                if ($file->isFile()) {
+                     $this->images[] = \Includes\Utils\FileManager::getRelativePath($file->getPathname(), $this->getImagesDir());
                 }
             }
         }

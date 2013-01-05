@@ -23,7 +23,7 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Module\XC\ThemeTweaker\Controller\Admin;
+namespace XLite\Module\XC\ThemeTweaker\Controller\Admin\Base;
 
 /**
  * CustomJavaScript controller
@@ -57,6 +57,24 @@ abstract class ThemeTweaker extends \XLite\Controller\Admin\AAdmin
     protected function doActionSaveFile()
     {
         \Includes\Utils\FileManager::write($this->getFileName(), \XLite\Core\Request::getInstance()->code);
+
+        if (\Includes\Utils\FileManager::isFileWriteable($this->getFileName())) {
+            if (
+                $config->aggregate_css
+                || $config->aggregate_js
+            ) {
+                \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_CACHE_RESOURCES);
+                \XLite\Core\TopMessage::addInfo('Aggregation cache has been cleaned');
+            }
+
+        } else {
+            \XLite\Core\TopMessage::addError(
+                'The file {{file}} does not exist or is not writable.',
+                array(
+                    'file' => $this->getFileName()
+                )
+            );
+        }
     }
 
     /**
