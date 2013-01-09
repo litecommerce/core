@@ -2907,8 +2907,12 @@ function module_cfg_install_db(&$params)
         }
 
         // Unset parameter if its empty
-        if (isset($params[$fieldName]) && strlen(trim($params[$fieldName])) == 0) {
-            unset($params[$fieldName]);
+        if (isset($params[$fieldName])) {
+            $params[$fieldName] = trim($params[$fieldName]);
+
+            if (empty($params[$fieldName])) {
+                unset($params[$fieldName]);
+            }
         }
 
         // Check if all required parameters presented
