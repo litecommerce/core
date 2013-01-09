@@ -2612,6 +2612,45 @@ function get_step($name)
 }
 
 /**
+ * Get timezones list
+ *
+ * @param boolean $addBlank Flag: is the blank row must prepend the rest of list rows
+ *
+ * @return array
+ */
+function getTimeZones($addBlank = false)
+{
+    $result = $addBlank
+        ? array(
+            '' => xtr('- None selected -')
+        )
+        : array();
+
+    $zones = timezone_identifiers_list();
+
+    foreach ($zones as $zone) {
+
+        if (preg_match('!^((Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific)/|UTC$)!', $zone)) {
+
+            $date = date_create(null, new DateTimeZone($zone));
+
+            $result[$zone] = xtr(
+                '[GMT@diff] - @zone - (@date)',
+                array(
+                    '@zone' => xtr(str_replace('_', ' ', $zone)),
+                    '@diff' => date_format($date, 'P'),
+                    '@date' => date_format($date, 'M j, Y - H:i'),
+                )
+            );
+        }
+    }
+
+    ksort($result);
+
+    return $result;
+}
+
+/**
  * Display form element
  *
  * @param string $fieldName
@@ -2636,7 +2675,7 @@ OUT;
 
             if (is_array($fieldData['select_data'])) {
                 foreach ($fieldData['select_data'] as $key => $value) {
-                    $_selected = ($value == $fieldValue ? ' selected="selected"' : '');
+                    $_selected = ($key == $fieldValue ? ' selected="selected"' : '');
                     $formElement .=<<<OUT
             <option value="{$key}"{$_selected}>{$value}</option>
 OUT;
@@ -2889,6 +2928,14 @@ function module_cfg_install_db(&$params)
             'def_value'   => '1',
             'required'    => false,
             'type'        => 'checkbox',
+        ),
+        'date_default_timezone' => array(
+            'title'       => xtr('Default time zone'),
+            'description' => xtr('By default, dates in this site will be displayed in the chosen time zone.'),
+            'def_value'   => date_default_timezone_get(),
+            'select_data' => getTimeZones(true),
+            'required'    => false,
+            'type'        => 'select',
         )
     );
 
