@@ -84,10 +84,7 @@ class Registry extends \XLite\Base implements \Doctrine\Common\Cache\Cache
      */
     public function fetch($id)
     {
-        $value = $this->driver->fetch($this->assembleId($id));
-        $value = $value ? @unserialize($value) : null;
-
-        return $value;
+        return $this->driver->fetch($this->assembleId($id));
     }
 
     /**
@@ -104,7 +101,7 @@ class Registry extends \XLite\Base implements \Doctrine\Common\Cache\Cache
         $key = $this->assembleId($id);
         $registry = $this->getRegistry();
         $registry[$id] = $key;
-        $this->driver->save($key, serialize($data));
+        $this->driver->save($key, $data);
         $this->setRegistry($registry);
     }
 
@@ -178,7 +175,6 @@ class Registry extends \XLite\Base implements \Doctrine\Common\Cache\Cache
     protected function getRegistry()
     {
         $registry = $this->driver->fetch($this->assembleServiceId(static::CELL_REGISTRY));
-        $registry = $registry ? unserialize($registry) : array();
 
         return is_array($registry) ? $registry : array();
     }

@@ -50,6 +50,16 @@ class Cache extends \XLite\Base
     }
 
     /**
+     * Get driver 
+     * 
+     * @return \Doctrine\Common\Cache\Cache
+     */
+    public function getDriver()
+    {
+        return $this->driver;
+    }
+
+    /**
      * Call driver's method
      *
      * @param string $name      Method name
@@ -69,7 +79,7 @@ class Cache extends \XLite\Base
      */
     protected function detectDriver()
     {
-        $options = $options ?: \XLite::getInstance()->getOptions('cache');
+        $options = \XLite::getInstance()->getOptions('cache');
 
         if (empty($options) || !is_array($options) || !isset($options['type'])) {
             $options = array('type' => null);

@@ -1326,9 +1326,10 @@ OUT;
     {
         static::$cacheDriver = new \XLite\Core\Cache();
 
-        $this->configuration->setMetadataCacheImpl(static::$cacheDriver);
-        $this->configuration->setQueryCacheImpl(static::$cacheDriver);
-        $this->configuration->setResultCacheImpl(static::$cacheDriver);
+        $driver = static::$cacheDriver->getDriver();
+        $this->configuration->setMetadataCacheImpl($driver);
+        $this->configuration->setQueryCacheImpl($driver);
+        $this->configuration->setResultCacheImpl($driver);
     }
 
     /**
