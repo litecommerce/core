@@ -186,14 +186,14 @@ abstract class AView extends \XLite\Core\Handler
         if (isset($name)) {
             // Save object reference in cache if it's not already saved
             if (!isset($this->namedWidgets[$name])) {
-                $this->namedWidgets[$name] = $this->getChildWidget($class);
+                $this->namedWidgets[$name] = $this->getChildWidget($class, $params);
             }
             // Get cached object
             $widget = $this->namedWidgets[$name];
 
         } else {
             // Create/clone current widget
-            $widget = $this->getChildWidget($class);
+            $widget = $this->getChildWidget($class, $params);
         }
 
         // Set param values
@@ -386,9 +386,9 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return \XLite\View\AView
      */
-    protected function getChildWidget($class = null)
+    protected function getChildWidget($class = null, array $params)
     {
-        return isset($class) ? new $class() : clone $this;
+        return isset($class) ? new $class($params) : clone $this;
     }
 
     /**

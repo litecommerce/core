@@ -1,0 +1,199 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Dashboard page styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+
+/**
+ * Markup styles
+ */
+
+.dashboard .center-block {
+  width: 740px;
+  display: inline-block;
+}
+
+.dashboard .sidebar {
+  width: 300px;
+  margin-left: 40px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.dashboard .center-block .title {
+  text-align: left;
+}
+
+
+div.tabs {
+  margin: 31px 0px 28px;
+}
+
+.js-tabs div.tabs
+{
+  clear: both;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.js-tabs.dashboard-tabs {
+  margin-top: 60px;
+  text-align: left;
+}
+
+div.tabs .primary {
+  height: 33px;
+  line-height: 32px;
+  padding: 0;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-collapse: collapse;
+}
+
+ul.tabs,
+div.tabs ul.primary span {
+border-color: #CADCE8;
+}
+
+ul.tabs li {
+  display: inline;
+  white-space: nowrap;
+}
+
+div.tabs .primary a,
+div.tabs .primary span {
+  padding: 11px 18px 8px;
+  vertical-align: baseline;
+  border-style: solid solid none solid;
+  border-width: 1px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+div.tabs .primary .active a,
+div.tabs .primary a:hover,
+div.tabs .primary .active a:hover,
+div.tabs .primary .active span,
+div.tabs .primary span:hover,
+div.tabs .primary .active span:hover {
+  border-bottom-color: white;
+  background: white;
+}
+
+div.tabs .primary .active a,
+div.tabs .primary .active span {
+  padding-bottom: 9px;
+}
+
+ul.primary li a, ul.primary li span {
+  -moz-border-radius-topleft: 12px;
+  -moz-border-radius-topright: 12px;
+  -webkit-border-top-left-radius: 12px;
+  -webkit-border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+div.tabs .primary a, div.tabs .primary span {
+  background: #EFF8FE url(../images/bg.png) repeat-x top left;
+}
+
+.dashboard .items-list-table {
+  width: 100%
+}
+
+.dashboard .items-list-table table.list {
+  width: 100%
+}
+
+.dashboard .items-list-table table.list tbody.lines td,
+.dashboard .items-list-table table.list tbody.lines td span,
+.dashboard .items-list-table table.list tbody td.main div,
+.dashboard .items-list-table table.list tbody td div {
+  font-size: 14px;
+}
+
+.dashboard .items-list-table table.list .cell.status {
+  padding-left: 0;
+  width: 102px;
+}
+
+.dashboard .items-list-table table.list .cell.status span {
+  width: 90px;
+  padding: 0 10px;
+  display: inline-block;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.dashboard .items-list-table table.list .cell.status span a {
+  color: #333;
+}
+
+.dashboard .items-list-table table.list .cell.status .status-P {
+  background-color: #D4F6D3;
+}
+
+.dashboard .items-list-table table.list .cell.status .status-A {
+  background-color: #F3BA89;
+}
+
+.dashboard .items-list-table table.list .cell.status .status-Q {
+  background-color: #E0F0FE;
+}
+
+.dashboard .items-list-table table.list .cell.status .status-F {
+  background-color: #F6D4D3;
+}
+
+.dashboard .items-list-table table.list .cell.profile div {
+  display: none;
+}
+
+.dashboard .items-list-table.products table.list .cell.actions.right {
+  width: 70px;
+}
+
+.dashboard .more-link-button {
+  font-size: 14px;
+}
+
+.dashboard .table-pager .left .pages-nav,
+.dashboard .table-pager .left .last {
+  display: none;
+}
+
+.dashboard .items-list.products table.list thead th.sku {
+  width: 93px;
+}
+
+.dashboard .items-list.products table.list thead th.name {
+  width: 70%;
+}
+
+.dashboard .items-list.products table.list tbody td.qty,
+.dashboard .items-list.products table.list tbody td.sold {
+  text-align: center;
+}
+
+.dashboard .items-list.products table.list tbody td.qty .view,
+.dashboard .items-list.products table.list tbody td.sold .view {
+   font-size: 16px;
+}
+
+.dashboard .empty-list {
+  font-size: 14px;
+  color: #8F8F8F;
+}
+
+.dashboard .js-tabs ul.tabs li.empty span {
+  color: #93B4CA;
+}

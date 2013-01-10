@@ -495,6 +495,19 @@ XLite\Model\LanguageLabel:
   - { name: 'Duplicated clean URL: X', translations: [{ code: en, label: 'Duplicated clean URL: {{value}}' }] }
   - { name: 'Attributes for X product class', translations: [{ code: en, label: 'Attributes for "{{class}}" product class' }] }
   - { name: 'X attributes in group', translations: [{ code: en, label: '{{count}} attributes in group' }] }
+  - { name: 'Low inventory products', translations: [{ code: en, label: 'Low inventory products ({{count}})' }] }
+  - { name: 'X orders on last day', translations: [{ code: en, label: '{{value}} orders yesterday' }] }
+  - { name: 'X orders on last week', translations: [{ code: en, label: '{{value}} orders on last week' }] }
+  - { name: 'X orders on last month', translations: [{ code: en, label: '{{value}} orders on last month' }] }
+  - { name: 'X orders on last lifetime', translations: [{ code: en, label: '' }] }
+  - { name: 'X revenue on last day', translations: [{ code: en, label: '{{value}} yesterday' }] }
+  - { name: 'X revenue on last week', translations: [{ code: en, label: '{{value}} on last week' }] }
+  - { name: 'X revenue on last month', translations: [{ code: en, label: '{{value}} on last month' }] }
+  - { name: 'X revenue on last lifetime', translations: [{ code: en, label: '' }] }
+  - { name: 'No order on last day', translations: [{ code: en, label: 'There where no orders yesterday' }] }
+  - { name: 'No order on last week', translations: [{ code: en, label: 'There where no orders last week' }] }
+  - { name: 'No order on last month', translations: [{ code: en, label: 'There where no orders last month' }] }
+  - { name: 'No order on last lifetime', translations: [{ code: en, label: 'There where no orders placed yet' }] }
 
 XLite\Model\Membership:
   directives: { insert: true }

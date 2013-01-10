@@ -23,38 +23,35 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\View\Pager\Admin\Model;
 
 /**
- * Low inventory box
+ * Table-based pager
  * 
- *
- * @ListChild (list="main", weight="200", zone="admin")
  */
-class LowInventoryBox extends \XLite\View\AView
+class Block extends \XLite\View\Pager\Admin\Model\Table
 {
-
     /**
-     * Return widget default template
+     * Get items per page (default)
      *
-     * @return string
+     * @return integer
      */
-    protected function getDefaultTemplate()
+    protected function getItemsPerPageDefault()
     {
-        return 'main/parts/low_inventory.tpl';
+        return 5;
     }
 
-    /**
-     * Check ACL permissions
-     *
-     * @return boolean
-     */
-    protected function checkACL()
-    {
-        $auth = \XLite\Core\Auth::getInstance();
+    // {{{ Content helpers
 
-        return parent::checkACL()
-            && ($auth->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS) || $auth->isPermissionAllowed('manage catalog'));
+    /**
+     * Get items per page ranges list
+     * 
+     * @return array
+     */
+    protected function getItemsPerPageRanges()
+    {
+        return array(5, 10, 15);
     }
+
+    // }}}
 }
-

@@ -59,13 +59,11 @@ class OrderItem extends \XLite\Model\Repo\ARepo
      *
      * @return \Doctrine\ORM\PersistentCollection
      */
-    public function getTopSellers(\XLite\Core\CommonCell $cnd)
+    public function getTopSellers(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $queryBuilder = $this->createQueryBuilder();
+        $result = $this->prepareTopSellersCondition($cnd)->getResult();
 
-        $this->prepareTopSellersCondition($queryBuilder, $cnd);
-
-        return $queryBuilder->getQuery()->getResult();
+        return $countOnly ? count($result) : $result;
     }
 
 
@@ -77,27 +75,49 @@ class OrderItem extends \XLite\Model\Repo\ARepo
      *
      * @return void
      */
-    protected function prepareTopSellersCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Core\CommonCell $cnd)
+    protected function prepareTopSellersCondition(\XLite\Core\CommonCell $cnd)
     {
         list($start, $end) = $cnd->date;
 
-        $queryBuilder->addSelect('SUM(o.amount) as cnt')
+        $qb = $this->createQueryBuilder();
+
+        $qb->addSelect('SUM(o.amount) as cnt')
             ->innerJoin('o.order', 'o1')
             ->innerJoin('o1.currency', 'currency', 'WITH', 'currency.currency_id = :currency_id')
             ->addSelect('o1.date')
-            ->andWhere('o1.date >= :start')
-            ->setParameter('start', $start)
-            ->andWhere('o1.date <= :end')
-            ->setParameter('end', $end)
-            ->andWhere('o1.status IN (:statusAuthorized, :statusProcessed, :statusCompleted)')
-            ->setParameter('statusAuthorized', \XLite\Model\Order::STATUS_AUTHORIZED)
-            ->setParameter('statusProcessed', \XLite\Model\Order::STATUS_PROCESSED)
-            ->setParameter('statusCompleted', \XLite\Model\Order::STATUS_COMPLETED)
+            ->andWhere($qb->expr()->in('o1.status', $this->getTopSellerOrderStatuses()))
             ->setParameter('currency_id', $cnd->currency)
             ->setMaxResults($cnd->limit)
             ->addGroupBy('o.sku')
             ->addOrderBy('cnt', 'desc')
             ->addOrderBy('o.name', 'asc');
+
+        if (0 < $start) {
+            $qb->andWhere('o1.date >= :start')
+                ->setParameter('start', $start);
+        }
+
+        if (0 < $end) {
+            $qb->andWhere('o1.date < :end')
+                ->setParameter('end', $end);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Get order statuses for top sellers query
+     *
+     * @return array
+     */
+    protected function getTopSellerOrderStatuses()
+    {
+        return array(
+            \XLite\Model\Order::STATUS_QUEUED,
+            \XLite\Model\Order::STATUS_COMPLETED,
+            \XLite\Model\Order::STATUS_AUTHORIZED,
+            \XLite\Model\Order::STATUS_PROCESSED,
+        );
     }
 
     // }}}

@@ -667,4 +667,25 @@ abstract class AItemsList extends \XLite\View\Container
         $this->requestParams[] = self::PARAM_SORT_BY;
         $this->requestParams[] = self::PARAM_SORT_ORDER;
     }
+
+    /**
+     * Get 'More' link URL
+     *
+     * @return string
+     */
+    public function getMoreLink()
+    {
+        return null;
+    }
+
+    /**
+     * Get 'More' link title
+     *
+     * @return string
+     */
+    public function getMoreLinkTitle()
+    {
+        return null;
+    }
+
 }

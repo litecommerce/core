@@ -633,4 +633,24 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     {
         return $this->isVisible();
     }
+
+    /**
+     * Get specific for items list 'More' link URL
+     *
+     * @return string
+     */
+    protected function getMoreLink()
+    {
+        return $this->getList()->getMoreLink();
+    }
+
+    /**
+     * Get specific for items list 'More' link title
+     *
+     * @return string
+     */
+    protected function getMoreLinkTitle()
+    {
+        return $this->getList()->getMoreLinkTitle();
+    }
 }

@@ -58,6 +58,7 @@ class Auth extends \XLite\Base
     protected $sessionVarsToClear = array(
         'profile_id',
         'anonymous',
+        'hide_welcome_block',
     );
 
     /**
