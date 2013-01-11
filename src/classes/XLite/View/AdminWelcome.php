@@ -26,12 +26,11 @@
 namespace XLite\View;
 
 /**
- * Main 
+ * Admin's 'Welcome...' block widget 
  * 
- *
- * @ListChild (list="admin.center", zone="admin")
+ * @ListChild (list="dashboard-center", zone="admin", weight="50")
  */
-class Main extends \XLite\View\Dialog
+class AdminWelcome extends \XLite\View\Dialog
 {
     /**
      * Return list of allowed targets
@@ -44,14 +43,50 @@ class Main extends \XLite\View\Dialog
     }
 
     /**
+     * Add widget specific CSS files
+     *
+     * @return array
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/style.css';
+
+        return $list;
+    }
+
+    /**
+     * Add widget specific JS files
+     *
+     * @return array
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/controller.js';
+
+        return $list;
+    }
+
+    /**
      * Return templates directory name
      *
      * @return string
      */
     protected function getDir()
     {
-        return $this->checkACL() ? 'main' : 'main/forbid';
+        return 'main';
     }
 
+    /**
+     * Check block visibility
+     *
+     * @return boolean
+     */
+    protected function isVisible()
+    {
+        return 1 != \XLite\Core\Session::getInstance()->hide_welcome_block
+            && 1 != \XLite\Core\Config::getInstance()->Internal->hide_welcome_block;
+    }
 }
 

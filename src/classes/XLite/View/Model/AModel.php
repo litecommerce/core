@@ -1217,7 +1217,13 @@ abstract class AModel extends \XLite\View\Dialog
         $model = $this->getModelObject();
         $method = 'get' . \XLite\Core\Converter::convertToCamelCase($name);
 
-        return method_exists($model, $method) ? $model->$method() : $model->getterProperty($name);
+        return is_object($model)
+            ? (
+                method_exists($model, $method)
+                ? $model->$method()
+                : $model->getterProperty($name)
+            )
+            : null;
     }
 
     /**
