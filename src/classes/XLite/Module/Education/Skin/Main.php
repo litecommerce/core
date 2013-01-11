@@ -107,6 +107,8 @@ abstract class Main extends \XLite\Module\AModule
          *
          */
         \XLite\Core\Layout::getInstance()->addSkin('education.skin.example');
+
+        \XLite\Core\Layout::getInstance()->addSkin('education.skin.example2');
     }
 
 }
