@@ -105,6 +105,20 @@ abstract class AView extends \XLite\Core\Handler
     protected $viewLists = array();
 
     /**
+     * Current skin directory
+     *
+     * @var string
+     */
+    protected $currentSkin = null;
+
+    /**
+     * Current locale code
+     *
+     * @var string
+     */
+    protected $currentLocale = null;
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -232,7 +246,7 @@ abstract class AView extends \XLite\Core\Handler
             }
 
             // Body of the old includeCompiledFile() method
-            $normalized = $this->getTemplateFile($template);
+            list($this->currentSkin, $this->currentLocale, $normalized) = $this->getTemplateFile($template);
             $compiled = \XLite\Singletons::$handler->flexy->prepare($normalized);
 
             $cnt = static::$profilerInfo['countDeep']++;
@@ -356,7 +370,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getTemplateFile($template = null)
     {
-        return \XLite\Singletons::$handler->layout->getTemplateFullPath($template ?: $this->getTemplate());
+        return \XLite\Singletons::$handler->layout->getTemplateFullPath($template ?: $this->getTemplate(), $this);
     }
 
     /**

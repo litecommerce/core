@@ -247,15 +247,16 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return string
      */
-    public function getTemplateFullPath($shortPath)
+    public function getTemplateFullPath($shortPath, $viewer)
     {
         $parts = explode(':', $shortPath, 2);
+
+        list($currentSkin, $currentLocale, $currentTemplate) = $this->getCurrentTemplateInfo();
 
         if (1 == count($parts)) {
             if ('parent' == $shortPath) {
 
-                list($currentSkin, $currentTemplate) = $this->getCurrentTemplateInfo();
-                $result = $this->getResourceParentFullPath($currentTemplate, $currentSkin);
+                $result = $this->getResourceParentFullPath($currentTemplate, $viewer->currentSkin?:$currentSkin, $viewer->currentLocale?:$currentLocale);
 
             } else {
                 $result = $this->getResourceFullPath($shortPath);
@@ -263,14 +264,13 @@ class Layout extends \XLite\Base\Singleton
 
         } elseif ('parent' == $parts[0]) {
 
-            list($currentSkin, $currentTemplate) = $this->getCurrentTemplateInfo();
-            $result = $this->getResourceParentFullPath($parts[1], $currentSkin);
+            $result = $this->getResourceParentFullPath($parts[1], $viewer->currentSkin?:$currentSkin, $viewer->currentLocale?:$currentLocale);
 
         } else {
             $result = $this->getResourceSkinFullPath($parts[1], $parts[0]);
         }
 
-        return $result;
+        return array($currentSkin, $currentLocale, $result);
     }
 
     /**
@@ -316,31 +316,38 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Returns the resource full path before parent skin
      *
-     * @param string $shortPath  Short path
-     * @param string $parentSkin Parent skin
+     * @param string $shortPath     Short path
+     * @param string $currentSkin   Current skin
+     * @param string $currentLocale Current locale
      *
      * @return string
      */
-    public function getResourceParentFullPath($shortPath, $parentSkin)
+    public function getResourceParentFullPath($shortPath, $currentSkin, $currentLocale)
     {
-        $result = null;
         $found = false;
 
-        foreach ($this->getSkinPaths($this->currentInterface) as $path) {
-            if ($found) {
-                $fullPath = $path['fs'] . LC_DS . $shortPath;
-                if (file_exists($fullPath)) {
-                    $result = $fullPath;
-                    break;
-                }
-            }
+        $paths = $this->getSkinPaths($this->currentInterface);
 
-            if ($path['name'] == $parentSkin) {
-                $found = true;
-            }
+        reset($paths);
+
+        while(!$found && list($key, $path) = each($paths)) {
+            $found = $path['name'] == $currentSkin
+                && $path['locale'] == $currentLocale
+                && file_exists($fullPath = $path['fs'] . LC_DS . $shortPath);
         }
 
-        return $result;
+        if ($found) {
+            $found = false;
+            while(!$found && list($key, $path) = each($paths)) {
+                $found = file_exists($fullPath = $path['fs'] . LC_DS . $shortPath);
+            }
+        } else {
+            $path = end($paths);
+
+            $fullPath = $path['fs'] . LC_DS . $shortPath;
+        }
+
+        return $fullPath;
     }
 
     /**
@@ -450,6 +457,7 @@ class Layout extends \XLite\Base\Singleton
                         'name' => $skin,
                         'fs'   => LC_DIR_SKINS . $skin . ($locale ? LC_DS . $locale : ''),
                         'web'  => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
+                        'locale' => $locale,
                     );
                 }
             }
@@ -470,7 +478,7 @@ class Layout extends \XLite\Base\Singleton
 
         list($skin, $lang, $template) = explode(LC_DS, substr($last, strlen(LC_DIR_SKINS)), 3);
 
-        return array($skin, $template);
+        return array($skin, $lang, $template);
     }
 
     /**
