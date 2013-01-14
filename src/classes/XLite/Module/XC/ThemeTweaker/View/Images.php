@@ -91,10 +91,13 @@ class Images extends \XLite\View\AView
     {
         if (!isset($this->images)) {
             $this->images = array();
-            foreach ($this->getImagesIterator()->getIterator() as $file) {
-                if ($file->isFile()) {
-                     $this->images[] = \Includes\Utils\FileManager::getRelativePath($file->getPathname(), $this->getImagesDir());
+            try {
+                foreach ($this->getImagesIterator()->getIterator() as $file) {
+                    if ($file->isFile()) {
+                        $this->images[] = \Includes\Utils\FileManager::getRelativePath($file->getPathname(), $this->getImagesDir());
+                    }
                 }
+            } catch (\Exception $e) {
             }
         }
 
