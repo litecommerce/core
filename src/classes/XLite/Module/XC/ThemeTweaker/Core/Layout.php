@@ -45,7 +45,7 @@ class Layout extends \XLite\Core\Layout implements \XLite\Base\IDecorator
             ? array (
                 array(
                     'name' => 'custom',
-                    'fs'   => LC_DIR_VAR,
+                    'fs'   => rtrim(LC_DIR_VAR, LC_DS),
                     'web'  => 'var',
                 )
             )

@@ -56,7 +56,7 @@ class CustomCssImages extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\Bas
             && $_FILES['new_image']['name']
         ) {
             if (!\Includes\Utils\FileManager::isExists($dir)) {
-                \Includes\Utils\FileManager::mkdir($dir);
+                \Includes\Utils\FileManager::mkdirRecursive($dir);
             }
 
             if (\Includes\Utils\FileManager::isDirWriteable($dir)) {
