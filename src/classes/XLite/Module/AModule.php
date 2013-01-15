@@ -1,4 +1,5 @@
 <?php
+
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
@@ -38,6 +39,8 @@ abstract class AModule
      */
     public static function init()
     {
+        // Register skins into Layout
+        static::registerSkins();
     }
 
     /**
@@ -199,5 +202,51 @@ abstract class AModule
     public static function isSystem()
     {
         return false;
+    }
+
+    /**
+     * Get the module skins list to register in layout.
+     * The array has the following format:
+     *
+     * return array(
+     *  <interface_name> => array(
+     *  <skin_short_path1>,
+     * ...
+     * ),
+     * ...
+     * )
+     *
+     * Interface in this list:
+     *
+     * \XLite::ADMIN_INTERFACE
+     * \XLite::CONSOLE_INTERFACE
+     * \XLite::COMMON_INTERFACE
+     * \XLite::MAIL_INTERFACE
+     * \XLite::CUSTOMER_INTERFACE
+     *
+     * <skin_short_path> - Relative skin path inside the LC_DIR_SKINS directory:
+     *
+     * For directory `<application_dir>/skins/my_module_skin` short path value will be 'my_module_skin'
+     *
+     * @return array
+     */
+    public static function getSkins()
+    {
+        return array();
+    }
+
+    /**
+     * Skins registration method.
+     * Do not change it until you are not sure.
+     *
+     * @return void
+     */
+    public static function registerSkins()
+    {
+        foreach (static::getSkins() as $interface => $skinsToRegister) {
+            foreach ($skinsToRegister as $skin) {
+                \XLite\Core\Layout::getInstance()->addSkin($skin, $interface);
+            }
+        }
     }
 }

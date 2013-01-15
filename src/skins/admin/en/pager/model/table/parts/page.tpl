@@ -11,7 +11,9 @@
  * @ListChild (list="pager.admin.model.table.left", weight="100")
  *}
 
-<span class="title">{t(#Page#)}:</span>
-<a href="{buildURLByPageId(previousPageId)}" class="{getPrevClass()}" data-pageId="{getPreviousPageId()}"><span>{t(#Prev#)}</span></a>
-<div class="input"><input type="text" id="pager-input" name="pageId" value="{preprocessPageId(pageId)}" class="validate[maxSize[6],min[1],custom[integer]] wheel-ctrl no-wheel-mark not-significant" /></div>
-<a href="{buildURLByPageId(nextPageId)}" class="{getNextClass()}" data-pageId="{getNextPageId()}"><span>{t(#Next#)}</span></a>
+<div class="pages-nav">
+  <span class="title">{t(#Page#)}:</span>
+  <a href="{buildURLByPageId(previousPageId)}" class="{getPrevClass()}" data-pageId="{getPreviousPageId()}"><span>{t(#Prev#)}</span></a>
+  <div class="input"><input type="text" id="pager-input" name="pageId" value="{preprocessPageId(pageId)}" class="validate[maxSize[6],min[1],custom[integer]] wheel-ctrl no-wheel-mark not-significant" /></div>
+  <a href="{buildURLByPageId(nextPageId)}" class="{getNextClass()}" data-pageId="{getNextPageId()}"><span>{t(#Next#)}</span></a>
+</div>

@@ -206,6 +206,13 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      */
     protected $attrSepTab = true;
 
+    /**
+     * How much product is sold (used in Top selling products statistics)
+     *
+     * @var integer
+     */
+    protected $sold = 0;
+
 
     /**
      * Constructor
@@ -632,5 +639,28 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
         }
 
         return $count;
+    }
+
+    /**
+     * Setter for $sold property
+     *
+     * @param integer $value Value to set
+     *
+     * @return void
+     */
+    public function setSold($value)
+    {
+        $this->sold = $value;
+    }
+
+    /**
+     * Getter for $sold property
+     *
+     * @return integer
+     */
+
+    public function getSold()
+    {
+        return $this->sold;
     }
 }
