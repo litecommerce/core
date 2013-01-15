@@ -126,7 +126,19 @@ class Module extends \XLite\Core\Pack\APack
      */
     public function getDirs()
     {
-        return array_merge($this->getClassDirs(), $this->getSkinDirs());
+        return array_merge($this->getClassDirs(), $this->getSkinDirs(), $this->getCustomSkinDirs());
+    }
+
+    /**
+     * Helper to provide the skin prefix (see `getCustomSkinDirs` for more info)
+     *
+     * @param string $item
+     *
+     * @return void
+     */
+    public function addSkinPrefix(&$item)
+    {
+        $item = LC_DIR_SKINS . $item;
     }
 
     /**
@@ -165,6 +177,25 @@ class Module extends \XLite\Core\Pack\APack
                 unset($result[$key]);
             }
         }
+
+        return array_values(array_unique($result));
+    }
+
+    /**
+     * Return list of module directories which contain templates. Custom skins
+     *
+     * @return array
+     */
+    protected function getCustomSkinDirs()
+    {
+        $result = array();
+
+        // Collect the custom skins registered via the module
+        foreach ($this->module->callModuleMethod('getSkins') as $tmp) {
+            $result = array_merge($result, $tmp);
+        }
+
+        array_walk($result, array($this, 'addSkinPrefix'));
 
         return array_values(array_unique($result));
     }
