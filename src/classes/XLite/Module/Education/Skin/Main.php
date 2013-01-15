@@ -82,33 +82,18 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Method to initialize concrete module instance
+     * Register the module skins.
      *
-     * @return void
+     * @return array
      */
-    public static function init()
+    public static function getSkins()
     {
-        parent::init();
-
-        /**
-         * You could use the complete call of addSkin method:
-         *
-         * \XLite\Core\Layout::getInstance()->addSkin('education.skin.example', \XLite::CUSTOMER_INTERFACE);
-         *
-         * or any other interface in this list:
-         *
-         * \XLite::ADMIN_INTERFACE
-         * \XLite::CONSOLE_INTERFACE
-         * \XLite::COMMON_INTERFACE
-         * \XLite::MAIL_INTERFACE
-         * \XLite::CUSTOMER_INTERFACE
-         *
-         * More information you will find in the developer documentation : Substitutional skin explanation
-         *
-         */
-        \XLite\Core\Layout::getInstance()->addSkin('education.skin.example');
-
-        \XLite\Core\Layout::getInstance()->addSkin('education.skin.example2');
+        return array(
+            \XLite::CUSTOMER_INTERFACE => array(
+                'education.skin.example',
+                'education.skin.example2',
+            ),
+        );
     }
 
 }
