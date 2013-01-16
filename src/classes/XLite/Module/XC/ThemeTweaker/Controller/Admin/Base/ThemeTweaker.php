@@ -50,13 +50,25 @@ abstract class ThemeTweaker extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Save file
+     * Save
      *
      * @return void
      */
-    protected function doActionSaveFile()
+    protected function doActionSave()
     {
         \Includes\Utils\FileManager::write($this->getFileName(), \XLite\Core\Request::getInstance()->code);
+
+        $setting = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy(
+            array(
+                'name' => 'use_' . \XLite\Core\Request::getInstance()->target,
+                'category' => 'XC\\ThemeTweaker'
+            )
+        );
+
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->update(
+            $setting,
+            array('value' => isset(\XLite\Core\Request::getInstance()->use))
+        );
 
         if (\Includes\Utils\FileManager::isFileWriteable($this->getFileName())) {
             if (
