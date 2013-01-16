@@ -1099,7 +1099,10 @@ function doPrepareFixtures(&$params, $silentMode = false)
 
             $moduleName = basename(dirname($f));
 
-            $enabledModules[$author][$moduleName] = 1;
+            $enabledModules[$author][$moduleName] = intval(
+                !empty($lcSettings['enable_modules'][$author])
+                && in_array($moduleName, $lcSettings['enable_modules'][$author])
+            );
 
             $moduleFile = sprintf('classes/XLite/Module/%s/%s/install.yaml', $author, $moduleName);
 
