@@ -41,6 +41,9 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
         // To cache data
         \Includes\Utils\ModulesManager::getActiveModules();
 
+        // Prepare flag to use it later for loading or not loading modules' yaml files
+        $isModulesFileExists = \Includes\Utils\ModulesManager::isModulesFileExists();
+
         // Walk through the "XLite/Module" directory
         foreach ($this->getModuleMainFileIterator()->getIterator() as $path => $data) {
             $dir    = $path;
@@ -52,7 +55,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
                 require_once ($path);
             }
 
-            \Includes\Utils\ModulesManager::switchModule($author, $name);
+            \Includes\Utils\ModulesManager::switchModule($author, $name, $isModulesFileExists);
         }
 
         \Includes\Utils\ModulesManager::removeFile();
