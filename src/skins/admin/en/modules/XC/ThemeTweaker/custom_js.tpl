@@ -11,6 +11,9 @@
 
 <widget class="\XLite\Module\XC\ThemeTweaker\View\Form\CustomJs" name="form" />
 
+  <input type="checkbox" value="1"{if:config.XC.ThemeTweaker.use_custom_js} checked="checked"{end:} id="use_js" name="use" /> <label for="use_js">{t(#Use custom js#)}</label>
+  <br /><br />
+
   <widget class="\XLite\Module\XC\ThemeTweaker\View\FormField\Textarea\CodeMirror" fieldName="code" cols="140" rows="20" fieldId="code" codeMode="javascript" value="{getFileContent()}" fieldOnly="true" />
 
   <div class="buttons">

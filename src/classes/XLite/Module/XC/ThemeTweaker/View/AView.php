@@ -57,7 +57,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
             !\XLite::isAdminZone()
         ) {
             if (
-                \XLite\Core\Config::getInstance()->XC->ThemeTweaker->use_js
+                \XLite\Core\Config::getInstance()->XC->ThemeTweaker->use_custom_js
             ) {
                 $files[static::RESOURCE_JS] = array(
                     array(
@@ -68,7 +68,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
             }
 
             if (
-                \XLite\Core\Config::getInstance()->XC->ThemeTweaker->use_css
+                \XLite\Core\Config::getInstance()->XC->ThemeTweaker->use_custom_css
             ) {
                 $files[static::RESOURCE_CSS] = array(
                     array(

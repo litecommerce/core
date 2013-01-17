@@ -11,6 +11,9 @@
 
 <widget class="\XLite\Module\XC\ThemeTweaker\View\Form\CustomCss" name="form" />
 
+  <input type="checkbox" value="1"{if:config.XC.ThemeTweaker.use_custom_css} checked="checked"{end:} id="use_css" name="use" /> <label for="use_css">{t(#Use custom css#)}</label>
+  <br /><br />
+
   <widget class="\XLite\Module\XC\ThemeTweaker\View\FormField\Textarea\CodeMirror" fieldName="code" cols="140" rows="20" fieldId="code" codeMode="css" value="{getFileContent()}" fieldOnly="true" />
 
   <div class="buttons">

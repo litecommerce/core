@@ -8,7 +8,7 @@
 # @link      http://www.litecommerce.com/
 
 XLite\Model\Config:
-  - name: use_css
+  - name: use_custom_css
     category: 'XC\ThemeTweaker'
     type: checkbox
     orderby: 10
@@ -16,7 +16,7 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: 'Use custom css'
-  - name: use_js
+  - name: use_custom_js
     category: 'XC\ThemeTweaker'
     type: checkbox
     orderby: 20

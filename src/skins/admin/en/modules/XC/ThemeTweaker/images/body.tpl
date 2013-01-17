@@ -12,6 +12,13 @@
 {if:getImages()}
 <div class="items-list-table items-list">
   <table class="list" cellspacing="0">
+    <thead>
+      <tr>
+        <th>{t(#Image#)}</th>
+        <th>{t(#Path for using in custom CSS#)}</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
     <tbody class="lines">
       <tr FOREACH="getImages(),image" class="line">
         <td class="image"><a href="{getImageUrl(image)}" target="_blank"><img src="{getImageUrl(image)}" alt="" /></a></td>

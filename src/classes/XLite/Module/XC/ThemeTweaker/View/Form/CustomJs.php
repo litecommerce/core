@@ -48,7 +48,7 @@ class CustomJs extends \XLite\View\Form\AForm
      */
     protected function getDefaultAction()
     {
-        return 'save_file';
+        return 'save';
     }
 
 }

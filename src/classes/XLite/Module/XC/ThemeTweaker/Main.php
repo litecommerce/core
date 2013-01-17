@@ -82,16 +82,6 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     */
-    public static function showSettingsForm()
-    {
-        return true;
-    }
-
-    /**
      * Module description
      *
      * @return string
