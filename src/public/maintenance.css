@@ -1,0 +1,68 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Maintenance and install pages style
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ */
+
+body
+{
+  padding: 0;
+  margin: 0;
+}
+
+div {
+  font-size: 16px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+div.header {
+  height: 80px;
+  width: 100%;
+  background-color: #F2F2F2;
+}
+
+div.container {
+  position: relative;
+  top: -50px;
+}
+
+div.img {
+  height: 100px;
+  width: 100px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  border: 1px solid #F2F2F2;
+  border-bottom-width: 2px;
+  margin: 0 auto;
+  background: white url(maintenance.png) no-repeat center;
+}
+
+.not-installed div.img {
+  background-image: url(not-installed.png);
+}
+
+div.title {
+  font-size: 24px;
+  font-weight: normal;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+div.text {
+  margin: 0 auto;
+  width: 600px;
+  white-space: normal;
+  text-align: center;
+}
+
+a strong {
+  font-weight: normal;
+}
+

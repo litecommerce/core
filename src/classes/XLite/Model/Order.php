@@ -1281,7 +1281,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $profile = $this->getProfile();
         if ($profile) {
             $mail->compose(
-                \XLite\Core\Config::getInstance()->Company->site_administrator,
+                \XLite\Core\Config::getInstance()->Company->orders_department,
                 $profile->getLogin(),
                 'order_processed'
             );
