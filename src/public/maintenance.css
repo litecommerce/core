@@ -17,7 +17,7 @@ body
 
 div {
   font-size: 16px;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Arial, Verdana, sans-serif;
 }
 
 div.header {
@@ -31,14 +31,24 @@ div.container {
   top: -50px;
 }
 
+div.circle {
+  height: 100px;
+  width: 100px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  -moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.08);
+  -webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.08);
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.08);
+  margin: 0 auto;
+}
+
 div.img {
   height: 100px;
   width: 100px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
   border-radius: 50px;
-  border: 1px solid #F2F2F2;
-  border-bottom-width: 2px;
   margin: 0 auto;
   background: white url(maintenance.png) no-repeat center;
 }
@@ -48,8 +58,9 @@ div.img {
 }
 
 div.title {
-  font-size: 24px;
-  font-weight: normal;
+  font-size: 22px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
   text-align: center;
   padding-top: 25px;
   padding-bottom: 25px;
@@ -62,7 +73,52 @@ div.text {
   text-align: center;
 }
 
-a strong {
-  font-weight: normal;
+a, a:link, a:visited, a:hover, a:active {
+  color: #1b80c6;
 }
+
+/* CSS3 rotation */
+@-webkit-keyframes spin { /* Safari */
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@-moz-keyframes spin { /* Firefox */
+  0% { -moz-transform: rotate(0deg); }
+  100% { -moz-transform: rotate(360deg); }
+}
+
+@-ms-keyframes spin { /* IE */
+  0% { -ms-transform: rotate(0deg); }
+  100% { -ms-transform: rotate(360deg); }
+}
+
+@-o-keyframes spin { /* Opera */
+  0% { -o-transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); }
+}
+
+@keyframes spin { /* CSS3 */
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}  
+
+#img {
+  -webkit-animation-name: spin;
+  -moz-animation-name: spin;
+  -ms-animation-name: spin;
+  -o-animation-name: spin;
+  animation-name: spin;
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  -ms-animation-duration: 2s;
+  -o-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -ms-animation-iteration-count: infinite;
+  -o-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
 
