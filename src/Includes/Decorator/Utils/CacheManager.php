@@ -278,7 +278,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     protected static function checkIfRebuildStarted()
     {
         if (static::checkRebuildIndicatorState()) {
-            \Includes\ErrorHandler::fireError('Cache rebuild is already started, please wait');
+            \Includes\ErrorHandler::fireError(
+                'Rebuilding the cache of classes. This may take several minutes, please be patient.',
+                \Includes\ErrorHandler::ERROR_MAINTENANCE_MODE
+            );
         }
     }
 
