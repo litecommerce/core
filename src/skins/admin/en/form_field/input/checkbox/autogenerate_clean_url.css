@@ -13,3 +13,11 @@
   display: block;
   float: none;
 }
+
+.product-modify-form .table-value.clean-url {
+  display: inline-block;
+}
+
+.clean-url-suffix {
+  display: inline;
+}
