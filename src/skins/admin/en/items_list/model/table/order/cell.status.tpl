@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<span class="status-{entity.getStatus()}"><a href="{buildURL(#order#,##,_ARRAY_(#order_id#^entity.getOrderId()))}">{getColumnValue(column,entity)}</a></span>
+<span class="status-{entity.getStatus()}"><a href="{buildURL(#order#,##,_ARRAY_(#order_id#^entity.getOrderId()))}">{t(getColumnValue(column,entity))}</a></span>
