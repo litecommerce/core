@@ -160,7 +160,7 @@ class Attribute extends \XLite\Model\Base\I18n
             self::TYPE_TEXT     => 'Text',
             self::TYPE_NUMBER   => 'Number',
             self::TYPE_CHECKBOX => 'Checkbox',
-            self::TYPE_SELECT   => 'Select',
+            self::TYPE_SELECT   => 'Combo box',
         );
 
         return isset($type)
@@ -301,7 +301,11 @@ class Attribute extends \XLite\Model\Base\I18n
     public function getAttributeValueClass()
     {
         return '\XLite\Model\AttributeValue\AttributeValue'
-            . $this->getTypes($this->getType()); 
+            . (
+                self::TYPE_SELECT == $this->getType()
+                ? 'Select'
+                : $this->getTypes($this->getType())
+            ); 
     }
 
     /**
