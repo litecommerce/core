@@ -23,57 +23,21 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Core\TranslationDriver;
+namespace XLite\Module\XC\ThemeTweaker\Controller\Admin;
 
 /**
- * Abstract translation driver
+ * Custom CSS controller
  *
  */
-abstract class ATranslationDriver extends \XLite\Base
+class CustomCss extends \XLite\Module\XC\ThemeTweaker\Controller\Admin\Base\ThemeTweaker
 {
     /**
-     * Translate label
-     *
-     * @param string $name Label name
-     * @param string $code Language code
-     *
-     * @return string|void
-     */
-    abstract public function translate($name, $code);
-
-    /**
-     * Check - valid driver or not
-     *
-     * @return boolean
-     */
-    abstract public function isValid();
-
-    /**
-     * Reset language driver
-     *
-     * @return void
-     */
-    abstract public function reset();
-
-
-    /**
-     * Get driver name
+     * Return the current page title (for the content area)
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return static::TRANSLATION_DRIVER_NAME;
-    }
-
-
-    /**
-     * Alias
-     *
-     * @return \XLite\Model\Repo\LanguageLabel
-     */
-    protected function getRepo()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel');
+        return static::t('Custom CSS');
     }
 }

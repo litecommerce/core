@@ -23,57 +23,32 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Core\TranslationDriver;
+namespace XLite\Module\XC\ThemeTweaker\Core;
 
 /**
- * Abstract translation driver
+ * Layout manager
  *
  */
-abstract class ATranslationDriver extends \XLite\Base
+class Layout extends \XLite\Core\Layout implements \XLite\Base\IDecorator
 {
     /**
-     * Translate label
+     * Get skin paths (file system and web)
      *
-     * @param string $name Label name
-     * @param string $code Language code
+     * @param string  $interface Interface code OPTIONAL
+     * @param boolean $reset     Local cache reset flag OPTIONAL
      *
-     * @return string|void
+     * @return array
      */
-    abstract public function translate($name, $code);
-
-    /**
-     * Check - valid driver or not
-     *
-     * @return boolean
-     */
-    abstract public function isValid();
-
-    /**
-     * Reset language driver
-     *
-     * @return void
-     */
-    abstract public function reset();
-
-
-    /**
-     * Get driver name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getSkinPaths($interface = null, $reset = false)
     {
-        return static::TRANSLATION_DRIVER_NAME;
-    }
-
-
-    /**
-     * Alias
-     *
-     * @return \XLite\Model\Repo\LanguageLabel
-     */
-    protected function getRepo()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel');
+        return 'custom' == $interface
+            ? array (
+                array(
+                    'name' => 'custom',
+                    'fs'   => rtrim(LC_DIR_VAR, LC_DS),
+                    'web'  => 'var',
+                )
+            )
+            : parent::getSkinPaths($interface, $reset);
     }
 }

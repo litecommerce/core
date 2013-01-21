@@ -23,57 +23,41 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Core\TranslationDriver;
+namespace XLite\Module\XC\ThemeTweaker\View\Form;
 
 /**
- * Abstract translation driver
- *
+ * Custom css images form
+ * 
  */
-abstract class ATranslationDriver extends \XLite\Base
+class CustomCssImages extends \XLite\View\Form\AForm
 {
     /**
-     * Translate label
-     *
-     * @param string $name Label name
-     * @param string $code Language code
-     *
-     * @return string|void
-     */
-    abstract public function translate($name, $code);
-
-    /**
-     * Check - valid driver or not
+     * Ability to add the 'enctype="multipart/form-data"' form attribute
      *
      * @return boolean
      */
-    abstract public function isValid();
+    protected function isMultipart()
+    {
+        return true;
+    }
 
     /**
-     * Reset language driver
-     *
-     * @return void
-     */
-    abstract public function reset();
-
-
-    /**
-     * Get driver name
+     * Get default target
      *
      * @return string
      */
-    public function getName()
+    protected function getDefaultTarget()
     {
-        return static::TRANSLATION_DRIVER_NAME;
+        return 'custom_css_images';
     }
 
-
     /**
-     * Alias
+     * Get default action
      *
-     * @return \XLite\Model\Repo\LanguageLabel
+     * @return string
      */
-    protected function getRepo()
+    protected function getDefaultAction()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel');
+        return 'update';
     }
 }

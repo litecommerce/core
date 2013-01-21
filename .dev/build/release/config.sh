@@ -58,6 +58,7 @@ CDev/Bestsellers
 CDev/FeaturedProducts
 CDev/FileAttachments
 CDev/ProductOptions
+XC/ThemeTweaker
 "
 
 # LiteCommerce modules which should be packed as separate distributives
@@ -93,6 +94,7 @@ CDev/XMLSitemapDrupal
 CDev/DeTranslation
 CDev/FrTranslation
 CDev/RuTranslation
+XC/ThemeTweaker
 "
 
 # LiteCommerce paid modules which should be packed as separate distributives
