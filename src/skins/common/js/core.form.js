@@ -1133,10 +1133,8 @@ CommonElement.prototype.validateInteger = function()
 {
   var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
-  var value = parseFloat(this.element.value);
-
   return {
-    status:  !apply || !this.element.value.length || (!isNaN(value) && value == Math.round(value)),
+    status:  !apply || !this.element.value.length || -1 != this.element.value.search(/^ *[0-9]+ */),
     message: 'Enter an integer',
     apply:   apply
   };
@@ -1147,8 +1145,11 @@ CommonElement.prototype.validateFloat = function()
 {
   var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
+  var value = this.element.value.replace(/^ +/, '').replace(/ $+/, '');
+  var sanitized = parseFloat(value);
+
   return {
-    status:  !apply || !this.element.value.length || !isNaN(parseFloat(this.element.value)),
+    status:  !apply || !this.element.value.length || (!isNaN(sanitized) && value === sanitized.toString()),
     message: 'Enter a number',
     apply:   apply
   };
