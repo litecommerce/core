@@ -303,8 +303,8 @@ class Attribute extends \XLite\Model\Base\I18n
         return '\XLite\Model\AttributeValue\AttributeValue'
             . (
                 self::TYPE_SELECT == $this->getType()
-                    ? 'Select'
-                    : $this->getTypes($this->getType())
+                ? 'Select'
+                : $this->getTypes($this->getType())
             ); 
     }
 

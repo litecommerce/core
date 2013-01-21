@@ -39,7 +39,7 @@ XLite\Model\Config:
   - { name: 'customer_presentation', category: 'General', translations: [{ code: 'ru', option_name: 'Параметры Клиентской зоны' }] }
   - { name: 'customer_security', category: 'Security', translations: [{ code: 'ru', option_name: 'Использовать HTTPS в клиентской зоне (для входа, оплаты и страниц профайла)' }] }
   - { name: 'date_format', category: 'General', translations: [{ code: 'ru', option_name: 'Формат даты' }] }
-  - { name: 'decimal_delim', category: 'General', translations: [{ code: 'ru', option_name: 'Разделитель дробной части валюты' }] }
+  - { name: 'decimal_delim', category: 'General', translations: [{ code: 'ru', option_name: 'Разделитель целой и дробной частей числа' }] }
   - { name: 'default_country', category: 'General', translations: [{ code: 'ru', option_name: 'Страна по умолчанию в регистрационной форме' }] }
   - { name: 'default_offline_payment', category: 'Payments', translations: [{ code: 'ru', option_name: 'Метод оплаты, используемый для заказов с нулевой суммой' }] }
   - { name: 'default_purchase_limit', category: 'General', translations: [{ code: 'ru', option_name: 'Ограничение покупки по умолчанию' }] }
@@ -111,10 +111,10 @@ XLite\Model\Config:
   - { name: 'start_year', category: 'Company', translations: [{ code: 'ru', option_name: 'Год начала работы магазина' }] }
   - { name: 'subcategories_look', category: 'General', translations: [{ code: 'ru', option_name: 'Формат списка категорий' }] }
   - { name: 'support_department', category: 'Company', translations: [{ code: 'ru', option_name: 'E-mail службы поддержки' }] }
-  - { name: 'thousand_delim', category: 'General', translations: [{ code: 'ru', option_name: 'Разделитель тысяч валюты' }] }
+  - { name: 'thousand_delim', category: 'General', translations: [{ code: 'ru', option_name: 'Разделитель разрядов (тысяч) числа' }] }
   - { name: 'time_format', category: 'General', translations: [{ code: 'ru', option_name: 'Формат времени' }] }
   - { name: 'time_zone', category: 'General', translations: [{ code: 'ru', option_name: 'Временная зона' }] }
-  - { name: 'tweet_hashtag', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Пказывать Hashtag в кнопке Tweet и в тексте статуса твита (опционально)' }] }
+  - { name: 'tweet_hashtag', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать Hashtag в кнопке Tweet и в тексте статуса твита (опционально)' }] }
   - { name: 'tweet_recommend', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Имя учетной записи пользователя для следования после отправки Tweet (опционально)', option_comment: ' Twitter будет предлагать клиентам следовать этому пользователю, когда они отправят твит при помощью кнопки Tweet.' }] }
   - { name: 'tweet_show_count', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать количество твитов в кнопке Tweet', option_comment: 'Поле счетчика показывает, сколько раз страница товара была затвитана в Твиттере.' }] }
   - { name: 'tweet_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать кнопку Tweet на странице описания товара', option_comment: 'Кнопка Tweet позволяет пользователям легко и быстро обмениваться ссылками на страницы товаров со своими последователями в Twitter.' }] }
@@ -771,7 +771,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Shipping address is not defined', translations: [{ code: 'ru', label: 'Адрес получателя не указан' }] }
   - { name: 'Shipping address is not defined yet', translations: [{ code: 'ru', label: 'Не указан адрес получателя' }] }
   - { name: 'Shipping charge based on percentage of order subtotal (% of subtotal)', translations: [{ code: 'ru', label: 'Стоимость доставки - процент от суммы заказа (% от суммы)' }] }
-  - { name: 'Shipping cost', translations: [{ code: 'ru', label: 'Стоимость доставки' }] }
+  - { name: 'Shipping cost', translations: [{ code: 'ru', label: 'Доставка' }] }
   - { name: 'Shipping info', translations: [{ code: 'ru', label: 'Получатель' }] }
   - { name: 'Shipping markup has been created successfully', translations: [{ code: 'ru', label: 'Наценка на доставку успешно создана' }] }
   - { name: 'Shipping markups have been updated', translations: [{ code: 'ru', label: 'Наценки на доставку обновлены' }] }
@@ -1214,7 +1214,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X coupon(s) has been created', translations: [{ code: 'ru', label: '{{count}} купон(ов) создано' }] }
   - { name: 'The coupon has been added', translations: [{ code: 'ru', label: 'Купон добавлен' }] }
   - { name: 'The coupon has been applied to your order', translations: [{ code: 'ru', label: 'Купон был успешно применен к вашему заказу' }] }
-  - { name: 'Coupon discount', translations: [{ code: 'ru', label: 'Скидка по купону' }] }
+  - { name: 'Coupon discount', translations: [{ code: 'ru', label: 'Скидка (купон)' }] }
   - { name: '$ off', translations: [{ code: 'ru', label: '$ cкидка' }] }
   - { name: 'Coming soon', translations: [{ code: 'ru', label: 'Ожидаемые товары' }] }
   - { name: 'All newest products', translations: [{ code: 'ru', label: 'Все новые товары' }] }
@@ -1229,3 +1229,7 @@ XLite\Model\LanguageLabel:
   - { name: 'If there are some critical errors occured you can do the following', translations: [{ code: 'ru', label: 'Если во время обновления возникли критические ошибки, вы можете сделать следующее' }] }
   - { name: 'Loading...', translations: [{ code: 'ru', label: 'Загрузка...' }] }
   - { name: 'If this option is ticked all prices in the catalog will be shown with ''inc VAT'' or ''ex VAT'' label depending on whether included VAT into the price or not. If you choose do not display this label, you have to place information about it somewhere on the cat', translations: [{ code: 'ru', label: 'Если эта опция включена, у каждой цены в каталоге будет значок "с НДС" или "без НДС", в зависимости от того, включен ли налог в цену или нет. Если вы не хотите, чтобы такой значок отображался рядом с ценами в каталоге, информацию об НДС нужно разместить на какой-нибудь другой странице каталога, т.к. покупателям должно быть понятно, включен налог в цену или нет.' }] }
+  - { name: 'K', translations: [{ code: 'ru', label: 'тыс.' }] }
+  - { name: 'M', translations: [{ code: 'ru', label: 'млн.' }] }
+  - { name: 'B', translations: [{ code: 'ru', label: 'млрд.' }] }
+

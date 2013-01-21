@@ -150,8 +150,8 @@ class Header extends \XLite\View\AView
             !\XLite\Core\Operator::isClassExists('\XLite\Module\CDev\DrupalConnector\Handler')
             || !\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
         )
-        && \XLite\Core\Config::getInstance()->GoogleAnalytics
-        && \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_account;
+        && \XLite\Core\Config::getInstance()->CDev->GoogleAnalytics
+        && \XLite\Core\Config::getInstance()->CDev->GoogleAnalytics->ga_account;
     }
 
     /**
