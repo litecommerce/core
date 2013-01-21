@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  *
  * @ListChild (list="invoice.item.name", weight="20")
+ * @ListChild (list="order.items.item.name", weight="20")
  *}
 <ul IF="item.countProductOptions()" class="item-options-list">
   <li FOREACH="item.getProductOptions(),option">{option.getName()}: {option.getValue()}</li>
