@@ -204,7 +204,7 @@ div.group table.list th.actions.left {
   width: auto;
   margin-left: 10px;
   float: left;
-  max-width: 440px;
+  max-width: 400px;
 }
 
 .ajax-container-loadable .model-properties div.table-value.values-value {
@@ -265,7 +265,7 @@ div.group table.list th.actions.left {
 }
 
 .ajax-container-loadable li.edit-unit {
-  left: 180px;
+  left: 240px;
 }
 
 .ajax-container-loadable div.note {
