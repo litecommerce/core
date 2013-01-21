@@ -587,15 +587,17 @@ class Converter extends \XLite\Base\Singleton
             && preg_match('/(([^_]+)_?([^.]*))\.?(.*)?/', setlocale(LC_TIME, 0), $match)
             && !preg_match('/utf\-?8/i', $match[4])
         ) {
+            $lng = \XLite\Core\Session::getInstance()->getLanguage();
+            $localeCode = $lng->getCode() . '_' . strtoupper($lng->getCode());
+            $localeCode3 = $lng->getCode3();
+
             setlocale(
                 LC_TIME,
-                $match[1] . '.UTF8',
-                $match[1] . '.UTF-8',
-                'en_US.UTF8',
-                'en_US.UTF-8',
-                'en_US',
-                'ENG',
-                'English',
+                $localeCode . '.UTF8',
+                $localeCode . '.UTF-8',
+                $localeCode,
+                $localeCode3 . '_' . strtoupper($localeCode3),
+                strtoupper($localeCode3),
                 $match[0]
             );
 
