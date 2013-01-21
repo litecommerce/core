@@ -34,11 +34,12 @@ namespace XLite\Module\CDev\SimpleCMS\Model;
  * @Entity
  * @Table  (name="pages",
  *      indexes={
- *          @Index (name="enabled", columns={"enabled"})
+ *          @Index (name="enabled", columns={"enabled"}),
+ *          @Index (name="cl", columns={"cleanURL"})
  *      }
  * )
  */
-class Page extends \XLite\Model\AEntity
+class Page extends \XLite\Model\Base\I18n
 {
     /**
      * Unique ID
@@ -52,17 +53,6 @@ class Page extends \XLite\Model\AEntity
      * @Column         (type="uinteger")
      */
     protected $id;
-
-    /**
-     * Name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string")
-     */
-    protected $name;
 
     /**
      * Is menu enabled or not
@@ -97,38 +87,6 @@ class Page extends \XLite\Model\AEntity
      */
     protected $image;
 
-    /**
-     * Teaser
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="text")
-     */
-    protected $teaser;
-
-    /**
-     * Content 
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="text")
-     */
-    protected $body;
-
-    /**
-     * Meta keywords 
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="text")
-     */
-    protected $metaKeywords;
 
     /**
      * Lifecycle callback
@@ -160,5 +118,4 @@ class Page extends \XLite\Model\AEntity
             ? \XLite::getInstance()->getShopURL(\XLite\Core\Converter::buildURL('page', '', array('id' => $this->getId()), 'cart.php', true))
             : null;
     }
-
 }

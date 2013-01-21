@@ -137,7 +137,7 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
 
         return $countOnly
             ? $this->searchCount($queryBuilder)
-            : $this->searchResult($queryBuilder);
+            : $this->correctSearchResult($this->searchResult($queryBuilder), $cnd->P_MODULE_ENABLED);
     }
 
     /**
@@ -164,6 +164,35 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
     public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
     {
         return $qb->getResult();
+    }
+
+    /**
+     * Correct the list of payment methods
+     * FIXME: this should be moved to the module hooks
+     *
+     * @param array   $methods           List of payment methods
+     * @param boolean $moduleEnabledFlag True if list should contain methods of enabled modules
+     *
+     * @return array
+     */
+    protected function correctSearchResult($methods, $moduleEnabledFlag)
+    {
+        if ($methods) {
+            foreach ($methods as $k => $method) {
+                if ($method->getModuleName()) {
+                    $isReallyModuleEnabled = (bool)$method->getProcessor();
+                    if ($method->getModuleEnabled() != $isReallyModuleEnabled) {
+                        $method->setModuleEnabled($isReallyModuleEnabled);
+                        $this->update($method);
+                        if ($moduleEnabledFlag && !$isReallyModuleEnabled || !$moduleEnabledFlag && $isReallyModuleEnabled) {
+                            unset($methods[$k]);
+                        }
+                    }
+                }
+            }
+        }
+
+        return $methods;
     }
 
     /**
@@ -456,12 +485,25 @@ class Method extends \XLite\Model\Repo\Base\I18n implements \XLite\Model\Repo\Ba
      */
     protected function defineAdditionByTypeQuery($type)
     {
-        return $this->createPureQueryBuilder('m')
+        $qb = $this->createPureQueryBuilder('m')
             ->andWhere('m.type = :type')
             ->andWhere('m.moduleEnabled = :moduleEnabled')
-            ->addOrderBy('m.moduleName', 'asc')
             ->setParameter('type', $type)
             ->setParameter('moduleEnabled', true);
+
+        return $this->addOrderByForAdditionByTypeQuery($qb);
+    }
+
+    /**
+     * Add ORDER BY for findAdditionByType() query
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function addOrderByForAdditionByTypeQuery($qb)
+    {
+        return $qb->addOrderBy('m.moduleName', 'asc');
     }
 
     /**

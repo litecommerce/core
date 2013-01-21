@@ -235,6 +235,20 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Return true if payment method supports currency defined in store
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     */
+    public function isCurrencyApplicable(\XLite\Model\Payment\Method $method)
+    {
+        $currencies = $this->getAllowedCurrencies($method);
+
+        return !$currencies || in_array(\XLite::getInstance()->getCurrency()->getCode(), $currencies);
+    }
+
+    /**
      * Check - payment processor is applicable for specified order or not
      *
      * @param \XLite\Model\Order          $order  Order

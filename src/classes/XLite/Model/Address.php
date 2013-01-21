@@ -47,6 +47,14 @@ class Address extends \XLite\Model\Base\PersonalAddress
     const SHIPPING = 's';
 
 
+    /**
+     * Address fields collection
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @OneToMany (targetEntity="XLite\Model\AddressFieldValue", mappedBy="address", cascade={"persist"})
+     */
+    protected $addressFields;
 
     /**
      * Flag: is it a billing address
@@ -69,47 +77,129 @@ class Address extends \XLite\Model\Base\PersonalAddress
     /**
      * Profile: many-to-one relation with profile entity
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var \XLite\Model\Profile
      *
      * @ManyToOne (targetEntity="XLite\Model\Profile", inversedBy="addresses")
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
      */
     protected $profile;
 
-
     /**
-     * Get billing address-specified required fields
+     * Universal setter
      *
-     * @return array
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return true|null Returns TRUE if the setting succeeds. NULL if the setting fails
      */
-    public function getBillingRequiredFields()
+    public function setterProperty($property, $value)
     {
-        return array(
-            'name',
-            'street',
-            'city',
-            'zipcode',
-            'state',
-            'country',
-        );
+        $result = parent::setterProperty($property, $value);
+
+        if (is_null($result)) {
+
+            $addressField = \XLite\Core\Database::getRepo('XLite\Model\AddressField')
+                ->findOneBy(array('serviceName' => $property));
+
+            if ($addressField) {
+
+                $repo = \XLite\Core\Database::getRepo('XLite\Model\AddressFieldValue');
+
+                $data = array(
+                    'address'       => $this,
+                    'addressField'  => $addressField,
+                );
+
+                $addressFieldValue = $repo->findOneBy($data);
+
+                if ($addressFieldValue) {
+                    $addressFieldValue->setValue($value);
+
+                    $repo->update($addressFieldValue);
+                } else {
+
+                    $data['value'] = $value;
+                    $addressFieldValue = new \XLite\Model\AddressFieldValue($data);
+
+                    $repo->insert($addressFieldValue);
+                }
+
+                $result = true;
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * Get shipping address-specified required fields
+     * Universal getter
      *
-     * @return array
+     * @param string $property
+     *
+     * @return mixed|null Returns NULL if it is impossible to get the property
      */
-    public function getShippingRequiredFields()
+    public function getterProperty($property)
     {
-        return array(
-            'name',
-            'street',
-            'city',
-            'zipcode',
-            'state',
-            'country',
-        );
+        $result = parent::getterProperty($property);
+
+        if (is_null($result)) {
+
+            $addressField = \XLite\Core\Database::getRepo('XLite\Model\AddressField')
+                ->findOneBy(array('serviceName' => $property));
+
+            if ($addressField) {
+
+                $addressFieldValue = \XLite\Core\Database::getRepo('XLite\Model\AddressFieldValue')
+                    ->findOneBy(array(
+                        'address'       => $this->getAddressId(),
+                        'addressField'  => $addressField->getId(),
+                    ));
+
+                $result = $addressFieldValue
+                    ? $addressFieldValue->getValue()
+                    : static::getDefaultFieldPlainValue($property);
+            }
+        }
+
+        return $result;
     }
+
+    /**
+     * Get default value for the field
+     *
+     * @param string $fieldName Field service name
+     *
+     * @return mixed
+     */
+    public static function getDefaultFieldValue($fieldName)
+    {
+        $result = null;
+
+        switch ($fieldName) {
+            case 'country':
+                $code = \XLite\Core\Config::getInstance()->Shipping->anonymous_country;
+                $result = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCode($code);
+                break;
+
+            case 'state':
+                $id = \XLite\Core\Config::getInstance()->Shipping->anonymous_state;
+                $result = \XLite\Core\Database::getRepo('XLite\Model\State')->find($id);
+                break;
+
+            case 'zipcode':
+                $result = \XLite\Core\Config::getInstance()->Shipping->anonymous_zipcode;
+                break;
+
+            case 'city':
+                $result = \XLite\Core\Config::getInstance()->Shipping->anonymous_city;
+                break;
+
+            default:
+        }
+
+        return $result;
+    }
+
 
     /**
      * Get required fields by address type
@@ -121,12 +211,12 @@ class Address extends \XLite\Model\Base\PersonalAddress
     public function getRequiredFieldsByType($atype)
     {
         switch ($atype) {
-            case self::BILLING:
-                $list = $this->getBillingRequiredFields();
+            case static::BILLING:
+                $list = \XLite\Core\Database::getRepo('XLite\Model\AddressField')->getBillingRequiredFields();
                 break;
 
-            case self::SHIPPING:
-                $list = $this->getShippingRequiredFields();
+            case static::SHIPPING:
+                $list = \XLite\Core\Database::getRepo('XLite\Model\AddressField')->getShippingRequiredFields();
                 break;
 
             default:
@@ -146,30 +236,28 @@ class Address extends \XLite\Model\Base\PersonalAddress
     {
         $entity = parent::cloneEntity();
 
+        $cnd = array('address' => $this);
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
+
+            $cnd['addressField'] = $field;
+
+            $fieldValue = \XLite\Core\Database::getRepo('XLite\Model\AddressFieldValue')->findOneBy($cnd);
+
+            if ($fieldValue) {
+
+                $newFieldValue = $fieldValue->cloneEntity();
+                $newFieldValue->setAddress($entity);
+                $newFieldValue->setAddressField($field);
+            }
+
+            \XLite\Core\Database::getEM()->persist($newFieldValue);
+        }
+
         if ($this->getProfile()) {
             $entity->setProfile($this->getProfile());
         }
 
         return $entity;
-    }
-
-
-    /**
-     * Check if address has duplicates
-     *
-     * @return boolean
-     */
-    protected function checkAddress()
-    {
-        $result = parent::checkAddress();
-
-        $sameAddress = $this->getRepository()->findSameAddress($this);
-
-        if ($sameAddress) {
-            \XLite\Core\TopMessage::addWarning('Address was not saved as other address with specified fields is already exists.');
-            $result = false;
-        }
-
-        return $result;
     }
 }

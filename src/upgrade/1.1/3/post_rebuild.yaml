@@ -1,0 +1,29 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Data for core upgrading 1.1.1 -> 1.1.3
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+
+XLite\Model\AddressField:
+  - { serviceName: title,         additional: false, required: false, translations: [{ code: en, name: Title }], schemaClass: \XLite\View\FormField\Select\Title }
+  - { serviceName: firstname,     additional: false, required: true,  translations: [{ code: en, name: First name }] }
+  - { serviceName: lastname,      additional: false, required: true,  translations: [{ code: en, name: Last name }] }
+  - { serviceName: street,        additional: false, required: true,  translations: [{ code: en, name: Address }] }
+  - { serviceName: city,          additional: false, required: true,  translations: [{ code: en, name: City }] }
+  - { serviceName: country_code,  additional: false, required: true,  translations: [{ code: en, name: Country }], schemaClass: \XLite\View\FormField\Select\Country, viewGetterName: country_name }
+  - { serviceName: state_id,      additional: false, required: true,  translations: [{ code: en, name: State }], schemaClass: \XLite\View\FormField\Select\State, viewGetterName: state_name }
+  - { serviceName: custom_state,  additional: false, required: false, translations: [{ code: en, name: State }], viewGetterName: state_name }
+  - { serviceName: zipcode,       additional: false, required: true,  translations: [{ code: en, name: Zip code }] }
+  - { serviceName: phone,         additional: false, required: true,  translations: [{ code: en, name: Phone }] }
+
+XLite\Model\LanguageLabel:
+  - { name: 'Proceed to payment X', translations: [{ code: en, label: 'Proceed to payment: {{total}}' }] }
+  - { name: 'Payment methods appearance description', translations: [{ code: en, label: 'Here you can define how your payment methods will look in customer area.<br />Here are shown only the methods enabled on the configuration page.' }] }
+  - { name: 'Watch this short video and learn the basics of how online payment processing works', translations: [{ code: en, label: "Watch this short video and learn the basics of how online payment processing works. You'll also find out what to look for when selecting the best payment processing solution for your business." }] }
+  - { name: 'X methods available', translations: [{ code: en, label: '{{count}} methods available' }] }
+  - { name: 'Payment method has been enabled successfully', translations: [{ code: en, label: 'Payment method has been enabled successfully' }] }
+  - { name: 'Payment method has been disabled successfully', translations: [{ code: en, label: 'Payment method has been disabled successfully' }] }
+  - { name: 'Payment method has been removed successfully', translations: [{ code: en, label: 'Payment method has been removed successfully' }] }

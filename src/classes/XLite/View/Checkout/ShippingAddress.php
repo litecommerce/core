@@ -29,14 +29,14 @@ namespace XLite\View\Checkout;
  * Shipping address block
  *
  */
-class ShippingAddress extends \XLite\View\AView
+class ShippingAddress extends \XLite\View\Checkout\AAddressBlock
 {
     /**
      * Get shipping address
      *
      * @return \XLite\Model\Address
      */
-    public function getAddress()
+    public function getShippingAddress()
     {
         $address = null;
 
@@ -59,6 +59,39 @@ class ShippingAddress extends \XLite\View\AView
         return $address;
     }
 
+    /**
+     * Get an array of address fields
+     *
+     * @return array
+     */
+    public function getAddressFields()
+    {
+        $result = array();
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\AddressField')->findAllEnabled() as $field) {
+            $result[$field->getServiceName()] = array(
+                \XLite\View\Model\Address\Address::SCHEMA_CLASS                 => $field->getSchemaClass(),
+                \XLite\View\Model\Address\Address::SCHEMA_LABEL                 => $field->getName(),
+                \XLite\View\Model\Address\Address::SCHEMA_REQUIRED              => $field->getRequired(),
+                \XLite\View\Model\Address\Address::SCHEMA_MODEL_ATTRIBUTES      => array(
+                    \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+                ),
+                \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS           => 'address-' . $field->getServiceName(),
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get address info model
+     *
+     * @return \XLite\Model\Address
+     */
+    protected function getAddressInfo()
+    {
+        return $this->getShippingAddress();
+    }
 
     /**
      * Return widget default template

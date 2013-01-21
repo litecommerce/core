@@ -10,8 +10,8 @@
  *
  * @ListChild (list="invoice.item", weight="10")
  *}
-<td class="name" colspan="{getItemDescriptionCount()}">
-  <a href="{item.getURL()}">{item.getName()}</a>
+<td bgcolor="#CCCCCC" class="name" colspan="{getItemDescriptionCount()}">
+  <strong>{item.getName()}</strong>
   <div IF="isViewListVisible(#invoice.item.name#,_ARRAY_(#item#^item))" class="additional">
     <list name="invoice.item.name" item="{item}" />
   </div>

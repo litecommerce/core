@@ -9,4 +9,7 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<a href="{entity.getFrontURL()}" target="new">{entity.getFrontURL()}</a>
+<div class="plain-value">
+  <span class="value"><a href="{entity.getFrontURL()}" target="new">{entity.getFrontURL()}</a></span>
+  <img IF="column.noWrap" src="images/spacer.gif" class="right-fade" alt="" />
+</div>

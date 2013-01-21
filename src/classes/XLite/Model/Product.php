@@ -193,8 +193,26 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      *      joinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")},
      *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
      * )
+     * @OrderBy   ({"position" = "ASC"})
      */
     protected $classes;
+
+    /**
+     * Show product attributes in a separate tab
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $attrSepTab = true;
+
+    /**
+     * How much product is sold (used in Top selling products statistics)
+     *
+     * @var integer
+     */
+    protected $sold = 0;
+
 
     /**
      * Constructor
@@ -604,5 +622,45 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
         }
 
         return $result;
+    }
+
+    /**
+     * Return number of attributes associated with this product 
+     *
+     * @return integer
+     */
+    public function getAttributesCount()
+    {
+        $count = 0;
+        if ($this->getClasses()) {
+            foreach ($this->getClasses() as $class) {
+                $count += $class->getAttributesCount();
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * Setter for $sold property
+     *
+     * @param integer $value Value to set
+     *
+     * @return void
+     */
+    public function setSold($value)
+    {
+        $this->sold = $value;
+    }
+
+    /**
+     * Getter for $sold property
+     *
+     * @return integer
+     */
+
+    public function getSold()
+    {
+        return $this->sold;
     }
 }

@@ -8,7 +8,7 @@
 # @link      http://www.litecommerce.com/
 
 XLite\Model\Order:
-  - profile: { login: rnd_tester@rrf.ru, password: 084e0343a0486ff05530df6c705c8bb4, access_level: 0, status: E, cms_profile_id: 0, addresses: [{ is_billing: true, is_shipping: true, title: Mr., firstname: Admin, lastname: Admin, phone: '0123456789', street: '51 apt, 87 street', city: Edmond, state: { country_code: US, code: OK }, country: { code: US }, zipcode: '73003' }] }
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
     orig_profile: { login: rnd_tester@rrf.ru }
     total: 20.7599
     subtotal: 17.99
@@ -37,7 +37,7 @@ XLite\Model\Order:
         description: Order placed
       - code: TRANSACTION
         description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
-  - profile: { login: rnd_tester@rrf.ru, password: 084e0343a0486ff05530df6c705c8bb4, access_level: 0, status: E, cms_profile_id: 0, addresses: [{ is_billing: true, is_shipping: true, title: Mr., firstname: Admin, lastname: Admin, phone: '0123456789', street: '51 apt, 87 street', city: Edmond, state: { country_code: US, code: OK }, country: { code: US }, zipcode: '73003' }] }
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
     orig_profile: { login: rnd_tester@rrf.ru }
     total: 121.1137
     subtotal: 116.91
@@ -101,3 +101,274 @@ XLite\Model\Order:
         description: Order placed
       - code: TRANSACTION
         description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: A
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: Q
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: F
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: C
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: P
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: A
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: D
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: F
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+
+  - profile: { login: rnd_tester@rrf.ru, cms_profile_id: 0 }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    currency: { code: USD }
+    status: P
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        netPrice: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    surcharges:
+      - type: shipping
+        code: SHIPPING
+        class: '\XLite\Logic\Order\Modifier\Shipping'
+        name: Shipping
+        value: 2.77
+    events:
+      - code: PLACE ORDER
+        description: Order placed
+      - code: TRANSACTION
+        description: "Payment transaction [method: Money Ordering, type: sale, amount: 17.99, status: Pending]"
+

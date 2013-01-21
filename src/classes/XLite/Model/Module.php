@@ -93,6 +93,15 @@ class Module extends \XLite\Model\AEntity
     protected $installed = false;
 
     /**
+     * install.yaml file load status
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $yamlLoaded = false;
+
+    /**
      * Order creation timestamp
      *
      * @var integer
@@ -260,6 +269,15 @@ class Module extends \XLite\Model\AEntity
      * @var string
      */
     protected $marketplaceID;
+
+    /**
+     * Flag (true if module is 'system module')
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $isSystem = false;
 
 
     // {{{ Routines to access methods of (non)installed modules

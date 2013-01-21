@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<widget IF="getSwitcherField()" class="{switcherField.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="{switcherField.name}" fieldParams="{switcherField.params}" />
+<widget IF="isAllowEntitySwitch(entity)" class="{switcherField.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="{switcherField.name}" fieldParams="{switcherField.params}" />

@@ -149,7 +149,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Returnd columns count
-     * 
+     *
      * @return integer
      */
     protected function getColumnsCount()
@@ -159,7 +159,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Check - table header is visible or not
-     * 
+     *
      * @return boolean
      */
     protected function isTableHeaderVisible()
@@ -296,8 +296,8 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get switcher field 
-     * 
+     * Get switcher field
+     *
      * @return array
      */
     protected function getSwitcherField()
@@ -310,8 +310,8 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get sort field 
-     * 
+     * Get sort field
+     *
      * @return array
      */
     protected function getSortField()
@@ -607,11 +607,15 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
             $list[] = 'items_list/model/table/parts/switcher.tpl';
         }
 
+        if ($this->isDefault()) {
+            $list[] = 'items_list/model/table/parts/default.tpl';
+        }
+
         return $list;
     }
 
     /**
-     * Get right actions tempaltes
+     * Get right actions templates
      *
      * @return array
      */
@@ -628,14 +632,26 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Check - remove entity or not
-     * 
+     *
      * @param \XLite\Model\AEntity $entity Entity
-     *  
+     *
      * @return boolean
      */
     protected function isAllowEntityRemove(\XLite\Model\AEntity $entity)
     {
         return true;
+    }
+
+    /**
+     * Check - switch entity or not
+     *
+     * @param \XLite\Model\AEntity $entity Entity
+     *
+     * @return boolean
+     */
+    protected function isAllowEntitySwitch(\XLite\Model\AEntity $entity)
+    {
+        return (bool)$this->getSwitcherField();
     }
 
     // }}}
@@ -710,9 +726,9 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Check - specified column is sorted or not
-     * 
+     *
      * @param array $column COlumn
-     *  
+     *
      * @return boolean
      */
     protected function isColumnSorted(array $column)
@@ -724,9 +740,9 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Get next sort direction
-     * 
+     *
      * @param array $column Column
-     *  
+     *
      * @return string
      */
     protected function getSortDirectionNext(array $column)
@@ -742,10 +758,10 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get sort link class 
-     * 
+     * Get sort link class
+     *
      * @param array $column Column
-     *  
+     *
      * @return string
      */
     protected function getSortLinkClass(array $column)
@@ -764,7 +780,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Check - search-in-head mechanism is available or not
-     * 
+     *
      * @return boolean
      */
     protected function isHeadSearchVisible()
@@ -783,9 +799,9 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Check - specified column has search widget or not
-     * 
+     *
      * @param array $column Column info
-     *  
+     *
      * @return boolean
      */
     protected function isSearchColumn(array $column)
@@ -795,10 +811,10 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
 
     /**
-     * Get search cell class 
-     * 
+     * Get search cell class
+     *
      * @param array $column ____param_comment____
-     *  
+     *
      * @return void
      */
     protected function getSearchCellClass(array $column)
@@ -808,5 +824,31 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     // }}}
+
+    /**
+     * Check if the column template is used for widget displaying
+     *
+     * @param array                $column
+     * @param \XLite\Model\AEntity $entity
+     *
+     * @return boolean
+     */
+    protected function isTemplateColumnVisible(array $column, \XLite\Model\AEntity $entity)
+    {
+        return isset($column[static::COLUMN_TEMPLATE]);
+    }
+
+    /**
+     * Check if the simple class is used for widget displaying
+     *
+     * @param array                $column
+     * @param \XLite\Model\AEntity $entity
+     *
+     * @return boolean
+     */
+    protected function isClassColumnVisible(array $column, \XLite\Model\AEntity $entity)
+    {
+        return !isset($column[static::COLUMN_TEMPLATE]);
+    }
 }
 

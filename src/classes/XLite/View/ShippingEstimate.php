@@ -80,6 +80,21 @@ class ShippingEstimate extends \XLite\View\AView
     }
 
     /**
+     * Check if the enabled address field with the given name exists
+     *
+     * @param string $fieldName
+     *
+     * @return boolean
+     */
+    protected function hasField($fieldName)
+    {
+        return (bool) \XLite\Core\Database::getRepo('XLite\Model\AddressField')->findOneBy(array(
+            'serviceName'   => $fieldName,
+            'enabled'       => true,
+        ));
+    }
+
+    /**
      * Get selected country code
      *
      * @return string

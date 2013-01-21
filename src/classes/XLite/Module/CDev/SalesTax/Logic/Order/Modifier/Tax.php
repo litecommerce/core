@@ -67,7 +67,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     public function calculate()
     {
         $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
+        $membership = $this->getMembership();
 
         foreach ($this->getTaxes() as $tax) {
             $previousItems = array();
@@ -75,16 +75,22 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
             $cost = 0;
             $ratesExists = false;
 
-            foreach ($tax->getFilteredRates($zones, $memebrship) as $rate) {
+            foreach ($tax->getFilteredRates($zones, $membership) as $rate) {
                 $ratesExists = true;
                 $productClass = $rate->getProductClass() ?: null;
                 if (!in_array($productClass, $previousClasses)) {
 
+                    // Get tax cost for products in the cart with specified product class
                     $items = $this->getTaxableItems($productClass, $previousItems);
                     if ($items) {
-                        $previousItems = array_merge($previousItems, $items);
+                        foreach ($items as $item) {
+                            $previousItems[] = $item->getProduct()->getProductId();
+                        }
                         $cost += $rate->calculate($items);
                     }
+
+                    // Add shipping tax cost
+                    $cost += $rate->calculateShippingTax($this->getTaxableShippingCost($productClass));
 
                     $previousClasses[] = $productClass;
                 }
@@ -99,6 +105,31 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
                 );
             }
         }
+    }
+
+    /**
+     * Get taxable shipping cost
+     *
+     * @param \XLite\Model\ProductClass $class Product class object
+     *
+     * @return float
+     */
+    protected function getTaxableShippingCost($class)
+    {
+        $result = 0;
+
+        $modifier = $this->order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+
+        if ($modifier && $modifier->getSelectedRate() && $modifier->getSelectedRate()->getMethod()) {
+
+            $rate = $modifier->getSelectedRate();
+
+            if (!$class || ($class && $rate->getMethod()->getClasses()->contains($class))) {
+                $result = $rate->getTaxableBasis();
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -155,7 +186,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
 
         foreach ($this->getOrder()->getItems() as $item) {
             if (
-                !in_array($item, $previousItems)
+                !in_array($item->getProduct()->getProductId(), $previousItems)
                 && (!$class || ($class && $item->getProductClasses()->contains($class)))
             ) {
                 $list[] = $item;

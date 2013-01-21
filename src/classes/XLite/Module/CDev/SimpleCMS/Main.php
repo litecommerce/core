@@ -38,7 +38,17 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC';
+        return 'X-Cart team';
+    }
+
+    /**
+     * Get module major version
+     *
+     * @return string
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
     }
 
     /**
@@ -48,7 +58,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**
@@ -68,7 +78,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Simple CMS';
+        return 'Allows you to add custom website pages and modify the primary website menu and the footer links. After installing additional TinyMCE and Go Social modules you can configure OpenGraph tags for your pages and edit their contents in the WYSIWYG mode. This module is incompatible with modules integrating your store with third-party CMS solutions.';
     }
 
     /**

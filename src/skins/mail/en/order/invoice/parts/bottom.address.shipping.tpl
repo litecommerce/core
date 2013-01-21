@@ -12,17 +12,13 @@
  *}
 <td class="ship" IF="order.profile&order.profile.getShippingAddress()&getShippingModifier()&shippingModifier.getMethod()">
   <strong>{t(#Shipping address#)}</strong>
-  <p>
-    {order.profile.shipping_address.title} {order.profile.shipping_address.firstname:h} {order.profile.shipping_address.lastname:h}
-  </p>
 
-  <p>
-    {order.profile.shipping_address.street:h}<br />
-    {order.profile.shipping_address.city:h}, {order.profile.shipping_address.state.state:h}, {order.profile.shipping_address.zipcode:h}<br />
-    {order.profile.shipping_address.country.country:h}
-  </p>
+  <ul class="address-section shipping-address-section">
+    <li FOREACH="getAddressSectionData(order.profile.shipping_address),idx,field" class="{field.css_class} address-field">
+      <span class="address-title">{t(field.title)}:</span>
+      <span class="address-field">{field.value}</span>
+      <span class="address-comma">,</span>
+    </li>
+  </ul>
 
-  <p IF="order.profile.shipping_address.phone" class="last">
-    {t(#Phone#)}: {order.profile.shipping_address.phone:h}
-  </p>
 </td>

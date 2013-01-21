@@ -82,6 +82,7 @@ servers=
 http_host = ""
 https_host = ""
 web_dir = ""
+domains = ""
 
 [clean_urls]
 enabled = off
@@ -173,7 +174,10 @@ use_output = Off
 ; Error handling options
 ;
 [error_handling]
+; Template for error pages
 page = "public/error.html"
+; Template for maintenance pages
+maintenance = "public/maintenance.html"
 
 ;
 ; Marketplace

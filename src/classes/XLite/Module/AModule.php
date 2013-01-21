@@ -190,4 +190,14 @@ abstract class AModule
     {
         return \Includes\Utils\Converter::composeVersion(static::getMajorVersion(), static::getMinorVersion());
     }
+
+    /**
+     * Return true if module is 'system module' and admin cannot disable/uninstall and view this module in the modules list
+     *
+     * @return boolean
+     */
+    public static function isSystem()
+    {
+        return false;
+    }
 }

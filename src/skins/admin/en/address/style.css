@@ -23,7 +23,7 @@
   padding-bottom: 10px;
 }
 
-.address-dialog label {
+.address-dialog .model-properties label {
   font-size: 14px;
   font-weight: normal;
   color: #53769d;
@@ -36,44 +36,44 @@
   margin-bottom: 6px;
 }
 
-.address-dialog ul li
+.address-dialog .model-properties ul li
 {
   padding: 0px 5px 6px 0px;
 }
 
-.address-dialog input {
+.address-dialog .model-properties input {
   width: 300px;
 }
 
-span.address-firstname input {
+.address-dialog .model-properties span.address-firstname input {
   width: 240px;
 }
 
-span.address-lastname input {
+.address-dialog .model-properties span.address-lastname input {
   width: 240px;
 }
 
-span.address-street input {
+.address-dialog .model-properties span.address-street input {
   width: 290px;
 }
 
-li.address-country select {
+.address-dialog .model-properties li.address-country select {
   width: 300px;
 }
 
-li.address-state select {
+.address-dialog .model-properties li.address-state select {
   width: 240px;
 }
 
-span.address-city input {
+.address-dialog .model-properties span.address-city input {
   width: 240px;
 }
 
-span.address-zipcode input {
+.address-dialog .model-properties span.address-zipcode input {
   width: 75px;
 }
 
-span.address-phone input {
+.address-dialog .model-properties span.address-phone input {
   width: 125px;
 }
 
@@ -82,12 +82,20 @@ span.address-phone input {
   border: 1px solid #ddd;
 }
 
-ul.default-table li.address-phone {
-  clear: none;
+.address-dialog .model-properties ul.table.default-table {
+  min-width: 600px;
 }
 
-ul.default-table li.address-phone label {
-  width: 50px;
+.address-dialog .model-properties ul.default-table li div.table-label label {
+  width: 70px;
+}
+
+.address-dialog .model-properties ul.default-table li.address-zipcode {
+  float: left;
+}
+
+.address-dialog .model-properties ul.default-table li.address-phone {
+  clear: none;
 }
 
 .address-dialog .button {

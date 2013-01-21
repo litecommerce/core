@@ -224,7 +224,7 @@ class XLite extends \XLite\Base
      */
     public function getOptions($names = null)
     {
-        return \Includes\Utils\ConfigParser::getOptions($names);
+        return \XLite\Core\ConfigParser::getOptions($names);
     }
 
     /**
@@ -260,7 +260,7 @@ class XLite extends \XLite\Base
      */
     public function getShopURL($url = '', $isSecure = null, array $params = array())
     {
-        return \Includes\Utils\URLManager::getShopURL($url, $isSecure, $params);
+        return \XLite\Core\URLManager::getShopURL($url, $isSecure, $params);
     }
 
     /**
@@ -489,7 +489,7 @@ class XLite extends \XLite\Base
      */
     final public function getMinorVersion()
     {
-        return '1';
+        return '3';
     }
 
     /**

@@ -47,7 +47,7 @@
   clear: right;
   font-size: 14px;
   color: #2c5fa6;
-  margin-top: -20px;
+  margin-top: 6px;
   margin-right: 40px;
   text-decoration: underline;
 }
@@ -57,10 +57,7 @@
 }
 
 .selections-list .url-copy-to-local span.label {
-  margin-top: -20px;
-  margin-left: 20px;
-  float: left;
-  clear: left;
+  padding-left: 5px;
 }
 
 div.upload-file {

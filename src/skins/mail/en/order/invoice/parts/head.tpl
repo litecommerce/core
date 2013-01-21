@@ -10,7 +10,7 @@
  *
  * @ListChild (list="invoice.base", weight="10")
  *}
-<table cellspacing="0" class="header">
+<table cellspacing="0" width="100%">
   <tr>
     <list name="invoice.head" />
   </tr>

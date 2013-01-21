@@ -38,7 +38,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC';
+        return 'X-Cart team';
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**

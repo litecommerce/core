@@ -11,7 +11,7 @@
 
 <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
-  <tr FOREACH="getPageData(),idx,module" class="module-{module.getModuleId()}">
+  <tr FOREACH="getPageData(),idx,module" class="{getModuleClassesCSS(module)}">
     <list name="columns" type="inherited" module="{getModuleFromMarketplace(module)}" />
   </tr>
 

@@ -10,5 +10,5 @@
  *}
 <select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h}>
   <option value="">{t(#Select one#)}</option>
-  <option FOREACH="getOptions(),optionValue" value="{optionValue.code:r}" selected="{optionValue.code=getValue()}">{optionValue.country:h}</option>
+  <option FOREACH="getOptions(),optionValue" value="{optionValue.getCode():r}" selected="{optionValue.getCode()=getValue()}">{optionValue.getCountry():h}</option>
 </select>

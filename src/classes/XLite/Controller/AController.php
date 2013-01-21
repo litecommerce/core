@@ -184,13 +184,28 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * isRedirectNeeded
+     * Is redirect needed
      *
      * @return boolean
      */
     public function isRedirectNeeded()
     {
-        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnURL()) && !$this->silent;
+        $isRedirectNeeded = (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnURL()) && !$this->silent;
+    
+        if (!$isRedirectNeeded) {
+            $host = \XLite::getInstance()->getOptions(
+                array(
+                    'host_details',
+                    $this->isHTTPS() ? 'https_host' : 'http_host'
+                )
+            );
+            if ($host != $_SERVER['HTTP_HOST']) {
+                $isRedirectNeeded = true;
+                $this->setReturnURL($this->getShopURL($this->getURL(), $this->isHTTPS()));
+            }
+        }
+
+        return $isRedirectNeeded;
     }
 
     /**
@@ -485,7 +500,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @param array $params URL parameters OPTIONAL
      *
-     * @return void
+     * @return string
      */
     public function getURL(array $params = array())
     {
@@ -494,6 +509,23 @@ abstract class AController extends \XLite\Core\Handler
         unset($params['target']);
 
         return $this->buildURL($target, '', $params);
+    }
+
+    /**
+     * Get referer URL
+     *
+     * @return string
+     */
+    public function getReferrerURL()
+    {
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            $url = $_SERVER['HTTP_REFERER'];
+
+        } else {
+            $url = $this->getURL();
+        }
+
+        return $url;
     }
 
     /**
@@ -1145,7 +1177,7 @@ abstract class AController extends \XLite\Core\Handler
     protected function needSecure()
     {
         return $this->isSecure()
-            && !\XLite\Core\Request::getInstance()->isHTTPS()
+            && !$this->isHTTPS()
             && !\XLite\Core\Request::getInstance()->isCLI()
             && \XLite\Core\Request::getInstance()->isGet();
     }
@@ -1191,7 +1223,7 @@ abstract class AController extends \XLite\Core\Handler
             }
         }
 
-        $this->setReturnURL($this->getURL());
+        $this->setReturnURL($this->getReferrerURL());
     }
 
     // }}}

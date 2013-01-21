@@ -74,20 +74,28 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      */
     protected function getCurrentItem()
     {
-        $item = parent::getCurrentItem();
+        // Check product options
+        if (!is_array($this->getCurrentProductOptions(parent::getCurrentProduct()))) {
 
-        if ($item->getProduct() && $item->getProduct()->hasOptions()) {
+            $this->optionInvalid = true;
 
-            // We take a product options array from customer request
-            $options = $this->getCurrentProductOptions($item->getProduct());
+        } else {
 
-            if (is_array($options)) {
+            $item = parent::getCurrentItem();
 
-                $item->setProductOptions($options);
+            if ($item->getProduct() && $item->getProduct()->hasOptions()) {
 
-            } else {
+                // We take a product options array from customer request
+                $options = $this->getCurrentProductOptions($item->getProduct());
 
-                $this->optionInvalid = true;
+                if (is_array($options)) {
+
+                    $item->setProductOptions($options);
+
+                } else {
+
+                    $this->optionInvalid = true;
+                }
             }
         }
 

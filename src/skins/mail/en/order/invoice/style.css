@@ -63,3 +63,51 @@ ul.invoice-totals li
 {
   padding: 3px 0;
 }
+
+ .addresses ul.address-section li {
+   background: none;
+   padding: 0px;
+   margin: 0px;
+ }
+
+.addresses ul.address-section {
+  padding-top: 12px;
+}
+
+.addresses ul.address-section li.address-field {
+  padding-right: 4px;
+}
+
+.addresses ul.address-section li.address-field.address-custom_state {
+  display: none;
+}
+
+.addresses ul.address-section li.address-field span {
+  font-size: 14px;
+  line-height: 20px;
+  padding-top: 8px;
+}
+
+ul.address-section li.address-field .address-title,
+  ul.address-section li.address-field .address-comma
+{
+  display: none;
+}
+
+ul.address-section li.address-field.address-phone .address-title,
+  ul.address-section li.address-field.field-additional .address-title,
+  ul.address-section li.address-field.address-city .address-comma,
+  ul.address-section li.address-field.address-street .address-comma,
+  ul.address-section li.address-field.address-state .address-comma
+{
+  display: inline;
+}
+
+ul.address-section li.address-field.address-title,
+  ul.address-section li.address-field.address-firstname,
+  ul.address-section li.address-field.address-city,
+  ul.address-section li.address-field.address-state
+{
+  float: left;
+}
+

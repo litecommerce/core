@@ -78,12 +78,26 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
             new \XLite\Core\Validator\HashArray,
             \XLite\Core\Validator\Pair\APair::SOFT
         );
-        $shippingAddress->addPair('name', new \XLite\Core\Validator\String($nonEmpty), $mode);
-        $shippingAddress->addPair('street', new \XLite\Core\Validator\String($nonEmpty), $mode);
-        $shippingAddress->addPair('city', new \XLite\Core\Validator\String($nonEmpty), $mode);
-        $shippingAddress->addPair('zipcode', new \XLite\Core\Validator\String(true));
-        $shippingAddress->addPair('phone', new \XLite\Core\Validator\String(), $mode);
-        $shippingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
+
+        $addressFields = \XLite::getController()->getAddressFields();
+
+        $isCountryStateAdded = false;
+
+        foreach ($addressFields as $fieldName => $fieldData) {
+
+            if (!$isCountryStateAdded && in_array($fieldName, array('country', 'state'))) {
+                $shippingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
+                $isCountryStateAdded = true;
+
+            } else {
+                $shippingAddress->addPair(
+                    $fieldName,
+                    new \XLite\Core\Validator\String($nonEmpty && $fieldData[\XLite\View\Model\Address\Address::SCHEMA_REQUIRED]),
+                    $mode
+                );
+            }
+        }
+
         $shippingAddress->addPair(
             'save_as_new',
             new \XLite\Core\Validator\String\Switcher(),
@@ -97,12 +111,24 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
                 new \XLite\Core\Validator\HashArray,
                 \XLite\Core\Validator\Pair\APair::SOFT
             );
-            $billingAddress->addPair('name', new \XLite\Core\Validator\String(true));
-            $billingAddress->addPair('street', new \XLite\Core\Validator\String(true));
-            $billingAddress->addPair('city', new \XLite\Core\Validator\String(true));
-            $billingAddress->addPair('zipcode', new \XLite\Core\Validator\String(true));
-            $billingAddress->addPair('phone', new \XLite\Core\Validator\String());
-            $billingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
+
+            $isCountryStateAdded = false;
+
+            foreach ($addressFields as $fieldName => $fieldData) {
+
+                if (!$isCountryStateAdded && in_array($fieldName, array('country', 'state'))) {
+                    $billingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
+                    $isCountryStateAdded = true;
+
+                } else {
+                    $billingAddress->addPair(
+                        $fieldName,
+                        new \XLite\Core\Validator\String($nonEmpty && $fieldData[\XLite\View\Model\Address\Address::SCHEMA_REQUIRED]),
+                        $mode
+                    );
+                }
+            }
+
             $billingAddress->addPair(
                 'save_as_new',
                 new \XLite\Core\Validator\String\Switcher(),

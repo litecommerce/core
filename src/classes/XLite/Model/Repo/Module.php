@@ -40,6 +40,7 @@ class Module extends \XLite\Model\Repo\ARepo
     const P_LIMIT            = 'limit';
     const P_PRICE_FILTER     = 'priceFilter';
     const P_INSTALLED        = 'installed';
+    const P_ISSYSTEM         = 'isSystem';
     const P_INACTIVE         = 'inactive';
     const P_CORE_VERSION     = 'coreVersion';
     const P_FROM_MARKETPLACE = 'fromMarketplace';
@@ -139,6 +140,7 @@ class Module extends \XLite\Model\Repo\ARepo
             self::P_LIMIT,
             self::P_PRICE_FILTER,
             self::P_INSTALLED,
+            self::P_ISSYSTEM,
             self::P_INACTIVE,
             self::P_CORE_VERSION,
             self::P_FROM_MARKETPLACE,
@@ -298,6 +300,21 @@ class Module extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition
+     *
+     * @return void
+     */
+    protected function prepareCndIsSystem(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $queryBuilder
+            ->andWhere('m.isSystem = :isSystem')
+            ->setParameter('isSystem', $value);
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *
      * @return void
      */
@@ -353,25 +370,32 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function updateMarketplaceModules(array $data)
     {
-        // Clear previously saved data
-        $this->defineDeleteNotInstalledModulesQuery()->execute();
-        $this->flushChanges();
-
-        // Save received data
-        $this->insertInBatch($data);
-    }
-
-    /**
-     * Define the Doctrine query
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function defineDeleteNotInstalledModulesQuery()
-    {
-        $queryBuilder = $this->getQueryBuilder()->delete($this->_entityName, 'm');
+        // Get the list of non-installed modules from marketplace
+        $queryBuilder = $this->createQueryBuilder();
+        $this->prepareCndFromMarketplace($queryBuilder, true);
         $this->prepareCndInstalled($queryBuilder, false);
 
-        return $queryBuilder;
+        $modules = $queryBuilder->getResult();
+
+        // Update existing modules
+        if (!empty($modules)) {
+            foreach ($modules as $module) {
+                $key = sprintf(
+                    '%s_%s_%s',
+                    $module->getAuthor(),
+                    $module->getName(),
+                    $module->getMajorVersion()
+                );
+
+                if (isset($data[$key])) {
+                    $this->update($module, $data[$key]);
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        // Add new modules
+        $this->insertInBatch($data);
     }
 
     // }}}

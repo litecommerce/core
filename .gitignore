@@ -33,3 +33,4 @@
 /src/var/.modules.structures.registry.php
 /src/var/.modules.structures.registry.hash.php
 /nbproject
+*.swp

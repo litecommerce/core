@@ -29,7 +29,7 @@ namespace XLite\View\Checkout;
  * Billing address block
  *
  */
-class BillingAddress extends \XLite\View\AView
+class BillingAddress extends \XLite\View\Checkout\AAddressBlock
 {
     /**
      * Modifier (cache)
@@ -108,5 +108,15 @@ class BillingAddress extends \XLite\View\AView
         }
 
         return $this->modifier;
+    }
+
+    /**
+     * Get address info model
+     *
+     * @return \XLite\Model\Address
+     */
+    protected function getAddressInfo()
+    {
+        return $this->getSameAddress();
     }
 }

@@ -65,6 +65,13 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      */
     protected $testPostURL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 
+    /**
+     * Referral page URL 
+     * 
+     * @var string
+     */
+    protected $referralPageURL = 'https://www.paypal.com/webapps/mpp/referral/paypal-express-checkout?partner_id=';
+
 
     /**
      * Get settings widget or template
@@ -412,7 +419,7 @@ HTML;
                     $status = self::PENDING;
                 }
 
-            } elseif (preg_match('/^10486/', $responseData['RESPMSG'])) {
+            } elseif (preg_match('/^Generic processor error: 10486/', $responseData['RESPMSG'])) {
                 $this->retryExpressCheckout(\XLite\Core\Session::getInstance()->ec_token);
 
             } else {

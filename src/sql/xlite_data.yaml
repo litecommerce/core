@@ -429,7 +429,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X hours', translations: [{ code: en, label: '{{hours}} hour(s)' }] }
   - { name: 'X minutes', translations: [{ code: en, label: '{{minutes}} minute(s)' }] }
   - { name: 'X seconds', translations: [{ code: en, label: '{{seconds}} second(s)' }] }
-  - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
+  - { name: 'Importing will overwrite the existing product information. This operation cannot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation cannot be undone.' }] }
   - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: en, label: 'To find out the data format for import, you can create a sample data file <a href="{{url}}">by exporting your existing products</a>. Then you can prepare the file for import using the same format.' }] }
   - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Note that data import time will strongly depend on the size of the file being imported.' }] }
   - { name: 'Occurred X add product events and Y update product events', translations: [{ code: en, label: 'Occurred {{new}} add product events and {{old}} update product events.' }] }
@@ -491,6 +491,23 @@ XLite\Model\LanguageLabel:
   - { name: 'Payment method has been enabled successfully', translations: [{ code: en, label: 'Payment method has been enabled successfully' }] }
   - { name: 'Payment method has been disabled successfully', translations: [{ code: en, label: 'Payment method has been disabled successfully' }] }
   - { name: 'Payment method has been removed successfully', translations: [{ code: en, label: 'Payment method has been removed successfully' }] }
+  - { name: 'Duplicated clean URL: X', translations: [{ code: en, label: 'Duplicated clean URL: {{value}}' }] }
+  - { name: 'Attributes for X product class', translations: [{ code: en, label: 'Attributes for "{{class}}" product class' }] }
+  - { name: 'X attributes in group', translations: [{ code: en, label: '{{count}} attributes in group' }] }
+  - { name: 'Low inventory products', translations: [{ code: en, label: 'Low inventory products ({{count}})' }] }
+  - { name: 'X orders on last day', translations: [{ code: en, label: '{{value}} orders yesterday' }] }
+  - { name: 'X orders on last week', translations: [{ code: en, label: '{{value}} orders on last week' }] }
+  - { name: 'X orders on last month', translations: [{ code: en, label: '{{value}} orders on last month' }] }
+  - { name: 'X orders on last lifetime', translations: [{ code: en, label: '' }] }
+  - { name: 'X revenue on last day', translations: [{ code: en, label: '{{value}} yesterday' }] }
+  - { name: 'X revenue on last week', translations: [{ code: en, label: '{{value}} on last week' }] }
+  - { name: 'X revenue on last month', translations: [{ code: en, label: '{{value}} on last month' }] }
+  - { name: 'X revenue on last lifetime', translations: [{ code: en, label: '' }] }
+  - { name: 'No order on last day', translations: [{ code: en, label: 'There where no orders yesterday' }] }
+  - { name: 'No order on last week', translations: [{ code: en, label: 'There where no orders last week' }] }
+  - { name: 'No order on last month', translations: [{ code: en, label: 'There where no orders last month' }] }
+  - { name: 'No order on last lifetime', translations: [{ code: en, label: 'There where no orders placed yet' }] }
+
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -682,7 +699,7 @@ XLite\Model\Language:
 XLite\Model\Payment\Method:
   directives: { insert: true }
   - { service_name: PurchaseOrder, class: 'Model\Payment\Processor\PurchaseOrder', added: true, orderby: 20, translations: [{ code: en, name: 'Purchase Order' }] }
-  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
+  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', added: true, enabled: true, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
   - { service_name: FaxOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
   - { service_name: MoneyOrdering, class: 'Model\Payment\Processor\Offline', added: true, orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
   - { service_name: Echeck, class: 'Model\Payment\Processor\Check', added: true, orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
@@ -1169,3 +1186,17 @@ XLite\Model\Role\Permission:
   - { code: manage catalog, section: Catalog, translations: [{ code: en, name: Manage catalog }] }
   - { code: manage users, section: Users, translations: [{ code: en, name: Manage users }] }
   - { code: manage orders, section: Sales, translations: [{ code: en, name: Manage orders }] }
+
+XLite\Model\AddressField:
+  - { serviceName: title,         additional: false, required: false, translations: [{ code: en, name: Title }], schemaClass: \XLite\View\FormField\Select\Title }
+  - { serviceName: firstname,     additional: false, required: true,  translations: [{ code: en, name: First name }] }
+  - { serviceName: lastname,      additional: false, required: true,  translations: [{ code: en, name: Last name }] }
+  - { serviceName: street,        additional: false, required: true,  translations: [{ code: en, name: Address }] }
+  - { serviceName: city,          additional: false, required: true,  translations: [{ code: en, name: City }] }
+  - { serviceName: country_code,  additional: false, required: true,  translations: [{ code: en, name: Country }], schemaClass: \XLite\View\FormField\Select\Country, viewGetterName: country_name }
+  - { serviceName: state_id,      additional: false, required: true,  translations: [{ code: en, name: State }], schemaClass: \XLite\View\FormField\Select\State, viewGetterName: state_name }
+  - { serviceName: custom_state,  additional: false, required: false, translations: [{ code: en, name: State }], viewGetterName: state_name }
+  - { serviceName: zipcode,       additional: false, required: true,  translations: [{ code: en, name: Zip code }] }
+  - { serviceName: phone,         additional: false, required: true,  translations: [{ code: en, name: Phone }] }
+
+

@@ -1229,3 +1229,7 @@ XLite\Model\LanguageLabel:
   - { name: 'If there are some critical errors occured you can do the following', translations: [{ code: 'ru', label: 'Если во время обновления возникли критические ошибки, вы можете сделать следующее' }] }
   - { name: 'Loading...', translations: [{ code: 'ru', label: 'Загрузка...' }] }
   - { name: 'If this option is ticked all prices in the catalog will be shown with ''inc VAT'' or ''ex VAT'' label depending on whether included VAT into the price or not. If you choose do not display this label, you have to place information about it somewhere on the cat', translations: [{ code: 'ru', label: 'Если эта опция включена, у каждой цены в каталоге будет значок "с НДС" или "без НДС", в зависимости от того, включен ли налог в цену или нет. Если вы не хотите, чтобы такой значок отображался рядом с ценами в каталоге, информацию об НДС нужно разместить на какой-нибудь другой странице каталога, т.к. покупателям должно быть понятно, включен налог в цену или нет.' }] }
+  - { name: 'K', translations: [{ code: 'ru', label: 'тыс.' }] }
+  - { name: 'M', translations: [{ code: 'ru', label: 'млн.' }] }
+  - { name: 'B', translations: [{ code: 'ru', label: 'млрд.' }] }
+

@@ -30,19 +30,19 @@ class XLite_Tests_Module_CDev_PaypalWPS_Main extends XLite_Tests_TestCase
     public function testGetModuleName()
     {
         $main = $this->getMain();
-        $this->assertEquals('Paypal Website Payments Standard', $main::getModuleName(), 'Wrong module name');
+        $this->assertEquals('PayPal (outside of the US)', $main::getModuleName(), 'Wrong module name');
     }
 
     public function testGetDescription()
     {
         $main = $this->getMain();
-        $this->assertEquals('Enables taking credit card payments for your online store via Paypal (Website Payments Standard).', $main::getDescription(), 'Wrong description');
+        $this->assertEquals('Enables taking credit card payments for your online store via PayPal (Website Payments Standard).', $main::getDescription(), 'Wrong description');
     }
 
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.1.0', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.1.1', $main::getVersion(), 'Wrong version');
     }
 
     public function testShowSettingsForm()

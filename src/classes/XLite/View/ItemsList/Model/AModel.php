@@ -494,9 +494,25 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
         foreach ($this->getPageData() as $entity) {
             $entity->getRepository()->update($entity, array(), false);
+            if ($this->isDefault()) {
+                $entity->setDefaultValue($this->isDefaultEntity($entity));
+            }
         }
 
         return $count;
+    }
+
+    /**
+     * Is default entity 
+     *
+     * @param \XLite\Model\AEntity $entity Line
+     *
+     * @return boolean
+     */
+    protected function isDefaultEntity(\XLite\Model\AEntity $entity)
+    {
+        return isset($this->requestData['defaultValue']) 
+            && $this->requestData['defaultValue'] == $entity->getId();
     }
 
     /**
@@ -791,8 +807,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     protected function buildEntityURL(\XLite\Model\AEntity $entity, array $column)
     {
         return \XLite\Core\Converter::buildURL(
-            $column[static::COLUMN_LINK], 
-            '', 
+            $column[static::COLUMN_LINK],
+            '',
             array($entity->getUniqueIdentifierName() => $entity->getUniqueIdentifier())
         );
     }
@@ -853,7 +869,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Mark list as switchyabvle (enable / disable)
+     * Mark list as switchable (enable / disable)
      *
      * @return boolean
      */
@@ -868,6 +884,16 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      * @return boolean
      */
     protected function isRemoved()
+    {
+        return false;
+    }
+
+    /**
+     * Mark list iten as default
+     *
+     * @return boolean
+     */
+    protected function isDefault()
     {
         return false;
     }

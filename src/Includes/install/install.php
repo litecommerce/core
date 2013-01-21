@@ -520,7 +520,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
 
     if (!empty($list)) {
         $result = false;
-        $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
+        $value = substr(implode(', ', $list), 0, 45) . '...';
         $errorMsg = xtr('There are disabled functions (:funclist) that may be used by software in some cases and should be enabled', array(':funclist' => implode(', ', $list)));
 
     } else {
@@ -1099,7 +1099,10 @@ function doPrepareFixtures(&$params, $silentMode = false)
 
             $moduleName = basename(dirname($f));
 
-            $enabledModules[$author][$moduleName] = 1;
+            $enabledModules[$author][$moduleName] = intval(
+                !empty($lcSettings['enable_modules'][$author])
+                && in_array($moduleName, $lcSettings['enable_modules'][$author])
+            );
 
             $moduleFile = sprintf('classes/XLite/Module/%s/%s/install.yaml', $author, $moduleName);
 
@@ -1194,7 +1197,7 @@ function doUpdateMainHtaccess(&$params, $silentMode = false)
         $util = '\Includes\Utils\FileManager';
 
         $util::replace(
-            $util::getDir($util::getDir(__DIR__)) . LC_DS . '.htaccess', 
+            $util::getDir($util::getDir(__DIR__)) . LC_DS . '.htaccess',
             '\1RewriteBase ' . $params['xlite_web_dir'],
             '/^(\s*)#\s*RewriteBase\s+____WEB_DIR____\s*$/mi'
         );
@@ -1400,9 +1403,9 @@ function doCreateAdminAccount(&$params, $silentMode = false)
     $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneByName('Administrator');
 
     $profile->addRoles($role);
- 
+
     $profile->create();
- 
+
     $role->addProfiles($profile);
     \XLite\Core\Database::getEM()->persist($role);
     \XLite\Core\Database::getEM()->flush();
@@ -1545,9 +1548,9 @@ function doFinishInstallation(&$params, $silentMode = false)
 
 /**
  * Sanitize host value (remove port as some servers include it to HTTP_HOST variable)
- * 
+ *
  * @param string $host Host value
- *  
+ *
  * @return string
  */
 function x_install_get_host($host)
@@ -2612,6 +2615,45 @@ function get_step($name)
 }
 
 /**
+ * Get timezones list
+ *
+ * @param boolean $addBlank Flag: is the blank row must prepend the rest of list rows
+ *
+ * @return array
+ */
+function getTimeZones($addBlank = false)
+{
+    $result = $addBlank
+        ? array(
+            '' => xtr('- None selected -')
+        )
+        : array();
+
+    $zones = timezone_identifiers_list();
+
+    foreach ($zones as $zone) {
+
+        if (preg_match('!^((Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific)/|UTC$)!', $zone)) {
+
+            $date = date_create(null, new DateTimeZone($zone));
+
+            $result[$zone] = xtr(
+                '[GMT@diff] - @zone - (@date)',
+                array(
+                    '@zone' => xtr(str_replace('_', ' ', $zone)),
+                    '@diff' => date_format($date, 'P'),
+                    '@date' => date_format($date, 'M j, Y - H:i'),
+                )
+            );
+        }
+    }
+
+    ksort($result);
+
+    return $result;
+}
+
+/**
  * Display form element
  *
  * @param string $fieldName
@@ -2636,7 +2678,7 @@ OUT;
 
             if (is_array($fieldData['select_data'])) {
                 foreach ($fieldData['select_data'] as $key => $value) {
-                    $_selected = ($value == $fieldValue ? ' selected="selected"' : '');
+                    $_selected = ($key == $fieldValue ? ' selected="selected"' : '');
                     $formElement .=<<<OUT
             <option value="{$key}"{$_selected}>{$value}</option>
 OUT;
@@ -2889,6 +2931,14 @@ function module_cfg_install_db(&$params)
             'def_value'   => '1',
             'required'    => false,
             'type'        => 'checkbox',
+        ),
+        'date_default_timezone' => array(
+            'title'       => xtr('Default time zone'),
+            'description' => xtr('By default, dates in this site will be displayed in the chosen time zone.'),
+            'def_value'   => date_default_timezone_get(),
+            'select_data' => getTimeZones(true),
+            'required'    => false,
+            'type'        => 'select',
         )
     );
 
@@ -2907,8 +2957,12 @@ function module_cfg_install_db(&$params)
         }
 
         // Unset parameter if its empty
-        if (isset($params[$fieldName]) && strlen(trim($params[$fieldName])) == 0) {
-            unset($params[$fieldName]);
+        if (isset($params[$fieldName])) {
+            $params[$fieldName] = trim($params[$fieldName]);
+
+            if (empty($params[$fieldName])) {
+                unset($params[$fieldName]);
+            }
         }
 
         // Check if all required parameters presented

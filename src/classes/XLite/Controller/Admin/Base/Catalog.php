@@ -111,7 +111,16 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
         $result = parent::getPostedData($field);
 
         if (parent::getPostedData('autogenerateCleanURL') && (!isset($field) || 'cleanURL' === $field)) {
-            $value = $this->generateCleanURL(parent::getPostedData('name'));
+
+            $oldCleanURL = $this->getEntity()->getCleanURL();
+
+            // Autogenerate cleanURL only for the default language
+            if (empty($oldCleanURL) || 'en' == $this->getCurrentLanguage() || $this->getCurrentLanguage() == static::getDefaultLanguage()) {
+                $value = $this->generateCleanURL(parent::getPostedData('name'));
+
+            } else {
+                $value = $oldCleanURL;
+            }
 
             if (isset($field)) {
                 $result = $value;
@@ -150,9 +159,20 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     {
         $result = '';
 
-        if (isset($name)) {
+        // Prepare the result and check if it could be generated
+        if (!empty($name)) {
             $separator = \XLite\Core\Converter::getCleanURLSeparator();
-            $result   .= strtolower(preg_replace('/\W+/S', $separator, $name));
+            $result = strtolower(preg_replace('/\W+/S', $separator, $name));
+
+            if (!preg_replace('/' . preg_quote($separator) . '/', '', $result)) {
+                $result = $this->getEntity()->getCleanURL();
+                $this->setCleanURLAutoGenerateWarning($name);
+                $name = null;
+            }
+        }
+
+        // Process cleanURL
+        if (!empty($name)) {
 
             $suffix    = '';
             $increment = 1;
@@ -196,6 +216,22 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
             array('clean_url' => $cleanURL, 'suffix' => $suffix)
         );
     }
+
+    /**
+     * Set warning
+     *
+     * @param string $name Product name
+     *
+     * @return boolean
+     */
+    protected function setCleanURLAutoGenerateWarning($name)
+    {
+        \XLite\Core\TopMessage::addWarning(
+            'Cannot autogenerate clean URL for the product name "{{name}}". Please specify it manually.',
+            array('name' => $name)
+        );
+    }
+
 
     // }}}
 

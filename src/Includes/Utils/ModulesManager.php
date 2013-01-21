@@ -246,6 +246,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
             'author'          => $author,
             'enabled'         => intval(static::isActiveModule($module)),
             'installed'       => 1,
+            'yamlLoaded'      => 0,
             'date'            => time(),
             'fromMarketplace' => 0,
             'majorVersion'    => static::callModuleMethod($module, 'getMajorVersion'),
@@ -282,12 +283,18 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     {
         if (!isset(static::$activeModules)) {
 
-            // Fetch active modules from the common list
-            static::$activeModules = \Includes\Utils\ArrayManager::searchAllInArraysArray(
+            // Fetch enabled modules from the common list
+            $enabledModules = \Includes\Utils\ArrayManager::searchAllInArraysArray(
                 static::getModulesList(),
                 'enabled',
                 true
             );
+
+            // Fetch system modules from the disabled modules list
+            $systemModules = static::getSystemModules();
+
+            // Get full list of active modules
+            static::$activeModules = $enabledModules + $systemModules;
 
             // Remove unsupported modules from list
             static::checkVersions();
@@ -324,6 +331,24 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     public static function areActiveModules(array $moduleNames)
     {
         return array_filter(array_map(array('static', 'isActiveModule'), $moduleNames)) == $moduleNames;
+    }
+
+    /**
+     * Get the list of disabled system modules
+     *
+     * @return array
+     */
+    protected static function getSystemModules()
+    {
+        $modules = array();
+
+        foreach (static::getModulesList() as $module => $data) {
+            if (static::callModuleMethod($module, 'isSystem')) {
+                $modules[$module] = $data;
+            }
+        }
+
+        return $modules;
     }
 
     /**
@@ -412,7 +437,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function disableModule($key)
     {
-        if (isset(static::$activeModules[$key])) {
+        if (isset(static::$activeModules[$key]) && !static::callModuleMethod($key, 'isSystem')) {
 
             // Short names
             $data = static::$activeModules[$key];
@@ -697,6 +722,16 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         return LC_DIR_VAR . static::MODULES_FILE_NAME;
     }
 
+    /**
+     * Check if modules list file exists
+     *
+     * @return boolean
+     */
+    public static function isModulesFileExists()
+    {
+        return \Includes\Utils\FileManager::isFileReadable(static::getModulesFilePath());
+    }
+
     // }}}
 
     // {{{ DB-related routines
@@ -712,8 +747,8 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         $table = static::getTableName();
 
         return \Includes\Utils\Database::fetchAll(
-            'SELECT ' . $field . $field . $table . '.* FROM ' . $table . ' WHERE installed = ? AND enabled = ?',
-            array(1, 1),
+            'SELECT ' . $field . $table . '.* FROM ' . $table . ' WHERE installed = ?',
+            array(1),
             \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
         );
     }
@@ -761,6 +796,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
                             'enabled'    => $enabled,
                             'moduleName' => $name,
                             'authorName' => $author,
+                            'yamlLoaded' => false,
                         );
                     }
                 }
@@ -816,12 +852,13 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     /**
      * Write module info to DB
      *
-     * @param string $author Module author
-     * @param string $name   Module name
+     * @param string  $author              Module author
+     * @param string  $name                Module name
+     * @param boolean $isModulesFileExists Flag: true means that the installation process is going now OPTIONAL
      *
      * @return void
      */
-    public static function switchModule($author, $name)
+    public static function switchModule($author, $name, $isModulesFileExists = false)
     {
         // Short names
         $condition = ' WHERE author = ? AND name = ?';
@@ -832,30 +869,86 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         $majorVersion = static::callModuleMethod($module, 'getMajorVersion');
         $minorVersion = static::callModuleMethod($module, 'getMinorVersion');
 
-        // Reset exisiting settings
+        // Reset existing settings
         $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ?' . $condition;
         \Includes\Utils\Database::execute($query, array(0, 0, $author, $name));
 
         // Search for module
+        $fields = array('moduleID');
         $condition .= ' AND fromMarketplace = ?';
-        $query      = 'SELECT moduleID FROM ' . $table . $condition . ' AND majorVersion = ? AND minorVersion = ?';
-        $moduleID   = \Includes\Utils\Database::fetchColumn(
+
+        if (!$isModulesFileExists) {
+            $fields[] = 'yamlLoaded';
+        }
+
+        $query = 'SELECT ' . implode(', ', $fields) . ' FROM ' . $table . $condition . ' AND majorVersion = ? AND minorVersion = ?';
+
+        $moduleRows = \Includes\Utils\Database::fetchAll(
             $query,
             array($author, $name, 0, $majorVersion, $minorVersion)
         );
 
+        $needToLoadYaml = false;
+
         // If found in DB
-        if ($moduleID) {
+        if ($moduleRows) {
+            $moduleID = intval($moduleRows[0]['moduleID']);
+            $yamlLoaded = intval($moduleRows[0]['yamlLoaded']);
+
+            $params = array(
+                'enabled = ?',
+                'installed = ?',
+            );
+
             $data  = array(intval(static::isActiveModule($module)), 1, $moduleID);
-            $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ? WHERE moduleID = ?';
+
+            if (!$yamlLoaded && static::isActiveModule($module)) {
+                $params[] = 'yamlLoaded = ?';
+                $data  = array(intval(static::isActiveModule($module)), 1, 1, $moduleID);
+                $needToLoadYaml = true;
+            }
+
+            $query = 'UPDATE ' . $table . ' SET ' . implode(', ', $params) . ' WHERE moduleID = ?';
 
         } else {
             $data  = static::getModuleDataFromClass($author, $name);
+
+            if ($data['enabled']) {
+                $data['yamlLoaded'] = 1;
+                $needToLoadYaml = true;
+            }
+
             $query = 'REPLACE INTO ' . $table . ' SET ' . implode(' = ?,', array_keys($data)) . ' = ?';
+        }
+
+        if (static::isActiveModule($module) && $needToLoadYaml && !$isModulesFileExists) {
+            static::addModuleYamlFile($author, $name);
         }
 
         // Save changes in DB
         \Includes\Utils\Database::execute($query, array_values($data));
+    }
+
+    /**
+     * Add module's install.yaml file to the fixtures list file
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return void
+     */
+    protected static function addModuleYamlFile($author, $name)
+    {
+        $file = 'classes' . LC_DS
+            . LC_NAMESPACE . LC_DS
+            . 'Module' . LC_DS
+            . $author . LC_DS
+            . $name . LC_DS
+               . 'install.yaml';
+
+        if (\Includes\Utils\FileManager::isFileReadable($file)) {
+            \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($file);
+        }
     }
 
     // }}}

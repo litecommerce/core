@@ -81,6 +81,36 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
 
     /**
+     * Get the list of all clean URLS
+     *
+     * @return array
+     */
+    public function findAllCleanURLs()
+    {
+        $result = array();
+
+        $products = $this->defineAllCleanURLsQuery()->getArrayResult();
+
+        foreach($products as $row) {
+            $result[$row['cleanURL']] = $row['product_id'];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Define the Doctrine query
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function defineAllCleanURLsQuery()
+    {
+        return $this->createPureQueryBuilder()
+            ->select('p.product_id')
+            ->addSelect('p.cleanURL');
+    }
+
+    /**
      * Common search
      *
      * @param \XLite\Core\CommonCell $cnd       Search condition

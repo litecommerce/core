@@ -8,12 +8,17 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  *}
-<div class="address-box">
-  <div class="name">{address.name}</div>
-  <div class="address">
-    {address.street}<br />
-    {address.city}, {address.state.state}, {address.zipcode}<br />
-    {address.country.country}<br />
-  </div>
-  <div class="phone" IF="address.phone">{t(#Phone#)}: {address.phone}</div>
-</div>
+
+<ul class="address-box">
+  {foreach:getAddressFields(),fieldName,fieldData}
+  <li class="address-text-cell address-text-{fieldName}" IF="{getFieldValue(fieldName,address)}">
+    <ul class="address-text">
+      <li class="address-text-label address-text-label-{fieldName}">{fieldData.label}:</li>
+      <li class="address-text-value">{getFieldValue(fieldName,address,1)}</li>
+      <li class="address-text-comma address-text-comma-{fieldName}">,</li>
+    </ul>
+  </li>
+  {end:}
+</ul>
+
+<div class="clear"></div>

@@ -21,7 +21,7 @@
   margin: 0 auto;
   z-index: 100;
   top: 40px;
-  left: 0;
+  left: 90px;
 }
 
 #topMenu ul,
@@ -61,7 +61,6 @@
 #topMenu ul#menuOuter
 {
   display: inline-block;
-  margin-left: 90px;
 }
 
 #topMenu ul#menuOuter li.root

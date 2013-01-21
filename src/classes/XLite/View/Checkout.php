@@ -54,6 +54,19 @@ class Checkout extends \XLite\View\Dialog
     }
 
     /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = 'checkout/checkout.css';
+
+        return $list;
+    }
+
+    /**
      * Get a list of JS files required to display the widget properly
      * FIXME - decompose these files
      *

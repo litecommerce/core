@@ -126,6 +126,16 @@ class Layout extends \XLite\Base\Singleton
     }
 
     /**
+     * Return current interface
+     *
+     * @return string
+     */
+    public function getInterface()
+    {
+        return $this->currentInterface;
+    }
+
+    /**
      * Returns the layout path
      *
      * @return string
@@ -458,9 +468,9 @@ class Layout extends \XLite\Base\Singleton
         $tail = \XLite\View\AView::getTail();
         $last = array_pop($tail);
 
-        return preg_match('/^(\w+)\W\w+\W(.+)$/Ss', substr($last, strlen(LC_DIR_SKINS)), $match)
-            ? array($match[1], $match[2])
-            : array(null, null);
+        list($skin, $lang, $template) = explode(LC_DS, substr($last, strlen(LC_DIR_SKINS)), 3);
+
+        return array($skin, $template);
     }
 
     /**

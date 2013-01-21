@@ -10,7 +10,7 @@
  *
  * @ListChild (list="shippingEstimator.address", weight="10")
  *}
-<li class="country">
+<li class="country" IF="hasField(#country_code#)">
   <label for="destination_country">{t(#Country#)}</label>
   <widget class="\XLite\View\CountrySelect" field="country" fieldId="destination_country" country="{getCountryCode()}" allowLabelCountry="true" />
 </li>
