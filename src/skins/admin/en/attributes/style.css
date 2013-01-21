@@ -9,8 +9,12 @@
  * @link      http://www.litecommerce.com/
  */
 
+.items-list-table.attribute_options table.list
+{
+  width: 400px;
+}
+
 .items-list-table table.list th.name {
-  width: 500px;
   color: #456583;
   font-size: 16px;
 }
@@ -18,6 +22,10 @@
 .items-list-table table.list th.type {
   width: 200px;
   text-align: right;
+}
+
+.items-list-table table.list td.name {
+  width: 340px;
 }
 
 .items-list-table table.list td.type {
