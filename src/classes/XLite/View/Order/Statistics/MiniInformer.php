@@ -337,7 +337,9 @@ class MiniInformer extends \XLite\View\Dialog
             unset($parts['decimalDelimiter']);
             unset($parts['decimal']);
 
-            $parts['suffix'] = !empty($parts['suffix']) ? $suffixes[$i] . $parts['suffix'] : $suffixes[$i];
+            $suffix = $this->t($suffixes[$i]);
+
+            $parts['suffix'] = !empty($parts['suffix']) ? $suffix . $parts['suffix'] : $suffix;
 
             $result = implode('', $parts);
 
