@@ -38,6 +38,7 @@ namespace XLite\Model;
  *          @Index (name="state", columns={"state"})
  *      }
  * )
+ * @HasLifecycleCallbacks
  */
 class State extends \XLite\Model\AEntity
 {
@@ -79,4 +80,24 @@ class State extends \XLite\Model\AEntity
      * @JoinColumn (name="country_code", referencedColumnName="code")
      */
     protected $country;
+
+    /**
+     * Remove zone elements 
+     * 
+     * @return void
+     * @PreRemove
+     */
+    public function removeZoneElements()
+    {
+        $elements = \XLite\Core\Database::getRepo('XLite\Model\ZoneElement')->findBy(
+            array(
+                'element_type'  => \XLite\Model\ZoneElement::ZONE_ELEMENT_STATE,
+                'element_value' => $this->getCountry()->getCode() . '_' . $this->getCode(),
+            )
+        );
+
+        foreach ($elements as $element) {
+            \XLite\Core\Database::getEM()->remove($element);
+        }
+    }
 }
