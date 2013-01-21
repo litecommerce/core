@@ -445,28 +445,6 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Format currency value
-     *
-     * @param mixed $price Currency unformatted value
-     *
-     * @return string
-     */
-    public static function formatCurrency($price)
-    {
-        if (isset($price)) {
-            $config = \XLite\Core\Config::getInstance();
-            $price = number_format(
-                doubleval($price),
-                2,
-                $config->General->decimal_delim,
-                $config->General->thousand_delim
-            );
-        }
-
-        return $price;
-    }
-
-    /**
      * Convert value from one to other weight units
      *
      * @param float  $value   Weight value
