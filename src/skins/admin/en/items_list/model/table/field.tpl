@@ -10,10 +10,12 @@
  *}
 
 <div class="plain-value">
+  <span class="value">
   {if:column.link}
     <a href="{buildEntityURL(entity,column)}" class="link">{getColumnValue(column,entity)}</a>
   {else:}
     {getColumnValue(column,entity)}
   {end:}
+  </span>
   <img IF="column.noWrap" src="images/spacer.gif" class="right-fade" alt="" />
 </div>

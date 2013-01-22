@@ -328,6 +328,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     protected $modifiers;
 
+
     /**
      * Return list of all aloowed order statuses
      *
@@ -352,6 +353,22 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             ? (isset($list[$status]) ? $list[$status] : null)
             : $list;
     }
+
+    /**
+     * Get open order statuses
+     *
+     * @return array
+     */
+    public static function getOpenStatuses()
+    {
+        return array(
+            \XLite\Model\Order::STATUS_QUEUED,
+            \XLite\Model\Order::STATUS_AUTHORIZED,
+            \XLite\Model\Order::STATUS_PROCESSED,
+            \XLite\Model\Order::STATUS_FAILED,
+        );
+    }
+
 
     /**
      * Add item to order
@@ -1264,7 +1281,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $profile = $this->getProfile();
         if ($profile) {
             $mail->compose(
-                \XLite\Core\Config::getInstance()->Company->site_administrator,
+                \XLite\Core\Config::getInstance()->Company->orders_department,
                 $profile->getLogin(),
                 'order_processed'
             );

@@ -48,7 +48,7 @@ This LiteCommerce Admin zone demo has been created for illustrative purposes onl
 <style type="text/css">
 <!--
 body {
-    padding-top: 34px;
+    padding-top: 34px !important;
 }
 .demo-header {
     color: #802418;

@@ -78,10 +78,12 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      */
     public function validate($data)
     {
+        $data = $this->sanitize($data);
+
         if (!\XLite\Core\Converter::isEmptyString($data)) {
             parent::validate($data);
 
-            $entity = \XLite\Core\Database::getRepo($this->class)->findOneByCleanURL($this->sanitize($data));
+            $entity = \XLite\Core\Database::getRepo($this->class)->findOneByCleanURL($data);
 
             // DO NOT use "!==" here
             if ($entity && (empty($this->id) || $entity->getUniqueIdentifier() != $this->id)) {
@@ -99,7 +101,10 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      */
     public function sanitize($data)
     {
-        return substr($data, 0, \XLite\Core\Database::getRepo($this->class)->getFieldInfo('cleanURL', 'length'));
+        return substr(
+            $data = preg_replace('/\.htm(l?)$/', '', $data),
+            0,
+            \XLite\Core\Database::getRepo($this->class)->getFieldInfo('cleanURL', 'length'));
     }
 
     /**

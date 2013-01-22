@@ -23,35 +23,33 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\View;
+namespace XLite\Module\CDev\SimpleCMS\Model;
 
 /**
- * Main 
+ * Menu translation
  * 
+ * @see   ____class_see____
+ * @since 1.0.21
  *
- * @ListChild (list="admin.center", zone="admin")
+ * @Entity
+ * @Table  (name="menu_translations",
+ *      indexes={
+ *          @Index (name="ci", columns={"code", "id"}),
+ *          @Index (name="id", columns={"id"})
+ *      }
+ * )
  */
-class Main extends \XLite\View\Dialog
+class MenuTranslation extends \XLite\Model\Base\Translation
 {
     /**
-     * Return list of allowed targets
+     * Name
      *
-     * @return array
-     */
-    public static function getAllowedTargets()
-    {
-        return array_merge(parent::getAllowedTargets(), array('main'));
-    }
-
-    /**
-     * Return templates directory name
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      *
-     * @return string
+     * @Column (type="string")
      */
-    protected function getDir()
-    {
-        return $this->checkACL() ? 'main' : 'main/forbid';
-    }
+    protected $name;
 
 }
-

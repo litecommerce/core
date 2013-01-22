@@ -54,12 +54,14 @@ class Page extends \XLite\View\ItemsList\Model\Table
     {
         return array(
             'name' => array(
-                static::COLUMN_NAME => \XLite\Core\Translation::lbl('Page name'),
-                static::COLUMN_LINK => 'page',
+                static::COLUMN_NAME    => \XLite\Core\Translation::lbl('Page name'),
+                static::COLUMN_NO_WRAP => true,
+                static::COLUMN_LINK    => 'page',
             ),
             'cleanURL' => array(
                 static::COLUMN_NAME     => \XLite\Core\Translation::lbl('Page URL'),
                 static::COLUMN_TEMPLATE => 'modules/CDev/SimpleCMS/pages/clean_url.tpl',
+                static::COLUMN_NO_WRAP  => true,
             ),
         );
     }
@@ -183,21 +185,4 @@ class Page extends \XLite\View\ItemsList\Model\Table
     }
 
     // }}}
-
-    /**
-     * Preprocess clean URL
-     *
-     * @param string                                  $value  CleanURL
-     * @param array                                   $column Column info
-     * @param \XLite\Module\CDev\SimpleCMS\Model\Page $page   Page
-     *
-     * @return string
-     */
-    protected function preprocessCleanURL($value, array $column, \XLite\Module\CDev\SimpleCMS\Model\Page $page)
-    {
-        return $value && LC_USE_CLEAN_URLS
-            ? $value . '.html'
-            : 'target=page&id=' . $page->getId();
-    }
-
 }
