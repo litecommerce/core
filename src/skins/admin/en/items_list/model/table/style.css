@@ -240,3 +240,12 @@
   font-size: 16px;
 }
 
+.items-list-table table.list tbody.lines td .plain-value {
+  font-size: 14px;
+}
+
+.items-list-table table.list tbody td.cell.no-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}

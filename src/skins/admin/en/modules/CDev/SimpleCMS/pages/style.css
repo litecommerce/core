@@ -13,11 +13,18 @@
   width: 800px;
 }
 
-.items-list.pages table.list td.cell.main {
+.items-list.pages table.list td.cell.main,
+.items-list.pages table.list td.cell.main .plain-value {
   width: 300px;
+  font-size: 14px;
 }
 
-.items-list.pages table.list td.cell.link {
+.items-list.pages table.list td.cell.main .plain-value .value {
+  font-size: 14px;
+}
+
+.items-list.pages table.list td.cell.cleanURL,
+.items-list.pages table.list td.cell.cleanURL .plain-value {
   width: 300px;
 }
 
