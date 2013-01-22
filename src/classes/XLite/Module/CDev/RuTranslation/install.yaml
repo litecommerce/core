@@ -1157,7 +1157,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Date: oldest first', translations: [{ code: 'ru', label: 'Дата: по убыванию' }] }
   - { name: 'LiteCommerce core version', translations: [{ code: 'ru', label: 'Версия ядра LiteCommerce' }] }
   - { name: 'Thank you for your order FOOTER', translations: [{ code: 'ru', label: 'Благодарим Вас за заказ в нашем магазине. Ждем Вас снова!' }] }
-  - { name: 'Get X off for order amount over Y', translations: [{ code: 'ru', label: 'Получите скидку {{X}} за заказы свыше {{Y}}' }] }
+  - { name: 'Get X off for order amount over Y', translations: [{ code: 'ru', label: 'Получите скидку {{X}} за заказ товаров на сумму свыше {{Y}}' }] }
   - { name: 'Have more coupons', translations: [{ code: 'ru', label: 'Есть еще купоны' }] }
   - { name: 'Have more coupons?', translations: [{ code: 'ru', label: 'Есть еще купоны?' }] }
   - { name: 'Limit number of uses', translations: [{ code: 'ru', label: 'Ограничение числа использований' }] }
