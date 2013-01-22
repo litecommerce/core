@@ -65,6 +65,11 @@
   <td>{if:gdlib}{gdlib}{else:}<span class="error-message">{t(#Not detected#)}</span><br /><b>{t(#Warning!#)}</b> {t(#PHP 'gd' extension is not installed.#)}{end:}</td>
 </tr>
 
+<tr>
+  <td class="setting-name">{t(#Translation driver#)}:</td>
+  <td>{getTranslationDriver()}</td>
+</tr>
+
 {if:!isWin()}
 <tr>
 	<td colspan="2">

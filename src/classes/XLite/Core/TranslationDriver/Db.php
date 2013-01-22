@@ -31,6 +31,9 @@ namespace XLite\Core\TranslationDriver;
  */
 class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
 {
+    const TRANSLATION_DRIVER_NAME = 'Database';
+
+
     /**
      * Translations
      *
