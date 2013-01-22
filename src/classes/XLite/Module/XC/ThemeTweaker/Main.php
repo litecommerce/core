@@ -78,7 +78,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Theme tweaker';
+        return 'This extension allows you to tweak your store design by adding and editing custom CSS styles and JavaScript code directly in the store back end. Also you can upload images to link them from your CSS styles.';
     }
 
     /**
