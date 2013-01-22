@@ -78,7 +78,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Theme tweaker';
+        return 'Allows to adjust storefront appearance via creating of custom CSS styles and Javascript code. This module also provides interface to upload images which can be used in CSS styles.';
     }
 
     /**

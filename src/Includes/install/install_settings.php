@@ -102,6 +102,9 @@ $lcSettings = array(
             'Bestsellers',
             'FeaturedProducts',
         ),
+        'XC' => array(
+            'ThemeTweaker',
+        ),
     ),
 );
 
