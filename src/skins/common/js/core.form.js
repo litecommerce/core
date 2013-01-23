@@ -1145,7 +1145,7 @@ CommonElement.prototype.validateFloat = function()
 {
   var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
-  var value = this.element.value.replace(/^ +/, '').replace(/ $+/, '');
+  var value = this.element.value.replace(/^ +/, '').replace(/ +$/, '');
   var sanitized = parseFloat(value);
 
   return {
