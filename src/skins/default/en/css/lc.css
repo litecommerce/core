@@ -2565,7 +2565,6 @@ form.estimator .main,
   margin: auto;
   text-align: center;
   width: 60%;
-  white-space: nowrap;
 }
 
 .checkout-block form.place .non-agree .terms-box {

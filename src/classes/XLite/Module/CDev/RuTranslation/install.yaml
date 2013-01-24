@@ -443,7 +443,7 @@ XLite\Model\LanguageLabel:
   - { name: 'How to restore your LiteCommerce database', translations: [{ code: 'ru', label: 'Как восстановить базу данных LiteCommerce' }] }
   - { name: 'HTML title (''title'' tag)', translations: [{ code: 'ru', label: 'HTML заголовок (''title'' tag)' }] }
   - { name: 'HTTPS check', translations: [{ code: 'ru', label: 'Проверка HTTPS' }] }
-  - { name: 'I accept Terms and Conditions', translations: [{ code: 'ru', label: 'Я принимаю <a href="{{URL}}">Уcловия использования</a>' }] }
+  - { name: 'I accept Terms and Conditions', translations: [{ code: 'ru', label: 'Я принимаю <a href="{{URL}}" target="_blank">Уcловия использования</a>' }] }
   - { name: 'Identity', translations: [{ code: 'ru', label: 'Идентификация' }] }
   - { name: 'If the product is assigned to multiple classes, only the first tax rate with the highest priority will be applied to it.', translations: [{ code: 'ru', label: 'Если товар входит в несколько классов, только первая ставка налога с наивысшим приоритетом будет применена к нему.' }] }
   - { name: 'If you already have an account, you can authenticate yourself by filling in the form below. The fields which are marked with * are mandatory', translations: [{ code: 'ru', label: 'Если у вас уже есть учетная записть, вы можете подтвердить владение аккаунтом, заполнив форму ниже. Обязательные поля отмечены звездочкой.' }] }
