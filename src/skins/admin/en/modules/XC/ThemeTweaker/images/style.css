@@ -26,3 +26,7 @@ div.new-image
   font-weight: bold;
   margin-top: 20px;
 }
+
+.items-list-table table.list td.main {
+  width: 500px;
+}
