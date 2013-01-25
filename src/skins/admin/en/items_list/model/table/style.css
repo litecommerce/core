@@ -26,12 +26,23 @@
   background-color: #f1f1f1;
 }
 
+.items-list-table table.list tbody.no-items td,
 .items-list-table table.list thead th {
   color: #8f8f8f;
   font-weight: normal;
+  text-align: left;
+  font-size: 16px;
+}
+
+.items-list-table table.list tbody.no-items td {
+  background-color: #f1f1f1;
+  width: 800px;
+  padding: 12px;
+}
+
+.items-list-table table.list thead th {
   padding: 18px 12px 12px;
   font-size: 14px;
-  text-align: left;
   border-bottom: 1px solid #d5d5d5;
 }
 
@@ -202,10 +213,6 @@
 
 .items-list-table table.list tbody.lines .inline-field .table-value {
   float: none;
-}
-
-.items-list-table table.list tbody.no-items td {
-  text-align: center;
 }
 
 .items-list-table table.list tbody.lines .field .subfield,
