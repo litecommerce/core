@@ -197,3 +197,7 @@ div.tabs .primary a, div.tabs .primary span {
 .dashboard .js-tabs ul.tabs li.empty span {
   color: #93B4CA;
 }
+
+.dashboard .items-list-table table.list td.main {
+  min-width: 0;
+}

@@ -15,6 +15,7 @@
   height: 13px;
   cursor: move;
   margin-left: auto;
+  margin-top: 5px;
 }
 
 .inline-move .field .table-value,
