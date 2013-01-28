@@ -70,6 +70,8 @@ abstract class ThemeTweaker extends \XLite\Controller\Admin\AAdmin
             array('value' => isset(\XLite\Core\Request::getInstance()->use))
         );
 
+        $config = \XLite\Core\Config::getInstance()->Performance;
+
         if (\Includes\Utils\FileManager::isFileWriteable($this->getFileName())) {
             if (
                 $config->aggregate_css
