@@ -10,9 +10,9 @@
  *}
 
 <div class="orders-stats">
-  <div class="tab-content-title">{t(#Orders#)}</div>
-  <div class="value" IF="tab.orders.value">{tab.orders.value}<span class="{getDeltaType(tab,#orders#)}"></span></div>
-  <div class="value" IF="!tab.orders.value">&mdash;</div>
+  <div class="tab-content-title">{t(#Accepted orders#)}</div>
+  <div class="value" IF="!isEmptyStats()">{tab.orders.value}<span class="{getDeltaType(tab,#orders#)}"></span></div>
+  <div class="value" IF="isEmptyStats()">&mdash;</div>
   <div class="prev" IF="isDisplayPrevValue(tab)">{getPrevValue(tab,#orders#)}</div>
 </div>
 

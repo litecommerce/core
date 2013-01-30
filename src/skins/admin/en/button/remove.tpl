@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  *}
 <div class="remove-wrapper {getStyle}">
-  <button type="button" class="{getStyle()}" title="{t(#Remove#)}">
+  <button type="button" class="{getStyle()}" title="{t(#Remove#)}" tabindex="-1">
     <img src="images/spacer.gif" alt="" />
   </button>
   <input type="checkbox" name="{getName()}" value="1" />

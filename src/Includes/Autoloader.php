@@ -129,6 +129,9 @@ abstract class Autoloader
 
         // PEAR2
         static::registerPEARAutolader();
+
+        // Load code cache
+        static::loadCodeCache();
     }
 
     /**
@@ -169,6 +172,23 @@ abstract class Autoloader
     protected static function registerPEARAutolader()
     {
         require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
+    }
+
+    /**
+     * Load code cache
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function loadCodeCache()
+    {
+        if (!defined('XLITE_CACHE_BUILDING')) {
+            $path = LC_DIR_CACHE_CLASSES . 'core.php';
+            if (file_exists($path)) {
+                require_once ($path);
+            }
+        }
     }
 
     /**

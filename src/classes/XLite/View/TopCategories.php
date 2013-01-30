@@ -303,4 +303,38 @@ class TopCategories extends \XLite\View\SideBarBox
 
         return implode(' ', $classes);
     }
+
+    // {{{ Cache
+
+    /**
+     * Cache availability
+     *
+     * @return boolean
+     */
+    protected function isCacheAvailable()
+    {
+        return true;
+    }
+
+    /**
+     * Get cache oarameters
+     *
+     * @return array
+     */
+    protected function getCacheParameters()
+    {
+        $list = parent::getCacheParameters();
+
+        $list[] = $this->getCategoryId();
+
+        $auth = \XLite\Core\Auth::getInstance();
+        $list[] = ($auth->isLogged() && $auth->getProfile()->getMembership())
+            ? $auth->getProfile()->getMembership()->getMembershipId()
+            : '-';
+
+        return $list;
+    }
+
+    // }}}
+
 }

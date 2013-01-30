@@ -151,6 +151,16 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get translation driver identifier
+     *
+     * @return string
+     */
+    public function getTranslationDriver()
+    {
+        return \XLite\Core\Translation::getInstance()->getDriver()->getName();
+    }
+
+    /**
      * Returns value by request
      *
      * @param string $name Type of value
@@ -579,6 +589,20 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_CACHE_RESOURCES);
 
         \XLite\Core\TopMessage::addInfo('Aggregation cache has been cleaned');
+
+        $this->setReturnURL($this->buildURL($this->get('target'), '', array('page' => 'Performance')));
+    }
+
+    /**
+     * Clean view cache
+     *
+     * @return void
+     */
+    public function doActionCleanViewCache()
+    {
+        \XLite\Core\WidgetCache::getInstance()->deleteAll();
+
+        \XLite\Core\TopMessage::addInfo('Widgets cache has been cleaned');
 
         $this->setReturnURL($this->buildURL($this->get('target'), '', array('page' => 'Performance')));
     }

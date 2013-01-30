@@ -31,6 +31,7 @@ $externalPatterns = array(
     'skins/default/en/common/ui.datepicker.css',
     'skins/admin/en/modules/CDev/TinyMCE/js/tinymce',
     'skins/common/ui/jquery-ui.css',
+    'skins/admin/en/modules/XC/ThemeTweaker/codemirror',
 );
 
 $nonOSLPatterns = array_merge($GPL, $externalPatterns);

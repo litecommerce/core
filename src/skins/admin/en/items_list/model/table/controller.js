@@ -153,6 +153,7 @@ TableItemsList.prototype.listeners.createButton = function(handler)
         }
 
         jQuery('.no-items').css('display', 'none');
+        jQuery('.sticky-panel').css('display', '');
 
         if (2 == box.children('tr').length) {
           var leftAction = jQuery('tbody.lines tr td.actions.left', handler.container).eq(0);
@@ -180,6 +181,7 @@ TableItemsList.prototype.listeners.removeLineButton = function(handler)
         jQuery(this).parents('tr').eq(0).remove();
         if (0 == jQuery('tr.create-line').length && 0 == jQuery('tr.line').length) {
           jQuery('.no-items').css('display', '');
+          jQuery('.sticky-panel').css('display', 'none');
         }
       }
     }
@@ -302,3 +304,12 @@ function TableItemsListQueue()
 }
 
 core.autoload(TableItemsListQueue);
+
+
+jQuery().ready(
+  function() {
+    if (jQuery('.no-items').css('display') == 'table-row-group') {
+      jQuery('.sticky-panel').css('display', 'none');
+    }
+  }
+);

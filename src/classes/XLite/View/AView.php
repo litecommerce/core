@@ -241,50 +241,70 @@ abstract class AView extends \XLite\Core\Handler
         $flag = isset($template);
 
         if ($flag || $this->checkVisibility()) {
+            
             if (!$this->isCloned && !$flag) {
                 $this->initView();
             }
 
-            // Body of the old includeCompiledFile() method
-            list($this->currentSkin, $this->currentLocale, $normalized) = $this->getTemplateFile($template);
-            $compiled = \XLite\Singletons::$handler->flexy->prepare($normalized);
+            $cacheAvailable = $this->isCacheAllowed($template);
+            $content = $cacheAvailable ? $this->getCachedContent() : null;
 
-            $cnt = static::$profilerInfo['countDeep']++;
-            $cntLevel = static::$profilerInfo['countLevel']++;
+            if (isset($content)) {
+                print $content;
 
-            if (static::$profilerInfo['isEnabled']) {
-                $timePoint = str_repeat('+', $cntLevel) . '[TPL ' . str_repeat('0', 4 - strlen((string)$cnt)) . $cnt . '] '
-                    . get_class($this) . ' :: ' . substr($template, strlen(LC_DIR_SKINS));
-                \XLite\Core\Profiler::getInstance()->log($timePoint);
+            } else {
+
+                if ($cacheAvailable) {
+                    ob_start();
+                }
+
+                // Body of the old includeCompiledFile() method
+                list($this->currentSkin, $this->currentLocale, $normalized) = $this->getTemplateFile($template);
+                $compiled = \XLite\Singletons::$handler->flexy->prepare($normalized);
+
+                $cnt = static::$profilerInfo['countDeep']++;
+                $cntLevel = static::$profilerInfo['countLevel']++;
+
+                if (static::$profilerInfo['isEnabled']) {
+                    $timePoint = str_repeat('+', $cntLevel) . '[TPL ' . str_repeat('0', 4 - strlen((string)$cnt)) . $cnt . '] '
+                        . get_class($this) . ' :: ' . substr($template, strlen(LC_DIR_SKINS));
+                    \XLite\Core\Profiler::getInstance()->log($timePoint);
+                }
+
+                if (static::$profilerInfo['markTemplates']) {
+                    $template = substr($template, strlen(LC_DIR_SKINS));
+                    $markTplText = get_class($this) . ' : ' . $template . ' (' . $cnt . ')'
+                        . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '');
+
+                    echo ('<!-- ' . $markTplText . ' {' . '{{ -->');
+                }
+
+                static::$profilerInfo['tail'][] = $normalized;
+
+                include $compiled;
+
+                array_pop(static::$profilerInfo['tail']);
+
+                if (static::$profilerInfo['markTemplates']) {
+                    echo ('<!-- }}' . '} ' . $markTplText . ' -->');
+                }
+
+                if (static::$profilerInfo['isEnabled']) {
+                    \XLite\Core\Profiler::getInstance()->log($timePoint);
+                }
+
+                if (!$this->isCloned && !$flag) {
+                    $this->closeView();
+                }
+
+                static::$profilerInfo['countLevel']--;
+
+                if ($cacheAvailable) {
+                    $this->setCachedContent(ob_get_contents());
+                    ob_end_flush();
+                }
+
             }
-
-            if (static::$profilerInfo['markTemplates']) {
-                $template = substr($template, strlen(LC_DIR_SKINS));
-                $markTplText = get_class($this) . ' : ' . $template . ' (' . $cnt . ')'
-                    . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '');
-
-                echo ('<!-- ' . $markTplText . ' {' . '{{ -->');
-            }
-
-            static::$profilerInfo['tail'][] = $normalized;
-
-            include $compiled;
-
-            array_pop(static::$profilerInfo['tail']);
-
-            if (static::$profilerInfo['markTemplates']) {
-                echo ('<!-- }}' . '} ' . $markTplText . ' -->');
-            }
-
-            if (static::$profilerInfo['isEnabled']) {
-                \XLite\Core\Profiler::getInstance()->log($timePoint);
-            }
-
-            if (!$this->isCloned && !$flag) {
-                $this->closeView();
-            }
-
-            static::$profilerInfo['countLevel']--;
         }
     }
 
@@ -1881,5 +1901,78 @@ abstract class AView extends \XLite\Core\Handler
 
         return $result;
     }
+
+    // {{{ Widget Cache
+
+    /**
+     * Cache allowed
+     *
+     * @param string $template Template
+     *
+     * @return boolean
+     */
+    protected function isCacheAllowed($template)
+    {
+        return !$this->isCloned
+            && $this->isCacheAvailable()
+            && \XLite\Core\WidgetCache::getInstance()->isEnabled();
+    }
+
+    /**
+     * Cache availability
+     *
+     * @return boolean
+     */
+    protected function isCacheAvailable()
+    {
+        return false;
+    }
+
+    /**
+     * Get cached content
+     *
+     * @return string
+     */
+    protected function getCachedContent()
+    {
+        return \XLite\Core\WidgetCache::getInstance()->get($this->getCacheParameters());
+    }
+
+    /**
+     * Set cached content
+     *
+     * @param string $content Content
+     *
+     * @return void
+     */
+    protected function setCachedContent($content)
+    {
+        \XLite\Core\WidgetCache::getInstance()->set($this->getCacheParameters(), $content, $this->getCacheTTL());
+    }
+
+    /**
+     * Get cache parameters
+     *
+     * @return array
+     */
+    protected function getCacheParameters()
+    {
+        return array(
+            \XLite\Core\Session::getInstance()->getLanguage()->getCode(),
+            substr(get_called_class(), 6),
+        );
+    }
+
+    /**
+     * Get cache TTL (seconds)
+     *
+     * @return integer
+     */
+    protected function getCacheTTL()
+    {
+        return null;
+    }
+
+    // }}}
 
 }

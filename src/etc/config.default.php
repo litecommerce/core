@@ -174,7 +174,10 @@ use_output = Off
 ; Error handling options
 ;
 [error_handling]
+; Template for error pages
 page = "public/error.html"
+; Template for maintenance pages
+maintenance = "public/maintenance.html"
 
 ;
 ; Marketplace

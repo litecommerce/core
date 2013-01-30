@@ -11,7 +11,7 @@
 <script type="text/javascript">
 var _gaq = _gaq || [];
 {foreach:getGaqOptions(),row}
-_gaq.push([{row}]);
+_gaq.push([{row:h}]);
 {end:}
 var ga = document.createElement('script');
 ga.type = 'text/javascript';

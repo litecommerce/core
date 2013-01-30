@@ -14,4 +14,5 @@ skins/common/colorpicker
 skins/default/en/css/jq
 skins/default/en/common/ui.datepicker.css
 skins/admin/en/modules/CDev/TinyMCE/js/tinymce
+skins/admin/en/modules/XC/ThemeTweaker/codemirror
 

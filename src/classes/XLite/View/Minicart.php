@@ -167,4 +167,19 @@ class Minicart extends \XLite\View\SideBarBox
             ),
         );
     }
+
+    // {{{ Cache
+
+    /**
+     * Cache availability
+     *
+     * @return boolean
+     */
+    protected function isCacheAvailable()
+    {
+        return $this->getCart()->isEmpty();
+    }
+
+    // }}}
+
 }

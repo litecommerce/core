@@ -500,7 +500,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @param array $params URL parameters OPTIONAL
      *
-     * @return void
+     * @return string
      */
     public function getURL(array $params = array())
     {
@@ -509,6 +509,23 @@ abstract class AController extends \XLite\Core\Handler
         unset($params['target']);
 
         return $this->buildURL($target, '', $params);
+    }
+
+    /**
+     * Get referer URL
+     *
+     * @return string
+     */
+    public function getReferrerURL()
+    {
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            $url = $_SERVER['HTTP_REFERER'];
+
+        } else {
+            $url = $this->getURL();
+        }
+
+        return $url;
     }
 
     /**
@@ -1206,7 +1223,7 @@ abstract class AController extends \XLite\Core\Handler
             }
         }
 
-        $this->setReturnURL($this->getURL());
+        $this->setReturnURL($this->getReferrerURL());
     }
 
     // }}}

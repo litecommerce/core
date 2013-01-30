@@ -753,4 +753,26 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {
         return array();
     }
+
+    // {{{ Cache
+
+    /**
+     * Get cache parameters
+     *
+     * @return array
+     */
+    protected function getCacheParameters()
+    {
+        $list = parent::getCacheParameters();
+
+        $auth = \XLite\Core\Auth::getInstance();
+        $list[] = ($auth->isLogged() && $auth->getProfile()->getMembership())
+            ? $auth->getProfile()->getMembership()->getMembershipId()
+            : '-';
+
+        return $list;
+    }
+
+    // }}}
+
 }

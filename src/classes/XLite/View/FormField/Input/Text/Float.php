@@ -34,7 +34,9 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
     /**
      * Widget param names
      */
-    const PARAM_E   = 'e';
+    const PARAM_E                  = 'e';
+    const PARAM_THOUSAND_SEPARATOR = 'thousand_separator';
+    const PARAM_DECIMAL_SEPARATOR  = 'decimal_separator';
 
     /**
      * Register JS files
@@ -70,7 +72,18 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_E   => new \XLite\Model\WidgetParam\Int('Number of digits after the decimal separator', 2),
+            static::PARAM_E => new \XLite\Model\WidgetParam\Int(
+                'Number of digits after the decimal separator',
+                2
+            ),
+            static::PARAM_THOUSAND_SEPARATOR => new \XLite\Model\WidgetParam\String(
+                'Thousand separator',
+                \XLite\Core\Config::getInstance()->General->thousand_delim
+            ),
+            static::PARAM_DECIMAL_SEPARATOR => new \XLite\Model\WidgetParam\String(
+                'Decimal separator',
+                 \XLite\Core\Config::getInstance()->General->decimal_delim
+            ),
         );
     }
 
@@ -143,8 +156,8 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
     {
         $attributes = parent::getCommonAttributes();
 
-        $attributes['data-decimal-delim']  = \XLite\Core\Config::getInstance()->General->decimal_delim;
-        $attributes['data-thousand-delim'] = \XLite\Core\Config::getInstance()->General->thousand_delim;
+        $attributes['data-decimal-delim']  = $this->getParam(self::PARAM_DECIMAL_SEPARATOR);
+        $attributes['data-thousand-delim'] = $this->getParam(self::PARAM_THOUSAND_SEPARATOR);
 
         $e = $this->getE();
         if (isset($e)) {

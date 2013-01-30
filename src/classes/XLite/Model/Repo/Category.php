@@ -297,7 +297,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         foreach ($this->defineSubcategoriesQuery($categoryId)->getArrayResult() as $category) {
             $list[] = $category;
-            if ($category['lpos'] > $category['rpod'] + 1) {
+            if ($category['rpos'] > $category['lpos'] + 1) {
                 $list = array_merge($list, $this->getCategoriesPlainListChild($category['category_id']));
             }
         }
