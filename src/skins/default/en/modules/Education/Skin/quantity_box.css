@@ -1,0 +1,6 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+input[type="text"].quantity.wrong-amount
+{
+  border: 1px solid #000;
+}
