@@ -178,7 +178,8 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
             \XLite\Core\Converter::buildURL(
                 'social_login',
                 'login',
-                array('auth_provider' => $this->getName())
+                array('auth_provider' => $this->getName()),
+                'cart.php'
             ),
             \XLite\Core\Request::getInstance()->isHTTPS(),
             array(),

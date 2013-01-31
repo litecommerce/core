@@ -35,8 +35,17 @@ abstract class ErrorHandler
     /**
      * Common error codes
      */
-    const ERROR_UNKNOWN     = -1;
-    const ERROR_FATAL_ERROR = 2;
+    const ERROR_UNKNOWN          = -1;
+    const ERROR_FATAL_ERROR      = 2;
+    const ERROR_MAINTENANCE_MODE = -9999;
+    const ERROR_NOT_INSTALLED    = -8888;
+
+    /**
+     * Error page types
+     */
+    const ERROR_PAGE_TYPE_ERROR         = 'error';
+    const ERROR_PAGE_TYPE_MAINTENANCE   = 'maintenance';
+    const ERROR_PAGE_TYPE_NOT_INSTALLED = 'install';
 
     /**
      * Throw exception
@@ -123,13 +132,53 @@ abstract class ErrorHandler
     }
 
     /**
+     * Return name of the maintenance page file (.html)
+     *
+     * @return string
+     */
+    protected static function getMaintenancePageFileDefault()
+    {
+        return 'public' . LC_DS . 'maintenance.html';
+    }
+
+    /**
+     * Return name of the maintenance page file (.html)
+     *
+     * @return string
+     */
+    protected static function getMaintenancePageFileFromConfig()
+    {
+        return \Includes\Utils\ConfigParser::getOptions(array('error_handling', 'maintenance'));
+    }
+
+    /**
      * Return name of the error page file (.html)
      *
      * @return string
      */
-    protected static function getErrorPageFile()
+    protected static function getNotInstalledPageFile()
     {
-        return LC_DIR_ROOT . (static::getErrorPageFileFromConfig() ?: static::getErrorPageFileDefault());
+        return 'public' . LC_DS . 'install.html';
+    }
+
+    /**
+     * Return name of the error page file (.html)
+     *
+     * @return string
+     */
+    protected static function getErrorPageFile($type = self::ERROR_PAGE_TYPE_ERROR)
+    {
+        if (self::ERROR_PAGE_TYPE_MAINTENANCE == $type) {
+            $file = LC_DIR_ROOT . (static::getMaintenancePageFileFromConfig() ?: static::getMaintenancePageFileDefault());
+
+        } elseif (self::ERROR_PAGE_TYPE_NOT_INSTALLED == $type) {
+            $file = LC_DIR_ROOT . static::getNotInstalledPageFile();
+
+        } else {
+            $file = LC_DIR_ROOT . (static::getErrorPageFileFromConfig() ?: static::getErrorPageFileDefault());
+        }
+
+        return $file;
     }
 
     /**
@@ -137,9 +186,9 @@ abstract class ErrorHandler
      *
      * @return string
      */
-    protected static function getErrorPageFileContent()
+    protected static function getErrorPageFileContent($type = self::ERROR_PAGE_TYPE_ERROR)
     {
-        return \Includes\Utils\FileManager::read(static::getErrorPageFile()) ?: LC_ERROR_PAGE_MESSAGE;
+        return \Includes\Utils\FileManager::read(static::getErrorPageFile($type)) ?: LC_ERROR_PAGE_MESSAGE;
     }
 
     /**
@@ -147,9 +196,9 @@ abstract class ErrorHandler
      *
      * @return string
      */
-    protected static function getErrorPage()
+    protected static function getErrorPage($type = self::ERROR_PAGE_TYPE_ERROR)
     {
-        return str_replace('@URL@', \Includes\Utils\URLManager::getShopURL(), static::getErrorPageFileContent());
+        return str_replace('@URL@', \Includes\Utils\URLManager::getShopURL(), static::getErrorPageFileContent($type));
     }
 
     /**
@@ -163,7 +212,35 @@ abstract class ErrorHandler
      */
     protected static function showErrorPage($code, $message, $page = null)
     {
-        showErrorPage($code, $message, $page ?: (LC_IS_CLI_MODE ? LC_ERROR_PAGE_MESSAGE : static::getErrorPage()));
+        showErrorPage(
+            $code,
+            $message,
+            $page
+            ?: (
+                LC_IS_CLI_MODE
+                ? LC_ERROR_PAGE_MESSAGE
+                : static::getErrorPage(static::getErrorPageType($code))
+            )
+        );
+    }
+
+    /**
+     * Return content of the error page file (.html)
+     *
+     * @return string
+     */
+    protected static function getErrorPageType($code)
+    {
+        $result = self::ERROR_PAGE_TYPE_ERROR;
+
+        if (self::ERROR_MAINTENANCE_MODE == $code) {
+            $result = self::ERROR_PAGE_TYPE_MAINTENANCE;
+
+        } elseif (self::ERROR_NOT_INSTALLED == $code) {
+            $result = self::ERROR_PAGE_TYPE_NOT_INSTALLED;
+        }
+
+        return $result;
     }
 
     /**
@@ -240,15 +317,10 @@ abstract class ErrorHandler
     {
         if (!\Includes\Utils\ConfigParser::getOptions(array('database_details', 'database'))) {
 
-            $message = 'Probably LC is not installed. Try to run ';
-            $url     = '<strong>install.php</strong>';
-            $link    = \Includes\Utils\URLManager::getShopURL('install.php');
+            $link = \Includes\Utils\URLManager::getShopURL('install.php');
+            $message = '<a href="' . $link . '">Click here</a> to run the installation wizard.';
 
-            if (\Includes\Utils\FileManager::isFile($link)) {
-                $url = '<a href="' . $link . '">' . $url . '</a>';
-            }
-
-            static::showErrorPage('ERROR_LC_NOT_INSTALLED', $message . $url, LC_ERROR_PAGE_MESSAGE);
+            static::showErrorPage(self::ERROR_NOT_INSTALLED, $message);
         }
     }
 }

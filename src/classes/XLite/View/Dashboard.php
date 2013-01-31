@@ -93,7 +93,7 @@ class Dashboard extends \XLite\View\Dialog
                 'style'  => 0 < $this->getLowInventoryProductsAmount() ? 'non-empty' : 'empty',
             ),
             'top_sellers' => array(
-                'name'   => '5 top selling products',
+                'name'   => 'Top selling products',
                 'widget' => '\XLite\View\Product\TopSellersBlock',
                 'style'  => 0 < $this->getTopSellersCount() ? 'non-empty' : 'empty',
             ),
@@ -180,7 +180,7 @@ class Dashboard extends \XLite\View\Dialog
     protected function getTopSellersCount()
     {
         $cnd = new \XLite\Core\CommonCell();
-        $cnd->currency = \XLite::getCurrency()->getCurrencyId();
+        $cnd->currency = \XLite::getInstance()->getCurrency()->getCurrencyId();
 
         return \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($cnd, true);
     }

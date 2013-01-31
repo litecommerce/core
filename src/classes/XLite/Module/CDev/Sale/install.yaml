@@ -16,6 +16,14 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: 'Display the "Products on sale" block in the storefront'
+  - name: sale_in_current_category
+    category: 'CDev\Sale'
+    type: checkbox
+    orderby: 30
+    value: Y
+    translations:
+      - code: en
+        option_name: 'Display only the products on sale which are in the category being viewed (or its subcategories)'
   - name: sale_max_count_in_block
     category: 'CDev\Sale'
     type: text

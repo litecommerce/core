@@ -58,10 +58,18 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
     {
         parent::setWidgetParams($params);
 
+        $currency = $this->getCurrency();
+
         foreach ($this->getWidgetParams() as $name => $param) {
+
             if (static::PARAM_E == $name) {
-                $param->setValue($this->getCurrency()->getE());
-                break;
+                $param->setValue($currency->getE());
+
+            } elseif (static::PARAM_THOUSAND_SEPARATOR == $name) {
+                $param->setValue($currency->getThousandDelimiter());
+
+            } elseif (static::PARAM_DECIMAL_SEPARATOR == $name) {
+                $param->setValue($currency->getDecimalDelimiter());
             }
         }
     }

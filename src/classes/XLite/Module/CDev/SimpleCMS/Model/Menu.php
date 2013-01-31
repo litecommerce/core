@@ -39,7 +39,7 @@ namespace XLite\Module\CDev\SimpleCMS\Model;
  *      }
  * )
  */
-class Menu extends \XLite\Model\AEntity
+class Menu extends \XLite\Model\Base\I18n
 {
     /**
      * Menu types
@@ -59,17 +59,6 @@ class Menu extends \XLite\Model\AEntity
      * @Column         (type="uinteger")
      */
     protected $id;
-
-    /**
-     * Name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string")
-     */
-    protected $name;
 
     /**
      * Link 
@@ -115,6 +104,7 @@ class Menu extends \XLite\Model\AEntity
      */
     protected $enabled = true;
 
+
     /**
      * Get menu types
      *
@@ -147,5 +137,4 @@ class Menu extends \XLite\Model\AEntity
             $this->type = $type;
         }
     }
-
 }

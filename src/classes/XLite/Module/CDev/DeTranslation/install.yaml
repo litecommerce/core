@@ -443,7 +443,7 @@ XLite\Model\LanguageLabel:
   - { name: 'How to restore your LiteCommerce database', translations: [{ code: 'de', label: 'Wie man eine LiteCommerce-Datenbank umspeichert ' }] }
   - { name: 'HTML title (''title'' tag)', translations: [{ code: 'de', label: 'HTML-Titel (''title'' tag)' }] }
   - { name: 'HTTPS check', translations: [{ code: 'de', label: 'HTTPS-Check' }] }
-  - { name: 'I accept Terms and Conditions', translations: [{ code: 'de', label: 'Ich  akzeptiere <a href="{{URL}}">Geschäftsbedingungen</a>' }] }
+  - { name: 'I accept Terms and Conditions', translations: [{ code: 'de', label: 'Ich  akzeptiere <a href="{{URL}}" target="_blank">Geschäftsbedingungen</a>' }] }
   - { name: 'Identity', translations: [{ code: 'de', label: 'Identität' }] }
   - { name: 'If the product is assigned to multiple classes, only the first tax rate with the highest priority will be applied to it.', translations: [{ code: 'de', label: 'Wenn ein Artikel mehreren Klassen zugeordnet ist, dann wird der erste vorrangige Steuersatz angewandt' }] }
   - { name: 'If you already have an account, you can authenticate yourself by filling in the form below. The fields which are marked with * are mandatory', translations: [{ code: 'de', label: 'Falls Sie bereits ein Konto haben, können Sie sich authentifizieren durch die Ausfüllung des untenstehenden Formulars. Die mit Stern (*) gekennzeichneten Felder sind Pflichtfelder.' }] }

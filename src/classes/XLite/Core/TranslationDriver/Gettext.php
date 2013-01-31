@@ -45,6 +45,8 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     const SERVICE_LBL   = '___service___';
     const SERVICE_VALUE = 'service';
 
+    const TRANSLATION_DRIVER_NAME = 'GetText';
+
     /**
      * Dynamic domains list
      *

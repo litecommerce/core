@@ -16,6 +16,8 @@
   <td class="star"></td>
   <td class="value-attribute">
     <widget class="XLite\View\FormField\Input\Text\CleanURL" fieldName="{getNamePostedData(#cleanURL#)}" value="{product.getCleanURL()}" maxlength="{getCleanURLMaxLength()}" label="{t(#Clean URL#)}" fieldOnly="true" disabled="{product.getAutogenerateCleanURL()}" />
+    <div class="clean-url-suffix">.html</div>
+    <div class="clear"></div>
     <widget class="XLite\View\FormField\Input\Checkbox\AutogenerateCleanURL" fieldName="{getNamePostedData(#autogenerateCleanURL#)}" value="{product.getAutogenerateCleanURL()}" label="{t(#Autogenerate Clean URL#)}" />
   </td>
 </tr>

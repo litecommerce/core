@@ -95,16 +95,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionDelete
-     *
-     * @return void
-     */
-    protected function doActionDelete()
-    {
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->deleteInBatchById($this->getSelected());
-    }
-
-    /**
      * doActionSearch
      *
      * @return void

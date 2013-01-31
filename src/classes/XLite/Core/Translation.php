@@ -157,6 +157,20 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
         return $this->translate($id, $arguments);
     }
 
+    /**
+     * Get translation driver
+     *
+     * @return \XLite\Core\TranslationDriver\ATranslationDriver
+     */
+    public function getDriver()
+    {
+        if (!isset($this->driver)) {
+            $this->driver = $this->defineDriver();
+        }
+
+        return $this->driver;
+    }
+
 
     /**
      * Process substitute
@@ -176,20 +190,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
         }
 
         return str_replace($keys, $values, $string);
-    }
-
-    /**
-     * Get translation driver
-     *
-     * @return \XLite\Core\TranslationDriver\ATranslationDriver
-     */
-    protected function getDriver()
-    {
-        if (!isset($this->driver)) {
-            $this->driver = $this->defineDriver();
-        }
-
-        return $this->driver;
     }
 
     /**
