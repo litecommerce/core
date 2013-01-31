@@ -31,10 +31,16 @@ return function()
     $query = file_get_contents(__DIR__ . LC_DS . 'dump.sql');
     $query = preg_replace('/%%PREFIX%%/', $prefix, $query);
 
-    $result = \XLite\Core\Database::getInstance()->importSQL($query);
+    $tmpFileName = sprintf('dump-%d.sql', time());
+
+    file_put_contents($tmpFileName, $query);
+
+    \Includes\Utils\Database::uploadSQLFromFile($tmpFileName, true);
+
+    \Includes\Utils\FileManager::deleteFile($tmpFileName);
 
     // Get the default language code
-    $code = \XLite::getInstance()->getDefaultLanguage()->getCode();
+    $code = \XLite::getInstance()->getDefaultLanguage() ?: 'en';
 
     // Copy multilingual data of pages
     $pages = \XLite\Core\Database::getRepo('XLite\Module\CDev\SimpleCMS\Model\Page')->findAll();

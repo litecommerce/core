@@ -84,7 +84,8 @@ class Order extends \XLite\Controller\Admin\AAdmin
     public function checkAccess()
     {
         return parent::checkAccess()
-            && $this->getOrder();
+            && $this->getOrder()
+            && $this->getOrder()->getProfile();
     }
 
     /**
