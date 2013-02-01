@@ -40,11 +40,8 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      */
     public function executeHookHandler()
     {
-        $driver = \XLite\Core\Database::getCacheDriverByOptions(\Includes\Utils\ConfigParser::getOptions('cache'));
-
-        if (isset($driver)) {
-            $driver->deleteAll();
-        }
+        $driver = new \XLite\Core\Cache();
+        $driver->deleteAll();
     }
 
     // }}}

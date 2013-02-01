@@ -153,81 +153,6 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
-     * Get cache driver by options list
-     *
-     * @param mixed $options Options from config.ini
-     *
-     * @return \Doctrine\Common\Cache\Cache
-     */
-    public static function getCacheDriverByOptions($options)
-    {
-        if (!isset($options) || !is_array($options) || !isset($options['type'])) {
-            $options = array('type' => null);
-        }
-
-        // Auto-detection
-        if ('auto' == $options['type']) {
-
-            foreach (static::$cacheDriversQuery as $type) {
-                $method = 'detectCacheDriver' . ucfirst($type);
-
-                // $method assembled from 'detectCacheDriver' + $type
-                if (static::$method()) {
-                    $options['type'] = $type;
-                    break;
-                }
-            }
-        }
-
-        if ('apc' == $options['type']) {
-
-            // APC
-            $cache = new \Doctrine\Common\Cache\ApcCache;
-
-        } elseif ('memcache' == $options['type'] && isset($options['servers']) && class_exists('Memcache', false)) {
-
-            // Memcache
-            $servers = explode(';', $options['servers']);
-            if ($servers) {
-                $memcache = new \Memcache();
-                foreach ($servers as $row) {
-                    $row = trim($row);
-                    $tmp = explode(':', $row, 2);
-                    if ('unix' == $tmp[0]) {
-                        $memcache->addServer($row, 0);
-
-                    } elseif (isset($tmp[1])) {
-                        $memcache->addServer($tmp[0], $tmp[1]);
-
-                    } else {
-                        $memcache->addServer($tmp[0]);
-                    }
-                }
-
-                $cache = new \Doctrine\Common\Cache\MemcacheCache;
-                $cache->setMemcache($memcache);
-            }
-
-        } elseif ('xcache' == $options['type']) {
-
-            $cache = new \Doctrine\Common\Cache\XcacheCache;
-
-        } else {
-
-            // Default cache - file system cache
-            $cache = new \XLite\Core\FileCache(LC_DIR_DATACACHE);
-
-        }
-
-        if (isset($options['namespace']) && $options['namespace']) {
-            // TODO - namespace temporary is empty - bug into Doctrine\Common\Cache\AbstractCache::deleteByPrefix()
-            //$cache->setNamespace($options['namespace']);
-        }
-
-        return $cache;
-    }
-
-    /**
      * Register custom types
      *
      * @return void
@@ -1399,11 +1324,12 @@ OUT;
      */
     protected function setDoctrineCache()
     {
-        static::$cacheDriver = static::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
+        static::$cacheDriver = new \XLite\Core\Cache();
 
-        $this->configuration->setMetadataCacheImpl(static::$cacheDriver);
-        $this->configuration->setQueryCacheImpl(static::$cacheDriver);
-        $this->configuration->setResultCacheImpl(static::$cacheDriver);
+        $driver = static::$cacheDriver->getDriver();
+        $this->configuration->setMetadataCacheImpl($driver);
+        $this->configuration->setQueryCacheImpl($driver);
+        $this->configuration->setResultCacheImpl($driver);
     }
 
     /**

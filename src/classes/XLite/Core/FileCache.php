@@ -67,6 +67,11 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
      */
     protected $validationCache = array();
 
+    /**
+     * Namespace
+     *
+     * @var string
+     */
     protected $_namespace;
 
     /**
@@ -139,80 +144,6 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
         return sprintf('%s[%s*', $this->getNamespace(), $id, $namespaceVersion);
     }
 
-
-    /**
-     * Delete by prefix
-     *
-     * @param string $prefix Prefix
-     *
-     * @return array
-     */
-    public function deleteByPrefix($prefix)
-    {
-        $deleted = array();
-
-        $prefix = $this->getNamespacedIdToDelete($prefix);
-        $list = glob($this->path . LC_DS . $prefix);
-
-        if ($list) {
-            foreach ($list as $f) {
-                if ($this->isKeyValid($f)) {
-                    $id = substr(basename($f), 0, -4);
-                    \Includes\Utils\FileManager::deleteFile($f);
-                    $deleted[] = $id;
-                }
-            }
-        }
-
-        return $deleted;
-    }
-
-    /**
-     * Delete by regular expression
-     *
-     * @param string $regex Regular expression
-     *
-     * @return array
-     */
-    public function deleteByRegex($regex)
-    {
-        $iterator = new \XLite\Core\FileCache\Iterator(new \FilesystemIterator($this->path));
-        $iterator->setRegexp($regex);
-
-        $deleted = array();
-
-        foreach ($iterator as $path => $info) {
-            if ($this->isKeyValid($path)) {
-                $id = substr(basename($path), 0, -4);
-                $this->delete($id);
-                $deleted[] = $id;
-            }
-        }
-
-        return $deleted;
-    }
-
-    /**
-     * Delete all cache entries
-     *
-     * @return array Array of the deleted cache ids
-     */
-    public function deleteAll()
-    {
-        $keys = array();
-
-        $list = glob($this->path . LC_DS . '*.php');
-
-        if ($list) {
-            foreach ($list as $f) {
-                if (unlink($f)) {
-                    $keys[] = substr(basename($f), 0, -4);
-                }
-            }
-        }
-
-        return $keys;
-    }
 
     /**
      * Get cache cell by id
