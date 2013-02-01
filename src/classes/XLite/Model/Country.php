@@ -36,6 +36,7 @@ namespace XLite\Model;
  *          @Index (name="enabled", columns={"enabled"})
  *      }
  * )
+ * @HasLifecycleCallbacks
  */
 class Country extends \XLite\Model\AEntity
 {
@@ -129,4 +130,25 @@ class Country extends \XLite\Model\AEntity
     {
         return 0 < count($this->states);
     }
+
+    /**
+     * Remove zone elements
+     *
+     * @return void
+     * @PreRemove
+     */
+    public function removeZoneElements()
+    {
+        $elements = \XLite\Core\Database::getRepo('XLite\Model\ZoneElement')->findBy(
+            array(
+                'element_type'  => \XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY,
+                'element_value' => $this->getCode(),
+            )
+        );
+
+        foreach ($elements as $element) {
+            \XLite\Core\Database::getEM()->remove($element);
+        }
+    }
+
 }

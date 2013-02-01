@@ -13,11 +13,13 @@
   width: 800px;
 }
 
-.items-list.menus table.list td.cell.main {
+.items-list.menus table.list td.cell.main,
+.items-list.menus table.list td.cell.main .inline-text .view {
   width: 300px;
 }
 
-.items-list.menus table.list td.cell.link {
+.items-list.menus table.list td.cell.link,
+.items-list.menus table.list td.cell.link .inline-text .view {
   width: 300px;
 }
 

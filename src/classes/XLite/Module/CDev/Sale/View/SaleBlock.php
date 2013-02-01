@@ -103,6 +103,12 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
     {
         $cnd = parent::getSearchConditions($cnd);
 
+        $cnd->{\XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS} = true;
+
+        if ($this->getCategoryId()) {
+            $cnd->{\XLite\Model\Repo\Product::P_CATEGORY_ID} = $this->getCategoryId();
+        }
+
         if ($this->getMaxItemsCount()) {
             $cnd->{\XLite\Model\Repo\Product::P_LIMIT} = array(
                 0,

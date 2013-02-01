@@ -1674,7 +1674,7 @@ table.including-modifiers td.value {
 
 #shopping-cart .cart-buttons {
   float: left;
-  width: 49%;
+  width: 69%;
 }
 
 #shopping-cart .cart-buttons form div {
@@ -1689,7 +1689,7 @@ table.including-modifiers td.value {
 
 #shopping-cart .sums {
   float: right;
-  width: 49%;
+  width: 29%;
   text-align: right;
   padding: 0px;
   margin: 0px;
@@ -2565,7 +2565,6 @@ form.estimator .main,
   margin: auto;
   text-align: center;
   width: 60%;
-  white-space: nowrap;
 }
 
 .checkout-block form.place .non-agree .terms-box {

@@ -24,6 +24,7 @@
 /src/var/run
 /src/var/images
 /src/var/tmp
+/src/var/theme
 /src/var/data
 /src/var/resources
 /src/var/.decorator.fixtures.ini.php

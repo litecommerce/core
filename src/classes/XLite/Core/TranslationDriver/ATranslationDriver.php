@@ -55,6 +55,18 @@ abstract class ATranslationDriver extends \XLite\Base
      */
     abstract public function reset();
 
+
+    /**
+     * Get driver name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return static::TRANSLATION_DRIVER_NAME;
+    }
+
+
     /**
      * Alias
      *

@@ -151,6 +151,16 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get translation driver identifier
+     *
+     * @return string
+     */
+    public function getTranslationDriver()
+    {
+        return \XLite\Core\Translation::getInstance()->getDriver()->getName();
+    }
+
+    /**
      * Returns value by request
      *
      * @param string $name Type of value

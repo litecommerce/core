@@ -8,14 +8,18 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  */
-.invoice-box .items .item-options-list {
+.invoice-box .items .item-options-list,
+div.line-3 .items .item-options-list
+{
   margin: 0px;
   padding: 0px;
   margin-left: 20px;
   list-style: none;
 }
 
-.invoice-box .items .item-options-list li {
+.invoice-box .items .item-options-list li,
+div.line-3 .items .item-options-list li
+{
   margin: 0px;
   padding: 0px;
   list-style: none;

@@ -93,6 +93,15 @@ class Module extends \XLite\Model\AEntity
     protected $installed = false;
 
     /**
+     * install.yaml file load status
+     *
+     * @var boolean
+     *
+     * @Column (type="boolean")
+     */
+    protected $yamlLoaded = false;
+
+    /**
      * Order creation timestamp
      *
      * @var integer

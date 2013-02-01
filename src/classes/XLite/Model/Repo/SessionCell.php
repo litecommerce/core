@@ -45,11 +45,36 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param string  $name  Cell name
      * @param mixed   $value Data to store
      *
-     * @return integer
+     * @return \XLite\Model\SessionCell
      */
     public function insertCell($id, $name, $value)
     {
-        return $this->insert($this->prepareDataForNewCell($id, $name, $value));
+        $connection = $this->_em->getConnection();
+
+        $data = $this->prepareDataForNewCell($id, $name, $value);
+
+        $connection->connect();
+
+        $cols = array();
+        $placeholders = array();
+
+        foreach ($data as $columnName => $value) {
+            $cols[] = $columnName;
+            $placeholders[] = '?';
+        }
+
+        $query = 'REPLACE INTO ' . $this->_class->getTableName()
+               . ' (' . implode(', ', $cols) . ')'
+               . ' VALUES (' . implode(', ', $placeholders) . ')';
+
+        $connection->executeUpdate($query, array_values($data));
+
+        return $this->findOneBy(
+            array(
+                'id'   => $id,
+                'name' => $name,
+            )
+        );
     }
 
     /**
@@ -63,8 +88,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     public function updateCell(\XLite\Model\SessionCell $cell, $value)
     {
         $cell->setValue($value);
-
-        return $this->update($cell);
+        $this->update($cell);
     }
 
     /**

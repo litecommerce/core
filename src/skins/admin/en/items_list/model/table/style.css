@@ -26,15 +26,27 @@
   background-color: #f1f1f1;
 }
 
+.items-list-table table.list tbody.no-items td,
 .items-list-table table.list thead th {
   color: #8f8f8f;
   font-weight: normal;
+  text-align: left;
+  font-size: 16px;
+}
+
+.items-list-table table.list tbody.no-items td {
+  background-color: #f1f1f1;
+  width: 800px;
+  padding: 12px;
+}
+
+.items-list-table table.list thead th {
   padding: 18px 12px 12px;
   font-size: 14px;
-  text-align: left;
   border-bottom: 1px solid #d5d5d5;
 }
 
+.items-list-table table.list tbody.create tr.line td,
 .items-list-table table.list tbody.lines tr.line td {
   border-top: 1px solid #e9e9e9;
   padding: 8px 12px 6px;
@@ -62,6 +74,7 @@
   vertical-align: middle;
 }
 
+.items-list-table table.list tbody.create td.actions.right .separator,
 .items-list-table table.list tbody.lines td.actions .separator {
   display: inline-block;
   width: 3px;
@@ -89,15 +102,24 @@
   margin-right: 12px;
 }
 
+.items-list-table table.list tbody.create td.actions .remove-wrapper {
+  padding-left: 12px;
+}
+
+.items-list-table table.list tbody.create td.actions .remove-wrapper,
 .items-list-table table.list tbody.lines td.actions .action {
   display: inline-block;
   padding-right: 2px;
   vertical-align: top;
 }
 
+.items-list-table table.list tbody.lines td.actions.left .action {
+  vertical-align: middle;
+}
+
 .items-list-table table.list tbody.lines td.actions .action.next {
   padding-left: 7px;
-  background: transparent url(../../../images/actions_separator.png) no-repeat left 7px;
+  background: transparent url(../../../images/actions_separator.png) no-repeat left 1px;
 }
 
 .items-list-table table.list tbody.lines td.actions div.selector {
@@ -123,7 +145,6 @@
 
 .items-list-table table.list tbody.lines td.actions .inline-switcher {
   width: 31px;
-  padding-top: 7px;
 }
 
 .items-list-table table.list tbody.lines td.actions .inline-move {
@@ -157,25 +178,25 @@
   opacity: .6;
 }
 
-.items-list-table table.list tbody.lines .inline-field .field {
+.items-list-table table.list .inline-field {
   line-height: normal;
 }
 
-.items-list-table table.list tbody.lines .inline-field .field input,
-.items-list-table table.list tbody.lines .inline-field .field select,
-.items-list-table table.list tbody.lines .inline-field .field textarea,
-.items-list-table table.list tbody.lines .inline-field .field span.text
+.items-list-table table.list .inline-field input,
+.items-list-table table.list .inline-field select,
+.items-list-table table.list .inline-field textarea,
+.items-list-table table.list .inline-field span.text
 {
   font-size: 14px;
 }
 
-.items-list-table table.list tbody.lines .inline-field .field input,
-.items-list-table table.list tbody.lines .inline-field .field select
+.items-list-table table.list .inline-field input,
+.items-list-table table.list .inline-field select
 {
   line-height: 18px;
 }
 
-.items-list-table table.list tbody.lines .inline-field .field input {
+.items-list-table table.list .inline-field input {
   height: 19px;
   padding-top: 5px;
   padding-left: 6px;
@@ -183,7 +204,7 @@
   font-size: 14px;
 }
 
-.items-list-table table.list tbody.lines .inline-field .field select {
+.items-list-table table.list .inline-field select {
   height: 29px;
   width: auto;
   margin-bottom: -2px;
@@ -192,10 +213,6 @@
 
 .items-list-table table.list tbody.lines .inline-field .table-value {
   float: none;
-}
-
-.items-list-table table.list tbody.no-items td {
-  text-align: center;
 }
 
 .items-list-table table.list tbody.lines .field .subfield,
@@ -240,3 +257,29 @@
   font-size: 16px;
 }
 
+.items-list-table table.list tbody.lines td .plain-value {
+  font-size: 14px;
+}
+
+.items-list-table table.list tbody td.cell.no-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.items-list-table table.list tbody.create td {
+  padding-left: 11px;
+}
+
+.items-list-table table.list tbody.create td.actions.right .separator {
+  position: relative;
+  top: 7px;
+}
+
+.items-list-table table.list tbody.create td.actions.right {
+  padding-left: 0;
+}
+
+.items-list-table table.list td.main {
+  min-width: 300px;
+}

@@ -9,5 +9,7 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<span class="symbol">{if:currency.getSymbol()}{currency.getSymbol():h}{else:}{currency.getCode()}{end:}</span>
+<span class="symbol" IF="currency.getPrefix()">{currency.getPrefix():h}</span>
 <span class="value">{getViewValue(singleField):h}</span>
+<span class="symbol" IF="currency.getSuffix()">{currency.getSuffix():h}</span>
+
