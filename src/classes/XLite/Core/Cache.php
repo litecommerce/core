@@ -107,7 +107,7 @@ class Cache extends \XLite\Base
         } elseif ('memcache' == $options['type'] && isset($options['servers']) && class_exists('Memcache', false)) {
 
             // Memcache
-            $servers = explode(';', $options['servers']);
+            $servers = explode(';', $options['servers']) ?: array('localhost');
             if ($servers) {
                 $memcache = new \Memcache();
                 foreach ($servers as $row) {
