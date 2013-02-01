@@ -398,7 +398,7 @@ class Storage extends \XLite\Base
      */
     protected function setRegistry(array $registry)
     {
-        $this->getCacheDriver()->save($this->assembleRegistryCell(), $registry);
+        $this->getCacheDriver()->save($this->assembleRegistryCell(), serialize($registry));
     }
 
     // }}}
@@ -427,7 +427,7 @@ class Storage extends \XLite\Base
      */
     protected function setGlobalRegistry(array $registry)
     {
-        $this->getCacheDriver()->save($this->assembleGlobalRegistryCell(), $registry);
+        $this->getCacheDriver()->save($this->assembleGlobalRegistryCell(), serialize($registry));
     }
 
     // }}}    

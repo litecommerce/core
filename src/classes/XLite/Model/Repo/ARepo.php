@@ -253,7 +253,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $prefix = $this->getHashPrefix() . '.' . $name;
         foreach (\XLite\Model\Repo\ARepo::getCacheDriver()->getIds() as $id) {
             if (0 === strpos($id, $prefix)) {
-                \XLite\Model\Repo\ARepo::getCacheDriver()->delete();
+                \XLite\Model\Repo\ARepo::getCacheDriver()->delete($id);
             }
         }
     }
