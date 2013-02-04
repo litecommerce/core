@@ -2,7 +2,7 @@
 
 namespace XLite\Module\Education\Skin\View\ItemsList\Model;
 
-class MyModule extends \XLite\View\ItemsList\Model\Table
+class MyModel extends \XLite\View\ItemsList\Model\Table
 {
     protected function defineColumns()
     {

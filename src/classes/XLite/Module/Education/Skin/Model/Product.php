@@ -8,7 +8,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      *
      * @var boolean
      *
-     * @Column(type="boolean")
+     * @Column(type="boolean", nullable=true)
      */
     protected $hiddenFlag;
 
