@@ -36,7 +36,6 @@ class Main extends \XLite\View\Model\Profile\AProfile
      */
 
     const SECTION_MAIN     = 'main';
-    const SECTION_ACCESS   = 'access';
 
 
     /**
@@ -70,30 +69,6 @@ class Main extends \XLite\View\Model\Profile\AProfile
             ),
         ),
     );
-
-    /**
-     * Schema of the "User access" section
-     *
-     * @var array
-     */
-    protected $accessSchema = array(
-        'access_level' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AccessLevel',
-            self::SCHEMA_LABEL    => 'Access level',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'status' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AccountStatus',
-            self::SCHEMA_LABEL    => 'Account status',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'membership_id' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Membership',
-            self::SCHEMA_LABEL    => 'Membership',
-            self::SCHEMA_REQUIRED => false,
-        ),
-    );
-
 
     /**
      * Return value for the "register" mode param
@@ -208,16 +183,6 @@ class Main extends \XLite\View\Model\Profile\AProfile
     }
 
     /**
-     * Return fields list by the corresponding schema
-     *
-     * @return array
-     */
-    protected function getFormFieldsForSectionAccess()
-    {
-        return $this->getFieldsBySchema($this->accessSchema);
-    }
-
-    /**
      * Populate model object properties by the passed data
      *
      * @param array $data Data to set
@@ -274,7 +239,6 @@ class Main extends \XLite\View\Model\Profile\AProfile
     {
         return array(
             self::SECTION_MAIN   => 'Personal info',
-            self::SECTION_ACCESS => 'Access information',
         );
     }
 
