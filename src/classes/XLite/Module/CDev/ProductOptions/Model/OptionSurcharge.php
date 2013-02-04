@@ -94,6 +94,16 @@ class OptionSurcharge extends \XLite\Model\AEntity
     protected $option;
 
     /**
+     * Get modifier 
+     * 
+     * @return float
+     */
+    public function getModifier()
+    {
+        return doubleval($this->modifier);
+    }
+
+    /**
      * Set modifier type
      *
      * @param string $type Modifier type code

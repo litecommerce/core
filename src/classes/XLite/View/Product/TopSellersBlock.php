@@ -97,7 +97,7 @@ class TopSellersBlock extends \XLite\View\Dialog
     protected function isEmptyStats()
     {
         $cnd = new \XLite\Core\CommonCell();
-        $cnd->currency = \XLite::getCurrency()->getCurrencyId();
+        $cnd->currency = \XLite::getInstance()->getCurrency()->getCurrencyId();
 
         $count = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($cnd, true);
 

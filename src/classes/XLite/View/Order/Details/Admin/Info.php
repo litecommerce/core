@@ -67,6 +67,17 @@ class Info extends \XLite\View\AView
     }
 
     /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getOrder();
+    }
+
+    /**
      * Return widget default template
      *
      * @return string

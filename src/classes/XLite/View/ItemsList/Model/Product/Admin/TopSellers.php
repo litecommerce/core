@@ -149,7 +149,7 @@ class TopSellers extends \XLite\View\ItemsList\Model\Product\Admin\LowInventoryB
 
         $cnd->date = array($this->getStartDate(), 0);
 
-        $cnd->currency = \XLite::getCurrency()->getCurrencyId();
+        $cnd->currency = \XLite::getInstance()->getCurrency()->getCurrencyId();
 
         $cnd->limit = $this->getParam(self::PARAM_PRODUCTS_LIMIT);
 
