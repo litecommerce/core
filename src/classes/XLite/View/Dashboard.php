@@ -180,7 +180,7 @@ class Dashboard extends \XLite\View\Dialog
     protected function getTopSellersCount()
     {
         $cnd = new \XLite\Core\CommonCell();
-        $cnd->currency = \XLite::getCurrency()->getCurrencyId();
+        $cnd->currency = \XLite::getInstance()->getCurrency()->getCurrencyId();
 
         return \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($cnd, true);
     }
