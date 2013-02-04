@@ -47,7 +47,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      */
     protected function getModelFormPartMain()
     {
-        return array(\XLite\View\Model\Profile\Main::SECTION_MAIN, \XLite\View\Model\Profile\Main::SECTION_ACCESS);
+        return array(\XLite\View\Model\Profile\Main::SECTION_MAIN);
     }
 
     /**
@@ -168,7 +168,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
 
                 if (isset($role->rid)) {
 
-                    $rolesToDelete 
+                    $rolesToDelete
                         = \XLite\Core\Database::getRepo('\XLite\Module\CDev\DrupalConnector\Model\DrupalRole')
                             ->findBy(array('drupal_role_id' => $role->rid));
 
@@ -236,10 +236,10 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
     }
 
     /**
-     * Update profile role 
-     * 
+     * Update profile role
+     *
      * @param \XLite\Model\Profile $profile Profile
-     *  
+     *
      * @return void
      */
     protected function updateProfileRole(\XLite\Model\Profile $profile)

@@ -253,6 +253,12 @@ class Layout extends \XLite\Base\Singleton
 
         list($currentSkin, $currentLocale, $currentTemplate) = $this->getCurrentTemplateInfo();
 
+        $templateInfo = $this->getCurrentTemplateInfo();
+
+        list($currentSkin, $currentLocale, $currentTemplate) = count($templateInfo) < 3
+            ? array(null, null, $shortPath)
+            : $templateInfo;
+
         if (1 == count($parts)) {
             if ('parent' == $shortPath) {
 
@@ -476,9 +482,7 @@ class Layout extends \XLite\Base\Singleton
         $tail = \XLite\View\AView::getTail();
         $last = array_pop($tail);
 
-        list($skin, $lang, $template) = explode(LC_DS, substr($last, strlen(LC_DIR_SKINS)), 3);
-
-        return array($skin, $lang, $template);
+        return explode(LC_DS, substr($last, strlen(LC_DIR_SKINS)), 3);
     }
 
     /**
