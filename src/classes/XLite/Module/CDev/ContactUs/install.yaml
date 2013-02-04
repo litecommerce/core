@@ -8,7 +8,6 @@
 # @link      http://www.litecommerce.com/
 
 XLite\Model\LanguageLabel:
-  directives: { insert: true }
   - { name: 'Contact us description', translations: [{ code: en, label: 'To contact us please fill the form below' }] }
 
 XLite\Model\Config:
