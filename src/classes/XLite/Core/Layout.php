@@ -361,8 +361,6 @@ class Layout extends \XLite\Base\Singleton
     {
         $parts = explode(':', $shortPath, 2);
 
-        list($currentSkin, $currentLocale, $currentTemplate) = $this->getCurrentTemplateInfo();
-
         $templateInfo = $this->getCurrentTemplateInfo();
 
         list($currentSkin, $currentLocale, $currentTemplate) = count($templateInfo) < 3
