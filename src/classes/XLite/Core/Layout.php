@@ -113,6 +113,116 @@ class Layout extends \XLite\Base\Singleton
      */
     protected $skinsCache = false;
 
+    // {{{ Layout changers methods
+    
+    /**
+     * The modules can use the method in the last step of classes rebuilding.
+     * The module removes the viewer class list location via this method.
+     * 
+     * For example:
+     * 
+     * \XLite\Core\Layout::getInstance()->removeClassFromList(
+     *    'XLite\Module\CDev\Bestsellers\View\Bestsellers',
+     *    'sidebar.first',
+     *    \XLite\Model\ViewList::INTERFACE_CUSTOMER
+     * );
+     * 
+     * After the classes rebuilding the bestsellers block is removed 
+     * from 'sidebar.first' list in customer interface
+     * 
+     * @param string $class    Name of class to remove 
+     * @param string $listName List name where the class was located
+     * @param string $zone     Interface where the list is located OPTIONAL
+     * 
+     * @see \XLite\Module\AModule::runBuildCacheHandler()
+     */
+    public function removeClassFromList($class, $listName, $zone = null)
+    {
+        $data = array(
+            'child' => $class,
+            'list'  => $listName,
+        );
+        
+        if (is_null($zone)) {
+            $data['zone'] = static::detectCurrentViewZone();
+        }
+
+        $this->removeFromList($data);
+    }
+    
+    public function addClassToList($class, $listName, $options = array())
+    {
+        return $this->addToList(array_merge(array(
+            'child' => $class, 
+            'list' => $listName,
+        ), $options));        
+    }
+    
+    /**
+     * The modules can use the method in the last step of classes rebuilding.
+     * The module removes the template list location via this method.
+     * 
+     * For example:
+     * 
+     * \XLite\Core\Layout::getInstance()->removeTemplateFromList(
+     *    'XLite\Module\CDev\Bestsellers\View\Bestsellers',
+     *    'sidebar.first',
+     *    \XLite\Model\ViewList::INTERFACE_CUSTOMER
+     * );
+     * 
+     * After the classes rebuilding the bestsellers block is removed 
+     * from 'sidebar.first' list in customer interface
+     * 
+     * @param string $class    Name of class to remove 
+     * @param string $listName List name where the class was located
+     * @param string $zone     Interface where the list is located OPTIONAL
+     * 
+     * @see \XLite\Module\AModule::runBuildCacheHandler()
+     */
+    public function removeTemplateFromList($tpl, $listName, $zone = null)
+    {
+        $data = array(
+            'tpl'   => $this->prepareTemplateToList($tpl),
+            'list'  => $listName,
+        );
+        
+        if (is_null($zone)) {
+            $data['zone'] = static::detectCurrentViewZone();
+        }
+
+        $this->removeFromList($data);        
+    }
+    
+    public function addTemplateToList($tpl, $listName, $options = array())
+    {
+        return $this->addToList(array_merge(array(
+            'tpl' => $this->prepareTemplateToList($tpl), 
+            'list' => $listName,
+        ), $options));        
+    }
+
+    protected function removeFromList($data)
+    {
+        $repo = \XLite\Core\Database::getRepo('\XLite\Model\ViewList');
+        $repo->deleteInBatch($repo->findBy($data));
+        
+        \XLite\View\AView::clearViewList($data['list']);
+    }
+
+    protected function addToList($data)
+    {
+        \XLite\View\AView::clearViewList($data['list']);
+        
+        return \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->insert(new \XLite\Model\ViewList($data));
+    }
+
+    protected function prepareTemplateToList($list)
+    {
+        return str_replace('/', LC_DS, $list);
+    }
+    
+    // }}}
+    
     // {{{ Common getters
 
     /**

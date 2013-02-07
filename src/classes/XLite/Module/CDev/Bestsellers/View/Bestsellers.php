@@ -43,6 +43,12 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const PARAM_CATEGORY_ID = 'category_id';
 
     /**
+     * List names where the Bestsellers block is located
+     */
+    const SIDEBAR_LIST = 'sidebar.first';
+    const CENTER_LIST = 'center.bottom';
+    
+    /**
      * Category id
      *
      * @var mixed
@@ -248,10 +254,10 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
             && !$this->isAJAX()
         ) {
             if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
-                $result = $result && 'sidebar.first' == $this->viewListName;
+                $result = $result && static::SIDEBAR_LIST == $this->viewListName;
 
             } else {
-                $result = $result && 'center.bottom' == $this->viewListName;
+                $result = $result && static::CENTER_LIST == $this->viewListName;
             }
         }
 
