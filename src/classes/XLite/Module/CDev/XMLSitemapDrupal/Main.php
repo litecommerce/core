@@ -100,11 +100,10 @@ abstract class Main extends \XLite\Module\AModule
     {
         parent::runBuildCacheHandler();
 
-        \XLite\View\AView::removeWidgetFromList(
-            'modules/CDev/XMLSitemap/menu.tpl',
-            true,
-            'menu.settings',
-            \XLite\Model\ViewList::INTERFACE_ADMIN
+        \XLite\Core\Layout::getInstance()->removeTemplateFromList(
+             'modules/CDev/XMLSitemap/menu.tpl',
+             'menu.settins',
+             \XLite\Model\ViewList::INTERFACE_ADMIN
         );
     }
 }

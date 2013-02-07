@@ -84,6 +84,13 @@ abstract class AView extends \XLite\Core\Handler
     protected static $profilerInfo;
 
     /**
+     * View lists (cache)
+     *
+     * @var array
+     */
+    protected static $viewLists = array();
+
+    /**
      * isCloned
      *
      * @var boolean
@@ -96,13 +103,6 @@ abstract class AView extends \XLite\Core\Handler
      * @var array
      */
     protected $namedWidgets = array();
-
-    /**
-     * View lists (cache)
-     *
-     * @var array
-     */
-    protected $viewLists = array();
 
     /**
      * Current skin directory
@@ -1451,18 +1451,18 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getViewList($list, array $arguments = array())
     {
-        if (!isset($this->viewLists[$list])) {
-            $this->viewLists[$list] = $this->defineViewList($list);
+        if (!isset(static::$viewLists[$list])) {
+            static::$viewLists[$list] = $this->defineViewList($list);
         }
 
         if (!empty($arguments)) {
-            foreach ($this->viewLists[$list] as $widget) {
+            foreach (static::$viewLists[$list] as $widget) {
                 $widget->setWidgetParams($arguments);
             }
         }
 
         $result = array();
-        foreach ($this->viewLists[$list] as $widget) {
+        foreach (static::$viewLists[$list] as $widget) {
             if ($widget->checkVisibility()) {
                 $result[] = $widget;
             }
@@ -1796,36 +1796,20 @@ abstract class AView extends \XLite\Core\Handler
 
     // }}}
 
-    // {{{ Remove class/template from list
-
     /**
-     * Remove widget from list
-     *
-     * @param string  $name       Class/template name
-     * @param boolean $isTemplate Flag OPTIONAL
-     * @param string  $list       List name OPTIONAL
-     * @param string  $zone       Zone name OPTIONAL
-     *
-     * @return void
+     * It is used basically when the view list entry has been changed in the layout
+     * 
+     * @param string $listName
+     * 
+     * @see \XLite\Core\Layout::removeClassFromList()
+     * @see \XLite\Core\Layout::removeTemplateFromList()
+     * @see \XLite\Core\Layout::addClassToList()
+     * @see \XLite\Core\Layout::addTemplateToList()
      */
-    public static function removeWidgetFromList($name, $isTemplate = true, $list = null, $zone = null)
+    public static function clearViewList($listName)
     {
-        $data = array();
-        $data[$isTemplate ? 'tpl' : 'child'] = $name;
-
-        if (!empty($list)) {
-            $data['list'] = $list;
-        }
-
-        if (empty($zone)) {
-            $data['zone'] = static::detectCurrentViewZone();
-        }
-
-        $repo = \XLite\Core\Database::getRepo('\XLite\Model\ViewList');
-        $repo->deleteInBatch($repo->findBy($data));
+        unset(static::$viewLists[$listName]);
     }
-
-    // }}}
 
     /**
      * Get logo
