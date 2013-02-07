@@ -2,4 +2,7 @@ body {
   color: #0092ef;
 }
 
+#page-wrapper {
+  width: 1240px;
+}
 
