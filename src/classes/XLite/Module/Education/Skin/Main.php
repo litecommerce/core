@@ -96,4 +96,72 @@ abstract class Main extends \XLite\Module\AModule
         );
     }
 
+    /**
+     * Decorator run this method at the end of cache rebuild
+     *
+     * @return void
+     */
+    public static function runBuildCacheHandler()
+    {
+        parent::runBuildCacheHandler();
+
+        \XLite\Core\Layout::getInstance()->removeClassFromList(
+             'XLite\Module\CDev\Bestsellers\View\Bestsellers',
+             'sidebar.first',
+             \XLite\Model\ViewList::INTERFACE_CUSTOMER
+        );
+        
+        \XLite\Core\Layout::getInstance()->addClassToList(
+             'XLite\Module\CDev\Bestsellers\View\Bestsellers',
+             'sidebar.second',
+             array(
+                 'zone'   => \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+                 'weight' => 200,
+             )
+        );
+
+        \XLite\Core\Layout::getInstance()->removeClassFromList(
+             'XLite\View\Minicart',
+             'layout.header.right',
+             \XLite\Model\ViewList::INTERFACE_CUSTOMER
+        );
+        
+        \XLite\Core\Layout::getInstance()->addClassToList(
+             'XLite\View\Minicart',
+             'sidebar.second',
+             array(
+                 'zone'   => \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+             )
+        );
+        
+        \XLite\Core\Layout::getInstance()->removeTemplateFromList(
+             'items_list/product/parts/common.display-modes.tpl',
+             'itemsList.product.grid.customer.header',
+             \XLite\Model\ViewList::INTERFACE_CUSTOMER
+        );
+
+        \XLite\Core\Layout::getInstance()->addTemplateToList(
+             'items_list/product/parts/common.display-modes.tpl',
+             'itemsList.product.grid.customer.header',
+             array(
+                 'zone'   => \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+                 'weight' => 10,
+             )
+        );
+        
+        \XLite\Core\Layout::getInstance()->removeTemplateFromList(
+             'items_list/product/parts/common.sort-options.tpl',
+             'itemsList.product.grid.customer.header',
+             \XLite\Model\ViewList::INTERFACE_CUSTOMER
+        );
+
+        \XLite\Core\Layout::getInstance()->addTemplateToList(
+             'items_list/product/parts/common.sort-options.tpl',
+             'itemsList.product.grid.customer.header',
+             array(
+                 'zone'   => \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+                 'weight' => 20,
+             )
+        );        
+    }
 }

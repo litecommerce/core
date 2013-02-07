@@ -6,3 +6,10 @@ body {
   width: 1240px;
 }
 
+.list-header .sort-box {
+  float: left;
+}
+
+.list-header ul.display-modes {
+  float: right;
+}
