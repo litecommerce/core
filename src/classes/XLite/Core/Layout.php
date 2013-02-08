@@ -149,7 +149,37 @@ class Layout extends \XLite\Base\Singleton
 
         $this->removeFromList($data);
     }
-    
+
+    /**
+     * The modules can use the method in the last step of classes rebuilding.
+     * The module adds the viewer class list location via this method.
+     * 
+     * Options array contains other info that must be added to the viewList entry.
+     * \XLite\Model\ViewList entry contains `weight` and `zone` parameters
+     * 
+     * For example:
+     * 
+     * \XLite\Core\Layout::getInstance()->addClassToList(
+     *    'XLite\Module\CDev\Bestsellers\View\Bestsellers',
+     *    'sidebar.second',
+     *    array(
+     *        'zone'   => \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+     *        'weight' => 100,
+     *    )
+     * );
+     * 
+     * If any module decorates \XLite\Model\ViewList class and adds any other info
+     * you can insert additional information via $options parameter
+     * 
+     * @param string $class    Class name WITHOUT leading `\`
+     * @param string $listName Name of the list where the class must be located
+     * @param array  $options  Additional info to add to the viewList entry
+     * 
+     * @return \XLite\Model\ViewList New entry of the viewList
+     * 
+     * @see \XLite\Model\ViewList
+     * @see \XLite\Module\AModule::runBuildCacheHandler()
+     */
     public function addClassToList($class, $listName, $options = array())
     {
         return $this->addToList(array_merge(array(
@@ -192,7 +222,37 @@ class Layout extends \XLite\Base\Singleton
 
         $this->removeFromList($data);        
     }
-    
+
+    /**
+     * The modules can use the method in the last step of classes rebuilding.
+     * The module adds the viewer class list location via this method.
+     * 
+     * Options array contains other info that must be added to the viewList entry.
+     * \XLite\Model\ViewList entry contains `weight` and `zone` parameters
+     * 
+     * For example:
+     * 
+     * \XLite\Core\Layout::getInstance()->addClassToList(
+     *    'modules/CDev/XMLSitemap/menu.tpl',
+     *    'sidebar.second',
+     *    array(
+     *        'zone'   => \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+     *        'weight' => 100,
+     *    )
+     * );
+     * 
+     * If any module decorates \XLite\Model\ViewList class and adds any other info
+     * you can insert additional information via $options parameter
+     * 
+     * @param string $tpl      Template relative path
+     * @param string $listName Name of the list where the template must be located
+     * @param array  $options  Additional info to add to the viewList entry
+     * 
+     * @return \XLite\Model\ViewList
+     * 
+     * @see \XLite\Model\ViewList
+     * @see \XLite\Module\AModule::runBuildCacheHandler()
+     */
     public function addTemplateToList($tpl, $listName, $options = array())
     {
         return $this->addToList(array_merge(array(
@@ -201,6 +261,15 @@ class Layout extends \XLite\Base\Singleton
         ), $options));        
     }
 
+    /**
+     * Method is used as a wrapper to remove viewlist entry directly from DB
+     * The remove<Template|Class>FromList() methods use the method
+     * 
+     * @param array $data viewlist entry data to remove
+     * 
+     * @see \XLite\Core\Layout::removeTemplateFromList()
+     * @see \XLite\Core\Layout::removeClassFromList()
+     */
     protected function removeFromList($data)
     {
         $repo = \XLite\Core\Database::getRepo('\XLite\Model\ViewList');
@@ -209,6 +278,14 @@ class Layout extends \XLite\Base\Singleton
         \XLite\View\AView::clearViewList($data['list']);
     }
 
+    /**
+     * Method is used as a wrapper to insert viewList entry directly into DB
+     * The add<Template|Class>ToList() methods use the method
+     * 
+     * @param array $data viewList entry data to insert
+     * 
+     * @return \XLite\Model\AEntity
+     */
     protected function addToList($data)
     {
         \XLite\View\AView::clearViewList($data['list']);
@@ -216,6 +293,18 @@ class Layout extends \XLite\Base\Singleton
         return \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->insert(new \XLite\Model\ViewList($data));
     }
 
+    /**
+     * The viewlist templates are stored in DB with the system based directory 
+     * separator. When using addTemplateToList() and removeTemplateFromList() methods
+     * the template string must be changed to the directory separator based file path
+     * 
+     * @param string $list
+     * 
+     * @return string
+     * 
+     * @see \XLite\Core\Layout::addTemplateToList()
+     * @see \XLite\Core\Layout::removeTemplateFromList()
+     */
     protected function prepareTemplateToList($list)
     {
         return str_replace('/', LC_DS, $list);
