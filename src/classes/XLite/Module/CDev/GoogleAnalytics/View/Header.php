@@ -50,13 +50,13 @@ class Header extends \XLite\View\AView
      */
     protected function getGaqOptions()
     {
-        $list = array('\'_setAccount\', \'' . \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_account . '\'');
+        $list = array('\'_setAccount\', \'' . \XLite\Core\Config::getInstance()->CDev->GoogleAnalytics->ga_account . '\'');
 
-        if (2 == \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_tracking_type) {
+        if (2 == \XLite\Core\Config::getInstance()->CDev->GoogleAnalytics->ga_tracking_type) {
 
             $list[] = '\'_setDomainName\', \'.\' + self.location.host.replace(/^[^\.]+\./, \'\')';
 
-        } elseif (3 == \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_tracking_type) {
+        } elseif (3 == \XLite\Core\Config::getInstance()->CDev->GoogleAnalytics->ga_tracking_type) {
             $list[] = '\'_setDomainName\', \'none\'';
             $list[] = '\'_setAllowLinker\', true';
         }
@@ -73,24 +73,10 @@ class Header extends \XLite\View\AView
             }
 
             $order = $this->getOrder();
+            
             if (!in_array($order->getOrderId(), $orders)) {
                 foreach ($order->getItems() as $item) {
 
-                    $product = $item->getProduct();
-                    $category = $product ? $product->getCategory() : null;
-                    if ($category && $category->getCategoryId()) {
-                        $categories = \XLite\Core\Database::getRepo('XLite\Model\Category')
-                            ->getCategoryPath($category->getCategoryId());
-                        $category = array();
-                        foreach ($categories as $cat) {
-                            $category[] = $cat->getName();
-                        }
-
-                        $category = implode(' / ', $category);
-
-                    } else {
-                        $category = '';
-                    }
                     $list[] = '\'_addItem\', '
                         . '\'' . $order->getOrderId() . '\', '
                         . '\'' . $this->escapeJavascript($item->getSku()) . '\', '

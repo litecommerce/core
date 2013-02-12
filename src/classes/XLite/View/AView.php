@@ -564,7 +564,26 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register CSS files
+     * Via this method the widget registers the CSS files which it uses.
+     * During the viewers initialization the CSS files are collecting into the static storage.
+     *
+     * The method must return the array of the CSS file paths:
+     *
+     * return array(
+     *      'modules/Developer/Module/style.css',
+     *      'styles/css/main.css',
+     * );
+     *
+     * Also the best practice is to use parent result:
+     *
+     * return array_merge(
+     *      parent::getCSSFiles(),
+     *      array(
+     *          'modules/Developer/Module/style.css',
+     *          'styles/css/main.css',
+     *          ...
+     *      )
+     * );
      *
      * @return array
      */
@@ -574,7 +593,26 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register JS files
+     * Via this method the widget registers the JS files which it uses.
+     * During the viewers initialization the JS files are collecting into the static storage.
+     *
+     * The method must return the array of the JS file paths:
+     *
+     * return array(
+     *      'modules/Developer/Module/script.js',
+     *      'script/js/main.js',
+     * );
+     *
+     * Also the best practice is to use parent result:
+     *
+     * return array_merge(
+     *      parent::getJSFiles(),
+     *      array(
+     *          'modules/Developer/Module/script.js',
+     *          'script/js/main.js',
+     *          ...
+     *      )
+     * );
      *
      * @return array
      */
@@ -584,7 +622,26 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register Meta tags
+     * Via this method the widget registers the meta tags which it uses.
+     * During the viewers initialization the meta tags are collecting into the static storage.
+     *
+     * The method must return the array of the full meta tag definitions:
+     *
+     * return array(
+     *      '<meta name="name1" content="Content1" />',
+     *      '<meta http-equiv="Content-Style-Type" content="text/css">',
+     * );
+     *
+     * Also the best practice is to use parent result:
+     *
+     * return array_merge(
+     *      parent::getMetaTags(),
+     *      array(
+     *          '<meta name="name1" content="Content1" />',
+     *          '<meta http-equiv="Content-Style-Type" content="text/css">',
+     *          ...
+     *      )
+     * );
      *
      * @return array
      */
@@ -594,7 +651,7 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register Meta tags
+     * Register RDF namespaces
      *
      * @return array
      */
@@ -877,30 +934,36 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register meta data
+     * Method collects the meta definitions (meta tags) into the static meta storage. (the Customer interface only!)
+     * Widgets can register the meta they are using via 'getMetaTags()'
      *
      * @return void
+     *
+     * @see \XLite\View\AView::getMetaTags()
      */
     protected function registerMetas()
     {
         $meta = $this->getMetaTags();
 
         if ($meta) {
-            static::$metas = array_merge(static::$metas, $meta);
+            static::$metas = array_unique(array_merge(static::$metas, $meta));
         }
     }
 
     /**
-     * Register meta data
+     * Method collects the namespace definitions  into the static namespace storage (the Customer interface only!).
+     * Widgets can register the namespaces they are using via 'getNamespaces()'
      *
      * @return void
+     *
+     * @see \XLite\View\AView::getNamespaces()
      */
     protected function registerNamespaces()
     {
         $data = $this->getNamespaces();
 
         if ($data) {
-            static::$namespaces = array_merge(static::$namespaces, $data);
+            static::$namespaces = array_unique(array_merge(static::$namespaces, $data));
         }
     }
 
