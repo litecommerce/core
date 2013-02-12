@@ -241,7 +241,7 @@ abstract class AView extends \XLite\Core\Handler
         $flag = isset($template);
 
         if ($flag || $this->checkVisibility()) {
-            
+
             if (!$this->isCloned && !$flag) {
                 $this->initView();
             }
@@ -584,7 +584,26 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register CSS files
+     * Via this method the widget registers the CSS files which it uses.
+     * During the viewers initialization the CSS files are collecting into the static storage.
+     *
+     * The method must return the array of the CSS file paths:
+     *
+     * return array(
+     *      'modules/Developer/Module/style.css',
+     *      'styles/css/main.css',
+     * );
+     *
+     * Also the best practice is to use parent result:
+     *
+     * return array_merge(
+     *      parent::getCSSFiles(),
+     *      array(
+     *          'modules/Developer/Module/style.css',
+     *          'styles/css/main.css',
+     *          ...
+     *      )
+     * );
      *
      * @return array
      */
@@ -594,7 +613,26 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register JS files
+     * Via this method the widget registers the JS files which it uses.
+     * During the viewers initialization the JS files are collecting into the static storage.
+     *
+     * The method must return the array of the JS file paths:
+     *
+     * return array(
+     *      'modules/Developer/Module/script.js',
+     *      'script/js/main.js',
+     * );
+     *
+     * Also the best practice is to use parent result:
+     *
+     * return array_merge(
+     *      parent::getJSFiles(),
+     *      array(
+     *          'modules/Developer/Module/script.js',
+     *          'script/js/main.js',
+     *          ...
+     *      )
+     * );
      *
      * @return array
      */
@@ -604,7 +642,26 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register Meta tags
+     * Via this method the widget registers the meta tags which it uses.
+     * During the viewers initialization the meta tags are collecting into the static storage.
+     *
+     * The method must return the array of the full meta tag definitions:
+     *
+     * return array(
+     *      '<meta name="name1" content="Content1" />',
+     *      '<meta http-equiv="Content-Style-Type" content="text/css">',
+     * );
+     *
+     * Also the best practice is to use parent result:
+     *
+     * return array_merge(
+     *      parent::getMetaTags(),
+     *      array(
+     *          '<meta name="name1" content="Content1" />',
+     *          '<meta http-equiv="Content-Style-Type" content="text/css">',
+     *          ...
+     *      )
+     * );
      *
      * @return array
      */
@@ -614,7 +671,7 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register Meta tags
+     * Register RDF namespaces
      *
      * @return array
      */
@@ -748,62 +805,185 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Common method to register resources
+     * This method collects the JS/CSS resources which are registered by various widgets via
+     * methods registered in \XLite\View\AView::getResourcesSchema:
+     *
+     * getCommonFiles()
+     * getResources() (this is a compilation of getJSFiles() / getCSSFiles() methods)
+     * getThemeFiles()
+     *
+     * Every widget to display registers the resources which are collected in the static::$resources static storage.
+     * Then these resources are prepared in this method and are ready to use in \XLite\View\AResourcesContainer class.
+     * Container class just gets these resources and puts them into the page as a script or CSS files inclusions.
+     *
+     * This method takes the $resources parameter in the following format:
+     * array(
+     *  static::RESOURCE_JS => array(
+     *      'js_file_path1',
+     *      'js_file_path2',
+     *      ...
+     *  ),
+     *  static::RESOURCE_CSS => array(
+     *      'css_file_path1',
+     *      'css_file_path2',
+     *      ...
+     *  ),
+     * )
+     *
+     * Note: You can provide more details for the resource if the resource array is provided instead of file path ('js_file_path1'):
+     *
+     * array(
+     *      'file'  => 'resource_file_path',
+     *      'media' => 'print'  // for example
+     *      'filelist' => array(          // If you use this parameter then the 'file' parameter is taken as a 'resource name',
+     *          'file1_path(real_path)',  // and the real file paths must be provided via 'filelist' parameter
+     *      )
+     * )
+     *
+     * $index - parameter is an order_by number which helps to insert the resources into some ordered queue
+     *
+     * $interface - parameter to inform where the resources are placed.
      *
      * @param array    $resources List of resources to register
-     * @param initeger $index     Position in list
-     * @param string   $interface Interface OPTIONAL
+     * @param initeger $index     Position in the ordered resources queue
+     * @param string   $interface Interface where the resources are placed OPTIONAL
      *
      * @return void
+     *
+     * @see \XLite\View\AView::registerResourcesForCurrentWidget()
+     * @see \XLite\View\AView::initView()
      */
     protected function registerResources(array $resources, $index, $interface = null)
     {
         foreach ($resources as $type => $files) {
-            foreach ($files as $data) {
-                if (is_string($data)) {
 
-                    $data = array(
-                        'file' => $data,
-                        'filelist' => array($data),
-                    );
-                }
-
-                if (!isset($data['filelist'])) {
-                    $data['filelist'] = array($data['file']);
-                }
-
-                if (!isset(static::$resources[$index][$type][$data['file']])) {
-                    static::$resources[$index][$type][$data['file']] = $this->prepareResource($data, $interface);
-                }
-            }
+            $this->{$this->assembleRegisterResourcesTypeName($type)}($files, $index, $interface);
         }
     }
 
     /**
-     * Register meta data
+     * Return the name of the method that registers the provided resource type in the resources storage
+     *
+     * @param  string $type Currently just two types of resources can be registered: js, css
+     *
+     * @return string By default the core supports 'registerJSResources' and 'registerCSSResources' registrators
+     */
+    protected function assembleRegisterResourcesTypeName($type)
+    {
+        return 'register' . strtoupper($type) . 'Resources';
+    }
+
+    /**
+     * Main JS resources registrator. see self::registerResources() for more info
+     *
+     * @param array   $files     List of file relative pathes to the resources
+     * @param integer $index     Position in the ordered resources queue
+     * @param string  $interface Interface where the files are located
+     *
+     * @see \XLite\View\AView::registerResources()
+     */
+    protected function registerJSResources($files, $index, $interface)
+    {
+        $this->registerResourcesByType($files, $index, $interface, static::RESOURCE_JS);
+    }
+
+    /**
+     * Main CSS resources registrator. see self::registerResources() for more info
+     *
+     * @param array   $files     List of file relative pathes to the resources
+     * @param integer $index     Position in the ordered resources queue
+     * @param string  $interface Interface where the files are located
+     *
+     * @see \XLite\View\AView::registerResources()
+     */
+    protected function registerCSSResources($files, $index, $interface)
+    {
+        $this->registerResourcesByType($files, $index, $interface, static::RESOURCE_CSS);
+    }
+
+    /**
+     * Main common registrator of resources. see self::registerResources() for more info
+     * This method takes the files list and registers them as the resources of the provided $type
+     *
+     * @param array   $files     List of file relative pathes to the resources
+     * @param integer $index     Position in the ordered resources queue
+     * @param string  $interface Interface where the files are located
+     * @param string  $type      Type of the resources ('js', 'css')
+     *
+     */
+    protected function registerResourcesByType($files, $index, $interface, $type)
+    {
+        foreach ($files as $resource) {
+
+            $this->prepareResourceByType($resource, $index, $interface, $type);
+        }
+    }
+
+    /**
+     * The resource must be prepared before the registration in the resources storage:
+     * - the file must be correctly located and full file path must be found
+     * - the web location of the resource must be found
+     *
+     * Then this method actually stores the resource into the static resources storage
+     *
+     * @param string|array $resource  Resource file path or array of resources
+     * @param integer      $index
+     * @param string       $interface
+     * @param string       $type
+     */
+    protected function prepareResourceByType($resource, $index, $interface, $type)
+    {
+        if (is_string($resource)) {
+            $resource = array(
+                'file' => $resource,
+                'filelist' => array($resource),
+            );
+        }
+
+        if (!isset($resource['filelist'])) {
+            $resource['filelist'] = array($resource['file']);
+        }
+
+        // The resource location information is found via prepareResource() method
+        $data = $this->prepareResource($resource, $interface);
+
+        // The resource finally stored into the static resources storage according its position, type and full file path
+        if (!isset(static::$resources[$index][$type][$data['file']])) {
+            static::$resources[$index][$type][$data['file']] = $data;
+        }
+    }
+
+    /**
+     * Method collects the meta definitions (meta tags) into the static meta storage. (the Customer interface only!)
+     * Widgets can register the meta they are using via 'getMetaTags()'
      *
      * @return void
+     *
+     * @see \XLite\View\AView::getMetaTags()
      */
     protected function registerMetas()
     {
         $meta = $this->getMetaTags();
 
         if ($meta) {
-            static::$metas = array_merge(static::$metas, $meta);
+            static::$metas = array_unique(array_merge(static::$metas, $meta));
         }
     }
 
     /**
-     * Register meta data
+     * Method collects the namespace definitions  into the static namespace storage (the Customer interface only!).
+     * Widgets can register the namespaces they are using via 'getNamespaces()'
      *
      * @return void
+     *
+     * @see \XLite\View\AView::getNamespaces()
      */
     protected function registerNamespaces()
     {
         $data = $this->getNamespaces();
 
         if ($data) {
-            static::$namespaces = array_merge(static::$namespaces, $data);
+            static::$namespaces = array_unique(array_merge(static::$namespaces, $data));
         }
     }
 
@@ -1818,9 +1998,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * It is used basically when the view list entry has been changed in the layout
-     * 
+     *
      * @param string $listName
-     * 
+     *
      * @see \XLite\Core\Layout::removeClassFromList()
      * @see \XLite\Core\Layout::removeTemplateFromList()
      * @see \XLite\Core\Layout::addClassToList()

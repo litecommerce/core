@@ -114,26 +114,26 @@ class Layout extends \XLite\Base\Singleton
     protected $skinsCache = false;
 
     // {{{ Layout changers methods
-    
+
     /**
      * The modules can use the method in the last step of classes rebuilding.
      * The module removes the viewer class list location via this method.
-     * 
+     *
      * For example:
-     * 
+     *
      * \XLite\Core\Layout::getInstance()->removeClassFromList(
      *    'XLite\Module\CDev\Bestsellers\View\Bestsellers',
      *    'sidebar.first',
      *    \XLite\Model\ViewList::INTERFACE_CUSTOMER
      * );
-     * 
-     * After the classes rebuilding the bestsellers block is removed 
+     *
+     * After the classes rebuilding the bestsellers block is removed
      * from 'sidebar.first' list in customer interface
-     * 
-     * @param string $class    Name of class to remove 
+     *
+     * @param string $class    Name of class to remove
      * @param string $listName List name where the class was located
      * @param string $zone     Interface where the list is located OPTIONAL
-     * 
+     *
      * @see \XLite\Module\AModule::runBuildCacheHandler()
      */
     public function removeClassFromList($class, $listName, $zone = null)
@@ -142,41 +142,71 @@ class Layout extends \XLite\Base\Singleton
             'child' => $class,
             'list'  => $listName,
         );
-        
+
         if (is_null($zone)) {
             $data['zone'] = static::detectCurrentViewZone();
         }
 
         $this->removeFromList($data);
     }
-    
+
+    /**
+     * The modules can use the method in the last step of classes rebuilding.
+     * The module adds the viewer class list location via this method.
+     *
+     * Options array contains other info that must be added to the viewList entry.
+     * \XLite\Model\ViewList entry contains `weight` and `zone` parameters
+     *
+     * For example:
+     *
+     * \XLite\Core\Layout::getInstance()->addClassToList(
+     *    'XLite\Module\CDev\Bestsellers\View\Bestsellers',
+     *    'sidebar.second',
+     *    array(
+     *        'zone'   => \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+     *        'weight' => 100,
+     *    )
+     * );
+     *
+     * If any module decorates \XLite\Model\ViewList class and adds any other info
+     * you can insert additional information via $options parameter
+     *
+     * @param string $class    Class name WITHOUT leading `\`
+     * @param string $listName Name of the list where the class must be located
+     * @param array  $options  Additional info to add to the viewList entry
+     *
+     * @return \XLite\Model\ViewList New entry of the viewList
+     *
+     * @see \XLite\Model\ViewList
+     * @see \XLite\Module\AModule::runBuildCacheHandler()
+     */
     public function addClassToList($class, $listName, $options = array())
     {
         return $this->addToList(array_merge(array(
-            'child' => $class, 
+            'child' => $class,
             'list' => $listName,
-        ), $options));        
+        ), $options));
     }
-    
+
     /**
      * The modules can use the method in the last step of classes rebuilding.
      * The module removes the template list location via this method.
-     * 
+     *
      * For example:
-     * 
+     *
      * \XLite\Core\Layout::getInstance()->removeTemplateFromList(
      *    'XLite\Module\CDev\Bestsellers\View\Bestsellers',
      *    'sidebar.first',
      *    \XLite\Model\ViewList::INTERFACE_CUSTOMER
      * );
-     * 
-     * After the classes rebuilding the bestsellers block is removed 
+     *
+     * After the classes rebuilding the bestsellers block is removed
      * from 'sidebar.first' list in customer interface
-     * 
-     * @param string $class    Name of class to remove 
+     *
+     * @param string $class    Name of class to remove
      * @param string $listName List name where the class was located
      * @param string $zone     Interface where the list is located OPTIONAL
-     * 
+     *
      * @see \XLite\Module\AModule::runBuildCacheHandler()
      */
     public function removeTemplateFromList($tpl, $listName, $zone = null)
@@ -185,44 +215,103 @@ class Layout extends \XLite\Base\Singleton
             'tpl'   => $this->prepareTemplateToList($tpl),
             'list'  => $listName,
         );
-        
+
         if (is_null($zone)) {
             $data['zone'] = static::detectCurrentViewZone();
         }
 
-        $this->removeFromList($data);        
+        $this->removeFromList($data);
     }
-    
+
+    /**
+     * The modules can use the method in the last step of classes rebuilding.
+     * The module adds the viewer class list location via this method.
+     *
+     * Options array contains other info that must be added to the viewList entry.
+     * \XLite\Model\ViewList entry contains `weight` and `zone` parameters
+     *
+     * For example:
+     *
+     * \XLite\Core\Layout::getInstance()->addClassToList(
+     *    'modules/CDev/XMLSitemap/menu.tpl',
+     *    'sidebar.second',
+     *    array(
+     *        'zone'   => \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+     *        'weight' => 100,
+     *    )
+     * );
+     *
+     * If any module decorates \XLite\Model\ViewList class and adds any other info
+     * you can insert additional information via $options parameter
+     *
+     * @param string $tpl      Template relative path
+     * @param string $listName Name of the list where the template must be located
+     * @param array  $options  Additional info to add to the viewList entry
+     *
+     * @return \XLite\Model\ViewList
+     *
+     * @see \XLite\Model\ViewList
+     * @see \XLite\Module\AModule::runBuildCacheHandler()
+     */
     public function addTemplateToList($tpl, $listName, $options = array())
     {
         return $this->addToList(array_merge(array(
-            'tpl' => $this->prepareTemplateToList($tpl), 
+            'tpl' => $this->prepareTemplateToList($tpl),
             'list' => $listName,
-        ), $options));        
+        ), $options));
     }
 
+    /**
+     * Method is used as a wrapper to remove viewlist entry directly from DB
+     * The remove<Template|Class>FromList() methods use the method
+     *
+     * @param array $data viewlist entry data to remove
+     *
+     * @see \XLite\Core\Layout::removeTemplateFromList()
+     * @see \XLite\Core\Layout::removeClassFromList()
+     */
     protected function removeFromList($data)
     {
         $repo = \XLite\Core\Database::getRepo('\XLite\Model\ViewList');
         $repo->deleteInBatch($repo->findBy($data));
-        
+
         \XLite\View\AView::clearViewList($data['list']);
     }
 
+    /**
+     * Method is used as a wrapper to insert viewList entry directly into DB
+     * The add<Template|Class>ToList() methods use the method
+     *
+     * @param array $data viewList entry data to insert
+     *
+     * @return \XLite\Model\AEntity
+     */
     protected function addToList($data)
     {
         \XLite\View\AView::clearViewList($data['list']);
-        
+
         return \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->insert(new \XLite\Model\ViewList($data));
     }
 
+    /**
+     * The viewlist templates are stored in DB with the system based directory
+     * separator. When using addTemplateToList() and removeTemplateFromList() methods
+     * the template string must be changed to the directory separator based file path
+     *
+     * @param string $list
+     *
+     * @return string
+     *
+     * @see \XLite\Core\Layout::addTemplateToList()
+     * @see \XLite\Core\Layout::removeTemplateFromList()
+     */
     protected function prepareTemplateToList($list)
     {
         return str_replace('/', LC_DS, $list);
     }
-    
+
     // }}}
-    
+
     // {{{ Common getters
 
     /**
