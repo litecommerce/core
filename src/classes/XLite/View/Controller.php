@@ -113,9 +113,11 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * Get body classes
+     * CSS classes which are defined in the defineBodyClasses() method are assembled into the one string
      *
      * @return string
+     *
+     * @see \XLite\View\Content::defineBodyClasses()
      */
     protected function getBodyClasses()
     {
@@ -123,9 +125,15 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * Define body classes list
+     * The layout defines the specific CSS classes for the 'body' tag
+     * The body CSS classes can define:
      *
-     * @return array
+     * AREA: area-a / area-c
+     * SKINS that are added to this interface: skin-<skin1>, skin-<skin2>, ...
+     * TARGET : target-<target_name>
+     * Sidebars: one-sidebar | two-sidebars | no-sidebars | sidebar-first | sidebar-second
+     *
+     * @return array Array of CSS classes to apply to the 'body' tag
      */
     protected function defineBodyClasses()
     {
@@ -134,7 +142,7 @@ class Controller extends \XLite\View\AView
         );
 
         foreach (array_reverse(\XLite\Core\Layout::getInstance()->getSkins()) as $skin) {
-            $classes[] = 'skin-' . $skin;
+            $classes[] = 'skin-' . $this->prepareCSSClass($skin);
         }
 
         $classes[] = 'target-' . (\XLite\Core\Request::getInstance()->target ?: \XLite::TARGET_DEFAULT);
@@ -161,6 +169,21 @@ class Controller extends \XLite\View\AView
         }
 
         return $classes;
+    }
+
+    /**
+     * Before using the CSS class in the 'class' attribute it must be prepared to be valid
+     * The restricted symbols are changed to '-'
+     *
+     * @param  string $class CSS class name to be prepared
+     *
+     * @return string
+     *
+     * @see \XLite\View\AView::defineBodyClasses()
+     */
+    protected function prepareCSSClass($class)
+    {
+        return preg_replace('/[^a-z0-9_-]+/Sis', '-', $class);
     }
 
     /**
